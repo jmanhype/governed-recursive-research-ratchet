@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T23:42:13Z
-content_hash: "sha256:38a2db619f88845ed78471ef403d1466f58f71c669c4de26f478c20392813c82"
+updated_at: 2026-10-20T23:46:09Z
+content_hash: "sha256:dd042d40de8b579543f562bcaf1fdd96010db9306079debbf9ef5557fc23e10d"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -125,6 +125,31 @@ OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
 - Operator explicitly increased the offline-build guest ephemeral /work tmpfs cap from 350 MiB to 512 MiB and authorized rerunning GRRR-90te parent identity integration.
 - VM RAM remains 1024 MiB. All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; 600-second cumulative build/test runtime before other probes; no guest networking, host shares, clipboard, or forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If linking still fails at 512 MiB /work, stop again; do not automatically increase resources.
+## PM Decision
+ACCEPTED [2026-10-20]: Independent bounded review of delivery a1d2148d8a8216e4db964b1a4fc76ee10f48c564 against epic e841545dedef472ffc2c74414a3a425d7bf27acf. Runtime source at 403c907 is unchanged by the final documentation commit. No privileged integration rerun, source edit, branch checkout, merge, or push performed.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed full changed implementation/test diff and exact source files, final-audit/AUDIT.md, canonical successful attempt, approval amendments, license review and provenance addendum.
+- Ran pvg verify on research/offline.py research/offline_execution.py research/policy.py tests/unit_offline.py tests/unit_offline_runtime.py tests/integration/offline_preflight.py tests/integration/offline_probe.py: 7 files, 0 issues. git diff --check and guest sh -n passed. No incomplete stubs/thin files; three bare pass statements are intentional process-cleanup exception handlers. New public functions carry type annotations.
+- Ran python3 scripts/verify-offline-evidence docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c: PASS, six evaluator snapshots; 6 required/executed, 0 skipped/errors/failures. Independently hashed manifest 85fbaadbae832ebb67110bbdfe980025fc011d6adb720866054acb4c690b1c16 and license review 4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf.
+- Inspected recorded 31/31 unit output and unit-only 24.0761478163% coverage; no integration coverage inferred. Successful integration output is clean; deliberate negative-service errors and prior failed attempts are expected preserved evidence, not dismissed defects.
+- Diff-budget investigation: 329 files / 3921 additions / 2 deletions total; implementation/tests 13 files / 1525 additions / 2 deletions. Growth is attributable to distinct preparation, guest, identity launcher, runtime adapter, independent verifier and real negative tests plus preserved attempts/license/authorization evidence. No unrelated core changes or excluded admission/observation-attack implementation found. Separation of trust roles justifies overrun.
+- Canonical current result is final-audit/AUDIT.md and successful attempt; STATUS.md and earlier draft/blocked artifacts are historical checkpoints, not current authorization or baseline results. Approval docs retain original limits and explicit later amendments rather than silently rewriting history.
+- Graph-tool discovery unavailable in this worker; bounded source/diff fallback used. pvg notes search could not resolve a worktree-local notes vault; live story/children operations resolved shared git-common-dir nd vault correctly. No issue files read directly.
+
+### proof
+- [x] AC #1: exact 52 source blobs and LICENSE blob verified; pinned source/toolchain/VM identities bound through inventory/profile/assets; actual full upstream tests and synthetic create/read observed.
+- [x] AC #2: two fresh offline VMs produced identical ae21fbda8127e7560c30bbd1026d79dffafefe4a32a78728521228a1162af5ea binaries; total 92.563880959s; source checks before/after; actual dependency output and full inventory retained.
+- [x] AC #3: exact 159-component operator-approved local-use review, 54 permissive / 80 boundary-controlled / 25 Apple-system classifications, notice/provenance exceptions retained. No redistribution, new project linking, Apple extraction or additional rights inferred; dyld per-image hash limitation explicit.
+- [x] AC #4: actual guest routes/mounts/devices show loopback-only and detached read-only input; fixed QEMU arguments omit network/shares/integration/agents; protected path and write denial probes plus guest synthetic IO pass.
+- [x] AC #5: separate OS identities, protected evaluator policy/expectations, root-readonly inputs, fresh reset, one active VM and approved RAM/workspace limits verified in code and real evidence; no host/container fallback.
+- [x] AC #6: real bad network/share/identity/image/dependency controls, concurrency rejection, acknowledgement, graceful/forced stop, watchdog and output cap pass. Numeric original profile and narrow 1024 MiB RAM / 512 MiB work amendments are recorded; emergency exact-PID stop procedure documented.
+
+Residual boundaries: baseline only; admission and promotion remain blocked. Full observation attack matrix, stop/admission linearization, general budget lifecycle and adversarial runner/administrator certification are not granted by this acceptance. The registered test-story wrapper was inspected and delegates to the tested launcher; it was not separately rerun. No DISCOVERED_BUG blocks raised by this bounded review.
+
 ## Implementation Evidence
 PROOF: See committed final audit a1d2148d8a8216e4db964b1a4fc76ee10f48c564 and complete AC Verification table above. Independent verifier PASS; integration 6/6 no skips/failures; units31/31; unit-only coverage24.0761478163%; pvg verify7files0issues.
 LEARNINGS: Exact ISO namespace and resource-boundary evidence are mandatory.
