@@ -1,5 +1,28 @@
 # GRRR-90te — preparation checkpoint, not delivery
 
+## Current authorization boundary: ready for parent-mediated run
+
+The operator subsequently approved the exact 159-component local-use inventory,
+confirmed installed macOS build 26A428 terms, and authorized the parent-mediated
+root run after disk and review binding checks. See
+`LOCAL-USE-LICENSE-AUTHORIZATION-2026-10-20.md`; prior draft/checkpoint statements
+below remain historical and do not supersede this later explicit decision.
+
+Final private review SHA-256:
+`4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf`.
+It has all 159 component keys, all four risk dispositions, operator UID 501 and
+mode 0600. Its authorization reference
+`033330e01fda00835902bdd7cb0016338fe7891146d4501ef3e6fa1d2d00b8d5`
+binds the exact operator decision and license evidence. Classification, mixed
+license expressions, no-redistribution/no-new-project-linking restrictions,
+notice retention, Apple boundaries and fail-closed dependency checks remain intact.
+
+Parent Gradle-cache cleanup manifests are preserved byte-for-byte. Free space at
+final review verification was 16,530,137,088 bytes, above the 15,000,000,000-byte
+floor; the launcher must recheck it. No root launcher, sudo, or VM execution was
+performed during this artifact-finalization step. Baseline correctness and runtime
+acceptance remain pending the parent run, not inferred from authorization.
+
 ## Latest checkpoint: approved profile implemented, privileged evidence pending
 
 The operator subsequently approved the exact build profile; see
