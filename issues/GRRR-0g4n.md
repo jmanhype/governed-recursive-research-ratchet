@@ -1,17 +1,16 @@
 ---
 id: GRRR-0g4n
 title: "Observe one bounded challenge through the trusted research path"
-status: in_progress
+status: open
 priority: 1
 type: task
 labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T03:37:20Z
-content_hash: "sha256:0ed30ee5f70d30bac08aab49fb05d75c4deedc6c812ef0cc29fe2145671c93c8"
+updated_at: 2026-10-20T03:37:21Z
+content_hash: "sha256:4ff1110de6a941c5ff40ba9d964658c89f80bd2bee9599e056e84da760d2b6ab"
 blocks: [GRRR-90te, GRRR-6sso]
-assignee: dev-GRRR-0g4n
 ---
 
 ## Description
@@ -108,6 +107,8 @@ BLOCKED BEFORE DEVELOPER DISPATCH:
 - 2026-10-20T03:19:04Z dep_added: blocks GRRR-6sso
 - 2026-10-20T03:34:35Z status: open -> in_progress
 - 2026-10-20T03:34:35Z claimed by dev-GRRR-0g4n
+- 2026-10-20T03:37:21Z status: in_progress -> open
+- 2026-10-20T03:37:21Z released by speed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
