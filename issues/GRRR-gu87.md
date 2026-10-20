@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-20T23:57:21Z
-content_hash: "sha256:3935d1b218f015e572f10add041526f6d904b4c01133cc99a54462e0f3c6123e"
+updated_at: 2026-10-20T23:57:36Z
+content_hash: "sha256:e52c97704e6e37698f05f8a660e484ea06389f49ec7688e6904858af0669b7fb"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -102,6 +102,23 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- WIP implementation: 7286815d88cc752bb58f5a9e692278027a61a79e; evidence commit: 96e612d.
+- 45 unit tests passed; required integration exit 1 with two prerequisite errors and zero skips. Full research coverage 37%; pvg verify 0 issues.
+- Claim retained by dispatcher instruction. No delivery, acceptance, profile execution or remote push.
+- docs/evidence/trusted-observation/wip-7286815/STATUS.md SHA256 8f0b5ed981dd9c5e8201e171f189110eb2d2cbdcd47fb6f843c37770a4e855b4.
+
+### proof
+- [ ] AC #1: approved guest supervisor challenge remains blocked.
+- [ ] AC #2: real guest/service hostile observations remain incomplete.
+- [ ] AC #3: supervisor implementation, pinning and profile approval absent.
+- [ ] AC #4: actual identity and shared offline accounting proof pending.
+- [ ] AC #5: actual service metering, overlap and review proof pending.
+- [ ] AC #6: actual store/lost-response/watchdog integration proof pending.
+
 # GRRR-gu87 WIP checkpoint — not delivered
 
 Implementation SHA: `7286815d88cc752bb58f5a9e692278027a61a79e`.
