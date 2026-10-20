@@ -64,6 +64,35 @@ def verify(attempt: Path) -> dict:
             'output_bytes': len(raw), 'reserved_seconds': report['reserved_seconds'],
             'reserved_total_seconds': report['reserved_total_seconds'], 'verified': False, 'admission': 'blocked',
             'probe_run': probes[0]['run'], 'objects_checked': len(snapshot['objects'])}
+    counts = json.loads((attempt / 'test-output.txt').read_text().splitlines()[-1])
+    assert counts['executed'] == counts['required'] and not any(counts[k] for k in ('skipped', 'errors', 'failures'))
+    summary['test_counts'] = counts
+    if counts['required'] == 12:
+        controls = json.loads((attempt / 'negative-controls.json').read_bytes())
+        assert set(controls) == {'missing-policy', 'absent-vm'}
+        for name, control in controls.items():
+            assert control['absence_confirmed'] and control['observed_code'] == 'Unavailable'
+            assert control['returncode'] == (3 if name == 'missing-policy' else 0)
+            assert sha((attempt / (name + '.log')).read_bytes()) == control['log_sha256']
+        summary['real_absence_controls'] = controls
+        summary['active_safety_controls'] = {}
+        for name, message in [('output', 'Guest output exceeded cap'),
+                              ('deadline', 'Evaluator-approved deadline exceeded')]:
+            reports = [row['event'] for row in snapshot['events'] if row['event'].get('probe') == name]
+            assert len(reports) == 1
+            control = reports[0]
+            assert control['execution'] == 'error' and control['finding'] == 'not-evaluated'
+            assert control['observation_error']['code'] == 'GateBlocked' and control['observation_error']['message'] == message
+            observed = json.loads(bytes.fromhex(snapshot['objects'][control['objects'][0]]))
+            assert observed['assets_unchanged'] and observed['isolation_verified'] and observed['termination']['ceased']
+            assert observed['raw_bytes'] == len(bytes.fromhex(snapshot['objects'][observed['raw_digest']])) <= 1048576
+            if name == 'output':
+                assert observed['raw_bytes'] == 1048576
+            else:
+                assert 5 <= observed['seconds'] < 30
+            summary['active_safety_controls'][name] = {'run': control['run'], 'code': 'GateBlocked',
+                'seconds': observed['seconds'], 'captured_bytes': observed['raw_bytes'],
+                'ceased': observed['termination']['ceased'], 'assets_unchanged': observed['assets_unchanged']}
     return summary
 
 

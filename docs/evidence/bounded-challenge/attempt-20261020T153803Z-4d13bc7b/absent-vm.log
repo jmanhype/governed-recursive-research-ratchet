@@ -1,0 +1,1 @@
+{"control": "absent-vm", "expected_failure": {"code": "Unavailable", "message": "Approved VM executable absent", "operation": "unknown", "receipt": null, "retryable": false}}

@@ -1,0 +1,19 @@
+Required integration tests: 12
+test_00a_missing_policy_real_control (__main__.BoundedChallenge.test_00a_missing_policy_real_control) ... ok
+test_00b_absent_vm_real_control (__main__.BoundedChallenge.test_00b_absent_vm_real_control) ... ok
+test_01_direct_stop_before_synthetic (__main__.BoundedChallenge.test_01_direct_stop_before_synthetic) ... ok
+test_01a_active_output_cap (__main__.BoundedChallenge.test_01a_active_output_cap) ... ok
+test_01b_active_command_deadline (__main__.BoundedChallenge.test_01b_active_command_deadline) ... ok
+test_02_clean_and_faulty_real_vm (__main__.BoundedChallenge.test_02_clean_and_faulty_real_vm) ... ok
+test_03_all_denied_capabilities (__main__.BoundedChallenge.test_03_all_denied_capabilities) ... ok
+test_04_invalid_metadata_and_bindings (__main__.BoundedChallenge.test_04_invalid_metadata_and_bindings) ... ok
+test_05_idempotency_mismatch_and_concurrency (__main__.BoundedChallenge.test_05_idempotency_mismatch_and_concurrency) ... ok
+test_06_unavailable_and_unauthorized_executor (__main__.BoundedChallenge.test_06_unavailable_and_unauthorized_executor) ... ok
+test_07_downstream_is_unavailable (__main__.BoundedChallenge.test_07_downstream_is_unavailable) ... ok
+test_08_protected_files_are_not_operator_writable (__main__.BoundedChallenge.test_08_protected_files_are_not_operator_writable) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 17.875s
+
+OK
+{"required": 12, "executed": 12, "skipped": 0, "failures": 0, "errors": 0}
