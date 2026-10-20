@@ -1,0 +1,6 @@
+.vault/
+.tmp-sr_pm/
+.DS_Store
+.env
+.env.*
+!.env.example
