@@ -46,12 +46,19 @@ class OfflinePreflight(unittest.TestCase):
         thread = threading.Thread(target=invoke)
         thread.start()
         if probe in ('stop', 'force'):
+            state = {'ready': False}
             deadline = time.monotonic() + 45
             while time.monotonic() < deadline and thread.is_alive():
                 state = call(self.socket, {'action': 'status', 'run': run}, timeout=2)
                 if state['ready']:
                     break
                 time.sleep(0.05)
+            if not state['ready']:
+                # Preserve actual serial/termination diagnostics before failing readiness.
+                if thread.is_alive():
+                    call(self.socket, {'action': 'stop', 'run': run}, timeout=2)
+                thread.join(timeout=310)
+                (self.root / (probe + '-readiness-failure.json')).write_bytes(canonical(holder))
             self.assertTrue(state['ready'], 'Actual guest must be ready before stop')
             # A concurrent dispatch is a real IPC request, not a substituted callable.
             with self.assertRaises(Failure) as blocked:

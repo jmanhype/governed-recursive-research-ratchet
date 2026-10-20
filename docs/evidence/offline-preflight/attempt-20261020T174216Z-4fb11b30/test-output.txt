@@ -1,0 +1,19 @@
+test_01_actual_permission_and_misconfiguration_controls (__main__.OfflinePreflight.test_01_actual_permission_and_misconfiguration_controls) ... ok
+test_02_graceful_stop_and_acknowledgement (__main__.OfflinePreflight.test_02_graceful_stop_and_acknowledgement) ... FAIL
+
+======================================================================
+FAIL: test_02_graceful_stop_and_acknowledgement (__main__.OfflinePreflight.test_02_graceful_stop_and_acknowledgement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-offline-w21ixqhk/evaluator/code/offline_preflight.py", line 92, in test_02_graceful_stop_and_acknowledgement
+    observed = self.dispatch('stop')
+  File "/private/tmp/grrr-offline-w21ixqhk/evaluator/code/offline_preflight.py", line 55, in dispatch
+    self.assertTrue(state['ready'], 'Actual guest must be ready before stop')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Actual guest must be ready before stop
+
+----------------------------------------------------------------------
+Ran 2 tests in 6.822s
+
+FAILED (failures=1)
+{"errors": 0, "executed": 2, "failures": 1, "required": 6, "skipped": 0}

@@ -18,6 +18,24 @@ from common import EVALUATOR, RUNNER, Failure, canonical, digest, fields, identi
 from execution import Executor, ASSETS
 
 
+def input_mount_command(token: str) -> str:
+    """Discover detached media by content, not QEMU's block enumeration order."""
+    require(len(token) == 32 and all(c in '0123456789abcdef' for c in token),
+            'InvalidInput', 'Invalid readiness token')
+    return (
+        "mkdir -p /inputs; grrr_input=; for grrr_dev in /dev/vd*; do "
+        "test -b \"$grrr_dev\" || continue; "
+        "test \"$(cat /sys/class/block/${grrr_dev##*/}/ro)\" = 1 || continue; "
+        "mount -t iso9660 -o ro \"$grrr_dev\" /inputs || continue; "
+        "if test -f /inputs/offline-guest.sh && "
+        "awk '$2 == \"/inputs\" && $3 == \"iso9660\" && "
+        "$4 ~ /(^|,)ro(,|$)/ {found=1} END {exit !found}' /proc/mounts; "
+        "then grrr_input=$grrr_dev; break; fi; "
+        "umount /inputs || break; done; "
+        "test -n \"$grrr_input\" && printf '" + token + "\\n'"
+    )
+
+
 def validate_config(config: dict) -> dict:
     """Validate the fixed capability surface independently of filesystem trust."""
     fields(config, {'version', 'profile_sha256', 'image_sha256', 'license_review_sha256', 'qemu_sha256',
@@ -169,8 +187,7 @@ class OfflineExecutor(Executor):
             send('stty -echo')
             until(b'localhost:~#', 5)
             token = uuid.uuid4().hex
-            send("mkdir /inputs; mount -t iso9660 -o ro /dev/vda /inputs && "
-                 "test -f /inputs/offline-guest.sh && printf '" + token + "\\n'")
+            send(input_mount_command(token))
             until(token.encode(), 5)
             with self.lock:
                 if request['probe'] == 'force':
