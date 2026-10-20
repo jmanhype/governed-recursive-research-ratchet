@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T23:46:10Z
-content_hash: "sha256:8aa0a3d2511467dc4835d031242327a4567932c55a0e13ebe304a0b23119e12c"
+content_hash: "sha256:f3cc4ff5c756822ea4c6fbe1a28034ac1731e69f2d08379b49fc2bb7b17f1d42"
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
 follows: [GRRR-0g4n]
@@ -126,6 +126,18 @@ OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
 - Operator explicitly increased the offline-build guest ephemeral /work tmpfs cap from 350 MiB to 512 MiB and authorized rerunning GRRR-90te parent identity integration.
 - VM RAM remains 1024 MiB. All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; 600-second cumulative build/test runtime before other probes; no guest networking, host shares, clipboard, or forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If linking still fails at 512 MiB /work, stop again; do not automatically increase resources.
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-20.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-20]: Independent bounded review of delivery a1d2148d8a8216e4db964b1a4fc76ee10f48c564 against epic e841545dedef472ffc2c74414a3a425d7bf27acf. Runtime source at 403c907 is unchanged by the final documentation commit. No privileged integration rerun, source edit, branch checkout, merge, or push performed.
 
