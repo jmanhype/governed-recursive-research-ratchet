@@ -1,7 +1,7 @@
 #!/bin/sh
 # Evaluator-authored fixed bootstrap; source and toolchain are read-only media.
 set -eu
-export PATH=/inputs/go/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
 export HOME=/work/home GOPATH=/work/gopath GOCACHE=/work/cache GOTMPDIR=/work/tmp
 export GOPROXY=off GOSUMDB=off GOTOOLCHAIN=local CGO_ENABLED=0 GOFLAGS=-mod=readonly
 export GOMAXPROCS=1 GOGC=30 GOMEMLIMIT=128MiB
@@ -34,6 +34,9 @@ touch /tmp/grrr-reset
 printf 'GRRR-ISOLATION-PASS\n'
 mkdir /work
 mount -t tmpfs -o size=350m tmpfs /work
+printf '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797  /inputs/go.tar.gz\n' | sha256sum -c -
+tar -xzf /inputs/go.tar.gz -C /work
+export GOROOT=/work/go PATH=/work/go/bin:/usr/sbin:/usr/bin:/sbin:/bin
 mkdir -p /work/home /work/gopath /work/cache /work/tmp /work/source /work/vault
 tar -xf /inputs/source.tar -C /work/source
 cd /work/source

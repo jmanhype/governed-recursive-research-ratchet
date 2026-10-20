@@ -14,6 +14,18 @@ from common import digest
 
 
 class OfflineRuntimeContracts(unittest.TestCase):
+    def test_go_archive_transport_is_verified_and_guest_only(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        guest = (root / 'research/offline-guest.sh').read_text()
+        self.assertNotIn('/inputs/go/bin', guest)
+        self.assertIn('3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797  /inputs/go.tar.gz', guest)
+        self.assertIn('tar -xzf /inputs/go.tar.gz -C /work', guest)
+        self.assertIn('GOROOT=/work/go PATH=/work/go/bin:', guest)
+        self.assertIn('size=350m', guest)
+        preparation = (root / 'scripts/prepare-offline-assets').read_text()
+        self.assertNotIn('bundle.extractall(media', preparation)
+        self.assertIn("shutil.copyfile(archive, media / 'go.tar.gz')", preparation)
+
     def test_source_tar_preserves_hidden_paths_case_bytes_and_modes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

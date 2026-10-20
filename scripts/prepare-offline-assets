@@ -93,9 +93,8 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     package_source(source, source_record['files'], media / 'source.tar')
     (media / 'source.sha256').write_text(''.join(v['sha256'] + '  ' + name + '\n'
         for name, v in sorted(source_record['files'].items())))
-    # Archive was fully checked for traversal, links/devices and duplicate names.
-    with tarfile.open(archive, 'r:gz') as bundle:
-        bundle.extractall(media, filter='data')
+    # Keep names intact across ISO9660; extraction occurs only in the guest.
+    shutil.copyfile(archive, media / 'go.tar.gz')
     shutil.copyfile(ROOT / 'research/offline-guest.sh', media / 'offline-guest.sh')
     input_iso = target / 'input.iso'
     capture(['/usr/bin/hdiutil', 'makehybrid', '-iso', '-joliet', '-default-volume-name', 'GRRR_INPUT',
