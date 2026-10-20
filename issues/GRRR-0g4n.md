@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T15:43:07Z
-content_hash: "sha256:1f9a287e89edafd782be8f9e8bdef3f6456ea06e867731d251fdb8892c6863c6"
+updated_at: 2026-10-20T15:46:39Z
+content_hash: "sha256:ac3df4809f5a8647d37a355d7fcf88b1cbfc30ce6a7295efcc08982d4a6e0ac4"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -73,7 +73,7 @@ Proposed required command after implementation: ./scripts/test-story bounded-cha
 - Run pvg story verify-delivery and pvg story deliver; developer marks delivered, never accepted/closed. PM-Acceptor independently checks evidence and user intent. Report unresolved gates and residual risks; no claims from mocks, partial success or agent narration.
 - Preserve concurrent edits. No recursive delegation in this story without dispatcher authorization. nd stores receipt references only; evaluator ledger remains experiment source of truth.
 
-## nd_contract
+## Historical contract (superseded)
 status: new
 
 ### evidence
@@ -152,7 +152,7 @@ MANDATORY NEGATIVE CONTROL CHECKPOINT (not delivery): commit dee02e80f6a99c3c8a2
 DELIVERY COMMIT: 83bab97b3f5edea53005f4cb18374a24faaa12b6 on story/GRRR-0g4n; clean worktree, no push. Exact parent integration source commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Evidence and independent audit committed at83bab97. Final scripts/verify-evidence check exit0,20 manifest artifacts verified;12/12 integration tests and9/9 unit tests; pvg verify10 recognized files0 issues. PM review required; developer is not accepting or closing.
 
 
-## nd_contract
+## Historical contract (superseded)
 status: delivered
 
 ### evidence
@@ -297,7 +297,7 @@ by the negative controls.
 - Local `pvg notes search` discovery failed because worktree `.vault` is absent;
   live story operations used shared `pvg nd`. No global notes were consulted.
 
-## nd_contract
+## Historical contract (superseded)
 status: in_progress
 
 ### evidence
@@ -312,6 +312,32 @@ status: in_progress
 - [x] AC #5: Full gate inventory with downstream not-run and no verified/admitted result.
 - [x] AC #6: Real isolation/reset/permissions/stop and mandatory negative controls, including active cap/deadline probes.
 - [x] AC #7: Independently checked receipts and preserved reports with shared snapshot identity and unchanged assets.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Story branch: story/GRRR-0g4n
+- Commit SHA: a3403552eb6ea27981e53108337080a5ae652401
+- Integration source commit: dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9
+- Required integration: 12 executed, 0 skipped, 0 failures, 0 errors
+- Unit tests: 9 executed, 0 failures
+- pvg verify: 0 findings
+- Evidence: docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b
+- Manifest SHA256: 5758264cf727dd9abd1c84e9b3b3c0d7b28575f2919271c5a105ebc26e9def54
+- Test output SHA256: 3a4fa144133976f27014091dfd3dec95e72dca767df28b2907a7eb36ae396bfe
+- Independent audit: docs/evidence/bounded-challenge/final-audit-12-tests.json; 20 artifact hashes plus chains, anchors and objects checked.
+- Full PROOF/LEARNINGS and limitations: docs/evidence/bounded-challenge/DELIVERY-GRRR-0g4n.md
+
+### proof
+- [x] AC #1: Approved CLI/identities/numeric policy; docs/IMPLEMENTATION-APPROVAL-2026-10-20.md and CLI help.
+- [x] AC #2: Real clean/faulty VM assertions and receipts; final attempt clean.json and faulty.json.
+- [x] AC #3: Typed validated authenticated bounded audited path; 12 integration tests and 9 unit tests.
+- [x] AC #4: Five denied capabilities; test_03_all_denied_capabilities passed.
+- [x] AC #5: Full 11-gate inventory; downstream not-run and Verified/admission blocked in both reports.
+- [x] AC #6: Real identity/isolation/reset/stop and active missing-policy/absent-VM/output/deadline controls; final attempt negative-controls.json and probe snapshots.
+- [x] AC #7: Independent manifest/chain/object/anchor audit and CLI projection parity; final-audit-12-tests.json.
+
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
