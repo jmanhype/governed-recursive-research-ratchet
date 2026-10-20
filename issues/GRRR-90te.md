@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T17:41:39Z
-content_hash: "sha256:b0cb0a9cd759e9a656e316fae30010ff994411a4ea41654a704163af87c1e26e"
+updated_at: 2026-10-20T17:46:48Z
+content_hash: "sha256:e23e4c20e6cd756a80da159009cde845edd544ec42a6ede35d1fb829576d67a1"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -115,6 +115,17 @@ OPERATOR LOCAL-USE LICENSE, MACOS TERMS, CLEANUP, AND PREFLIGHT APPROVAL (2026-1
 - Review basis: license-review-draft.json SHA-256 4d3e93ebb6ac205225e7521c951a93baa64335a899710619ae3f593f7b3cf0c6; provenance addendum SHA-256 3be01e90783d6cfeb928585691c86d7413a37c02c8d5e0bc93135cb4cc36bc67.
 AUTHORIZED GRADLE CLEANUP RESULT (2026-10-20): removed only /Users/speed/.gradle/caches (1.7 GiB, 19,865 files); df rose from 13 GB to 15 GB; manifest .tmp-sr_pm/gradle-cleanup-manifest.txt. No model/project/output cache touched.
 AUTHORIZATION ARTIFACT FINALIZATION: documentation/evidence-only commit fa0949766a836af84a0247ccf189b4dbda5f86bd. Final ignored private license-review.json SHA256 4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf; owner UID 501 mode 0600; exact 159 components and four risk dispositions; classification counts preserved 54 permissive / 80 boundary-controlled / 25 Apple-system. Authorization reference 033330e01fda00835902bdd7cb0016338fe7891146d4501ef3e6fa1d2d00b8d5 binds four operator/license evidence artifacts. Both parent Gradle cleanup files copied byte-identically (SHA256 de0617ffa519fa284b03e03f13e0eec0ab8620c12887d14df43cd44ee1577851). Unit tests 24/24 passed; pvg verify six files passed; py_compile and sh -n passed. Free bytes at final verification 16530137088; root launcher must recheck 15000000000 floor. No root/sudo/VM invocation performed. Ready for parent-mediated root run; not delivered or accepted.
+## nd_contract
+status: in_progress
+
+### evidence
+- Repair commit f4f6e96c9bd965a6aad8bcf74b5aaf8c2c3b1067: detached read-only input discovery and failure receipt preservation.
+- 26 unit tests passed; pvg verify 3 changed Python files passed, zero issues; py_compile passed.
+- Parent attempt attempt-20261020T174216Z-4fb11b30 preserved unchanged: 2/6 executed, 1 failure, 0 skips. Readiness failure proven; exact guest device assignment unavailable in exported evidence.
+- No root execution by developer; parent rerun required. Input image and private license review unchanged.
+
+### proof
+- [ ] AC #1-#6: mandatory real offline integration remains unproven; no delivery.
 
 ## nd_contract
 status: in_progress
