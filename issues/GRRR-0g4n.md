@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T14:55:55Z
-content_hash: "sha256:a415d26811893e42fe6f2ba38cea5c57512d0904c5410b56328631ec2c428033"
+updated_at: 2026-10-20T14:58:36Z
+content_hash: "sha256:20b0409aad83fd9ec970bac7be3c9ecea53d4009071267de5f9ccc51f35a487b"
 blocks: [GRRR-90te, GRRR-6sso]
 ---
 
@@ -139,6 +139,11 @@ IDENTITY PROVISIONING BLOCKER (2026-10-20):
 - An AppleScript administrator-authorization attempt was cancelled after the prompt was not approved/visible for over three minutes. No account was created.
 - Idempotent root provisioning script is staged at .tmp-sr_pm/provision-grrr-identities-root.sh; it fails if either account or UID/GID already exists.
 - Developer dispatch is intentionally withheld until identities exist, because GRRR-0g4n AC #6 requires distinct evaluator permissions and must fail closed.
+IDENTITY PROVISIONING COMPLETE (2026-10-20):
+- _grrr_evaluator: UID/GID 320, hidden, UserShell /usr/bin/false, NFSHomeDirectory /var/empty, password disabled, no admin membership.
+- _grrr_runner: UID/GID 321, hidden, UserShell /usr/bin/false, NFSHomeDirectory /var/empty, password disabled, no admin membership.
+- Operator supplied administrator authorization interactively; the credential was not stored, echoed to artifacts, or passed to any worker.
+- Noninteractive sudo remains unavailable to ordinary shell commands. Identity-launched integration commands must use an explicitly approved parent-mediated path; do not give credentials to the developer.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
