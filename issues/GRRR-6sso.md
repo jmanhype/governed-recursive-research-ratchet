@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-10-20T03:20:57Z
-content_hash: "sha256:5aef6b9f2d1b93815a2eee89733d999e8cf4399713cd3c9da22d9497325031ae"
+updated_at: 2026-10-20T03:26:28Z
+content_hash: "sha256:306ea2d5aec58b9c3669165efac511972fdbb27dd0ee826ca8fbd9adf2bd436c"
 blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-dbbi, GRRR-z3w9, GRRR-34ve, GRRR-fmvp]
 ---
 
@@ -68,7 +68,7 @@ CONSUMES:
 
 ## Story Acceptance Criteria
 1. From a clean authorized environment, operator approves bounded scope/preflight and uses real CLI to start frozen-corpus research, monitor, inspect one verified snapshot/report, independently replay a defect, review exact contract, explicitly approve admission and observe recurrence rejected while clean baseline passes. Capture unedited command/output/receipt hashes for the full journey.
-2. Exercise >=20 independently validated representative seeds plus clean negatives: full mandatory suite catches 100% critical and >=90% remaining under approved corpus rule, zero unverified/failed-replay admissions. All mandatory gates run and retain individual evidence; missing capability blocks the capstone, never skips to green.
+2. After all ten siblings are accepted, exercise >=20 independently validated representative seeds plus clean negatives through the complete mandatory verification system, including independent replay and authorization/admission capability: full mandatory suite catches 100% critical and >=90% remaining under approved corpus rule, zero unverified/failed-replay admissions. All mandatory gates run and retain individual evidence; missing capability blocks the capstone, never skips to green. Preliminary corpus fixture-validation observations are not this proof and cannot be substituted for full-system receipts. No gate or threshold is weakened by accepting the corpus earlier.
 3. Exercise genuine random/deterministic/Jev equal-budget comparison with pre-registered repetitions and actual cost/uncertainty report. Jev below threshold retains deterministic baseline and is a valid measured result; unavailable Jev leaves three-arm comparative POC and this full capstone incomplete, even if evaluator demonstration passes. No unsupported superiority claim.
 4. Operator stops a deliberately hung runner; real executor cessation/fence verified, repeated requests idempotent, dispatch/admission races obey durable order. Crash/recover at durable transitions without false pass; committed-before-stop admission is accurately listed. Preserved artifacts/baseline hashes and behavior establish verified restoration or explicit Recovery required.
 5. Operator attempts forged evidence/identity, stale approval, missing mandatory gate, unknown/exhausted budget, protected writes and ambiguous spec: all fail closed with matching CLI/Markdown/JSON evidence and safe next action. No production/main/patch/harness capability exists. Independent verifier detects tampered/truncated/missing export artifacts against trusted anchor.
