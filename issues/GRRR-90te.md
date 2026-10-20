@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T18:02:27Z
-content_hash: "sha256:e00737c50f314e2d5a501da33bc33c03650cefc4eed038d6f12237d64f748214"
+updated_at: 2026-10-20T18:11:00Z
+content_hash: "sha256:33678b8a3d8605ebf8b86c65dd7321ecef5c694d0b81c6b2d2de1804b7db2632"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -115,6 +115,16 @@ OPERATOR LOCAL-USE LICENSE, MACOS TERMS, CLEANUP, AND PREFLIGHT APPROVAL (2026-1
 - Review basis: license-review-draft.json SHA-256 4d3e93ebb6ac205225e7521c951a93baa64335a899710619ae3f593f7b3cf0c6; provenance addendum SHA-256 3be01e90783d6cfeb928585691c86d7413a37c02c8d5e0bc93135cb4cc36bc67.
 AUTHORIZED GRADLE CLEANUP RESULT (2026-10-20): removed only /Users/speed/.gradle/caches (1.7 GiB, 19,865 files); df rose from 13 GB to 15 GB; manifest .tmp-sr_pm/gradle-cleanup-manifest.txt. No model/project/output cache touched.
 AUTHORIZATION ARTIFACT FINALIZATION: documentation/evidence-only commit fa0949766a836af84a0247ccf189b4dbda5f86bd. Final ignored private license-review.json SHA256 4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf; owner UID 501 mode 0600; exact 159 components and four risk dispositions; classification counts preserved 54 permissive / 80 boundary-controlled / 25 Apple-system. Authorization reference 033330e01fda00835902bdd7cb0016338fe7891146d4501ef3e6fa1d2d00b8d5 binds four operator/license evidence artifacts. Both parent Gradle cleanup files copied byte-identically (SHA256 de0617ffa519fa284b03e03f13e0eec0ab8620c12887d14df43cd44ee1577851). Unit tests 24/24 passed; pvg verify six files passed; py_compile and sh -n passed. Free bytes at final verification 16530137088; root launcher must recheck 15000000000 floor. No root/sudo/VM invocation performed. Ready for parent-mediated root run; not delivered or accepted.
+## nd_contract
+status: in_progress
+### evidence
+- Go archive transport repair: pinned archive read back from new ISO and hash verified; guest verifies and extracts only inside /work. Prior fourth failure and old image retained.
+- 30 unit tests, shell syntax, Python compilation and pvg verify pass.
+- Image fb3a017ecf56fd3f9e211fcd7fefd468ace46e5914c25df35a0689f62e8a5cd9; receipt 7eaf64a4c309d10a5b94740e17c05d83c6ce1aba580c97783acd0ba1e501e090.
+- Only about 65 MB disk headroom above hard floor; parent disk gate mandatory. All VM/work limits unchanged; exhaustion remains blocker.
+### proof
+- [ ] AC #1-#6: real build proof outstanding; no developer root run; not delivered.
+
 ## nd_contract
 status: in_progress
 ### evidence
