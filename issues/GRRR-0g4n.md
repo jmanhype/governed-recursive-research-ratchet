@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T12:04:59Z
-content_hash: "sha256:e356f14c5205beb3ec2a981b12c172e6cc170b235881a85dc45e2e4757882b49"
+updated_at: 2026-10-20T13:07:16Z
+content_hash: "sha256:d1481fcee7c69c83c2c2f0e034f6ce36573c93f574a9cfa70492263a148576cc"
 blocks: [GRRR-90te, GRRR-6sso]
 ---
 
@@ -110,6 +110,13 @@ VM PREFLIGHT AUDIT (read-only, 2026-10-20):
 - Candidate provisioning path under review: direct QEMU with -net none, disposable snapshot disk, no host sharing, bounded process/output/deadline, and evaluator-owned control. QEMU is GPL-2.0-only and therefore requires separate license-boundary approval even as an external tool.
 - No cache deletion, package installation, VM creation, source implementation, commit, or push occurred.
 VM PREFLIGHT ADDENDUM: pnpm 10.28.2 reports its active store as /Users/speed/Library/pnpm/store/v10; the 7.2 GiB v3 store is stale relative to the current CLI. No deletion occurred.
+AUTHORIZED CACHE CLEANUP RESULT (2026-10-20):
+- Removed only Codex Sparkle Installation staging: 9.1 GiB, 19,900 files.
+- Removed only obsolete pnpm v3 store: 7.3 GiB, 419,743 files.
+- Recorded manifest at .tmp-sr_pm/vm-cleanup-manifest.txt.
+- Active pnpm 10.28.2 store remains /Users/speed/Library/pnpm/store/v10.
+- Free space increased from 4 GB to 14 GB, short of the preflight requirement of at least 15 GB.
+- QEMU installation intentionally did not start because the authorized sequence required the 15 GB check first. No additional cache was deleted.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
