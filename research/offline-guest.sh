@@ -9,10 +9,21 @@ unset SSH_AUTH_SOCK SSH_AGENT_PID DISPLAY WAYLAND_DISPLAY
 printf 'GRRR-ISOLATION-BEGIN\n'
 cat /proc/net/route /proc/net/ipv6_route /proc/mounts /proc/partitions
 ls -l /sys/class/net /sys/class/block /dev/virtio-ports 2>/dev/null || true
+printf 'GRRR-CHECK loopback-only\n'
 test "$(ls /sys/class/net)" = lo
-test "$(wc -l < /proc/net/route)" -eq 1
+printf 'GRRR-CHECK no-ipv4-routes\n'
+# Linux may expose an empty table rather than a header when IPv4 is disabled.
+awk 'NF && !(NR == 1 && $1 == "Iface" && $2 == "Destination") {exit 1}' /proc/net/route
+printf 'GRRR-CHECK no-external-ipv6-routes\n'
+awk 'NF && $NF != "lo" {exit 1}' /proc/net/ipv6_route
+printf 'GRRR-CHECK no-virtio-ports\n'
 test ! -e /dev/virtio-ports
-test "$(cat /sys/class/block/vda/ro)" = 1
+printf 'GRRR-CHECK boot-iso-mount-read-only\n'
+# Snapshot-mode boot block flags need not be ro; the mounted ISO must be ro.
+awk '$1 == "/dev/vda" && $2 == "/media/vda" && $3 == "iso9660" && $4 ~ /(^|,)ro(,|$)/ {found=1} END {exit !found}' /proc/mounts
+printf 'GRRR-CHECK detached-input-block-and-mount-read-only\n'
+test "$(cat /sys/class/block/vdb/ro)" = 1
+awk '$1 == "/dev/vdb" && $2 == "/inputs" && $3 == "iso9660" && $4 ~ /(^|,)ro(,|$)/ {found=1} END {exit !found}' /proc/mounts
 ! grep -E '9p|virtiofs|cifs|nfs|vboxsf|fuse' /proc/mounts
 for path in /Users /home/speed /root/.ssh /root/.aws /run/host /host /protected /production /evaluator; do
     test ! -e "$path"

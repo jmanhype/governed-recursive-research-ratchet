@@ -1,0 +1,1 @@
+{"expected_failure": {"code": "Unavailable", "message": "Offline dependency absent: input.iso", "operation": "unknown", "retryable": false, "receipt": null}}

@@ -2,6 +2,7 @@
 import copy
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'research'))
@@ -11,6 +12,25 @@ from offline import clone_asset
 
 
 class OfflineRuntimeContracts(unittest.TestCase):
+    def test_actual_route_predicate_rejects_route_rows(self) -> None:
+        guest = (Path(__file__).resolve().parents[1] / 'research/offline-guest.sh').read_text()
+        predicate = next(line for line in guest.splitlines() if line.startswith("awk 'NF && !(NR"))
+        expression = predicate.split("'", 2)[1]
+        for routes, expected in [('', 0), ('Iface Destination Gateway\n', 0),
+                                  ('Iface Destination Gateway\neth0 00000000 0100000A\n', 1),
+                                  ('eth0 00000000 0100000A\n', 1)]:
+            self.assertEqual(subprocess.run(['/usr/bin/awk', expression], input=routes,
+                                           text=True, capture_output=True).returncode, expected)
+
+    def test_guest_distinguishes_boot_snapshot_from_detached_input(self) -> None:
+        guest = (Path(__file__).resolve().parents[1] / 'research/offline-guest.sh').read_text()
+        self.assertNotIn('/sys/class/block/vda/ro', guest)
+        self.assertIn('/sys/class/block/vdb/ro', guest)
+        self.assertIn('$1 == "/dev/vda" && $2 == "/media/vda"', guest)
+        self.assertIn('$1 == "/dev/vdb" && $2 == "/inputs"', guest)
+        self.assertIn('! touch /inputs/unauthorized-write', guest)
+        self.assertIn('set -eu', guest)
+
     def test_input_discovery_is_not_boot_device_assumption(self) -> None:
         command = input_mount_command('a' * 32)
         self.assertNotIn('/dev/vda', command)
