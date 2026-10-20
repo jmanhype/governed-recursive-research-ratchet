@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T15:10:11Z
-content_hash: "sha256:e334c30442187d1fc29c91e4b37efd6194bb6ae993e86e96cbada68e09f847a1"
+updated_at: 2026-10-20T15:19:35Z
+content_hash: "sha256:f4c8fb2c67a46432f327377825efdf63f535b847fcc7e808545dca68a3cd7f8c"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -146,6 +146,7 @@ IDENTITY PROVISIONING COMPLETE (2026-10-20):
 - Operator supplied administrator authorization interactively; the credential was not stored, echoed to artifacts, or passed to any worker.
 - Noninteractive sudo remains unavailable to ordinary shell commands. Identity-launched integration commands must use an explicitly approved parent-mediated path; do not give credentials to the developer.
 IMPLEMENTATION CHECKPOINT (not delivery): commit d136f7d1c086f3966d6ba2bf50079bea75df20af on story/GRRR-0g4n. Added 14 files/1085 lines: typed standard-library CLI, peer-authenticated restricted evaluator and executor, fixed synthetic packet hashes, QEMU isolation and stop adapter, SQLite hash-linked event/object snapshots, projections, and synchronous parent identity launcher. Parent clarified grrr-walk-001 CLEAN newline versus forged PASS newline semantics; no vlt defect claim. python3 tests/unit_contracts.py: 5/5 pass. pvg verify on explicit source/test/script paths: PASSED, 9 recognized files scanned, 0 issues. git diff --check: exit 0. Mandatory ./scripts/test-story bounded-challenge: exit 1, required 8, executed 0, skipped 0, errors 1 because evaluator endpoint absent. This is expected fail-closed infrastructure evidence, not integration proof. Requires parent-mediated root scripts/identity-integration with approved asset directory; no sudo or credentials used. No delivery/acceptance asserted. Remaining proof includes real identity/VM execution, missing asset/policy negative controls and full AC audit; current tests do not establish all required ACs. pvg notes search failed because worktree .vault missing; parent identified known local discovery issue, no global notes queried.
+IDENTITY RUNTIME FIX CHECKPOINT (not delivery): commit 3c93078d3e9e2c73d1196a24e5414af6b7f9864b. Parent run at d136f7d failed exit 1 before evaluator start: runner Python could not open Documents-path execution.py (EACCES). TCC remains suspected, not proven. Original runner.log SHA256 2ee7b8a6d8e8118399c7747c12addc6a71e996933dd6d2e07bba7eab39775917 and manifest SHA256 6389da8faf46dad72095e74493645d6925ae8124e64e31307364d65f4934c4fa verified unchanged and committed; old .runtime untouched. Parent launcher now creates fresh root-owned mode0711 /private/tmp/grrr-* runtime, copies only approved code/assets, keeps service dirs mode0700, runs services/probe from temporary path, and records each attempt separately. Operator binding is mode0600 and peer authentication remains kernel-based in both directions. Runtime/protected-artifact denied-read and impersonation probes remain mandatory. Unit tests: 7/7 pass. py_compile and git diff --check exit 0. pvg verify explicit modified paths: 5 recognized files, 0 findings. Mandatory suite remains fail-closed before privilege run: required8/executed0/skipped0/errors1, absent runtime binding. Non-root identity launcher exits1 without creating runtime. Awaiting parent-mediated identity integration; no delivery/acceptance claim.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
