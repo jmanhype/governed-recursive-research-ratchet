@@ -1,0 +1,41 @@
+{
+  "integration_attempt": "attempt-20261020T152641Z-49296ef3",
+  "manifest_artifacts_checked": 12,
+  "manifest_sha256": "efcbb0e55b05c4607340ddb3fa5250caa2673e433719f8ceb3f0b8a08ff292b9",
+  "runs": {
+    "clean": {
+      "admission": "blocked",
+      "anchor": "db0eb35a6cce26616838e6ebacab5fc789b1eede8d330230ad6f817f24efc5dc",
+      "assertion": "pass",
+      "candidate": "3e57352ef65633f4603ceb9975873880d972b4fb32cc26c990c2af990155df87",
+      "evaluator": "a3018019f4b66f7da6e9e711c4e36d0abd3799fa950955cec482e9ccba641798",
+      "execution_seconds": 1.3692438330035657,
+      "objects_checked": 2,
+      "output_bytes": 24691,
+      "policy": "6d8caf11c2fd5edcc45dd282103e4f386b586670473c11d527dbf00bea2d6e8b",
+      "probe_run": "e6dd110b2d75433582edf448734e3174",
+      "reserved_seconds": 300,
+      "reserved_total_seconds": 600,
+      "run": "5408e0f7165b40c385def0073fc1d41e",
+      "snapshot_id": "daa04e1bca98d2d000bc65cb16cda8d4228c1a56b15a164b4e2cdb4e007ee37d",
+      "verified": false
+    },
+    "faulty": {
+      "admission": "blocked",
+      "anchor": "340153dc50266be042c89b7c811b7f5891d4e3fb79b0ccf791e8ef0697e5270e",
+      "assertion": "fail",
+      "candidate": "dce9868a0a07f1b010cec2dce43782e41486a68419a0d0034c5d20f190637b4b",
+      "evaluator": "a3018019f4b66f7da6e9e711c4e36d0abd3799fa950955cec482e9ccba641798",
+      "execution_seconds": 1.302911500009941,
+      "objects_checked": 3,
+      "output_bytes": 24690,
+      "policy": "6d8caf11c2fd5edcc45dd282103e4f386b586670473c11d527dbf00bea2d6e8b",
+      "probe_run": "e6dd110b2d75433582edf448734e3174",
+      "reserved_seconds": 300,
+      "reserved_total_seconds": 900,
+      "run": "bfd6af84e45d44d0863d73b029f50b79",
+      "snapshot_id": "4265078d02429fe4b0f8a64076728ea909bc037a8c8b70e70da9eca3cfa1717b",
+      "verified": false
+    }
+  }
+}

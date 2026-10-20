@@ -1,0 +1,14 @@
+test_allowlist_rejects_roles_and_expected_answers (__main__.Contracts.test_allowlist_rejects_roles_and_expected_answers) ... ok
+test_cli_exact_grammar (__main__.Contracts.test_cli_exact_grammar) ... ok
+test_identifiers_reject_traversal (__main__.Contracts.test_identifiers_reject_traversal) ... ok
+test_isolation_inventory_is_exact_not_color_interpreted (__main__.Contracts.test_isolation_inventory_is_exact_not_color_interpreted) ... ok
+test_packet_identity_and_forged_pass_distinct (__main__.Contracts.test_packet_identity_and_forged_pass_distinct) ... ok
+test_recorded_preflight_failure_preceded_operator_stop (__main__.Contracts.test_recorded_preflight_failure_preceded_operator_stop) ... ok
+test_registered_limits_and_inventory (__main__.Contracts.test_registered_limits_and_inventory) ... ok
+test_runtime_binding_is_local_and_restricted (__main__.Contracts.test_runtime_binding_is_local_and_restricted) ... ok
+test_short_temporary_socket_path (__main__.Contracts.test_short_temporary_socket_path) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.003s
+
+OK

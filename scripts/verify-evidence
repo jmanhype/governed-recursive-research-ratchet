@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+"""Offline independent receipt verifier: standard library; no service authority."""
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+
+def encode(value: object) -> bytes:
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True,
+                      allow_nan=False).encode('ascii')
+
+
+def sha(content: bytes) -> str:
+    return hashlib.sha256(content).hexdigest()
+
+
+def verify(attempt: Path) -> dict:
+    manifest = json.loads((attempt / 'manifest.json').read_bytes())
+    assert manifest['exit_code'] == 0, 'Historical failed attempt is not success'
+    for name, expected in manifest['artifacts'].items():
+        assert Path(name).name == name, 'Manifest path traversal'
+        assert sha((attempt / name).read_bytes()) == expected, 'Artifact mismatch: ' + name
+    summary = {'integration_attempt': attempt.name, 'manifest_sha256': sha((attempt / 'manifest.json').read_bytes()),
+               'manifest_artifacts_checked': len(manifest['artifacts']), 'runs': {}}
+    for label, expected_bytes, assertion in [('clean', b'CLEAN\n', 'pass'), ('faulty', b'PASS\n', 'fail')]:
+        snapshot = json.loads((attempt / (label + '.json')).read_bytes())
+        anchor = (attempt / (label + '.anchor')).read_text().strip()
+        document = dict(snapshot)
+        sid = document.pop('snapshot_id')
+        assert sha(encode(document)) == sid, 'Snapshot content mismatch'
+        prior = '0' * 64
+        for index, row in enumerate(snapshot['events'], 1):
+            assert row['sequence'] == index and row['prior'] == prior, 'Chain gap'
+            prior = sha(prior.encode() + encode(row['event']))
+            assert prior == row['digest'], 'Event digest mismatch'
+            for object_id in row['event'].get('objects', []):
+                assert sha(bytes.fromhex(snapshot['objects'][object_id])) == object_id, 'Object mismatch'
+        assert prior == anchor == snapshot['receipt']['digest'], 'Trusted anchor mismatch/truncation'
+        report = snapshot['events'][-1]['event']
+        assert report['execution'] == 'completed' and report['assertion'] == assertion
+        assert not report['verified'] and report['admission'] == 'blocked'
+        assert len(report['gates']) == 11
+        for name in ('independent_replay', 'reviewer_outcome', 'action_specific_human_approval', 'specification_traceability'):
+            assert report['gates'][name]['state'] == 'not-run'
+        observed = json.loads(bytes.fromhex(snapshot['objects'][report['objects'][0]]))
+        assert bytes.fromhex(observed['observation']) == expected_bytes and observed['exit_code'] == 0
+        assert observed['assets_unchanged'] and observed['isolation_verified']
+        assert observed['termination']['ceased'] and observed['seconds'] < 300
+        raw = bytes.fromhex(observed['raw']) if 'raw' in observed else bytes.fromhex(snapshot['objects'][observed['raw_digest']])
+        assert len(raw) <= 1048576
+        command = observed['command']
+        for flag, value in [('-net', 'none'), ('-monitor', 'none'), ('-m', '512'), ('-smp', '1')]:
+            assert command[command.index(flag) + 1] == value
+        assert '-snapshot' in command and '-no-reboot' in command
+        assert not any(part in command for part in ('-virtfs', '-fsdev', '-netdev', '-nic'))
+        probes = [row['event'] for row in snapshot['events'] if row['event'].get('probe') in (True, 'stop')]
+        assert probes and all(p['execution'] == 'stopped' and p['cessation_verified']
+                              and p['isolation_verified'] and p['observation_error']['code'] == 'Stopped' for p in probes)
+        assert probes[0]['recorded_ns'] < report['recorded_ns']
+        summary['runs'][label] = {'run': report['run'], 'snapshot_id': sid, 'anchor': anchor,
+            'candidate': report['candidate'], 'evaluator': report['evaluator'], 'policy': report['policy'],
+            'assertion': assertion, 'execution_seconds': observed['seconds'],
+            'output_bytes': len(raw), 'reserved_seconds': report['reserved_seconds'],
+            'reserved_total_seconds': report['reserved_total_seconds'], 'verified': False, 'admission': 'blocked',
+            'probe_run': probes[0]['run'], 'objects_checked': len(snapshot['objects'])}
+    counts = json.loads((attempt / 'test-output.txt').read_text().splitlines()[-1])
+    assert counts['executed'] == counts['required'] and not any(counts[k] for k in ('skipped', 'errors', 'failures'))
+    summary['test_counts'] = counts
+    if counts['required'] == 12:
+        controls = json.loads((attempt / 'negative-controls.json').read_bytes())
+        assert set(controls) == {'missing-policy', 'absent-vm'}
+        for name, control in controls.items():
+            assert control['absence_confirmed'] and control['observed_code'] == 'Unavailable'
+            assert control['returncode'] == (3 if name == 'missing-policy' else 0)
+            assert sha((attempt / (name + '.log')).read_bytes()) == control['log_sha256']
+        summary['real_absence_controls'] = controls
+        summary['active_safety_controls'] = {}
+        for name, message in [('output', 'Guest output exceeded cap'),
+                              ('deadline', 'Evaluator-approved deadline exceeded')]:
+            reports = [row['event'] for row in snapshot['events'] if row['event'].get('probe') == name]
+            assert len(reports) == 1
+            control = reports[0]
+            assert control['execution'] == 'error' and control['finding'] == 'not-evaluated'
+            assert control['observation_error']['code'] == 'GateBlocked' and control['observation_error']['message'] == message
+            observed = json.loads(bytes.fromhex(snapshot['objects'][control['objects'][0]]))
+            assert observed['assets_unchanged'] and observed['isolation_verified'] and observed['termination']['ceased']
+            assert observed['raw_bytes'] == len(bytes.fromhex(snapshot['objects'][observed['raw_digest']])) <= 1048576
+            if name == 'output':
+                assert observed['raw_bytes'] == 1048576
+            else:
+                assert 5 <= observed['seconds'] < 30
+            summary['active_safety_controls'][name] = {'run': control['run'], 'code': 'GateBlocked',
+                'seconds': observed['seconds'], 'captured_bytes': observed['raw_bytes'],
+                'ceased': observed['termination']['ceased'], 'assets_unchanged': observed['assets_unchanged']}
+    return summary
+
+
+if __name__ == '__main__':
+    print(json.dumps(verify(Path(sys.argv[1]).resolve(strict=True)), sort_keys=True, indent=2))

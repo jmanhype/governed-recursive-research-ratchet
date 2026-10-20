@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Same mandatory entrypoint for local/CI; never starts a substitute host candidate."""
+from pathlib import Path
+import subprocess
+import sys
+ROOT = Path(__file__).resolve().parents[1]
+if sys.argv[1:] != ['bounded-challenge']:
+    print('Usage: ./scripts/test-story bounded-challenge', file=sys.stderr)
+    raise SystemExit(2)
+try:
+    result = subprocess.run([sys.executable, str(ROOT / 'tests/integration/bounded_challenge.py')],
+                            cwd=ROOT, timeout=600)
+    raise SystemExit(result.returncode)
+except subprocess.TimeoutExpired:
+    print('FAIL: mandatory suite exceeded 600 seconds; no skipped success', file=sys.stderr)
+    raise SystemExit(1)

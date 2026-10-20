@@ -1,0 +1,245 @@
+#!/usr/bin/env python3
+"""Parent-mediated root integration, no sudo/passwords, no installation or network.
+
+Parent-authorized fresh restricted runtime under /private/tmp, never Documents.
+Starts restricted services, runs the mandatory suite synchronously, stops services.
+Preserves every runtime/evidence attempt; never deletes prior failure artifacts.
+"""
+import json
+import os
+from pathlib import Path
+import pwd
+import shutil
+import signal
+import subprocess
+import sys
+import time
+import tempfile
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest
+from policy import default_policy
+
+
+def identity(uid: int) -> None:
+    os.setgroups([])
+    os.setgid(uid)
+    os.setuid(uid)
+    os.umask(0o077)
+
+
+def negative_controls(runtime: Path, evidence: Path) -> None:
+    """Separate immutable negative runtimes; never remove installed tools/policy."""
+    results = {}
+    for control in ('missing-policy', 'absent-vm'):
+        base = runtime / control
+        base.mkdir(mode=0o711)
+        os.chmod(base, 0o711)
+        ipc = base / 'ipc'
+        ipc.mkdir(mode=0o1777)
+        os.chmod(ipc, 0o1777)
+        for name, uid in [('evaluator', 320), ('runner', 321)]:
+            target = base / name
+            shutil.copytree(runtime / name / 'code', target / 'code')
+            os.chown(target, uid, uid)
+            os.chmod(target, 0o700)
+            os.chown(target / 'code', uid, uid)
+            os.chmod(target / 'code', 0o700)
+            for path in (target / 'code').iterdir():
+                os.chown(path, uid, uid)
+                os.chmod(path, 0o400)
+        if control == 'missing-policy':
+            command = [sys.executable, str(base / 'evaluator/code/evaluator.py'), str(base / 'evaluator')]
+            result = subprocess.run(command, cwd=base, preexec_fn=lambda: identity(320),
+                                    capture_output=True, text=True, timeout=5,
+                                    env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+            (evidence / (control + '.log')).write_text(result.stdout + result.stderr)
+            assert result.returncode == 3, 'Missing-policy evaluator must fail closed'
+            assert json.loads(result.stdout)['error']['code'] == 'Unavailable'
+            assert not (ipc / 'evaluator.sock').exists(), 'Absent policy must not expose service'
+        else:
+            config = base / 'runner/execution-config.json'
+            config.write_bytes(canonical({'version': 1, 'qemu': str(base / 'absent-qemu')}))
+            os.chmod(config, 0o444)
+            probe = base / 'evaluator/code/absent_vm_probe.py'
+            shutil.copyfile(ROOT / 'tests/integration/absent_vm_probe.py', probe)
+            os.chown(probe, 320, 320)
+            os.chmod(probe, 0o400)
+            with (evidence / 'absent-vm-service.log').open('xb') as log:
+                service = subprocess.Popen([sys.executable, str(base / 'runner/code/execution.py'), str(base / 'runner')],
+                    cwd=base, preexec_fn=lambda: identity(321), stdout=log, stderr=subprocess.STDOUT,
+                    start_new_session=True, env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+                try:
+                    deadline = time.monotonic() + 5
+                    while time.monotonic() < deadline and not (ipc / 'executor.sock').exists() and service.poll() is None:
+                        time.sleep(0.05)
+                    assert (ipc / 'executor.sock').exists(), 'Negative executor did not start'
+                    command = [sys.executable, str(probe), str(base)]
+                    result = subprocess.run(command, cwd=base, preexec_fn=lambda: identity(320),
+                        capture_output=True, text=True, timeout=5,
+                        env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+                    (evidence / (control + '.log')).write_text(result.stdout + result.stderr)
+                    assert result.returncode == 0, 'Absent-QEMU negative control failed'
+                    assert json.loads(result.stdout)['expected_failure']['code'] == 'Unavailable'
+                finally:
+                    if service.poll() is None:
+                        service.terminate()
+                    try:
+                        service.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        service.kill()
+                        service.wait(timeout=2)
+        implementation = base / ('evaluator/code/evaluator.py' if control == 'missing-policy' else 'runner/code/execution.py')
+        absent = base / ('evaluator/policy.json' if control == 'missing-policy' else 'absent-qemu')
+        assert not absent.exists(), 'Negative control prerequisite must actually be absent'
+        results[control] = {'command': command, 'returncode': result.returncode,
+                            'implementation_sha256': digest(implementation.read_bytes()),
+                            'absent_path': str(absent), 'absence_confirmed': not absent.exists(),
+                            'observed_code': 'Unavailable', 'stdout': result.stdout,
+                            'log_sha256': digest((evidence / (control + '.log')).read_bytes())}
+    receipt = runtime / 'negative-controls.json'
+    receipt.write_bytes(canonical(results))
+    os.chmod(receipt, 0o444)
+    shutil.copyfile(receipt, evidence / receipt.name)
+
+
+def run() -> int:
+    if os.getuid() != 0:
+        print('AWAITING_PARENT_IDENTITY_RUN: root identity launcher required; never request/store credentials')
+        return 1
+    if len(sys.argv) != 2:
+        print('Usage: scripts/identity-integration ABSOLUTE_APPROVED_VM_ASSET_DIRECTORY')
+        return 2
+    for name, uid in [('_grrr_evaluator', 320), ('_grrr_runner', 321)]:
+        account = pwd.getpwnam(name)
+        if (account.pw_uid, account.pw_gid, account.pw_shell) != (uid, uid, '/usr/bin/false'):
+            raise RuntimeError('Restricted service identity mismatch')
+    operator = ROOT.stat().st_uid
+    if operator in (0, 320, 321):
+        raise RuntimeError('Separate operator ownership required')
+    attempt = 'attempt-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8]
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-', dir='/private/tmp'))
+    os.chmod(runtime, 0o711)  # Root-owned, traversable but not listable by services.
+    ipc = runtime / 'ipc'
+    ipc.mkdir(mode=0o1777)
+    os.chmod(ipc, 0o1777)
+    for name, uid in [('evaluator', 320), ('runner', 321)]:
+        path = runtime / name
+        path.mkdir(mode=0o700)
+        os.chown(path, uid, uid)
+        code = path / 'code'
+        code.mkdir(mode=0o700)
+        os.chown(code, uid, uid)
+        files = ('common.py', 'execution.py') if uid == 321 else ('common.py', 'policy.py', 'ledger.py', 'evaluator.py')
+        for filename in files:
+            shutil.copyfile(ROOT / 'research' / filename, code / filename)
+            os.chown(code / filename, uid, uid)
+            os.chmod(code / filename, 0o400)
+    config = runtime / 'runner/execution-config.json'
+    config.write_bytes(canonical({'version': 1, 'qemu': '/opt/homebrew/bin/qemu-system-aarch64'}))
+    os.chmod(config, 0o444)
+    # Service code is deployed narrowly outside Documents; no broad worktree ACL grant.
+    probe_path = runtime / 'runner/code/permission_probe.py'
+    shutil.copyfile(ROOT / 'tests/integration/permission_probe.py', probe_path)
+    os.chown(probe_path, 321, 321)
+    os.chmod(probe_path, 0o400)
+    policy = runtime / 'evaluator/policy.json'
+    policy.write_bytes(canonical(default_policy(operator)))
+    os.chown(policy, 320, 320)
+    os.chmod(policy, 0o600)
+    assets = runtime / 'runner/assets'
+    assets.mkdir(mode=0o700)
+    os.chown(assets, 321, 321)
+    source = Path(sys.argv[1]).resolve(strict=True)
+    for filename, relative in [('alpine-virt-3.22.6-aarch64.iso', 'alpine-virt-3.22.6-aarch64.iso'),
+                               ('vmlinuz-virt', 'boot/vmlinuz-virt'), ('initramfs-virt', 'boot/initramfs-virt')]:
+        shutil.copyfile(source / relative, assets / filename)
+        os.chown(assets / filename, 321, 321)
+        os.chmod(assets / filename, 0o400)
+    evidence = ROOT / 'docs/evidence/bounded-challenge' / attempt
+    evidence.mkdir(mode=0o700, parents=True)
+    os.chown(evidence, operator, ROOT.stat().st_gid)
+    binding = {'runtime': str(runtime), 'evidence': str(evidence), 'version': 1}
+    binding_path = ROOT / '.runtime-endpoint.json'
+    if binding_path.is_symlink():
+        raise RuntimeError('Refusing symlink runtime binding')
+    staging = ROOT / ('.runtime-endpoint-' + uuid.uuid4().hex + '.json')
+    with staging.open('xb') as stream:
+        stream.write(canonical(binding))
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.chown(staging, operator, ROOT.stat().st_gid)
+    os.chmod(staging, 0o600)
+    os.replace(staging, binding_path)
+    (evidence / 'runtime-binding.json').write_bytes(canonical(binding))
+    previous_log = ROOT / 'docs/evidence/bounded-challenge/runner.log'
+    previous_manifest = ROOT / 'docs/evidence/bounded-challenge/manifest.json'
+    previous = {str(p.relative_to(ROOT)): digest(p.read_bytes())
+                for p in (previous_log, previous_manifest) if p.is_file()}
+    (evidence / 'prior-failure-preserved.json').write_bytes(canonical({
+        'status': 'historical-failure-not-success', 'hashes': previous,
+        'diagnosis': 'Documents-path permission denied; TCC cause suspected, not proven'}))
+    # Actual denied reads and forged-operator request under runner UID, not a mocked uid.
+    processes = []
+    streams = []
+    code = 1
+    try:
+        negative_controls(runtime, evidence)
+        for name, uid, module in [('runner', 321, 'execution.py'), ('evaluator', 320, 'evaluator.py')]:
+            stream = (runtime / (name + '.log')).open('xb')
+            streams.append(stream)
+            process = subprocess.Popen([sys.executable, str(runtime / name / 'code' / module), str(runtime / name)],
+                cwd=runtime, stdin=subprocess.DEVNULL, stdout=stream, stderr=subprocess.STDOUT,
+                preexec_fn=lambda uid=uid: identity(uid), start_new_session=True,
+                env={'PATH': '/opt/homebrew/bin:/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+            processes.append(process)
+            socket_name = 'executor' if uid == 321 else 'evaluator'
+            deadline = time.monotonic() + 5
+            while time.monotonic() < deadline and not (ipc / (socket_name + '.sock')).exists() and process.poll() is None:
+                time.sleep(0.05)
+            if process.poll() is not None or not (ipc / (socket_name + '.sock')).exists():
+                raise RuntimeError('Service failed; inspect ' + name + '.log')
+        result = subprocess.run([sys.executable, str(probe_path), str(runtime),
+                                 str(ROOT / '.runtime/runner/code/execution.py')], cwd=runtime, timeout=5,
+                                preexec_fn=lambda: identity(321), capture_output=True, text=True)
+        (evidence / 'permissions.txt').write_text(result.stdout + result.stderr)
+        if result.returncode:
+            raise RuntimeError('Mandatory identity negative controls failed')
+        with (evidence / 'test-output.txt').open('wb') as stream:
+            result = subprocess.run([sys.executable, str(ROOT / 'scripts/test-story'), 'bounded-challenge'],
+                cwd=ROOT, timeout=610, stdout=stream, stderr=subprocess.STDOUT,
+                preexec_fn=lambda: (os.setgroups([]), os.setgid(ROOT.stat().st_gid), os.setuid(operator)),
+                env={'PATH': '/opt/homebrew/bin:/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+            code = result.returncode
+    finally:
+        for process in reversed(processes):
+            if process.poll() is None:
+                os.killpg(process.pid, signal.SIGTERM)
+            try:
+                process.wait(timeout=7)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid, signal.SIGKILL)
+                process.wait(timeout=2)
+        for stream in streams:
+            stream.close()
+        for name in ('runner.log', 'evaluator.log'):
+            if (runtime / name).is_file():
+                shutil.copyfile(runtime / name, evidence / name)
+        for name, expected in previous.items():
+            if digest((ROOT / name).read_bytes()) != expected:
+                code = 1
+                (evidence / 'preservation-error.txt').write_text('Prior failure artifact changed: ' + name)
+        hashes = {p.name: digest(p.read_bytes()) for p in evidence.iterdir() if p.is_file()}
+        (evidence / 'manifest.json').write_bytes(canonical({'exit_code': code, 'artifacts': hashes,
+                                                          'runtime': str(runtime), 'attempt': attempt}))
+        for path in evidence.iterdir():
+            os.chown(path, operator, ROOT.stat().st_gid)
+            os.chmod(path, 0o600)
+    print('Integration exit:', code, 'Evidence:', evidence)
+    return code
+
+
+if __name__ == '__main__':
+    raise SystemExit(run())

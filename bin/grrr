@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+"""Standalone approved entrypoint; no pvg extension or host candidate execution."""
+import sys
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from runner import main
+raise SystemExit(main(ROOT))

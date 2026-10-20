@@ -1,0 +1,96 @@
+{
+  "active_safety_controls": {
+    "deadline": {
+      "assets_unchanged": true,
+      "captured_bytes": 24603,
+      "ceased": true,
+      "code": "GateBlocked",
+      "run": "a02c3fb065a6474d90928225c4f2896d",
+      "seconds": 6.300877542002127
+    },
+    "output": {
+      "assets_unchanged": true,
+      "captured_bytes": 1048576,
+      "ceased": true,
+      "code": "GateBlocked",
+      "run": "589d8dfb92ae436e8c3b4bbd4bda6803",
+      "seconds": 4.467508666988579
+    }
+  },
+  "integration_attempt": "attempt-20261020T153803Z-4d13bc7b",
+  "manifest_artifacts_checked": 20,
+  "manifest_sha256": "5758264cf727dd9abd1c84e9b3b3c0d7b28575f2919271c5a105ebc26e9def54",
+  "real_absence_controls": {
+    "absent-vm": {
+      "absence_confirmed": true,
+      "absent_path": "/private/tmp/grrr-5im9abtq/absent-vm/absent-qemu",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/private/tmp/grrr-5im9abtq/absent-vm/evaluator/code/absent_vm_probe.py",
+        "/private/tmp/grrr-5im9abtq/absent-vm"
+      ],
+      "implementation_sha256": "bf84ae1a8b50c6f0d807a393bc1e9dec4e5f80806402f4ccf5a2413e7ef1a5a5",
+      "log_sha256": "9537360f4a7f3de9993bb68f25004c2a4aebc768702114329702ea3b451f9e00",
+      "observed_code": "Unavailable",
+      "returncode": 0,
+      "stdout": "{\"control\": \"absent-vm\", \"expected_failure\": {\"code\": \"Unavailable\", \"message\": \"Approved VM executable absent\", \"operation\": \"unknown\", \"receipt\": null, \"retryable\": false}}\n"
+    },
+    "missing-policy": {
+      "absence_confirmed": true,
+      "absent_path": "/private/tmp/grrr-5im9abtq/missing-policy/evaluator/policy.json",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/private/tmp/grrr-5im9abtq/missing-policy/evaluator/code/evaluator.py",
+        "/private/tmp/grrr-5im9abtq/missing-policy/evaluator"
+      ],
+      "implementation_sha256": "24ceed06773899c7c6cbc519766b4c235ab9c2962f16237e044bbc5d52323f99",
+      "log_sha256": "96a18c3d77e9abc77d9c2f01afd0732220e63c39bbb009346b4e9c10e611a05c",
+      "observed_code": "Unavailable",
+      "returncode": 3,
+      "stdout": "{\"error\":{\"code\":\"Unavailable\",\"message\":\"Missing protected policy\",\"operation\":\"unknown\",\"receipt\":null,\"retryable\":false}}\n"
+    }
+  },
+  "runs": {
+    "clean": {
+      "admission": "blocked",
+      "anchor": "77df06051ed13bce52777165f7ac3cc8fed88dd2e88c55ee1e8f95887cc8d273",
+      "assertion": "pass",
+      "candidate": "3e57352ef65633f4603ceb9975873880d972b4fb32cc26c990c2af990155df87",
+      "evaluator": "36ce1dc292d2fab29815aa32d2ef2e6a0e2f4fe8d91ac5e7d4e226a0e89b503c",
+      "execution_seconds": 1.2923955419973936,
+      "objects_checked": 8,
+      "output_bytes": 24691,
+      "policy": "e97c614e32c282458f0dafb232c20c6e9d5c998cd0ed6c2c3f20bc49f71ae438",
+      "probe_run": "ef6ff46c5e774fef85de2cab930524b4",
+      "reserved_seconds": 300,
+      "reserved_total_seconds": 1200,
+      "run": "2c91e5b6d3844deab31d7f7c7c36ad24",
+      "snapshot_id": "82926d2902291ceb8d934fcf3141629a67f32118f484e25dfd693b80bfaa7753",
+      "verified": false
+    },
+    "faulty": {
+      "admission": "blocked",
+      "anchor": "bdae7dbe080a3492525fa68b7fec5e07c8620368471f947680f0b7cddbdc5470",
+      "assertion": "fail",
+      "candidate": "dce9868a0a07f1b010cec2dce43782e41486a68419a0d0034c5d20f190637b4b",
+      "evaluator": "36ce1dc292d2fab29815aa32d2ef2e6a0e2f4fe8d91ac5e7d4e226a0e89b503c",
+      "execution_seconds": 1.2945780000009108,
+      "objects_checked": 10,
+      "output_bytes": 24690,
+      "policy": "e97c614e32c282458f0dafb232c20c6e9d5c998cd0ed6c2c3f20bc49f71ae438",
+      "probe_run": "ef6ff46c5e774fef85de2cab930524b4",
+      "reserved_seconds": 300,
+      "reserved_total_seconds": 1500,
+      "run": "824221898a5b4ccf960a462624105562",
+      "snapshot_id": "f8f8c723d20288919cfc1e5191ebcc20daf1f8c2d58f635ef834c8b80390cb3e",
+      "verified": false
+    }
+  },
+  "test_counts": {
+    "errors": 0,
+    "executed": 12,
+    "failures": 0,
+    "required": 12,
+    "skipped": 0
+  }
+}

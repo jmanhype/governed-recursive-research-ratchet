@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+"""Parent-only read-only journal diagnostic; never starts services or changes runtime."""
+import json
+import os
+from pathlib import Path
+import sqlite3
+import sys
+
+
+def main() -> None:
+    if os.getuid() != 0:
+        raise SystemExit('Parent identity required to read protected diagnostics')
+    attempt = Path(sys.argv[1]).resolve(strict=True)
+    root = Path(__file__).resolve().parents[1]
+    if attempt.parent != root / 'docs/evidence/bounded-challenge':
+        raise SystemExit('Only this worktree attempt evidence is allowed')
+    binding = json.loads((attempt / 'runtime-binding.json').read_bytes())
+    runtime = Path(binding['runtime'])
+    if runtime.parent != Path('/private/tmp') or not runtime.name.startswith('grrr-'):
+        raise SystemExit('Not an approved temporary runtime')
+    db = sqlite3.connect((runtime / 'evaluator/ledger.sqlite').as_uri() + '?mode=ro', uri=True)
+    events = [dict(sequence=n, prior=p, digest=h, event=json.loads(b))
+              for n, p, h, b in db.execute('SELECT * FROM events ORDER BY seq')]
+    db.close()
+    objects = {h: json.loads((runtime / 'evaluator/objects' / h).read_bytes())
+               for row in events for h in row['event'].get('objects', [])}
+    destination = attempt / 'protected-diagnostic.json'
+    with destination.open('xb') as stream:
+        stream.write(json.dumps({'events': events, 'objects': objects}, sort_keys=True, indent=2).encode())
+    os.chown(destination, root.stat().st_uid, root.stat().st_gid)
+    os.chmod(destination, 0o600)
+    print(destination)
+
+
+if __name__ == '__main__':
+    main()

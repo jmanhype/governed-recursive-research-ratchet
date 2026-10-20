@@ -1,0 +1,5 @@
+PASS denied read: /private/tmp/grrr-5im9abtq/evaluator/policy.json
+PASS denied read: /private/tmp/grrr-5im9abtq/evaluator/ledger.sqlite
+PASS denied read: /private/tmp/grrr-5im9abtq/evaluator/code/evaluator.py
+PASS denied read: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/.runtime/runner/code/execution.py
+PASS denied kernel-peer impersonation
