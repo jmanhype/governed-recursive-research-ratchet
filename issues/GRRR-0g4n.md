@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T15:46:39Z
-content_hash: "sha256:ac3df4809f5a8647d37a355d7fcf88b1cbfc30ce6a7295efcc08982d4a6e0ac4"
+updated_at: 2026-10-20T15:47:55Z
+content_hash: "sha256:a667a55543c6cc743d1d156df9d5988f9db5fc9651b7d8ca23cf5b530538ea52"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -330,6 +330,7 @@ status: delivered
 - Full PROOF/LEARNINGS and limitations: docs/evidence/bounded-challenge/DELIVERY-GRRR-0g4n.md
 
 ### proof
+### AC Verification
 - [x] AC #1: Approved CLI/identities/numeric policy; docs/IMPLEMENTATION-APPROVAL-2026-10-20.md and CLI help.
 - [x] AC #2: Real clean/faulty VM assertions and receipts; final attempt clean.json and faulty.json.
 - [x] AC #3: Typed validated authenticated bounded audited path; 12 integration tests and 9 unit tests.
