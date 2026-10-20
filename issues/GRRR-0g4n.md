@@ -4,7 +4,7 @@ title: "Observe one bounded challenge through the trusted research path"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, walking-skeleton, delivered, accepted]
+labels: [milestone-1, integration, walking-skeleton, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
