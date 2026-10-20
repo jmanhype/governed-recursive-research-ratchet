@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T15:43:06Z
-content_hash: "sha256:f517229c21462031305a1a9d87c65f6c42baf8431beac4452e977fb0230ca24c"
+updated_at: 2026-10-20T15:43:07Z
+content_hash: "sha256:1f9a287e89edafd782be8f9e8bdef3f6456ea06e867731d251fdb8892c6863c6"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -150,6 +150,18 @@ IDENTITY RUNTIME FIX CHECKPOINT (not delivery): commit 3c93078d3e9e2c73d1196a24e
 PREFLIGHT REPAIR CHECKPOINT (not delivery): commit 8f85947bfdac01ade6ced151afa8a847b768421a. Parent-exported read-only protected diagnostic proves event4 finished at1.298718459s with GateBlocked Guest isolation/reset check failed; ANSI-colored lo from interactive ls did not satisfy exact newline-lo-newline check. Operator stop occurred later at event5, so historical error is not relabeled as a stop race. Replaced ls with exact shell interface-name printing, retained strict isolation checks, added authenticated bootstrap readiness and stop-test readiness polling. Concurrent EOF checks recheck stop fence; preflight true requires Stopped error, verified isolation, cessation and unchanged assets. Validated request keys bind before preflight gate, including denied requests. Test saved ID renamed to saved_run_id. Unit tests9/9 pass, py_compile and diff-check pass, pvg verify4 recognized files/0 findings. Original attempt permissions/test-output/manifest hashes remain parent-reported values and are now committed with read-only diagnostic. Fresh parent identity run still required; no integration success or delivery claimed. Evidence preservation increases total diff beyond original approximate line/file budget; code remains a small Python-standard-library slice, added bulk is captured diagnostic/attempt evidence.
 MANDATORY NEGATIVE CONTROL CHECKPOINT (not delivery): commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Preserved successful 8-test attempt at integration commit8f85947 and independently verified12 manifest artifact hashes, receipt chains/anchors, raw CLEAN/PASS bytes, completed clean/faulty assertions,11 gates, stopped preflight, unchanged assets and output bounds; final-audit.json records measurements. Parent correctly required actual absence/overflow/deadline proof before delivery. Added separate restricted missing-policy and absent-QEMU runtimes using same source hashes; root-owned read-only executor config points only to approved QEMU or dedicated absent path, never modifies installed QEMU. Added evaluator-authored output flood and five-second command-deadline safety probes, distinct from candidate semantics. Full mandatory entrypoint now enumerates12 test methods and requires root-generated absence receipts plus active probe evidence. Raw console bytes stored separately as content objects to avoid nested-hex wire growth. Unit9/9 pass; pvg verify explicit paths10 recognized files0 findings; py_compile and diff-check pass. New12-test attempt requires parent identity launcher; no delivery or new integration-success claim.
 DELIVERY COMMIT: 83bab97b3f5edea53005f4cb18374a24faaa12b6 on story/GRRR-0g4n; clean worktree, no push. Exact parent integration source commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Evidence and independent audit committed at83bab97. Final scripts/verify-evidence check exit0,20 manifest artifacts verified;12/12 integration tests and9/9 unit tests; pvg verify10 recognized files0 issues. PM review required; developer is not accepting or closing.
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-20.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence
 
 Commit: 83bab97b3f5edea53005f4cb18374a24faaa12b6
