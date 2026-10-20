@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T23:29:26Z
-content_hash: "sha256:eeac0c14b5976e4e5f70ce655f595c8626e371d3f2f175117fcf3a776c38a0d6"
+updated_at: 2026-10-20T23:30:42Z
+content_hash: "sha256:b82de5d598a2c8d52a7e2a08bef6b8108e8396cce4cc758d5c0d4f82de340d4c"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -125,6 +125,15 @@ OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
 - Operator explicitly increased the offline-build guest ephemeral /work tmpfs cap from 350 MiB to 512 MiB and authorized rerunning GRRR-90te parent identity integration.
 - VM RAM remains 1024 MiB. All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; 600-second cumulative build/test runtime before other probes; no guest networking, host shares, clipboard, or forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If linking still fails at 512 MiB /work, stop again; do not automatically increase resources.
+## nd_contract
+status: in_progress
+### evidence
+- Approved offline /work tmpfs increased only to 512 MiB, now explicit in profile and strict runtime config; guest uses size=512m. VM RAM remains 1024 MiB and synthetic policy unchanged.
+- 31 unit tests, shell syntax/Python compilation and pvg verify 4 files pass. Old image/receipt retained; new ISO primary GO.TGZ extent hash verified.
+- Profile 2e08f0288355a64eba22b75fdeb1e62ac14dfaea3be26cbee38ece6eb4051d47; approval ea54419888597cacde66c9a73efa86eacd52dde96bf0c098b0b7fd728277b3b2; receipt bfcb6b9f5fac29267ade2c50258f1b99106b69ae808c936062e442cc39191666; image 7e75d23870510175489ba818b7795dfbb9fde7cd1a69c00e36e735c76cbdb5ce.
+- Parent root run pending; no privileged execution here. If /work fills at 512 MiB stop, no further increase authorized.
+### proof
+- [ ] AC #1-#6: mandatory real baseline proof remains pending; not delivered.
 
 ## nd_contract
 status: in_progress
