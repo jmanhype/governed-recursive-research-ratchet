@@ -11,7 +11,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'research'))
-from common import DENIED, GATES, PACKETS, Failure, call, canonical, digest
+from common import DENIED, GATES, PACKETS, Failure, call, canonical, digest, runtime_binding
 from ledger import verifySnapshot
 from runner import projection
 
@@ -19,7 +19,10 @@ from runner import projection
 class BoundedChallenge(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.endpoint = ROOT / '.runtime/ipc/evaluator.sock'
+        binding = runtime_binding(ROOT)
+        cls.runtime = Path(binding['runtime'])
+        cls.evidence = Path(binding['evidence'])
+        cls.endpoint = cls.runtime / 'ipc/evaluator.sock'
         state = call(cls.endpoint, {'action': 'list'}, timeout=2)
         cls.policy = state['policy']
         cls.clean = digest(canonical(PACKETS['clean']))
@@ -74,7 +77,7 @@ class BoundedChallenge(unittest.TestCase):
             self.assertEqual(report['admission'], 'blocked')
             snapshot = call(self.endpoint, {'action': 'evidence', 'run': report['run']})
             self.assertEqual(verifySnapshot(snapshot, report['anchor']), snapshot)
-            evidence = ROOT / 'docs/evidence/bounded-challenge'
+            evidence = self.evidence
             evidence.mkdir(exist_ok=True, parents=True)
             (evidence / (name + '.json')).write_bytes(canonical(snapshot))
             (evidence / (name + '.anchor')).write_text(report['anchor'] + '\n')
@@ -120,10 +123,10 @@ class BoundedChallenge(unittest.TestCase):
 
     def test_06_unavailable_and_unauthorized_executor(self) -> None:
         with self.assertRaises(Failure) as result:
-            call(ROOT / '.runtime/ipc/absent.sock', {}, timeout=1)
+            call(self.runtime / 'ipc/absent.sock', {}, timeout=1)
         self.assertEqual(result.exception.record['code'], 'Unavailable')
         with self.assertRaises(Failure) as result:
-            call(ROOT / '.runtime/ipc/executor.sock', {'action': 'stop', 'run': 'forged'}, timeout=2)
+            call(self.runtime / 'ipc/executor.sock', {'action': 'stop', 'run': 'forged'}, timeout=2)
         self.assertEqual(result.exception.record['code'], 'Unauthorized')
 
     def test_07_downstream_is_unavailable(self) -> None:
@@ -133,7 +136,7 @@ class BoundedChallenge(unittest.TestCase):
     def test_08_protected_files_are_not_operator_writable(self) -> None:
         for path in ('policy.json', 'ledger.sqlite'):
             with self.assertRaises(PermissionError):
-                (ROOT / '.runtime/evaluator' / path).read_bytes()
+                (self.runtime / 'evaluator' / path).read_bytes()
 
 
 if __name__ == '__main__':

@@ -42,9 +42,20 @@ No environment-provided role or endpoint override is trusted.
 
 The parent runs `scripts/identity-integration APPROVED_ASSET_DIRECTORY` as root
 through an already-authorized mechanism. It does not prompt, install, access
-credentials or alter accounts. All writes are within this worktree. It refuses
-an existing `.runtime` to preserve evidence; restarting evaluator state remains
-RecoveryRequired. This test launcher is not a persistent service deployment.
+credentials or alter accounts. Following the first Documents-path permission
+failure, parent-authorized launchers create a fresh root-owned `/private/tmp/grrr-*`
+runtime with mode 0711 and separate mode-0700 service directories. Only approved
+code/assets are copied out; services never need broad access to Documents.
+Evaluator and executor sockets still authenticate kernel peer UIDs in both
+directions. The operator-owned mode-0600 `.runtime-endpoint.json` records the
+current endpoint, not authority; clients reject unsafe bindings and wrong peers.
+Every attempt retains its runtime and writes a distinct
+`docs/evidence/bounded-challenge/attempt-TIMESTAMP-ID/` evidence directory.
+The previous `.runtime` and failed logs remain untouched. Historical failure
+hashes are rechecked and never counted as success. TCC is a suspected cause of
+the original EACCES, not a confirmed diagnosis.
+Restarting evaluator state remains RecoveryRequired. This test launcher is not
+a persistent service deployment.
 
 The launcher verifies runner denied reads/writes and impersonation, then runs
 `./scripts/test-story bounded-challenge` synchronously. The suite first verifies
@@ -53,8 +64,9 @@ The same command is the mandatory CI entrypoint; absent services are an error,
 never skip/success. Supplementary pure tests: `python3 tests/unit_contracts.py`.
 
 Raw snapshots/anchors and Markdown are preserved under
-`docs/evidence/bounded-challenge/`; protected journal/objects remain in
-`.runtime/evaluator/`, outside disposable guests. Independent verification uses
+each `docs/evidence/bounded-challenge/attempt-*` directory; protected
+journal/objects remain in the recorded `/private/tmp/grrr-*/evaluator/`, outside
+disposable guests. Independent verification uses
 `ledger.verifySnapshot(snapshot, separately_retained_anchor)` and checks event
 sequence/prior links, object hashes and snapshot identity. Hashes are not human
 approval and do not protect against a privileged host attacker.

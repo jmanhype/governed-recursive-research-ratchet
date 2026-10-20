@@ -15,4 +15,5 @@
 .vault/.vlt.lock
 .vault/.guard/
 .runtime/
+.runtime-endpoint.json
 __pycache__/

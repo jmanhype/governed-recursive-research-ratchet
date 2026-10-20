@@ -3,7 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import uuid
-from common import Failure, call
+from common import Failure, call, runtime_binding
 
 
 def parser() -> argparse.ArgumentParser:
@@ -52,7 +52,8 @@ def main(root: Path) -> int:
     if request['action'] == 'start':
         request.update(key=uuid.uuid4().hex, epoch=0)
     try:
-        result = call(root / '.runtime/ipc/evaluator.sock', request)
+        binding = runtime_binding(root)
+        result = call(Path(binding['runtime']) / 'ipc/evaluator.sock', request)
         if request['action'] == 'evidence':
             print(projection(result, format, level))
         else:

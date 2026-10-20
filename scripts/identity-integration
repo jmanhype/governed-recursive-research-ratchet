@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Parent-mediated root integration, no sudo/passwords, no installation or network.
 
-Run once in a clean story worktree. All mutated paths are beneath that worktree.
+Parent-authorized fresh restricted runtime under /private/tmp, never Documents.
 Starts restricted services, runs the mandatory suite synchronously, stops services.
-Preserves runtime/evidence on failure; subsequent runs need an inspected new runtime.
+Preserves every runtime/evidence attempt; never deletes prior failure artifacts.
 """
 import json
 import os
@@ -14,6 +14,8 @@ import signal
 import subprocess
 import sys
 import time
+import tempfile
+import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
@@ -42,8 +44,9 @@ def run() -> int:
     operator = ROOT.stat().st_uid
     if operator in (0, 320, 321):
         raise RuntimeError('Separate operator ownership required')
-    runtime = ROOT / '.runtime'
-    runtime.mkdir(mode=0o755)  # Intentionally no exist_ok: retain previous evidence.
+    attempt = 'attempt-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8]
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-', dir='/private/tmp'))
+    os.chmod(runtime, 0o711)  # Root-owned, traversable but not listable by services.
     ipc = runtime / 'ipc'
     ipc.mkdir(mode=0o1777)
     os.chmod(ipc, 0o1777)
@@ -59,8 +62,11 @@ def run() -> int:
             shutil.copyfile(ROOT / 'research' / filename, code / filename)
             os.chown(code / filename, uid, uid)
             os.chmod(code / filename, 0o400)
-    # Deny runner access to evaluator implementation in the development source too.
-    os.chmod(ROOT / 'research', 0o700)
+    # Service code is deployed narrowly outside Documents; no broad worktree ACL grant.
+    probe_path = runtime / 'runner/code/permission_probe.py'
+    shutil.copyfile(ROOT / 'tests/integration/permission_probe.py', probe_path)
+    os.chown(probe_path, 321, 321)
+    os.chmod(probe_path, 0o400)
     policy = runtime / 'evaluator/policy.json'
     policy.write_bytes(canonical(default_policy(operator)))
     os.chown(policy, 320, 320)
@@ -74,19 +80,39 @@ def run() -> int:
         shutil.copyfile(source / relative, assets / filename)
         os.chown(assets / filename, 321, 321)
         os.chmod(assets / filename, 0o400)
-    evidence = ROOT / 'docs/evidence/bounded-challenge'
-    evidence.mkdir(exist_ok=True, parents=True)
+    evidence = ROOT / 'docs/evidence/bounded-challenge' / attempt
+    evidence.mkdir(mode=0o700, parents=True)
     os.chown(evidence, operator, ROOT.stat().st_gid)
+    binding = {'runtime': str(runtime), 'evidence': str(evidence), 'version': 1}
+    binding_path = ROOT / '.runtime-endpoint.json'
+    if binding_path.is_symlink():
+        raise RuntimeError('Refusing symlink runtime binding')
+    staging = ROOT / ('.runtime-endpoint-' + uuid.uuid4().hex + '.json')
+    with staging.open('xb') as stream:
+        stream.write(canonical(binding))
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.chown(staging, operator, ROOT.stat().st_gid)
+    os.chmod(staging, 0o600)
+    os.replace(staging, binding_path)
+    (evidence / 'runtime-binding.json').write_bytes(canonical(binding))
+    previous_log = ROOT / 'docs/evidence/bounded-challenge/runner.log'
+    previous_manifest = ROOT / 'docs/evidence/bounded-challenge/manifest.json'
+    previous = {str(p.relative_to(ROOT)): digest(p.read_bytes())
+                for p in (previous_log, previous_manifest) if p.is_file()}
+    (evidence / 'prior-failure-preserved.json').write_bytes(canonical({
+        'status': 'historical-failure-not-success', 'hashes': previous,
+        'diagnosis': 'Documents-path permission denied; TCC cause suspected, not proven'}))
     # Actual denied reads and forged-operator request under runner UID, not a mocked uid.
     processes = []
     streams = []
     code = 1
     try:
         for name, uid, module in [('runner', 321, 'execution.py'), ('evaluator', 320, 'evaluator.py')]:
-            stream = (evidence / (name + '.log')).open('wb')
+            stream = (runtime / (name + '.log')).open('xb')
             streams.append(stream)
             process = subprocess.Popen([sys.executable, str(runtime / name / 'code' / module), str(runtime / name)],
-                cwd=ROOT, stdin=subprocess.DEVNULL, stdout=stream, stderr=subprocess.STDOUT,
+                cwd=runtime, stdin=subprocess.DEVNULL, stdout=stream, stderr=subprocess.STDOUT,
                 preexec_fn=lambda uid=uid: identity(uid), start_new_session=True,
                 env={'PATH': '/opt/homebrew/bin:/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
             processes.append(process)
@@ -96,7 +122,8 @@ def run() -> int:
                 time.sleep(0.05)
             if process.poll() is not None or not (ipc / (socket_name + '.sock')).exists():
                 raise RuntimeError('Service failed; inspect ' + name + '.log')
-        result = subprocess.run([sys.executable, str(ROOT / 'tests/integration/permission_probe.py')], cwd=ROOT, timeout=5,
+        result = subprocess.run([sys.executable, str(probe_path), str(runtime),
+                                 str(ROOT / '.runtime/runner/code/execution.py')], cwd=runtime, timeout=5,
                                 preexec_fn=lambda: identity(321), capture_output=True, text=True)
         (evidence / 'permissions.txt').write_text(result.stdout + result.stderr)
         if result.returncode:
@@ -118,8 +145,16 @@ def run() -> int:
                 process.wait(timeout=2)
         for stream in streams:
             stream.close()
+        for name in ('runner.log', 'evaluator.log'):
+            if (runtime / name).is_file():
+                shutil.copyfile(runtime / name, evidence / name)
+        for name, expected in previous.items():
+            if digest((ROOT / name).read_bytes()) != expected:
+                code = 1
+                (evidence / 'preservation-error.txt').write_text('Prior failure artifact changed: ' + name)
         hashes = {p.name: digest(p.read_bytes()) for p in evidence.iterdir() if p.is_file()}
-        (evidence / 'manifest.json').write_bytes(canonical({'exit_code': code, 'artifacts': hashes}))
+        (evidence / 'manifest.json').write_bytes(canonical({'exit_code': code, 'artifacts': hashes,
+                                                          'runtime': str(runtime), 'attempt': attempt}))
         for path in evidence.iterdir():
             os.chown(path, operator, ROOT.stat().st_gid)
             os.chmod(path, 0o600)

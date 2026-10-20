@@ -84,7 +84,9 @@ def call(path: Path, request: dict, timeout: float = 310) -> dict:
     with socket.socket(socket.AF_UNIX) as conn:
         conn.settimeout(timeout)
         try:
-            conn.connect(os.path.relpath(path, Path.cwd()))
+            conn.connect(socket_path(path))
+            expected_uid = EVALUATOR if path.name == 'evaluator.sock' else RUNNER
+            require(peer_uid(conn) == expected_uid, 'Unauthorized', 'Server peer identity mismatch')
             conn.sendall(canonical(request) + b'\n')
             response = receive(conn)
         except (OSError, TimeoutError) as exc:
@@ -95,11 +97,36 @@ def call(path: Path, request: dict, timeout: float = 310) -> dict:
     return response['ok']
 
 
+def socket_path(path: Path) -> str:
+    """Use short absolute temp-runtime paths; retain relative support on macOS."""
+    absolute = str(path.resolve())
+    return absolute if len(os.fsencode(absolute)) < 100 else os.path.relpath(path, Path.cwd())
+
+
+def runtime_binding(root: Path) -> dict:
+    """Read parent-owned local endpoint metadata, never a request-supplied role."""
+    path = root / '.runtime-endpoint.json'
+    require(path.is_file() and not path.is_symlink(), 'Unavailable', 'Parent runtime binding absent')
+    stat = path.stat()
+    require(stat.st_uid in (0, os.getuid()) and stat.st_mode & 0o022 == 0,
+            'Unauthorized', 'Runtime binding has unsafe ownership/mode')
+    value = json.loads(path.read_bytes())
+    fields(value, {'runtime', 'evidence', 'version'})
+    require(value['version'] == 1, 'InvalidInput', 'Runtime binding version invalid')
+    runtime = Path(value['runtime'])
+    require(runtime.parent == Path('/private/tmp') and runtime.name.startswith('grrr-')
+            and not runtime.is_symlink(), 'InvalidInput', 'Runtime must be a dedicated temp directory')
+    evidence = Path(value['evidence'])
+    require(evidence.parent == root / 'docs/evidence/bounded-challenge'
+            and evidence.name.startswith('attempt-'), 'InvalidInput', 'Attempt evidence location invalid')
+    return value
+
+
 def serve(path: Path, handler: Callable[[int, dict], dict]) -> None:
     import threading
     require(not path.exists(), 'RecoveryRequired', 'Existing endpoint requires inspection')
     listener = socket.socket(socket.AF_UNIX)
-    listener.bind(os.path.relpath(path, Path.cwd()))
+    listener.bind(socket_path(path))
     os.chmod(path, 0o666)  # Authentication is kernel peer credentials, not payload/umask.
     listener.listen(8)
     slots = threading.BoundedSemaphore(8)
