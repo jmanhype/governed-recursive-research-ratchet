@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Independent offline preflight export verification; rejects partial/failed attempts."""
+import base64
+import json
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'research'))
+from common import canonical, digest, require
+from ledger import verifySnapshot
+
+
+def verify(attempt: Path) -> dict:
+    manifest = json.loads((attempt / 'manifest.json').read_bytes())
+    require(manifest['exit_code'] == 0 and manifest['baseline_verified'] is True,
+            'GateBlocked', 'Failed/partial preflight is not a clean baseline')
+    for name, expected in manifest['artifacts'].items():
+        require(Path(name).name == name, 'IntegrityFailure', 'Manifest traversal')
+        require(digest((attempt / name).read_bytes()) == expected, 'IntegrityFailure', 'Export hash differs')
+    counts = json.loads((attempt / 'test-output.txt').read_text().splitlines()[-1])
+    require(counts == {'required': 6, 'executed': 6, 'skipped': 0, 'failures': 0, 'errors': 0},
+            'GateBlocked', 'Required integration tests did not all execute/pass')
+    objects = set()
+    snapshots = 0
+    for path in attempt.glob('*.json'):
+        value = json.loads(path.read_bytes())
+        if 'snapshot_id' in value:
+            verifySnapshot(value, value['receipt']['digest'])
+            objects.update(value['objects'])
+            snapshots += 1
+    require(snapshots >= 6, 'IntegrityFailure', 'Missing evaluator-owned observation snapshots')
+    baseline = json.loads((attempt / 'baseline-receipt.json').read_bytes())
+    require(baseline['baseline_verified'] is True and baseline['admission'] == 'blocked',
+            'GateBlocked', 'Baseline receipt scope differs')
+    hashes, runs = [], []
+    for number in (1, 2):
+        observed = json.loads((attempt / ('build-' + str(number) + '.json')).read_bytes())
+        require(digest(canonical(observed)) in objects, 'IntegrityFailure', 'Build is not bound into evaluator journal')
+        require(observed['error'] is None and observed['exit_code'] == 0 and observed['assets_unchanged'],
+                'GateBlocked', 'Build failed or inputs changed')
+        require(observed['termination']['ceased'] and observed['seconds'] <= 300,
+                'GateBlocked', 'Guest did not cease within approved ceiling')
+        text = base64.b64decode(observed['observation_base64'], validate=True).decode()
+        require('GRRR-BASELINE-PASS\n' in text and 'GRRR-ISOLATION-PASS\n' in text,
+                'GateBlocked', 'Missing actual guest success/isolation evidence')
+        require(len(base64.b64decode(observed['raw_base64'], validate=True)) <= 1048576,
+                'GateBlocked', 'Output bound exceeded')
+        row = baseline['builds'][number - 1]
+        require('GRRR-BUILD-SHA256 ' + row['sha256'] + '  /work/vlt\n' in text,
+                'IntegrityFailure', 'Build identity differs from observation')
+        hashes.append(row['sha256'])
+        runs.append(observed['run'])
+    require(hashes[0] == hashes[1] and runs[0] != runs[1] and baseline['total_seconds'] <= 600,
+            'GateBlocked', 'Independent build identities/runtime differ')
+    return {'manifest_sha256': digest((attempt / 'manifest.json').read_bytes()),
+            'snapshot_count': snapshots, 'baseline': baseline, 'test_counts': counts,
+            'scope': 'offline baseline only; no admission or promotion'}
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        raise SystemExit('Usage: verify-offline-evidence ATTEMPT_DIRECTORY')
+    print(json.dumps(verify(Path(sys.argv[1])), sort_keys=True, indent=2))

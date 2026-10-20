@@ -4,6 +4,7 @@ This profile is deliberately distinct from the registered synthetic-only policy.
 Validation is not registration, authorization, license clearance, or a VM receipt.
 """
 import hashlib
+import ctypes
 import os
 from pathlib import Path
 import subprocess
@@ -16,6 +17,19 @@ LICENSE_BLOB = 'c004659349c7a1f6c55e5107b53a0766085e8d2e'
 TOOLCHAIN = 'go1.26.10.linux-arm64.tar.gz'
 TOOLCHAIN_SHA256 = '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797'
 PERMISSIVE = frozenset(('MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', 'ISC'))
+
+
+def clone_asset(source: Path, destination: Path) -> None:
+    """APFS clonefile only: unlike cp -c, never fall back to a full data copy."""
+    require(source.is_file() and not source.is_symlink() and not destination.exists(),
+            'InvalidInput', 'Clone requires regular source and absent destination')
+    library = ctypes.CDLL(None, use_errno=True)
+    require(hasattr(library, 'clonefile'), 'Unavailable', 'clonefile is unavailable; no copy fallback')
+    clonefile = library.clonefile
+    clonefile.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int)
+    clonefile.restype = ctypes.c_int
+    result = clonefile(os.fsencode(source), os.fsencode(destination), 0)
+    require(result == 0, 'Unavailable', 'APFS clone failed; no full-copy fallback: errno ' + str(ctypes.get_errno()))
 
 
 def git(source: Path, *args: str) -> bytes:

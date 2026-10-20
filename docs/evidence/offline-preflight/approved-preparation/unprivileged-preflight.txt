@@ -1,0 +1,3 @@
+AWAITING_PARENT_IDENTITY_RUN: root-mediated offline launcher required; no sudo or credential requests
+
+exit_code=1

@@ -16,4 +16,5 @@
 .vault/.guard/
 .runtime/
 .runtime-endpoint.json
+.offline-inputs.json
 __pycache__/

@@ -1,0 +1,252 @@
+#!/usr/bin/env python3
+"""Root-mediated offline preflight. No sudo, installation, network, or credentials.
+
+Usage: offline-identity-integration VM_DIRECTORY PREPARED_ASSETS LICENSE_REVIEW_JSON
+The review must explicitly bind the entire inventory and authorize local use.
+"""
+import json
+import os
+from pathlib import Path
+import pwd
+import shutil
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require, identifier
+from offline import proposed_profile, clone_asset
+from execution import ASSETS, QEMU
+
+
+def identity(uid: int) -> None:
+    os.setgroups([])
+    os.setgid(uid)
+    os.setuid(uid)
+    os.umask(0o077)
+
+
+def readonly(path: Path, data: bytes) -> None:
+    path.write_bytes(data)
+    os.chown(path, 0, 0)
+    os.chmod(path, 0o444)
+
+
+def start(base: Path, log: Path) -> subprocess.Popen:
+    with log.open('xb') as stream:
+        process = subprocess.Popen([sys.executable, str(base / 'runner/code/offline_execution.py'), str(base / 'runner')],
+            cwd=base, stdout=stream, stderr=subprocess.STDOUT, preexec_fn=lambda: identity(321),
+            start_new_session=True, env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline and not (base / 'ipc/executor.sock').exists() and process.poll() is None:
+        time.sleep(0.05)
+    return process
+
+
+def cease(process: subprocess.Popen) -> None:
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        pass
+    # A stopped QEMU child may survive an already-exited service leader.
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    if process.poll() is None:
+        process.wait(timeout=2)
+
+
+def run_probe(base: Path, mode: str, uid: int) -> subprocess.CompletedProcess:
+    return subprocess.run([sys.executable, str(base / 'runner/code/offline_probe.py'), str(base), mode],
+        cwd=base, preexec_fn=lambda: identity(uid), capture_output=True, text=True, timeout=20,
+        env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+
+
+def main() -> int:
+    if os.getuid() != 0:
+        print('AWAITING_PARENT_IDENTITY_RUN: root-mediated offline launcher required; no sudo or credential requests')
+        return 1
+    if len(sys.argv) != 4:
+        print(__doc__)
+        return 2
+    operator = ROOT.stat().st_uid
+    require(operator not in (0, 320, 321), 'Unauthorized', 'Operator must be independent')
+    evidence = ROOT / 'docs/evidence/offline-preflight' / ('attempt-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8])
+    evidence.mkdir(parents=True, mode=0o700)
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-offline-', dir='/private/tmp'))
+    os.chmod(runtime, 0o711)
+    process = None
+    code = 1
+    try:
+        vm, prepared, review_path = [Path(value).resolve(strict=True) for value in sys.argv[1:]]
+        for name, uid in [('_grrr_evaluator', 320), ('_grrr_runner', 321)]:
+            account = pwd.getpwnam(name)
+            require((account.pw_uid, account.pw_gid, account.pw_shell) == (uid, uid, '/usr/bin/false'),
+                    'Unauthorized', 'Service account configuration differs')
+        inventory_raw = (prepared / 'inventory.json').read_bytes()
+        inventory = json.loads(inventory_raw)
+        for path, library in inventory['host_libraries'].items():
+            if library.get('sha256'):
+                require(digest(Path(path).read_bytes()) == library['sha256'],
+                        'IntegrityFailure', 'Host runtime library bytes changed')
+            elif library.get('origin') == 'macOS system runtime':
+                actual = subprocess.check_output(['/usr/bin/sw_vers', '-buildVersion'], text=True).strip()
+                require(actual == library['version'], 'StaleBinding', 'System runtime build changed')
+        receipt = json.loads((prepared / 'asset-receipt.json').read_bytes())
+        require(receipt['inventory_sha256'] == digest(inventory_raw), 'IntegrityFailure', 'Inventory changed')
+        require(receipt['image_sha256'] == digest((prepared / 'input.iso').read_bytes()), 'IntegrityFailure', 'Input image changed')
+        require(receipt['guest_script_sha256'] == digest((ROOT / 'research/offline-guest.sh').read_bytes()),
+                'StaleBinding', 'Rebuild detached media for updated guest bootstrap')
+        approval_ref = digest((ROOT / 'docs/OFFLINE-PREFLIGHT-APPROVAL-2026-10-20.md').read_bytes())
+        require(receipt['approval_sha256'] == approval_ref, 'StaleBinding', 'Profile approval artifact changed')
+        require(review_path.stat().st_uid == operator and review_path.stat().st_mode & 0o077 == 0,
+                'Unauthorized', 'Review must be operator-owned private artifact')
+        review_raw = review_path.read_bytes()
+        review = json.loads(review_raw)
+        require(set(review) == {'version', 'decision', 'operator_uid', 'inventory_sha256', 'scope',
+                               'components', 'resolutions', 'authorization_reference'}, 'InvalidInput', 'Review schema differs')
+        require(review['version'] == 1 and review['decision'] == 'approved-local-use'
+                and review['operator_uid'] == operator and review['inventory_sha256'] == digest(inventory_raw)
+                and review['scope'] == inventory['scope'], 'GateBlocked', 'License review does not clear exact local-use inventory')
+        expected = {'source', 'toolchain'} | set(inventory['apk_packages']) | set(inventory['host_libraries'])
+        require(set(review['components']) == expected, 'GateBlocked', 'Review omits a component')
+        require(set(review['resolutions']) == set(inventory['unresolved']), 'GateBlocked', 'Review omits a known risk')
+        for value in list(review['components'].values()) + list(review['resolutions'].values()):
+            require(isinstance(value, str) and len(value.strip()) >= 20, 'GateBlocked', 'Review lacks substantive evidence/obligations')
+        identifier(review['authorization_reference'], True)
+        profile = proposed_profile(operator, digest(inventory_raw))
+        profile_ref = digest(canonical(profile))
+        (runtime / 'ipc').mkdir(mode=0o1777)
+        os.chmod(runtime / 'ipc', 0o1777)
+        for name, uid in [('runner', 321), ('evaluator', 320)]:
+            directory = runtime / name
+            directory.mkdir(mode=0o700)
+            os.chown(directory, uid, uid)
+            module_dir = directory / 'code'
+            module_dir.mkdir(mode=0o755)
+            for filename in ('common.py', 'policy.py', 'offline.py', 'execution.py', 'offline_execution.py', 'ledger.py'):
+                readonly(module_dir / filename, (ROOT / 'research' / filename).read_bytes())
+        readonly(runtime / 'runner/code/offline_probe.py', (ROOT / 'tests/integration/offline_probe.py').read_bytes())
+        # Probe code needs traversable runner code only, not runner workspace access.
+        probe_public = runtime / 'probe'
+        shutil.copytree(runtime / 'runner/code', probe_public)
+        os.chmod(probe_public, 0o755)
+        readonly(runtime / 'evaluator/code/offline_preflight.py', (ROOT / 'tests/integration/offline_preflight.py').read_bytes())
+        readonly(runtime / 'runner/execution-config.json', canonical({'version': 1, 'qemu': QEMU}))
+        config = {'version': 1, 'profile_sha256': profile_ref, 'image_sha256': receipt['image_sha256'],
+                  'qemu_sha256': inventory['host_libraries'][str(Path(QEMU).resolve())]['sha256'],
+                  'license_review_sha256': digest(review_raw), 'network': False, 'shares': [],
+                  'memory_mib': 512, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
+        readonly(runtime / 'runner/offline-config.json', canonical(config))
+        readonly(runtime / 'probe-config.json', canonical(config))
+        policy = runtime / 'evaluator/policy.json'
+        policy.write_bytes(canonical(profile))
+        os.chown(policy, 320, 320)
+        os.chmod(policy, 0o600)
+        readonly(runtime / 'evaluator/profile-approval.json', canonical({'version': 1,
+            'profile_sha256': profile_ref, 'operator_uid': operator, 'decision': 'approved',
+            'authorization_reference': approval_ref}))
+        readonly(runtime / 'evaluator/license-review.json', review_raw)
+        assets = runtime / 'runner/assets'
+        assets.mkdir(mode=0o755)
+        for name, hashed in dict(ASSETS, **{'input.iso': receipt['image_sha256']}).items():
+            source = prepared / name if name == 'input.iso' else vm / ('boot/' + name if name in ('vmlinuz-virt', 'initramfs-virt') else name)
+            require(digest(source.read_bytes()) == hashed, 'IntegrityFailure', 'Runtime asset mismatch')
+            destination = assets / name
+            clone_asset(source, destination)
+            subprocess.run(['/bin/chmod', '-N', str(destination)], check=True, timeout=5)
+            os.chown(destination, 0, 0)
+            os.chmod(destination, 0o444)
+            require(digest(destination.read_bytes()) == hashed, 'IntegrityFailure', 'Cloned asset mismatch')
+        require(shutil.disk_usage(runtime).free >= 15000000000, 'BudgetExceeded', 'Free space below approved floor after staging')
+        readonly(runtime / 'binding.json', canonical({'profile': profile_ref, 'operator_uid': operator,
+            'operator_home': pwd.getpwuid(operator).pw_dir, 'runtime': str(runtime),
+            'code_sha256': {str(p.relative_to(runtime)): digest(p.read_bytes())
+                for name in ('runner', 'evaluator') for p in (runtime / name / 'code').iterdir() if p.is_file()}}))
+        controls = {}
+        for name in ('network', 'share', 'identity', 'image', 'dependency'):
+            base = runtime / ('negative-' + name)
+            base.mkdir(mode=0o711)
+            os.chmod(base, 0o711)
+            (base / 'ipc').mkdir(mode=0o1777)
+            os.chmod(base / 'ipc', 0o1777)
+            shutil.copytree(runtime / 'runner', base / 'runner', copy_function=os.link)
+            os.chown(base / 'runner', 321, 321)
+            os.chmod(base / 'runner', 0o700)
+            modified = dict(config)
+            if name in ('network', 'share'):
+                modified['network' if name == 'network' else 'shares'] = True if name == 'network' else ['/Users']
+            if name == 'image':
+                modified['image_sha256'] = '0' * 64
+            # Replace links, never mutate the original root-controlled input.
+            config_path = base / 'runner/offline-config.json'
+            config_path.unlink()
+            readonly(config_path, canonical(modified))
+            if name == 'identity':
+                os.chown(config_path, 321, 321)
+            if name == 'dependency':
+                (base / 'runner/assets/input.iso').unlink()
+            negative = start(base, evidence / (name + '-service.log'))
+            try:
+                if name in ('network', 'share', 'identity'):
+                    returned = negative.wait(timeout=5)
+                    require(returned != 0 and not (base / 'ipc/executor.sock').exists(), 'GateBlocked', 'Unsafe config exposed service')
+                    expected_error = ('Offline configuration is not root-controlled' if name == 'identity'
+                                      else 'Offline capabilities or limits differ from approved profile')
+                    require(expected_error in (evidence / (name + '-service.log')).read_text(),
+                            'GateBlocked', 'Negative service failed for an unexpected reason')
+                    controls[name] = {'passed': True, 'returncode': returned, 'command': negative.args}
+                else:
+                    result = subprocess.run([sys.executable, str(probe_public / 'offline_probe.py'), str(base), name],
+                        cwd=runtime, preexec_fn=lambda: identity(320), capture_output=True, text=True, timeout=20)
+                    (evidence / (name + '.log')).write_text(result.stdout + result.stderr)
+                    require(result.returncode == 0, 'GateBlocked', 'Negative asset control failed')
+                    controls[name] = {'passed': True, 'returncode': result.returncode, 'command': result.args}
+            finally:
+                cease(negative)
+        process = start(runtime, evidence / 'executor.log')
+        require(process.poll() is None, 'Unavailable', 'Offline executor failed startup')
+        for mode, uid in [('unauthorized-peer', operator), ('protected-paths', 321)]:
+            result = subprocess.run([sys.executable, str(probe_public / 'offline_probe.py'), str(runtime), mode],
+                cwd=runtime, preexec_fn=lambda uid=uid: identity(uid), capture_output=True, text=True, timeout=20)
+            (evidence / (mode + '.log')).write_text(result.stdout + result.stderr)
+            require(result.returncode == 0, 'GateBlocked', 'Identity/ACL probe failed')
+            controls[mode] = {'passed': True, 'returncode': result.returncode, 'command': result.args}
+        readonly(runtime / 'controls.json', canonical(controls))
+        with (evidence / 'test-output.txt').open('xb') as stream:
+            result = subprocess.run([sys.executable, str(runtime / 'evaluator/code/offline_preflight.py'), str(runtime)],
+                cwd=runtime, preexec_fn=lambda: identity(320), stdout=stream, stderr=subprocess.STDOUT, timeout=1900,
+                env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+            code = result.returncode
+    except Exception as exc:
+        (evidence / 'failure.json').write_bytes(canonical({'error': type(exc).__name__, 'message': str(exc),
+            'runtime': str(runtime), 'baseline_verified': False}))
+    finally:
+        if process:
+            cease(process)
+        for path in (runtime / 'evaluator').glob('*.json'):
+            shutil.copyfile(path, evidence / path.name)
+        for filename in ('controls.json', 'binding.json'):
+            if (runtime / filename).is_file():
+                shutil.copyfile(runtime / filename, evidence / filename)
+        hashes = {p.name: digest(p.read_bytes()) for p in evidence.iterdir() if p.is_file()}
+        (evidence / 'manifest.json').write_bytes(canonical({'exit_code': code, 'artifacts': hashes,
+            'runtime': str(runtime), 'required_tests': 6, 'baseline_verified': code == 0}))
+        for path in (evidence, *evidence.iterdir()):
+            os.chown(path, operator, ROOT.stat().st_gid)
+            os.chmod(path, 0o700 if path.is_dir() else 0o600)
+    print(json.dumps({'exit_code': code, 'evidence': str(evidence), 'runtime': str(runtime)}))
+    return code
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

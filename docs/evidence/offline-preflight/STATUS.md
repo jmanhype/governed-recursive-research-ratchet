@@ -1,5 +1,85 @@
 # GRRR-90te — preparation checkpoint, not delivery
 
+## Latest checkpoint: approved profile implemented, privileged evidence pending
+
+The operator subsequently approved the exact build profile; see
+`docs/OFFLINE-PREFLIGHT-APPROVAL-2026-10-20.md`. The older checkpoint below remains
+historical evidence, not the current implementation inventory.
+
+Implemented `research/offline_execution.py`, fixed `research/offline-guest.sh`,
+root-mediated `scripts/offline-identity-integration`, real evaluator integration
+`tests/integration/offline_preflight.py` and `offline_probe.py`, and independent
+`scripts/verify-offline-evidence`. `./scripts/test-story offline-preflight` now
+routes to the root launcher via the private ignored `.offline-inputs.json` binding.
+The existing synthetic policy/dispatch semantics remain unchanged; `loadPolicy`
+accepts the separate exact offline profile only with a root-controlled approval.
+
+No new guest has executed. The nonprivileged entrypoint was run and correctly
+returned exit 1 / `AWAITING_PARENT_IDENTITY_RUN`. No sudo/credential use occurred.
+Available unit tests pass **24/24**, no skips; unit-only research line coverage
+**22.46%**. `pvg verify` passed six Python files; extensionless scripts additionally
+passed `py_compile`, and the guest script passed `sh -n`. These are not VM results.
+
+`approved-preparation/` records 101 shipped Alpine APKs (including transitive
+dependency declarations and exact package hashes), 16,712 Go archive members,
+41 notice-name matches, and 56 host runtime components. Raw `.PKGINFO` fields,
+Homebrew formula/license metadata, origins, version/build identifiers, and hashes
+are preserved. macOS dyld system images lack standalone file hashes; their OS
+build binding and the limitation require explicit review. The resolved guest Go
+dependency list is intentionally still unmeasured.
+
+**License clearance is not granted.** GPL/mixed APKs, bundled toolchain notices,
+host runtime components and four recorded risks require a separate, substantive
+operator-owned `license-review.json` before the launcher starts services/VMs.
+The record must have exactly: `version=1`, `decision="approved-local-use"`, the
+actual `operator_uid`, exact `inventory_sha256`, matching inventory `scope`,
+`components` (all APK paths and host-library keys plus `source` and `toolchain`),
+`resolutions` (all four inventory unresolved strings), and an
+`authorization_reference` SHA-256. Each component/resolution value must describe
+review evidence and applicable obligations, not just an approval boolean. Do not
+auto-fill this review or treat the build-profile approval as blanket clearance.
+
+- Inventory SHA-256: `dc11522600eae2424bf3fce4d124d401db85a3566fa63968d2a6a2ec32f98fcb`.
+- Final detached image SHA-256: `2bf3a0dadd6828abc1e1fb55a7f7a4d4846c99942145f4307739f0be1b86abd7`.
+- Guest bootstrap SHA-256: `30f626548b9c0ed0232079146f13f9cfc2b8032ba1e1eb9b64c37e50d862d7a2`.
+
+The exact authorized generated `media/go` cache was removed after verifying the
+original image/receipt and pinned archive. Both image versions, source clone,
+archive and all evidence remain. Deleted regular-file bytes: 227,769,067 across
+15,045 files; tree manifest digest:
+`777d4e351960e6e55c8bd521992ebf35afa3a740fa0037f0e2fc6b8aeb214b54`.
+`cache-cleanup.json` records actual `df` before the combined repackage/cleanup
+operation and after it (not an isolated claim about bytes freed). Free capacity
+is moving with unrelated host activity; the 15-GB gate remains enforced before
+and after runtime staging and before each invocation.
+
+The launcher uses `clonefile(2)` directly, not `cp -c`: the latter's documented
+full-copy fallback violates the fail-closed disk requirement. The actual clone
+independence test passed. Clones are rehashed, stripped of inherited ACLs,
+root-owned and read-only beneath the restricted runner directory.
+
+After explicit license review and sufficient free space, parent/root command:
+
+```sh
+/opt/homebrew/bin/python3 /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-90te/scripts/offline-identity-integration \
+  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/vm \
+  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-90te/.tmp-sr_pm/offline-preflight/assets-20261020-1 \
+  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-90te/.tmp-sr_pm/offline-preflight/assets-20261020-1/license-review.json
+```
+
+The suite has six mandatory tests covering seven real OS/configuration negatives,
+graceful/forced stop and acknowledgement, watchdog, output cap, and two clean
+independent baseline builds. It stops on the first failure; unexecuted required
+tests never become a green result. All receipt/baseline claims remain pending
+until the root run and independent export verification. No story delivery yet.
+
+Scope-budget note for PM: the expanded implementation is above the approximate
+seven-file/1200-LOC target when including the prior preparation checkpoint;
+separate launcher, guest bootstrap, license inventory, verifier and real tests
+were retained rather than collapsing trust boundaries to reduce file count.
+
+## Historical checkpoint (before profile approval)
+
 No vlt source, Go build, Go test, or new VM profile was executed. No baseline
 has passed. Software admission/promotion remains unavailable. The existing
 synthetic policy, evaluator, executor, CLI and integration suite are unchanged.
