@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T16:10:47Z
-content_hash: "sha256:253dfcfe76ebb4d707e42d32f599d5e5e0fd41e187d8d88a5fa3714555ea992e"
+updated_at: 2026-10-20T16:58:16Z
+content_hash: "sha256:a16e3bc1459dcd402a621bfdc3efe18fc0d2813e2d475a43fd4c70d03a417259"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -99,6 +99,14 @@ status: new
 
 
 ## Notes
+OPERATOR OFFLINE BUILD PREFLIGHT PROFILE APPROVAL (2026-10-20):
+- Approved two independent fresh disposable VM invocations for pinned vlt source 129e0b3f15a3bd6af949ee47d76f6855c582ab73 using Go 1.26.10 linux-arm64 archive SHA-256 3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797.
+- Per invocation: 512 MiB RAM, 1 vCPU, 300-second total hard ceiling. Cumulative build/test runtime before other probes/replays: maximum 600 seconds.
+- Initial command timeout is 240 seconds and explicitly unmeasured; replace with measured result while retaining the 300-second hard ceiling.
+- Preserve approved controls: 30-second boot deadline, 2-second stop acknowledgement target, 5-second SIGTERM grace plus mandatory forced kill, 1 MiB output cap, and 15 GB minimum host free space.
+- Required isolation: no guest networking, host shares, clipboard integration, or forwarded agents; evaluator-controlled read-only detached asset input; no host build fallback, paid service, production access, automatic main merge, or promotion.
+- Unexplained build differences, missing dependencies, license ambiguity, isolation failure, or non-clean baseline must fail closed. Resource exhaustion at 512 MiB is a measured blocker, not permission to increase limits.
+
 ## nd_contract
 status: in_progress
 
