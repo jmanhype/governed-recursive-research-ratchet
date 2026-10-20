@@ -1,0 +1,38 @@
+UNIT-ONLY line coverage for research/. No identity/VM integration coverage is measured or inferred.
+Coverage executable resolved by pyenv: /Users/speed/.pyenv/versions/3.10.14/bin/coverage
+Interpreter from coverage executable shebang: /Users/speed/.pyenv/versions/3.10.14/bin/python3.10
++ /Users/speed/.pyenv/versions/3.10.14/bin/python3.10 --version
+Python 3.10.14
++ /Users/speed/.pyenv/shims/coverage --version
+Coverage.py, version 7.9.1 with C extension
+Full documentation is at https://coverage.readthedocs.io/en/7.9.1
++ /Users/speed/.pyenv/shims/coverage run --data-file=.tmp-sr_pm/unit.coverage --source=research --context=unit-only-research tests/unit_contracts.py
+test_allowlist_rejects_roles_and_expected_answers (__main__.Contracts) ... ok
+test_cli_exact_grammar (__main__.Contracts) ... ok
+test_identifiers_reject_traversal (__main__.Contracts) ... ok
+test_isolation_inventory_is_exact_not_color_interpreted (__main__.Contracts) ... ok
+test_packet_identity_and_forged_pass_distinct (__main__.Contracts) ... ok
+test_recorded_preflight_failure_preceded_operator_stop (__main__.Contracts) ... ok
+test_registered_limits_and_inventory (__main__.Contracts) ... ok
+test_runtime_binding_is_local_and_restricted (__main__.Contracts) ... ok
+test_short_temporary_socket_path (__main__.Contracts) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.005s
+
+OK
++ /Users/speed/.pyenv/shims/coverage report --data-file=.tmp-sr_pm/unit.coverage --precision=2 -m
+Name                    Stmts   Miss   Cover   Missing
+------------------------------------------------------
+research/common.py        110     59  46.36%   52, 61-65, 69-80, 84-97, 126-155
+research/evaluator.py     154    154   0.00%   2-198
+research/execution.py     167    143  14.37%   24, 32-48, 51-63, 68-188, 196-210, 214-216
+research/ledger.py         67     67   0.00%   2-83
+research/policy.py         17      9  47.06%   25-36
+research/runner.py         52     23  55.77%   34-44, 48-64
+------------------------------------------------------
+TOTAL                     567    455  19.75%
++ /Users/speed/.pyenv/shims/coverage json --data-file=.tmp-sr_pm/unit.coverage --pretty-print --show-contexts -o docs/evidence/bounded-challenge/unit-coverage.json
+Wrote JSON report to docs/evidence/bounded-challenge/unit-coverage.json
++ set +x
+All commands exited 0. Exactly nine supplementary unit tests executed; zero VM or service-identity commands executed.
