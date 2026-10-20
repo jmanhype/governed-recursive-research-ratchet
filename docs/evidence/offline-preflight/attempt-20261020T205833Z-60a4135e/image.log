@@ -1,0 +1,1 @@
+{"expected_failure": {"code": "IntegrityFailure", "message": "Offline asset mismatch: input.iso", "operation": "unknown", "retryable": false, "receipt": null}}

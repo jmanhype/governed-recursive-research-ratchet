@@ -1,0 +1,21 @@
+test_01_actual_permission_and_misconfiguration_controls (__main__.OfflinePreflight.test_01_actual_permission_and_misconfiguration_controls) ... ok
+test_02_graceful_stop_and_acknowledgement (__main__.OfflinePreflight.test_02_graceful_stop_and_acknowledgement) ... ok
+test_03_forced_cancellation (__main__.OfflinePreflight.test_03_forced_cancellation) ... ok
+test_04_watchdog_deadline (__main__.OfflinePreflight.test_04_watchdog_deadline) ... ok
+test_05_output_resource_cap (__main__.OfflinePreflight.test_05_output_resource_cap) ... ok
+test_06_independent_builds_clean_baseline_and_isolation (__main__.OfflinePreflight.test_06_independent_builds_clean_baseline_and_isolation) ... FAIL
+
+======================================================================
+FAIL: test_06_independent_builds_clean_baseline_and_isolation (__main__.OfflinePreflight.test_06_independent_builds_clean_baseline_and_isolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-offline-jwxgpr6a/evaluator/code/offline_preflight.py", line 127, in test_06_independent_builds_clean_baseline_and_isolation
+    self.assertEqual(observed['exit_code'], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 6 tests in 273.265s
+
+FAILED (failures=1)
+{"errors": 0, "executed": 6, "failures": 1, "required": 6, "skipped": 0}
