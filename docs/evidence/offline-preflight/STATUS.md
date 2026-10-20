@@ -50,7 +50,9 @@ Final preparation: `preparation-20261020T160545Z-bc3d6dc7/`.
 - First failed preparation (`preparation-20261020T160442Z-1bd0c23f`) is preserved.
   A binary fixture matched the notice filename search; strict UTF-8 decoding failed.
   The corrected inventory preserves non-text matches as hex instead of discarding
-  them. An intermediate successful preparation remains on disk, not canonical.
+  them. Intermediate preparation `preparation-20261020T160505Z-8cb1c144/` is
+  preserved in Git as non-canonical historical evidence. It predates the explicit
+  `inventory.json` profile binding; do not use its proposal to authorize execution.
 
 Untracked preparation inputs remain under `.tmp-sr_pm/offline-preflight/` (source
 Git clone, official Go metadata and archive). No upstream code/toolchain/QEMU
