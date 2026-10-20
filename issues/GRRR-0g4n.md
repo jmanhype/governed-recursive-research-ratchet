@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T15:56:23Z
-content_hash: "sha256:5aea6455c6b541cef37240c98a6556e0f56cbfad174ca5768da4d00c7ac2e3a6"
+content_hash: "sha256:e6c349ca45e63f33864bd5ba17a68ad0afaf959f59cc8a571b037d98f697fd63"
 assignee: dev-GRRR-0g4n
 closed_at: 2026-10-20T15:56:23Z
 close_reason: "Accepted: independently verified bounded synthetic VM path, all seven ACs, 12/12 real integration tests, preserved hash-bound evidence and explicitly scoped unit coverage."
@@ -152,6 +152,18 @@ PREFLIGHT REPAIR CHECKPOINT (not delivery): commit 8f85947bfdac01ade6ced151afa8a
 MANDATORY NEGATIVE CONTROL CHECKPOINT (not delivery): commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Preserved successful 8-test attempt at integration commit8f85947 and independently verified12 manifest artifact hashes, receipt chains/anchors, raw CLEAN/PASS bytes, completed clean/faulty assertions,11 gates, stopped preflight, unchanged assets and output bounds; final-audit.json records measurements. Parent correctly required actual absence/overflow/deadline proof before delivery. Added separate restricted missing-policy and absent-QEMU runtimes using same source hashes; root-owned read-only executor config points only to approved QEMU or dedicated absent path, never modifies installed QEMU. Added evaluator-authored output flood and five-second command-deadline safety probes, distinct from candidate semantics. Full mandatory entrypoint now enumerates12 test methods and requires root-generated absence receipts plus active probe evidence. Raw console bytes stored separately as content objects to avoid nested-hex wire growth. Unit9/9 pass; pvg verify explicit paths10 recognized files0 findings; py_compile and diff-check pass. New12-test attempt requires parent identity launcher; no delivery or new integration-success claim.
 DELIVERY COMMIT: 83bab97b3f5edea53005f4cb18374a24faaa12b6 on story/GRRR-0g4n; clean worktree, no push. Exact parent integration source commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Evidence and independent audit committed at83bab97. Final scripts/verify-evidence check exit0,20 manifest artifacts verified;12/12 integration tests and9/9 unit tests; pvg verify10 recognized files0 issues. PM review required; developer is not accepting or closing.
 UNIT-ONLY COVERAGE ADDENDUM. SHA: 10c0862f3e1c82b449d76f9342f2f89703e3dbaa. Executed /Users/speed/.pyenv/shims/coverage run --data-file=.tmp-sr_pm/unit.coverage --source=research --context=unit-only-research tests/unit_contracts.py, then coverage report --data-file=.tmp-sr_pm/unit.coverage --precision=2 -m and coverage json --data-file=.tmp-sr_pm/unit.coverage --pretty-print --show-contexts -o docs/evidence/bounded-challenge/unit-coverage.json; all exit0. Python3.10.14 and Coverage.py7.9.1. Nine unit tests passed. UNIT-ONLY line coverage for research/:112/567 statements=19.75%; common46.36%, evaluator0.00%, execution14.37%, ledger0.00%, policy47.06%, runner55.77%. Raw transcript unit-coverage.txt SHA2567ef31a3871d35dec5683a46ca409a25b4cf070d7dc8ceb0fda2c91b397ffa25c; JSON SHA2564560925e18f0ec1213efd44b15c32b5ec5104990626f595b81bf0fc8a47ba3d7. No identity/VM integration coverage is measured or inferred. No privileged VM integration rerun or implementation behavior change.
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-20.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-20]: Independent review of delivery 10c0862f3e1c82b449d76f9342f2f89703e3dbaa meets the bounded synthetic walking-skeleton bar, not vlt verification, admission or production readiness.
 
