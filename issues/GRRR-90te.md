@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T18:43:13Z
-content_hash: "sha256:2103bba36bdc28efa581680bedad8fe62440bc0b5287d05cdc7784f5f209610c"
+updated_at: 2026-10-20T20:56:37Z
+content_hash: "sha256:e4be6c4f66acd5e88d9b70bf7464261cb6b83eaa44097f3e28baf9c813f46b45"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -117,6 +117,11 @@ AUTHORIZED GRADLE CLEANUP RESULT (2026-10-20): removed only /Users/speed/.gradle
 AUTHORIZATION ARTIFACT FINALIZATION: documentation/evidence-only commit fa0949766a836af84a0247ccf189b4dbda5f86bd. Final ignored private license-review.json SHA256 4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf; owner UID 501 mode 0600; exact 159 components and four risk dispositions; classification counts preserved 54 permissive / 80 boundary-controlled / 25 Apple-system. Authorization reference 033330e01fda00835902bdd7cb0016338fe7891146d4501ef3e6fa1d2d00b8d5 binds four operator/license evidence artifacts. Both parent Gradle cleanup files copied byte-identically (SHA256 de0617ffa519fa284b03e03f13e0eec0ab8620c12887d14df43cd44ee1577851). Unit tests 24/24 passed; pvg verify six files passed; py_compile and sh -n passed. Free bytes at final verification 16530137088; root launcher must recheck 15000000000 floor. No root/sudo/VM invocation performed. Ready for parent-mediated root run; not delivered or accepted.
 REGENERABLE HOMEBREW CACHE CLEANUP (2026-10-20): removed only /Users/speed/Library/Caches/Homebrew (208M, 1,576 files); free space now 15,260,770,304 bytes. Manifest preserved in main checkout .tmp-sr_pm/homebrew-cache-cleanup-manifest.txt. No project/model/output data touched.
 REGENERABLE CARGO CACHE CLEANUP (2026-10-20): removed only /Users/speed/.cargo/registry/src (410M, 21,720 files) and /Users/speed/.cargo/registry/cache (57M, 477 files); free space now 15,551,619,072 bytes. Manifest main checkout .tmp-sr_pm/cargo-cache-cleanup-manifest.txt. No project/model/output data touched.
+OPERATOR 1024 MiB OFFLINE VM APPROVAL (2026-10-20):
+- Operator explicitly increased offline-build VM memory from 512 MiB to 1024 MiB and authorized rerunning GRRR-90te parent identity integration.
+- All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; maximum 600 seconds cumulative build/test runtime before other probes; no guest networking/host shares/clipboard/forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
+- If compilation still fails at 1024 MiB, stop again; do not automatically increase resources.
+
 ## nd_contract
 status: in_progress
 ### evidence
