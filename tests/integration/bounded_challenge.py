@@ -39,6 +39,25 @@ class BoundedChallenge(unittest.TestCase):
             call(self.endpoint, request)
         self.assertEqual(result.exception.record['code'], code)
 
+    def infrastructure_control(self, name: str, expected_exit: int) -> None:
+        receipt = self.runtime / 'negative-controls.json'
+        self.assertEqual(receipt.stat().st_uid, 0)
+        self.assertEqual(receipt.stat().st_mode & 0o222, 0)
+        controls = json.loads(receipt.read_bytes())
+        self.assertEqual(set(controls), {'missing-policy', 'absent-vm'})
+        self.assertEqual(controls[name]['observed_code'], 'Unavailable')
+        self.assertEqual(controls[name]['returncode'], expected_exit)
+        self.assertEqual(digest((self.evidence / (name + '.log')).read_bytes()), controls[name]['log_sha256'])
+        self.assertTrue(controls[name]['absence_confirmed'])
+        implementation = 'evaluator.py' if name == 'missing-policy' else 'execution.py'
+        self.assertEqual(digest((ROOT / 'research' / implementation).read_bytes()), controls[name]['implementation_sha256'])
+
+    def test_00a_missing_policy_real_control(self) -> None:
+        self.infrastructure_control('missing-policy', 3)
+
+    def test_00b_absent_vm_real_control(self) -> None:
+        self.infrastructure_control('absent-vm', 0)
+
     def test_01_direct_stop_before_synthetic(self) -> None:
         denied = self.request()
         self.denied(denied, 'GateBlocked')
@@ -73,6 +92,34 @@ class BoundedChallenge(unittest.TestCase):
         self.assertTrue(call(self.endpoint, {'action': 'list'})['preflight'])
         for key in ('stop-preflight', 'stop-again'):
             self.assertTrue(call(self.endpoint, {'action': 'stop', 'run': run, 'key': key})['ceased'])
+
+    def safety_probe(self, name: str, expected_message: str) -> dict:
+        report = call(self.endpoint, self.request(action='probe-' + name))
+        self.assertEqual(report['execution'], 'error')
+        self.assertEqual(report['finding'], 'not-evaluated')
+        self.assertEqual(report['observation_error']['code'], 'GateBlocked')
+        self.assertEqual(report['observation_error']['message'], expected_message)
+        self.assertTrue(report['cessation_verified'])
+        self.assertTrue(report['isolation_verified'])
+        snapshot = call(self.endpoint, {'action': 'evidence', 'run': report['run']})
+        verifySnapshot(snapshot, report['anchor'])
+        (self.evidence / (name + '-control.json')).write_bytes(canonical(snapshot))
+        (self.evidence / (name + '-control.anchor')).write_text(report['anchor'] + '\n')
+        observed = json.loads(bytes.fromhex(snapshot['objects'][snapshot['events'][-1]['event']['objects'][0]]))
+        self.assertTrue(observed['assets_unchanged'])
+        self.assertEqual(len(bytes.fromhex(snapshot['objects'][observed['raw_digest']])), observed['raw_bytes'])
+        self.assertLessEqual(observed['raw_bytes'], 1048576)
+        self.assertTrue(call(self.endpoint, {'action': 'list'})['preflight'], 'Services must remain responsive')
+        return observed
+
+    def test_01a_active_output_cap(self) -> None:
+        observed = self.safety_probe('output', 'Guest output exceeded cap')
+        self.assertEqual(observed['raw_bytes'], 1048576)
+
+    def test_01b_active_command_deadline(self) -> None:
+        observed = self.safety_probe('deadline', 'Evaluator-approved deadline exceeded')
+        self.assertGreaterEqual(observed['seconds'], 5)
+        self.assertLess(observed['seconds'], 30)
 
     def test_02_clean_and_faulty_real_vm(self) -> None:
         for name, variant, expected in [('clean', self.clean, 'pass'), ('faulty', self.faulty, 'fail')]:

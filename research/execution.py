@@ -1,5 +1,6 @@
 """Narrow runner-identity VM adapter. Candidate commands never execute on host."""
 import base64
+import json
 import os
 from pathlib import Path
 import selectors
@@ -30,6 +31,16 @@ class Executor:
     def __init__(self, root: Path) -> None:
         require(os.getuid() == RUNNER, 'Unauthorized', 'Executor requires runner identity')
         self.root = root
+        config_path = root / 'execution-config.json'
+        require(config_path.is_file() and not config_path.is_symlink(), 'Unavailable', 'Executor config absent')
+        config_stat = config_path.stat()
+        require(config_stat.st_uid == 0 and config_stat.st_mode & 0o222 == 0,
+                'Unauthorized', 'Executor config must be root-owned read-only')
+        config = json.loads(config_path.read_bytes())
+        fields(config, {'version', 'qemu'})
+        require(config['version'] == 1 and config['qemu'] in
+                (QEMU, str(root.parent / 'absent-qemu')), 'InvalidInput', 'Unregistered executor configuration')
+        self.qemu = config['qemu']
         self.lock = threading.RLock()
         self.active: dict[str, subprocess.Popen] = {}
         self.fenced: set[str] = set()
@@ -60,10 +71,10 @@ class Executor:
         identifier(reservation)
         identifier(key)
         require(fence == 0, 'StaleBinding', 'Stale execution epoch')
-        require(request['variant'] in VARIANTS and type(request['probe']) is bool,
+        require(request['variant'] in VARIANTS and request['probe'] in (None, 'stop', 'output', 'deadline'),
                 'InvalidInput', 'Variant not frozen/allowlisted')
-        require(Path(QEMU).is_file(), 'Unavailable', 'Approved VM executable absent')
-        version = subprocess.run([QEMU, '--version'], capture_output=True, timeout=5, check=True)
+        require(Path(self.qemu).is_file(), 'Unavailable', 'Approved VM executable absent')
+        version = subprocess.run([self.qemu, '--version'], capture_output=True, timeout=5, check=True)
         require(b'version 11.1.2' in version.stdout, 'StaleBinding', 'QEMU version changed')
         require(shutil.disk_usage(self.root).free >= 15000000000,
                 'BudgetExceeded', 'Host free space below approved minimum')
@@ -73,7 +84,7 @@ class Executor:
             require(path.is_file() and not path.is_symlink(), 'Unavailable', 'VM asset absent')
             before[name] = digest(path.read_bytes())
             require(before[name] == expected, 'IntegrityFailure', 'VM asset hash changed')
-        args = [QEMU, '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '512',
+        args = [self.qemu, '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '512',
                 '-smp', '1', '-kernel', str(self.root / 'assets/vmlinuz-virt'),
                 '-initrd', str(self.root / 'assets/initramfs-virt'), '-append',
                 'modules=loop,squashfs,sd-mod,usb-storage console=ttyAMA0',
@@ -143,9 +154,16 @@ class Executor:
             with self.lock:
                 require(run not in self.fenced, 'Stopped', 'Stopped before ready state')
                 self.ready.add(run)
-            if request['probe']:
+            if request['probe'] == 'stop':
                 # Pre-experiment emergency-stop exercise: deliberately await control cancellation.
                 until(b'NEVER-EMITTED', 300)
+            elif request['probe'] == 'output':
+                # Evaluator-authored safety control, never a candidate semantic.
+                send('yes GRRR-SAFETY-PROBE')
+                until(b'NEVER-EMITTED', 5)
+            elif request['probe'] == 'deadline':
+                send('sleep 6')
+                until(b'NEVER-EMITTED', 5)
             token = uuid.uuid4().hex
             send(f"printf '{token}-BEGIN\\n'; " + VARIANTS[request['variant']]['command'] +
                  f"; r=$?; printf '{token}-EXIT:%s\\n' \"$r\"")

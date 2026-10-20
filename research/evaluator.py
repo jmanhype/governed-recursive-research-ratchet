@@ -13,6 +13,7 @@ from policy import loadPolicy
 class Evaluator:
     def __init__(self, root: Path) -> None:
         self.root = root
+        require((root / 'policy.json').is_file(), 'Unavailable', 'Missing protected policy')
         self.policy_ref = digest((root / 'policy.json').read_bytes())
         self.policy = loadPolicy(os.getuid(), root / 'policy.json', self.policy_ref)
         self.ledger = Ledger(root)
@@ -35,7 +36,7 @@ class Evaluator:
         # Deliberately exclude arbitrary request strings and raw data from audit metadata.
         self.event({'kind': 'denied', 'actor_uid': uid, 'code': code, 'objects': []}, uuid.uuid4().hex)
 
-    def start(self, request: dict, uid: int, probe: bool = False) -> dict:
+    def start(self, request: dict, uid: int, probe: str | None = None) -> dict:
         fields(request, {'action', 'policy', 'challenge', 'variant', 'key', 'epoch'})
         identifier(request['key'])
         identifier(request['variant'], True)
@@ -84,6 +85,10 @@ class Evaluator:
         with self.lock:
             assertion = observed['transport_complete'] and observed['observation'] == b'CLEAN\n'.hex() and observed['exit_code'] == 0
             gates = {gate: {'state': 'not-run', 'evidence': None} for gate in GATES}
+            raw_bytes = bytes.fromhex(observed.pop('raw', ''))
+            raw_object = self.ledger.object(raw_bytes)
+            observed['raw_digest'] = raw_object
+            observed['raw_bytes'] = len(raw_bytes)
             raw_hash = self.ledger.object(canonical(observed))
             for gate in ('source_environment_identity', 'isolation', 'trusted_observation'):
                 gates[gate] = {'state': 'pass' if observed['transport_complete'] else 'error', 'evidence': raw_hash}
@@ -98,7 +103,7 @@ class Evaluator:
                       'assertion': 'pass' if assertion else 'fail',
                       'finding': 'no-synthetic-fault-observed' if assertion else 'synthetic-walkthrough-fault',
                       'verified': False, 'admission': 'blocked', 'decision': 'not-run',
-                      'gates': gates, 'objects': [raw_hash], 'reservation': reservation,
+                      'gates': gates, 'objects': [raw_hash, raw_object], 'reservation': reservation,
                       'reserved_seconds': 300, 'reserved_total_seconds': self.reserved,
                       'execution_seconds': observed['seconds'], 'review_seconds': None,
                       'incremental_money_cents': 0, 'epoch': self.runs[run]['epoch'],
@@ -115,7 +120,7 @@ class Evaluator:
             report.update(snapshot_id=snapshot['snapshot_id'], anchor=snapshot['receipt']['digest'])
             self.runs[run] = report
             (self.root / (run + '.json')).write_bytes(canonical(snapshot))
-            if (probe and stopped and observed['termination']['ceased']
+            if (probe == 'stop' and stopped and observed['termination']['ceased']
                     and observed['assets_unchanged'] and observed.get('isolation_verified')
                     and observed['error'] and observed['error']['code'] == 'Stopped'):
                 self.preflight = True
@@ -150,8 +155,9 @@ class Evaluator:
             action = request.get('action')
             if action in DENIED:
                 raise Failure('GateBlocked', 'Capability explicitly denied: ' + action)
-            if action in ('start', 'preflight'):
-                return self.start(request, uid, action == 'preflight')
+            if action in ('start', 'preflight', 'probe-output', 'probe-deadline'):
+                probe = {'start': None, 'preflight': 'stop', 'probe-output': 'output', 'probe-deadline': 'deadline'}[action]
+                return self.start(request, uid, probe)
             if action == 'list':
                 fields(request, {'action'})
                 return {'runs': list(self.runs), 'policy': self.policy_ref, 'preflight': self.preflight}
@@ -184,5 +190,9 @@ class Evaluator:
 if __name__ == '__main__':
     import sys
     root = Path(sys.argv[1]).resolve()
-    evaluator = Evaluator(root)
-    serve(root.parent / 'ipc/evaluator.sock', evaluator.handle)
+    try:
+        evaluator = Evaluator(root)
+        serve(root.parent / 'ipc/evaluator.sock', evaluator.handle)
+    except Failure as exc:
+        print(canonical({'error': exc.record}).decode(), flush=True)
+        raise SystemExit(3)

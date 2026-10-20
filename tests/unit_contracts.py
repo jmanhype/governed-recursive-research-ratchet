@@ -31,6 +31,7 @@ class Contracts(unittest.TestCase):
         policy = default_policy(501)
         self.assertEqual(policy['gates'], list(GATES))
         self.assertEqual(policy['limits']['challenge_seconds'], 300)
+        self.assertEqual(policy['limits']['command_seconds'], 5)
         self.assertFalse(policy['paid_dispatch'])
 
     def test_cli_exact_grammar(self) -> None:

@@ -30,6 +30,81 @@ def identity(uid: int) -> None:
     os.umask(0o077)
 
 
+def negative_controls(runtime: Path, evidence: Path) -> None:
+    """Separate immutable negative runtimes; never remove installed tools/policy."""
+    results = {}
+    for control in ('missing-policy', 'absent-vm'):
+        base = runtime / control
+        base.mkdir(mode=0o711)
+        os.chmod(base, 0o711)
+        ipc = base / 'ipc'
+        ipc.mkdir(mode=0o1777)
+        os.chmod(ipc, 0o1777)
+        for name, uid in [('evaluator', 320), ('runner', 321)]:
+            target = base / name
+            shutil.copytree(runtime / name / 'code', target / 'code')
+            os.chown(target, uid, uid)
+            os.chmod(target, 0o700)
+            os.chown(target / 'code', uid, uid)
+            os.chmod(target / 'code', 0o700)
+            for path in (target / 'code').iterdir():
+                os.chown(path, uid, uid)
+                os.chmod(path, 0o400)
+        if control == 'missing-policy':
+            command = [sys.executable, str(base / 'evaluator/code/evaluator.py'), str(base / 'evaluator')]
+            result = subprocess.run(command, cwd=base, preexec_fn=lambda: identity(320),
+                                    capture_output=True, text=True, timeout=5,
+                                    env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+            (evidence / (control + '.log')).write_text(result.stdout + result.stderr)
+            assert result.returncode == 3, 'Missing-policy evaluator must fail closed'
+            assert json.loads(result.stdout)['error']['code'] == 'Unavailable'
+            assert not (ipc / 'evaluator.sock').exists(), 'Absent policy must not expose service'
+        else:
+            config = base / 'runner/execution-config.json'
+            config.write_bytes(canonical({'version': 1, 'qemu': str(base / 'absent-qemu')}))
+            os.chmod(config, 0o444)
+            probe = base / 'evaluator/code/absent_vm_probe.py'
+            shutil.copyfile(ROOT / 'tests/integration/absent_vm_probe.py', probe)
+            os.chown(probe, 320, 320)
+            os.chmod(probe, 0o400)
+            with (evidence / 'absent-vm-service.log').open('xb') as log:
+                service = subprocess.Popen([sys.executable, str(base / 'runner/code/execution.py'), str(base / 'runner')],
+                    cwd=base, preexec_fn=lambda: identity(321), stdout=log, stderr=subprocess.STDOUT,
+                    start_new_session=True, env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+                try:
+                    deadline = time.monotonic() + 5
+                    while time.monotonic() < deadline and not (ipc / 'executor.sock').exists() and service.poll() is None:
+                        time.sleep(0.05)
+                    assert (ipc / 'executor.sock').exists(), 'Negative executor did not start'
+                    command = [sys.executable, str(probe), str(base)]
+                    result = subprocess.run(command, cwd=base, preexec_fn=lambda: identity(320),
+                        capture_output=True, text=True, timeout=5,
+                        env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'})
+                    (evidence / (control + '.log')).write_text(result.stdout + result.stderr)
+                    assert result.returncode == 0, 'Absent-QEMU negative control failed'
+                    assert json.loads(result.stdout)['expected_failure']['code'] == 'Unavailable'
+                finally:
+                    if service.poll() is None:
+                        service.terminate()
+                    try:
+                        service.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        service.kill()
+                        service.wait(timeout=2)
+        implementation = base / ('evaluator/code/evaluator.py' if control == 'missing-policy' else 'runner/code/execution.py')
+        absent = base / ('evaluator/policy.json' if control == 'missing-policy' else 'absent-qemu')
+        assert not absent.exists(), 'Negative control prerequisite must actually be absent'
+        results[control] = {'command': command, 'returncode': result.returncode,
+                            'implementation_sha256': digest(implementation.read_bytes()),
+                            'absent_path': str(absent), 'absence_confirmed': not absent.exists(),
+                            'observed_code': 'Unavailable', 'stdout': result.stdout,
+                            'log_sha256': digest((evidence / (control + '.log')).read_bytes())}
+    receipt = runtime / 'negative-controls.json'
+    receipt.write_bytes(canonical(results))
+    os.chmod(receipt, 0o444)
+    shutil.copyfile(receipt, evidence / receipt.name)
+
+
 def run() -> int:
     if os.getuid() != 0:
         print('AWAITING_PARENT_IDENTITY_RUN: root identity launcher required; never request/store credentials')
@@ -62,6 +137,9 @@ def run() -> int:
             shutil.copyfile(ROOT / 'research' / filename, code / filename)
             os.chown(code / filename, uid, uid)
             os.chmod(code / filename, 0o400)
+    config = runtime / 'runner/execution-config.json'
+    config.write_bytes(canonical({'version': 1, 'qemu': '/opt/homebrew/bin/qemu-system-aarch64'}))
+    os.chmod(config, 0o444)
     # Service code is deployed narrowly outside Documents; no broad worktree ACL grant.
     probe_path = runtime / 'runner/code/permission_probe.py'
     shutil.copyfile(ROOT / 'tests/integration/permission_probe.py', probe_path)
@@ -108,6 +186,7 @@ def run() -> int:
     streams = []
     code = 1
     try:
+        negative_controls(runtime, evidence)
         for name, uid, module in [('runner', 321, 'execution.py'), ('evaluator', 320, 'evaluator.py')]:
             stream = (runtime / (name + '.log')).open('xb')
             streams.append(stream)

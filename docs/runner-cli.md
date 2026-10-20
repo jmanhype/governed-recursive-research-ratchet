@@ -63,6 +63,24 @@ direct stop against a real booted VM before either synthetic variant is run.
 The same command is the mandatory CI entrypoint; absent services are an error,
 never skip/success. Supplementary pure tests: `python3 tests/unit_contracts.py`.
 
+Parent-authorized negative controls also run in every final launcher attempt:
+two separate restricted runtimes exercise genuinely missing evaluator policy and
+a root-owned read-only executor configuration pointing at an absent QEMU path.
+The installed QEMU and successful runtime policy are never renamed or modified.
+The same executor/evaluator source bytes are checked in the control receipts.
+After direct-stop preflight, evaluator-authored safety probes emit over 1 MiB
+and wait past the five-second command bound. These are safety probes, not new
+candidate variants. Their GateBlocked outcomes, bounded raw objects, cessation,
+unchanged assets and responsive services must pass assertions before clean/faulty
+tests. The unchanged 300-second outer challenge watchdog is not weakened.
+There are now 12 mandatory test methods; all four negative controls are named.
+
+Raw console bytes are distinct content-addressed objects, not nested hex inside
+hex-encoded metadata. This preserves the 1 MiB captured-output ceiling while
+keeping the full audit response within the separately bounded 3 MiB wire format.
+`scripts/verify-evidence ATTEMPT_DIRECTORY` checks anchors, chains and objects
+offline independently of the service's ledger implementation.
+
 Raw snapshots/anchors and Markdown are preserved under
 each `docs/evidence/bounded-challenge/attempt-*` directory; protected
 journal/objects remain in the recorded `/private/tmp/grrr-*/evaluator/`, outside

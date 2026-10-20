@@ -5,6 +5,7 @@ import json
 from common import EVALUATOR, GATES, Failure, canonical, digest, fields, require
 
 LIMITS = {'memory_mib': 512, 'vcpus': 1, 'boot_seconds': 30,
+          'command_seconds': 5,
           'stop_ack_seconds': 2, 'term_grace_seconds': 5, 'output_bytes': 1048576,
           'challenge_seconds': 300, 'minimum_free_bytes': 15000000000,
           'poc_execution_seconds': 21600, 'milestone_execution_seconds': 86400,
