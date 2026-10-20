@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T18:25:38Z
-content_hash: "sha256:e0d420925ccd618a76f087b9d405b1cd3f8456d7d0b2e83bfcae064d141f4439"
+updated_at: 2026-10-20T18:26:18Z
+content_hash: "sha256:b417fd93d3cade8898cf959b05c4e0330c8f16611f686e03228b0eee45c3a2c5"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -117,6 +117,14 @@ AUTHORIZED GRADLE CLEANUP RESULT (2026-10-20): removed only /Users/speed/.gradle
 AUTHORIZATION ARTIFACT FINALIZATION: documentation/evidence-only commit fa0949766a836af84a0247ccf189b4dbda5f86bd. Final ignored private license-review.json SHA256 4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf; owner UID 501 mode 0600; exact 159 components and four risk dispositions; classification counts preserved 54 permissive / 80 boundary-controlled / 25 Apple-system. Authorization reference 033330e01fda00835902bdd7cb0016338fe7891146d4501ef3e6fa1d2d00b8d5 binds four operator/license evidence artifacts. Both parent Gradle cleanup files copied byte-identically (SHA256 de0617ffa519fa284b03e03f13e0eec0ab8620c12887d14df43cd44ee1577851). Unit tests 24/24 passed; pvg verify six files passed; py_compile and sh -n passed. Free bytes at final verification 16530137088; root launcher must recheck 15000000000 floor. No root/sudo/VM invocation performed. Ready for parent-mediated root run; not delivered or accepted.
 REGENERABLE HOMEBREW CACHE CLEANUP (2026-10-20): removed only /Users/speed/Library/Caches/Homebrew (208M, 1,576 files); free space now 15,260,770,304 bytes. Manifest preserved in main checkout .tmp-sr_pm/homebrew-cache-cleanup-manifest.txt. No project/model/output data touched.
 REGENERABLE CARGO CACHE CLEANUP (2026-10-20): removed only /Users/speed/.cargo/registry/src (410M, 21,720 files) and /Users/speed/.cargo/registry/cache (57M, 477 files); free space now 15,551,619,072 bytes. Manifest main checkout .tmp-sr_pm/cargo-cache-cleanup-manifest.txt. No project/model/output data touched.
+## nd_contract
+status: in_progress
+### evidence
+- go.tgz primary ISO namespace repair: direct PVD/root directory read-back proves GO.TGZ contains exact pinned Go archive SHA, independent of Joliet. 31 unit tests/static checks pass.
+- All failed attempts and prior images preserved. Only authorized Go duplicate removed with deterministic manifest; repack waited for parent Cargo cleanup. Free bytes after repack 15486951424.
+- Image ff523652e7f0073df3424732d924b5223dc719f1e373ad1cbe44f88194bac38a; receipt 594cb1a07adc6134be81b05035c275562b558a9853eeb2b3ccb9ed39d512157a.
+### proof
+- [ ] AC #1-#6: real build proof outstanding; no developer root execution; not delivered.
 
 ## nd_contract
 status: in_progress
