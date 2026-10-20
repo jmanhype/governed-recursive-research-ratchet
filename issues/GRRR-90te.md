@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T23:30:42Z
-content_hash: "sha256:b82de5d598a2c8d52a7e2a08bef6b8108e8396cce4cc758d5c0d4f82de340d4c"
+updated_at: 2026-10-20T23:40:54Z
+content_hash: "sha256:baedae91dd0322d1f74237b79c575650f00f2013d26af9e22a9584c4ec17170a"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -125,6 +125,60 @@ OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
 - Operator explicitly increased the offline-build guest ephemeral /work tmpfs cap from 350 MiB to 512 MiB and authorized rerunning GRRR-90te parent identity integration.
 - VM RAM remains 1024 MiB. All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; 600-second cumulative build/test runtime before other probes; no guest networking, host shares, clipboard, or forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If linking still fails at 512 MiB /work, stop again; do not automatically increase resources.
+## Implementation Evidence (DELIVERED)
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- Parent: /opt/homebrew/bin/python3 scripts/offline-identity-integration <main .tmp-sr_pm/vm> <story .tmp-sr_pm/offline-preflight/assets-20261020-1> <same assets/license-review.json>, at runtime code commit 403c907e66095ee9d860158e069e0d963d8a9b48. Exact absolute command in dispatcher handoff. Same launcher used by ./scripts/test-story offline-preflight; entrypoint not separately rerun.
+- python3 scripts/verify-offline-evidence docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c
+- PYTHONPATH=.tmp-sr_pm/final-coverage-tools COVERAGE_FILE=.tmp-sr_pm/final.coverage python3 -m coverage run --source=research -m unittest discover -s tests -p 'unit*.py' -v
+- Same environment: python3 -m coverage json -o docs/evidence/offline-preflight/final-audit/unit-coverage.json; python3 -m coverage report
+- pvg verify research/offline.py research/offline_execution.py research/policy.py tests/unit_offline.py tests/unit_offline_runtime.py tests/integration/offline_preflight.py tests/integration/offline_probe.py
+- python3 -m py_compile scripts/prepare-offline-assets scripts/prepare-offline-preflight scripts/offline-identity-integration scripts/test-story scripts/verify-offline-evidence
+- sh -n research/offline-guest.sh
+
+Summary: integration 6/6 PASS, zero skipped/errors/failures, launcher exit 0, 348.058 seconds. Independent evidence verifier PASS, six snapshots, baseline_verified=true. Unit 31/31 PASS, zero skipped; Python/shell static checks PASS. pvg verify PASSED, 7 files scanned, 0 issues.
+Coverage: unit-only research line coverage 24.0761478163% (215/893), coverage.py 7.13.4. No integration coverage inferred.
+
+### Commit
+Branch: story/GRRR-90te
+SHA: a1d2148d8a8216e4db964b1a4fc76ee10f48c564
+Runtime implementation SHA: 403c907e66095ee9d860158e069e0d963d8a9b48
+
+### Evidence identities
+- Canonical attempt docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c; audit docs/evidence/offline-preflight/final-audit/AUDIT.md.
+- Manifest SHA256 85fbaadbae832ebb67110bbdfe980025fc011d6adb720866054acb4c690b1c16.
+- Test-output SHA256 1a88076a5222ac0217f6eb59d642049d1bb3138c3d457d657dbcadcdd7246946.
+- Baseline receipt SHA256 cd26c3022ac378d726136079b0989eed5ff8842b6afaf613fdfa2420256ebd50.
+- Both build SHA256 ae21fbda8127e7560c30bbd1026d79dffafefe4a32a78728521228a1162af5ea.
+- Profile SHA256 2e08f0288355a64eba22b75fdeb1e62ac14dfaea3be26cbee38ece6eb4051d47.
+- License review SHA256 4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf.
+- Measured command maximum 44.959017792s; invocation maximum 46.332908917s; two builds total 92.563880959s. Measured observations replace unmeasured assumption, not approved 240/300 second ceilings.
+
+### AC Verification
+| AC | Evidence | Status |
+|---|---|---|
+| 1 | research/offline.py verifies pinned commit, all 52 source blobs, correct LICENSE blob, authoritative behavior references; inventory/receipt bind source/toolchain/image; baseline receipt and independent full tests. | PASS |
+| 2 | offline_execution.py and offline_preflight.py test_06 use two independent clean offline VM runs, identical binary hashes, printed real dependency closure, full inventoried tools/assets. Missing dependency negative blocks. | PASS |
+| 3 | 159-component exact-inventory operator review, license/provenance addendum, all risk resolutions; GPL/LGPL local-use boundaries and macOS terms explicit. No redistribution/new-linking clearance inferred. | PASS |
+| 4 | Guest actual routes/mounts/devices, no host/credential/protected paths or channels, readonly detached inputs reject writes; synthetic vault IO works. Real host permission probes pass. | PASS |
+| 5 | Separate service identities/ACLs, root-readonly assets/config, evaluator-private policy; test_06 clean reset and unchanged inputs, bounded 1024 MiB RAM/512 MiB work approved separately. Synthetic remains unchanged. | PASS |
+| 6 | Real misconfiguration network/share/identity/image/dependency probes and tests_02–05 concurrency/stop/forced/watchdog/output-cap PASS. Approved numeric limits and emergency-stop procedure predate execution. All failures preserved. | PASS |
+
+Boundary map: research/execution retains accepted synthetic Executor; offline specialization research/offline_execution.py extends it; research/policy.py loads exact protected offline profile; logical tests/integration/offline-preflight maps to offline_preflight.py plus offline_probe.py/root launcher. No pvg/nd/vlt core changes.
+
+LEARNINGS:
+- Verify base ISO9660 names, not just Joliet/macOS extension-aware listings.
+- Archive source/toolchain to preserve exact hidden/case/long names.
+- Persist failure diagnostics before assertions.
+- Separate RAM, guest workspace, and host disk boundaries; changes require operator approval.
+- Unit coverage is supplementary, never a substitute for real identity/VM tests.
+
+Residual boundaries: baseline only, admission/promotion intentionally blocked; full observation attack matrix and stop/admission linearization remain other stories. Diff budget exceeded: 13 implementation/test files and 1525 additions/2 deletions relative to accepted epic base, excluding evidence. PM investigation required; no waiver or automatic acceptance claimed.
+
+
 ## nd_contract
 status: in_progress
 ### evidence
