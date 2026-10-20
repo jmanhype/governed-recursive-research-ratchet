@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T16:58:16Z
-content_hash: "sha256:a16e3bc1459dcd402a621bfdc3efe18fc0d2813e2d475a43fd4c70d03a417259"
+updated_at: 2026-10-20T17:17:58Z
+content_hash: "sha256:958229dacee6797b104fd80650effc9c04b030038a51d44ecada54dcde022794"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -106,6 +106,32 @@ OPERATOR OFFLINE BUILD PREFLIGHT PROFILE APPROVAL (2026-10-20):
 - Preserve approved controls: 30-second boot deadline, 2-second stop acknowledgement target, 5-second SIGTERM grace plus mandatory forced kill, 1 MiB output cap, and 15 GB minimum host free space.
 - Required isolation: no guest networking, host shares, clipboard integration, or forwarded agents; evaluator-controlled read-only detached asset input; no host build fallback, paid service, production access, automatic main merge, or promotion.
 - Unexplained build differences, missing dependencies, license ambiguity, isolation failure, or non-clean baseline must fail closed. Resource exhaustion at 512 MiB is a measured blocker, not permission to increase limits.
+## nd_contract
+status: in_progress
+
+### evidence
+- Commit 6c7b93e165e141d8884f2318934cfe84763a244c implements approved offline profile, fixed guest adapter, root launcher, real mandatory suite and independent verifier. Worktree clean after commit; no delivery/acceptance.
+- Operator profile approval versioned in docs/OFFLINE-PREFLIGHT-APPROVAL-2026-10-20.md. Synthetic behavior unchanged; separate root-bound offline loadPolicy branch.
+- Preparation manifest SHA256 51b5f46f6fdde846096f711ec7c483aa858abf1ac4fa597d5fee6a0966ac0b05 under docs/evidence/offline-preflight/approved-preparation/. Independently verified 10 artifact hashes, source/image/bootstrap/inventory bindings.
+- Inventory: 101 Alpine APKs, 16712 Go archive members, 41 notice matches, 56 host runtime components. GPL/mixed licenses and four explicit risks still require separate substantive review; no clearance fabricated.
+- Authorized deletion only of regenerable media/go: 15045 files / 227769067 bytes; tree digest 777d4e351960e6e55c8bd521992ebf35afa3a740fa0037f0e2fc6b8aeb214b54. Both ISOs, source and pinned archive retained. Actual df pre-combined-repackage/cleanup and post recorded. Host space moving near 15-GB floor; gate unchanged.
+- Root launcher uses clonefile(2) directly because cp -c silently falls back; rehashes root-owned ACL-stripped read-only clones. Actual independent clone test passed.
+- Unit suite 24/24, zero skips; unit-only research coverage 22.46%. pvg verify passed six Python files; extensionless scripts py_compile and guest sh -n passed. git diff --cached --check passed.
+- ./scripts/test-story offline-preflight run without privilege: exit 1, AWAITING_PARENT_IDENTITY_RUN. No new guest/build/test execution. Exact parent command and required review schema are in STATUS.md.
+- Budget disclosure: total story diff exceeds approximate seven-file/1200-LOC guideline; distinct launcher/guest/bootstrap/inventory/verifier/test trust roles retained for PM investigation.
+
+### proof
+- [ ] AC #1: exact source/license/toolchain/image hashes present; real clean-baseline receipt pending root run.
+- [ ] AC #2: two fresh builds implemented, not executed; dynamic Go dependency confirmation pending.
+- [ ] AC #3: inventory metadata/notices preserved; separate license review and compliance proof unresolved.
+- [ ] AC #4: actual guest isolation/synthetic I/O probes implemented, unexecuted.
+- [ ] AC #5: root-controlled immutable staging and identity/ACL probes implemented, privileged execution pending.
+- [ ] AC #6: explicit numeric profile approved; real watchdog/ack/TERM/KILL and five misconfiguration tests implemented, measurements pending.
+
+### learnings
+- cp -c is not a strict clone primitive on macOS. Use clonefile without copy fallback near hard disk gates.
+- Preserve preparation-stage success separately from verified baseline status; a complete metadata inventory is not license clearance.
+
 
 ## nd_contract
 status: in_progress
