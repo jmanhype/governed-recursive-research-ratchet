@@ -1,0 +1,4 @@
+# paivot-graph project vault settings
+# Managed by: pvg settings key=value
+
+lint.quality_gates: Integration tests: MANDATORY \(no mocks\)|fail closed|no automatic main merge|no production mutation|no autonomous patch generation|no harness adaptation|no unapproved paid calls
