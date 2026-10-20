@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T23:41:32Z
-content_hash: "sha256:d523d82b3779bae7516693242f0e2cef720b0f75a893fc5c86839ba4ead2e13f"
+updated_at: 2026-10-20T23:42:13Z
+content_hash: "sha256:38a2db619f88845ed78471ef403d1466f58f71c669c4de26f478c20392813c82"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -77,7 +77,7 @@ Proposed required command after implementation: ./scripts/test-story offline-pre
 - Run pvg story verify-delivery and pvg story deliver; developer marks delivered, never accepted/closed. PM-Acceptor independently checks evidence and user intent. Report unresolved gates and residual risks; no claims from mocks, partial success or agent narration.
 - Preserve concurrent edits. No recursive delegation in this story without dispatcher authorization. nd stores receipt references only; evaluator ledger remains experiment source of truth.
 
-## nd_contract
+## Historical nd_contract 1
 status: new
 
 ### evidence
@@ -129,7 +129,7 @@ OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
 PROOF: See committed final audit a1d2148d8a8216e4db964b1a4fc76ee10f48c564 and complete AC Verification table above. Independent verifier PASS; integration 6/6 no skips/failures; units31/31; unit-only coverage24.0761478163%; pvg verify7files0issues.
 LEARNINGS: Exact ISO namespace and resource-boundary evidence are mandatory.
 
-## nd_contract
+## Historical nd_contract 2
 status: delivered
 
 ### evidence
@@ -143,7 +143,7 @@ status: delivered
 - [x] AC #5: independent identities/ACLs/reset and approved resource caps pass.
 - [x] AC #6: actual negative configs, watchdog, acknowledgement and graceful/forced cancellation pass; emergency procedure approved.
 
-## nd_contract
+## Historical nd_contract 3
 status: delivered
 
 ### evidence
@@ -153,7 +153,7 @@ status: delivered
 - [ ] Developer evidence block must remain authoritative above this contract.
 
 
-## Implementation Evidence (DELIVERED)
+## Implementation Evidence
 
 PROOF:
 
@@ -207,7 +207,7 @@ LEARNINGS:
 Residual boundaries: baseline only, admission/promotion intentionally blocked; full observation attack matrix and stop/admission linearization remain other stories. Diff budget exceeded: 13 implementation/test files and 1525 additions/2 deletions relative to accepted epic base, excluding evidence. PM investigation required; no waiver or automatic acceptance claimed.
 
 
-## nd_contract
+## Historical nd_contract 4
 status: in_progress
 ### evidence
 - Approved offline /work tmpfs increased only to 512 MiB, now explicit in profile and strict runtime config; guest uses size=512m. VM RAM remains 1024 MiB and synthetic policy unchanged.
@@ -217,7 +217,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: mandatory real baseline proof remains pending; not delivered.
 
-## nd_contract
+## Historical nd_contract 5
 status: in_progress
 ### evidence
 - BLOCKED: attempt-20261020T205833Z-60a4135e reached linking under approved 1024 MiB RAM; linker mapping output failed: no space left on device. Guest /work tmpfs 350 MiB cap, not host disk or compiler kill.
@@ -227,7 +227,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: baseline remains false; independent successful builds unproven.
 
-## nd_contract
+## Historical nd_contract 6
 status: in_progress
 ### evidence
 - Explicit operator-approved 1024 MiB offline-only amendment implemented in profile, adapter validation/QEMU arguments, root launcher and preparation approval binding. Synthetic remains 512 MiB; every other limit unchanged.
@@ -237,7 +237,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: awaiting mandatory successful real baseline evidence; not delivered.
 
-## nd_contract
+## Historical nd_contract 7
 status: in_progress
 ### evidence
 - BLOCKED checkpoint: attempt-20261020T182702Z-768d552e, all 24 artifact hashes verified. Manifest SHA256 b4e19f303ae9cf644484de878014a9b51e142cc4989c0a5eb55c8174222ced0b; build SHA256 a0949547b9a7f7c4a700887e80ddda4d391ecda3c7d3bb5bd0ebfb41d9dc8017.
@@ -247,7 +247,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: baseline remains false; no successful independent builds or complete baseline proof. Not delivered.
 
-## nd_contract
+## Historical nd_contract 8
 status: in_progress
 ### evidence
 - go.tgz primary ISO namespace repair: direct PVD/root directory read-back proves GO.TGZ contains exact pinned Go archive SHA, independent of Joliet. 31 unit tests/static checks pass.
@@ -256,7 +256,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: real build proof outstanding; no developer root execution; not delivered.
 
-## nd_contract
+## Historical nd_contract 9
 status: in_progress
 ### evidence
 - Go archive transport repair: pinned archive read back from new ISO and hash verified; guest verifies and extracts only inside /work. Prior fourth failure and old image retained.
@@ -266,7 +266,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: real build proof outstanding; no developer root run; not delivered.
 
-## nd_contract
+## Historical nd_contract 10
 status: in_progress
 ### evidence
 - Exact 52-file source tar transport replaces loose ISO source tree; names, modes, hashes verified after reading archive back from generated ISO. Third failed attempt preserved unchanged.
@@ -275,7 +275,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: real offline build proof outstanding; not delivered.
 
-## nd_contract
+## Historical nd_contract 11
 status: in_progress
 ### evidence
 - Isolation repair: 28 unit tests pass, shell syntax and Python compilation pass, pvg verify passes.
@@ -284,7 +284,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: parent real baseline rerun remains mandatory; not delivered.
 
-## nd_contract
+## Historical nd_contract 12
 status: in_progress
 
 ### evidence
@@ -296,7 +296,7 @@ status: in_progress
 ### proof
 - [ ] AC #1-#6: mandatory real offline integration remains unproven; no delivery.
 
-## nd_contract
+## Historical nd_contract 13
 status: in_progress
 
 ### evidence
@@ -323,7 +323,7 @@ status: in_progress
 - Preserve preparation-stage success separately from verified baseline status; a complete metadata inventory is not license clearance.
 
 
-## nd_contract
+## Historical nd_contract 14
 status: in_progress
 
 ### evidence
@@ -364,3 +364,25 @@ status: in_progress
 - Follows: [[GRRR-0g4n]]
 
 ## Comments
+
+## nd_contract
+status: delivered
+
+### evidence
+SHA: a1d2148d8a8216e4db964b1a4fc76ee10f48c564
+- Runtime code 403c907e66095ee9d860158e069e0d963d8a9b48.
+- Successful attempt docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c.
+- Independent python3 scripts/verify-offline-evidence verification PASS, six evaluator snapshots.
+- Manifest SHA256 85fbaadbae832ebb67110bbdfe980025fc011d6adb720866054acb4c690b1c16.
+- Integration 6/6 executed, 0 skipped/errors/failures; two builds byte-identical ae21fbda8127e7560c30bbd1026d79dffafefe4a32a78728521228a1162af5ea.
+- Unit31/31 pass; unit-only research coverage24.0761478163% (215/893), not integration coverage. pvg verify7files0issues; shell/Python static pass.
+- Measured command max44.959017792s, invocation max46.332908917s, two builds92.563880959s. Approved ceilings unchanged.
+- Full PROOF/LEARNINGS and PM diff-budget investigation retained above and in committed final-audit/AUDIT.md. Baseline only; admission/promotion blocked.
+
+### proof
+[x] AC #1: exact pinned source and license blob, toolchain/image identities and clean-baseline tests verified.
+[x] AC #2: independent offline fresh VM builds match; complete inputs/dependency inventory and runtime closure retained.
+[x] AC #3: 159-component exact-inventory local-use license review and risk resolutions operator-approved.
+[x] AC #4: actual guest routes/mounts/devices and protected-host denial pass; synthetic IO without writable shares.
+[x] AC #5: separate OS identities/ACLs, evaluator protection, clean resets and approved resource caps pass.
+[x] AC #6: numeric stop/watchdog/forced cancellation and misconfiguration probes pass; emergency procedure approved.
