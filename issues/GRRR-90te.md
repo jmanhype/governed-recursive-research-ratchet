@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T15:59:07Z
-content_hash: "sha256:2c813da5f2ecb6f75b60225023e3848ebd519946157479a2d2bf3e6d76ebf53d"
+updated_at: 2026-10-20T16:10:47Z
+content_hash: "sha256:253dfcfe76ebb4d707e42d32f599d5e5e0fd41e187d8d88a5fa3714555ea992e"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -99,6 +99,28 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Authorization-boundary WIP committed 90f4da212b3711d717d00d32f412d0681c6accd6; not delivered or accepted.
+- Non-executing preparation verified pinned vlt commit/license/every tracked source byte and Go 1.26.10 archive; source/toolchain remain ignored preparation assets, not Git code imports.
+- Final evidence: docs/evidence/offline-preflight/preparation-20261020T160545Z-bc3d6dc7; manifest SHA256 30a5624ef6f1321ca77ab1f2d78a38b8cd9a7432652e553bc85eb9afadb64033. Manifest artifacts and inventory/profile binding independently rechecked.
+- python unittest discovery: 17/17 passed, zero skips. Coverage unit-only research 22.95%, offline module 41.76%. No VM/source/build/test execution of new profile.
+- pvg verify explicit 3 code paths: passed (2 .py scanned; extensionless script independently py_compile checked). git diff --cached --check passed.
+- Dispatcher requires operator approval before new offline Go profile execution. Proposal: 512 MiB, 1 CPU, 300 seconds per fresh VM, 2 independent builds (600 seconds cumulative max), 240-second command timeout UNMEASURED, no networking/shares/paid calls. Existing synthetic policy unchanged.
+- Full inventory/license compliance, detached read-only input image, VM adapter/root launcher and mandatory offline-preflight integration suite still incomplete. No root command fabricated. See docs/evidence/offline-preflight/STATUS.md.
+
+### proof
+- [ ] AC #1: source identity verified; offline baseline receipt absent.
+- [ ] AC #2: toolchain/source inputs pinned; independent VM builds not executed.
+- [ ] AC #3: licenses/notices inventoried partially; separate review and full compliance incomplete.
+- [ ] AC #4: new-profile actual isolation probes not executed.
+- [ ] AC #5: no policy/identity/cap weakening; new-profile integration outstanding.
+- [ ] AC #6: explicit approval absent; cancellation/misconfiguration measurements outstanding.
+
+### learnings
+- Preparation success must remain distinct from preflight success. Preserve binary notice-name matches as bytes. Synthetic-only approval does not authorize a Go build profile.
 
 
 ## History
