@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T15:53:26Z
-content_hash: "sha256:7efb677c691d85827e6ce2e61ffaa30aa62b7fd0216facaf6607a41e202c525d"
+content_hash: "sha256:03955112923fc34133a38ed9bd74a5796c9dc15b8a47c07fb779c12bd2a06b72"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -318,7 +318,7 @@ status: delivered
 
 ### evidence
 - Story branch: story/GRRR-0g4n
-- Commit SHA: a3403552eb6ea27981e53108337080a5ae652401
+- Commit SHA: 10c0862f3e1c82b449d76f9342f2f89703e3dbaa
 - Integration source commit: dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9
 - Required integration: 12 executed, 0 skipped, 0 failures, 0 errors
 - Unit tests: 9 executed, 0 failures
@@ -328,6 +328,12 @@ status: delivered
 - Test output SHA256: 3a4fa144133976f27014091dfd3dec95e72dca767df28b2907a7eb36ae396bfe
 - Independent audit: docs/evidence/bounded-challenge/final-audit-12-tests.json; 20 artifact hashes plus chains, anchors and objects checked.
 - Full PROOF/LEARNINGS and limitations: docs/evidence/bounded-challenge/DELIVERY-GRRR-0g4n.md
+
+- UNIT-ONLY research/ line coverage: 19.75% (112/567 statements); 9 unit tests; Python 3.10.14, Coverage.py 7.9.1.
+- Module line coverage: common 46.36%; evaluator 0.00%; execution 14.37%; ledger 0.00%; policy 47.06%; runner 55.77%.
+- No parent-run identity/VM integration coverage is measured or inferred; no privileged integration rerun occurred.
+- Coverage transcript: docs/evidence/bounded-challenge/unit-coverage.txt; SHA256 7ef31a3871d35dec5683a46ca409a25b4cf070d7dc8ceb0fda2c91b397ffa25c.
+- Coverage JSON: docs/evidence/bounded-challenge/unit-coverage.json; SHA256 4560925e18f0ec1213efd44b15c32b5ec5104990626f595b81bf0fc8a47ba3d7.
 
 ### proof
 ### AC Verification
