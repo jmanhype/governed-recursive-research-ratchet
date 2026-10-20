@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T03:34:35Z
-content_hash: "sha256:871d6ad05620262a428b99072486c8224b827de5796e0836b9ae1ebacd725328"
+updated_at: 2026-10-20T03:37:20Z
+content_hash: "sha256:0ed30ee5f70d30bac08aab49fb05d75c4deedc6c812ef0cc29fe2145671c93c8"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -96,7 +96,12 @@ status: new
 
 
 ## Notes
-
+BLOCKED BEFORE DEVELOPER DISPATCH:
+- AC #1 requires separate operator approval of standalone runner grammar, scope, policy, VM/identity setup, and measured numeric limits; those approvals are not yet recorded.
+- AC #6 requires a real local VM with clean reset, disabled networking/sharing, distinct evaluator permissions, bounded output, finite reservation, evaluator deadline, and direct emergency stop.
+- Measured host preflight on 2026-10-19: macOS 27.0, Apple M2 Pro, 32 GB RAM, 10 cores, Hypervisor support=1, only 8 GB free; limactl/QEMU/UTM/Parallels/VirtualBox/vmrun/colima/podman unavailable; Docker CLI exists but daemon is unreachable.
+- Architecture forbids silent downgrade to unrestricted host/container execution. No implementation, experiment, commit, or push occurred.
+- Next required operator decision: authorize a verified VM provisioning path and safe space plan, or provide another approved isolated execution host.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
