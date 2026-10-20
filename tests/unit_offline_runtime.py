@@ -28,7 +28,8 @@ class OfflineRuntimeContracts(unittest.TestCase):
         self.assertIn('3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797  /inputs/go.tgz', guest)
         self.assertIn('tar -xzf /inputs/go.tgz -C /work', guest)
         self.assertIn('GOROOT=/work/go PATH=/work/go/bin:', guest)
-        self.assertIn('size=350m', guest)
+        self.assertIn('size=512m', guest)
+        self.assertNotIn('size=350m', guest)
         preparation = (root / 'scripts/prepare-offline-assets').read_text()
         self.assertNotIn('bundle.extractall(media', preparation)
         self.assertIn("shutil.copyfile(archive, media / 'go.tgz')", preparation)
@@ -91,14 +92,14 @@ class OfflineRuntimeContracts(unittest.TestCase):
     def setUp(self) -> None:
         self.config = {'version': 1, 'profile_sha256': 'a' * 64, 'image_sha256': 'b' * 64,
             'license_review_sha256': 'c' * 64, 'qemu_sha256': 'd' * 64, 'network': False, 'shares': [],
-            'memory_mib': 1024, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
+            'memory_mib': 1024, 'workspace_mib': 512, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
 
     def test_exact_registered_configuration(self) -> None:
         self.assertEqual(validate_config(self.config), self.config)
 
     def test_network_or_share_never_becomes_allowed(self) -> None:
         for key, value in [('network', True), ('network', 'none'), ('shares', ['/Users']),
-                           ('memory_mib', 512), ('memory_mib', 2048), ('vcpus', 2), ('command_seconds', 241), ('total_seconds', 301)]:
+                           ('workspace_mib', 350), ('workspace_mib', 1024), ('memory_mib', 512), ('memory_mib', 2048), ('vcpus', 2), ('command_seconds', 241), ('total_seconds', 301)]:
             config = dict(self.config, **{key: value})
             with self.assertRaises(Failure):
                 validate_config(config)
@@ -109,7 +110,7 @@ class OfflineRuntimeContracts(unittest.TestCase):
                 validate_config(dict(self.config, **{key: 'arbitrary'}))
 
     def test_numbers_are_not_booleans(self) -> None:
-        for key in ('version', 'vcpus', 'memory_mib'):
+        for key in ('version', 'vcpus', 'memory_mib', 'workspace_mib'):
             with self.assertRaises(Failure):
                 validate_config(dict(self.config, **{key: True}))
 

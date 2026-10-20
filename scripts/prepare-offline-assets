@@ -104,7 +104,7 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
                'image_sha256': digest(input_iso.read_bytes()),
                'guest_script_sha256': digest((ROOT / 'research/offline-guest.sh').read_bytes()),
                'source_tree_sha256': source_record['tree_sha256'],
-               'approval_sha256': digest((ROOT / 'docs/OFFLINE-PREFLIGHT-1024-APPROVAL-2026-10-20.md').read_bytes()),
+               'approval_sha256': digest((ROOT / 'docs/OFFLINE-PREFLIGHT-WORK512-APPROVAL-2026-10-20.md').read_bytes()),
                'license_review': 'required', 'host_free_bytes': shutil.disk_usage(target).free}
     (target / 'asset-receipt.json').write_bytes(canonical(receipt))
     return receipt

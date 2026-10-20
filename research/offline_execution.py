@@ -39,13 +39,13 @@ def input_mount_command(token: str) -> str:
 def validate_config(config: dict) -> dict:
     """Validate the fixed capability surface independently of filesystem trust."""
     fields(config, {'version', 'profile_sha256', 'image_sha256', 'license_review_sha256', 'qemu_sha256',
-                    'network', 'shares', 'memory_mib', 'vcpus', 'command_seconds', 'total_seconds'})
+                    'network', 'shares', 'memory_mib', 'workspace_mib', 'vcpus', 'command_seconds', 'total_seconds'})
     for key in ('profile_sha256', 'image_sha256', 'license_review_sha256', 'qemu_sha256'):
         identifier(config[key], True)
-    require(all(type(config[key]) is int for key in ('version', 'memory_mib', 'vcpus', 'command_seconds', 'total_seconds')),
+    require(all(type(config[key]) is int for key in ('version', 'memory_mib', 'workspace_mib', 'vcpus', 'command_seconds', 'total_seconds')),
             'InvalidInput', 'Numeric configuration has wrong type')
     require(config['version'] == 1 and config['network'] is False and config['shares'] == []
-            and config['memory_mib'] == 1024 and config['vcpus'] == 1
+            and config['memory_mib'] == 1024 and config['workspace_mib'] == 512 and config['vcpus'] == 1
             and config['command_seconds'] == 240 and config['total_seconds'] == 300,
             'GateBlocked', 'Offline capabilities or limits differ from approved profile')
     return config

@@ -15,6 +15,8 @@ class OfflineContracts(unittest.TestCase):
         before = canonical(default_policy(501))
         profile = proposed_profile(501, 'a' * 64)
         self.assertEqual(profile['limits']['memory_mib'], 1024)
+        self.assertEqual(profile['workspace_mib'], 512)
+        self.assertNotIn('workspace_mib', default_policy(501))
         self.assertEqual(default_policy(501)['limits']['memory_mib'], 512)
         self.assertEqual(profile['limits'], dict(default_policy(501)['limits'], memory_mib=1024))
         self.assertEqual(profile['per_invocation_seconds'], 300)

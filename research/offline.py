@@ -174,7 +174,7 @@ def proposed_profile(operator: int, inventory_digest: str) -> dict:
             'limits': dict(LIMITS, memory_mib=1024), 'network': False, 'host_shares': False,
             'paid_dispatch': False, 'toolchain_auto_download': False,
             'build_command_seconds': 240, 'per_invocation_seconds': 300,
-            'builds': 2, 'independent_fresh_vms': True,
+            'builds': 2, 'independent_fresh_vms': True, 'workspace_mib': 512,
             'approval': 'required', 'build_timeout_basis': 'proposal only; no offline build measured',
             'read_only_asset_transport': 'detached block image; not a host filesystem mount'}
 
