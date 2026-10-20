@@ -1,7 +1,7 @@
 ---
 id: GRRR-90te
 title: "Block unsafe baselines before an operator starts research"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T23:46:09Z
-content_hash: "sha256:dd042d40de8b579543f562bcaf1fdd96010db9306079debbf9ef5557fc23e10d"
-blocks: [GRRR-gu87, GRRR-6sso]
+content_hash: "sha256:8aa0a3d2511467dc4835d031242327a4567932c55a0e13ebe304a0b23119e12c"
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
 follows: [GRRR-0g4n]
+closed_at: 2026-10-20T23:46:09Z
+close_reason: "Accepted: independently verified pinned offline baseline, real identity/isolation/cancellation controls, exact local-use license scope, and justified evidence/diff growth; admission remains blocked."
 ---
 
 ## Description
@@ -381,10 +382,12 @@ status: in_progress
 - 2026-10-20T15:59:07Z auto-follows: linked to predecessor GRRR-0g4n
 - 2026-10-20T15:59:07Z claimed by dev-GRRR-90te
 - 2026-10-20T23:40:54Z status: in_progress -> in_progress
+- 2026-10-20T23:46:09Z status: in_progress -> closed
+- 2026-10-20T23:46:09Z dep_removed: no_longer_blocks GRRR-gu87
+- 2026-10-20T23:46:09Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-gu87]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-0g4n]]
 - Follows: [[GRRR-0g4n]]
 
