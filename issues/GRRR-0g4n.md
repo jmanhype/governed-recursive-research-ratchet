@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T15:42:02Z
-content_hash: "sha256:9a89af319e7680a9914fcc6901e9eae57f20bf7665543565b5f2537567dcf1a7"
+updated_at: 2026-10-20T15:43:06Z
+content_hash: "sha256:3330e93b09b9aa809ed1fed632f43c663e36ae4dd1b9342ebde322562716ab42"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -150,6 +150,43 @@ IDENTITY RUNTIME FIX CHECKPOINT (not delivery): commit 3c93078d3e9e2c73d1196a24e
 PREFLIGHT REPAIR CHECKPOINT (not delivery): commit 8f85947bfdac01ade6ced151afa8a847b768421a. Parent-exported read-only protected diagnostic proves event4 finished at1.298718459s with GateBlocked Guest isolation/reset check failed; ANSI-colored lo from interactive ls did not satisfy exact newline-lo-newline check. Operator stop occurred later at event5, so historical error is not relabeled as a stop race. Replaced ls with exact shell interface-name printing, retained strict isolation checks, added authenticated bootstrap readiness and stop-test readiness polling. Concurrent EOF checks recheck stop fence; preflight true requires Stopped error, verified isolation, cessation and unchanged assets. Validated request keys bind before preflight gate, including denied requests. Test saved ID renamed to saved_run_id. Unit tests9/9 pass, py_compile and diff-check pass, pvg verify4 recognized files/0 findings. Original attempt permissions/test-output/manifest hashes remain parent-reported values and are now committed with read-only diagnostic. Fresh parent identity run still required; no integration success or delivery claimed. Evidence preservation increases total diff beyond original approximate line/file budget; code remains a small Python-standard-library slice, added bulk is captured diagnostic/attempt evidence.
 MANDATORY NEGATIVE CONTROL CHECKPOINT (not delivery): commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Preserved successful 8-test attempt at integration commit8f85947 and independently verified12 manifest artifact hashes, receipt chains/anchors, raw CLEAN/PASS bytes, completed clean/faulty assertions,11 gates, stopped preflight, unchanged assets and output bounds; final-audit.json records measurements. Parent correctly required actual absence/overflow/deadline proof before delivery. Added separate restricted missing-policy and absent-QEMU runtimes using same source hashes; root-owned read-only executor config points only to approved QEMU or dedicated absent path, never modifies installed QEMU. Added evaluator-authored output flood and five-second command-deadline safety probes, distinct from candidate semantics. Full mandatory entrypoint now enumerates12 test methods and requires root-generated absence receipts plus active probe evidence. Raw console bytes stored separately as content objects to avoid nested-hex wire growth. Unit9/9 pass; pvg verify explicit paths10 recognized files0 findings; py_compile and diff-check pass. New12-test attempt requires parent identity launcher; no delivery or new integration-success claim.
 DELIVERY COMMIT: 83bab97b3f5edea53005f4cb18374a24faaa12b6 on story/GRRR-0g4n; clean worktree, no push. Exact parent integration source commit dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9. Evidence and independent audit committed at83bab97. Final scripts/verify-evidence check exit0,20 manifest artifacts verified;12/12 integration tests and9/9 unit tests; pvg verify10 recognized files0 issues. PM review required; developer is not accepting or closing.
+## Implementation Evidence
+
+Commit: 83bab97b3f5edea53005f4cb18374a24faaa12b6
+Integration commit: dee02e80f6a99c3c8a21f79bd0e15390ff85a4b9
+Branch: story/GRRR-0g4n. No push, acceptance or close performed.
+
+### CI/Test Results
+
+Commands run:
+- Parent root: ./scripts/identity-integration /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/vm — exit 0; launches restricted services and ./scripts/test-story bounded-challenge synchronously.
+- ./scripts/test-story bounded-challenge — exit 0; 12 required, 12 executed, 0 skipped, 0 failures, 0 errors; 17.875 seconds.
+- python3 tests/unit_contracts.py — exit 0; 9/9 passed.
+- ./scripts/verify-evidence docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b — exit 0; 20 artifact hashes plus chains/anchors/raw objects and all four safety controls verified.
+- pvg verify research/common.py research/policy.py research/ledger.py research/execution.py research/evaluator.py research/runner.py bin/grrr scripts/test-story scripts/identity-integration scripts/inspect-attempt scripts/verify-evidence tests/integration/bounded_challenge.py tests/integration/permission_probe.py tests/integration/absent_vm_probe.py tests/unit_contracts.py --format=text — exit 0; 10 recognized files scanned, 0 issues.
+- git diff --check — exit 0.
+
+Summary: 12/12 real integration tests and 9/9 supplementary unit tests pass; no skipped tests. Missing policy, absent QEMU, output cap and command deadline were actively tested. Clean execution passes its assertion; forged-PASS execution fails. Both remain blocked for Verified/admission. No hosted CI execution is claimed.
+
+### PROOF
+
+- [x] AC 1: Approved grammar, identity setup and numeric limits recorded; help exposes inspection and stop; pvg core unchanged.
+- [x] AC 2: Real CLI/evaluator/QEMU/ledger/report path produced exact CLEAN versus PASS results and durable receipts.
+- [x] AC 3: Typed validation/authentication/metadata/budget/rate/audit/error mechanisms wired; mandatory real integration entrypoint fails closed.
+- [x] AC 4: Five denied capabilities tested against real evaluator transport, each GateBlocked.
+- [x] AC 5: All 11 gates visible; replay/spec/review/approval remain not-run; verified/admitted states blocked.
+- [x] AC 6: VM reset/network/sharing/identity/output/deadline/reservation/stop and malformed/unauthorized/stale/duplicate/absent-policy/absent-VM/forged-PASS negative controls passed.
+- [x] AC 7: Independent chain/object/anchor verifier and CLI text/Markdown/JSON parity; preserved faulty evidence and unchanged assets.
+
+Evidence: docs/evidence/bounded-challenge/DELIVERY-GRRR-0g4n.md contains the detailed AC table, wiring, measurements, all residual boundaries and histories. Final audit: docs/evidence/bounded-challenge/final-audit-12-tests.json. Final manifest SHA256: 5758264cf727dd9abd1c84e9b3b3c0d7b28575f2919271c5a105ebc26e9def54. Test log SHA256: 3a4fa144133976f27014091dfd3dec95e72dca767df28b2907a7eb36ae396bfe.
+
+### LEARNINGS
+
+- Preserve failed attempts: Documents-path EACCES required narrowly deployed temporary runtimes, not broad permission grants.
+- Interactive ls colors caused a legitimate isolation assertion failure; exact shell inventory and observed readiness repaired it without loosening gates.
+- Avoid TestCase.run attribute collision; bind idempotency keys even for denied requests.
+- Absence and limit branches need real active controls; large raw output needs separate bounded content objects.
+- The full 300-second outer watchdog was not allowed to expire; five-second command deadline was actively proven. Recovery/replay/admission, vlt validation and hosted CI execution remain outside these claims. PM must review evidence-driven file/line budget overrun.
 
 # Implementation Evidence — GRRR-0g4n
 
