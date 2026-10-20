@@ -9,8 +9,8 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-10-20T03:19:04Z
-content_hash: "sha256:1561203859e4bb4f68b4a4165b383b3514d45e7ea3b1fe2f3bc48197e72da530"
-blocked_by: [GRRR-dbbi]
+content_hash: "sha256:a5c189246df510dd570acdc217d8714c9eee265a947fce604f7ad147ee5ce1e9"
+blocked_by: [GRRR-dbbi, GRRR-34ve]
 ---
 
 ## Description
@@ -121,9 +121,10 @@ status: new
 
 ## History
 - 2026-10-20T03:19:04Z dep_added: blocked_by GRRR-dbbi
+- 2026-10-20T03:19:04Z dep_added: blocked_by GRRR-34ve
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-dbbi]]
+- Blocked by: [[GRRR-dbbi]], [[GRRR-34ve]]
 
 ## Comments
