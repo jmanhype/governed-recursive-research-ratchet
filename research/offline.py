@@ -4,6 +4,7 @@ This profile is deliberately distinct from the registered synthetic-only policy.
 Validation is not registration, authorization, license clearance, or a VM receipt.
 """
 import hashlib
+import io
 import ctypes
 import os
 from pathlib import Path
@@ -17,6 +18,28 @@ LICENSE_BLOB = 'c004659349c7a1f6c55e5107b53a0766085e8d2e'
 TOOLCHAIN = 'go1.26.10.linux-arm64.tar.gz'
 TOOLCHAIN_SHA256 = '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797'
 PERMISSIVE = frozenset(('MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', 'ISC'))
+
+
+def package_source(source: Path, records: dict, destination: Path) -> None:
+    """Transport exact Git-inventoried names/modes without ISO name translation."""
+    require(not destination.exists(), 'InvalidInput', 'Source archive already exists')
+    with tarfile.open(destination, 'x', format=tarfile.PAX_FORMAT) as archive:
+        for name, record in sorted(records.items()):
+            path = Path(name)
+            require(not path.is_absolute() and '..' not in path.parts and '.git' not in path.parts,
+                    'InvalidInput', 'Unsafe source archive path')
+            data = (source / path).read_bytes()
+            require(digest(data) == record['sha256'], 'IntegrityFailure', 'Source archive byte mismatch')
+            require(record['mode'] in ('100644', '100755'), 'InvalidInput', 'Unsupported source mode')
+            member = tarfile.TarInfo(name)
+            member.size, member.mode = len(data), int(record['mode'], 8) & 0o777
+            archive.addfile(member, io.BytesIO(data))
+    with tarfile.open(destination) as archive:
+        require(archive.getnames() == sorted(records), 'IntegrityFailure', 'Source archive path mismatch')
+        for member in archive:
+            require(member.isfile() and member.mode == int(records[member.name]['mode'], 8) & 0o777
+                    and digest(archive.extractfile(member).read()) == records[member.name]['sha256'],
+                    'IntegrityFailure', 'Source archive verification failed')
 
 
 def clone_asset(source: Path, destination: Path) -> None:

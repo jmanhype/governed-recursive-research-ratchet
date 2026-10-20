@@ -35,7 +35,7 @@ printf 'GRRR-ISOLATION-PASS\n'
 mkdir /work
 mount -t tmpfs -o size=350m tmpfs /work
 mkdir -p /work/home /work/gopath /work/cache /work/tmp /work/source /work/vault
-cp -R /inputs/source/. /work/source/
+tar -xf /inputs/source.tar -C /work/source
 cd /work/source
 sha256sum -c /inputs/source.sha256
 printf 'GRRR-DEPENDENCIES-BEGIN\n'

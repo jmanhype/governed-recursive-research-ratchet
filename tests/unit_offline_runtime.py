@@ -3,15 +3,35 @@ import copy
 from pathlib import Path
 import sys
 import subprocess
+import tarfile
 import tempfile
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'research'))
 from common import Failure
 from offline_execution import validate_config, read_config, input_mount_command
-from offline import clone_asset
+from offline import clone_asset, package_source
+from common import digest
 
 
 class OfflineRuntimeContracts(unittest.TestCase):
+    def test_source_tar_preserves_hidden_paths_case_bytes_and_modes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            records = {}
+            for name, mode in [('.github/workflows/ci.yml', '100644'), ('.gitignore', '100644'),
+                               ('LICENSE', '100644'), ('Run.sh', '100755')]:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(name.encode())
+                records[name] = {'sha256': digest(name.encode()), 'mode': mode}
+            (root / 'untracked').write_text('excluded')
+            package_source(root, records, root / 'source.tar')
+            with tarfile.open(root / 'source.tar') as archive:
+                self.assertEqual(set(archive.getnames()), set(records))
+                for member in archive:
+                    self.assertEqual(member.mode, int(records[member.name]['mode'], 8) & 0o777)
+                    self.assertEqual(archive.extractfile(member).read(), member.name.encode())
+
     def test_actual_route_predicate_rejects_route_rows(self) -> None:
         guest = (Path(__file__).resolve().parents[1] / 'research/offline-guest.sh').read_text()
         predicate = next(line for line in guest.splitlines() if line.startswith("awk 'NF && !(NR"))

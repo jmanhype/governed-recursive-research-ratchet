@@ -15,7 +15,7 @@ import uuid
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 from common import canonical, digest, require
-from offline import source_inventory, toolchain_inventory
+from offline import source_inventory, toolchain_inventory, package_source
 from execution import ASSETS, QEMU
 
 
@@ -90,11 +90,7 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     (target / 'inventory.json').write_bytes(canonical(inventory))
     media = target / 'media'
     media.mkdir()
-    (media / 'source').mkdir()
-    for name in source_record['files']:
-        destination = media / 'source' / name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(source / name, destination)
+    package_source(source, source_record['files'], media / 'source.tar')
     (media / 'source.sha256').write_text(''.join(v['sha256'] + '  ' + name + '\n'
         for name, v in sorted(source_record['files'].items())))
     # Archive was fully checked for traversal, links/devices and duplicate names.
