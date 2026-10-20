@@ -106,7 +106,7 @@ def main() -> int:
         require(receipt['image_sha256'] == digest((prepared / 'input.iso').read_bytes()), 'IntegrityFailure', 'Input image changed')
         require(receipt['guest_script_sha256'] == digest((ROOT / 'research/offline-guest.sh').read_bytes()),
                 'StaleBinding', 'Rebuild detached media for updated guest bootstrap')
-        approval_ref = digest((ROOT / 'docs/OFFLINE-PREFLIGHT-APPROVAL-2026-10-20.md').read_bytes())
+        approval_ref = digest((ROOT / 'docs/OFFLINE-PREFLIGHT-1024-APPROVAL-2026-10-20.md').read_bytes())
         require(receipt['approval_sha256'] == approval_ref, 'StaleBinding', 'Profile approval artifact changed')
         require(review_path.stat().st_uid == operator and review_path.stat().st_mode & 0o077 == 0,
                 'Unauthorized', 'Review must be operator-owned private artifact')
@@ -145,7 +145,7 @@ def main() -> int:
         config = {'version': 1, 'profile_sha256': profile_ref, 'image_sha256': receipt['image_sha256'],
                   'qemu_sha256': inventory['host_libraries'][str(Path(QEMU).resolve())]['sha256'],
                   'license_review_sha256': digest(review_raw), 'network': False, 'shares': [],
-                  'memory_mib': 512, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
+                  'memory_mib': 1024, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
         readonly(runtime / 'runner/offline-config.json', canonical(config))
         readonly(runtime / 'probe-config.json', canonical(config))
         policy = runtime / 'evaluator/policy.json'

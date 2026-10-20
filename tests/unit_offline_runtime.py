@@ -91,14 +91,14 @@ class OfflineRuntimeContracts(unittest.TestCase):
     def setUp(self) -> None:
         self.config = {'version': 1, 'profile_sha256': 'a' * 64, 'image_sha256': 'b' * 64,
             'license_review_sha256': 'c' * 64, 'qemu_sha256': 'd' * 64, 'network': False, 'shares': [],
-            'memory_mib': 512, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
+            'memory_mib': 1024, 'vcpus': 1, 'command_seconds': 240, 'total_seconds': 300}
 
     def test_exact_registered_configuration(self) -> None:
         self.assertEqual(validate_config(self.config), self.config)
 
     def test_network_or_share_never_becomes_allowed(self) -> None:
         for key, value in [('network', True), ('network', 'none'), ('shares', ['/Users']),
-                           ('memory_mib', 1024), ('vcpus', 2), ('command_seconds', 241), ('total_seconds', 301)]:
+                           ('memory_mib', 512), ('memory_mib', 2048), ('vcpus', 2), ('command_seconds', 241), ('total_seconds', 301)]:
             config = dict(self.config, **{key: value})
             with self.assertRaises(Failure):
                 validate_config(config)

@@ -45,7 +45,7 @@ def validate_config(config: dict) -> dict:
     require(all(type(config[key]) is int for key in ('version', 'memory_mib', 'vcpus', 'command_seconds', 'total_seconds')),
             'InvalidInput', 'Numeric configuration has wrong type')
     require(config['version'] == 1 and config['network'] is False and config['shares'] == []
-            and config['memory_mib'] == 512 and config['vcpus'] == 1
+            and config['memory_mib'] == 1024 and config['vcpus'] == 1
             and config['command_seconds'] == 240 and config['total_seconds'] == 300,
             'GateBlocked', 'Offline capabilities or limits differ from approved profile')
     return config
@@ -130,7 +130,7 @@ class OfflineExecutor(Executor):
                     'Unauthorized', 'Offline asset not root read-only')
             require(digest(path.read_bytes()) == hashed, 'IntegrityFailure', 'Offline asset mismatch: ' + name)
         assets = self.root / 'assets'
-        args = [self.qemu, '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '512', '-smp', '1',
+        args = [self.qemu, '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '1024', '-smp', '1',
                 '-kernel', str(assets / 'vmlinuz-virt'), '-initrd', str(assets / 'initramfs-virt'),
                 '-append', 'modules=loop,squashfs,sd-mod,usb-storage console=ttyAMA0',
                 '-cdrom', str(assets / 'alpine-virt-3.22.6-aarch64.iso'),

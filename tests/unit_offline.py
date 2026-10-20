@@ -14,7 +14,9 @@ class OfflineContracts(unittest.TestCase):
     def test_profile_cannot_change_synthetic_policy(self) -> None:
         before = canonical(default_policy(501))
         profile = proposed_profile(501, 'a' * 64)
-        self.assertEqual(profile['limits'], default_policy(501)['limits'])
+        self.assertEqual(profile['limits']['memory_mib'], 1024)
+        self.assertEqual(default_policy(501)['limits']['memory_mib'], 512)
+        self.assertEqual(profile['limits'], dict(default_policy(501)['limits'], memory_mib=1024))
         self.assertEqual(profile['per_invocation_seconds'], 300)
         self.assertEqual(profile['builds'], 2)
         self.assertFalse(profile['network'])

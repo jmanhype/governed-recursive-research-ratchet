@@ -171,7 +171,7 @@ def proposed_profile(operator: int, inventory_digest: str) -> dict:
     require(type(operator) is int and operator not in (0, 320, 321), 'Unauthorized', 'Separate operator required')
     return {'version': 1, 'profile': 'offline-preflight-v1', 'operator_uid': operator,
             'inventory_sha256': inventory_digest, 'source_commit': SOURCE_COMMIT,
-            'limits': dict(LIMITS), 'network': False, 'host_shares': False,
+            'limits': dict(LIMITS, memory_mib=1024), 'network': False, 'host_shares': False,
             'paid_dispatch': False, 'toolchain_auto_download': False,
             'build_command_seconds': 240, 'per_invocation_seconds': 300,
             'builds': 2, 'independent_fresh_vms': True,
