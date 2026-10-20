@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T21:04:28Z
-content_hash: "sha256:4336fc622a8aed1b65c627b8851bd73175d0ca935e122c6acb8a77e3267853ec"
+updated_at: 2026-10-20T23:29:26Z
+content_hash: "sha256:eeac0c14b5976e4e5f70ce655f595c8626e371d3f2f175117fcf3a776c38a0d6"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -121,6 +121,11 @@ OPERATOR 1024 MiB OFFLINE VM APPROVAL (2026-10-20):
 - Operator explicitly increased offline-build VM memory from 512 MiB to 1024 MiB and authorized rerunning GRRR-90te parent identity integration.
 - All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; maximum 600 seconds cumulative build/test runtime before other probes; no guest networking/host shares/clipboard/forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If compilation still fails at 1024 MiB, stop again; do not automatically increase resources.
+OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
+- Operator explicitly increased the offline-build guest ephemeral /work tmpfs cap from 350 MiB to 512 MiB and authorized rerunning GRRR-90te parent identity integration.
+- VM RAM remains 1024 MiB. All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; 600-second cumulative build/test runtime before other probes; no guest networking, host shares, clipboard, or forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
+- If linking still fails at 512 MiB /work, stop again; do not automatically increase resources.
+
 ## nd_contract
 status: in_progress
 ### evidence
