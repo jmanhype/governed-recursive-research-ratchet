@@ -20,6 +20,37 @@ TOOLCHAIN_SHA256 = '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb731
 PERMISSIVE = frozenset(('MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', 'ISC'))
 
 
+def verify_base_iso_go(image: Path) -> dict:
+    """Read primary ISO9660 directory, never Joliet/Rock Ridge name extensions."""
+    with image.open('rb') as stream:
+        stream.seek(16 * 2048)
+        descriptor = stream.read(2048)
+        require(descriptor[:7] == b'\x01CD001\x01', 'IntegrityFailure', 'Missing primary ISO descriptor')
+        root = descriptor[156:190]
+        stream.seek(int.from_bytes(root[2:6], 'little') * 2048)
+        directory = stream.read(int.from_bytes(root[10:14], 'little'))
+        offset, matches = 0, []
+        while offset < len(directory):
+            length = directory[offset]
+            if not length:
+                offset = (offset // 2048 + 1) * 2048
+                continue
+            record = directory[offset:offset + length]
+            require(len(record) >= 34, 'IntegrityFailure', 'Truncated ISO directory record')
+            name = record[33:33 + record[32]]
+            if name in (b'GO.TGZ;1', b'go.tgz;1', b'go.tgz', b'GO.TGZ'):
+                matches.append(record)
+            offset += length
+        require(len(matches) == 1, 'IntegrityFailure', 'go.tgz absent or ambiguous in base ISO namespace')
+        record = matches[0]
+        require(not record[25] & 2, 'IntegrityFailure', 'Go transport is a directory')
+        stream.seek(int.from_bytes(record[2:6], 'little') * 2048)
+        data = stream.read(int.from_bytes(record[10:14], 'little'))
+        require(digest(data) == TOOLCHAIN_SHA256, 'IntegrityFailure', 'Base ISO Go archive bytes differ')
+        return {'base_name': record[33:33 + record[32]].decode('ascii'),
+                'bytes': len(data), 'sha256': digest(data), 'namespace': 'primary ISO9660; no Joliet'}
+
+
 def package_source(source: Path, records: dict, destination: Path) -> None:
     """Transport exact Git-inventoried names/modes without ISO name translation."""
     require(not destination.exists(), 'InvalidInput', 'Source archive already exists')

@@ -1,0 +1,8 @@
+{
+  "bytes": 227769067,
+  "df_after": "Filesystem   1024-blocks      Used Available Capacity  iused     ifree %iused  Mounted on\n/dev/disk3s1   971350180 917311260  14715348    99% 17199726 147153480   10%   /System/Volumes/Data\n",
+  "df_before": "Filesystem   1024-blocks      Used Available Capacity  iused     ifree %iused  Mounted on\n/dev/disk3s1   971350180 917318780  14707828    99% 17216426 147078280   10%   /System/Volumes/Data\n",
+  "files": 15045,
+  "manifest_sha256": "c642ecadfe1b580f9e01361444acf7237e7107b88be14c2027f4052f740db900",
+  "target": ".tmp-sr_pm/offline-preflight/assets-20261020-1/go-loose-v4-preserved"
+}

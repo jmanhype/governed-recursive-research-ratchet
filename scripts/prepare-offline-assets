@@ -15,7 +15,7 @@ import uuid
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 from common import canonical, digest, require
-from offline import source_inventory, toolchain_inventory, package_source
+from offline import source_inventory, toolchain_inventory, package_source, verify_base_iso_go
 from execution import ASSETS, QEMU
 
 
@@ -94,11 +94,12 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     (media / 'source.sha256').write_text(''.join(v['sha256'] + '  ' + name + '\n'
         for name, v in sorted(source_record['files'].items())))
     # Keep names intact across ISO9660; extraction occurs only in the guest.
-    shutil.copyfile(archive, media / 'go.tar.gz')
+    shutil.copyfile(archive, media / 'go.tgz')
     shutil.copyfile(ROOT / 'research/offline-guest.sh', media / 'offline-guest.sh')
     input_iso = target / 'input.iso'
     capture(['/usr/bin/hdiutil', 'makehybrid', '-iso', '-joliet', '-default-volume-name', 'GRRR_INPUT',
              '-o', str(input_iso), str(media)])
+    verify_base_iso_go(input_iso)
     receipt = {'version': 1, 'inventory_sha256': digest((target / 'inventory.json').read_bytes()),
                'image_sha256': digest(input_iso.read_bytes()),
                'guest_script_sha256': digest((ROOT / 'research/offline-guest.sh').read_bytes()),

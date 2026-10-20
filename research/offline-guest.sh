@@ -34,8 +34,8 @@ touch /tmp/grrr-reset
 printf 'GRRR-ISOLATION-PASS\n'
 mkdir /work
 mount -t tmpfs -o size=350m tmpfs /work
-printf '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797  /inputs/go.tar.gz\n' | sha256sum -c -
-tar -xzf /inputs/go.tar.gz -C /work
+printf '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797  /inputs/go.tgz\n' | sha256sum -c -
+tar -xzf /inputs/go.tgz -C /work
 export GOROOT=/work/go PATH=/work/go/bin:/usr/sbin:/usr/bin:/sbin:/bin
 mkdir -p /work/home /work/gopath /work/cache /work/tmp /work/source /work/vault
 tar -xf /inputs/source.tar -C /work/source
