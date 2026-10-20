@@ -1,0 +1,27 @@
+{
+  "assets_unchanged": true,
+  "build_sha256": "a0949547b9a7f7c4a700887e80ddda4d391ecda3c7d3bb5bd0ebfb41d9dc8017",
+  "classification": "resource-boundary blocker; compiler kill proven, OOM inference without kernel OOM receipt",
+  "command_seconds": 174.82442020899907,
+  "compiler_diagnostic": "runtime: /work/go/pkg/tool/linux_arm64/compile: signal: killed",
+  "error": null,
+  "exit_code": 1,
+  "manifest_sha256": "b4e19f303ae9cf644484de878014a9b51e142cc4989c0a5eb55c8174222ced0b",
+  "seconds": 193.6099525000027,
+  "termination": {
+    "ceased": true,
+    "fenced": true,
+    "forced": false,
+    "run": "d30b621c5b0b435cbfe8e7854e9011c1",
+    "seconds": 0.04824208399804775
+  },
+  "test_counts": {
+    "errors": 0,
+    "executed": 6,
+    "failures": 1,
+    "required": 6,
+    "skipped": 0
+  },
+  "test_output_sha256": "b6b44ef21a122c2ad9b29dddcb078c222d9adfba58b942cfb9ba950fa6c3ae28",
+  "verified_artifacts": 24
+}
