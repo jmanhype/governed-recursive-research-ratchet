@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T20:58:01Z
-content_hash: "sha256:999825859f683d1ad38d8c5cec272b115a772c1d6faa22682ee1e7adb8c2435a"
+updated_at: 2026-10-20T21:04:28Z
+content_hash: "sha256:4336fc622a8aed1b65c627b8851bd73175d0ca935e122c6acb8a77e3267853ec"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -121,6 +121,16 @@ OPERATOR 1024 MiB OFFLINE VM APPROVAL (2026-10-20):
 - Operator explicitly increased offline-build VM memory from 512 MiB to 1024 MiB and authorized rerunning GRRR-90te parent identity integration.
 - All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; maximum 600 seconds cumulative build/test runtime before other probes; no guest networking/host shares/clipboard/forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If compilation still fails at 1024 MiB, stop again; do not automatically increase resources.
+## nd_contract
+status: in_progress
+### evidence
+- BLOCKED: attempt-20261020T205833Z-60a4135e reached linking under approved 1024 MiB RAM; linker mapping output failed: no space left on device. Guest /work tmpfs 350 MiB cap, not host disk or compiler kill.
+- Tests 1-5 passed; 6/6 executed, zero skips, one failure. Duration 18.121606208s; command 16.788934333s. All 24 manifest hashes verified.
+- Manifest SHA256 0a0b4707b4c4f6a40d9dab62b2d4948cabf3e858fd47d8dad2e9db5aacb93ebb; build 362724662f774edefae58a42cbd2384105d72b4116418fa66ee08daccc9cdbef; test-output 7e2068f1d8654238bef8dcccae589fb6442c960cf461717988160aa6fff270c7.
+- Operator decision requested: increase only guest ephemeral /work tmpfs from 350 MiB to fixed 512 MiB; RAM stays 1024 MiB, all other limits unchanged. Not applied; no VM rerun or delivery. Documentation/evidence-only checkpoint; code unchanged.
+### proof
+- [ ] AC #1-#6: baseline remains false; independent successful builds unproven.
+
 ## nd_contract
 status: in_progress
 ### evidence
