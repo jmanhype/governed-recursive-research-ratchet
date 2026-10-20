@@ -1,17 +1,19 @@
 ---
 id: GRRR-90te
 title: "Block unsafe baselines before an operator starts research"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T03:20:56Z
-content_hash: "sha256:ed0460a4f3f6adae3c28e74aab3685874026a1d3d19d0b379495842ddc8be6e6"
+updated_at: 2026-10-20T15:59:07Z
+content_hash: "sha256:2c813da5f2ecb6f75b60225023e3848ebd519946157479a2d2bf3e6d76ebf53d"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
+assignee: dev-GRRR-90te
+follows: [GRRR-0g4n]
 ---
 
 ## Description
@@ -104,10 +106,14 @@ status: new
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-gu87
 - 2026-10-20T03:19:04Z dep_added: blocks GRRR-6sso
 - 2026-10-20T15:56:23Z dep_removed: was_blocked_by GRRR-0g4n
+- 2026-10-20T15:59:07Z status: open -> in_progress
+- 2026-10-20T15:59:07Z auto-follows: linked to predecessor GRRR-0g4n
+- 2026-10-20T15:59:07Z claimed by dev-GRRR-90te
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-gu87]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-0g4n]]
+- Follows: [[GRRR-0g4n]]
 
 ## Comments
