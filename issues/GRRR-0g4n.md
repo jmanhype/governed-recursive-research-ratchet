@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T13:19:07Z
-content_hash: "sha256:e13fde5e329bade447200692a94288b4d06b95116e5780bfcfced1e40bb2a49c"
+updated_at: 2026-10-20T13:20:53Z
+content_hash: "sha256:0e524875c8b3d3db466b50f322b9161cdf3cc65adf7607ebd0fe4bf702c75858"
 blocks: [GRRR-90te, GRRR-6sso]
 ---
 
@@ -125,6 +125,7 @@ QEMU NO-NETWORK VM PREFLIGHT PASS (2026-10-20):
 - Run 1: marker 6422.769 ms; stop 63.655 ms. Run 2: marker 6545.848 ms; stop 59.223 ms. No eth0 text observed; QEMU -net none is the controlling isolation evidence.
 - Report: VM-PREFLIGHT-2026-10-20.md. Machine evidence: .tmp-sr_pm/vm/qemu-no-network-preflight.json plus two run logs.
 - Still not proven: standalone runner grammar, restricted OS identities/ACLs, authenticated evaluator control transport, durable ledger, trusted arbitrary-output observation, vlt challenge, independent replay/admission. No story implementation or experiment occurred.
+VM PREFLIGHT EVIDENCE DURABILITY NOTE: durable copies of cleanup manifests, audit output, QEMU JSON result, and both boot logs now live under docs/evidence/vm-preflight/. VM-PREFLIGHT-2026-10-20.md references those durable paths. The files are not yet committed; commit requires separate operator authorization.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
