@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T14:48:58Z
-content_hash: "sha256:383c5f53fef894aa7a9a86b9f9eb104fccd3b6841b0abac025c365ad76a78be6"
+updated_at: 2026-10-20T14:55:55Z
+content_hash: "sha256:64c3e73e84aeba908e0bf2ffff531bc072926551e9de3870402e4ef566c84a90"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -134,6 +134,12 @@ OPERATOR IMPLEMENTATION APPROVAL (2026-10-20):
 - Evidence/approval commit on main and fast-forwarded story/epic branches: c2970356436531565711fb3c2df24eb91c3ed510.
 - Dispatch worktree: .claude/worktrees/dev-GRRR-0g4n on story/GRRR-0g4n.
 - Authorization remains limited to this story. No production access, automatic main merge, autonomous patch generation, harness adaptation, or unapproved paid calls.
+IDENTITY PROVISIONING BLOCKER (2026-10-20):
+- Operator approved creating _grrr_evaluator (UID/GID 320) and _grrr_runner (UID/GID 321), both hidden, non-login, non-admin.
+- Noninteractive sudo is unavailable ( reports a password is required).
+- An AppleScript administrator-authorization attempt was cancelled after the prompt was not approved/visible for over three minutes. No account was created.
+- Idempotent root provisioning script is staged at .tmp-sr_pm/provision-grrr-identities-root.sh; it fails if either account or UID/GID already exists.
+- Developer dispatch is intentionally withheld until identities exist, because GRRR-0g4n AC #6 requires distinct evaluator permissions and must fail closed.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
