@@ -1,0 +1,40 @@
+=== time and disk ===
+2026-10-20T11:59:55Z
+Filesystem     1G-blocks Used Available Capacity iused    ifree %iused  Mounted on
+/dev/disk3s3s1       926   13         3    80%  484014 36051000    1%   /
+Filesystem   1G-blocks Used Available Capacity  iused    ifree %iused  Mounted on
+/dev/disk3s1       926  885         3   100% 17640218 36051000   33%   /System/Volumes/Data
+=== package managers and virtualization ===
+brew=/opt/homebrew/bin/brew
+limactl=unavailable
+qemu-system-aarch64=unavailable
+qemu-system-x86_64=unavailable
+utmctl=unavailable
+prlctl=unavailable
+VBoxManage=unavailable
+vmrun=unavailable
+colima=unavailable
+docker=/usr/local/bin/docker
+podman=unavailable
+brew_version=Homebrew 7.0.4-17-g2f1c682
+brew_prefix=/opt/homebrew
+brew_cache=/Users/speed/Library/Caches/Homebrew
+=== targeted read-only space audit ===
+480K	/Users/speed/Library/Developer/Xcode/DerivedData
+3.5G	/Users/speed/Library/Developer/CoreSimulator/Caches
+ 19G	/Users/speed/Library/Caches
+8.5G	/Users/speed/.cache
+ 57M	/Users/speed/.cargo/registry/cache
+410M	/Users/speed/.cargo/registry/src
+ 16M	/Users/speed/.npm/_cacache
+9.1G	/Users/speed/Library/pnpm/store
+144K	/Users/speed/Library/Caches/pip
+554M	/Users/speed/Library/Caches/ms-playwright
+705M	/Users/speed/go/pkg/mod/cache
+1.7G	/Users/speed/.gradle/caches
+3.8G	/Users/speed/.cache/huggingface
+4.4G	/Users/speed/.ollama/models
+=== homebrew cache size ===
+ 37M	/Users/speed/Library/Caches/Homebrew
+=== homebrew dry-run reclaim estimate ===
+=== qemu/lima install state ===

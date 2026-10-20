@@ -1,0 +1,50 @@
+AUTHORIZED VM CACHE CLEANUP MANIFEST
+2026-10-20T13:05:15Z
+
+DF_BEFORE
+Filesystem   1G-blocks Used Available Capacity  iused    ifree %iused  Mounted on
+/dev/disk3s1       926  884         4   100% 17640639 46313000   28%   /System/Volumes/Data
+
+ACTIVE PNPM
+/opt/homebrew/bin/pnpm
+10.28.2
+/Users/speed/Library/pnpm/store/v10
+
+ACTIVE CHATGPT EXECUTABLE
+speed            44923   1.5  1.2 2007278224 409696   ??  S     7:08PM  22:12.82 /Applications/ChatGPT.app/Contents/MacOS/ChatGPT
+
+ACTIVE CACHE USERS CHECK
+
+TARGET
+/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation
+type=Directory mode=drwxr-xr-x owner=speed group=staff modified=Oct 19 19:08:35 2026
+9.1G	/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation
+file_count=   19900
+top_level_entries
+/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation/1bA1Rvbhn
+/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation/CFii5dCqQ
+/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation/T1hShriu9
+/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation/WLTDsotb0
+/Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation/jOE2tt0mi
+
+TARGET
+/Users/speed/Library/pnpm/store/v3
+type=Directory mode=drwxr-xr-x owner=speed group=staff modified=Oct 12 15:48:23 2025
+7.3G	/Users/speed/Library/pnpm/store/v3
+file_count=  419743
+top_level_entries
+/Users/speed/Library/pnpm/store/v3/files
+/Users/speed/Library/pnpm/store/v3/https+++codeload.github.com+browserbase+stagehand+tar.gz+b5e17490a4b2184d33922e55907f38b316dbfa46
+/Users/speed/Library/pnpm/store/v3/https+++pkg.pr.new+@opennextjs+aws@704
+/Users/speed/Library/pnpm/store/v3/tmp
+
+DF_AFTER
+Filesystem   1G-blocks Used Available Capacity  iused     ifree %iused  Mounted on
+/dev/disk3s1       926  874        14    99% 17186723 149571920   10%   /System/Volumes/Data
+
+TARGETS_AFTER
+REMOVED /Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation
+REMOVED /Users/speed/Library/pnpm/store/v3
+
+ACTIVE PNPM STORE AFTER
+/Users/speed/Library/pnpm/store/v10

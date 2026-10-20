@@ -1,0 +1,89 @@
+
+=== user Library caches (/Users/speed/Library/Caches) ===
+20298184	/Users/speed/Library/Caches
+9528428	/Users/speed/Library/Caches/com.openai.codex
+1228564	/Users/speed/Library/Caches/autoclaw-updater
+1087684	/Users/speed/Library/Caches/voyager-updater
+964592	/Users/speed/Library/Caches/Google
+962656	/Users/speed/Library/Caches/Citro Labs
+790372	/Users/speed/Library/Caches/dev.zcode.app.ShipIt
+768532	/Users/speed/Library/Caches/com.spacefs.launcher
+567668	/Users/speed/Library/Caches/ms-playwright
+541176	/Users/speed/Library/Caches/now.typeless.desktop.ShipIt
+506376	/Users/speed/Library/Caches/Codex
+487612	/Users/speed/Library/Caches/@zcodedesktop-updater
+371644	/Users/speed/Library/Caches/com.meta.endo
+357868	/Users/speed/Library/Caches/antigravity-updater
+357436	/Users/speed/Library/Caches/typeless-updater
+262736	/Users/speed/Library/Caches/com.google.GeminiMacOS
+214348	/Users/speed/Library/Caches/loom-updater
+194068	/Users/speed/Library/Caches/ollama
+168740	/Users/speed/Library/Caches/deno
+138476	/Users/speed/Library/Caches/com.spotify.client
+127512	/Users/speed/Library/Caches/node-gyp
+111668	/Users/speed/Library/Caches/electron
+105716	/Users/speed/Library/Caches/Comet
+102048	/Users/speed/Library/Caches/GeoServices
+75468	/Users/speed/Library/Caches/go-build
+38028	/Users/speed/Library/Caches/Homebrew
+26360	/Users/speed/Library/Caches/com.apple.helpd
+18900	/Users/speed/Library/Caches/com.apple.VisualIntelligenceCore
+16976	/Users/speed/Library/Caches/com.apple.python
+16768	/Users/speed/Library/Caches/com.apple.parsecd
+14420	/Users/speed/Library/Caches/com.apple.CloudTelemetry
+7720	/Users/speed/Library/Caches/beads
+7676	/Users/speed/Library/Caches/CloudKit
+7192	/Users/speed/Library/Caches/com.apple.ctcategories.service
+6576	/Users/speed/Library/Caches/next-swc
+6312	/Users/speed/Library/Caches/com.apple.AppleMediaServices
+6164	/Users/speed/Library/Caches/com.apple.appstoreagent
+6068	/Users/speed/Library/Caches/com.apple.amsengagementd
+5040	/Users/speed/Library/Caches/com.apple.tipsd
+4464	/Users/speed/Library/Caches/com.apple.passd
+
+=== user dot cache (/Users/speed/.cache) ===
+8882228	/Users/speed/.cache
+4024352	/Users/speed/.cache/huggingface
+3311776	/Users/speed/.cache/codex-runtimes
+1160232	/Users/speed/.cache/whisper
+194276	/Users/speed/.cache/opencode
+146340	/Users/speed/.cache/codebase-memory-mcp
+36232	/Users/speed/.cache/prisma
+3120	/Users/speed/.cache/gh
+1440	/Users/speed/.cache/rebar3
+1324	/Users/speed/.cache/mesa_shader_cache
+808	/Users/speed/.cache/sgflix-megagist
+760	/Users/speed/.cache/mmdr
+708	/Users/speed/.cache/gstreamer-1.0
+352	/Users/speed/.cache/amp
+276	/Users/speed/.cache/fontconfig
+168	/Users/speed/.cache/yt-dlp
+8	/Users/speed/.cache/puppeteer
+8	/Users/speed/.cache/paivot
+8	/Users/speed/.cache/comfy-cli
+8	/Users/speed/.cache/bluwy-giget
+4	/Users/speed/.cache/last30days
+4	/Users/speed/.cache/gdown
+4	/Users/speed/.cache/chrome-devtools-mcp
+4	/Users/speed/.cache/bgutil-ytdlp-pot-provider
+0	/Users/speed/.cache/torch
+0	/Users/speed/.cache/hyperframes
+0	/Users/speed/.cache/claude
+
+=== pnpm store (/Users/speed/Library/pnpm/store) ===
+9548608	/Users/speed/Library/pnpm/store
+7603928	/Users/speed/Library/pnpm/store/v3
+1612884	/Users/speed/Library/pnpm/store/v10
+331796	/Users/speed/Library/pnpm/store/v11
+
+=== gradle caches (/Users/speed/.gradle/caches) ===
+1807820	/Users/speed/.gradle/caches
+975740	/Users/speed/.gradle/caches/8.11.1
+504952	/Users/speed/.gradle/caches/9.3.1
+326744	/Users/speed/.gradle/caches/modules-2
+372	/Users/speed/.gradle/caches/journal-1
+0	/Users/speed/.gradle/caches/jars-9
+
+=== CoreSimulator caches (/Users/speed/Library/Developer/CoreSimulator/Caches) ===
+3690488	/Users/speed/Library/Developer/CoreSimulator/Caches/dyld
+3690488	/Users/speed/Library/Developer/CoreSimulator/Caches
