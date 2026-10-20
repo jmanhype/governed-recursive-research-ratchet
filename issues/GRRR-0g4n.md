@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T13:07:16Z
-content_hash: "sha256:d1481fcee7c69c83c2c2f0e034f6ce36573c93f574a9cfa70492263a148576cc"
+updated_at: 2026-10-20T13:19:07Z
+content_hash: "sha256:e13fde5e329bade447200692a94288b4d06b95116e5780bfcfced1e40bb2a49c"
 blocks: [GRRR-90te, GRRR-6sso]
 ---
 
@@ -117,6 +117,14 @@ AUTHORIZED CACHE CLEANUP RESULT (2026-10-20):
 - Active pnpm 10.28.2 store remains /Users/speed/Library/pnpm/store/v10.
 - Free space increased from 4 GB to 14 GB, short of the preflight requirement of at least 15 GB.
 - QEMU installation intentionally did not start because the authorized sequence required the 15 GB check first. No additional cache was deleted.
+QEMU NO-NETWORK VM PREFLIGHT PASS (2026-10-20):
+- Operator authorized additional CoreSimulator dyld cleanup; 3.5 GiB removed, free space reached 17 GB, then QEMU was installed.
+- QEMU executable/version: /opt/homebrew/bin/qemu-system-aarch64 11.1.2; external GPL-2.0-only tool boundary recorded in VM-PREFLIGHT-2026-10-20.md.
+- Alpine virt 3.22.6 aarch64 ISO SHA-256 09d601858d72484c89d576fb735215cccf54a92a03e67ca4a7fa7e4b8ec4a7a2; kernel and initramfs hashes are recorded in the preflight report.
+- Two independent boots used -net none, -snapshot, -monitor none, -no-reboot, 512 MiB, one vCPU, and no host-share device. Both reached localhost login, preserved the ISO hash, stayed below 1 MiB output, and terminated on SIGTERM within grace.
+- Run 1: marker 6422.769 ms; stop 63.655 ms. Run 2: marker 6545.848 ms; stop 59.223 ms. No eth0 text observed; QEMU -net none is the controlling isolation evidence.
+- Report: VM-PREFLIGHT-2026-10-20.md. Machine evidence: .tmp-sr_pm/vm/qemu-no-network-preflight.json plus two run logs.
+- Still not proven: standalone runner grammar, restricted OS identities/ACLs, authenticated evaluator control transport, durable ledger, trusted arbitrary-output observation, vlt challenge, independent replay/admission. No story implementation or experiment occurred.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
