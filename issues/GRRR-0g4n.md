@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T14:58:36Z
-content_hash: "sha256:313b8180d0e85036b60a08d79651ca4251d5a3842eb6e224cc5098dea305334b"
+updated_at: 2026-10-20T15:10:11Z
+content_hash: "sha256:e334c30442187d1fc29c91e4b37efd6194bb6ae993e86e96cbada68e09f847a1"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -145,6 +145,7 @@ IDENTITY PROVISIONING COMPLETE (2026-10-20):
 - _grrr_runner: UID/GID 321, hidden, UserShell /usr/bin/false, NFSHomeDirectory /var/empty, password disabled, no admin membership.
 - Operator supplied administrator authorization interactively; the credential was not stored, echoed to artifacts, or passed to any worker.
 - Noninteractive sudo remains unavailable to ordinary shell commands. Identity-launched integration commands must use an explicitly approved parent-mediated path; do not give credentials to the developer.
+IMPLEMENTATION CHECKPOINT (not delivery): commit d136f7d1c086f3966d6ba2bf50079bea75df20af on story/GRRR-0g4n. Added 14 files/1085 lines: typed standard-library CLI, peer-authenticated restricted evaluator and executor, fixed synthetic packet hashes, QEMU isolation and stop adapter, SQLite hash-linked event/object snapshots, projections, and synchronous parent identity launcher. Parent clarified grrr-walk-001 CLEAN newline versus forged PASS newline semantics; no vlt defect claim. python3 tests/unit_contracts.py: 5/5 pass. pvg verify on explicit source/test/script paths: PASSED, 9 recognized files scanned, 0 issues. git diff --check: exit 0. Mandatory ./scripts/test-story bounded-challenge: exit 1, required 8, executed 0, skipped 0, errors 1 because evaluator endpoint absent. This is expected fail-closed infrastructure evidence, not integration proof. Requires parent-mediated root scripts/identity-integration with approved asset directory; no sudo or credentials used. No delivery/acceptance asserted. Remaining proof includes real identity/VM execution, missing asset/policy negative controls and full AC audit; current tests do not establish all required ACs. pvg notes search failed because worktree .vault missing; parent identified known local discovery issue, no global notes queried.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
