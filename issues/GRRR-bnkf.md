@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-20T03:20:57Z
-content_hash: "sha256:3c69393bdad666edcce85d82fb65296c2a85127376d0a662c6f5600fe2bb4e6b"
+updated_at: 2026-10-20T03:26:28Z
+content_hash: "sha256:1858996792e51a1bf829300eb72eb6435532d79d90afafb6e6eee6a6716bf671"
 blocked_by: [GRRR-c875]
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 ---
@@ -26,10 +26,10 @@ Hard-stop on budget/runtime/review exhaustion, unauthorized/protected writes or 
 No automatic main merge; no production mutation; no autonomous patch generation; no harness adaptation; no unapproved paid calls. Work only in the dedicated repository, never active /openjutsu-studio or /wangp-dspy workspaces. Never commit/push without explicit authorization. Do not expose credentials, proprietary source, raw logs or private holdouts to models. No hard-tdd label is authorized.
 
 ## USER INTENT
-I can judge whether measured detection covers meaningful vlt failures rather than an optimizer-selected easy benchmark.
+I can judge whether proposed detection scenarios cover meaningful vlt failures rather than an optimizer-selected easy benchmark.
 
 ## OUT OF SCOPE
-Selection-arm execution/statistical comparisons land in comparison; independent allegation replay and contract admission are later slices. This story validates frozen seeds, not automatic code patch generation.
+Selection-arm execution/statistical comparisons land in comparison; independent allegation replay and contract admission are later slices. Corpus acceptance covers frozen trusted fixtures and their preliminary validation only; final full mandatory-system detection proof remains in GRRR-6sso after every sibling is accepted. Missing downstream capabilities must stay not-run and cannot authorize findings/admission; they are not required to accept this upstream fixture artifact. This story does not generate patches.
 
 ## DIFF BUDGET
 ~25 fixture/doc/test files, under 2200 changed LOC; fixture count is intentional for >=20 independent scenarios. Gross overrun triggers PM investigation, not automatic rejection.
@@ -59,12 +59,12 @@ CONSUMES:
   Usage: Read the versioned artifact or invoke the proposed test entrypoint exactly; validate identity and completeness before use; unknown/missing values block dependent authority.
 
 ## Story Acceptance Criteria
-1. Independently validate at least 20 defect scenarios plus clean negatives against pinned source/spec requirements using real isolated executions; corpus manifest hashes variants, input identities, clean/faulty observations, source/spec references, critical labels and independent reviewer approval. Unsupported/ambiguous behavior is not fabricated as a known defect.
+1. Independently validate at least 20 seeded defect scenarios plus clean negatives as trusted fixture ground truth against pinned source/spec requirements using real isolated executions through the already accepted executor/observation path. Corpus manifest hashes variants, input identities, clean/faulty observations, source/spec references, critical labels and independent corpus-review approval. This is preliminary fixture validation, not a Verified defect finding, independent allegation ReplayReceipt, contract admission or complete-system proof. Unsupported/ambiguous behavior is not fabricated as a known defect.
 2. Cover exact filename/title resolution; alias/collision precedence; case-insensitive/path-qualified lookup; wikilinks/embeds/headings/block references/inert zones; frontmatter/index invalidation; rename/move/delete/stale cache; concurrent read/write/locking; filesystem errors/invalid paths; deterministic repetition and integrity-registry tampering. Approve representativeness before interpreting detection thresholds.
 3. Freeze corpus, seeded variants, hidden truth, critical classes, specifications and plan before arms. Separate public synthetic metadata from protected answers/holdouts and permitted training feedback; test filesystem/API denials and contamination checks. Mutation after freeze invalidates comparison and requires new approved version, never silent repair.
 4. Pre-register arm ordering, seeds, at least three randomized repetitions where feasible, explicit feasibility exceptions, tie-breaks, stopping, feedback, unique-defect deduplication, cost allocations/amortization, denominator validity and uncertainty method. Operator/reviewer approves before measurement, not after results.
-5. Run complete mandatory verification over frozen variants and clean controls: 100% designated critical seeds and at least 90% remaining seeds detected under approved representative-set rule. Missing gate or nondeterministic unresolved seed blocks acceptance; failed/false-positive examples remain recorded.
-6. Expose an operator-reviewable coverage table and immutable corpus/plan/spec digests with counts and gaps; the selector never receives hidden labels or outputs outside approved feedback. Mandatory-suite discoveries remain separately attributable from later selector credit.
+5. Run preliminary trusted fixture-validation checks over frozen variants and clean controls using only accepted upstream isolation, observation, budget, ledger and stop capabilities. Require reproducible expected clean/faulty behavior and spec-backed ground truth for every included scenario; missing required fixture-validation evidence or nondeterministic unresolved seeds blocks corpus acceptance. Record failed/false-positive checks and gaps. Downstream independent allegation replay, authorization/admission and complete mandatory-system gates remain explicitly not-run, not waived or deemed passing. Complete-system 100% critical and at least 90% other-seed detection is acceptance proof owned by the final capstone after all capabilities land, not a prerequisite for accepting this corpus.
+6. Expose an operator-reviewable preliminary fixture coverage table and immutable corpus/plan/spec digests with counts and gaps; the selector never receives hidden labels or outputs outside approved feedback. Label fixture observations as preliminary, separately from later independently verified selector discoveries and final mandatory-suite detections; do not credit preliminary observations as either.
 
 ## Testing Requirements
 Integration tests: MANDATORY (no mocks). Include real success path plus every negative/error/concurrency case enumerated in the AC. Use real local VM, OS identities/permissions, evaluator, transactional store and pinned vlt where the path crosses them; mocks/stubs/fake receipts do not establish integration proof. Unit tests may supplement pure parsing/serialization; they cannot replace real integration. No skip-if-missing or environment-variable shortcut to green.
