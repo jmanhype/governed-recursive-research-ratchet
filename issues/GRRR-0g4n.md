@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T12:04:05Z
-content_hash: "sha256:96bd62b47b1b98a67b66b52e2821f79945e091255d7a238a68e6839606ec21a6"
+updated_at: 2026-10-20T12:04:59Z
+content_hash: "sha256:e356f14c5205beb3ec2a981b12c172e6cc170b235881a85dc45e2e4757882b49"
 blocks: [GRRR-90te, GRRR-6sso]
 ---
 
@@ -109,6 +109,7 @@ VM PREFLIGHT AUDIT (read-only, 2026-10-20):
 - Running app check: ChatGPT executes from /Applications, not the Sparkle Installation cache. No active pnpm/Gradle/CoreSimulator/Sparkle process was observed.
 - Candidate provisioning path under review: direct QEMU with -net none, disposable snapshot disk, no host sharing, bounded process/output/deadline, and evaluator-owned control. QEMU is GPL-2.0-only and therefore requires separate license-boundary approval even as an external tool.
 - No cache deletion, package installation, VM creation, source implementation, commit, or push occurred.
+VM PREFLIGHT ADDENDUM: pnpm 10.28.2 reports its active store as /Users/speed/Library/pnpm/store/v10; the 7.2 GiB v3 store is stale relative to the current CLI. No deletion occurred.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
