@@ -1,0 +1,17 @@
+{
+  "baseline_verified": false,
+  "build_sha256": "362724662f774edefae58a42cbd2384105d72b4116418fa66ee08daccc9cdbef",
+  "command_seconds": 16.788934332999816,
+  "counts": {
+    "errors": 0,
+    "executed": 6,
+    "failures": 1,
+    "required": 6,
+    "skipped": 0
+  },
+  "diagnostic": "/work/go/pkg/tool/linux_arm64/link: mapping output file failed: no space left on device",
+  "manifest_sha256": "0a0b4707b4c4f6a40d9dab62b2d4948cabf3e858fd47d8dad2e9db5aacb93ebb",
+  "seconds": 18.12160620800023,
+  "test_output_sha256": "7e2068f1d8654238bef8dcccae589fb6442c960cf461717988160aa6fff270c7",
+  "verified_artifacts": 24
+}

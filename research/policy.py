@@ -31,6 +31,12 @@ def loadPolicy(principal: int, path: Path, ref: str) -> dict:
     raw = path.read_bytes()
     require(digest(raw) == ref, 'StaleBinding', 'Policy digest mismatch')
     policy = json.loads(raw)
+    if policy.get('profile') == 'offline-preflight-v1':
+        from offline import proposed_profile, require_profile_approval
+        require(policy == proposed_profile(policy.get('operator_uid'), policy.get('inventory_sha256')),
+                'InvalidInput', 'Offline profile limits or capabilities changed')
+        require_profile_approval(path.parent / 'profile-approval.json', policy)
+        return policy
     require(policy == default_policy(policy.get('operator_uid')),
             'InvalidInput', 'Unregistered policy configuration')
     return policy

@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/private/tmp/grrr-offline-m5qlaapy/negative-network/runner/code/offline_execution.py", line 240, in <module>
+    serve(root.parent / 'ipc/executor.sock', OfflineExecutor(root).handle)
+                                             ~~~~~~~~~~~~~~~^^^^^^
+  File "/private/tmp/grrr-offline-m5qlaapy/negative-network/runner/code/offline_execution.py", line 71, in __init__
+    self.config = read_config(root)
+                  ~~~~~~~~~~~^^^^^^
+  File "/private/tmp/grrr-offline-m5qlaapy/negative-network/runner/code/offline_execution.py", line 65, in read_config
+    return validate_config(json.loads(raw))
+  File "/private/tmp/grrr-offline-m5qlaapy/negative-network/runner/code/offline_execution.py", line 47, in validate_config
+    require(config['version'] == 1 and config['network'] is False and config['shares'] == []
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and config['memory_mib'] == 1024 and config['workspace_mib'] == 512 and config['vcpus'] == 1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and config['command_seconds'] == 240 and config['total_seconds'] == 300,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            'GateBlocked', 'Offline capabilities or limits differ from approved profile')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/grrr-offline-m5qlaapy/negative-network/runner/code/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Offline capabilities or limits differ from approved profile

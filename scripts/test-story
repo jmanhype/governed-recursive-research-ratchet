@@ -4,9 +4,22 @@ from pathlib import Path
 import subprocess
 import sys
 ROOT = Path(__file__).resolve().parents[1]
-if sys.argv[1:] != ['bounded-challenge']:
-    print('Usage: ./scripts/test-story bounded-challenge', file=sys.stderr)
+if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight']):
+    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight', file=sys.stderr)
     raise SystemExit(2)
+if sys.argv[1] == 'offline-preflight':
+    import json
+    try:
+        binding = json.loads((ROOT / '.offline-inputs.json').read_bytes())
+        if set(binding) != {'vm_directory', 'prepared_assets', 'license_review'}:
+            raise ValueError('Offline input binding schema differs')
+        result = subprocess.run([sys.executable, str(ROOT / 'scripts/offline-identity-integration'),
+                                 binding['vm_directory'], binding['prepared_assets'], binding['license_review']],
+                                cwd=ROOT, timeout=2100)
+        raise SystemExit(result.returncode)
+    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+        print('FAIL: mandatory offline prerequisites unavailable: ' + str(exc), file=sys.stderr)
+        raise SystemExit(1)
 try:
     result = subprocess.run([sys.executable, str(ROOT / 'tests/integration/bounded_challenge.py')],
                             cwd=ROOT, timeout=600)

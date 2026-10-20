@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/private/tmp/grrr-offline-ub67xf1g/negative-identity/runner/code/offline_execution.py", line 240, in <module>
+    serve(root.parent / 'ipc/executor.sock', OfflineExecutor(root).handle)
+                                             ~~~~~~~~~~~~~~~^^^^^^
+  File "/private/tmp/grrr-offline-ub67xf1g/negative-identity/runner/code/offline_execution.py", line 71, in __init__
+    self.config = read_config(root)
+                  ~~~~~~~~~~~^^^^^^
+  File "/private/tmp/grrr-offline-ub67xf1g/negative-identity/runner/code/offline_execution.py", line 60, in read_config
+    require(info.st_uid == 0 and info.st_mode & 0o222 == 0,
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            'Unauthorized', 'Offline configuration is not root-controlled')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/grrr-offline-ub67xf1g/negative-identity/runner/code/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Offline configuration is not root-controlled

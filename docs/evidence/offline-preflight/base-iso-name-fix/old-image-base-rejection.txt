@@ -1,0 +1,1 @@
+{'code': 'IntegrityFailure', 'message': 'go.tgz absent or ambiguous in base ISO namespace', 'operation': 'unknown', 'retryable': False, 'receipt': None}

@@ -1,0 +1,19 @@
+AUTHORIZED GRADLE CACHE CLEANUP MANIFEST
+2026-10-20T17:38:13Z
+
+TARGET
+/Users/speed/.gradle/caches
+type=Directory mode=drwxr-xr-x owner=speed group=staff modified=May  9 15:04:03 2026
+1.7G	/Users/speed/.gradle/caches
+file_count=   19865
+
+DF_BEFORE
+Filesystem   1G-blocks Used Available Capacity  iused     ifree %iused  Mounted on
+/dev/disk3s1       926  875        13    99% 17222254 143207200   11%   /System/Volumes/Data
+
+TARGET_AFTER
+REMOVED /Users/speed/.gradle/caches
+
+DF_AFTER
+Filesystem   1G-blocks Used Available Capacity  iused     ifree %iused  Mounted on
+/dev/disk3s1       926  873        15    99% 17184966 161383960   10%   /System/Volumes/Data

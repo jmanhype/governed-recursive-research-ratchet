@@ -1,0 +1,123 @@
+#!/usr/bin/env python3
+"""Prepare detached read-only media and explicit review inventory; never run target code."""
+import io
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import tarfile
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require
+from offline import source_inventory, toolchain_inventory, package_source, verify_base_iso_go
+from execution import ASSETS, QEMU
+
+
+def capture(args: list[str], data: bytes | None = None) -> bytes:
+    return subprocess.run(args, input=data, capture_output=True, check=True, timeout=90).stdout
+
+
+def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
+    """Inventory every shipped APK/Go member and host dynamic-library closure."""
+    require(not target.exists(), 'InvalidInput', 'Never overwrite preparation attempts')
+    target.mkdir(parents=True)
+    source_record = source_inventory(source)
+    go_record = toolchain_inventory(archive)
+    iso = vm / 'alpine-virt-3.22.6-aarch64.iso'
+    require(digest(iso.read_bytes()) == ASSETS[iso.name], 'IntegrityFailure', 'Alpine ISO differs')
+    inventory = {'version': 1, 'source': source_record, 'toolchain': go_record,
+                 'apk_packages': {}, 'host_libraries': {}, 'models': [], 'unresolved': [],
+                 'source_execution': False, 'scope': 'local offline preflight only; no redistribution'}
+    for name in capture(['/usr/bin/tar', '-tf', str(iso)]).decode().splitlines():
+        if not name.endswith('.apk'):
+            continue
+        data = capture(['/usr/bin/tar', '-xOf', str(iso), name])
+        info = capture(['/usr/bin/tar', '-xzOf', '-', '.PKGINFO'], data).decode()
+        metadata = {}
+        for line in info.splitlines():
+            if ' = ' in line:
+                key, value = line.split(' = ', 1)
+                metadata.setdefault(key, []).append(value)
+        inventory['apk_packages'][name] = {'sha256': digest(data), 'metadata': metadata,
+            'metadata_sha256': digest(info.encode()), 'origin':
+            'https://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/' + Path(name).name,
+            'license_compliance': 'separate-review-required',
+            'obligations': 'Review package source/license/notice terms; preserve attribution; no redistribution authorized'}
+    queue = [Path(QEMU).resolve(), Path(sys.executable).resolve()]
+    while queue:
+        binary = queue.pop()
+        if str(binary) in inventory['host_libraries']:
+            continue
+        record = {'path': str(binary), 'sha256': digest(binary.read_bytes()), 'dependencies': [],
+                  'license_compliance': 'separate-review-required'}
+        parts = binary.parts
+        if 'Cellar' in parts:
+            index = parts.index('Cellar')
+            package, version = parts[index + 1:index + 3]
+            prefix = Path(*parts[:index + 3])
+            record.update(package=package, version=version, origin='https://formulae.brew.sh/formula/' + package)
+            formula = prefix / '.brew' / (package + '.rb')
+            if formula.is_file():
+                record['formula'] = formula.read_text()
+                record['formula_sha256'] = digest(formula.read_bytes())
+            record['notices'] = {str(p.relative_to(prefix)): {'sha256': digest(p.read_bytes()), 'bytes': p.stat().st_size}
+                for p in prefix.rglob('*') if p.is_file() and not p.is_symlink()
+                and any(word in p.name.upper() for word in ('LICENSE', 'COPYING', 'NOTICE'))}
+        for line in capture(['/usr/bin/otool', '-L', str(binary)]).decode().splitlines()[1:]:
+            dependency = line.strip().split(' (', 1)[0]
+            record['dependencies'].append(dependency)
+            if dependency.startswith('/opt/homebrew/'):
+                queue.append(Path(dependency).resolve(strict=True))
+            elif dependency.startswith(('/usr/lib/', '/System/')):
+                inventory['host_libraries'].setdefault(dependency, {'origin': 'macOS system runtime',
+                    'version': capture(['/usr/bin/sw_vers', '-buildVersion']).decode().strip(),
+                    'sha256': None, 'risk': 'dyld system cache; per-image bytes unavailable',
+                    'license_compliance': 'separate-review-required'})
+            else:
+                inventory['unresolved'].append('Unresolved dynamic loader path: ' + dependency)
+        inventory['host_libraries'][str(binary)] = record
+    inventory['unresolved'] += [
+        'All 101 shipped Alpine APK licenses/notices require independent review, including GPL/mixed licenses',
+        'Go bundled notices and non-text notice-name matches require independent compliance review',
+        'macOS system runtime and Homebrew dynamic closure require separate scope-limited review',
+        'Offline go list/test will confirm actual source dependency closure; not yet executed']
+    (target / 'inventory.json').write_bytes(canonical(inventory))
+    media = target / 'media'
+    media.mkdir()
+    package_source(source, source_record['files'], media / 'source.tar')
+    (media / 'source.sha256').write_text(''.join(v['sha256'] + '  ' + name + '\n'
+        for name, v in sorted(source_record['files'].items())))
+    # Keep names intact across ISO9660; extraction occurs only in the guest.
+    shutil.copyfile(archive, media / 'go.tgz')
+    shutil.copyfile(ROOT / 'research/offline-guest.sh', media / 'offline-guest.sh')
+    input_iso = target / 'input.iso'
+    capture(['/usr/bin/hdiutil', 'makehybrid', '-iso', '-joliet', '-default-volume-name', 'GRRR_INPUT',
+             '-o', str(input_iso), str(media)])
+    verify_base_iso_go(input_iso)
+    receipt = {'version': 1, 'inventory_sha256': digest((target / 'inventory.json').read_bytes()),
+               'image_sha256': digest(input_iso.read_bytes()),
+               'guest_script_sha256': digest((ROOT / 'research/offline-guest.sh').read_bytes()),
+               'source_tree_sha256': source_record['tree_sha256'],
+               'approval_sha256': digest((ROOT / 'docs/OFFLINE-PREFLIGHT-WORK512-APPROVAL-2026-10-20.md').read_bytes()),
+               'license_review': 'required', 'host_free_bytes': shutil.disk_usage(target).free}
+    (target / 'asset-receipt.json').write_bytes(canonical(receipt))
+    return receipt
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 5:
+        raise SystemExit('Usage: prepare-offline-assets SOURCE GO_ARCHIVE VM_DIRECTORY NEW_OUTPUT_DIRECTORY')
+    target = Path(sys.argv[4]).absolute()
+    try:
+        result = prepare(*(Path(value).resolve(strict=True) for value in sys.argv[1:4]), target)
+        print(json.dumps(result, sort_keys=True))
+    except Exception as exc:
+        if target.is_dir():
+            (target / 'failure.json').write_bytes(canonical({'error': type(exc).__name__, 'message': str(exc)}))
+        raise
