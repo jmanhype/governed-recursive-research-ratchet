@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T17:17:58Z
-content_hash: "sha256:958229dacee6797b104fd80650effc9c04b030038a51d44ecada54dcde022794"
+updated_at: 2026-10-20T17:38:00Z
+content_hash: "sha256:9ebab21f74c3b7b9b87b3e0397fbe99212d319be453b33232ce3f3321cd36927"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -106,6 +106,14 @@ OPERATOR OFFLINE BUILD PREFLIGHT PROFILE APPROVAL (2026-10-20):
 - Preserve approved controls: 30-second boot deadline, 2-second stop acknowledgement target, 5-second SIGTERM grace plus mandatory forced kill, 1 MiB output cap, and 15 GB minimum host free space.
 - Required isolation: no guest networking, host shares, clipboard integration, or forwarded agents; evaluator-controlled read-only detached asset input; no host build fallback, paid service, production access, automatic main merge, or promotion.
 - Unexplained build differences, missing dependencies, license ambiguity, isolation failure, or non-clean baseline must fail closed. Resource exhaustion at 512 MiB is a measured blocker, not permission to increase limits.
+OPERATOR LOCAL-USE LICENSE, MACOS TERMS, CLEANUP, AND PREFLIGHT APPROVAL (2026-10-20):
+- Operator approved the reviewed 159-component inventory for bounded local offline use only: no source/binary redistribution, no new project linking or copying, notices/source references preserved, GPL/LGPL components confined to local execution under the approved isolation boundary.
+- Operator confirmed installed macOS build 26A428 terms permit local execution of installed system frameworks and QEMU for this non-redistributable preflight.
+- Operator approved deletion of only /Users/speed/.gradle/caches, a regenerable build cache.
+- Operator approved parent-mediated root identity execution for GRRR-90te after the disk gate passes and the exact license-review artifact is bound.
+- Runtime offline dependency closure, reproducibility, isolation, cancellation, and license checks remain mandatory and must fail closed on ambiguity or mismatch.
+- Review basis: license-review-draft.json SHA-256 4d3e93ebb6ac205225e7521c951a93baa64335a899710619ae3f593f7b3cf0c6; provenance addendum SHA-256 3be01e90783d6cfeb928585691c86d7413a37c02c8d5e0bc93135cb4cc36bc67.
+
 ## nd_contract
 status: in_progress
 
