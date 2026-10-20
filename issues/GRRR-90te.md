@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T17:38:00Z
-content_hash: "sha256:9ebab21f74c3b7b9b87b3e0397fbe99212d319be453b33232ce3f3321cd36927"
+updated_at: 2026-10-20T17:38:30Z
+content_hash: "sha256:fe151ba77cd0935769f78d5533ec537e960f8023058b97b12186e0826e94a566"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -113,6 +113,7 @@ OPERATOR LOCAL-USE LICENSE, MACOS TERMS, CLEANUP, AND PREFLIGHT APPROVAL (2026-1
 - Operator approved parent-mediated root identity execution for GRRR-90te after the disk gate passes and the exact license-review artifact is bound.
 - Runtime offline dependency closure, reproducibility, isolation, cancellation, and license checks remain mandatory and must fail closed on ambiguity or mismatch.
 - Review basis: license-review-draft.json SHA-256 4d3e93ebb6ac205225e7521c951a93baa64335a899710619ae3f593f7b3cf0c6; provenance addendum SHA-256 3be01e90783d6cfeb928585691c86d7413a37c02c8d5e0bc93135cb4cc36bc67.
+AUTHORIZED GRADLE CLEANUP RESULT (2026-10-20): removed only /Users/speed/.gradle/caches (1.7 GiB, 19,865 files); df rose from 13 GB to 15 GB; manifest .tmp-sr_pm/gradle-cleanup-manifest.txt. No model/project/output cache touched.
 
 ## nd_contract
 status: in_progress
