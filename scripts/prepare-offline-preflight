@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+"""Non-executing source/toolchain preparation. Never authorizes a VM build.
+
+Usage: prepare-offline-preflight SOURCE_CHECKOUT GO_ARCHIVE VM_ASSET_DIRECTORY
+Downloads are a separate preparation step; this tool is entirely offline.
+"""
+import json
+import os
+from pathlib import Path
+import sys
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest
+from execution import ASSETS, QEMU
+from offline import source_inventory, toolchain_inventory, proposed_profile
+
+
+def main() -> int:
+    """Save immutable attempt evidence, including incomplete inventory failures."""
+    if len(sys.argv) != 4:
+        print(__doc__, file=sys.stderr)
+        return 2
+    attempt = ROOT / 'docs/evidence/offline-preflight' / (
+        'preparation-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8])
+    attempt.mkdir(parents=True, mode=0o700)
+    started = time.monotonic()
+    code = 1
+    receipt = {'kind': 'preparation-not-execution', 'approved': False,
+               'baseline_verified': False, 'source': None, 'toolchain': None,
+               'execution_seconds': 0, 'incremental_money_cents': 0,
+               'review_seconds': None, 'blocked_reasons': [], 'assets': {}}
+    try:
+        source, archive, vm = [Path(value).resolve(strict=True) for value in sys.argv[1:]]
+        receipt['source'] = source_inventory(source)
+        toolchain = toolchain_inventory(archive)
+        (attempt / 'toolchain-members.json').write_bytes(canonical(toolchain.pop('members')))
+        (attempt / 'toolchain-notices.json').write_bytes(canonical(toolchain.pop('notices')))
+        receipt['toolchain'] = toolchain
+        receipt['source']['license_text'] = (source / 'LICENSE').read_text()
+        receipt['source']['obligations'] = 'Preserve license/copyright/NOTICE if present; identify modifications; no trademark grant'
+        receipt['source']['license_compliance'] = 'not-cleared; full transitive dependency and notice review pending'
+        for name, expected in ASSETS.items():
+            path = vm / ('boot/' + name if name != 'alpine-virt-3.22.6-aarch64.iso' else name)
+            actual = digest(path.read_bytes())
+            receipt['assets'][name] = {'sha256': actual, 'expected_sha256': expected,
+                'origin': 'https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/alpine-virt-3.22.6-aarch64.iso',
+                'version': 'Alpine virt 3.22.6 aarch64', 'matched': actual == expected,
+                'license': 'mixed; kernel GPL; full installed APK inventory unresolved',
+                'obligations': 'Per-package licenses and notices require review; no redistribution clearance',
+                'separate_review': None}
+            if actual != expected:
+                raise ValueError('VM asset identity mismatch: ' + name)
+        qemu = Path(QEMU).resolve(strict=True)
+        receipt['assets']['qemu'] = {'sha256': digest(qemu.read_bytes()), 'origin': 'https://www.qemu.org/',
+            'path': str(qemu), 'version': '11.1.2 per existing approval; not reexecuted',
+            'license': 'GPL-2.0-only', 'obligations': 'External executable only; never copy/link/redistribute',
+            'separate_review': 'docs/IMPLEMENTATION-APPROVAL-2026-10-20.md; synthetic scope only',
+            'dynamic_library_inventory': 'unresolved'}
+        receipt['assets']['models'] = {'used': [], 'paid_calls': False}
+        receipt['blocked_reasons'] = [
+            'Explicit operator offline-build profile approval absent; synthetic approval cannot be reused',
+            'No independent offline builds or clean baseline test execution performed',
+            'Full VM APK/toolchain bundled dependency license/notice compliance review incomplete',
+            'Host QEMU/Python transitive runtime library inventory incomplete',
+            'Read-only detached asset image not yet produced or approved',
+            'New profile guest isolation/reset/negative/cancellation integration not executed']
+        receipt['toolchain']['members_sha256'] = digest((attempt / 'toolchain-members.json').read_bytes())
+        receipt['toolchain']['notices_sha256'] = digest((attempt / 'toolchain-notices.json').read_bytes())
+        (attempt / 'inventory.json').write_bytes(canonical(receipt))
+        proposal = proposed_profile(os.getuid(), digest((attempt / 'inventory.json').read_bytes()))
+        (attempt / 'profile-proposal.json').write_bytes(canonical(proposal))
+        code = 0  # Preparation completion only; never a preflight pass.
+    except Exception as exc:
+        receipt['blocked_reasons'].append(type(exc).__name__ + ': ' + str(exc))
+    finally:
+        receipt['preparation_seconds'] = time.monotonic() - started
+        receipt['preflight_state'] = 'blocked'
+        (attempt / 'preparation.json').write_bytes(canonical(receipt))
+        artifacts = {p.name: digest(p.read_bytes()) for p in attempt.iterdir() if p.is_file()}
+        (attempt / 'manifest.json').write_bytes(canonical({'kind': 'preparation-not-preflight',
+            'preparation_exit_code': code, 'preflight_exit_code': 1, 'artifacts': artifacts,
+            'source_execution_performed': False, 'vm_execution_performed': False}))
+    print(json.dumps({'preparation_exit_code': code, 'preflight_state': 'blocked', 'evidence': str(attempt)}))
+    return code
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
