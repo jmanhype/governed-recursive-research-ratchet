@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T20:56:37Z
-content_hash: "sha256:e4be6c4f66acd5e88d9b70bf7464261cb6b83eaa44097f3e28baf9c813f46b45"
+updated_at: 2026-10-20T20:58:01Z
+content_hash: "sha256:999825859f683d1ad38d8c5cec272b115a772c1d6faa22682ee1e7adb8c2435a"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -121,6 +121,15 @@ OPERATOR 1024 MiB OFFLINE VM APPROVAL (2026-10-20):
 - Operator explicitly increased offline-build VM memory from 512 MiB to 1024 MiB and authorized rerunning GRRR-90te parent identity integration.
 - All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; maximum 600 seconds cumulative build/test runtime before other probes; no guest networking/host shares/clipboard/forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If compilation still fails at 1024 MiB, stop again; do not automatically increase resources.
+## nd_contract
+status: in_progress
+### evidence
+- Explicit operator-approved 1024 MiB offline-only amendment implemented in profile, adapter validation/QEMU arguments, root launcher and preparation approval binding. Synthetic remains 512 MiB; every other limit unchanged.
+- 31 unit tests pass including exact limits comparison and rejection of 512/2048 offline configs; Python compilation and pvg verify 4 files pass.
+- New profile 6dc4ea9d4da104b22d9865edfa64487d817eb40aaa5425d37c565c4280f4dfd3; approval 2fa136998c51d4a0dc3d3ffc535345d4b1b815dc1c660ae6ceba064efe8c365c; receipt c55cbe8d5c1e13918efbd0cedaf8b7a15233626b57e3cf973a89d5f5a7ad5eba. Image unchanged ff523652e7f0073df3424732d924b5223dc719f1e373ad1cbe44f88194bac38a.
+- Parent identity run required; no privileged run by worker. If compiler killed at 1024 MiB, stop with no further resource increase. Prior 512 MiB evidence preserved.
+### proof
+- [ ] AC #1-#6: awaiting mandatory successful real baseline evidence; not delivered.
 
 ## nd_contract
 status: in_progress
