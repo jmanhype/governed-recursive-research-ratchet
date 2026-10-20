@@ -1,0 +1,83 @@
+Required integration tests: 8
+test_01_direct_stop_before_synthetic (__main__.BoundedChallenge.test_01_direct_stop_before_synthetic) ... FAIL
+test_02_clean_and_faulty_real_vm (__main__.BoundedChallenge.test_02_clean_and_faulty_real_vm) ... FAIL
+test_03_all_denied_capabilities (__main__.BoundedChallenge.test_03_all_denied_capabilities) ... ok
+test_04_invalid_metadata_and_bindings (__main__.BoundedChallenge.test_04_invalid_metadata_and_bindings) ... ok
+test_05_idempotency_mismatch_and_concurrency (__main__.BoundedChallenge.test_05_idempotency_mismatch_and_concurrency) ... FAIL
+test_06_unavailable_and_unauthorized_executor (__main__.BoundedChallenge.test_06_unavailable_and_unauthorized_executor) ... ok
+test_07_downstream_is_unavailable (__main__.BoundedChallenge.test_07_downstream_is_unavailable) ... ERROR
+test_08_protected_files_are_not_operator_writable (__main__.BoundedChallenge.test_08_protected_files_are_not_operator_writable) ... ok
+
+======================================================================
+ERROR: test_07_downstream_is_unavailable (__main__.BoundedChallenge.test_07_downstream_is_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/tests/integration/bounded_challenge.py", line 134, in test_07_downstream_is_unavailable
+    self.denied({'action': action, 'run': self.run}, 'GateBlocked')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/tests/integration/bounded_challenge.py", line 39, in denied
+    call(self.endpoint, request)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/research/common.py", line 90, in call
+    conn.sendall(canonical(request) + b'\n')
+                 ~~~~~~~~~^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/research/common.py", line 25, in canonical
+    return json.dumps(value, sort_keys=True, separators=(',', ':'),
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      ensure_ascii=True, allow_nan=False).encode('ascii')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 182, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type method is not JSON serializable
+when serializing dict item 'run'
+
+======================================================================
+FAIL: test_01_direct_stop_before_synthetic (__main__.BoundedChallenge.test_01_direct_stop_before_synthetic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/tests/integration/bounded_challenge.py", line 62, in test_01_direct_stop_before_synthetic
+    self.assertEqual(report['execution'], 'stopped')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'error' != 'stopped'
+- error
++ stopped
+
+
+======================================================================
+FAIL: test_02_clean_and_faulty_real_vm (__main__.BoundedChallenge.test_02_clean_and_faulty_real_vm)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/tests/integration/bounded_challenge.py", line 72, in test_02_clean_and_faulty_real_vm
+    self.assertEqual(result.returncode, 0 if name == 'clean' else 3, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 != 0 : {"error": {"code": "GateBlocked", "message": "Direct stop preflight required before candidate execution", "operation": "unknown", "receipt": null, "retryable": false}}
+
+
+======================================================================
+FAIL: test_05_idempotency_mismatch_and_concurrency (__main__.BoundedChallenge.test_05_idempotency_mismatch_and_concurrency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/tests/integration/bounded_challenge.py", line 119, in test_05_idempotency_mismatch_and_concurrency
+    self.denied(dict(request, variant=self.faulty), 'StaleBinding')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-0g4n/tests/integration/bounded_challenge.py", line 40, in denied
+    self.assertEqual(result.exception.record['code'], code)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'GateBlocked' != 'StaleBinding'
+- GateBlocked
++ StaleBinding
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 10.722s
+
+FAILED (failures=3, errors=1)
+{"required": 8, "executed": 8, "skipped": 0, "failures": 3, "errors": 1}

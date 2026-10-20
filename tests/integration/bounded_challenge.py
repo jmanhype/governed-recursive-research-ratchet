@@ -40,26 +40,36 @@ class BoundedChallenge(unittest.TestCase):
         self.assertEqual(result.exception.record['code'], code)
 
     def test_01_direct_stop_before_synthetic(self) -> None:
-        self.denied(self.request(), 'GateBlocked')
+        denied = self.request()
+        self.denied(denied, 'GateBlocked')
+        self.denied(dict(denied, variant=self.faulty), 'StaleBinding')
         request = self.request(action='preflight')
         with concurrent.futures.ThreadPoolExecutor(1) as pool:
             future = pool.submit(call, self.endpoint, request)
-            deadline = time.monotonic() + 15
+            deadline = time.monotonic() + 50  # Approved boot + bounded bootstrap, not a longer VM boot bound.
             run = None
             while time.monotonic() < deadline:
                 runs = call(self.endpoint, {'action': 'list'})['runs']
                 if runs:
                     run = runs[-1]
-                    break
+                    status = call(self.endpoint, {'action': 'status', 'run': run})
+                    if status['execution'] != 'running':
+                        self.fail('Preflight ended before verified readiness: ' + json.dumps(status))
+                    if status.get('executor', {}).get('ready') and status['executor']['active']:
+                        break
                 time.sleep(0.05)
+            else:
+                self.fail('Preflight did not reach verified readiness before test deadline')
             self.assertIsNotNone(run)
-            time.sleep(10)  # real guest boot, no candidate execution; explicit bounded wait
             started = time.monotonic()
             stopped = call(self.endpoint, {'action': 'stop', 'run': run, 'key': 'stop-preflight'})
             self.assertTrue(stopped['ceased'])
             self.assertLess(time.monotonic() - started, 2)
             report = future.result(timeout=10)
         self.assertEqual(report['execution'], 'stopped')
+        self.assertTrue(report['isolation_verified'])
+        self.assertEqual(report['observation_error']['code'], 'Stopped')
+        self.assertTrue(report['cessation_verified'])
         self.assertTrue(call(self.endpoint, {'action': 'list'})['preflight'])
         for key in ('stop-preflight', 'stop-again'):
             self.assertTrue(call(self.endpoint, {'action': 'stop', 'run': run, 'key': key})['ceased'])
@@ -94,7 +104,7 @@ class BoundedChallenge(unittest.TestCase):
             corrupt['events'].pop()
             with self.assertRaises(Failure):
                 verifySnapshot(corrupt, report['anchor'])
-            type(self).run = report['run']
+            type(self).saved_run_id = report['run']
 
     def test_03_all_denied_capabilities(self) -> None:
         for action in DENIED:
@@ -130,8 +140,10 @@ class BoundedChallenge(unittest.TestCase):
         self.assertEqual(result.exception.record['code'], 'Unauthorized')
 
     def test_07_downstream_is_unavailable(self) -> None:
+        # A missing prerequisite is an explicit failure, not a TestCase.run method.
+        self.assertTrue(hasattr(self, 'saved_run_id'), 'Clean/faulty execution did not produce a saved run ID')
         for action in ('review', 'recover', 'decide'):
-            self.denied({'action': action, 'run': self.run}, 'GateBlocked')
+            self.denied({'action': action, 'run': self.saved_run_id}, 'GateBlocked')
 
     def test_08_protected_files_are_not_operator_writable(self) -> None:
         for path in ('policy.json', 'ledger.sqlite'):

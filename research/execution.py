@@ -17,6 +17,15 @@ ASSETS = {'alpine-virt-3.22.6-aarch64.iso': '09d601858d72484c89d576fb735215cccf5
 QEMU = '/opt/homebrew/bin/qemu-system-aarch64'
 
 
+def isolation_verified(data: bytes) -> bool:
+    """Check explicit interface inventory and reset; don't silently strip controls."""
+    if data.count(b'NET-BEGIN\n') != 1 or data.count(b'NET-END\n') != 1:
+        return False
+    interfaces = data.split(b'NET-BEGIN\n', 1)[1].split(b'NET-END\n', 1)[0]
+    return (interfaces == b'lo\n' and b'RESET-CLEAN\n' in data
+            and b'9p' not in data and b'virtiofs' not in data)
+
+
 class Executor:
     def __init__(self, root: Path) -> None:
         require(os.getuid() == RUNNER, 'Unauthorized', 'Executor requires runner identity')
@@ -25,6 +34,7 @@ class Executor:
         self.active: dict[str, subprocess.Popen] = {}
         self.fenced: set[str] = set()
         self.keys: dict[str, dict] = {}
+        self.ready: set[str] = set()
 
     def stop(self, run: str) -> dict:
         started = time.monotonic()
@@ -92,13 +102,17 @@ class Executor:
                     require(run not in self.fenced, 'Stopped', 'Emergency stop fenced guest')
                 for _, _ in selector.select(0.05):
                     chunk = os.read(process.stdout.fileno(), 65536)
+                    with self.lock:
+                        require(run not in self.fenced, 'Stopped', 'Emergency stop fenced guest')
                     require(bool(chunk), 'Unavailable', 'Guest transport ended')
                     fits = len(captured) + len(chunk) <= 1048576
                     captured.extend(chunk[:1048576 - len(captured)])
                     require(fits, 'GateBlocked', 'Guest output exceeded cap')
                     if marker in captured[begin:]:
                         return bytes(captured[begin:])
-                require(process.poll() is None, 'Unavailable', 'Guest exited before observation')
+                with self.lock:
+                    require(run not in self.fenced, 'Stopped', 'Emergency stop fenced guest')
+                    require(process.poll() is None, 'Unavailable', 'Guest exited before observation')
             raise Failure('GateBlocked', 'Evaluator-approved deadline exceeded')
 
         def send(command: str) -> None:
@@ -109,6 +123,7 @@ class Executor:
         observation = b''
         exit_code = None
         isolation = b''
+        ready_verified = False
         try:
             until(b'localhost login:', 30)
             send('root')
@@ -117,13 +132,17 @@ class Executor:
             until(b'localhost:~#', 5)
             marker = uuid.uuid4().hex
             # Bootstrap is evaluator-authored; guest has no writable host mount.
-            send("printf 'ISOLATION\\n'; ls /sys/class/net; cat /proc/mounts; "
+            send("printf 'ISOLATION\\nNET-BEGIN\\n'; "
+                 "for p in /sys/class/net/*; do printf '%s\\n' \"${p##*/}\"; done; "
+                 "printf 'NET-END\\n'; cat /proc/mounts; "
                  "test ! -e /tmp/grrr-reset && echo RESET-CLEAN; touch /tmp/grrr-reset; "
                  f"printf '{marker}\\n'")
             isolation = until(marker.encode(), 5).replace(b'\r\n', b'\n')
-            require(b'RESET-CLEAN\n' in isolation and b'\nlo\n' in isolation
-                    and b'eth0' not in isolation and b'9p' not in isolation
-                    and b'virtiofs' not in isolation, 'GateBlocked', 'Guest isolation/reset check failed')
+            require(isolation_verified(isolation), 'GateBlocked', 'Guest isolation/reset check failed')
+            ready_verified = True
+            with self.lock:
+                require(run not in self.fenced, 'Stopped', 'Stopped before ready state')
+                self.ready.add(run)
             if request['probe']:
                 # Pre-experiment emergency-stop exercise: deliberately await control cancellation.
                 until(b'NEVER-EMITTED', 300)
@@ -145,16 +164,26 @@ class Executor:
             process.stdout.close()
             with self.lock:
                 self.active.pop(run, None)
+                self.ready.discard(run)
         unchanged = all(digest((self.root / 'assets' / name).read_bytes()) == hashed
                         for name, hashed in before.items())
         return {'run': run, 'command': args, 'qemu_version': version.stdout.decode().splitlines()[0],
                 'assets': before, 'assets_unchanged': unchanged, 'observation': observation.hex(),
                 'exit_code': exit_code, 'raw': bytes(captured).hex(), 'isolation': isolation.hex(),
                 'termination': termination, 'seconds': time.monotonic() - started,
-                'error': error, 'transport_complete': error is None}
+                'error': error, 'transport_complete': error is None,
+                'isolation_verified': ready_verified}
 
     def handle(self, uid: int, message: dict) -> dict:
         require(uid == EVALUATOR, 'Unauthorized', 'Executor peer is not evaluator')
+        if message.get('action') == 'status':
+            fields(message, {'action', 'run'})
+            run = identifier(message['run'])
+            with self.lock:
+                process = self.active.get(run)
+                return {'run': run, 'ready': run in self.ready,
+                        'active': process is not None and process.poll() is None,
+                        'fenced': run in self.fenced}
         if message.get('action') == 'stop':
             fields(message, {'action', 'run'})
             return self.stop(identifier(message['run']))

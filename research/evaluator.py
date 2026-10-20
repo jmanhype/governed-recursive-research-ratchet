@@ -20,6 +20,7 @@ class Evaluator:
         self.lock = threading.RLock()
         self.runs: dict[str, dict] = {}
         self.keys: dict[str, tuple[dict, str]] = {}
+        self.bindings: dict[str, dict] = {}
         self.reserved = 0
         self.preflight = False
         self.stops: dict[str, tuple[str, dict]] = {}
@@ -41,10 +42,15 @@ class Evaluator:
         identifier(request['policy'], True)
         require(request['challenge'] == 'grrr-walk-001' and request['variant'] in VARIANTS,
                 'InvalidInput', 'Unknown frozen challenge or variant')
-        loadPolicy(EVALUATOR, self.root / 'policy.json', request['policy'])
         require(type(request['epoch']) is int and request['epoch'] == 0,
                 'StaleBinding', 'Stale epoch')
         with self.lock:
+            if request['key'] in self.bindings:
+                require(self.bindings[request['key']] == request, 'StaleBinding',
+                        'Key reused for a different request, including a denied attempt')
+            else:
+                self.bindings[request['key']] = request.copy()
+            loadPolicy(EVALUATOR, self.root / 'policy.json', request['policy'])
             if request['key'] in self.keys:
                 previous, run = self.keys[request['key']]
                 require(previous == request, 'StaleBinding', 'Key reused for a different request')
@@ -99,12 +105,19 @@ class Evaluator:
                       'cessation_verified': observed['termination']['ceased'],
                       'next_action': 'Inspect evidence; replay/review/admission unavailable',
                       'scope': 'Not a vlt defect, Verified defect, or admission candidate'}
+            if probe or not observed['transport_complete']:
+                report['finding'] = 'not-evaluated'
+            report['probe'] = probe
+            report['isolation_verified'] = observed.get('isolation_verified', False)
+            report['observation_error'] = observed['error']
             snapshot = self.event(dict(report, kind='observation'), uuid.uuid4().hex)
             verifySnapshot(snapshot, snapshot['receipt']['digest'])
             report.update(snapshot_id=snapshot['snapshot_id'], anchor=snapshot['receipt']['digest'])
             self.runs[run] = report
             (self.root / (run + '.json')).write_bytes(canonical(snapshot))
-            if probe and stopped and observed['termination']['ceased'] and observed['assets_unchanged']:
+            if (probe and stopped and observed['termination']['ceased']
+                    and observed['assets_unchanged'] and observed.get('isolation_verified')
+                    and observed['error'] and observed['error']['code'] == 'Stopped'):
                 self.preflight = True
             return report
 
@@ -153,7 +166,11 @@ class Evaluator:
             if action in ('decide', 'recover', 'review'):
                 raise Failure('GateBlocked', 'Review, decisions, admission and recovery are not-run/unavailable')
             if action == 'status':
-                return self.runs[run]
+                with self.lock:
+                    status = dict(self.runs[run])
+                if status['execution'] == 'running':
+                    status['executor'] = call(self.executor, {'action': 'status', 'run': run}, timeout=2)
+                return status
             if action == 'evidence':
                 import json
                 snapshot = json.loads((self.root / (run + '.json')).read_bytes())
