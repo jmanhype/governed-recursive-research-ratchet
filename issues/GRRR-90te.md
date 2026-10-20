@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T23:40:54Z
-content_hash: "sha256:58fabcd399b425fc17098e026170f1d8a1d08b7c6a45513874166a39feddc30d"
+updated_at: 2026-10-20T23:41:32Z
+content_hash: "sha256:d523d82b3779bae7516693242f0e2cef720b0f75a893fc5c86839ba4ead2e13f"
 blocks: [GRRR-gu87, GRRR-6sso]
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
@@ -125,7 +125,23 @@ OPERATOR 512 MiB WORKFS APPROVAL (2026-10-20):
 - Operator explicitly increased the offline-build guest ephemeral /work tmpfs cap from 350 MiB to 512 MiB and authorized rerunning GRRR-90te parent identity integration.
 - VM RAM remains 1024 MiB. All other limits remain unchanged: 1 vCPU; 300-second total hard ceiling per invocation; 240-second initial command timeout replaced by measured result; two fresh VMs; 600-second cumulative build/test runtime before other probes; no guest networking, host shares, clipboard, or forwarded agents; no host build fallback, paid service, production access, automatic main merge, or promotion; 1 MiB output cap; 15 GB host-free-space gate; existing stop and force-kill controls.
 - If linking still fails at 512 MiB /work, stop again; do not automatically increase resources.
+## Implementation Evidence
+PROOF: See committed final audit a1d2148d8a8216e4db964b1a4fc76ee10f48c564 and complete AC Verification table above. Independent verifier PASS; integration 6/6 no skips/failures; units31/31; unit-only coverage24.0761478163%; pvg verify7files0issues.
+LEARNINGS: Exact ISO namespace and resource-boundary evidence are mandatory.
 
+## nd_contract
+status: delivered
+
+### evidence
+- Commit a1d2148d8a8216e4db964b1a4fc76ee10f48c564. Canonical successful attempt attempt-20261020T233115Z-6e1e938c; offline verifier PASS.
+
+### proof
+- [x] AC #1: pinned source/license/toolchain/image and full baseline tests verified.
+- [x] AC #2: two clean independent offline builds byte-identical; dependencies inventoried.
+- [x] AC #3: complete scope-limited operator license/provenance review bound.
+- [x] AC #4: actual guest isolation and synthetic IO plus host permission probes pass.
+- [x] AC #5: independent identities/ACLs/reset and approved resource caps pass.
+- [x] AC #6: actual negative configs, watchdog, acknowledgement and graceful/forced cancellation pass; emergency procedure approved.
 
 ## nd_contract
 status: delivered
