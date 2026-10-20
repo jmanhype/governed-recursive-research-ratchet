@@ -4,11 +4,11 @@ title: "Block unsafe baselines before an operator starts research"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, delivered]
+labels: [milestone-1, integration, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T23:46:09Z
+updated_at: 2026-10-20T23:46:10Z
 content_hash: "sha256:8aa0a3d2511467dc4835d031242327a4567932c55a0e13ebe304a0b23119e12c"
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
