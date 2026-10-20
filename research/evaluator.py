@@ -4,10 +4,13 @@ from pathlib import Path
 import threading
 import time
 import uuid
+import sqlite3
 from common import (EVALUATOR, RUNNER, DENIED, GATES, VARIANTS, Failure, call,
                     canonical, digest, fields, identifier, require, serve)
 from ledger import Ledger, verifySnapshot
 from policy import loadPolicy
+from budget import Budget
+from observation import validate_observation, gate
 
 
 class Evaluator:
@@ -23,14 +26,30 @@ class Evaluator:
         self.keys: dict[str, tuple[dict, str]] = {}
         self.bindings: dict[str, dict] = {}
         self.reserved = 0
+        self.halted = False
+        self.cessation_unknown: set[str] = set()
+        self.budget = Budget(root / 'budget.sqlite')
         self.preflight = False
         self.stops: dict[str, tuple[str, dict]] = {}
         self.executor = root.parent / 'ipc/executor.sock'
         self.identity = digest(b''.join(p.read_bytes() for p in sorted((root / 'code').glob('*.py'))))
 
     def event(self, record: dict, key: str) -> dict:
-        return self.ledger.snapshot(dict(record, recorded_ns=time.time_ns(),
-                                        evaluator=self.identity, policy=self.policy_ref), key)
+        try:
+            return self.ledger.snapshot(dict(record, recorded_ns=time.time_ns(),
+                                            evaluator=self.identity, policy=self.policy_ref), key)
+        except (OSError, sqlite3.Error):
+            self.halted = True
+            # A full evaluator store must not prevent direct executor fencing.
+            # Never retry the failed write or a possibly dispatched effect.
+            for run, state in self.runs.items():
+                if state['execution'] == 'running':
+                    state['epoch'] = 1
+                    try:
+                        call(self.executor, {'action': 'stop', 'run': run}, timeout=8)
+                    except Failure:
+                        self.cessation_unknown.add(run)
+            raise Failure('RecoveryRequired', 'Evaluator store unavailable; work halted')
 
     def audit(self, uid: int, code: str) -> None:
         # Deliberately exclude arbitrary request strings and raw data from audit metadata.
@@ -46,6 +65,7 @@ class Evaluator:
         require(type(request['epoch']) is int and request['epoch'] == 0,
                 'StaleBinding', 'Stale epoch')
         with self.lock:
+            require(not self.halted, 'Stopped', 'Evaluator halted; explicit recovery required')
             if request['key'] in self.bindings:
                 require(self.bindings[request['key']] == request, 'StaleBinding',
                         'Key reused for a different request, including a denied attempt')
@@ -62,21 +82,34 @@ class Evaluator:
             require(self.reserved + 300 <= 21600, 'BudgetExceeded', 'POC cumulative reservation exhausted')
             run = uuid.uuid4().hex
             reservation = uuid.uuid4().hex
-            self.reserved += 300
+            reserved = self.budget.reserve(EVALUATOR, run,
+                {'currency': 'USD', 'money_cents': 0, 'execution_us': 300_000000, 'review_us': 0},
+                request['key'], binding=digest(canonical(request)))
+            reservation = reserved['id']
+            self.reserved = self.budget.totals(EVALUATOR)['charged_and_reserved']['poc']['execution_us'] / 1000000
             self.runs[run] = {'run': run, 'execution': 'running', 'epoch': 0,
                               'verified': False, 'admission': 'blocked', 'snapshot_id': None}
             self.keys[request['key']] = (request.copy(), run)
             self.event({'kind': 'reserved', 'run': run, 'actor_uid': uid, 'reservation': reservation,
                         'maximum_seconds': 300, 'reserved_total_seconds': self.reserved,
-                        'money_cents': 0, 'paid_dispatch': False, 'review_seconds': None,
+                        'money_cents': 0, 'paid_dispatch': False, 'review_seconds': 0,
                         'objects': []}, request['key'])
         timer = threading.Timer(300, self.deadline, args=(run,))
         timer.start()
+        dispatch_started = time.monotonic_ns()
         try:
             observed = call(self.executor, {'action': 'dispatch',
                 'request': {'run': run, 'variant': request['variant'], 'probe': probe},
                 'reservation': reservation, 'epoch': 0, 'key': request['key']})
+            observed = validate_observation(observed, run)
         except Failure as exc:
+            self.halted = True
+            # The dispatch may have executed: retain its maximum, fence without
+            # retrying dispatch, and report no trusted usage on transport loss.
+            try:
+                call(self.executor, {'action': 'stop', 'run': run}, timeout=8)
+            except Failure:
+                self.cessation_unknown.add(run)
             observed = {'error': exc.record, 'transport_complete': False, 'observation': '',
                         'exit_code': None, 'seconds': None, 'assets_unchanged': False,
                         'termination': {'ceased': False}}
@@ -90,11 +123,23 @@ class Evaluator:
             observed['raw_digest'] = raw_object
             observed['raw_bytes'] = len(raw_bytes)
             raw_hash = self.ledger.object(canonical(observed))
-            for gate in ('source_environment_identity', 'isolation', 'trusted_observation'):
-                gates[gate] = {'state': 'pass' if observed['transport_complete'] else 'error', 'evidence': raw_hash}
+            for name in ('source_environment_identity', 'isolation'):
+                gates[name] = {'state': 'pass' if observed['transport_complete'] else 'error', 'evidence': raw_hash}
+            gates['trusted_observation'] = dict(gate(observed), evidence=raw_hash)
             gates['protected_asset_integrity'] = {'state': 'pass' if observed['assets_unchanged'] else 'fail', 'evidence': raw_hash}
             gates['baseline_correctness'] = {'state': 'pass' if assertion else 'fail', 'evidence': raw_hash}
-            gates['budget_state'] = {'state': 'pass', 'evidence': reservation}
+            # Host elapsed includes overlapping time in each independent arm.
+            # A timeout, absent receipt or uncertain cessation retains the hold.
+            settlement = None
+            if observed['transport_complete'] and observed['termination']['ceased']:
+                elapsed = (time.monotonic_ns() - dispatch_started + 999) // 1000
+                try:
+                    meter = self.budget.meter(EVALUATOR, reservation,
+                        {'currency': 'USD', 'money_cents': 0, 'execution_us': elapsed, 'review_us': 0}, raw_hash)
+                    settlement = self.budget.settle(EVALUATOR, reservation, meter)
+                except (Failure, sqlite3.Error, OSError):
+                    self.halted = True
+            gates['budget_state'] = {'state': 'fail' if self.halted else 'pass', 'evidence': reservation}
             gates['evidence_integrity_currency'] = {'state': 'pass', 'evidence': raw_hash}
             stopped = self.runs[run]['epoch'] != 0
             report = {'run': run, 'candidate': request['variant'], 'challenge': request['challenge'],
@@ -107,6 +152,8 @@ class Evaluator:
                       'reserved_seconds': 300, 'reserved_total_seconds': self.reserved,
                       'execution_seconds': observed['seconds'], 'review_seconds': None,
                       'incremental_money_cents': 0, 'epoch': self.runs[run]['epoch'],
+                      'budget': self.budget.totals(EVALUATOR), 'settlement': settlement,
+                      'usage_status': 'settled' if settlement else 'maximum-retained',
                       'cessation_verified': observed['termination']['ceased'],
                       'next_action': 'Inspect evidence; replay/review/admission unavailable',
                       'scope': 'Not a vlt defect, Verified defect, or admission candidate'}
@@ -127,6 +174,7 @@ class Evaluator:
             return report
 
     def deadline(self, run: str) -> None:
+        self.halted = True
         try:
             self.stop(run, 'watchdog-' + run, EVALUATOR)
         except Failure:
@@ -183,7 +231,8 @@ class Evaluator:
                 return verifySnapshot(snapshot, self.runs[run]['anchor'])
             raise Failure('InvalidInput', 'Unknown action')
         except Failure as exc:
-            self.audit(uid, exc.record['code'])
+            if not self.halted:
+                self.audit(uid, exc.record['code'])
             raise
 
 

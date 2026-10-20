@@ -132,7 +132,7 @@ def run() -> int:
         code = path / 'code'
         code.mkdir(mode=0o700)
         os.chown(code, uid, uid)
-        files = ('common.py', 'execution.py') if uid == 321 else ('common.py', 'policy.py', 'ledger.py', 'evaluator.py')
+        files = ('common.py', 'execution.py') if uid == 321 else ('common.py', 'policy.py', 'ledger.py', 'budget.py', 'observation.py', 'evaluator.py')
         for filename in files:
             shutil.copyfile(ROOT / 'research' / filename, code / filename)
             os.chown(code / filename, uid, uid)
