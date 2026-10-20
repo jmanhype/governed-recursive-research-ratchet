@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T03:37:21Z
-content_hash: "sha256:4ff1110de6a941c5ff40ba9d964658c89f80bd2bee9599e056e84da760d2b6ab"
+updated_at: 2026-10-20T12:04:05Z
+content_hash: "sha256:96bd62b47b1b98a67b66b52e2821f79945e091255d7a238a68e6839606ec21a6"
 blocks: [GRRR-90te, GRRR-6sso]
 ---
 
@@ -101,6 +101,14 @@ BLOCKED BEFORE DEVELOPER DISPATCH:
 - Measured host preflight on 2026-10-19: macOS 27.0, Apple M2 Pro, 32 GB RAM, 10 cores, Hypervisor support=1, only 8 GB free; limactl/QEMU/UTM/Parallels/VirtualBox/vmrun/colima/podman unavailable; Docker CLI exists but daemon is unreachable.
 - Architecture forbids silent downgrade to unrestricted host/container execution. No implementation, experiment, commit, or push occurred.
 - Next required operator decision: authorize a verified VM provisioning path and safe space plan, or provide another approved isolated execution host.
+VM PREFLIGHT AUDIT (read-only, 2026-10-20):
+- Data volume has approximately 3 GB free (100% capacity); initial earlier reading was 8 GB.
+- Hypervisor support is present on macOS 27.0 / Apple M2 Pro / 32 GB RAM.
+- No local VM tool is installed: limactl, QEMU, UTM, Parallels, VirtualBox, vmrun, Colima, and Podman unavailable. Docker CLI exists but daemon is unreachable.
+- Read-only audit found safe/regenerable candidates requiring explicit cleanup authorization: Codex Sparkle update staging ~9.1 GiB; old pnpm v3 store ~7.2 GiB; CoreSimulator dyld cache ~3.5 GiB; Gradle caches ~1.7 GiB; additional updater caches are available under Library/Caches.
+- Running app check: ChatGPT executes from /Applications, not the Sparkle Installation cache. No active pnpm/Gradle/CoreSimulator/Sparkle process was observed.
+- Candidate provisioning path under review: direct QEMU with -net none, disposable snapshot disk, no host sharing, bounded process/output/deadline, and evaluator-owned control. QEMU is GPL-2.0-only and therefore requires separate license-boundary approval even as an external tool.
+- No cache deletion, package installation, VM creation, source implementation, commit, or push occurred.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
