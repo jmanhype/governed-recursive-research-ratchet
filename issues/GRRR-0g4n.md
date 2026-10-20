@@ -8,8 +8,8 @@ labels: [milestone-1, integration, walking-skeleton]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
-updated_at: 2026-10-20T14:48:29Z
-content_hash: "sha256:c23ecefda803131643189166dd6c17d446b76084032e62237ded861ccbb9c3af"
+updated_at: 2026-10-20T14:48:58Z
+content_hash: "sha256:383c5f53fef894aa7a9a86b9f9eb104fccd3b6841b0abac025c365ad76a78be6"
 blocks: [GRRR-90te, GRRR-6sso]
 assignee: dev-GRRR-0g4n
 ---
@@ -127,6 +127,13 @@ QEMU NO-NETWORK VM PREFLIGHT PASS (2026-10-20):
 - Report: VM-PREFLIGHT-2026-10-20.md. Machine evidence: .tmp-sr_pm/vm/qemu-no-network-preflight.json plus two run logs.
 - Still not proven: standalone runner grammar, restricted OS identities/ACLs, authenticated evaluator control transport, durable ledger, trusted arbitrary-output observation, vlt challenge, independent replay/admission. No story implementation or experiment occurred.
 VM PREFLIGHT EVIDENCE DURABILITY NOTE: durable copies of cleanup manifests, audit output, QEMU JSON result, and both boot logs now live under docs/evidence/vm-preflight/. VM-PREFLIGHT-2026-10-20.md references those durable paths. The files are not yet committed; commit requires separate operator authorization.
+OPERATOR IMPLEMENTATION APPROVAL (2026-10-20):
+- Approved standalone bin/grrr grammar, dedicated _grrr_evaluator and _grrr_runner identities, measured limits, local evidence commit, and dispatch of this story.
+- Approved limits: QEMU 512 MiB / 1 vCPU; 30s boot deadline; 2s stop acknowledgement target; 5s SIGTERM grace then forced kill; 1 MiB guest output cap; 5-minute single-challenge deadline; 15 GB minimum free space; networking/host shares disabled.
+- Approved record: docs/IMPLEMENTATION-APPROVAL-2026-10-20.md.
+- Evidence/approval commit on main and fast-forwarded story/epic branches: c2970356436531565711fb3c2df24eb91c3ed510.
+- Dispatch worktree: .claude/worktrees/dev-GRRR-0g4n on story/GRRR-0g4n.
+- Authorization remains limited to this story. No production access, automatic main merge, autonomous patch generation, harness adaptation, or unapproved paid calls.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocks GRRR-90te
