@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:46:06Z
-content_hash: "sha256:b3af60ea26e53f68167faaa3bc4f5b1094ea284b3c420d00eded16c3b78b549e"
+updated_at: 2026-10-21T20:46:47Z
+content_hash: "sha256:bbd9f8c7af81f825b26f30b491b0081e72ef5e32a80e1c6c826977ef272d3e84"
 blocks: [GRRR-c875, GRRR-6sso]
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
@@ -98,7 +98,19 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-10-21]: Delivery proof passed 9/9. PM independently verified the trusted export against anchor 0955178e5c5d47e512ebdd2505b7f31cb7bcbb60cd6b3503c493dfc1f5cf0a37, recovery retry/promotion denial, UID-321 and UID-501 filesystem denial probes, clean static scan, clean story branch, and no remaining process. The 61-file commit count is primarily preserved failed and successful integration evidence; implementation is six files and 913 insertions, explained by mandatory crash/recovery/export controls. The disclosed Homebrew ResourceWarning remains test cleanup debt and does not affect this acceptance path.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Implementation/evidence commit 1c2a1c595703abf6a94e96792c5f1deb60841ca8.
+- Real integration 4/4, no skips; full no-guest 159/159 under both interpreters; pvg verify 0 issues.
+
+### proof
+- [x] AC #1 through AC #6 independently rechecked against durable evidence.
+- [ ] Admission and promotion remain intentionally blocked.
 
 ## nd_contract
 status: delivered
