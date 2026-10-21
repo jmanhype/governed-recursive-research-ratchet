@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build trusted guest artifacts and read back detached media; NEVER boot a VM.
 
-Usage: python3 scripts/prepare-trusted-observation SOURCE GO_ARCHIVE NEW_OUTPUT
+Usage: python3 scripts/prepare-trusted-observation SOURCE GO_ARCHIVE VM_ASSETS NEW_OUTPUT
 Only trusted supervisor/helper sources are cross-compiled on host. Pinned vlt
 source is inventoried and packaged, never built/executed here.
 """
@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 from common import canonical, digest, require
 from offline import clone_asset, package_source, source_inventory, TOOLCHAIN_SHA256
+from execution import ASSETS, QEMU
 
 FLOOR = 15000000000
 PROPOSAL = '1830a92ad2cbd91788051304ec8f6acaebf256b85065b2db2c07271b6906e3f6'
@@ -36,7 +37,7 @@ def capture(args: list[str], env: dict | None = None) -> bytes:
 
 def elf_identity(path: Path) -> dict:
     raw = path.read_bytes()
-    require(raw[:6] == b'\x7fELF\x02\x01' and struct.unpack_from('<H', raw, 18)[0] == 183,
+    require(len(raw) >= 64 and raw[:6] == b'\x7fELF\x02\x01' and struct.unpack_from('<H', raw, 18)[0] == 183,
             'IntegrityFailure', 'Expected little-endian ELF64 AArch64')
     offset = struct.unpack_from('<Q', raw, 32)[0]
     entry, count = struct.unpack_from('<HH', raw, 54)
@@ -77,7 +78,7 @@ def iso_readback(image: Path, expected: dict[str, str]) -> dict:
     return found
 
 
-def prepare(source: Path, archive: Path, target: Path) -> dict:
+def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     require(not target.exists(), 'InvalidInput', 'Use a fresh preparation directory')
     proposal_path = ROOT / 'docs/TRUSTED-OBSERVATION-PROFILE-PROPOSAL.json'
     require(digest(proposal_path.read_bytes()) == PROPOSAL, 'StaleBinding', 'Development proposal differs')
@@ -85,6 +86,15 @@ def prepare(source: Path, archive: Path, target: Path) -> dict:
     # current free space. No automatic cleanup or limit increase.
     initial_free = space(target.parent, 350000000)
     require(digest(archive.read_bytes()) == TOOLCHAIN_SHA256, 'IntegrityFailure', 'Go archive differs')
+    proposal = json.loads(proposal_path.read_bytes())
+    actual_assets = {}
+    for name, expected_hash in ASSETS.items():
+        path = vm / ('boot/' + name if name != 'alpine-virt-3.22.6-aarch64.iso' else name)
+        require(path.is_file() and not path.is_symlink(), 'IntegrityFailure', 'Missing or linked shared VM asset')
+        actual_assets[name] = digest(path.read_bytes())
+        require(actual_assets[name] == expected_hash, 'IntegrityFailure', 'Shared VM asset changed')
+    actual_assets['qemu'] = digest(Path(QEMU).read_bytes())
+    require(actual_assets['qemu'] == proposal['qemu_sha256'], 'StaleBinding', 'Proposed QEMU changed')
     inventory = source_inventory(source)
     target.mkdir(mode=0o700)
     media = target / 'media'
@@ -96,6 +106,8 @@ def prepare(source: Path, archive: Path, target: Path) -> dict:
     shutil.copyfile(ROOT / 'research/trusted-guest.sh', media / 'guest.sh')
     compiler = Path('/opt/homebrew/bin/go').resolve(strict=True)
     compiler_hash = digest(compiler.read_bytes())
+    compiler_license = compiler.parent.parent / 'LICENSE'
+    require(compiler_license.is_file(), 'GateBlocked', 'Host compiler license unavailable for review')
     compiler_version = capture([str(compiler), 'version']).decode().strip()
     require(compiler_version == 'go version go1.26.7 darwin/arm64',
             'StaleBinding', 'Host preparation compiler changed; review required')
@@ -125,7 +137,7 @@ def prepare(source: Path, archive: Path, target: Path) -> dict:
                'proposal_sha256': PROPOSAL, 'authorization_source': 'Operator approval recorded in GRRR-gu87 nd notes',
                'execution_authorized': False}
     (target / 'development-binding.json').write_bytes(canonical(binding))
-    profile = json.loads(proposal_path.read_bytes())
+    profile = dict(proposal)
     profile.update(authorization='development-review-only', dispatch_enabled=False,
                    supervisor_sha256=elf_identity(media / 'supervis')['sha256'],
                    input_image_sha256=digest(image.read_bytes()),
@@ -138,6 +150,9 @@ def prepare(source: Path, archive: Path, target: Path) -> dict:
                'candidate_execution_performed': False, 'initial_free_bytes': initial_free,
                'final_free_bytes': final_free, 'compiler': {'version': compiler_version, 'sha256': compiler_hash,
                'scope': 'Host trusted-source cross-compilation only; separate execution review includes this new provenance'},
+               'compiler_license_sha256': digest(compiler_license.read_bytes()),
+               'compiler_license_text': compiler_license.read_text(),
+               'shared_assets': actual_assets,
                'commands': commands, 'source': inventory, 'toolchain_sha256': TOOLCHAIN_SHA256,
                'supervisor': elf_identity(media / 'supervis'), 'helper': elf_identity(media / 'helper'),
                'supervisor_source_hashes': {p.name: digest(p.read_bytes()) for p in sources.glob('*.go')},
@@ -149,8 +164,8 @@ def prepare(source: Path, archive: Path, target: Path) -> dict:
 
 
 if __name__ == '__main__':
-    require(len(sys.argv) == 4, 'InvalidInput', 'Usage: prepare-trusted-observation SOURCE GO_ARCHIVE NEW_OUTPUT')
+    require(len(sys.argv) == 5, 'InvalidInput', 'Usage: prepare-trusted-observation SOURCE GO_ARCHIVE VM_ASSETS NEW_OUTPUT')
     result = prepare(Path(sys.argv[1]).resolve(strict=True), Path(sys.argv[2]).resolve(strict=True),
-                     Path(sys.argv[3]).absolute())
+                     Path(sys.argv[3]).resolve(strict=True), Path(sys.argv[4]).absolute())
     print(canonical({key: result[key] for key in ('image_sha256', 'profile_sha256', 'supervisor',
                                                 'development_binding_sha256', 'final_free_bytes')}).decode())
