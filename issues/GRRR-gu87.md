@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T02:45:50Z
-content_hash: "sha256:49d60e3fbd163ee550939cc7fe687af840ec23a65ee965a5d5fabe8df8c0b70b"
+updated_at: 2026-10-21T02:49:17Z
+content_hash: "sha256:01d0913c397d7149caf4938f7c1e4e349b3f908fcf1c0be8c34c5598f9b5fa4d"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -122,6 +122,8 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 - Approved creating/reconciling one protected persistent campaign accounting store across synthetic/offline/trusted profiles, including prior charges, unresolved holds, stops, migration receipt, store identity, inode/device binding, active state, and campaign lock. No fresh allowance or silent reset.
 - Approved installed-state review and non-guest permission/import-origin/accounting restart/concurrency/replacement-denial checks, followed by composition of final installation/accounting/bootstrap/interpreter bindings and exact composed execution-profile digest.
 - Not authorized: QEMU guest execution, ten trusted-observation controls, paid calls, resource expansion, host fallback, production mutation, automatic admission, or candidate-correctness certification. Separate execution approval remains mandatory.
+REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 948M/11,155 files; Google cache 929M/12,978 files; partially regenerated Codex cache reduced to ~20K; com.spacefs.launcher 751M/487 files; dev.zcode.app.ShipIt 772M/779 files; @zcodedesktop-updater 476M/3 files. Current free space 18,042,109,952 bytes. Manifests: .tmp-sr_pm/provisioning-cache-cleanup-manifest.txt and .tmp-sr_pm/provisioning-cache-cleanup-round2-manifest.txt. No model/project/output/credential data touched.
+
 ## nd_contract
 status: in_progress
 
