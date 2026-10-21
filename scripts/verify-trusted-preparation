@@ -63,6 +63,7 @@ def verify(target: Path, receipt_hash: str) -> dict:
     require(receipt['candidate_execution_performed'] is False and receipt['vm_execution_performed'] is False,
             'IntegrityFailure', 'Unexpected execution claim')
     return {'receipt_sha256': receipt_hash, 'supervisor_sha256': receipt['supervisor']['sha256'],
+            'helper_sha256': receipt['helper']['sha256'],
             'image_sha256': receipt['image_sha256'], 'profile_sha256': receipt['profile_sha256'],
             'source_files_verified': len(receipt['source']['files']), 'iso_files_verified': len(expected),
             'execution_performed': False, 'execution_approval': 'absent', 'guest_behavior': 'not-run'}

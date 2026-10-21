@@ -12,16 +12,16 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 from common import Failure, canonical, digest
-from trusted_execution import (IMAGE, LIMITS, PROFILE, RECEIPT, SUPERVISOR, TrustedExecutor,
+from trusted_execution import (IMAGE, LIMITS, PROFILE, QEMU_MANIFEST, RECEIPT, SUPERVISOR, HELPER, TrustedExecutor,
                                decode_guest, root_record, validate_approval, validate_config, validate_request, configuration_digest)
 from trusted_evaluation import EXPECTED, validate_receipt, verdict
 
 
 def config():
-    value = {'version': 1, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR,
+    value = {'version': 1, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER,
             'host_code': 'a' * 64, 'operator_uid': 501, 'limits': dict(LIMITS),
             'network': False, 'host_shares': False, 'paid_dispatch': False, 'read_only_inputs': True,
-            'qemu_installation': 'b' * 64, 'accounting_binding': 'c' * 64,
+            'qemu_installation': QEMU_MANIFEST, 'accounting_binding': 'c' * 64,
             'bootstrap_sha256': 'd' * 64, 'python_sha256': 'e' * 64}
     value['execution_profile'] = configuration_digest(value)
     return value
@@ -51,7 +51,8 @@ def receipt():
             'guest': guest(), 'error': None, 'transport_complete': True, 'ceased': True,
             'forced': False, 'seconds': 1.5, 'raw_sha256': digest(b'raw'), 'raw_bytes': 3,
             'raw_base64': base64.b64encode(b'raw').decode(), 'exit_code': 0, 'profile': PROFILE,
-            'image': IMAGE, 'supervisor': SUPERVISOR, 'execution_profile': config()['execution_profile'],
+            'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER,
+            'execution_profile': config()['execution_profile'],
             'qemu_installation': config()['qemu_installation']}
 
 
@@ -60,7 +61,8 @@ class HostContracts(unittest.TestCase):
         validate_config(config())
         for key, value in (('network', True), ('host_shares', True), ('paid_dispatch', True),
                            ('read_only_inputs', False), ('operator_uid', 321), ('version', True),
-                           ('profile', '0' * 64), ('image', '0' * 64)):
+                           ('profile', '0' * 64), ('image', '0' * 64), ('helper', '0' * 64),
+                           ('qemu_installation', '0' * 64)):
             with self.subTest(key=key), self.assertRaises(Failure):
                 validate_config(dict(config(), **{key: value}))
         for key in LIMITS:
@@ -75,7 +77,7 @@ class HostContracts(unittest.TestCase):
             'guest_toolchain': '3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797',
             'authorization_reference': 'b' * 64}
         approved = {k: v for k, v in config().items() if k in
-                    ('version', 'operator_uid', 'profile', 'image', 'supervisor', 'host_code',
+                    ('version', 'operator_uid', 'profile', 'image', 'supervisor', 'helper', 'host_code',
                      'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile')}
         approved.update(decision='approved-trusted-execution', license_review_sha256=digest(canonical(review)),
                         authorization_reference='c' * 64)

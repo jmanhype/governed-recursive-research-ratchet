@@ -8,7 +8,8 @@ import uuid
 from persistent_budget import PersistentBudget
 from common import EVALUATOR, Failure, call, canonical, digest, fields, require
 from ledger import Ledger
-from trusted_execution import PROFILE, IMAGE, SUPERVISOR, decode_guest, root_record, validate_config
+from trusted_execution import (PROFILE, IMAGE, SUPERVISOR, HELPER, QEMU_MANIFEST,
+                               decode_guest, root_record, validate_config)
 
 EXPECTED = b'SUPERVISOR-OWNED-CONTENT\n'
 
@@ -16,11 +17,13 @@ EXPECTED = b'SUPERVISOR-OWNED-CONTENT\n'
 def validate_receipt(value: dict, request: dict, execution_profile: str, installation: str) -> dict:
     fields(value, {'version', 'run', 'key', 'reservation', 'guest', 'error', 'transport_complete',
                    'ceased', 'forced', 'seconds', 'raw_sha256', 'raw_bytes', 'raw_base64',
-                   'exit_code', 'profile', 'image', 'supervisor', 'execution_profile', 'qemu_installation'})
+                   'exit_code', 'profile', 'image', 'supervisor', 'helper', 'execution_profile',
+                   'qemu_installation'})
     require(type(value['version']) is int and value['version'] == 1
             and all(value[k] == request[k] for k in ('run', 'key', 'reservation'))
             and value['profile'] == PROFILE and value['image'] == IMAGE and value['supervisor'] == SUPERVISOR
-            and value['execution_profile'] == execution_profile and value['qemu_installation'] == installation,
+            and value['helper'] == HELPER and value['execution_profile'] == execution_profile
+            and value['qemu_installation'] == installation == QEMU_MANIFEST,
             'StaleBinding', 'Receipt binding differs')
     require(all(type(value[k]) is bool for k in ('ceased', 'forced', 'transport_complete'))
             and value['ceased'] and type(value['seconds']) in (float, int)

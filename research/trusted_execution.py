@@ -1,4 +1,4 @@
-"""Dedicated v3 executor; no launch without root-owned exact execution approval."""
+"""Dedicated v4 executor; no launch without root-owned exact execution approval."""
 import base64
 import json
 import os
@@ -11,15 +11,35 @@ import threading
 import time
 import uuid
 from common import EVALUATOR, RUNNER, Failure, canonical, digest, fields, identifier, require, serve, unique_fields
-from execution import ASSETS, QEMU
+from execution import ASSETS
 from trusted_install import verify_qemu
 from trusted_transport import AuthenticatedServer
 
-PROFILE = '3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0'
-IMAGE = '799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233'
+PROFILE = 'a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205'
+IMAGE = '57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6'
 SUPERVISOR = 'a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6'
-RECEIPT = '775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c'
-QEMU_SHA = '7299ef807db462f913be5d1b89a71ea12590416175be0be5e87c2349594c6542'
+HELPER = '14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e'
+RECEIPT = '3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7'
+DEVELOPMENT_BINDING = '9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209'
+QEMU_MANIFEST = 'e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625'
+QEMU_EXECUTABLE = '352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da'
+QEMU_ROOT = Path('/Library/GRRR/qemu')
+QEMU_EXECUTABLE_PATH = QEMU_ROOT / 'bin/qemu-system-aarch64'
+PRESERVED_ROOT = Path('/Library/GRRR/trusted-observation/v4')
+PRESERVED_V4 = {
+    'prepared-profile.json': PROFILE,
+    'input.iso': IMAGE,
+    'preparation.json': RECEIPT,
+    'development-binding.json': DEVELOPMENT_BINDING,
+    'supervisor': SUPERVISOR,
+    'helper': HELPER,
+}
+PROTECTED_UID = 0
+PROTECTED_GID = 0
+PROTECTED_FILE_MODE = 0o444
+PRESERVED_DIRECTORY_MODE = 0o755
+PRESERVED_FILE_MAX_BYTES = 128 * 1024 * 1024
+ROOT_RECORD_MAX_BYTES = 128 * 1024
 VARIANTS = ('clean', 'forged-pass', 'altered-expectations', 'mutation', 'impersonation', 'oversized', 'malformed')
 LIMITS = {'memory_mib': 1024, 'workspace_mib': 512, 'vcpus': 1, 'boot_seconds': 30,
           'command_seconds': 240, 'total_seconds': 300, 'stop_ack_seconds': 2,
@@ -31,23 +51,96 @@ def configuration_digest(config):
     return digest(canonical({key: value for key, value in config.items() if key != 'execution_profile'}))
 
 
+def _acl_free(path: Path) -> bool:
+    """Inspect the macOS ACL marker without interpreting file bytes as instructions."""
+    try:
+        output = subprocess.run(['/bin/ls', '-lde', str(path)], capture_output=True,
+                                check=True, timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise Failure('Unauthorized', 'Protected path ACL could not be inspected') from exc
+    fields = output.split(None, 1)
+    return bool(fields) and b'+' not in fields[0]
+
+
+def _safe_ancestors(path: Path) -> None:
+    """Require root-owned, non-link, non-group/world-writable, ACL-free ancestors."""
+    for ancestor in (path, *path.parents):
+        try:
+            info = ancestor.lstat()
+        except OSError as exc:
+            raise Failure('GateBlocked', 'Protected ancestor absent or unreadable') from exc
+        require(not stat.S_ISLNK(info.st_mode) and info.st_uid == PROTECTED_UID
+                and info.st_gid == PROTECTED_GID and info.st_mode & 0o022 == 0,
+                'Unauthorized', 'Protected ancestor metadata differs')
+        require(_acl_free(ancestor), 'Unauthorized', 'ACL-bearing protected ancestor')
+
+
+def protected_bytes(path: Path, expected: str | None = None, maximum: int = PRESERVED_FILE_MAX_BYTES) -> bytes:
+    """Open one no-follow root-owned 0444 regular file and optionally bind its bytes."""
+    require(path.is_absolute(), 'Unauthorized', 'Absolute protected path required')
+    try:
+        before = path.lstat()
+        require(not stat.S_ISLNK(before.st_mode), 'Unauthorized', 'Protected path symlink')
+        descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+        with os.fdopen(descriptor, 'rb') as stream:
+            info = os.fstat(stream.fileno())
+            require(stat.S_ISREG(info.st_mode) and info.st_uid == PROTECTED_UID and info.st_gid == PROTECTED_GID
+                    and stat.S_IMODE(info.st_mode) == PROTECTED_FILE_MODE and info.st_nlink == 1
+                    and info.st_size <= maximum, 'Unauthorized', 'Protected file metadata differs')
+            require(_acl_free(path), 'Unauthorized', 'ACL-bearing protected file')
+            raw = stream.read(maximum + 1)
+            require(_acl_free(path), 'IntegrityFailure', 'Protected file ACL changed during verification')
+    except (OSError, ValueError) as exc:
+        raise Failure('GateBlocked', 'Protected file absent or unreadable') from exc
+    try:
+        after = path.lstat()
+    except OSError as exc:
+        raise Failure('IntegrityFailure', 'Protected path vanished during verification') from exc
+    require((before.st_dev, before.st_ino, before.st_mode, before.st_uid, before.st_gid, before.st_nlink)
+            == (after.st_dev, after.st_ino, after.st_mode, after.st_uid, after.st_gid, after.st_nlink)
+            and (after.st_dev, after.st_ino, after.st_mode, after.st_uid, after.st_gid, after.st_nlink)
+            == (info.st_dev, info.st_ino, info.st_mode, info.st_uid, info.st_gid, info.st_nlink),
+            'IntegrityFailure', 'Protected path changed during verification')
+    require(len(raw) <= maximum, 'InvalidInput', 'Protected file too large')
+    if expected is not None:
+        require(digest(raw) == expected, 'IntegrityFailure', 'Protected file bytes differ')
+    return raw
+
+
+def validate_preserved_v4(root: Path = PRESERVED_ROOT) -> dict:
+    """Verify the exact six-member preserved v4 namespace before any launch path."""
+    require(root == PRESERVED_ROOT and root.is_absolute(), 'Unauthorized', 'Preserved v4 root differs')
+    try:
+        info = root.lstat()
+        members = {entry.name for entry in root.iterdir()}
+    except OSError as exc:
+        raise Failure('GateBlocked', 'Preserved v4 root absent or unreadable') from exc
+    _safe_ancestors(root)
+    require(stat.S_ISDIR(info.st_mode) and info.st_uid == PROTECTED_UID and info.st_gid == PROTECTED_GID
+            and stat.S_IMODE(info.st_mode) == PRESERVED_DIRECTORY_MODE and _acl_free(root),
+            'Unauthorized', 'Preserved v4 directory metadata differs')
+    require(members == set(PRESERVED_V4), 'IntegrityFailure', 'Preserved v4 member set differs')
+    verified = {name: digest(protected_bytes(root / name, expected))
+            for name, expected in PRESERVED_V4.items()}
+    after = root.lstat()
+    require((after.st_dev, after.st_ino, after.st_mode, after.st_uid, after.st_gid, after.st_nlink)
+            == (info.st_dev, info.st_ino, info.st_mode, info.st_uid, info.st_gid, info.st_nlink)
+            and {entry.name for entry in root.iterdir()} == members
+            and _acl_free(root), 'IntegrityFailure', 'Preserved v4 root changed during verification')
+    return verified
+
+
 def root_record(path: Path) -> dict:
     """Check an opened file's ownership/mode, not a prior path-only stat."""
-    require(not path.is_symlink(), 'Unauthorized', 'Root record symlink')
+    raw = protected_bytes(path, maximum=ROOT_RECORD_MAX_BYTES)
     try:
-        with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
-            info = os.fstat(stream.fileno())
-            require(stat.S_ISREG(info.st_mode) and info.st_uid == 0 and info.st_mode & 0o222 == 0 and info.st_nlink == 1
-                    and info.st_size <= 16384, 'Unauthorized', 'Root record ownership/mode/size differs')
-            raw = stream.read(16385)
-        require(len(raw) <= 16384, 'InvalidInput', 'Root record too large')
         return json.loads(raw, object_pairs_hook=unique_fields)
-    except (OSError, ValueError) as exc:
-        raise Failure('GateBlocked', 'Required root record absent or malformed') from exc
+    except ValueError as exc:
+        raise Failure('GateBlocked', 'Required root record malformed') from exc
 
 
 def validate_config(config: dict) -> dict:
-    fields(config, {'version', 'profile', 'image', 'supervisor', 'host_code', 'operator_uid', 'limits',
+    fields(config, {'version', 'profile', 'image', 'supervisor', 'helper', 'host_code', 'operator_uid', 'limits',
                     'network', 'host_shares', 'paid_dispatch', 'read_only_inputs',
                     'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile'})
     identifier(config['host_code'], True)
@@ -57,7 +150,8 @@ def validate_config(config: dict) -> dict:
             'StaleBinding', 'Composed execution profile differs from reviewed configuration')
     require(config['version'] == 1 and type(config['version']) is int
             and config['profile'] == PROFILE and config['image'] == IMAGE
-            and config['supervisor'] == SUPERVISOR and config['limits'] == LIMITS
+            and config['supervisor'] == SUPERVISOR and config['helper'] == HELPER and config['limits'] == LIMITS
+            and config['qemu_installation'] == QEMU_MANIFEST
             and all(type(v) is int for v in config['limits'].values())
             and config['network'] is False and config['host_shares'] is False
             and config['paid_dispatch'] is False and config['read_only_inputs'] is True
@@ -67,12 +161,12 @@ def validate_config(config: dict) -> dict:
 
 
 def validate_approval(approval: dict, config: dict, review: dict) -> None:
-    fields(approval, {'version', 'decision', 'operator_uid', 'profile', 'image', 'supervisor',
+    fields(approval, {'version', 'decision', 'operator_uid', 'profile', 'image', 'supervisor', 'helper',
                       'host_code', 'license_review_sha256', 'authorization_reference',
                       'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile'})
     require(approval['version'] == 1 and type(approval['version']) is int
             and approval['decision'] == 'approved-trusted-execution'
-            and all(approval[k] == config[k] for k in ('operator_uid', 'profile', 'image', 'supervisor', 'host_code',
+            and all(approval[k] == config[k] for k in ('operator_uid', 'profile', 'image', 'supervisor', 'helper', 'host_code',
                                                       'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile'))
             and approval['license_review_sha256'] == digest(canonical(review)),
             'GateBlocked', 'No execution approval for exact code/profile/license binding')
@@ -147,6 +241,7 @@ class TrustedExecutor:
     def __init__(self, root: Path) -> None:
         require(os.getuid() == RUNNER, 'Unauthorized', 'Trusted executor requires UID 321')
         self.root = root
+        self.preserved = validate_preserved_v4()
         self.config = validate_config(root_record(root / 'config.json'))
         validate_approval(root_record(root / 'approval.json'), self.config, root_record(root / 'license.json'))
         self.lock = threading.RLock()
@@ -199,13 +294,16 @@ class TrustedExecutor:
         require(validate_config(root_record(self.root / 'config.json')) == self.config,
                 'StaleBinding', 'Configuration changed')
         validate_approval(root_record(self.root / 'approval.json'), self.config, root_record(self.root / 'license.json'))
+        validate_preserved_v4()
         require(shutil.disk_usage(self.root).free >= 15000000000, 'BudgetExceeded', 'Host free space below floor')
         installation = root_record(self.root / 'qemu-installation.json')
         require(digest(canonical(installation)) == self.config['qemu_installation'],
                 'IntegrityFailure', 'QEMU installation approval differs')
         executable = verify_qemu(installation)
+        require(executable == QEMU_EXECUTABLE_PATH and digest(executable.read_bytes()) == QEMU_EXECUTABLE,
+                'IntegrityFailure', 'Installed QEMU executable differs')
         assets = self.root / 'assets'
-        expected = dict(ASSETS, **{'input.iso': IMAGE})
+        expected = dict(ASSETS)
         for name, hashed in expected.items():
             path = assets / name
             require(path.is_file() and not path.is_symlink() and path.stat().st_uid == 0
@@ -216,7 +314,8 @@ class TrustedExecutor:
                 '-kernel', str(assets / 'vmlinuz-virt'), '-initrd', str(assets / 'initramfs-virt'),
                 '-append', 'modules=loop,squashfs,sd-mod,usb-storage console=ttyAMA0',
                 '-cdrom', str(assets / 'alpine-virt-3.22.6-aarch64.iso'),
-                '-drive', 'file=' + str(assets / 'input.iso') + ',if=none,id=inputs,format=raw,readonly=on',
+                '-drive', 'file=' + str(PRESERVED_ROOT / 'input.iso')
+                        + ',if=none,id=inputs,format=raw,readonly=on',
                 '-device', 'virtio-blk-device,drive=inputs', '-net', 'none', '-nographic',
                 '-monitor', 'none', '-no-reboot', '-snapshot']
         with self.lock:
@@ -323,6 +422,7 @@ class TrustedExecutor:
                   'ceased': process.poll() is not None, 'forced': forced, 'seconds': time.monotonic() - started,
                   'raw_sha256': digest(bytes(raw)), 'raw_bytes': len(raw), 'raw_base64': base64.b64encode(raw).decode(),
                   'exit_code': exit_code, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR,
+                  'helper': HELPER,
                   'execution_profile': self.config['execution_profile'],
                   'qemu_installation': self.config['qemu_installation']}
         with self.lock:

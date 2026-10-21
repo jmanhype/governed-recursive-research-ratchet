@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Dedicated trusted-observation launcher. --dry-run never stages or launches.
 
-Usage: trusted-identity-integration --dry-run VM_ASSETS PREPARED_V3 QEMU_MANIFEST
+Usage: trusted-identity-integration --dry-run VM_ASSETS PREPARED_V4 QEMU_MANIFEST
 Root entry is ONLY the independently installed trusted-root-bootstrap.
 This checkout script must never be invoked as root.
 No sudo, credential handling, fallback executor, or implied execution approval.
@@ -32,8 +32,8 @@ if os.getuid() == 0:
             raise SystemExit('Mutable snapshot ancestor')
 sys.path.insert(0, str(ROOT / 'research'))
 from common import Failure, canonical, digest, require
-from execution import ASSETS, QEMU
-from trusted_execution import (IMAGE, LIMITS, PROFILE, QEMU_SHA, RECEIPT, SUPERVISOR,
+from execution import ASSETS
+from trusted_execution import (IMAGE, LIMITS, PROFILE, QEMU_MANIFEST, RECEIPT, SUPERVISOR, HELPER,
                                root_record, validate_approval, validate_config, configuration_digest)
 from trusted_install import immutable, record, verify_qemu
 from persistent_budget import ACTIVE, validate_store
@@ -62,13 +62,16 @@ def prepare_plan(vm: Path, prepared: Path, qemu_manifest: Path, operator=None) -
     loader.exec_module(module)
     readback = module.verify(prepared, RECEIPT)
     require(readback['profile_sha256'] == PROFILE and readback['supervisor_sha256'] == SUPERVISOR
-            and readback['image_sha256'] == IMAGE, 'IntegrityFailure', 'v3 pinned artifacts differ')
+            and readback['helper_sha256'] == HELPER and readback['image_sha256'] == IMAGE,
+            'IntegrityFailure', 'v4 pinned artifacts differ')
     assets = {name: vm / (name if name.endswith('.iso') else 'boot/' + name) for name in ASSETS}
     assets['input.iso'] = prepared / 'input.iso'
     for name, expected in dict(ASSETS, **{'input.iso': IMAGE}).items():
         require(not assets[name].is_symlink() and assets[name].is_file()
                 and digest(assets[name].read_bytes()) == expected, 'IntegrityFailure', 'Asset mismatch: ' + name)
     installation = record(qemu_manifest)
+    require(digest(canonical(installation)) == QEMU_MANIFEST,
+            'IntegrityFailure', 'Installed QEMU manifest differs')
     verify_qemu(installation)
     accounting = record(ACTIVE)
     validate_store(accounting, Path(accounting['directory']) / 'budget.sqlite')
@@ -76,10 +79,10 @@ def prepare_plan(vm: Path, prepared: Path, qemu_manifest: Path, operator=None) -
     require(free >= LIMITS['minimum_host_free_bytes'], 'BudgetExceeded', 'Host free space below fixed floor')
     operator = ROOT.stat().st_uid if operator is None else operator
     code = inventory()
-    config = {'version': 1, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR,
+    config = {'version': 1, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER,
         'host_code': digest(canonical(code)), 'operator_uid': operator, 'limits': LIMITS,
         'network': False, 'host_shares': False, 'paid_dispatch': False, 'read_only_inputs': True,
-        'qemu_installation': digest(canonical(installation)), 'accounting_binding': digest(canonical(accounting)),
+        'qemu_installation': QEMU_MANIFEST, 'accounting_binding': digest(canonical(accounting)),
         'bootstrap_sha256': digest((ROOT / 'scripts/trusted-root-bootstrap').read_bytes()),
         'python_sha256': digest(Path(sys.executable).read_bytes())}
     config['execution_profile'] = configuration_digest(config)
