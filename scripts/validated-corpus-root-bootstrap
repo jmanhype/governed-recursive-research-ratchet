@@ -56,7 +56,9 @@ def main():
     approval=read_json(approval_path,True); check(approval.get('decision')=='approved-trusted-execution','execution not authorized')
     check(approval.get('bootstrap_sha256')==sha(self_path.read_bytes()),'bootstrap pin differs')
     check(approval.get('python_sha256')==sha(interpreter.read_bytes()),'interpreter pin differs')
-    binding=read_json(binding_path); files=binding['files']; check(isinstance(files,dict) and 0<len(files)<=128,'invalid inventory')
+    binding=read_json(binding_path); files=binding['files']; corpus_files=binding['corpus_files']
+    check(isinstance(files,dict) and 0<len(files)<=128,'invalid inventory')
+    check(set(corpus_files)=={'corpus/manifest.json','corpus/protected/truth.json'},'invalid corpus asset inventory')
     check(sha(canonical(files))==approval['host_code'],'source inventory differs')
     check('scripts/validated-corpus-identity-integration' in files,'launcher absent')
     read_json(license_path,True); qemu=read_json(qemu_path,True)
@@ -74,6 +76,12 @@ def main():
             info=os.fstat(stream.fileno()); check(stat.S_ISREG(info.st_mode) and info.st_size<=10485760,'unsafe source size')
             data=stream.read(10485761)
         check(sha(data)==expected,'source changed'); destination=target/relative; destination.parent.mkdir(parents=True,exist_ok=True,mode=0o755)
+        with destination.open('xb') as stream: stream.write(data); stream.flush(); os.fsync(stream.fileno())
+        destination.chmod(0o444)
+    for name,expected in corpus_files.items():
+        relative=Path(name); check(not relative.is_absolute() and '..' not in relative.parts,'unsafe corpus asset')
+        data=(source/relative).read_bytes(); check(sha(data)==expected,'corpus asset changed')
+        destination=target/relative; destination.parent.mkdir(parents=True,exist_ok=True,mode=0o755)
         with destination.open('xb') as stream: stream.write(data); stream.flush(); os.fsync(stream.fileno())
         destination.chmod(0o444)
     for directory in sorted((p for p in target.rglob('*') if p.is_dir()),reverse=True): directory.chmod(0o555)
