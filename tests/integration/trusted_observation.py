@@ -14,9 +14,7 @@ import unittest
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / 'research'))
-sys.path.insert(0, str(ROOT / 'tests'))
+# Only isolated_entry's authenticated snapshot may supply application imports.
 from common import EVALUATOR, Failure, MAX_WIRE, call, canonical, digest, peer_uid, receive, require
 from unit_trusted_observation import BudgetChecks
 from observation import regular_artifact

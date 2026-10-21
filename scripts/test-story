@@ -21,6 +21,9 @@ if sys.argv[1] == 'offline-preflight':
         print('FAIL: mandatory offline prerequisites unavailable: ' + str(exc), file=sys.stderr)
         raise SystemExit(1)
 try:
+    if sys.argv[1] == 'trusted-observation':
+        print('FAIL: trusted-observation requires approved isolated identity launcher; 10 required, 0 executed, 0 skipped; gate not-run', file=sys.stderr)
+        raise SystemExit(1)
     module = 'trusted_observation.py' if sys.argv[1] == 'trusted-observation' else 'bounded_challenge.py'
     result = subprocess.run([sys.executable, str(ROOT / 'tests/integration' / module)],
                             cwd=ROOT, timeout=600)

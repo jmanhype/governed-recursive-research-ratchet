@@ -12,7 +12,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'research'))
+# Import roots are supplied by the verified isolated entrypoint, never inferred.
 from budget import Budget, CEILINGS, vector
 from common import EVALUATOR, Failure, canonical, digest, receive
 from observation import bounded_hex, gate, regular_artifact, validate_observation

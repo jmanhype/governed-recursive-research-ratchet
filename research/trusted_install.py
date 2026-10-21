@@ -8,6 +8,19 @@ import subprocess
 from common import canonical, digest, fields, identifier, require, unique_fields
 
 
+def absolute_dependencies(root, dependencies, rpaths, members):
+    """No loader search is approved: require exact normalized absolute closure."""
+    require(not rpaths, 'IntegrityFailure', 'LC_RPATH search is forbidden')
+    for name in dependencies:
+        path = Path(name)
+        require(path.is_absolute() and str(path) == name and '..' not in path.parts,
+                'IntegrityFailure', 'Dependency must be normalized and absolute')
+        if name.startswith(('/usr/lib/', '/System/Library/')):
+            continue  # Sealed OS cache, bound separately to system_build.
+        require(name.startswith(str(root) + '/') and str(path.relative_to(root)) in members,
+                'IntegrityFailure', 'Absolute dependency absent from immutable closure')
+
+
 def immutable(path: Path, *, directory=False):
     require(path.is_absolute() and '..' not in path.parts, 'Unauthorized', 'Absolute normalized path required')
     for ancestor in reversed((path, *path.parents)):
@@ -117,22 +130,5 @@ def verify_qemu(manifest: dict):
     require(actual_build == manifest['system_build'], 'StaleBinding', 'Sealed system dependency build changed')
     for relative, raw in data.items():
         dependencies, rpaths = macho_loads(raw)
-        owner = root / relative
-        def local(name):
-            require(name.startswith('@loader_path/') or name.startswith(str(root) + '/'),
-                    'IntegrityFailure', 'Mutable or unsupported dynamic search path')
-            target = Path(name.replace('@loader_path', str(owner.parent), 1))
-            require('..' not in target.parts, 'IntegrityFailure', 'Parent dynamic paths must be normalized before review')
-            return str(target.relative_to(root))
-        search = [local(name) for name in rpaths]
-        for name in dependencies:
-            if name.startswith(('/usr/lib/', '/System/Library/')):
-                require('..' not in Path(name).parts, 'IntegrityFailure', 'Unsafe system library path')
-                continue  # OS sealed system cache is bound to system_build.
-            if name.startswith('@rpath/'):
-                choices = [str(Path(prefix) / name[len('@rpath/'):]) for prefix in search]
-                require(len([p for p in choices if p in data]) == 1,
-                        'IntegrityFailure', 'Ambiguous or missing reviewed rpath dependency')
-            else:
-                require(local(name) in data, 'IntegrityFailure', 'Dependency absent from reviewed closure')
+        absolute_dependencies(root, dependencies, rpaths, data)
     return root / manifest['executable']
