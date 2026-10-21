@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T15:29:43Z
-content_hash: "sha256:8a2c3b3fa7560469c145867843625e6fede06914cdfa53154567b651f1b0aaef"
+updated_at: 2026-10-21T16:03:40Z
+content_hash: "sha256:8f37b8b5fa1e8940963982c205484c1092110cb01c0d4989b3a449c3146a2b8d"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -144,6 +144,26 @@ OPERATOR V4 ROOT PRESERVATION AUTHORIZATION (2026-10-21): Authorize root-control
 INDEPENDENT V4 ROOT INSTALLER REVIEW (2026-10-21): SECURITY_REVIEW: V4_ROOT_INSTALLER_APPROVED. Reviewed installer SHA-256 0044e034e21921cb09032e27b33e4a013f71540dc83deed21180d766f961deba and nonroot preflight SHA-256 e4ca58acd6dae395da38890ae6f956c7051d14a07dd4ef6ed6c4893887f22325. Root entry is restricted to /Library/GRRR/bootstrap/install-v4-preservation-1957ab3 with safe bootstrap ancestors, root:wheel 0444, single-link and no-ACL checks; fsync follows final metadata. Staging and atomic no-replace/no-follow publication remain approved. Parent placement must refuse an existing target, account for /usr/bin/install non-exclusivity, and rehash the installed copy before invocation; post-publication failure requires inspection with no automatic retry. Review grants no execution, migration, or release authority.
 ROOT-CONTROLLED V4 PRESERVATION RECORD (2026-10-21, evidence commit 522e5d5): Operator authorization at reviewed plan commit 1957ab3 was executed only after independent installer review. Protected installer 0044e034e21921cb09032e27b33e4a013f71540dc83deed21180d766f961deba was placed root:wheel 0444 at /Library/GRRR/bootstrap/install-v4-preservation-1957ab3, rehashed, and invoked canonically with -I -S -B in an empty environment. It privately staged and atomically published exactly six files at /Library/GRRR/trusted-observation/v4 using RENAME_EXCL|RENAME_NOFOLLOW_ANY: input.iso 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6, preparation.json 3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7, prepared-profile.json a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205, development-binding.json 9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209, supervisor a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6, and helper 14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e. All six are root:wheel 0444, single-link, ACL-free, and byte-match reviewed sources; directories are root:wheel 0755. Empty private staging root remains root:wheel 0700. Protected QEMU/accounting bytes unchanged; accounting integrity ok, stopped=1, zero reservations, 259 artifacts. Independent post-install review: SECURITY_REVIEW: V4_PRESERVATION_INSTALLED_APPROVED. Evidence manifest 3/3; machine READBACK 7bc420577bcdb4245eaaeea2c91faa5c29a3e5897d4d12e5fb97c9b56a80a59d; install JSON eef7cf2d1df8953f62f3ee22d2e7633e214d1dfdb206ac9eedd3b5c14edac17e; privileged inspection 065cef6741fdd67ccc37cda5ed9431a75cfb14733ccbe04e0dd310d1636f575f. This is preservation only: no source implementation, QEMU/guest execution, accounting migration/release, dispatch, execution approval, runtime claim, or push.
 OPERATOR V4 SOURCE REVISION AUTHORIZATION (2026-10-21): Authorize v4 source revision at preserved evidence commit 522e5d5. Scope is limited to no-guest source/tests that bind trusted execution to preserved v4 profile a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205, ISO 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6, receipt 3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7, supervisor a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6, helper 14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e, and installed QEMU manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625. Reject v3/Homebrew fallback and partial/mutated/ACL/symlink/hard-link assets. This does not authorize QEMU or guest execution, protected-state mutation, accounting migration/release, dispatch, execution approval, delivery acceptance, or push.
+## nd_contract
+status: in_progress
+
+### evidence
+- Local story commit `70a6246` on `story/GRRR-gu87`: v4 source revision and no-guest evidence.
+- Exact v4 bindings: profile `a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205`, image `57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6`, receipt `3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7`, supervisor `a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6`, helper `14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e`, QEMU manifest `e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625`.
+- Config, approval, and result schemas bind helper plus installed QEMU; preserved v4 bytes/metadata and immutable QEMU are verified before launch. v3/Homebrew values reject.
+- `python3 -m unittest discover -s tests -p 'unit*.py' -v`: 116 passed, 0 failed, 0 skipped. Focused `tests/unit_trusted_v4_source.py`: 8 passed, 0 failed, 0 skipped.
+- Python compile and `git diff --check`: pass. `pvg verify --include-tests ...`: passed, 4 recognized files, 0 issues.
+- Read-only installed readback: six v4 hashes and QEMU manifest/executable hashes match; accounting SQLite integrity `ok`, stopped=1, reservations=0.
+- Evidence: `docs/evidence/trusted-observation/v4-source/` (`STATUS.md`, `UNIT.txt`, `STATIC.txt`, `READBACK.txt`, `SHA256SUMS`).
+- Performed no root/sudo, protected mutation, accounting migration/release, QEMU execution, guest integration, delivery, acceptance, or push.
+
+### proof
+- [ ] AC #1: real isolated v4 guest execution remains not-run pending separate approval.
+- [ ] AC #2: real guest adversarial observations remain not-run.
+- [ ] AC #3: real supervisor separation/race controls remain not-run.
+- [ ] AC #4: actual cross-profile accounting migration/identity proof remains blocked by conservative history.
+- [ ] AC #5: real trusted metering/overlap/epoch controls remain not-run.
+- [ ] AC #6: real watchdog/store exhaustion/lost-response controls remain not-run.
 
 ## Trusted-observation v4 planning commit
 - Local story-only planning commit: `79a326e3a1668a5938abe1752e85f4edf985a778` (`docs(GRRR-gu87): plan v4 preservation profile`).
