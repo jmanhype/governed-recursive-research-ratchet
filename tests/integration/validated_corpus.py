@@ -43,7 +43,8 @@ class ValidatedCorpus(unittest.TestCase):
     def test_01_every_scenario_three_real_isolated_repetitions(self):
         manifest = json.loads((self.session.root/'corpus/manifest.json').read_bytes())
         observations = []
-        for challenge in manifest['challenge_ids']:
+        challenges = sorted(manifest['challenge_ids'], key=lambda value: (not value.endswith('C001'), value))
+        for challenge in challenges:
             with self.subTest(challenge=challenge):
                 result, decision = self.session.execute(challenge); guest = result['guest']
                 self.assertTrue(guest['supervisor_unchanged'])

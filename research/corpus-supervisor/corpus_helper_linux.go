@@ -25,6 +25,7 @@ type observation struct {
 	Test         string       `json:"test"`
 	BuildExit    int          `json:"build_exit"`
 	BuildSHA256  string       `json:"build_output_sha256"`
+	BuildOutput  []byte       `json:"build_output"`
 	Repetitions  []repetition `json:"repetitions"`
 	InternalBug  bool         `json:"internal_error"`
 }
@@ -49,7 +50,7 @@ func main() {
 	build.Env = environment
 	buildRaw, buildErr := build.CombinedOutput()
 	result := observation{Version: 1, Challenge: challenge, Test: "TestGRRR" + challenge,
-		BuildExit: 0, BuildSHA256: digest(bounded(buildRaw))}
+		BuildExit: 0, BuildSHA256: digest(bounded(buildRaw)), BuildOutput: bounded(buildRaw)}
 	if buildErr != nil {
 		if exitError, ok := buildErr.(*exec.ExitError); ok {
 			result.BuildExit = exitError.ExitCode()

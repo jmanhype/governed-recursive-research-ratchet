@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-_dg5nsfa",
+  "bootstrap_commit": "b7916c74abce838f32a6b5df74e321f63fd49a08",
+  "guest_started": true,
+  "scenarios_dispatched": 32,
+  "validated_defects": 24,
+  "failed_clean_controls": 8,
+  "common_build_output_sha256": "f718031b71a6eb82bab59b71d6f3fe40fc7744ce7bfb810d8499a7ac0b9e304c",
+  "diagnosis": "All probes shared a hidden Go build failure; helper retained only the hash, not compiler text",
+  "candidate_executed": true,
+  "fix": "Carry bounded build output and execute C001 first for a fast clean-control diagnostic"
+}

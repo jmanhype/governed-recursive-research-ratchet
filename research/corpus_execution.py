@@ -80,7 +80,7 @@ def decode_candidate(raw: bytes, challenge: str) -> dict:
     require(len(raw) <= 524288, 'InvalidInput', 'Oversized candidate observation')
     value = json.loads(raw)
     fields(value, {'version', 'challenge', 'test', 'build_exit', 'build_output_sha256',
-                   'repetitions', 'internal_error'})
+                   'repetitions', 'internal_error'}, {'build_output'})
     short_challenge = challenge[-4:]
     require(value['version'] == 1 and value['challenge'] == short_challenge
             and value['test'] == 'TestGRRR' + short_challenge and value['build_exit'] in (0, 1, 2)
@@ -92,6 +92,10 @@ def decode_candidate(raw: bytes, challenge: str) -> dict:
         require(type(repetition['exit']) is int and 0 <= repetition['exit'] <= 2
                 and isinstance(repetition['output_sha256'], str) and len(repetition['output_sha256']) == 64,
                 'InvalidInput', 'Candidate repetition differs')
+    if 'build_output' in value:
+        require(isinstance(value['build_output'], str) and len(base64.b64decode(value['build_output'], validate=True)) <= 16384
+                and digest(base64.b64decode(value['build_output'], validate=True)) == value['build_output_sha256'],
+                'InvalidInput', 'Candidate build output differs')
     return value
 
 
