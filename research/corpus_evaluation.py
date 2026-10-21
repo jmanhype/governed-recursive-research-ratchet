@@ -32,7 +32,7 @@ def validate_receipt(value: dict, request: dict, execution_profile: str) -> dict
             'IntegrityFailure', 'Raw transport binding differs')
     require(value['transport_complete'] and value['error'] is None and value['exit_code'] == 0,
             'BudgetUnknown', 'Incomplete corpus observation')
-    decode_guest(canonical(value['guest']).encode(), request['run'], request['challenge'])
+    decode_guest(canonical(value['guest']), request['run'], request['challenge'])
     return value
 
 
