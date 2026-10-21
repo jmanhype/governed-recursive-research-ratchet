@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-21T21:50:04Z
-content_hash: "sha256:ef5e456bf86ff8df69e44a49c4bf278b1b07182da27d7dcbd6c0d207d5eb01c6"
+updated_at: 2026-10-21T21:50:05Z
+content_hash: "sha256:67319132970d3c515f613bd255a8c44725c9b42fb344587983c8d744faa7979a"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 assignee: dev-GRRR-bnkf
@@ -107,6 +107,17 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-21.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
 
 ## Implementation Evidence (DELIVERED)
 
