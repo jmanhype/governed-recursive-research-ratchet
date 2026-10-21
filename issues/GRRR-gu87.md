@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T16:21:35Z
-content_hash: "sha256:a7f8280a452457ebb47af4654059e9cff044633deb6e78d096a0e195dae598b9"
+updated_at: 2026-10-21T16:31:45Z
+content_hash: "sha256:4fabe15dc0eddf89221cef847a582cf0ac1057987fba58df830da36aed90ac37"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -146,6 +146,102 @@ ROOT-CONTROLLED V4 PRESERVATION RECORD (2026-10-21, evidence commit 522e5d5): Op
 OPERATOR V4 SOURCE REVISION AUTHORIZATION (2026-10-21): Authorize v4 source revision at preserved evidence commit 522e5d5. Scope is limited to no-guest source/tests that bind trusted execution to preserved v4 profile a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205, ISO 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6, receipt 3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7, supervisor a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6, helper 14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e, and installed QEMU manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625. Reject v3/Homebrew fallback and partial/mutated/ACL/symlink/hard-link assets. This does not authorize QEMU or guest execution, protected-state mutation, accounting migration/release, dispatch, execution approval, delivery acceptance, or push.
 INDEPENDENT V4 SOURCE REVISION REVIEW (2026-10-21, clean commit 6f47e896f9a07fab78f168b48fc857ff698985a9): SECURITY_REVIEW: V4_SOURCE_REVISION_APPROVED. Reviewer independently verified preserved v4 hashes, installed QEMU manifest/executable pins, unchanged accounting hashes, explicit helper/config/approval/result bindings, v3/Homebrew rejection, protected namespace checks, bounded 128 KiB root-record reads, evidence manifest 4/4, and reported 116/116 no-guest plus 8/8 focused results. Missing execution approval and incompatible stopped conservative accounting remain fail-closed; no migration, hold release, fallback allowance, or runtime authorization was added. Nonblocking follow-up: the conservative active binding lacks directory, so launcher preparation may terminate with KeyError rather than structured RecoveryRequired; no dispatch occurs. Approval covers no-guest source revision only—not installation changes, accounting changes, QEMU/guest execution, or runtime-control success.
 OPERATOR ACCOUNTING NEXT-GATE AUTHORIZATION (2026-10-21): Operator agreed to continue the fail-closed accounting gate. Authorized work is limited to (1) making launcher handling of the current conservative active record return structured RecoveryRequired instead of KeyError, with no dispatch, and (2) producing a planning-only conservative-accounting migration/evidence-resolution design. Do not mutate /Library/GRRR/accounting, clear stopped, release holds, settle unknown history, create reservations, execute QEMU/guest code, authorize runtime dispatch, or claim migration completeness.
+# Conservative accounting fail-closed checkpoint — story remains in progress
+
+Authorized bounded follow-up completed at local commit
+`c9003ea6f2491d61581192ca2338ccbe415ec841` on `story/GRRR-gu87`; no push.
+
+## Changed files
+- `scripts/trusted-identity-integration`: added a launcher-only accounting
+  preflight. A conservative/malformed binding without a reviewed nonempty
+  directory now raises structured `Failure(code=RecoveryRequired)` before
+  constructing or accessing a store path. `persistent_budget.validate_store`
+  was not weakened.
+- `tests/unit_trusted_host.py`: added a no-guest regression using a temporary
+  conservative active record/binding; asserts `RecoveryRequired` and no
+  `budget.sqlite` access/creation.
+- Added proposal-only evidence under
+  `docs/evidence/trusted-observation/accounting-migration-plan/`:
+  `PLAN.md`, `PLAN.json`, `INPUT-READBACK.json`, `VERIFICATION.txt`, and
+  `SHA256SUMS`.
+
+## Verification
+- System focused no-guest host units:
+  `/usr/bin/python3 -I -B -m unittest discover -s tests -p unit_trusted_host.py -v`
+  — 10/10 passed.
+- Homebrew focused no-guest host units:
+  `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p unit_trusted_host.py -v`
+  — 10/10 passed.
+- Full no-guest unit discovery under system Python:
+  `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v`
+  — 117/117 passed at the committed tree (post-commit rerun: 117/117).
+- Full no-guest unit discovery under Homebrew Python:
+  `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v`
+  — 117/117 passed at the committed tree (post-commit rerun: 117/117).
+- In-memory `compile()` of launcher, persistent validator, and focused test
+  under both required interpreters: PASS.
+- Evidence JSON parsing under both interpreters: PASS.
+- `pvg verify --include-tests --format=text ...`: PASS, 2 recognized files,
+  0 issues. `git diff --check`: PASS. Evidence `shasum -c`: 6/6 OK.
+- No integration/guest suite was run because this authorization explicitly
+  prohibited QEMU/guest/candidate execution.
+
+## Read-only protected accounting result
+Final protected hashes remained:
+- `active.json`: `cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b`
+- `budget.sqlite`: `9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234`
+- `receipt.json`: `9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde`
+
+Immutable SQLite readback (`mode=ro&immutable=1`, `query_only=ON`):
+`integrity_check=ok`; state `(1,1)`; metadata 2; artifacts 259;
+legacy_events 110; reservations 0. The active record still lacks `directory`.
+No protected path, stop state, hold, history, reservation, or settlement was
+mutated.
+
+## Migration plan status
+The committed plan is explicitly proposal-only. It requires complete source
+evidence collection, byte preservation of all 259 artifacts and 110 events,
+non-promotion of ambiguous events into reservations/settlements/zero, a fresh
+private candidate with deterministic ancestry and hash/device/inode binding,
+independent reproduction, separate installation authorization, later runtime
+adapter review, full unresolved POC/milestone encumbrance, and rollback scoped
+only to a newly created candidate. No migration was executed.
+
+Remaining blockers are intentional: unresolved original identity/interval/
+stage/receipt evidence, trusted meter receipts, historical campaign-stop
+resolution, candidate build/reproduction, operator installation authorization,
+runtime adapter review, and separate execution authorization.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Local commit `c9003ea6f2491d61581192ca2338ccbe415ec841`; worktree clean after
+  commit; branch not pushed.
+- Focused units 10/10 under both Pythons; full no-guest units 117/117 under
+  both Pythons; compile/JSON/pvg/diff/hash checks passed.
+- Evidence: `docs/evidence/trusted-observation/accounting-migration-plan/VERIFICATION.txt`
+  and `SHA256SUMS`.
+- Protected store checked read/hash-only and remained stopped with 259/110
+  preserved rows and zero reservations.
+
+### proof
+- [x] Launcher conservative/malformed active binding fails structured
+  `RecoveryRequired` before directory/store access.
+- [x] Proposal-only migration/evidence-resolution design and readback are
+  committed with manifest hashes.
+- [ ] Original GRRR-gu87 AC #1: approved real isolated challenge remains
+  not-run.
+- [ ] Original GRRR-gu87 AC #2: complete real adversarial guest observation
+  remains not-run.
+- [ ] Original GRRR-gu87 AC #3: real supervisor separation/race proof remains
+  not-run.
+- [ ] Original GRRR-gu87 AC #4: complete actual identity/accounting lifecycle
+  remains unresolved by this bounded follow-up.
+- [ ] Original GRRR-gu87 AC #5: complete trusted metering/overlap/epoch proof
+  remains not-run.
+- [ ] Original GRRR-gu87 AC #6: complete watchdog/exhaustion/lost-response
+  proof remains not-run.
 
 ## nd_contract
 status: in_progress
