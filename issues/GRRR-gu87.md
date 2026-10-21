@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T01:58:49Z
-content_hash: "sha256:f5b41afa114924fb39b34363e5fb0e5e437bed29edacac75388a2bbc5bc62bf1"
+updated_at: 2026-10-21T02:01:38Z
+content_hash: "sha256:13cfb56d64bc8102b2623cb27f1b2c938c18c00dc1a557416fd0d804dc379d90"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -113,6 +113,8 @@ DISPOSABLE OFFLINE RUNTIME CLEANUP (2026-10-21): removed only old root-owned /pr
 REGENERABLE DEVELOPMENT CACHE CLEANUP (2026-10-21): removed only /Users/speed/.cache/opencode (190M, 11,996 files) and /Users/speed/.cache/codebase-memory-mcp (143M, 24 files); free space now 15,461,191,680 bytes. Manifest main checkout .tmp-sr_pm/development-cache-cleanup-manifest.txt. No model/project/output data touched.
 REGENERABLE UPDATER CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/autoclaw-updater (1.2G, 3 files) and /Users/speed/Library/Caches/voyager-updater (1.0G, 5 files); free space now 16,972,693,504 bytes. Manifest main checkout .tmp-sr_pm/updater-cache-cleanup-manifest.txt. No application data, models, projects, credentials, or outputs touched.
 INDEPENDENT SECURITY REVIEW (2026-10-21, commit d53deaf60290c5795a29ca279ec6919a15b44fb3): SECURITY_REVIEW: CHANGES_REQUIRED. Blocking findings: (1) fresh per-launch budget DB resets cross-run/profile ceilings; use one protected persistent accounting store and test restart/concurrency/cross-profile exhaustion; (2) mode-0666 service allows eight pre-auth slow readers for 310s and can starve stop/status; authenticate before payload reads, reserve control capacity, and add saturation tests; (3) mutable operator-owned Homebrew QEMU path is hashed then executed; use immutable root-controlled reviewed executable/deps or equivalent race-resistant binding and test replacement; (4) root imports/executes checkout code before validating approval inventory; use independently verified root-controlled bootstrap/source snapshot before privileged execution. Preparation pins/hashes matched and ten-scenario harness exists, but no execution approval should be requested until blockers are fixed and re-reviewed.
+INDEPENDENT SECURITY RE-REVIEW (2026-10-21, commit 7fee2ba0fa456fc9edd1b9ce1bfdbc284cd338a1): SECURITY_REVIEW: CHANGES_REQUIRED. Original persistent accounting/control-availability designs substantially addressed, but two new high blockers remain: (1) staged trusted_observation.py derives /private/tmp/research and /private/tmp/tests paths ahead of isolated verified code, allowing host-writable modules to load as UID 320; preserve verified directory structure or remove unsafe path manipulation and add poisoned-path regression; (2) QEMU @rpath validation checks manifest membership but not actual loader selection/order, allowing unlisted earlier shadow libraries; validate all search directories/candidates and mutable ancestors or forbid @rpath, with shadow/symlink/ambiguity negatives. Immutable installation/accounting migration/bootstrap provisioning and composed execution digest remain pending; no execution approval.
+
 ## nd_contract
 status: in_progress
 
