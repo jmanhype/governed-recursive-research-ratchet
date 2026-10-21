@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:27:05Z
-content_hash: "sha256:4219c29b0339371a60d43c505702999670abd80c96d371d0ed1ab8190064f90e"
+updated_at: 2026-10-21T20:45:40Z
+content_hash: "sha256:2c24e9ba39ed3ae31f58da5122f2d2564d114547efda511520977f9f69f0038d"
 blocks: [GRRR-c875, GRRR-6sso]
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
@@ -98,6 +98,59 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERED)
+
+Implementation commit: 1c2a1c595703abf6a94e96792c5f1deb60841ca8 on story/GRRR-my5n. Changed implementation paths: research/ledger.py, scripts/test-story, scripts/durable-identity-integration, tests/unit_durable_evidence.py, tests/integration/durable_evidence.py, and tests/integration/durable_probe.py. Durable evidence and all failed launcher attempts are preserved under docs/evidence/durable-evidence.
+
+Final successful real-identity evidence: docs/evidence/durable-evidence/attempt-20261021T204415Z-c360927f. Private runtime: /private/tmp/grrr-durable-pbc2gjg6. External local export: /Users/Shared/GRRR/durable-evidence/durable-e9bf620ac3a3438d9aef883d9d7c02ee/export. Reviewer-readable copy: the export subtree in the evidence attempt. Snapshot ID: 83567fa3aaeb646ac040454f49070767b1a758bbecb650d462570833b51a11c2. Independently retained anchor: 0955178e5c5d47e512ebdd2505b7f31cb7bcbb60cd6b3503c493dfc1f5cf0a37.
+
+### CI/Test Results
+
+Commands run:
+- /usr/bin/python3 -I -B -W error -m unittest discover -s tests -p unit_durable_evidence.py -v
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p "unit*.py"
+- /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p "unit*.py"
+- ./scripts/test-story durable-evidence as UID 501 (expected fail-closed refusal)
+- sudo ./scripts/test-story durable-evidence (parent-mediated UID-320/UID-321/UID-501 integration)
+- PYTHONPATH=research /Users/speed/miniconda3/bin/coverage run ... unit_durable_evidence.py
+- pvg verify --include-tests --format=text research/ledger.py tests/unit_durable_evidence.py tests/integration/durable_evidence.py tests/integration/durable_probe.py scripts/durable-identity-integration scripts/test-story
+- git diff --check
+
+Summary: focused durable units 7/7 passed; full no-guest units 159/159 passed under system Python and 159/159 under Homebrew Python. Required real integration: 4 required / 4 executed / 0 skipped / 0 failures / 0 errors. Actual UID-321 and UID-501 filesystem/API probes were denied. Coverage of research/ledger.py: 98% (228 statements, 4 missed). pvg verify: 4 recognized files, 0 issues. git diff --check passed. No QEMU/guest or paid dispatch was executed.
+
+AC Verification:
+| AC | Requirement | Evidence | Status |
+|---|---|---|---|
+| 1 | Evaluator-owned immutable hash-linked history | Real UID-320 test 1; SQL update/delete triggers denied; UID 321 API principal denied | PASS |
+| 2 | Full explicit experiment/gate/usage/recovery schema | validate_durable_event and unit schema negatives; all eleven gates remain explicit pass/fail/not-run/error | PASS |
+| 3 | Objects precede references; transaction/idempotency crash semantics | Real fault trigger left object unreferenced and rolled back event/idempotency; duplicate key behavior tested | PASS |
+| 4 | Trusted-anchor snapshot verification | verifySnapshot detects altered, truncated, missing-object and wrong-anchor snapshots | PASS |
+| 5 | Durable export outside runtime | export_snapshot wrote manifest, snapshot, object and verifier instructions to /Users/Shared and reviewer copy; verify_export passed | PASS |
+| 6 | Recovery and fault behavior | Real interrupted event, recovery-required record, preserved reservations, no retry/promotion, altered-object and store-exhaustion controls passed | PASS |
+
+LEARNINGS:
+- Isolated Python does not implicitly make a staged script directory importable; the staged entrypoint must add its own root-controlled directory.
+- macOS can surface a denied traverse as FileNotFoundError rather than PermissionError; denial probes must accept the OS-specific denial without accepting missing protected evidence.
+- A public identity probe cannot live inside the UID-320 private code directory; it must be separately root-owned while the ledger stays private.
+- Final export bytes can remain evaluator-private externally while a reviewer-readable copy is preserved in durable evidence.
+
+DISCOVERED_BUG:
+  title: Homebrew Python suite still emits SQLite ResourceWarnings
+  context: The final full Homebrew run passed 159/159 but emitted 36 SQLite ResourceWarning lines during trusted-import AST/database work. System Python and real integration are clean; this is test-resource cleanup debt already disclosed on GRRR-gu87, not durable-ledger behavior.
+  affected_files: tests/unit_trusted_import_closure.py, research/trusted_install.py
+  discovered_during: GRRR-my5n
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 1c2a1c595703abf6a94e96792c5f1deb60841ca8; story worktree clean; no push.
+- Final real-identity evidence attempt 20261021T204415Z-c360927f passed 4/4 with zero skips and preserved all prior failed attempts.
+
+### proof
+- [x] AC #1 through AC #6 verified by real UID-320 integration and no-skip unit negatives.
+- [ ] Admission/promotion remains blocked and downstream independent review is intentionally not claimed.
+
 ## nd_contract
 status: in_progress
 
