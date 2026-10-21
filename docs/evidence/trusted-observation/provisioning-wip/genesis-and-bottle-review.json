@@ -1,0 +1,624 @@
+{
+  "aggregation": null,
+  "decision": "reconciliation-required",
+  "execution_gate": "blocked",
+  "known_observations": [
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        5,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 0.008236666995799169
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        6,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        8,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 9.57996235229075e-07
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        10,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        11,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        11,
+        "event",
+        "reservation"
+      ],
+      "value": "5caf08242968429fb7cb8684aaa21c38"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        12,
+        "event",
+        "reservation"
+      ],
+      "value": "5caf08242968429fb7cb8684aaa21c38"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        13,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        13,
+        "event",
+        "reservation"
+      ],
+      "value": "a207a5575038431dadae8ae1e10d37c5"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+      "json_path": [
+        "events",
+        14,
+        "event",
+        "reservation"
+      ],
+      "value": "a207a5575038431dadae8ae1e10d37c5"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        5,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 0.008236666995799169
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        6,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        8,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 9.57996235229075e-07
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        10,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        11,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        11,
+        "event",
+        "reservation"
+      ],
+      "value": "5caf08242968429fb7cb8684aaa21c38"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+      "json_path": [
+        "events",
+        12,
+        "event",
+        "reservation"
+      ],
+      "value": "5caf08242968429fb7cb8684aaa21c38"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        5,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 0.008236666995799169
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        6,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        8,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 9.57996235229075e-07
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        10,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        11,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        11,
+        "event",
+        "reservation"
+      ],
+      "value": "5caf08242968429fb7cb8684aaa21c38"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        12,
+        "event",
+        "reservation"
+      ],
+      "value": "5caf08242968429fb7cb8684aaa21c38"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        13,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        13,
+        "event",
+        "reservation"
+      ],
+      "value": "a207a5575038431dadae8ae1e10d37c5"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        14,
+        "event",
+        "reservation"
+      ],
+      "value": "a207a5575038431dadae8ae1e10d37c5"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        15,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        15,
+        "event",
+        "reservation"
+      ],
+      "value": "a874ac93bd794d30b00bbac5884130ce"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+      "json_path": [
+        "events",
+        16,
+        "event",
+        "reservation"
+      ],
+      "value": "a874ac93bd794d30b00bbac5884130ce"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        3,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        5,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 0.008236666995799169
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        6,
+        "event",
+        "reservation"
+      ],
+      "value": "094af62daa82497faabed600dabe01eb"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        8,
+        "event",
+        "outcome",
+        "seconds"
+      ],
+      "value": 9.57996235229075e-07
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "money_cents"
+      ],
+      "value": 0
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        9,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+      "json_path": [
+        "events",
+        10,
+        "event",
+        "reservation"
+      ],
+      "value": "2d9e40eb14e14cd69c04c51418332ea0"
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/baseline-receipt.json",
+      "json_path": [
+        "builds",
+        0,
+        "seconds"
+      ],
+      "value": 46.23097204200167
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/baseline-receipt.json",
+      "json_path": [
+        "builds",
+        1,
+        "seconds"
+      ],
+      "value": 46.33290891700017
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-1.json",
+      "json_path": [
+        "seconds"
+      ],
+      "value": 46.23097204200167
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-1.json",
+      "json_path": [
+        "termination",
+        "seconds"
+      ],
+      "value": 0.009785334001207957
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-2.json",
+      "json_path": [
+        "seconds"
+      ],
+      "value": 46.33290891700017
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-2.json",
+      "json_path": [
+        "termination",
+        "seconds"
+      ],
+      "value": 0.010082333001264487
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force-ack.json",
+      "json_path": [
+        "seconds"
+      ],
+      "value": 3.199999991920777e-05
+    },
+    {
+      "file": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop-ack.json",
+      "json_path": [
+        "seconds"
+      ],
+      "value": 5.062499985797331e-05
+    }
+  ],
+  "prior_sources": {
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/manifest.json": "5758264cf727dd9abd1c84e9b3b3c0d7b28575f2919271c5a105ebc26e9def54",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/negative-controls.json": "7b6ad2252dd79ac23c68feea7dff93704e525c4d1e23c1bfd3764c89a0271442",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/prior-failure-preserved.json": "b02e3568839d447cceba15cdba3093e2e9704c0d2a55bc1fb848a4dcf757ab46",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/runtime-binding.json": "a42495c1062e6d826ebdad43aeb838a138e28e3780ea36ea6da2aadb69c23272",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/baseline-receipt.json": "cd26c3022ac378d726136079b0989eed5ff8842b6afaf613fdfa2420256ebd50",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/binding.json": "47fd1073759c81220e838f89dd778f97f73b0a85ed50ee3a9db66fd42d9bd689",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-1.json": "72aec6ab2287d7c53e0e94847ac33a789131a0e04f4259b83b15437f069e282e",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-2.json": "014761f445c027afef2cfef97563bddcc1142028982bf0117ffe3818d9095066",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/controls.json": "9e87df2f74cd65160c699c9c71166bb980dc1f375185c93ff4154fab9524deb2",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force-ack.json": "6960b9b1360d21b343576509bd1e538eb8ac9d99df03f1f626f8343d23827371",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force.json": "9fae89d439c208ae0002be1bec3e92cd9555d3af017cf3aaf434efd4cdd9fead",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/license-review.json": "4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/manifest.json": "85fbaadbae832ebb67110bbdfe980025fc011d6adb720866054acb4c690b1c16",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/policy.json": "2e08f0288355a64eba22b75fdeb1e62ac14dfaea3be26cbee38ece6eb4051d47",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/profile-approval.json": "3474c0a20999af6048ba862bc37e274da79ca89cbaef1ed84d2c1fe5f7b71ed5",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop-ack.json": "8f9c869aadc05150c12ab9d0d2d21447e6eaee5a005f33dc7b68baff75d69099",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop.json": "777d47a7694b7d35698621d95c6fc4541700944eee8424a66dbd16017ea65bbe",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+  },
+  "qemu_blocker": "No reviewed proof of disabled/pinned dynamic module/plugin loading; no closure fabricated",
+  "qemu_executed": false,
+  "qemu_formula_explicitly_disables_modules": false,
+  "qemu_formula_explicitly_disables_plugins": false,
+  "qemu_installation": null,
+  "qemu_origin": "installed Homebrew bottle; not a new upstream build",
+  "qemu_provenance": {
+    ".brew/qemu.rb": "01862193494a6cb04bba128546445cdec060dbd053f5a37b0fd2da67a3bb44bc",
+    "INSTALL_RECEIPT.json": "13d25481c4bfce7b2f9fb8f9e95e2583e2e215af033bba27421058605dc9fc9c",
+    "bin/qemu-system-aarch64": "7299ef807db462f913be5d1b89a71ea12590416175be0be5e87c2349594c6542",
+    "sbom.spdx.json": "2a750005a68d3b0efbdc4cd783ffb81db3e814c30b1c2ca6502b907ff4169448"
+  },
+  "reset_allowance": false,
+  "unresolved": [
+    "Exact cumulative prior review duration unavailable",
+    "Earlier failed attempts and overlapping/replayed execution require reconciliation",
+    "Persistent holds, stops and trusted settlement receipts must be reconciled before migration"
+  ],
+  "unresolved_history": true,
+  "version": 1
+}
