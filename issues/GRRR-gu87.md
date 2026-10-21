@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T18:15:58Z
-content_hash: "sha256:7d1a2eafbe6c4923c7dd97e00e0bf3a656e0c49d122c13c49a595122c5dd8680"
+updated_at: 2026-10-21T18:27:48Z
+content_hash: "sha256:874d501295fdc60067fbface0cf192fd33f81cdd354b6fa9cd28ac3e9f2f3d61"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -150,6 +150,27 @@ INDEPENDENT ACCOUNTING MIGRATION PLAN REVIEW (2026-10-21, commit c9003ea6f2491d6
 OPERATOR PRIVATE ACCOUNTING EVIDENCE-MANIFEST AUTHORIZATION (2026-10-21): Authorize read-only evidence-manifest collection at commit c9003ea6f2491d61581192ca2338ccbe415ec841. Scope is limited to verifying and inventorying the current protected accounting source, its 259 artifacts, 110 legacy events, committed reconciliation sources, available event fields, and explicit missing migration evidence. Preserve protected hashes and stopped=1; classify unknowns rather than inferring reservations, intervals, stage assignments, receipts, settlements, or zero costs. Do not build/install a candidate store, mutate accounting, release stops/holds, dispatch work, execute QEMU/guest code, deliver the full story, or push.
 INDEPENDENT ACCOUNTING EVIDENCE MANIFEST REVIEW (2026-10-21, commit 1903c3cc920b34b4fabcbf4b3f9582e212c32cfb): SECURITY_REVIEW: ACCOUNTING_EVIDENCE_MANIFEST_APPROVED for non-root private metadata collection only. Reviewer verified protected hashes/device/inodes/root ownership/0444/single links, immutable query-only SQLite, all 259 artifact hashes, 110 event/source correspondences, explicit missing-evidence classification, no settlement authority from pointers/observations, and exclusive output creation. Evidence manifest 3/3 from its directory; bare filenames are valid but instructions must state that working directory. Nonblocking hardening follow-ups: close successful-read descriptors with finally/context manager, explicitly reject root and constrain output ancestors before broader future use, and add atomic publication/fsync if this becomes durable collection evidence. Current approval excludes root and unsafe output locations. No migration, installation, settlement, stop/hold release, or execution is authorized.
 OPERATOR ACCOUNTING EVIDENCE REQUEST/HARDENING AUTHORIZATION (2026-10-21): Operator approved continuing the fail-closed accounting path after manifest commit 1903c3cc920b34b4fabcbf4b3f9582e212c32cfb. Authorized scope: (1) harden the non-root private manifest collector to close read descriptors, reject root invocation, validate a private safe output parent/final path, and atomically fsync publication without overwriting existing output; (2) generate a metadata-only evidence-request package directly from the committed manifest, enumerating missing original identities, request keys, stages, currency/paid-service proof, start/end/overlap intervals, trusted meter/settlement receipts, reservation mappings, and campaign-stop resolution. Unknowns must remain explicit requests, never inferred values or authority. Do not mutate protected accounting, build/install a candidate store, release stops/holds, settle history, dispatch work, execute QEMU/guest code, deliver the full story, or push.
+## nd_contract
+status: in_progress
+
+### evidence
+- SECURITY CORRECTION for review of prior commit 8881cf449193f51865ae41671a255eb02e6e9ecb. New local story commit: 1bee295f4dc7c945bd5a3d146adcdf28e997a93b. Only scripts/collect-accounting-evidence-manifest, scripts/generate-accounting-evidence-request, tests/unit_accounting_evidence_manifest.py, and tests/unit_accounting_evidence_request.py changed. No push.
+- Blocker 1 fixed for both collector and generator: real/effective UID 0 is rejected before manifest/source/output access; output must be absolute normalized lexical with absent non-symlink final; every existing ancestor through / is lstat-checked as a directory, non-symlink, non-group/world-writable, ACL-marker-free via /bin/ls -lde first token, and owned by current effective UID or root. Exact bounded /private/tmp exception requires root ownership plus sticky group/world-write; /tmp remains rejected lexically as symlink. Immediate parent must be current-effective-UID-owned and group/world-write/ACL-free.
+- Both publishers now retain an O_RDONLY|O_DIRECTORY|O_NOFOLLOW immediate-parent fd, compare fstat to fresh lstat, create relative staging through dir_fd, fsync payloads, recheck parent path-to-fd identity before staging and rename, publish with Darwin renameatx_np(parent_fd,temp,parent_fd,final,RENAME_EXCL|RENAME_NOFOLLOW_ANY), fsync the opened parent, and close every fd on success/failure.
+- Blocker 2 fixed: generator rejects real or effective root before reading manifest/output; collector rejects real or effective root before source/output access. Tests use absent manifest/database paths and verify no output.
+- Added no-skip negatives: mocked ACL-bearing ancestor, group-writable ancestor, direct root-owned /private/tmp parent where applicable, and parent path/fd identity mismatch before staging. Existing publication/final-symlink/existing-final tests continue.
+- Focused tests: collector manifest suite 17 passed/0 failed/0 skipped; request generator suite 11 passed/0 failed/0 skipped. Full no-guest suites: /usr/bin/python3 -I -B => 145 passed/0 failed/0 skipped; /opt/homebrew/bin/python3 -B => 145 passed/0 failed/0 skipped (only pre-existing unrelated sqlite ResourceWarnings). py_compile passed for both scripts and both test files under both interpreters.
+- Live hardened collector output /private/tmp/grrr-secure-live.hPBtsd/MANIFEST.json: 259 artifacts/110 events/322 references/0 mismatches, mode 0600, cmp=0, SHA-256 8c64d70cc0f3b903620ed45094133ceffaf5e48107427fcfc2204b73daa06270.
+- Fresh hardened generator output /private/tmp/grrr-secure-request.2Pmybl/accounting-evidence-request: REQUEST.json and REQUEST.md both cmp=0. REQUEST.json SHA-256 e597a4ce884d04080682d884f1ae121bad981aa01917bfd2544a88373e6a2b71; REQUEST.md SHA-256 2824b5badc38d5dcefa1b6dc69bedc5621e75c1bde6aed4e4a561cd4cfc6becf.
+- Explicit pvg verify on four changed paths with --include-tests: PASSED, 2 recognized files, 0 issues. git diff --check passed before commit. Worktree clean after commit.
+- No protected path mutation, root/sudo execution, candidate build/install, migration, stop/hold release, settlement, dispatch, QEMU/guest/candidate execution, story delivery, acceptance, or push occurred.
+
+### proof
+- [x] Review blocker 1: both scripts now enforce full ancestor ownership/mode/symlink/ACL policy and pin/recheck publication parent identity through fd-relative atomic publication.
+- [x] Review blocker 2: both scripts reject real or effective root before input/output access, with focused tests.
+- [x] Dual-interpreter focused/full no-guest tests, compile, live byte-identity, generator reproducibility, explicit pvg verify, and whitespace checks pass at 1bee295f4dc7c945bd5a3d146adcdf28e997a93b.
+- [ ] Original GRRR-gu87 AC #1 through AC #6 remain pending real authorized behavioral integration; this correction does not deliver the story.
+
 ## nd_contract
 status: in_progress
 
