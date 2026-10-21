@@ -1,5 +1,6 @@
 """Real sqlite restart/concurrency/immutability tests; no identity impersonation."""
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing
 import json
 from pathlib import Path
 import runpy
@@ -48,7 +49,7 @@ class ConservativeGenesis(unittest.TestCase):
         self.api['verify'](self.path, self.receipt)
 
     def test_sql_gate_cannot_be_cleared_or_bypassed(self):
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db:
             for sql in ("INSERT INTO reservations VALUES('zero')",
                         "UPDATE state SET stopped=0", "DELETE FROM state"):
                 with self.assertRaises(sqlite3.IntegrityError):

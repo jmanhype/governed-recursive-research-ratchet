@@ -1,0 +1,1 @@
+{"promotion_authorized":false,"reason":"stop-transaction-failed","record":{"code":"RecoveryRequired","message":"Ledger transaction failed; inspect objects and tip","operation":"unknown","receipt":null,"retryable":false},"recorded_ns":1792616636845894000,"retry_authorized":false,"run":"run-crash","version":1}

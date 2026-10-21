@@ -1,0 +1,1 @@
+{"admission": "blocked", "error": "AWAITING_PARENT_IDENTITY_RUN: safe-stop requires root identity launcher; no credentials requested", "exit_code": 1, "guest_executed": false, "identities": {"evaluator": 320, "operator": 501, "runner": 321}, "integration_summary": null, "paid_dispatch": false, "runtime": null, "version": 1}

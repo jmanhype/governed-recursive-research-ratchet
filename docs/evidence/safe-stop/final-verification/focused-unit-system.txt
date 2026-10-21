@@ -1,0 +1,13 @@
+test_admission_fence_is_durable_and_registry_free (unit_safe_stop.SafeStop) ... ok
+test_cancel_failure_and_bad_baseline_are_recovery (unit_safe_stop.SafeStop) ... ok
+test_concurrent_same_key_returns_one_original_receipt (unit_safe_stop.SafeStop) ... ok
+test_crashed_transaction_leaves_no_stop_state_or_event (unit_safe_stop.SafeStop) ... ok
+test_launch_fence_and_distinct_principals (unit_safe_stop.SafeStop) ... ok
+test_status_requires_operation_digest_and_watchdog_identity (unit_safe_stop.SafeStop) ... ok
+test_stop_atomic_idempotency_and_reference (unit_safe_stop.SafeStop) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.044s
+
+OK
+EXIT=0

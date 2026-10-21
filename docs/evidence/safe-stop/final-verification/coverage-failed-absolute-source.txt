@@ -1,0 +1,15 @@
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.050s
+
+OK
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/inorout.py:508: CoverageWarning: Module /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-c875/research/control.py was never imported. (module-not-imported)
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/inorout.py:508: CoverageWarning: Module /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-c875/research/control_worker.py was never imported. (module-not-imported)
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/inorout.py:508: CoverageWarning: Module /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-c875/research/trusted_transport.py was never imported. (module-not-imported)
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/control.py:892: CoverageWarning: No data was collected. (no-data-collected)
+  self._warn("No data was collected.", slug="no-data-collected")
+No data to report.
+UNIT_EXIT=0 REPORT_EXIT=1

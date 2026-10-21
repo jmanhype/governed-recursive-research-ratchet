@@ -2,6 +2,7 @@
 """Read-only, hash-bound analysis. Never initializes SQLite or releases a hold."""
 import hashlib
 import json
+from contextlib import closing
 from decimal import Decimal
 from pathlib import Path
 import shutil
@@ -80,7 +81,7 @@ def inspect():
     check((info.st_dev, info.st_ino) == (active['device'], active['inode']) ==
           (16777229, 681781547), 'store identity differs')
     # mode=ro prevents accidental creation/writes; immutable avoids journal files.
-    with sqlite3.connect((BASE / 'budget.sqlite').as_uri() + '?mode=ro&immutable=1', uri=True) as db:
+    with closing(sqlite3.connect((BASE / 'budget.sqlite').as_uri() + '?mode=ro&immutable=1', uri=True)) as db:
         db.execute('PRAGMA query_only=ON')
         check(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)], 'integrity failure')
         check(db.execute('SELECT * FROM state').fetchall() == [(1, 1)], 'gate changed')

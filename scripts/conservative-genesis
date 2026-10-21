@@ -8,6 +8,7 @@ No allowance, settlement, complete migration, QEMU invocation or stop release.
 import fcntl
 import hashlib
 import json
+from contextlib import closing
 import os
 from pathlib import Path
 import shutil
@@ -98,7 +99,7 @@ def build(root, output):
                'complete_migration': False, 'release_authorized': False}
     receipt_raw = canonical(receipt)
     dbpath = output / 'budget.sqlite'
-    with sqlite3.connect(dbpath) as db:
+    with closing(sqlite3.connect(dbpath)) as db:
         db.executescript("""
         PRAGMA journal_mode=DELETE;
         PRAGMA synchronous=FULL;
@@ -127,6 +128,7 @@ def build(root, output):
             # Evidence key is NOT a reservation identity. Raw events remain in artifacts.
             db.execute('INSERT INTO legacy_events VALUES(?,?)',
                        (event['event_sha256'], canonical(event)))
+        db.commit()
     (output / 'receipt.json').write_bytes(receipt_raw)
     verify(dbpath, receipt)
     plan = {'schema': 'conservative-genesis-provisioning', 'version': 1,
@@ -147,7 +149,7 @@ def verify(path, receipt):
           and receipt['reset_allowance'] is False and receipt['release_authorized'] is False
           and receipt['encumbrances'] == CEILINGS and receipt['profiles'] == PROFILES
           and receipt['milestone_includes_poc'] is True, 'receipt violates blocked semantics')
-    with sqlite3.connect(path.as_uri() + '?mode=ro', uri=True) as db:
+    with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True)) as db:
         check(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)], 'integrity failure')
         check(db.execute('SELECT * FROM state').fetchall() == [(1, 1)], 'migration gate changed')
         check(db.execute('SELECT * FROM reservations').fetchall() == [], 'fabricated reservations')
@@ -170,7 +172,7 @@ def verify(path, receipt):
 def reserve(path, profile, stage, maximum):
     check(profile in PROFILES and stage in CEILINGS, 'unknown scope')
     # Even a zero-cost request never passes; no duplicate-key bypass.
-    with sqlite3.connect(path.as_uri() + '?mode=rw', uri=True, timeout=5) as db:
+    with closing(sqlite3.connect(path.as_uri() + '?mode=rw', uri=True, timeout=5)) as db:
         db.execute('BEGIN IMMEDIATE')
         check(db.execute('SELECT stopped FROM state').fetchall() == [(1,)], 'unsafe gate')
         raise RuntimeError('conservative-genesis stopped: reconciliation and explicit authorization required')

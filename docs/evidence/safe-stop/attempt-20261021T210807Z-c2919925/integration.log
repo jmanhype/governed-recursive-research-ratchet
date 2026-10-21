@@ -1,0 +1,13 @@
+test_01_operator_path_cancels_term_resistant_runner (__main__.Mandatory) ... ok
+test_02_watchdog_safety_authority_has_no_admission_authority (__main__.Mandatory) ... ok
+test_03_idempotency_and_distinct_key_reference (__main__.Mandatory) ... ok
+test_04_stop_and_launch_race_has_no_post_fence_start (__main__.Mandatory) ... ok
+test_05_unavailable_worker_is_recovery_not_safe_stop (__main__.Mandatory) ... ok
+test_06_hard_trigger_preserves_baseline_and_evidence (__main__.Mandatory) ... ok
+test_07_admission_fence_records_actual_durable_rejection (__main__.Mandatory) ... ok
+test_08_failed_stop_transaction_fences_until_recovery (__main__.Mandatory) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 6.792s
+
+OK

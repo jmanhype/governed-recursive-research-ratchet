@@ -1,0 +1,11 @@
+5570760c97942cfd55dfb255ab07508061ec9b2263eeccaf95c5489c1ba904ad  docs/evidence/safe-stop/final-verification/coverage-failed-absolute-source.txt
+5ced382ae74149d6643acc6dbadea8408242feaf6313923efc4cf0989212d61d  docs/evidence/safe-stop/final-verification/coverage-failed-source-syntax.txt
+f06326d24259c45acc7e1dc2ffdccd0b5262fdd6e8bc2a0145e0206e9c2d7253  docs/evidence/safe-stop/final-verification/coverage-with-unmeasured-worker-warning.txt
+ac8f0da81b668fec1c8fceced4d5c440c6882849db18c8e4f245212690e2d2fe  docs/evidence/safe-stop/final-verification/coverage.txt
+1254e49fd3294b8677bb720bea01a3536e1c6271485b2ce69bb07eb7771f22c4  docs/evidence/safe-stop/final-verification/focused-unit-system.txt
+b01154bfc2b36cf479157bb809a52a22c59561cc6bde2f4a008598cf0214df1e  docs/evidence/safe-stop/final-verification/full-unit-homebrew.txt
+0e2d4214b0b6bfa2d23522283c2c210d67abd93b6c266f9668f2abfc1f3fb551  docs/evidence/safe-stop/final-verification/full-unit-system.txt
+418a5c17f33c70e99b0cc0a07fce69191489cfedc94164bfa903785777c5bd4b  docs/evidence/safe-stop/final-verification/git-diff-check.txt
+6d6cc43f5e2eef3a3d5f8ca3a01015127d6006413956571fe69642c5592dfa49  docs/evidence/safe-stop/final-verification/pvg-verify.txt
+418a5c17f33c70e99b0cc0a07fce69191489cfedc94164bfa903785777c5bd4b  docs/evidence/safe-stop/final-verification/py_compile.txt
+efa020b2773c48f13d22e1d90855a953599354be2930eeb583de92ff3806ea34  docs/evidence/safe-stop/final-verification/coverage.data
