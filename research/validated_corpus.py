@@ -18,8 +18,8 @@ from trusted_execution import IMAGE, PRESERVED_ROOT, root_record
 SOURCE_ARCHIVE = 'e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e'
 SOURCE_COMMIT = '129e0b3f15a3bd6af949ee47d76f6855c582ab73'
 LICENSE_BLOB = 'c004659349c7a1f6c55e5107b53a0766085e8d2e'
-CORPUS_VERSION = 'GRRR-validated-corpus-v1'
-FROZEN_AT = '2026-10-21T21:30:00Z'
+CORPUS_VERSION = 'GRRR-validated-corpus-v2-isolated'
+FROZEN_AT = '2026-10-21T22:00:00Z'
 CATEGORIES = (
     'filename-title-resolution', 'alias-collision-precedence', 'case-path-lookup',
     'links-headings-inert', 'frontmatter-index-invalidation', 'rename-delete-cache',
@@ -36,11 +36,13 @@ DEFECTS = (
      'Exact filename lookup precedes alias lookup and preserves filename case.'),
     ('index.go', 'if _, ok := idx.byLowerAlias[la]; !ok {', 'if true {', False,
      'The first alias in deterministic walk order wins a collision.'),
-    ('vault.go', 'if prev, ok := newest[name]; ok && prev >= entry.TS {', 'if false {', False,
-     'Duplicate vault basenames resolve to the highest timestamp deterministically.'),
-    ('index.go', 'if rel, ok := idx.byLowerTitle[norm]; ok {', 'if false {', True,
+    ('index.go', 'if _, ok := idx.byExactName[name]; !ok {', 'if true {', True,
+     'The first exact filename in lexical walk order wins a duplicate collision.'),
+    ('index.go', '\tif rel, ok := idx.byLowerTitle[norm]; ok {\n\t\treturn rel, true\n\t}\n\tif rel, ok := idx.byLowerRelNoExt[norm]; ok {\n\t\treturn rel, true\n\t}',
+     '\tif false {\n\t\treturn rel, true\n\t}\n\tif false {\n\t\treturn rel, true\n\t}', True,
      'Note-title lookup is case-insensitive.'),
-    ('index.go', 'if rel, ok := idx.byLowerFile[norm]; ok {', 'if false {', True,
+    ('index.go', '\tif rel, ok := idx.byLowerFile[norm]; ok {\n\t\treturn rel, true\n\t}\n\tif rel, ok := idx.byLowerRel[norm]; ok {\n\t\treturn rel, true\n\t}',
+     '\tif false {\n\t\treturn rel, true\n\t}\n\tif false {\n\t\treturn rel, true\n\t}', True,
      'Attachment and embed filenames resolve without an .md extension.'),
     ('index.go', 'idx.byLowerAlias[strings.ToLower(title)]', 'idx.byLowerAlias[title]', False,
      'Frontmatter aliases resolve case-insensitively.'),
@@ -71,17 +73,18 @@ DEFECTS = (
      'Trashing a note also invalidates the stale cached index entry.'),
     ('lock.go', 'if bounded && time.Now().After(deadline) {', 'if false {', True,
      'A bounded lock timeout returns an error rather than waiting indefinitely.'),
-    ('commands.go', '\tresult := text + content\n\n\tif timestampsEnabled(timestamps) {\n\t\tresult = ensureTimestamps(result, false, time.Now())\n\t}\n\n\tresultBytes := []byte(result)\n\tif err := atomicWriteFile(path, resultBytes, 0644); err != nil {',
-     '\tresult := text + content\n\n\tif timestampsEnabled(timestamps) {\n\t\tresult = ensureTimestamps(result, false, time.Now())\n\t}\n\n\tresultBytes := []byte(result)\n\tif err := os.WriteFile(path, resultBytes, 0644); err != nil {', True,
-     'Appends use an atomic temporary-file rename so readers never observe partial output.'),
+    ('commands.go', 'if text != "" && !strings.HasSuffix(text, "\\n") && content != "" && !strings.HasPrefix(content, "\\n") {\n\t\ttext += "\\n"\n\t}',
+     'if text != "" && !strings.HasSuffix(text, "\\n") && content != "" && !strings.HasPrefix(content, "\\n") {\n\t}', True,
+     'Appending to a note lacking a final newline inserts the separator newline.'),
     ('vault.go', 'if filepath.IsAbs(userPath) {', 'if false {', True,
      'Absolute user paths are rejected before joining them to the vault root.'),
     ('vault.go', 'if cleaned != filepath.Clean(vaultDir) && !strings.HasPrefix(cleaned, vaultPrefix) {',
      'if false {', True, 'A cleaned traversal result outside the vault prefix is rejected.'),
-    ('commands.go', 'sort.Strings(files)', '_ = files', False,
-     'File listings are deterministically sorted across repetitions.'),
-    ('integrity.go', 'return hex.EncodeToString(h[:])', 'return hex.EncodeToString(h[:8])', True,
-     'Integrity comparisons use the full SHA-256 digest.'),
+    ('commands.go', 'if ranges[i].start <= last.end+1 {', 'if ranges[i].start < last.end {', False,
+     'Adjacent search-context repetitions merge deterministically.'),
+    ('integrity.go', '\tif entry.Hash == contentHash(content) {\n\t\treturn IntegrityOK\n\t}',
+     '\tif true {\n\t\treturn IntegrityOK\n\t}', True,
+     'Changed content is reported as an integrity mismatch.'),
 )
 
 CLEAN = (
@@ -156,6 +159,22 @@ def pinned_source(preserved_root: Path = PRESERVED_ROOT) -> tuple[bytes, dict[st
             and receipt['source']['license_blob'] == LICENSE_BLOB,
             'IntegrityFailure', 'Pinned source identity differs')
     return archive_raw, files
+
+
+def pinned_iso_member(name: str, preserved_root: Path = PRESERVED_ROOT) -> bytes:
+    """Read one exact primary-namespace member from the preserved v4 input."""
+    require(name in {'go.tgz', 'guest.sh', 'input.sum', 'source.sum', 'supervis', 'helper'},
+            'InvalidInput', 'Unregistered v4 ISO member')
+    receipt = root_record(preserved_root / 'preparation.json')
+    image = protected_image(preserved_root, receipt)
+    records = _iso_records(image)
+    require(name in records, 'GateBlocked', 'v4 ISO member absent: ' + name)
+    offset, size = records[name]
+    raw = image[offset:offset + size]
+    expected = receipt['primary_iso_readback'].get(name, {}).get('sha256')
+    require(expected is None or digest(raw) == expected,
+            'IntegrityFailure', 'v4 ISO member differs: ' + name)
+    return raw
 
 
 def protected_image(preserved_root: Path = PRESERVED_ROOT, receipt: dict | None = None) -> bytes:
@@ -313,7 +332,7 @@ def validate(root: Path, preserved_root: Path = PRESERVED_ROOT) -> dict:
     seeds = load_json(corpus / 'protected/seeds.json')
     truths = load_json(corpus / 'protected/truth.json')
     specs = load_json(corpus / 'spec-map.json')
-    require(manifest['counts'] == {'defects': 24, 'clean': 8, 'total': 32, 'critical': 16},
+    require(manifest['counts'] == {'defects': 24, 'clean': 8, 'total': 32, 'critical': 17},
             'InvalidInput', 'Corpus counts differ')
     require(set(manifest['categories']) == set(CATEGORIES) and len(manifest['categories']) == len(CATEGORIES),
             'InvalidInput', 'Required category coverage differs')
@@ -350,7 +369,7 @@ def validate(root: Path, preserved_root: Path = PRESERVED_ROOT) -> dict:
         'status': 'static-validation-pass; seeded isolated execution not-run',
         'corpus_version': CORPUS_VERSION, 'freeze_digest': manifest['freeze_digest'],
         'source_archive_sha256': digest(archive_raw), 'variants': len(set(variants)),
-        'defects': 24, 'clean': 8, 'critical': 16,
+        'defects': 24, 'clean': 8, 'critical': 17,
         'accepted_v4_observation': {'snapshot_sha256': digest(snapshot_path.read_bytes()),
                                     'receipt': snapshot['receipt']['digest'], 'completed': completed,
                                     'clean_pass': clean_pass, 'fault_fail': fault_fail},
