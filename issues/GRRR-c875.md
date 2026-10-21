@@ -4,11 +4,11 @@ title: "Stop a hung research run through independent trusted control"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, delivered]
+labels: [milestone-1, integration, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T21:23:30Z
+updated_at: 2026-10-21T21:23:31Z
 content_hash: "sha256:821e95086af2623a22005cc712135b54cafb66bb20745a0c7ff57e064a7d8ccd"
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
