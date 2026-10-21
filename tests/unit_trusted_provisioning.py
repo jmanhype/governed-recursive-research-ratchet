@@ -29,6 +29,15 @@ class Provisioning(unittest.TestCase):
     def test_schema_only_is_not_authority(self):
         self.assertEqual(provision.validate_plan(self.plan())['decision'], 'approved-provisioning-only')
 
+    def test_qemu_only_plan_cannot_carry_accounting(self):
+        plan = self.plan()
+        plan['decision'] = 'approved-qemu-provisioning-only'
+        with self.assertRaises(RuntimeError):
+            provision.validate_plan(plan)
+        for field in ('migration', 'campaign', 'store_id', 'database_sha256'):
+            del plan[field]
+        self.assertEqual(provision.validate_plan(plan)['decision'], 'approved-qemu-provisioning-only')
+
     def test_traversal_missing_source_duplicate_and_unknown_rejected(self):
         for mutation in ('traversal', 'missing', 'duplicate', 'unknown', 'self'):
             plan = self.plan()

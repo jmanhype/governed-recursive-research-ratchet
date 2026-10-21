@@ -68,14 +68,19 @@ def read_regular(path, maximum):
 
 
 def validate_plan(plan):
-    check(set(plan) == {'version', 'decision', 'installer_sha256', 'python_sha256',
-                       'host_code', 'files', 'source_files', 'qemu_manifest',
-                       'migration', 'campaign', 'store_id', 'database_sha256'},
+    qemu_only = plan.get('decision') == 'approved-qemu-provisioning-only'
+    base = {'version', 'decision', 'installer_sha256', 'python_sha256',
+            'host_code', 'files', 'source_files', 'qemu_manifest'}
+    accounting = set() if qemu_only else {'migration', 'campaign', 'store_id', 'database_sha256'}
+    check(set(plan) == base | accounting,
           'provisioning plan schema differs')
-    check(plan['version'] == 1 and plan['decision'] == 'approved-provisioning-only',
+    check(plan['version'] == 1 and plan['decision'] in (
+          'approved-provisioning-only', 'approved-qemu-provisioning-only'),
           'provisioning authority missing')
-    for key in ('installer_sha256', 'python_sha256', 'host_code', 'campaign',
-                'store_id', 'database_sha256'):
+    keys = ['installer_sha256', 'python_sha256', 'host_code']
+    if not qemu_only:
+        keys += ['campaign', 'store_id', 'database_sha256']
+    for key in keys:
         check(isinstance(plan[key], str) and len(plan[key]) == 64 and
               all(c in '0123456789abcdef' for c in plan[key]), 'invalid binding digest')
     check(isinstance(plan['files'], list) and 0 < len(plan['files']) <= 1024, 'bounded inventory required')
@@ -101,9 +106,10 @@ def validate_plan(plan):
         check(any(item['destination'] == 'snapshots/provisioned/' + name and
                   item['sha256'] == digest for item in plan['files']), 'source inventory incomplete')
     check(plan['qemu_manifest'] == 'qemu/installation.json', 'fixed QEMU manifest required')
-    migration = plan['migration']
-    check(set(migration) == {'database_source', 'receipt_source', 'receipt_sha256'},
-          'migration authority required')
+    if not qemu_only:
+        migration = plan['migration']
+        check(set(migration) == {'database_source', 'receipt_source', 'receipt_sha256'},
+              'migration authority required')
     return plan
 
 
@@ -155,18 +161,19 @@ def main():
     for item in plan['files']:
         raw = read_regular(Path(item['source']), item['size'])
         check(len(raw) == item['size'] and sha(raw) == item['sha256'], 'input integrity differs')
-    migration = plan['migration']
-    receipt = read_regular(Path(migration['receipt_source']), 1048576)
-    check(sha(receipt) == migration['receipt_sha256'], 'migration receipt differs')
-    history = json.loads(receipt, object_pairs_hook=unique)
-    check(history.get('decision') == 'approved-complete-accounting-migration' and
-          history.get('profiles') == PROFILES and history.get('campaign') == plan['campaign'] and
-          history.get('store_id') == plan['store_id'] and
-          isinstance(history.get('prior_sources'), list) and len(history['prior_sources']) > 0 and
-          history.get('unresolved_history') is False and history.get('reset_allowance') is False,
-          'complete prior-history reconciliation required; no fresh allowance')
-    database = read_regular(Path(migration['database_source']), 67108864)
-    check(sha(database) == plan['database_sha256'], 'prior database differs')
+    migration = plan.get('migration')
+    if migration is not None:
+        receipt = read_regular(Path(migration['receipt_source']), 1048576)
+        check(sha(receipt) == migration['receipt_sha256'], 'migration receipt differs')
+        history = json.loads(receipt, object_pairs_hook=unique)
+        check(history.get('decision') == 'approved-complete-accounting-migration' and
+              history.get('profiles') == PROFILES and history.get('campaign') == plan['campaign'] and
+              history.get('store_id') == plan['store_id'] and
+              isinstance(history.get('prior_sources'), list) and len(history['prior_sources']) > 0 and
+              history.get('unresolved_history') is False and history.get('reset_allowance') is False,
+              'complete prior-history reconciliation required; no fresh allowance')
+        database = read_regular(Path(migration['database_source']), 67108864)
+        check(sha(database) == plan['database_sha256'], 'prior database differs')
     for item in plan['files']:
         raw = read_regular(Path(item['source']), item['size'])
         check(sha(raw) == item['sha256'], 'input changed after preflight')
@@ -183,6 +190,12 @@ def main():
     from trusted_install import verify_qemu, record
     qemu = record(BASE / plan['qemu_manifest'])
     verify_qemu(qemu)
+    if plan['decision'] == 'approved-qemu-provisioning-only':
+        install_file(BASE / 'bootstrap/qemu-provisioning-readback.json', canonical({
+            'version': 1, 'plan_sha256': sha(raw_plan), 'host_code': plan['host_code'],
+            'qemu_installation': sha(canonical(qemu)), 'accounting_touched': False,
+            'execution_authorized': False, 'runtime_loading_tested': False, 'guest_executed': False}))
+        return
     from persistent_budget import validate_store
     accounting = BASE / 'accounting'
     if not accounting.exists():

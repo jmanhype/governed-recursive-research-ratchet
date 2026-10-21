@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Non-root read-back of proposed plan and every current input, never install."""
+import importlib.machinery
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+loader = importlib.machinery.SourceFileLoader('provision_validation', str(ROOT / 'scripts/provision-trusted-host'))
+spec = importlib.util.spec_from_loader(loader.name, loader)
+module = importlib.util.module_from_spec(spec)
+loader.exec_module(module)
+
+if __name__ == '__main__':
+    module.check(os.getuid() != 0 and len(sys.argv) == 2, 'non-root plan path required')
+    raw = Path(sys.argv[1]).read_bytes()
+    plan = module.validate_plan(json.loads(raw, object_pairs_hook=module.unique))
+    module.check(plan['decision'] == 'approved-qemu-provisioning-only', 'accounting authority forbidden')
+    module.check(module.sha((ROOT / 'scripts/provision-trusted-host').read_bytes()) ==
+                 plan['installer_sha256'], 'installer changed')
+    module.check(module.sha(module.PYTHON.read_bytes()) == plan['python_sha256'], 'interpreter changed')
+    total = 0
+    for item in plan['files']:
+        data = module.read_regular(Path(item['source']), item['size'])
+        module.check(len(data) == item['size'] and module.sha(data) == item['sha256'], 'plan input changed')
+        total += len(data)
+    print(json.dumps({'plan_sha256': module.sha(raw), 'input_files_checked': len(plan['files']),
+                      'input_bytes': total, 'accounting_authorized': False,
+                      'execution_authorized': False, 'installed': False}, sort_keys=True, indent=2))
