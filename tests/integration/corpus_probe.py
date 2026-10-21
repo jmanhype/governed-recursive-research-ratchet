@@ -5,8 +5,7 @@ from pathlib import Path
 import socket
 import tempfile
 
-from common import RUNNER, canonical, peer_uid, receive, require
-from trusted_install import record
+from common import RUNNER, canonical, peer_uid, receive, require, unique_fields
 
 
 def denied(path: Path, mode: int) -> bool:
@@ -28,7 +27,12 @@ for name in ('executor.sock', 'executor-control.sock'):
         conn.sendall(canonical({'action': 'status', 'run': 'probe'})+b'\n')
         response = receive(conn)
         denials[name+'-peer-role'] = response.get('error', {}).get('code') == 'Unauthorized'
-installation = record(root/'runner/qemu-installation.json')
+record_path = root/'runner/qemu-installation.json'
+record_info = record_path.lstat()
+require(record_info.st_uid == 0 and record_info.st_gid == 0
+        and record_info.st_nlink == 1 and not record_path.is_symlink()
+        and record_info.st_mode & 0o222 == 0, 'Unauthorized', 'QEMU record metadata differs')
+installation = json.loads(record_path.read_bytes(), object_pairs_hook=unique_fields)
 executable = Path(installation['root'])/installation['executable']
 denials['qemu-write'] = denied(executable, os.W_OK)
 with tempfile.TemporaryDirectory() as folder:

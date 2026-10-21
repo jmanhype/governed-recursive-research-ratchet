@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-pbzl372j",
+  "bootstrap_commit": "10f29dbe394ceb8620685e2d12a6b282503b42cf",
+  "failure": "trusted_install.record rejected the world-writable /private/tmp ancestor while checking the otherwise root-owned 0444 staged QEMU record",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "fix": "Probe checks the staged record itself with lstat/no-duplicate JSON decoding; QEMU executable denial remains an actual os.access/replace check"
+}
