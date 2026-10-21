@@ -25,11 +25,11 @@
     "different_fields": [
       "input_image_sha256"
     ],
-    "v3_input_image_sha256": "799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233",
+    "v3_input_image_sha256": "799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233",
     "v4_input_image_sha256": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6"
   },
   "current_v3_code": {
-    "IMAGE": "799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233",
+      "IMAGE": "799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233",
     "PROFILE": "3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0",
     "QEMU_SHA": "7299ef807db462f913be5d1b89a71ea12590416175be0be5e87c2349594c6542",
     "RECEIPT": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c",

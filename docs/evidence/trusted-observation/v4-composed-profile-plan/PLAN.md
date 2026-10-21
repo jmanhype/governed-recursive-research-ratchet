@@ -26,10 +26,11 @@ A later, separately authorized root-only operation may create a complete
 ISO, preparation receipt, prepared profile, development binding, supervisor,
 and helper identities listed in `PLAN.json`.
 
-Before creating anything, it must verify that every ancestor is root-owned,
-safe, ACL-free, and non-symlink. It must build and verify a complete private
-staging namespace first, then expose the final namespace only by an exclusive
-atomic operation. If the destination or any expected member already exists, the
+Before creating anything, it must verify that every ancestor directory is
+root:wheel, non-symlink, ACL-free, and free of group/world write bits. It must
+not change system-directory permissions. It must build and verify a complete
+private staging namespace first, then expose the final namespace only by an
+exclusive atomic operation. If the destination or any expected member exists, the
 operation must refuse. Every regular file must be `root:wheel`, mode `0444`,
 non-symlink, ACL-free, hard-link count one, and byte-verified against its live
 source. Partial state must never be exposed; diagnostics must be retained for

@@ -77,7 +77,7 @@
       "supervisor": "a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"
     },
     "requirements": [
-      "verify every ancestor is root:wheel, non-symlink, ACL-free, and non-writable before creation",
+      "verify every ancestor directory is root:wheel, non-symlink, ACL-free, and has no group/world write bits before creation; do not change system-directory permissions",
       "create a complete private staging directory first; never expose a partial final namespace",
       "use exclusive create for every file and final directory; refuse if destination or any member exists",
       "each regular file must be root:wheel 0444, st_nlink=1, non-symlink, ACL-free, and byte-verified",
