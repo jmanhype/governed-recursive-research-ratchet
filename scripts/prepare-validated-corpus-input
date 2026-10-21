@@ -17,6 +17,7 @@ import struct
 import subprocess
 import sys
 import tarfile
+import traceback
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,7 +26,7 @@ from common import canonical, digest, require
 from corpus_probes import probe_source
 from execution import ASSETS
 from offline import TOOLCHAIN_SHA256
-from trusted_execution import QEMU_MANIFEST
+from trusted_execution import PRESERVED_ROOT, QEMU_MANIFEST
 from trusted_install import record, verify_qemu
 import validated_corpus
 
@@ -66,6 +67,7 @@ def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
     require(not target.exists(), 'InvalidInput', 'Use a fresh corpus preparation directory')
     initial_free = space(target.parent, 500000000)
     archive_raw, source_files = validated_corpus.pinned_source()
+    source_inventory = validated_corpus.root_record(PRESERVED_ROOT / 'preparation.json')['source']['files']
     go_raw = validated_corpus.pinned_iso_member('go.tgz')
     require(digest(go_raw) == TOOLCHAIN_SHA256, 'IntegrityFailure', 'Pinned Go archive differs')
     installation = record(qemu_manifest)
@@ -81,7 +83,7 @@ def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
     media = target / 'media'; media.mkdir(mode=0o700)
     (media / 'vlt.tar').write_bytes(archive_raw)
     (media / 'source.sum').write_text(''.join(item['sha256'] + '  ' + name + '\n'
-        for name, item in sorted(source_files.items())))
+        for name, item in sorted(source_inventory.items())))
     (media / 'go.tgz').write_bytes(go_raw)
     shutil.copyfile(ROOT / 'research/corpus-guest.sh', media / 'guest.sh')
     cache = target.parent / 'grrr-corpus-host-build-cache'
@@ -96,7 +98,7 @@ def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
                 str(ROOT / 'research/corpus-supervisor' / source)]
         commands.append(args); capture(args, env); space(target)
     (media / 'seeds.json').write_bytes(canonical(seeds))
-    probes = {challenge['challenge']: probe_source(challenge['challenge']).encode('utf-8')
+    probes = {challenge['challenge']: probe_source(challenge['challenge'][-4:]).encode('utf-8')
               for challenge in public}
     with tarfile.open(media / 'probes.tar', 'x', format=tarfile.PAX_FORMAT) as archive:
         for name, raw in sorted(probes.items()):
@@ -159,5 +161,6 @@ if __name__ == '__main__':
         raise SystemExit(main())
     except Exception as exc:
         print(canonical({'corpus_preparation': 'failed', 'error': str(exc),
+                         'traceback': traceback.format_exc(),
                          'vm_execution_performed': False}).decode())
         raise SystemExit(1)

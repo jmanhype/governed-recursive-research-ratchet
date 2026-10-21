@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+"""UID-separated corpus launcher. Root entry is only the installed bootstrap."""
+from __future__ import annotations
+import ctypes
+import fcntl
+import json
+import os
+from pathlib import Path
+import pwd
+import shutil
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def require_root_snapshot() -> None:
+    if not (sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode
+            and ROOT.parent == Path('/Library/GRRR/snapshots')):
+        raise SystemExit('Root checkout execution prohibited; installed bootstrap required')
+    for path in (ROOT, *ROOT.parents):
+        if path.is_symlink() or path.stat().st_uid != 0 or path.stat().st_mode & 0o022:
+            raise SystemExit('Mutable snapshot ancestor')
+
+
+if os.getuid() == 0:
+    require_root_snapshot()
+
+sys.path.insert(0, str(ROOT/'research'))
+from common import Failure, canonical, digest, require
+from corpus_execution import HELPER, IMAGE, LIMITS, PROFILE, RECEIPT, SUPERVISOR, QEMU_MANIFEST, validate_preserved
+from execution import ASSETS
+from trusted_install import immutable, record, verify_qemu
+from validated_corpus import CORPUS_FREEZE
+
+CODE = ('research/common.py', 'research/execution.py', 'research/budget.py', 'research/ledger.py',
+        'research/trusted_execution.py', 'research/trusted_install.py', 'research/trusted_transport.py',
+        'research/isolated_entry.py', 'research/corpus_execution.py', 'research/corpus_evaluation.py',
+        'tests/integration/validated_corpus.py', 'tests/integration/trusted_probe.py',
+        'scripts/validated-corpus-identity-integration', 'scripts/validated-corpus-root-bootstrap')
+
+
+def inventory() -> dict:
+    return {name: digest((ROOT/name).read_bytes()) for name in CODE}
+
+
+def verify_prepared(prepared: Path) -> dict:
+    require(digest((prepared/'preparation.json').read_bytes()) == RECEIPT, 'IntegrityFailure', 'Corpus receipt differs')
+    profile = json.loads((prepared/'prepared-profile.json').read_bytes())
+    require(digest(canonical(profile)) == PROFILE and profile['image_sha256'] == digest((prepared/'input.iso').read_bytes()) == IMAGE
+            and profile['supervisor_sha256'] == SUPERVISOR and profile['helper_sha256'] == HELPER
+            and profile['dispatch_enabled'] is False and profile['authorization'] == 'required',
+            'IntegrityFailure', 'Corpus prepared profile differs')
+    return profile
+
+
+def prepare_plan(vm: Path, prepared: Path, qemu_manifest: Path, operator=None) -> dict:
+    verify_prepared(prepared); preserved = validate_preserved()
+    require(preserved['input.iso'] == IMAGE and preserved['prepared-profile.json'] == PROFILE,
+            'IntegrityFailure', 'Installed corpus profile differs')
+    assets = {name: vm/('boot/'+name if name not in ('alpine-virt-3.22.6-aarch64.iso',) else name) for name in ASSETS}
+    for name, expected in ASSETS.items(): require(digest(assets[name].read_bytes()) == expected, 'IntegrityFailure', 'Asset differs')
+    installation = record(qemu_manifest); require(digest(canonical(installation)) == QEMU_MANIFEST, 'IntegrityFailure', 'QEMU differs')
+    verify_qemu(installation); require(shutil.disk_usage('/private/tmp').free >= LIMITS['minimum_host_free_bytes'], 'BudgetExceeded', 'Space floor')
+    operator = ROOT.stat().st_uid if operator is None else operator; code = inventory()
+    accounting = digest(canonical({'kind':'disposable-corpus-budget','corpus_freeze':CORPUS_FREEZE,'profile':PROFILE}))
+    config = {'version':1, 'profile':PROFILE, 'image':IMAGE, 'supervisor':SUPERVISOR, 'helper':HELPER,
+              'host_code':digest(canonical(code)), 'operator_uid':operator, 'limits':LIMITS,
+              'network':False, 'host_shares':False, 'paid_dispatch':False, 'read_only_inputs':True,
+              'qemu_installation':QEMU_MANIFEST, 'corpus_binding':CORPUS_FREEZE,
+              'accounting_binding':accounting, 'bootstrap_sha256':digest((ROOT/'scripts/validated-corpus-root-bootstrap').read_bytes()),
+              'python_sha256':digest(Path(sys.executable).read_bytes())}
+    config['execution_profile'] = __import__('trusted_execution').configuration_digest(config)
+    return {'version':1, 'config':config, 'code':code, 'assets':{k:str(v) for k,v in assets.items()},
+            'asset_hashes':dict(ASSETS), 'execution_authorized':False, 'execution_performed':False}
+
+
+def readonly(path: Path, data: bytes, mode=0o444):
+    with path.open('xb') as stream: stream.write(data); stream.flush(); os.fsync(stream.fileno())
+    os.chmod(path, mode)
+
+
+def clone(source: Path, target: Path, expected: str):
+    library = ctypes.CDLL(None, use_errno=True); function = library.clonefile
+    function.argtypes=(ctypes.c_char_p,ctypes.c_char_p,ctypes.c_int); function.restype=ctypes.c_int
+    require(function(os.fsencode(source), os.fsencode(target), 0)==0, 'GateBlocked','APFS clone failed')
+    require(digest(target.read_bytes())==expected,'IntegrityFailure','Cloned asset differs')
+
+
+def identity(uid:int):
+    os.setgroups([]); os.setgid(uid); os.setuid(uid); os.umask(0o077)
+
+
+def cease(process):
+    for sig, wait in ((signal.SIGTERM,5),(signal.SIGKILL,2)):
+        try: os.killpg(process.pid,sig)
+        except ProcessLookupError: pass
+        try: process.wait(timeout=wait); return
+        except subprocess.TimeoutExpired: pass
+    raise Failure('RecoveryRequired','Service cessation unconfirmed')
+
+
+def launch(plan, approval, license_review):
+    require(os.getuid()==0,'Unauthorized','Root bootstrap required')
+    from corpus_execution import root_record
+    from trusted_execution import validate_approval
+    approved, reviewed = root_record(approval), root_record(license_review)
+    validate_approval(approved, plan['config'], reviewed)
+    lock_path = Path('/Library/GRRR/validated-corpus/v2/launch.lock'); immutable(lock_path)
+    descriptor = os.open(lock_path,os.O_RDONLY|os.O_NOFOLLOW)
+    try: fcntl.flock(descriptor,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    except BlockingIOError: os.close(descriptor); raise Failure('Stopped','Another corpus launcher is active')
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-corpus-',dir='/private/tmp')); runtime.chmod(0o711); service=None
+    print('PRIVATE_RUNTIME='+str(runtime),flush=True)
+    environment={'PATH':'/usr/bin:/bin','HOME':'/var/empty','PYTHONDONTWRITEBYTECODE':'1'}
+    try:
+        for name,owner,mode in (('ipc',0,0o1777),('runner',0,0o755),('evaluator',320,0o700),
+                                ('code',0,0o755),('runner/assets',0,0o755),('runner/scratch',321,0o700),
+                                ('evaluator/corpus',320,0o700)):
+            path=runtime/name; path.mkdir(); os.chown(path,owner,owner); path.chmod(mode)
+        for name,hashed in plan['code'].items():
+            data=(ROOT/name).read_bytes(); require(digest(data)==hashed,'IntegrityFailure','Code changed')
+            readonly(runtime/'code'/Path(name).name,data)
+        for name,source in plan['assets'].items(): clone(Path(source),runtime/'runner/assets'/name,plan['asset_hashes'][name])
+        readonly(runtime/'runner/config.json',canonical(plan['config']))
+        readonly(runtime/'runner/approval.json',canonical(approved)); readonly(runtime/'runner/license.json',canonical(reviewed))
+        readonly(runtime/'runner/qemu-installation.json',canonical(record(Path('/Library/GRRR/qemu/installation.json'))))
+        readonly(runtime/'plan.json',canonical(plan))
+        readonly(runtime/'evaluator/corpus/manifest.json',(ROOT/'corpus/manifest.json').read_bytes())
+        readonly(runtime/'evaluator/corpus/truth.json',(ROOT/'corpus/protected/truth.json').read_bytes())
+        with (runtime/'service.log').open('xb') as log:
+            service=subprocess.Popen([sys.executable,'-I','-S','-B',str(runtime/'code/isolated_entry.py'),
+                'corpus_execution.py',str(runtime/'runner')],cwd=runtime,stdout=log,stderr=subprocess.STDOUT,
+                env=environment,preexec_fn=lambda:identity(321),start_new_session=True)
+        deadline=time.monotonic()+5
+        while time.monotonic()<deadline and not ((runtime/'ipc/executor.sock').exists() and (runtime/'ipc/executor-control.sock').exists()) and service.poll() is None: time.sleep(.05)
+        require(service.poll() is None and (runtime/'ipc/executor.sock').exists() and (runtime/'ipc/executor-control.sock').exists(),'Unavailable','Executor failed to start')
+        for uid in (321,plan['config']['operator_uid']):
+            result=subprocess.run([sys.executable,'-I','-S','-B',str(runtime/'code/isolated_entry.py'),
+                'trusted_probe.py',str(runtime)],cwd=runtime,capture_output=True,timeout=15,
+                env=environment,preexec_fn=lambda uid=uid:identity(uid))
+            require(result.returncode==0,'GateBlocked','Identity denial probe failed')
+        with (runtime/'integration.log').open('xb') as log:
+            result=subprocess.run([sys.executable,'-I','-S','-B',str(runtime/'code/isolated_entry.py'),
+                'validated_corpus.py',str(runtime)],cwd=runtime,stdout=log,stderr=subprocess.STDOUT,
+                env=environment,preexec_fn=lambda:identity(320),timeout=21600)
+        return result.returncode
+    finally:
+        if service is not None: cease(service)
+        print('RETAINED_PRIVATE_RUNTIME='+str(runtime),flush=True); os.close(descriptor)
+
+
+def main():
+    require(len(sys.argv) in (5,7) and sys.argv[1] in ('--dry-run','--bootstrap-run'),'InvalidInput',__doc__)
+    if sys.argv[1]=='--bootstrap-run': require(os.getuid()==0,'Unauthorized','Root bootstrap required')
+    vm=Path(sys.argv[2]); prepared=Path(sys.argv[3]); qemu=Path(sys.argv[-1])
+    operator=None if sys.argv[1]=='--dry-run' else json.loads(Path(sys.argv[4]).read_bytes())['operator_uid']
+    plan=prepare_plan(vm,prepared,qemu,operator)
+    if sys.argv[1]=='--dry-run': print(canonical(plan).decode()); return 0
+    return launch(plan,Path(sys.argv[4]),Path(sys.argv[5]))
+
+
+if __name__=='__main__':
+    try: raise SystemExit(main())
+    except (Failure,OSError,ValueError) as exc:
+        print(canonical({'validated_corpus':'not-run','error':exc.record if isinstance(exc,Failure) else type(exc).__name__}).decode()); raise SystemExit(1)
