@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T01:10:16Z
-content_hash: "sha256:2d9461cfcc3b4269807682dbd331fd2fc22beb57de45a920d4c7500d4e27020c"
+updated_at: 2026-10-21T01:10:17Z
+content_hash: "sha256:c9edf9841ce7104e32d58d8eaa336ae787262cc465950e3571579b6e78146bd6"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -111,6 +111,25 @@ OPERATOR TRUSTED-OBSERVATION PROFILE DEVELOPMENT/REVIEW APPROVAL (2026-10-20):
 - Before execution, operator must separately approve parent-mediated identity execution and guest negative controls after reviewing completed supervisor and detached input-image hashes.
 DISPOSABLE OFFLINE RUNTIME CLEANUP (2026-10-21): removed only old root-owned /private/tmp/grrr-offline-jwxgpr6a (175M/121 files) and /private/tmp/grrr-offline-m5qlaapy (200M/127 files); durable evidence was already committed. Free space now 15,481,393,152 bytes. No project/model/output data touched.
 REGENERABLE DEVELOPMENT CACHE CLEANUP (2026-10-21): removed only /Users/speed/.cache/opencode (190M, 11,996 files) and /Users/speed/.cache/codebase-memory-mcp (143M, 24 files); free space now 15,461,191,680 bytes. Manifest main checkout .tmp-sr_pm/development-cache-cleanup-manifest.txt. No model/project/output data touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- Development implementation 98c8af1; complete evidence checkpoint 91a7ad5. Worktree clean. No guest execution, privileged launcher, paid call or push.
+- 50/50 Python tests; 2/2 Go protocol tests with 90.6% parser coverage. Python research coverage 37%; Linux supervisor runtime coverage 0%. Cross-Go-vet and explicit pvg verify pass (12 files, zero issues).
+- Actual nonexecuting ISO read-back verified all 7 files and all 52 archived source files. Receipt anchor 775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c.
+- Final supervisor a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6; ISO 799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233; prepared profile 3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0. Dispatch remains disabled.
+- docs/TRUSTED-OBSERVATION-PREPARED.md SHA256 fcd27424ad8f50c15d13cb01f07673be558c709fad4d5957e88925f97acfba04.
+- Story diff guideline overrun explicitly referred to PM investigation. Claim retained. Not delivered or accepted.
+
+### proof
+- [ ] AC #1: guest adapter and execution proof pending separate approval.
+- [ ] AC #2: full real adversarial guest/service observations pending.
+- [ ] AC #3: supervisor and image pinned but actual separation/race proof not-run.
+- [ ] AC #4: real evaluator identity and offline accounting integration pending.
+- [ ] AC #5: real cross-service metering/review/overlap proof pending.
+- [ ] AC #6: real watchdog/store/lost-response integration pending.
+
 # Trusted-observation development checkpoint — execution not authorized
 
 Implementation basis: `98c8af1` on `story/GRRR-gu87`. This supersedes the
