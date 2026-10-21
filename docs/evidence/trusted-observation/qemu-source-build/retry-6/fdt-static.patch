@@ -1,0 +1,11 @@
+--- a/meson.build
++++ b/meson.build
+@@ -2045,7 +2045,7 @@
+   fdt_opt = 'system'
+ endif
+ if fdt_opt in ['enabled', 'system'] or (fdt_opt == 'auto' and have_system)
+-  fdt = cc.find_library('fdt', required: fdt_opt == 'system')
++  fdt = cc.find_library('fdt', required: fdt_opt == 'system', dirs: ['/opt/homebrew/Cellar/dtc/1.8.1/lib'], static: true)
+   if fdt.found() and cc.links('''
+      #include <libfdt.h>
+      #include <libfdt_env.h>
