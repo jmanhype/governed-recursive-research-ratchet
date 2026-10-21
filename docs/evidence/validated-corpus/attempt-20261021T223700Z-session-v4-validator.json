@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-32plqgpp",
+  "bootstrap_commit": "6b46ab01fc2ff94ee3701218d7fa939df997feb3",
+  "failure": "CorpusSession also imported trusted_execution.validate_config",
+  "search_result": "All remaining corpus-path validators now resolve to corpus_execution.validate_config",
+  "vm_executed": false,
+  "candidate_executed": false
+}

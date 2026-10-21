@@ -8,10 +8,10 @@ import uuid
 
 from budget import Budget
 from common import EVALUATOR, Failure, call, canonical, digest, fields, require
-from corpus_execution import HELPER, IMAGE, PROFILE, SUPERVISOR, QEMU_MANIFEST, decode_guest
+from corpus_execution import (HELPER, IMAGE, PROFILE, SUPERVISOR, QEMU_MANIFEST, decode_guest,
+                              validate_config)
 from ledger import Ledger
-from trusted_execution import QEMU_MANIFEST as V4_QEMU
-from trusted_execution import root_record, validate_config
+from trusted_execution import root_record
 
 
 def validate_receipt(value: dict, request: dict, execution_profile: str) -> dict:
