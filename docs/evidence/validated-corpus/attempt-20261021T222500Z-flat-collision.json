@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-k9jhxvpi",
+  "bootstrap_commit": "93e0ce70000bc51259cca5d62020451f999a2ebe",
+  "failure": "FileExistsError before service or guest launch",
+  "cause": "Flattened research/validated_corpus.py collided with tests/integration/validated_corpus.py; research copy is no longer staged because CORPUS_FREEZE is imported from corpus_execution.py",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "staged_code_files_observed": 10
+}
