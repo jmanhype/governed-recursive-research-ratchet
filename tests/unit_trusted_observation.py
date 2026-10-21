@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import socket
 import sqlite3
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -69,10 +70,13 @@ class BudgetChecks:
 
     def test_second_launcher_lock_is_rejected(self) -> None:
         lock = self.path.parent / 'launch.lock'
-        with lock.open('wb') as first, lock.open('rb') as second:
+        with lock.open('wb') as first:
             fcntl.flock(first, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            with self.assertRaises(BlockingIOError):
-                fcntl.flock(second, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            result = subprocess.run([sys.executable, '-I', '-S', '-B',
+                str(Path(__file__).with_name('launch_lock_probe.py')), str(lock)],
+                capture_output=True, timeout=3, env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty'})
+            self.assertEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, b'blocked\n')
 
     def test_duplicate_binding_and_stage(self) -> None:
         first = self.reserve('same', resources(execution=100))

@@ -46,6 +46,7 @@ CODE = ('research/common.py', 'research/execution.py', 'research/budget.py', 're
         'tests/unit_trusted_observation.py', 'research/policy.py', 'research/trusted_install.py',
         'research/trusted_transport.py', 'research/persistent_budget.py', 'research/isolated_entry.py',
         'scripts/trusted-root-bootstrap', 'research/trusted-guest.sh',
+        'tests/launch_lock_probe.py',
         'research/trusted-supervisor/protocol.go', 'research/trusted-supervisor/protocol_test.go',
         'research/trusted-supervisor/candidate_helper_linux.go', 'research/trusted-supervisor/supervisor_linux.go')
 

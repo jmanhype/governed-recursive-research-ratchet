@@ -104,7 +104,13 @@ def verify_qemu(manifest: dict):
         immutable(root / 'data' / path)
         require(digest((root / 'data' / path).read_bytes()) == expected,
                 'IntegrityFailure', 'QEMU firmware/data bytes changed')
-    require({str(p.relative_to(root / 'data')) for p in (root / 'data').rglob('*') if not p.is_dir()}
+    data_members = list((root / 'data').rglob('*'))
+    require(len(data_members) <= 512 and all(not p.is_symlink() for p in data_members),
+            'IntegrityFailure', 'Unbounded or symlinked QEMU data tree')
+    for member in data_members:
+        if member.is_dir():
+            immutable(member, directory=True)
+    require({str(p.relative_to(root / 'data')) for p in data_members if not p.is_dir()}
             == set(manifest['data_files']), 'IntegrityFailure', 'Uninventoried QEMU data member')
     actual_build = subprocess.run(['/usr/bin/sw_vers', '-buildVersion'], capture_output=True,
         check=True, timeout=2, env={'PATH': '/usr/bin:/bin'}).stdout.decode().strip()
