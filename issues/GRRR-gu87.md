@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T19:30:09Z
-content_hash: "sha256:4f9c7287f9b0154afd2e69b2189426db25279283dfaf49519c733a17fe25256d"
+updated_at: 2026-10-21T19:31:45Z
+content_hash: "sha256:c3e78d7446030fddcfe653dd6afe9455a71c7d6d3a4e15a9be3e1e53b4759fec"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -1118,3 +1118,15 @@ AWAITING_PARENT_IDENTITY_RUN
 
 ### 2026-10-21T05:49:48Z speed
 loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
+
+### 2026-10-21T19:31:45Z speed
+## nd_contract
+status: in_progress
+
+### evidence
+- Terminal authoritative pointer for local successor-accounting commit `64bc18a1a9c932fbdc06b056984cf95076ec14a1`: the full evidence/proof block is immediately above in Notes. The worktree is clean, no push occurred, and no root installation or protected mutation was performed.
+
+### proof
+- [x] Scoped successor-accounting implementation, focused/full no-guest tests, compilation, pvg verify, and whitespace checks completed as recorded for `64bc18a`.
+- [ ] Parent GRRR-gu87 real-guest integration ACs remain pending and this story remains in_progress.
+
