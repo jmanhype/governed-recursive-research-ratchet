@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:45:40Z
-content_hash: "sha256:9bb033a986b428b6f8834fb5b424880a5e71d5c1c287b832ec8ad43f7889333e"
+content_hash: "sha256:12a29fd06f0b22d98f90cde2008e17ca22d8e51f1418453583efe3f2deb1ef92"
 blocks: [GRRR-c875, GRRR-6sso]
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
@@ -98,6 +98,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-21.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence (DELIVERED)
 
 Implementation commit: 1c2a1c595703abf6a94e96792c5f1deb60841ca8 on story/GRRR-my5n. Changed implementation paths: research/ledger.py, scripts/test-story, scripts/durable-identity-integration, tests/unit_durable_evidence.py, tests/integration/durable_evidence.py, and tests/integration/durable_probe.py. Durable evidence and all failed launcher attempts are preserved under docs/evidence/durable-evidence.
