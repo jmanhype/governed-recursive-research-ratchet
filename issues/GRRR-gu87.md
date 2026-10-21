@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:15:24Z
-content_hash: "sha256:d0b5530d84c4e183bd34a6944e65ab8f459640e28f095cb030940b481916e84a"
+content_hash: "sha256:81924ec0f613e60a7c4f0b5beeadc98dc5d4b46a627141f3e5d5ceab7285c136"
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
 assignee: dev-GRRR-gu87
 closed_at: 2026-10-21T20:15:24Z
 close_reason: "Accepted: real 10/10 trusted-observation controls with durable evidence and preserved fail-closed boundaries"
-led_to: [GRRR-my5n]
+led_to: [GRRR-my5n, GRRR-c875]
 ---
 
 ## Description
@@ -1175,7 +1175,7 @@ AWAITING_PARENT_IDENTITY_RUN
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-90te]]
 - Follows: [[GRRR-90te]], [[GRRR-0g4n]]
-- Led to: [[GRRR-my5n]]
+- Led to: [[GRRR-my5n]], [[GRRR-c875]]
 
 ## Comments
 
