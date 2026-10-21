@@ -1,7 +1,7 @@
 ---
 id: GRRR-my5n
 title: "Recover a verifiable experiment snapshot after interruption"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:46:47Z
-content_hash: "sha256:bbd9f8c7af81f825b26f30b491b0081e72ef5e32a80e1c6c826977ef272d3e84"
-blocks: [GRRR-c875, GRRR-6sso]
+content_hash: "sha256:37a2dcf75a0b0055dc7b713289c590fba1d602e42d3f36d17308343e7e79ac50"
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
 follows: [GRRR-gu87, GRRR-90te]
+closed_at: 2026-10-21T20:46:47Z
+close_reason: "Accepted: durable UID-320 ledger, crash recovery, trusted export, and identity denials proven"
 ---
 
 ## Description
@@ -195,10 +196,12 @@ status: in_progress
 - 2026-10-21T20:27:05Z claimed by dev-GRRR-my5n
 - 2026-10-21T20:45:40Z status: in_progress -> in_progress
 - 2026-10-21T20:45:40Z auto-follows: linked to predecessor GRRR-90te
+- 2026-10-21T20:46:47Z status: in_progress -> closed
+- 2026-10-21T20:46:47Z dep_removed: no_longer_blocks GRRR-c875
+- 2026-10-21T20:46:47Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-c875]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-gu87]]
 - Follows: [[GRRR-gu87]], [[GRRR-90te]]
 

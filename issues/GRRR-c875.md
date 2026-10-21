@@ -9,9 +9,9 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-20T03:20:56Z
-content_hash: "sha256:e5f26a3fd0a04b4783f6d569a85a90f84ab6bfda89c4eebc3dd76f30a66ff358"
-blocked_by: [GRRR-my5n]
+content_hash: "sha256:d7dfce86a6f612d1d8f75ed0869179c006bf4b9138a4617ee4913344fefe2033"
 blocks: [GRRR-bnkf, GRRR-6sso]
+was_blocked_by: [GRRR-my5n]
 ---
 
 ## Description
@@ -111,10 +111,11 @@ status: new
 - 2026-10-20T03:19:02Z dep_added: blocked_by GRRR-my5n
 - 2026-10-20T03:19:03Z dep_added: blocks GRRR-bnkf
 - 2026-10-20T03:19:05Z dep_added: blocks GRRR-6sso
+- 2026-10-21T20:46:47Z dep_removed: was_blocked_by GRRR-my5n
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-bnkf]], [[GRRR-6sso]]
-- Blocked by: [[GRRR-my5n]]
+- Was blocked by: [[GRRR-my5n]]
 
 ## Comments
