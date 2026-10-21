@@ -69,7 +69,8 @@ class Ledger:
         row = self.db.execute('SELECT hash FROM events ORDER BY seq DESC LIMIT 1').fetchone()
         return row[0] if row else '0' * 64
 
-    def append(self, principal: int, event: dict, expectedTip: str, key: str) -> dict:
+    def _append(self, principal: int, event: dict, expectedTip: str, key: str,
+                callback=None) -> dict:
         require(principal == EVALUATOR, 'Unauthorized', 'Journal is evaluator-only')
         identifier(expectedTip, True)
         identifier(key)
@@ -94,13 +95,24 @@ class Ledger:
                 sequence = cursor.lastrowid
                 self.db.execute('INSERT INTO idempotency VALUES(?,?,?,?,?)',
                                 (key, sequence, expectedTip, hashed, body))
+                receipt = {'sequence': sequence, 'digest': hashed, 'prior': expectedTip}
+                if callback is not None:
+                    callback(self.db, receipt)
                 self.db.commit()
-                return {'sequence': sequence, 'digest': hashed, 'prior': expectedTip}
+                return receipt
             except BaseException as exc:
                 self.db.rollback()
                 if isinstance(exc, (sqlite3.Error, OSError)):
                     raise Failure('RecoveryRequired', 'Ledger transaction failed; inspect objects and tip') from exc
                 raise
+
+    def append(self, principal: int, event: dict, expectedTip: str, key: str) -> dict:
+        return self._append(principal, event, expectedTip, key)
+
+    def append_atomic(self, principal: int, event: dict, expectedTip: str, key: str,
+                      callback=None) -> dict:
+        """Append and apply caller state changes in one SQLite transaction."""
+        return self._append(principal, event, expectedTip, key, callback)
 
     def snapshot(self, event: dict, key: str) -> dict:
         with self.lock:
