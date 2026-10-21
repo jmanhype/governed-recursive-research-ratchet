@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T19:31:45Z
-content_hash: "sha256:c3e78d7446030fddcfe653dd6afe9455a71c7d6d3a4e15a9be3e1e53b4759fec"
+updated_at: 2026-10-21T19:31:55Z
+content_hash: "sha256:2daec2a9839cc87e5808218c5a7c2fb98c755c4353cf7ddbcdad42ff26e812b0"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -1129,4 +1129,16 @@ status: in_progress
 ### proof
 - [x] Scoped successor-accounting implementation, focused/full no-guest tests, compilation, pvg verify, and whitespace checks completed as recorded for `64bc18a`.
 - [ ] Parent GRRR-gu87 real-guest integration ACs remain pending and this story remains in_progress.
+
+
+### 2026-10-21T19:31:55Z speed
+## nd_contract
+status: in_progress
+
+### evidence
+- Correction to the prior terminal pointer only: the full successor-accounting evidence block for commit `64bc18a1a9c932fbdc06b056984cf95076ec14a1` is earlier in this story's Notes, not immediately above this comment. All measured outcomes in that full block remain unchanged. Worktree clean; no push, root installation, protected mutation, delivery, or acceptance.
+
+### proof
+- [x] This terminal block supersedes only the pointer wording; it does not alter code, tests, commit, status, or prior evidence.
+- [ ] Parent GRRR-gu87 real-guest integration ACs remain pending and authoritative status is in_progress.
 
