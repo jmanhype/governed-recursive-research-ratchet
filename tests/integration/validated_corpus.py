@@ -11,8 +11,9 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT/'research'))
 from common import EVALUATOR, canonical, require
 from corpus_evaluation import CorpusSession
+from corpus_execution import validate_config
 from ledger import verifySnapshot
-from trusted_execution import root_record, validate_approval, validate_config
+from trusted_execution import root_record, validate_approval
 
 
 class ValidatedCorpus(unittest.TestCase):
