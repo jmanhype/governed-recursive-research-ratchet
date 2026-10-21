@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T03:12:39Z
-content_hash: "sha256:009df845218a16eeeddb4bc15c71b3703f0ab1a818f067ea2d1066a049f010ea"
+updated_at: 2026-10-21T03:16:40Z
+content_hash: "sha256:4599c43877e2ac8e43e770dcf1acb292de7e8aaebd0c5c4d9df4ac86b3121126"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -124,6 +124,17 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 - Not authorized: QEMU guest execution, ten trusted-observation controls, paid calls, resource expansion, host fallback, production mutation, automatic admission, or candidate-correctness certification. Separate execution approval remains mandatory.
 REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 948M/11,155 files; Google cache 929M/12,978 files; partially regenerated Codex cache reduced to ~20K; com.spacefs.launcher 751M/487 files; dev.zcode.app.ShipIt 772M/779 files; @zcodedesktop-updater 476M/3 files. Current free space 18,042,109,952 bytes. Manifests: .tmp-sr_pm/provisioning-cache-cleanup-manifest.txt and .tmp-sr_pm/provisioning-cache-cleanup-round2-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- Authorized FDT-only unified diff applied: meson.build before 7d45b715ca8e740d787eee6d4a1e8ae4a7456aecfe16dda2a7d32a0f2cc10591 after 7222d581694f1022ba6ab661907af6abf552243e80c9725cc4a7a064d70df4e0. dtc hashes reverified.
+- Fresh configure succeeded; exact static libfdt.a selected, no FDT subproject/download. Static/minimal/no-modules/no-plugins retained. Compilation reached final link 2022/2023, failed ld library crt0.o not found with -static. Exit 2; stopped with no fallback.
+- Complete logs, build configuration, static dependency formula/archive/license provenance retained in qemu-source-build/retry-6. No binary/closure/QEMU execution/root install. Host/v3 pins unchanged; claim retained.
+
+### proof
+- [ ] AC #1-#6: Mandatory guest suite unauthorized/not-run; build blocked at macOS fully-static link.
+
 ## nd_contract
 status: in_progress
 
