@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T16:55:02Z
-content_hash: "sha256:78b34cc5ad41de410973aae21f25ed9aa2457732ed8b8266e156ff85d899c498"
+updated_at: 2026-10-21T16:58:27Z
+content_hash: "sha256:ddaaaaa93d0f2b0efc9fdfb9e4d5b6f7d0709be45f6f0d0e563b63a4cce2208a"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -148,6 +148,8 @@ INDEPENDENT V4 SOURCE REVISION REVIEW (2026-10-21, clean commit 6f47e896f9a07fab
 OPERATOR ACCOUNTING NEXT-GATE AUTHORIZATION (2026-10-21): Operator agreed to continue the fail-closed accounting gate. Authorized work is limited to (1) making launcher handling of the current conservative active record return structured RecoveryRequired instead of KeyError, with no dispatch, and (2) producing a planning-only conservative-accounting migration/evidence-resolution design. Do not mutate /Library/GRRR/accounting, clear stopped, release holds, settle unknown history, create reservations, execute QEMU/guest code, authorize runtime dispatch, or claim migration completeness.
 INDEPENDENT ACCOUNTING MIGRATION PLAN REVIEW (2026-10-21, commit c9003ea6f2491d61581192ca2338ccbe415ec841): SECURITY_REVIEW: ACCOUNTING_MIGRATION_PLAN_APPROVED. Reviewer verified evidence 6/6, unchanged protected accounting hashes, normal CLI preflight before accounting-path construction, structured RecoveryRequired behavior, and unchanged validate_store. The proposal preserves stopped=1, 259 artifacts, 110 events, full encumbrances, and unknown costs without promoting evidence to reservations/settlements. Fresh candidate, provenance, independent reproduction, installation authorization, adapter review, and restricted rollback remain mandatory. launch() direct directory lookup cannot bypass normal preflight and direct invocation fails without authority; future adapter review must enforce unresolved-history/encumbrance controls, not merely preserve rows. This approves proposal-only scope and grants no candidate build, migration, installation, stop release, or execution.
 OPERATOR PRIVATE ACCOUNTING EVIDENCE-MANIFEST AUTHORIZATION (2026-10-21): Authorize read-only evidence-manifest collection at commit c9003ea6f2491d61581192ca2338ccbe415ec841. Scope is limited to verifying and inventorying the current protected accounting source, its 259 artifacts, 110 legacy events, committed reconciliation sources, available event fields, and explicit missing migration evidence. Preserve protected hashes and stopped=1; classify unknowns rather than inferring reservations, intervals, stage assignments, receipts, settlements, or zero costs. Do not build/install a candidate store, mutate accounting, release stops/holds, dispatch work, execute QEMU/guest code, deliver the full story, or push.
+INDEPENDENT ACCOUNTING EVIDENCE MANIFEST REVIEW (2026-10-21, commit 1903c3cc920b34b4fabcbf4b3f9582e212c32cfb): SECURITY_REVIEW: ACCOUNTING_EVIDENCE_MANIFEST_APPROVED for non-root private metadata collection only. Reviewer verified protected hashes/device/inodes/root ownership/0444/single links, immutable query-only SQLite, all 259 artifact hashes, 110 event/source correspondences, explicit missing-evidence classification, no settlement authority from pointers/observations, and exclusive output creation. Evidence manifest 3/3 from its directory; bare filenames are valid but instructions must state that working directory. Nonblocking hardening follow-ups: close successful-read descriptors with finally/context manager, explicitly reject root and constrain output ancestors before broader future use, and add atomic publication/fsync if this becomes durable collection evidence. Current approval excludes root and unsafe output locations. No migration, installation, settlement, stop/hold release, or execution is authorized.
+
 ## Implementation Evidence (IN PROGRESS — private evidence manifest only)
 
 PROOF:
