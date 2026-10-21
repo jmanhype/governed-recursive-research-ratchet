@@ -4,7 +4,7 @@
 
 The exact retained v3 input-ISO hash is:
 
-`799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233`
+`799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233`
 
 Earlier recovery prose transcribed that retained hash incorrectly. This is a
 reporting correction only: the committed v3 receipt and profile remain
@@ -65,7 +65,7 @@ The only top-level receipt/context differences are:
 2. `initial_free_bytes`: v3 `15213449216`; v4 `34560266240`.
 3. `final_free_bytes`: v3 `15132168192`; v4 `34422800384`.
 4. `image_sha256`: retained v3
-   `799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233`;
+   `799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233`;
    v4 `57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6`.
 5. `profile_sha256`: retained v3
    `3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0`;
