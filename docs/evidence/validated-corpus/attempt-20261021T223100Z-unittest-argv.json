@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-2iqlt_9e",
+  "bootstrap_commit": "4dd9a206e11c27cc1da60cf87e2890e7e9a48e4f",
+  "failure": "unittest.main consumed the required runtime path as a test-name argv entry",
+  "observed": "UID-321 corpus executor started; both authenticated sockets existed; service.log was empty; no guest was dispatched",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "fix": "Pin unittest argv to the program name"
+}
