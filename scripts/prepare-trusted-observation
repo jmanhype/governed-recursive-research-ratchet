@@ -84,7 +84,10 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     require(digest(proposal_path.read_bytes()) == PROPOSAL, 'StaleBinding', 'Development proposal differs')
     # Reserve room for host cross-build cache plus detached image, not merely
     # current free space. No automatic cleanup or limit increase.
-    initial_free = space(target.parent, 350000000)
+    cache = target.parent / 'host-build-cache'
+    # Reuse only this preparation root's regenerable compiler cache. Previously
+    # built immutable artifacts are never overwritten or treated as cache.
+    initial_free = space(target.parent, 100000000 if cache.is_dir() else 350000000)
     require(digest(archive.read_bytes()) == TOOLCHAIN_SHA256, 'IntegrityFailure', 'Go archive differs')
     proposal = json.loads(proposal_path.read_bytes())
     actual_assets = {}
@@ -115,7 +118,7 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     env = {'PATH': '/opt/homebrew/bin:/usr/bin:/bin', 'HOME': '/var/empty',
            'GOOS': 'linux', 'GOARCH': 'arm64', 'CGO_ENABLED': '0', 'GO111MODULE': 'off',
            'GOTOOLCHAIN': 'local', 'GOPROXY': 'off', 'GOSUMDB': 'off',
-           'GOCACHE': str(target / 'build-cache'), 'GOMAXPROCS': '1'}
+           'GOCACHE': str(cache), 'GOMAXPROCS': '1'}
     sources = ROOT / 'research/trusted-supervisor'
     commands = []
     for output, names in [('supervis', ['supervisor_linux.go', 'protocol.go']),

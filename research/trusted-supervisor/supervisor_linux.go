@@ -201,7 +201,16 @@ func observe(request Request) (map[string]any, error) {
 	cmd.Stdin = null
 	output := &capture{}
 	cmd.Stdout, cmd.Stderr = output, output
-	cmd.WaitDelay = 2 * time.Second
+	cmd.Cancel = func() error {
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGTERM)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	// After the approved TERM grace, os/exec kills the direct child; the
+	// bounded UID sweep below verifies cessation of descendants for two seconds.
+	cmd.WaitDelay = 5 * time.Second
 	if err := restrictThread(); err != nil {
 		return nil, err
 	}
