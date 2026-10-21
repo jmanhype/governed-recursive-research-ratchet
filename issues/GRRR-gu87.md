@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T02:32:32Z
-content_hash: "sha256:dbe84c50d94d71efbfcad46e3de8c79a07a0c2852b117f64cef4e17922500cb7"
+updated_at: 2026-10-21T02:39:32Z
+content_hash: "sha256:b177edc4e7a7dce85dfebf4e2bfa4ddab13973ab3bcd309b4b49683e37cb0932"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -122,6 +122,22 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 - Approved creating/reconciling one protected persistent campaign accounting store across synthetic/offline/trusted profiles, including prior charges, unresolved holds, stops, migration receipt, store identity, inode/device binding, active state, and campaign lock. No fresh allowance or silent reset.
 - Approved installed-state review and non-guest permission/import-origin/accounting restart/concurrency/replacement-denial checks, followed by composition of final installation/accounting/bootstrap/interpreter bindings and exact composed execution-profile digest.
 - Not authorized: QEMU guest execution, ten trusted-observation controls, paid calls, resource expansion, host fallback, production mutation, automatic admission, or candidate-correctness certification. Separate execution approval remains mandatory.
+## nd_contract
+status: in_progress
+
+### evidence
+- Provisioning-only WIP staged: scripts/provision-trusted-host and scripts/review-provisioning-inputs. Independently installed root-controlled plan/hash boundary; no mutable checkout root entry; no overwrite/reset; complete source read-back before imports; exact reviewed DB migration only.
+- Both Python unit suites 84/84; explicit py_compile and pvg verify pass. No root/sudo/install/QEMU/guest execution. Host inventory 742625e1254dc50a41642508e3df1db6d7f1bf019079861bfbc77003dc50255a and v3 guest artifacts unchanged. Provisioner e34bd0bc92af433bba6757f66c892ea9983c778cd9096b8da6108b6a41e32d36.
+- docs/TRUSTED-OBSERVATION-PROVISIONING-WIP.md records paths and parent-only command template. Installed Homebrew bottle formula does not prove disabled/pinned module/plugin loading; immutable closure not fabricated. Accepted synthetic/offline source evidence hashed with known observations; cumulative review and earlier attempt/hold/stop reconciliation incomplete. No fresh allowance/database invented.
+- AWAITING_PARENT_IDENTITY_RUN remains conditional on genuine reviewed plan, QEMU closure and reconciled prior database. Final composed execution-profile digest unavailable. No execution approval requested. Claim retained.
+
+### proof
+- [ ] AC #1: Mandatory guest suite not-run.
+- [ ] AC #2: Unit negatives pass; mandatory identity suite not-run.
+- [ ] AC #3: Race/locking guest proof not-run.
+- [ ] AC #4: Genesis reconciliation blocked; no allowance reset.
+- [ ] AC #5: Trusted guest receipt proof not-run.
+- [ ] AC #6: Ten mandatory controls unauthorized and not-run.
 
 ## nd_contract
 status: in_progress
