@@ -1,5 +1,6 @@
 """Mandatory real UID-separated execution of every frozen corpus scenario."""
 import json
+import os
 from pathlib import Path
 import sys
 import time
@@ -17,7 +18,7 @@ from trusted_execution import root_record, validate_approval, validate_config
 class ValidatedCorpus(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        require(len(sys.argv) == 2 and sys.getuid() == EVALUATOR, 'Unauthorized',
+        require(len(sys.argv) == 2 and os.getuid() == EVALUATOR, 'Unauthorized',
                 'AWAITING_PARENT_IDENTITY_RUN: approved corpus launcher and UID 320 required')
         cls.runtime = Path(sys.argv[1]); require(cls.runtime.parent == Path('/private/tmp')
             and cls.runtime.name.startswith('grrr-corpus-') and cls.runtime.stat().st_uid == 0,
