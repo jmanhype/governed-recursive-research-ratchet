@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:15:23Z
-content_hash: "sha256:fd741db5a4a177e7911e012aed21b10aedfc9c2bb93312cc5ee87edc4442b534"
+updated_at: 2026-10-21T20:15:24Z
+content_hash: "sha256:4fcd2b4f4873d92e67455dbf07a8e15ad292fd1fd5e6112901b8579e65f518ff"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -157,7 +157,19 @@ PARENT-LED SUCCESSOR SECURITY REVIEW AND HARDENING (2026-10-21, commit 56697da):
 PARENT-LED V4 EXECUTION BINDING REVIEW (2026-10-21, commit 9d3df87): The prior independently reviewed v4 source is unchanged except successor-accounting wiring plus parent hardening that requires root:wheel bootstrap metadata. The exact dry-run completed as UID 320 with no guest execution. It verified preserved profile a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205, input ISO 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6, receipt 3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7, supervisor a9a0fd9a8471bc1859e5ab91c37a6a139942562f719784fec51b8254eb8307d6, helper 14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e, QEMU manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625, and successor accounting binding e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95. Exact dry-run values: host_code 6547c104a17e3d460ddddc97e3a39b57ff298e3ce46abbc88afc7059057d0ee9; bootstrap d6bf36a8712f1d92715a7e724fea6488b2b1b4f0dd872b47f257c62f2f3f3ac7; execution_profile b5400cdf040725cbe3b661d1d69f26a276123775bb63074b49fd7420befe61a7; Python 5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26. Operator handle-it authorization plus the recorded successor-campaign decision authorizes only the ten fixed local trusted-observation controls under 1024 MiB/1 vCPU/512 MiB /work/no-network limits. This does not authorize paid dispatch, old-account release, candidate admission, promotion, production mutation, automatic merge, or claiming candidate correctness.
 V4 APPROVAL FIX1 (2026-10-21): The first launch failed closed before QEMU because the generated license-review record transcribed compiler hash e670dfa79b080bad7f7d6b1d7131145c8c49068096650ebf0ac6292f098db60d with one missing f, yielding a 63-character value. The failed review/approval records remain immutable under the original 9d3df87 names; they are not overwritten or reset. Corrected fix1 records republish the same authorized execution profile with the exact preserved compiler hash. No guest process was started and no accounting reservation was created by the failed attempt.
 DELIVERED GRRR-gu87 REAL TRUSTED-OBSERVATION EVIDENCE (2026-10-21, evidence commit 141823f): Exact protected execution used hardened bootstrap d6bf36a8712f1d92715a7e724fea6488b2b1b4f0dd872b47f257c62f2f3f3ac7, corrected approval fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b, execution profile b5400cdf040725cbe3b661d1d69f26a276123775bb63074b49fd7420befe61a7, preserved v4 profile/ISO/supervisor/helper/QEMU pins, and GRRR-POC-2 accounting binding e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95. The real UID-320/UID-321 launcher retained private runtime /private/tmp/grrr-trusted-rk5jwjmv. Mandatory integration suite ran 10 required / 10 executed / 0 skipped / 0 failures / 0 errors in 226.185s. Host denial probes passed for UID 321 and operator UID 501. Ledger snapshot a070c21845becd209d3ed84591d4d8c95db8604783cc76a997b829cc901760f6 verified 30 chained events and 8 objects. Successor accounting remained integrity-ok and stopped after mandated watchdog: 11 reservations, 8 trusted settlements, 3 pending conservative holds, 208265788 execution microseconds charged/reserved. Old accounting remains stopped/unresolved with unchanged hashes, 259 artifacts, 110 legacy events, and zero reservations. No QEMU/evaluator/runner process remained. Durable evidence directory docs/evidence/trusted-observation/v4-run-9d3df87 contains 17 files; all 16 content hashes in READBACK.json verified, and READBACK SHA-256 is 2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8. The suite intentionally reports verified=false and admission=blocked: control success is not candidate correctness, replay, review, admission, or promotion.
+## PM Decision
+ACCEPTED [2026-10-21]: Evidence reviewed. Real offline UID-320/UID-321 integration executed all ten mandatory controls with no skips, durable ledger/accounting evidence verified, predecessor remains quarantined, and no process side effect remains. Diff overrun was investigated and is accounted for by explicitly authorized accounting, provisioning, recovery, and evidence-preservation blockers. The disclosed Homebrew ResourceWarning is test cleanup debt, not an acceptance-path failure.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Delivery proof passed 9/9; evidence hashes passed 16/16; real integration passed 10/10.
+- Durable evidence commit: 141823fe7e19e43fd3d2bfcc0fe4be8303e42642.
+
+### proof
+- [x] AC #1 through AC #6 verified against real integration evidence.
+- [ ] Downstream independent replay, review, candidate verification, admission, and promotion intentionally remain blocked.
 
 ## nd_contract
 status: delivered
