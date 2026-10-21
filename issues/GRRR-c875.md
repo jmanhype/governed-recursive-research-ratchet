@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:53:17Z
-content_hash: "sha256:5c2cb242d29ec6247798e81cad5d96fd9d5f92e3116f5a5f55f3824a3a357f3c"
+updated_at: 2026-10-21T21:17:51Z
+content_hash: "sha256:c08d697e65c92840f0f871397ef1e5a1d861afe3a0c61ef5efe03e9dcfcf0177"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
@@ -107,6 +107,114 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERED)
+
+### Commit
+- Branch: `story/GRRR-c875`
+- Commit: `3f4a9cf2c52ae5992f76ff5350e63518ba1fad83`
+- Subject: `feat(GRRR-c875): prove independent safe stop`
+- Worktree was clean after commit; no push was performed.
+
+### Summary
+- Implemented evaluator-owned durable stop state, epoch/admission fencing, launch tracking, recovery markers, dual operator/watchdog Unix-socket endpoints, and evaluator-to-UID-321 trusted cancellation RPC.
+- Added a UID-321 control worker that independently TERM/KILLs a real TERM-resistant sibling process and verifies the protected baseline hash.
+- Added a parent-mediated real-identity launcher and mandatory `./scripts/test-story safe-stop` entrypoint. It stages root-controlled code, launches actual evaluator UID 320, hung runner/control-worker UID 321, and operator UID 501, preserves all attempts, and refuses nonroot execution.
+- No QEMU, guest, paid call, protected admission, production mutation, accounting-stop release, or VM-behavior claim is made.
+
+### CI/Test Results
+Commands run:
+- `sudo ./scripts/test-story safe-stop` (parent-mediated final exact-code run)
+- `/usr/bin/python3 -I -B -m unittest discover -s tests -p unit_safe_stop.py -v`
+- `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py'`
+- `/opt/homebrew/bin/python3 -B -W error::ResourceWarning -m unittest discover -s tests -p 'unit*.py'`
+- `/usr/bin/python3 -I -B -m py_compile research/control.py research/ledger.py research/control_worker.py research/isolated_entry.py research/trusted_transport.py tests/integration/hung_runner.py tests/integration/safe_stop.py tests/integration/safe_stop_probe.py tests/unit_safe_stop.py tests/unit_conservative_genesis.py scripts/safe-stop-identity-integration scripts/test-story scripts/conservative-genesis scripts/reconcile-installed-accounting`
+- `pvg verify --include-tests --format=text <all explicit changed implementation/test/script paths>`
+- `git diff --check`
+- `PYTHONPATH=research /Users/speed/miniconda3/bin/coverage run --branch --source=control,trusted_transport -m unittest discover -s tests -p unit_safe_stop.py`, followed by `coverage report -m`
+
+Summary:
+- Real safe-stop integration: **8 required / 8 executed / 0 skipped / 0 failures / 0 errors**, elapsed 6.793 s, actual UIDs 320/321/501.
+- Focused safe-stop unit tests: **7/7 passed**.
+- Full no-guest unit suite: **166/166 passed** under system Python.
+- Full no-guest unit suite: **166/166 passed** under Homebrew Python with `ResourceWarning` promoted to error.
+- `py_compile`: exit 0.
+- `pvg verify`: **10 recognized files scanned, 0 issues**.
+- `git diff --check`: exit 0.
+- Unit-only branch coverage: `research/control.py` **92%**; `trusted_transport.py` **15%**; combined measured sources **65%**. The UID-separated server/worker paths are exercised by the real integration but not instrumented by this unit coverage run.
+
+Final real-identity evidence: `docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0`.
+- Private retained runtime: `/private/tmp/grrr-safe-stop-v39aekoq`.
+- Manifest: exit 0, no cleanup error, identities evaluator 320 / runner 321 / operator 501, guest executed false, paid dispatch false, admission blocked.
+- Authorized UID-501 stop returned operation `b40e7a8718a6d20c8cab5a689a2ddcc1294ce4586e63f734e9e0bf0a5bdfdc11`, durable receipt `01a21eee090376e8bbb3625a3af5dfe5c92944d6d2f73ca903afe79fd930c95b`, epoch 1, forced cessation true, baseline true, measured cancellation 1.013065625 s.
+- UID-321 forged operator and UID-501 forged watchdog requests were both denied before payload reading.
+- After service shutdown, UID-501 unavailable-control probe returned `Unavailable`, not success.
+- Durable ledger SHA-256 in final evidence: `bccf3becf831e9c5ffb618490ca643c27f30c27af1339a6459d9339734b32b21`; full artifact inventory is in `SHA256SUMS`.
+
+All failed/intermediate attempts are intentionally preserved:
+- `attempt-20261021T210324Z-d2cead20`: nonroot fail-closed refusal.
+- `attempt-20261021T210346Z-5d2f09dc`: tests passed but launcher cleanup failed for `run-crash`.
+- `attempt-20261021T210508Z-9e752d4a`: first clean end-to-end launcher, before final isolated-entry routing.
+- `attempt-20261021T210807Z-c2919925`: clean isolated-entry run, before all six hard-trigger records.
+- `attempt-20261021T211329Z-82bb0bd2`: trigger-event assertion failure.
+- `attempt-20261021T211422Z-9f4ee3e0`: final authoritative pass.
+
+Operator-authorized regenerable cache cleanup:
+- Initial full-suite setup failed the fixed 15.35 GiB preparation floor at about 11 GiB free.
+- Safe `pnpm store prune` removed 1,153 unreferenced packages.
+- Operator then authorized only HuggingFace xet, whisper-large-v3-turbo, and duplicate whisper-small caches. Exact-path inventory/hashes and result are in `docs/evidence/safe-stop/cache-cleanup-20261021`.
+- Free space moved from 12,637,286,400 to 15,818,838,016 bytes (3,181,551,616 bytes freed by the three authorized entries); all named entries were absent afterward.
+
+### pvg verify
+- `VERIFY: PASSED (10 files scanned, 0 issues)`
+
+### AC Verification
+| AC | Requirement | Code Location | Test/Evidence Location | Status |
+|---|---|---|---|---|
+| 1 | Operator reaches independent evaluator control endpoint; runner/watchdog impersonation denied; urgent reason optional | `research/control.py:StopService`; `research/trusted_transport.py:AuthenticatedServer/control_call` | Final evidence `external-probes.json`; integration test 1 | PASS |
+| 2 | Stop event, stopping state, and epoch commit atomically; same/distinct keys are idempotent without duplicate cancellation | `research/control.py:stop`; `research/ledger.py:append_atomic` | Unit idempotency/concurrency tests; integration test 3 and durable ledger | PASS |
+| 3 | Final launch check serializes with stop, tracks pre-fence launches, and prevents post-fence starts | `research/control.py:register_launch/can_launch` | Integration race test 4; one legal ordering wins and the run stays fenced | PASS |
+| 4 | Evaluator-directed trusted worker bounds TERM/KILL and verifies cessation/baseline without runner cooperation | `research/control_worker.py`; `control.py:terminate` | Final authorized/watchdog results; forced KILL in 1.013 s; baseline hash unchanged | PASS |
+| 5 | Recording/cancellation failures never claim safe stop; recovery fences work and status remains truthful | `control.py:_record_recovery/_failed_stop/_write_recovery_marker` | Integration test 5 (worker unavailable) and test 8 (transaction crash/best-effort kill/marker) | PASS |
+| 6 | Admission checks serialize on durable control state and record rejection without registry effects | `control.py:admission_fence`; `admission_fences` table | Unit admission test; integration test 7; every result has `registry_effect: false` | PASS |
+| 7 | All hard triggers stop scheduling/admission and preserve evidence/baseline; unavailable control never reports success | `control.py:stop/admission_fence`; final operator unavailable probe | Integration test 6 records all six trigger reasons with one cancellation; post-integration UID-501 probe returns `Unavailable` | PASS |
+
+### Remaining gates and residual scope
+- None blocking this host-control story.
+- Guest/VM cancellation behavior is intentionally not claimed because no guest was launched.
+- Admission and promotion remain blocked; actual protected-registry admission races belong to the downstream admission story.
+- Existing GRRR-POC-2 persistent accounting remains stopped and untouched.
+
+LEARNINGS:
+- macOS `with sqlite3.connect(...)` commits but does not close the connection; Homebrew Python exposes this as deferred `ResourceWarning`s. Explicit `contextlib.closing` plus an explicit commit where writes occur is required.
+- A killed child can remain a zombie until the parent reaps it; cleanup must call `poll()`/`wait()` even when process-group signaling reports no live member.
+- UID 320 cannot signal UID 321 directly. A separate UID-321 control worker, authenticated by peer UID and isolated from the hung runner process/session, provides the required independent sibling cancellation authority.
+- Staged application modules must not mutate `sys.path`; extending the sole root-controlled `isolated_entry` allowlist preserves the existing import-closure invariant.
+- Real identity launchers should preserve every intermediate failure, including a logically passing test run with failed cleanup, because process reaping is part of the safety guarantee.
+
+DISCOVERED_BUG:
+  title: Homebrew SQLite test cleanup emitted unclosed-connection warnings
+  context: Full Homebrew unit execution passed but emitted 15 deferred SQLite ResourceWarnings. Tracemalloc identified `scripts/conservative-genesis`, `scripts/reconcile-installed-accounting`, and `tests/unit_conservative_genesis.py`. They used `with sqlite3.connect(...)` without `closing`. The conservative-genesis build path also needed an explicit commit after replacing transaction context semantics. All were fixed and the final Homebrew run passes 166/166 with ResourceWarning promoted to error.
+  affected_files: scripts/conservative-genesis, scripts/reconcile-installed-accounting, tests/unit_conservative_genesis.py
+  discovered_during: GRRR-c875
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit `3f4a9cf2c52ae5992f76ff5350e63518ba1fad83` on `story/GRRR-c875`.
+- Final real-identity evidence `docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0`: 8/8, 0 skipped, UIDs 320/321/501.
+- Full units 166/166 under both interpreters; pvg verify 0 issues; py_compile and git diff --check passed.
+
+### proof
+- [x] AC #1: independent authenticated operator path and identity denials proven with real UIDs.
+- [x] AC #2: atomic durable stop transaction, epoch, receipts, and idempotency proven.
+- [x] AC #3: serialized launch/stop race, tracking, and post-stop fence proven.
+- [x] AC #4: independent bounded TERM/KILL cancellation and baseline verification proven.
+- [x] AC #5: unavailable cancellation and failed recording remain recovery-required/fenced, never safe-stopped.
+- [x] AC #6: durable control-side admission-fence rejection proven without registry effects.
+- [x] AC #7: all six hard triggers preserve evidence/baseline and unavailable control reports no false success.
+
+
 ## nd_contract
 status: in_progress
 
