@@ -1,0 +1,28 @@
+setUpClass (__main__.ActualIdentityBudget) ... ERROR
+test_approved_pinned_supervisor_and_guest_controls (__main__.MandatoryGuestObservation.test_approved_pinned_supervisor_and_guest_controls) ... ERROR
+
+======================================================================
+ERROR: setUpClass (__main__.ActualIdentityBudget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/integration/trusted_observation.py", line 23, in setUpClass
+    require(os.getuid() == EVALUATOR, 'Unauthorized',
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: AWAITING_PARENT_IDENTITY_RUN: actual evaluator UID 320 required
+
+======================================================================
+ERROR: test_approved_pinned_supervisor_and_guest_controls (__main__.MandatoryGuestObservation.test_approved_pinned_supervisor_and_guest_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/integration/trusted_observation.py", line 30, in test_approved_pinned_supervisor_and_guest_controls
+    require(proposal['authorization'] == 'approved' and proposal['dispatch_enabled'] is True,
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Trusted-observation supervisor profile is proposal-only; mandatory guest gates not-run
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=2)
+{"required": 10, "executed": 1, "skipped": 0, "failures": 0, "errors": 2, "mandatory_guest_gate": "not-run"}
