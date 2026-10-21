@@ -4,8 +4,9 @@ from pathlib import Path
 import subprocess
 import sys
 ROOT = Path(__file__).resolve().parents[1]
-if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight'], ['trusted-observation'], ['durable-evidence'], ['safe-stop']):
-    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|durable-evidence|safe-stop', file=sys.stderr)
+if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight'], ['trusted-observation'],
+                        ['validated-corpus'], ['durable-evidence'], ['safe-stop']):
+    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|validated-corpus|durable-evidence|safe-stop', file=sys.stderr)
     raise SystemExit(2)
 if sys.argv[1] == 'offline-preflight':
     import json
@@ -32,7 +33,8 @@ try:
     if sys.argv[1] == 'trusted-observation':
         print('FAIL: trusted-observation requires approved isolated identity launcher; 10 required, 0 executed, 0 skipped; gate not-run', file=sys.stderr)
         raise SystemExit(1)
-    module = 'trusted_observation.py' if sys.argv[1] == 'trusted-observation' else 'bounded_challenge.py'
+    module = {'bounded-challenge': 'bounded_challenge.py', 'trusted-observation': 'trusted_observation.py',
+              'validated-corpus': 'validated_corpus.py'}[sys.argv[1]]
     result = subprocess.run([sys.executable, str(ROOT / 'tests/integration' / module)],
                             cwd=ROOT, timeout=600)
     raise SystemExit(result.returncode)

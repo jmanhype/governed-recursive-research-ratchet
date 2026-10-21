@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "seeded_variant_execution": {
+    "state": "not-run",
+    "reason": "The accepted pinned v4 profile and input admit only its fixed challenge variants; arbitrary corpus seeds require a new reviewed input/profile."
+  },
+  "full_no_guest_suite": {
+    "state": "error",
+    "reason": "ConservativeGenesis setup refuses preparation below 15.35 GB; measured free space is 13,499,834,368 bytes."
+  },
+  "bounded_challenge_integration": {
+    "state": "not-run",
+    "reason": "This story worktree has no parent runtime binding; the mandatory entrypoint failed closed before tests."
+  },
+  "independent_replay": "not-run",
+  "reviewer_outcome": "not-run",
+  "contract_admission": "blocked",
+  "verified_finding": false
+}

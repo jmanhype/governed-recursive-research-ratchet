@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "free_bytes": 13499834368,
+  "required_free_bytes": 15350000000,
+  "space_gate": "fail",
+  "protected_accounting": {
+    "active_json": "/Library/GRRR/accounting-poc2/active.json",
+    "active_json_sha256": "e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95",
+    "store_directory_stat": "evaluator:evaluator 0700",
+    "unprivileged_read": "denied as designed",
+    "state_from_dispatch": "stopped; no protected mutation attempted"
+  },
+  "decision": "No VM, guest, candidate build, protected accounting release, or new execution profile was attempted."
+}
