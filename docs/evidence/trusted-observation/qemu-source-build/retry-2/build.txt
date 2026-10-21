@@ -1,0 +1,285 @@
+{
+  "available_bytes": 18544623616,
+  "binary_sha256": null,
+  "build_run": false,
+  "closure_sha256": null,
+  "configure_run": false,
+  "minimum_host_free_bytes": 15000000000,
+  "note": "Space pass is not a build, installation, or execution approval.",
+  "qemu_executed": false,
+  "reason": "space-preflight-only",
+  "requested_version": "11.1.2",
+  "required_build_headroom_bytes": 2000000000,
+  "root_installation_performed": false,
+  "source_archive_sha256": null,
+  "source_commit": null,
+  "source_fetched": false,
+  "status": "preflight-pass",
+  "version": 1
+}
+python determined to be '/opt/homebrew/bin/python3'
+python version: Python 3.14.3
+mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+mkvenv: checking for meson>=1.5.0
+mkvenv: checking for pycotap>=1.1.0
+mkvenv: installing meson==1.11.1, pycotap==1.3.1
+mkvenv: checking for qemu.qmp>=0.0.5
+mkvenv: checking for setuptools>=44.1.1
+mkvenv: checking for wheel>=0.34.2
+mkvenv: checking for pip>=20.3.4
+mkvenv: installing qemu.qmp==0.0.6
+mkvenv: installing /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/python
+Disabling PIE due to missing toolchain support
+The Meson build system
+Version: 1.11.1
+Source dir: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2
+Build dir: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build
+Build type: native build
+Project name: qemu
+Project version: 11.1.2
+C compiler for the host machine: cc (clang 17.0.0 "Apple clang version 17.0.0 (clang-1700.0.13.3)")
+C linker for the host machine: cc ld64 1167.4.1
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+Program scripts/symlink-install-tree.py found: YES (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build/pyvenv/bin/python3.14 /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/scripts/symlink-install-tree.py)
+Program sh found: YES (/bin/sh)
+Program python3 found: YES (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build/pyvenv/bin/python3.14)
+Objective-C compiler for the host machine: clang (clang 17.0.0)
+Objective-C linker for the host machine: clang ld64 1167.4.1
+Compiler for language rust skipped: feature rust disabled
+Program iasl found: NO
+Program bzip2 found: YES (/usr/bin/bzip2)
+Checking for size of "void *" : 8 
+Compiler for C supports arguments -fno-link-libatomic: NO 
+Compiler for C supports arguments -fno-pie: YES 
+Compiler for C supports arguments -no-pie: NO 
+Compiler for C supports link arguments -Wl,-z,relro: NO 
+Compiler for C supports link arguments -Wl,-z,now: NO 
+Checking if "-fzero-call-used-regs=used-gpr" compiles: YES 
+Compiler for C supports arguments -D_GNU_SOURCE: YES 
+Compiler for C supports arguments -D_FILE_OFFSET_BITS=64: YES 
+Compiler for C supports arguments -D_LARGEFILE_SOURCE: YES 
+Compiler for C supports arguments -fno-strict-aliasing: YES 
+Compiler for C supports arguments -fno-common: YES 
+Compiler for C supports arguments -fwrapv: YES 
+Compiler for C supports arguments -fno-pie: YES (cached)
+Compiler for C supports arguments -ftrivial-auto-var-init=zero: YES 
+Compiler for C supports arguments -fzero-init-padding-bits=all: NO 
+Compiler for C supports arguments -fzero-call-used-regs=used-gpr: YES 
+Compiler for C supports arguments -Wempty-body: YES 
+Compiler for C supports arguments -Wendif-labels: YES 
+Compiler for C supports arguments -Wexpansion-to-defined: YES 
+Compiler for C supports arguments -Wformat-overflow=2: NO 
+Compiler for C supports arguments -Wformat-security: YES 
+Compiler for C supports arguments -Wformat-y2k: YES 
+Compiler for C supports arguments -Wignored-qualifiers: YES 
+Compiler for C supports arguments -Wimplicit-fallthrough=2: NO 
+Compiler for C supports arguments -Winit-self: YES 
+Compiler for C supports arguments -Wmissing-format-attribute: YES 
+Compiler for C supports arguments -Wmissing-prototypes: YES 
+Compiler for C supports arguments -Wnested-externs: YES 
+Compiler for C supports arguments -Wold-style-declaration: NO 
+Compiler for C supports arguments -Wold-style-definition: YES 
+Compiler for C supports arguments -Wredundant-decls: YES 
+Compiler for C supports arguments -Wshadow=local: NO 
+Compiler for C supports arguments -Wstrict-prototypes: YES 
+Compiler for C supports arguments -Wtype-limits: YES 
+Compiler for C supports arguments -Wundef: YES 
+Compiler for C supports arguments -Wvla: YES 
+Compiler for C supports arguments -Wwrite-strings: YES 
+Compiler for C supports arguments -Wno-gnu-variable-sized-type-not-at-end: YES 
+Compiler for C supports arguments -Wno-initializer-overrides: YES 
+Compiler for C supports arguments -Wno-missing-include-dirs: YES 
+Compiler for C supports arguments -Wno-psabi: YES 
+Compiler for C supports arguments -Wno-shift-negative-value: YES 
+Compiler for C supports arguments -Wno-string-plus-int: YES 
+Compiler for C supports arguments -Wno-tautological-type-limit-compare: YES 
+Compiler for C supports arguments -Wno-typedef-redefinition: YES 
+Compiler for Objective-C supports arguments -D_GNU_SOURCE: YES 
+Compiler for Objective-C supports arguments -D_FILE_OFFSET_BITS=64: YES 
+Compiler for Objective-C supports arguments -D_LARGEFILE_SOURCE: YES 
+Compiler for Objective-C supports arguments -fno-strict-aliasing: YES 
+Compiler for Objective-C supports arguments -fno-common: YES 
+Compiler for Objective-C supports arguments -fwrapv: YES 
+Compiler for Objective-C supports arguments -fno-pie: YES 
+Compiler for Objective-C supports arguments -ftrivial-auto-var-init=zero: YES 
+Compiler for Objective-C supports arguments -fzero-init-padding-bits=all: NO 
+Compiler for Objective-C supports arguments -fzero-call-used-regs=used-gpr: YES 
+Compiler for Objective-C supports arguments -Wempty-body: YES 
+Compiler for Objective-C supports arguments -Wendif-labels: YES 
+Compiler for Objective-C supports arguments -Wexpansion-to-defined: YES 
+Compiler for Objective-C supports arguments -Wformat-overflow=2: NO 
+Compiler for Objective-C supports arguments -Wformat-security: YES 
+Compiler for Objective-C supports arguments -Wformat-y2k: YES 
+Compiler for Objective-C supports arguments -Wignored-qualifiers: YES 
+Compiler for Objective-C supports arguments -Wimplicit-fallthrough=2: NO 
+Compiler for Objective-C supports arguments -Winit-self: YES 
+Compiler for Objective-C supports arguments -Wmissing-format-attribute: YES 
+Compiler for Objective-C supports arguments -Wmissing-prototypes: YES 
+Compiler for Objective-C supports arguments -Wnested-externs: YES 
+Compiler for Objective-C supports arguments -Wold-style-declaration: NO 
+Compiler for Objective-C supports arguments -Wold-style-definition: YES 
+Compiler for Objective-C supports arguments -Wredundant-decls: YES 
+Compiler for Objective-C supports arguments -Wshadow=local: NO 
+Compiler for Objective-C supports arguments -Wstrict-prototypes: YES 
+Compiler for Objective-C supports arguments -Wtype-limits: YES 
+Compiler for Objective-C supports arguments -Wundef: YES 
+Compiler for Objective-C supports arguments -Wvla: YES 
+Compiler for Objective-C supports arguments -Wwrite-strings: YES 
+Compiler for Objective-C supports arguments -Wno-gnu-variable-sized-type-not-at-end: YES 
+Compiler for Objective-C supports arguments -Wno-initializer-overrides: YES 
+Compiler for Objective-C supports arguments -Wno-missing-include-dirs: YES 
+Compiler for Objective-C supports arguments -Wno-psabi: YES 
+Compiler for Objective-C supports arguments -Wno-shift-negative-value: YES 
+Compiler for Objective-C supports arguments -Wno-string-plus-int: YES 
+Compiler for Objective-C supports arguments -Wno-tautological-type-limit-compare: YES 
+Compiler for Objective-C supports arguments -Wno-typedef-redefinition: YES 
+Program cgcc skipped: feature sparse disabled
+Library m found: YES
+Run-time dependency threads found: YES
+Library util found: NO
+Run-time dependency appleframeworks found: YES (CoreFoundation)
+Run-time dependency appleframeworks found: YES (IOKit)
+Dependency appleframeworks(modules: ParavirtualizedGraphics, Metal) for host machine skipped: feature pvg disabled
+Run-time dependency appleframeworks found: YES (Hypervisor)
+Found pkg-config: YES (/opt/homebrew/bin/pkg-config) 2.4.3
+WARNING: Static library 'iconv' not found for dependency 'glib-2.0', may not be statically linked
+Run-time dependency glib-2.0 found: YES 2.90.1
+Dependency gio-2.0 for host machine skipped: feature gio disabled
+Program scripts/xml-preprocess.py found: YES (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build/pyvenv/bin/python3.14 /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/scripts/xml-preprocess.py)
+Dependency pixman-1 for host machine skipped: feature pixman disabled
+WARNING: Static library 'z' not found for dependency 'zlib', may not be statically linked
+Run-time dependency zlib found: YES 1.2.12
+Library aio skipped: feature linux_aio disabled
+Dependency liburing for host machine skipped: feature linux_io_uring disabled
+Dependency libnfs for host machine skipped: feature libnfs disabled
+Dependency appleframeworks(modules: Cocoa, CoreVideo, QuartzCore) for host machine skipped: feature cocoa disabled
+Dependency appleframeworks(modules: vmnet) for host machine skipped: feature vmnet disabled
+Dependency libseccomp for host machine skipped: feature seccomp disabled
+Library cap-ng skipped: feature cap_ng disabled
+Dependency xkbcommon for host machine skipped: feature xkbcommon disabled
+Dependency slirp for host machine skipped: feature slirp disabled
+Library vdeplug skipped: feature vde disabled
+Dependency libpulse for host machine skipped: feature pa disabled
+Dependency alsa for host machine skipped: feature alsa disabled
+Dependency jack for host machine skipped: feature jack disabled
+Dependency libpipewire-0.3 for host machine skipped: feature pipewire disabled
+Dependency sndio for host machine skipped: feature sndio disabled
+Dependency spice-protocol for host machine skipped: feature spice_protocol disabled
+Checking for function "shm_open" : YES 
+Dependency libiscsi for host machine skipped: feature libiscsi disabled
+Dependency libzstd for host machine skipped: feature zstd disabled
+Dependency qpl for host machine skipped: feature qpl disabled
+Dependency libwd for host machine skipped: feature uadk disabled
+Dependency libwd_comp for host machine skipped: feature uadk disabled
+Dependency qatzip for host machine skipped: feature qatzip disabled
+Dependency virglrenderer for host machine skipped: feature virglrenderer disabled
+Dependency rutabaga_gfx_ffi for host machine skipped: feature rutabaga_gfx disabled
+Dependency blkio for host machine skipped: feature blkio disabled
+Dependency libcurl for host machine skipped: feature curl disabled
+Dependency igvm for host machine skipped: feature igvm disabled
+Library brlapi skipped: feature brlapi disabled
+Dependency sdl2 for host machine skipped: feature sdl disabled
+Library rados skipped: feature rbd disabled
+Library rbd skipped: feature rbd disabled
+Dependency libssh for host machine skipped: feature libssh disabled
+Library bz2 skipped: feature bzip2 disabled
+Library lzfse skipped: feature lzfse disabled
+Has header "dsound.h" : NO 
+Dependency appleframeworks(modules: CoreAudio) for host machine skipped: feature coreaudio disabled
+Dependency epoxy for host machine skipped: feature opengl disabled
+Has header "epoxy/egl.h" with dependency epoxy: NO 
+Dependency libcbor for host machine skipped: feature libcbor disabled
+Dependency libgcrypt for host machine skipped: feature gcrypt disabled
+Dependency nettle for host machine skipped: feature nettle disabled
+Dependency capstone for host machine skipped: feature capstone disabled
+Run-time dependency gmp found: YES 6.3.0
+Run-time dependency x11 found: YES 1.8.13
+Library pam skipped: feature auth_pam disabled
+Library snappy skipped: feature snappy disabled
+Library lzo2 skipped: feature lzo disabled
+Library numa skipped: feature numa disabled
+Library fdt found: NO
+Library rdmacm skipped: feature rdma disabled
+Library ibverbs skipped: feature rdma disabled
+Dependency libcacard for host machine skipped: feature smartcard disabled
+Dependency u2f-emu for host machine skipped: feature u2f disabled
+Dependency canokey-qemu for host machine skipped: feature canokey disabled
+Dependency libusbredirparser-0.5 for host machine skipped: feature usb_redir disabled
+Dependency libusb-1.0 for host machine skipped: feature libusb disabled
+Dependency libpmem for host machine skipped: feature libpmem disabled
+Dependency libdaxctl for host machine skipped: feature libdaxctl disabled
+Dependency libkeyutils for host machine skipped: feature libkeyutils disabled
+Checking for function "gettid" : NO 
+Dependency libselinux for host machine skipped: feature selinux disabled
+Dependency fuse3 for host machine skipped: feature fuse disabled
+Dependency libbpf for host machine skipped: feature bpf disabled
+Dependency libdw for host machine skipped: feature libdw disabled
+Has header "IOKit/storage/IOMedia.h" : YES 
+Checking for function "pthread_fchdir_np" : YES 
+Has header "linux/magic.h" : NO 
+Has header "linux/btrfs.h" : NO 
+Has header "libdrm/drm.h" : NO 
+Has header "linux/openat2.h" : NO 
+Has header "pty.h" : NO 
+Has header "sys/disk.h" : YES 
+Has header "sys/ioccom.h" : YES 
+Has header "sys/kcov.h" : NO 
+Checking for function "close_range" : NO 
+Checking for function "accept4" : NO 
+Checking for function "clock_adjtime" : NO 
+Checking for function "dup3" : NO 
+Checking for function "fallocate" : NO 
+Checking for function "posix_fallocate" : NO 
+Checking for function "sched_getcpu" : NO 
+Checking for function "posix_memalign" : YES 
+Checking for function "_aligned_malloc" : NO 
+Checking for function "valloc" : YES 
+Checking for function "memalign" : NO 
+Checking for function "ppoll" : NO 
+Checking for function "preadv" : YES 
+Checking for function "pthread_fchdir_np" : YES (cached)
+Checking for function "sendfile" : YES 
+Checking for function "setns" : NO 
+Checking for function "syncfs" : NO 
+Checking for function "sync_file_range" : NO 
+Checking for function "timerfd_create" : NO 
+Checking for function "getloadavg" : YES 
+Checking for function "htonll" : NO 
+Checking for function "copy_file_range" : NO 
+Checking for function "getifaddrs" : YES 
+Checking for function "openpty" with dependency -lutil: YES 
+Checking for function "strchrnul" : YES 
+Checking for function "system" : YES 
+Header "sys/inotify.h" has symbol "inotify_init1" : NO 
+Header "linux/blkzoned.h" has symbol "BLKOPENZONE" : NO 
+Header "linux/falloc.h" has symbol "FALLOC_FL_PUNCH_HOLE" : NO 
+Header "linux/falloc.h" has symbol "FALLOC_FL_ZERO_RANGE" : NO 
+Has header "linux/fiemap.h" : NO 
+Header "sched.h" has symbol "getcpu" : NO 
+Checking for function "getrandom" : NO 
+Header "sys/prctl.h" has symbol "PR_SET_TIMERSLACK" : NO 
+Header "linux/rtnetlink.h" has symbol "IFLA_PROTO_DOWN" : NO 
+Header "sys/sysmacros.h" has symbol "makedev" : NO 
+Header "getopt.h" has symbol "optreset" : YES 
+Header "netinet/in.h" has symbol "IPPROTO_MPTCP" : NO 
+Header "netinet/tcp.h" has symbol "TCP_KEEPCNT" : YES 
+Header "netinet/tcp.h" has symbol "TCP_KEEPIDLE" : NO 
+Header "netinet/tcp.h" has symbol "TCP_KEEPALIVE" : YES 
+Header "netinet/tcp.h" has symbol "TCP_KEEPINTVL" : YES 
+Checking whether type "struct sigevent" has member "sigev_notify_thread_id" : NO 
+Checking whether type "struct stat" has member "st_atim" : NO 
+Checking whether type "struct blk_zone" has member "capacity" : NO 
+Checking for type "struct iovec" : YES 
+Checking for type "struct utmpx" : YES 
+Header "asm/hwprobe.h" has symbol "RISCV_HWPROBE_EXT_ZBA" : NO 
+Header "linux/vm_sockets.h" has symbol "AF_VSOCK" : NO 
+Program scripts/minikconf.py found: YES (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build/pyvenv/bin/python3.14 /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/scripts/minikconf.py)
+Program scripts/make-config-poison.sh found: YES (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/scripts/make-config-poison.sh)
+
+../qemu-11.1.2/meson.build:3445:2: ERROR: Problem encountered: fdt disabled but required by targets aarch64-softmmu
+
+A full log can be found at /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build/meson-logs/meson-log.txt
+
+ERROR: meson setup failed
+

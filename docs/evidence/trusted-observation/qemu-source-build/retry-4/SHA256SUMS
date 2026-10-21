@@ -1,0 +1,12 @@
+d508c2aa656efb7252affbddbdf45671202a34156543ce72ef5354d5c56cd656  scripts/build-qemu-upstream
+222b3cd9d0ae5fad9762ea2d567524277cdef9c727da2605b11de7e7183372db  docs/evidence/trusted-observation/qemu-source-build/retry-2/build.txt
+cdffe876b207c22cdb3408f5600533ca5a89feb97265a85c9dd42baacb478661  docs/evidence/trusted-observation/qemu-source-build/retry-2/meson-log.txt
+56ace5dd26bf7ab06761f37e7785360a27f1dd94bf4efed09e6761c942eafa4d  docs/evidence/trusted-observation/qemu-source-build/retry-2/ninja-provenance.txt
+18a99235672e9214b0ae9a998a0a6e7b10d265bc03f805680833f8cae7c60371  docs/evidence/trusted-observation/qemu-source-build/retry-2/STATUS.md
+03fcb9ca76c7fabb4d21eea8fdea593c2fec940ce54c56c3a6e8c724a54b1a6e  docs/evidence/trusted-observation/qemu-source-build/retry-3/build.txt
+51cd3e8da0994f562529ffe2d0fcee237c4eec804eeb279d198eadef7ae1a226  docs/evidence/trusted-observation/qemu-source-build/retry-3/fdt-provenance.txt
+5a00accbbdd952882b53ad8a9b82727d0a67d08ee1d9b465313b34066f1e2170  docs/evidence/trusted-observation/qemu-source-build/retry-3/meson-log.txt
+51574e378e9002e5904264612ebe3a6929e772197d09d51674220829ddeee619  docs/evidence/trusted-observation/qemu-source-build/retry-3/STATUS.md
+7ae3ad736abf3ce6a2ec57d5681998c60e1ab2c52fdde579929f605b1edc7d09  docs/evidence/trusted-observation/qemu-source-build/retry-4/build.txt
+da6f61c0bf84c42c99ec1b6e027914057d239151bfe4406a868d0bf99bcab8e7  docs/evidence/trusted-observation/qemu-source-build/retry-4/meson-log.txt
+a1e5b2d4c471e6d7d6003cd562bcada301e48e41c05a34c8ef5eb2358d2aeafe  docs/evidence/trusted-observation/qemu-source-build/retry-4/STATUS.md
