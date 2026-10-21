@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:53:17Z
-content_hash: "sha256:0411129ef9288e71de03c64c6540afc64baf7c5af60f5f057eda17154be7b416"
+content_hash: "sha256:5c2cb242d29ec6247798e81cad5d96fd9d5f92e3116f5a5f55f3824a3a357f3c"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
@@ -107,7 +107,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed 2026-10-21 from operator continuation authorization.
+- Preserved local WIP commit 459b3c3 on story/GRRR-c875; worktree renamed to dev-GRRR-c875.
+
+### proof
+- [ ] AC #1 through AC #7 pending completion and real integration evidence.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocked_by GRRR-my5n
