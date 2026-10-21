@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "comparison": "committed-v3-receipt-vs-recovered-v4-receipt",
+  "original_v3": {
+    "receipt_sha256": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d0c0c",
+    "profile_sha256": "3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0",
+    "image_sha256": "799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233"
+  },
+  "recovery_v4": {
+    "receipt_sha256": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7",
+    "profile_sha256": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205",
+    "image_sha256": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6"
+  },
+  "direct_equalities": {
+    "primary_iso_payload_records_count_7": true,
+    "vlt_source_inventory_count_52": true,
+    "vlt_source_files_names_hashes_blob_ids_modes_and_sizes": true,
+    "vlt_source_tree_sha256": "3c43f236b2f3bc86e1fcd8c634c88ecd119a759458fc3f7b3580dda46271a487",
+    "supervisor_identity_and_bytes": true,
+    "helper_identity_and_bytes": true,
+    "go_archive_sha256": true,
+    "guest_script_sha256": true,
+    "shared_alpine_kernel_initramfs_qemu_hashes": true,
+    "compiler_version_binary_and_license_provenance": true,
+    "development_binding_sha256": true,
+    "profile_except_input_image_sha256": true
+  },
+  "primary_iso_payload_hashes": {
+    "go.tgz": "3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797",
+    "guest.sh": "8738b78aed326c02ce95640765b103618565b5e8f90f97442b54ebc79c73b6eb",
+    "helper": "14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e",
+    "input.sum": "b36f4623b8ec627fd10a9a27a82a051878b36a4fb6390e9ecf03567be9068bb4",
+    "source.sum": "56b628590cf85934aeb51ea4eacaaf61dcb3f8b500ffdec9dacb9b7c25193cd1",
+    "supervis": "a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6",
+    "vlt.tar": "e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e"
+  },
+  "unchanged_profile_limits": {
+    "memory_mib": 1024,
+    "vcpus": 1,
+    "workspace_mib": 512,
+    "boot_seconds": 30,
+    "command_seconds": 240,
+    "total_seconds": 300,
+    "stop_ack_seconds": 2,
+    "term_grace_seconds": 5,
+    "kill_wait_seconds": 2,
+    "output_bytes": 1048576,
+    "wire_bytes": 3145728,
+    "minimum_host_free_bytes": 15000000000,
+    "network": false,
+    "host_shares": false,
+    "paid_dispatch": false,
+    "dispatch_enabled": false
+  },
+  "container_or_context_only_differences": {
+    "commands.output_paths": "v3 story-worktree .tmp path versus durable main-checkout .tmp path",
+    "initial_free_bytes": {
+      "v3": 15213449216,
+      "v4": 34560266240
+    },
+    "final_free_bytes": {
+      "v3": 15132168192,
+      "v4": 34422800384
+    },
+    "input_iso.sha256": {
+      "v3": "799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233",
+      "v4": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6",
+      "bytes_equal": true,
+      "bytes": 71483392
+    },
+    "prepared_profile.sha256": {
+      "v3": "3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0",
+      "v4": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205"
+    },
+    "receipt.sha256": {
+      "v3": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d0c0c",
+      "v4": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7"
+    }
+  },
+  "execution": {
+    "qemu_performed": false,
+    "guest_performed": false,
+    "candidate_performed": false,
+    "approval": "absent"
+  }
+}

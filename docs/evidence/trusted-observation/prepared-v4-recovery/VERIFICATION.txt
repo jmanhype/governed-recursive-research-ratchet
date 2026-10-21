@@ -1,0 +1,42 @@
+== Recovered v4 anchor ==
+Command: python3 scripts/verify-trusted-preparation ../../../.tmp-sr_pm/trusted-observation/prepared-v3-recovery 3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7
+Exit: 0
+Output:
+{"execution_approval":"absent","execution_performed":false,"guest_behavior":"not-run","image_sha256":"57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6","iso_files_verified":7,"profile_sha256":"a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205","receipt_sha256":"3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7","source_files_verified":52,"supervisor_sha256":"a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"}
+
+== Python no-guest unit suite ==
+Command: python3 -m unittest discover -s tests -p 'unit*.py' -v
+Exit: 0
+Summary:
+Ran 108 tests in 3.388s
+OK
+
+== Go protocol tests ==
+Command (from research/trusted-supervisor): go test -count=1 -v -coverprofile=/tmp/grrr-gu87-v4-protocol.coverage protocol.go protocol_test.go
+Exit: 0
+Summary:
+2 tests passed, 0 failed; statement coverage 90.6%
+
+== Linux/arm64 static vet ==
+Commands (from research/trusted-supervisor):
+GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go vet supervisor_linux.go protocol.go
+GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go vet candidate_helper_linux.go
+Exit: 0 for both; no diagnostics.
+
+No generated Linux ELF, QEMU process, guest, supervisor service, helper,
+candidate, or vlt code was executed.
+
+== Evidence structure and static checks ==
+Command: python3 -m json.tool docs/evidence/trusted-observation/prepared-v4-recovery/COMPARISON.json
+Exit: 0
+
+Independent receipt/profile equality audit:
+PASS: direct equalities and exact five-field contextual difference set
+
+Command: git diff --check
+Exit: 0; no output.
+
+Command: pvg verify docs/evidence/trusted-observation/prepared-v4-recovery/REPORT.md docs/evidence/trusted-observation/prepared-v4-recovery/COMPARISON.json docs/evidence/trusted-observation/prepared-v4-recovery/COMMANDS.md docs/evidence/trusted-observation/prepared-v4-recovery/VERIFICATION.txt --format=text
+Exit: 0
+Output:
+VERIFY: PASSED (0 files scanned, 0 issues)
