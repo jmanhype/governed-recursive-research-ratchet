@@ -4,11 +4,11 @@ title: "Stop a hung research run through independent trusted control"
 status: in_progress
 priority: 1
 type: task
-labels: [milestone-1, integration]
+labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T21:18:05Z
+updated_at: 2026-10-21T21:18:06Z
 content_hash: "sha256:c38d5b139a471d11fe7e8328fcff49935e7e5de21bd78cdf72b1c920cee2986a"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
