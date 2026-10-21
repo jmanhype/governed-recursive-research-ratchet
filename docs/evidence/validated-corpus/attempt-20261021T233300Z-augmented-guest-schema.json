@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-su275w_l",
+  "bootstrap_commit": "2380370ae560dcc164d7ed2631c967de8b0d96e4",
+  "guest_started": true,
+  "scenarios_dispatched": 32,
+  "durable_events": 129,
+  "durable_objects": 32,
+  "failure": "Executor results legitimately carry decode_guest's candidate_observation projection; receipt re-validation used an exact schema that rejected it",
+  "fix": "Accept the projection as optional and require canonical equality with candidate_output decoding",
+  "candidate_executed": true
+}

@@ -100,7 +100,8 @@ def decode_guest(raw: bytes, run: str, challenge: str) -> dict:
     value = json.loads(raw)
     fields(value, {'version', 'run', 'challenge', 'variant', 'supervisor_sha256', 'supervisor_unchanged',
                    'candidate_credentials', 'candidate_exit_success', 'candidate_output', 'output_exceeded',
-                   'kernel_lock_held_by_supervisor', 'seconds', 'candidate_cessation', 'verified', 'admission', 'scope'})
+                   'kernel_lock_held_by_supervisor', 'seconds', 'candidate_cessation', 'verified', 'admission', 'scope'},
+           {'candidate_observation'})
     require(value['version'] == 1 and value['run'] == run and value['challenge'] == challenge
             and value['variant'] == challenge and value['supervisor_sha256'] == SUPERVISOR
             and value['supervisor_unchanged'] is True and value['verified'] is False
@@ -114,7 +115,11 @@ def decode_guest(raw: bytes, run: str, challenge: str) -> dict:
             and all(status.get(key) == '0' * 16 for key in ('CapEff', 'CapPrm', 'CapInh', 'CapBnd', 'CapAmb')),
             'IntegrityFailure', 'Candidate separation not observed')
     candidate = base64.b64decode(value['candidate_output'], validate=True)
-    value['candidate_observation'] = decode_candidate(candidate, challenge)
+    observation = decode_candidate(candidate, challenge)
+    if 'candidate_observation' in value:
+        require(canonical(value['candidate_observation']) == canonical(observation),
+                'IntegrityFailure', 'Candidate observation projection differs')
+    value['candidate_observation'] = observation
     return value
 
 
