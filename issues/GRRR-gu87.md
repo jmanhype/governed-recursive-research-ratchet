@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T05:33:30Z
-content_hash: "sha256:e10e1d751fd6b987ffd19ec17200108b184bad5b10d152ad12a12baba302917e"
+updated_at: 2026-10-21T05:46:07Z
+content_hash: "sha256:cc3e2cdc325153ff9434d787864dd6bfb41995b1cabca5edcbd56f61af7387c7"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -132,6 +132,17 @@ EXACT QEMU PROVISIONING PLAN d1bf4b29 INSTALLED AND INDEPENDENTLY CHECKED (2026-
 INDEPENDENT CONSERVATIVE ACCOUNTING INSTALL REVIEW (2026-10-21, commit 4143b9c): SECURITY_REVIEW: READY_FOR_CONSERVATIVE_ACCOUNTING_INSTALL. Toolchain owner-write exception is limited to exact hash-pinned canonical Python and json module; immutable payload checks unchanged. Updated bootstrap 07484611331e38165dcf8d3cb872455806572ca5451289d7b30ea9a9ffccbc97; updated plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459; DB 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234; receipt 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde. Installation must remain stopped=1, zero reservations, all stages blocked, preserve 259 hash-bound artifacts, and require future independent reconciliation before stop/hold release. No execution or complete migration authorized.
 OPERATOR CONSERVATIVE ACCOUNTING PLAN APPROVAL (2026-10-21): approved exact plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459 with bootstrap 07484611331e38165dcf8d3cb872455806572ca5451289d7b30ea9a9ffccbc97. Authorization is limited to installing the immutable blocked conservative-genesis baseline: stopped=1, unresolved history preserved, zero reservations, all profiles/stages blocked, no execution, hold release, stop clearing, complete migration, or Apple toolchain permission changes.
 CONSERVATIVE ACCOUNTING INSTALL RECORD (2026-10-21T05:33:30Z): Operator approved exact plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459. Fresh preflight matched bootstrap 07484611331e38165dcf8d3cb872455806572ca5451289d7b30ea9a9ffccbc97, plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459, database 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234, and receipt 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde; independently verified 259 artifacts with stopped=1 before root placement. Parent placed exact bootstrap/plan as root:wheel 0444 and invoked only the reviewed canonical install command. Installed active binding: device=16777229, inode=681781547, stopped=1, execution_gate=blocked, unresolved_history=true, store_id=12f4ce0101556ece7b7b2839077c3dc9de8c2a4bec98dbc0d570f2b5c61faec9, active SHA256 cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b. Independent post-install verification confirmed exact hashes, root:wheel ownership, modes 0444, no ACL indicators, single links, exact device/inode binding, SQLite integrity ok, 259 artifacts, empty reservations, SQL reservation/state-release denials, all six profile/stage zero-cost reservation denials, rejection by synthetic/offline/trusted-observation runtime validators, and unchanged database hash after denials. Free space after verification was 15065124864 bytes. No QEMU execution, candidate execution, hold release, stop clearing, fresh allowance, complete migration, Apple permission change, or promotion is authorized or claimed. Evidence: install console 633418ffaf46866bc4bc337634c6ca1f68468a2d5924df1bf2d67273960efccf; verification JSON 85b6f9e0a2770ba63fa7b0850b47ea3e903df8a6d4d9287426fd9295a3687ae8.
+## nd_contract
+status: in_progress
+
+### evidence
+- Read-only installed reconciliation commit c717a85; inspected mode=ro immutable SQLite/query_only, exact DB/receipt/active hashes unchanged before/after, device16777229 inode681781547, 259 artifacts, stopped=1 and zero reservations. No installed mutation/root/QEMU or database copy/build.
+- All visible exports: 48 reservation events, 48 observations, 8 stop events. Visible maxima sum 14400s and observation sum 2439.7885517949825973s are NOT authoritative charges; max observed duration 243.71385945900693s is lower bound only. Evidence digest/run/reservation/source hashes and JSON measurement pointers retained. Historical worst-case totals unknown; full POC/milestone admission holds retained, POC included rather than double-counted.
+- Report docs/evidence/trusted-observation/installed-reconciliation/REPORT.md SHA256 5f250685e29f5dd571b39d589a343aa84ab236527527f146fd09a2cc9bf524b4; report.json 2bd034edfc99d433ea9bc01d8fb6b1afd7715a18dea975fc20188459c747359e; SHA256SUMS bbddc190f25196f2873e95b1e4e0be6f53e40ddf20a96b93365ce97cb3f047ff verified8/8.
+- Scoped real installed read-only tests3/3 under each Python; pvg explicit paths passed. Full builder suite intentionally not run below preparation space gate. Free12953030656 bytes at markdown observation, below15GB execution floor.
+
+### proof
+- [ ] AC #1-#6: reconciliation remains ambiguous without missing invocation, timing/overlap/stage, review/prep/replay/selector, settlement/paid-service and campaign-stop evidence. Exact no-mutation review plan in report. No hold release, no stop clear, no execution readiness. Claim retained.
 
 ## nd_contract
 status: in_progress
