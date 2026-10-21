@@ -4,11 +4,11 @@ title: "Recover a verifiable experiment snapshot after interruption"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, delivered]
+labels: [milestone-1, integration, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:46:47Z
+updated_at: 2026-10-21T20:46:48Z
 content_hash: "sha256:37a2dcf75a0b0055dc7b713289c590fba1d602e42d3f36d17308343e7e79ac50"
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
