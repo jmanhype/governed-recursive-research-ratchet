@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T19:12:12Z
-content_hash: "sha256:0591917d3a745590efc33db91e69863637f9d71a958b6329d4322c46782bfa48"
+updated_at: 2026-10-21T19:30:09Z
+content_hash: "sha256:4f9c7287f9b0154afd2e69b2189426db25279283dfaf49519c733a17fe25256d"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -153,6 +153,26 @@ OPERATOR ACCOUNTING EVIDENCE REQUEST/HARDENING AUTHORIZATION (2026-10-21): Opera
 INDEPENDENT EVIDENCE REQUEST HARDENING REVIEW (2026-10-21, commit 1bee295f4dc7c945bd5a3d146adcdf28e997a93b): SECURITY_REVIEW: EVIDENCE_REQUEST_HARDENING_APPROVED. Both collector and generator reject real/effective root before file access. Full ancestry checks reject unsafe ownership, permissions, symlinks, and ACLs, with only the bounded root-owned sticky /private/tmp exception. Publication uses pinned directory descriptors, relative exclusive creation, identity rechecks, file/directory fsync, and same-parent exclusive/no-follow rename; descriptors close on failure. Added negative tests cover the prior blockers. Race-detection tests are mocked, not adversarial runtime coverage. Approval is limited to non-root metadata collection/request generation; it grants no accounting mutation, candidate build/installation, migration, stop/hold release, settlement, reservation, dispatch, QEMU/guest execution, or runtime authority.
 OPERATOR COMPLETION OWNERSHIP (2026-10-21): Operator asked the coordinator to handle the remaining project path and complete it. Coordinator will first perform one bounded local-evidence recovery pass from already preserved artifacts, repository history, tracker notes, and local session records. If authoritative records remain unavailable, make the conservative campaign disposition rather than fabricate settlements or silently reset costs. This authorization does not permit paid calls, credential disclosure, accounting mutation, stop/hold release, candidate admission, QEMU/guest execution, budget increase, or automatic merge. Any successor campaign or execution approval must be explicitly recorded.
 CONSERVATIVE CAMPAIGN DISPOSITION AND SUCCESSOR AUTHORIZATION (2026-10-21): Local session records contain all 110 event keys and all 48 run IDs, but they are agent/session records, not trusted evaluator meter or settlement receipts; they cannot authorize clearing the old campaign. DISPOSITION: preserve /Library/GRRR/accounting permanently stopped and unresolved; do not migrate, settle, release, or reset it. Operator handle-it authorization is recorded as an exact successor decision, not an old-budget increase: create a distinct GRRR-POC-2 campaign with a fresh POC ceiling of USD 50 / 21600 execution seconds / 3600 review seconds, local-only/no paid dispatch, full auditability, and explicit carry-forward reference to the stopped predecessor. Successor execution may use only the reviewed v4 trusted-observation profile with its existing 1024 MiB/1 vCPU/512 MiB /work/no-network limits, then the existing vlt controls/baselines. This authorization still forbids paid calls, production mutation, automatic merge, candidate admission, promotion, or weakening any verification gate. Root installation of a separately namespaced successor accounting store and exact guest execution remain separately reviewable implementation gates.
+## nd_contract
+status: in_progress
+
+### evidence
+- Local commit `64bc18a1a9c932fbdc06b056984cf95076ec14a1` (`feat(GRRR-gu87): provision successor accounting`), no push.
+- Added root-only future installer `scripts/provision-successor-accounting`; changed `research/persistent_budget.py`, `scripts/trusted-root-bootstrap`, and added focused no-guest suite `tests/unit_successor_accounting.py`.
+- Installer creates only an absent `/Library/GRRR/accounting-poc2`: evaluator 320:320 directory mode 0700 and DB mode 0600; root:wheel active/lock mode 0444; Budget-compatible schema with `state stopped=0`, empty reservations/metering/overhead, and store identity/receipt ancestry.
+- Fresh plan ceilings are USD 5000 cents, 21600 execution seconds, 3600 review seconds; `execution_authorized=false` and `paid_dispatch=false`. Deterministic values at this commit: installer SHA-256 `3196e4f3cd4b7bb7818a135f325db46601386df892b97b13c39fdeeafc89b7d7`; plan SHA-256 `35b8909d6078de4fcfe8abdecaf9445aa6376f685bc3ac45414f4398940caa1d`; campaign `9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9`; store ID `901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6`.
+- The exact predecessor active SHA-256 remains `cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b`; read-only before/after checks also retained DB `9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234` and receipt `9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde`. `/Library/GRRR/accounting-poc2` remained absent.
+- Focused tests: `/usr/bin/python3 -I -B -W error::ResourceWarning -m unittest discover -s tests -p 'unit_successor_accounting.py' -v`: 7/7 OK; `/opt/homebrew/bin/python3 -B -W error::ResourceWarning ...`: 7/7 OK.
+- Full no-guest units: `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py'`: 152/152 OK; `/opt/homebrew/bin/python3 -B ...`: 152/152 OK. Homebrew emitted the suite's pre-existing sqlite ResourceWarnings; no failures.
+- Explicit source compilation under both required interpreters passed for all three Python source/script/test files.
+- `pvg verify research/persistent_budget.py scripts/trusted-root-bootstrap scripts/provision-successor-accounting tests/unit_successor_accounting.py --include-tests --format=text`: VERIFY PASSED (2 recognized files, 0 issues); unstaged and staged `git diff --check` passed.
+- Committed file SHA-256 values: `afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263`, `fff30dfba3443a2e0fc2698d05bfa0712fdb240efa44561e6baaa7e5d2e83a24`, `3196e4f3cd4b7bb7818a135f325db46601386df892b97b13c39fdeeafc89b7d7`, `6f68f6b69eeaa73bd52023e1dcbab67de5c38ba190f50466fd00307bfd8bbb46`.
+- Boundaries honored: no sudo/root installation, protected-state mutation, QEMU/guest execution, paid dispatch, launcher execution, delivery transition, acceptance, or push.
+
+### proof
+- [x] Scoped successor installer/runtime wiring: fixture proves fresh schema, identity, exact modes/ownership, active validation, reservation success, over-ceiling rejection, predecessor distinctness/unchanged bytes, exact authorization, deterministic identity, unsafe ACL metadata rejection, existing/partial refusal, and non-root pre-effect refusal.
+- [ ] Parent GRRR-gu87 mandatory real-guest trusted-observation integration ACs remain pending separate authorization and are not claimed by this no-guest slice.
+
 
 ## nd_contract
 status: in_progress
