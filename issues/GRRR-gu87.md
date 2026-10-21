@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T01:31:23Z
-content_hash: "sha256:28cde65eba5c9be5a6a0b101c80a7d0f51ea159e9cf125d8de8a721790933bb0"
+updated_at: 2026-10-21T01:58:49Z
+content_hash: "sha256:f5b41afa114924fb39b34363e5fb0e5e437bed29edacac75388a2bbc5bc62bf1"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -113,6 +113,68 @@ DISPOSABLE OFFLINE RUNTIME CLEANUP (2026-10-21): removed only old root-owned /pr
 REGENERABLE DEVELOPMENT CACHE CLEANUP (2026-10-21): removed only /Users/speed/.cache/opencode (190M, 11,996 files) and /Users/speed/.cache/codebase-memory-mcp (143M, 24 files); free space now 15,461,191,680 bytes. Manifest main checkout .tmp-sr_pm/development-cache-cleanup-manifest.txt. No model/project/output data touched.
 REGENERABLE UPDATER CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/autoclaw-updater (1.2G, 3 files) and /Users/speed/Library/Caches/voyager-updater (1.0G, 5 files); free space now 16,972,693,504 bytes. Manifest main checkout .tmp-sr_pm/updater-cache-cleanup-manifest.txt. No application data, models, projects, credentials, or outputs touched.
 INDEPENDENT SECURITY REVIEW (2026-10-21, commit d53deaf60290c5795a29ca279ec6919a15b44fb3): SECURITY_REVIEW: CHANGES_REQUIRED. Blocking findings: (1) fresh per-launch budget DB resets cross-run/profile ceilings; use one protected persistent accounting store and test restart/concurrency/cross-profile exhaustion; (2) mode-0666 service allows eight pre-auth slow readers for 310s and can starve stop/status; authenticate before payload reads, reserve control capacity, and add saturation tests; (3) mutable operator-owned Homebrew QEMU path is hashed then executed; use immutable root-controlled reviewed executable/deps or equivalent race-resistant binding and test replacement; (4) root imports/executes checkout code before validating approval inventory; use independently verified root-controlled bootstrap/source snapshot before privileged execution. Preparation pins/hashes matched and ten-scenario harness exists, but no execution approval should be requested until blockers are fixed and re-reviewed.
+## nd_contract
+status: in_progress
+
+### evidence
+- Parent independent review: SECURITY_REVIEW: CHANGES_REQUIRED. Four findings:
+  persistent accounting lifecycle, pre-auth control availability, immutable QEMU
+  execution binding, root bootstrap trust.
+- Response source WIP `66f4ba1f7e7750dfe91c0eaa8b9dc10940617a7b`;
+  final source/evidence WIP `7fee2ba0fa456fc9edd1b9ce1bfdbc284cd338a1`.
+- Protected pre-existing campaign store now required across synthetic/offline/
+  trusted-observation evaluator reservation paths. No automatic initialization
+  or missing-state repair. Identity/history/inode/stop/meter integrity checks;
+  missing migration binding blocks work. Profile resources unchanged.
+- Dedicated pre-auth data/control sockets, bounded initial reads; actual
+  socket-saturation tests and separate-process flock rejection pass.
+- Trusted path rejects Homebrew execution; requires reviewed root-owned QEMU/
+  dependency/data closure and disabled-module/plugin build provenance.
+- Independently installed standalone bootstrap required; no checkout application
+  import before approval-bound snapshot verification; isolated canonical Python.
+- Host source inventory SHA-256:
+  `f5170737b386d3f80039b40f70a6ec878ec0144d4db518d680479045498ff9e9`.
+- Bootstrap source (not installed):
+  `615cbfab84ddce1d84b397da9b4e99d2a51c1404bfd637defcc313238512ed9f`.
+- System and Homebrew Python: 76/76 unit tests each. Actual UID-320/root/guest
+  proof remains not-run; unit identity substitution is explicitly disclosed.
+- Go protocol tests pass, 90.6% statements. pvg explicit paths: 15 recognized
+  files, 0 issues. py_compile/diff checks pass.
+- Python trace line coverage: transport 88%, persistent accounting 72%,
+  installation validator 38%, executor 41%, evaluator 48%, bootstrap 23%.
+- v3 supervisor/ISO/source unchanged; independent readback 7 ISO/52 source
+  members succeeds. No guest binary rebuild or execution.
+- Mandatory suite: 10 required, 0 executed, 0 skipped, 1 identity prerequisite
+  error. Nonroot bootstrap rejected; dry-run blocked by absent root installation.
+- Evidence manifest:
+  `6116186b4cec078928b330e8037ea754fc9999bf02115f5cd9faa24de829e8a9`.
+  All entries rehashed successfully. Worktree clean after commit.
+- Full response, immutable-bootstrap design, profile transition, missing
+  prerequisites and exact next request: docs/TRUSTED-OBSERVATION-SECURITY-WIP.md.
+
+### proof
+- [ ] AC #1: actual approved composed-profile invocation remains not-run.
+- [ ] AC #2: privileged service/guest adversarial suite remains not-run.
+- [ ] AC #3: actual isolation/race/locking proof remains not-run.
+- [ ] AC #4: protected prior-cost migration and real cross-profile identity proof pending.
+- [ ] AC #5: actual metering/lost-receipt/recovery proof pending.
+- [ ] AC #6: actual root/guest watchdog/tamper/store controls pending.
+
+### AC Verification
+All six ACs remain incomplete. No security approval or delivery is claimed.
+Claim retained; no root/sudo/QEMU/guest run, paid call, push, deliver or close.
+
+The prior direct checkout root command and host pin are withdrawn. Prepared-v3
+still pins historical Homebrew QEMU, so the hardened path requires a NEW composed
+execution-profile digest binding the unchanged media plus immutable installation,
+accounting, bootstrap/interpreter, host code and unchanged limits. That digest,
+installation approval, and accounting binding are null/absent, not fabricated.
+
+Exact next request: independently re-review these four security changes. Do not
+request or authorize guest execution. If design review clears them, identify the
+separate provisioning-only authorization needed for immutable QEMU/runtime closure,
+independently installed bootstrap and migration of prior campaign costs/holds/stops.
+Return verified hashes and composed profile for a later decision.
 
 ## nd_contract
 status: in_progress
