@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-21T21:55:30Z
-content_hash: "sha256:9b201e17c7a5dffd26a122899a7c03f470f33626412dce2ae44623d16089043a"
+content_hash: "sha256:fa23806755b474fae934e9f0a3b3e0837ce931017863c263b0d82547a28843ea"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87]
@@ -107,7 +107,14 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+## nd_contract
+status: in_progress
 
+### evidence
+- Rework claimed 2026-10-21 after PM rejection; prepare a new reviewed disposable corpus input/profile and request parent-mediated UID-separated execution.
+
+### proof
+- [ ] AC #1/#5 pending real isolated seeded-variant execution.
 
 ## nd_contract
 status: rejected
