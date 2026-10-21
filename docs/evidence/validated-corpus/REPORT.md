@@ -42,8 +42,9 @@ No host or guest candidate was built or executed, no vlt CLI was invoked, and no
 ## Explicit blockers
 
 1. `seeded_variant_execution: not-run` — arbitrary corpus variants require a new reviewed input/profile; the fixed v4 image cannot be weakened or replaced silently.
-2. Full no-guest suite reached an environment floor error, not a code assertion: 13,499,834,368 bytes are free versus the 15,350,000,000-byte ConservativeGenesis floor. The first evidence run also caught a temporary import-path violation in this story; it was fixed before the final run.
-3. `bounded-challenge` fails closed in this isolated story worktree because no parent runtime binding is present.
-4. Protected accounting remains stopped and evaluator-private; no release or recovery was attempted.
+2. `bounded-challenge` fails closed in this isolated story worktree because no parent runtime binding is present.
+3. Protected accounting remains stopped and evaluator-private; no release or recovery was attempted.
+
+The first full-suite attempt failed the ConservativeGenesis 15.35 GB floor at 13,499,834,368 free bytes and also caught a temporary import-path violation in this story. After the parent's authorized regenerable npm-npx cache cleanup (manifest `c50ffa401cd21dbf5a0922888dd36d5ed2559321768132f4ab210e5966f44e07`), both Python interpreters passed all **166 no-guest tests** with 0 failures and 0 skips.
 
 Downstream independent replay, reviewer outcome, finding verification, and contract admission remain not-run/blocked. Preliminary fixture observations are not credited as selector discoveries or final-system detections.

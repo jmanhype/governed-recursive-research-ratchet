@@ -5,8 +5,9 @@
     "reason": "The accepted pinned v4 profile and input admit only its fixed challenge variants; arbitrary corpus seeds require a new reviewed input/profile."
   },
   "full_no_guest_suite": {
-    "state": "error",
-    "reason": "ConservativeGenesis setup refuses preparation below 15.35 GB; measured free space is 13,499,834,368 bytes."
+    "state": "pass-after-authorized-parent-cache-cleanup",
+    "system_python": "166 passed, 0 failed, 0 skipped",
+    "homebrew_python": "166 passed, 0 failed, 0 skipped"
   },
   "bounded_challenge_integration": {
     "state": "not-run",

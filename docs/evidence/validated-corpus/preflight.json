@@ -3,6 +3,13 @@
   "free_bytes": 13499834368,
   "required_free_bytes": 15350000000,
   "space_gate": "fail",
+  "after_parent_authorized_cache_cleanup": {
+    "free_bytes": 17266094080,
+    "space_gate": "pass",
+    "cleanup_manifest": "../.tmp-sr_pm/npm-npx-cache-cleanup.json",
+    "cleanup_manifest_sha256": "c50ffa401cd21dbf5a0922888dd36d5ed2559321768132f4ab210e5966f44e07",
+    "measured_freed_bytes": 3942748160
+  },
   "protected_accounting": {
     "active_json": "/Library/GRRR/accounting-poc2/active.json",
     "active_json_sha256": "e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95",
