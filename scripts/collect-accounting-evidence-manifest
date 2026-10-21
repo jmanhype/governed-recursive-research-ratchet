@@ -6,10 +6,12 @@ does not copy artifact bodies, initialize SQLite, mutate accounting state, or
 interpret an available source pointer as a trusted meter receipt.
 """
 import argparse
+import ctypes
 import hashlib
 import math
 import json
 import os
+import secrets
 from pathlib import Path
 import sqlite3
 import stat
@@ -60,6 +62,8 @@ EVENT_KINDS = {
     "reserved", "observation", "offline-observation", "denied",
     "stop-fenced", "stop-outcome",
 }
+RENAME_EXCL = 0x00000004
+RENAME_NOFOLLOW_ANY = 0x00000010
 
 
 class EvidenceFailure(ValueError):
@@ -104,11 +108,99 @@ def open_regular_file(path):
                 break
             chunks.append(chunk)
         return b"".join(chunks), info
+    finally:
+        os.close(descriptor)
+
+
+def validate_output_path(path):
+    """Reject any non-private, ambiguous, linked, or occupied output path."""
+    path = Path(path)
+    require(path.is_absolute() and str(path) == os.path.normpath(str(path)),
+            "output path is not an absolute normalized lexical path")
+    parent = path.parent
+    try:
+        parent_info = os.lstat(parent)
+    except FileNotFoundError as error:
+        raise EvidenceFailure("unsafe output parent: %s does not exist" % parent) from error
+    require(stat.S_ISDIR(parent_info.st_mode), "unsafe output parent: not a directory")
+    require(parent_info.st_uid == os.getuid(),
+            "unsafe output parent: not owned by the current non-root UID")
+    require(stat.S_IMODE(parent_info.st_mode) & 0o022 == 0,
+            "unsafe output parent is group/world-writable")
+
+    ancestor = parent
+    while ancestor.parent != ancestor:
+        require(not stat.S_ISLNK(os.lstat(ancestor).st_mode),
+                "output ancestor is a symlink: %s" % ancestor)
+        ancestor = ancestor.parent
+    try:
+        final_info = os.lstat(path)
+    except FileNotFoundError:
+        pass
+    else:
+        if stat.S_ISLNK(final_info.st_mode):
+            raise EvidenceFailure("final output is a symlink: %s" % path)
+        raise EvidenceFailure("final output already exists: %s" % path)
+    return path
+
+
+def rename_exclusive(source, destination):
+    """Atomically publish without replacing or following any path on Darwin."""
+    library = ctypes.CDLL(None, use_errno=True)
+    try:
+        function = library.renamex_np
+    except AttributeError as error:
+        raise EvidenceFailure("Darwin renamex_np is unavailable") from error
+    function.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint]
+    function.restype = ctypes.c_int
+    result = function(os.fsencode(str(source)), os.fsencode(str(destination)),
+                      RENAME_EXCL | RENAME_NOFOLLOW_ANY)
+    if result != 0:
+        error_number = ctypes.get_errno()
+        raise OSError(error_number, os.strerror(error_number),
+                      str(source), None, str(destination))
+
+
+def fsync_directory(path):
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(str(path), flags)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def publish_payload(payload, output_path):
+    """Publish one 0600 payload exclusively and leave failures diagnostic."""
+    parent = output_path.parent
+    temporary = parent / (".%s.%d.%s.tmp" % (
+        output_path.name, os.getpid(), secrets.token_hex(16)
+    ))
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(str(temporary), flags, 0o600)
+    try:
+        stream = os.fdopen(descriptor, "wb")
     except Exception:
         os.close(descriptor)
         raise
-    else:
-        os.close(descriptor)
+    try:
+        view = memoryview(payload)
+        while view:
+            written = stream.write(view)
+            if written is None:
+                flush_error = stream.flush()
+                if flush_error is not None:
+                    raise OSError("buffered manifest write failed")
+                written = 0
+            elif written == 0:
+                raise OSError("buffered manifest write made no progress")
+            view = view[written:]
+        stream.flush()
+        os.fsync(stream.fileno())
+    finally:
+        stream.close()
+    rename_exclusive(temporary, output_path)
+    fsync_directory(parent)
 
 
 def stable_stat_matches(before, after):
@@ -362,6 +454,7 @@ def query_database(path, expected_counts):
 
 def manifest_for(database_path, prior_report_path, output_path, expectations=None):
     """Return the manifest after writing exactly the requested fresh output."""
+    require(os.getuid() != 0, "collector must not run as root")
     expected = dict(LIVE_EXPECTATIONS)
     if expectations is not None:
         expected.update(expectations)
@@ -372,7 +465,7 @@ def manifest_for(database_path, prior_report_path, output_path, expectations=Non
     expected_counts["legacy_events"] = expected.get("event_count", REQUIRED_COUNTS["legacy_events"])
     database_path = Path(database_path)
     prior_report_path = Path(prior_report_path)
-    output_path = Path(output_path)
+    output_path = validate_output_path(output_path)
     root = database_path.parent
     active_path = root / "active.json"
     receipt_path = root / "receipt.json"
@@ -560,15 +653,7 @@ def manifest_for(database_path, prior_report_path, output_path, expectations=Non
 
     payload = (json.dumps(manifest, sort_keys=True, indent=2,
                           ensure_ascii=False) + "\n").encode("utf-8")
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(str(output_path), flags, 0o600)
-    try:
-        view = memoryview(payload)
-        while view:
-            written = os.write(descriptor, view)
-            view = view[written:]
-    finally:
-        os.close(descriptor)
+    publish_payload(payload, output_path)
     return manifest
 
 

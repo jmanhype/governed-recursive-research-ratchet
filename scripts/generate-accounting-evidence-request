@@ -1,0 +1,427 @@
+#!/usr/bin/python3
+"""Generate a canonical metadata-only accounting evidence request."""
+import argparse
+import ctypes
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import sys
+import tempfile
+
+
+DEFAULT_MANIFEST = Path(
+    "docs/evidence/trusted-observation/accounting-evidence-manifest/MANIFEST.json"
+)
+DEFAULT_OUTPUT = Path(
+    "docs/evidence/trusted-observation/accounting-evidence-request"
+)
+MANIFEST_SHA256 = "8c64d70cc0f3b903620ed45094133ceffaf5e48107427fcfc2204b73daa06270"
+MANIFEST_SCHEMA_VERSION = 1
+MANIFEST_DECISION = "blocked-ambiguous-history"
+ARTIFACT_COUNT = 259
+EVENT_COUNT = 110
+EVENT_KIND_COUNTS = {
+    "denied": 6,
+    "observation": 8,
+    "offline-observation": 40,
+    "reserved": 48,
+    "stop-fenced": 4,
+    "stop-outcome": 4,
+}
+MISSING_COUNTS = {
+    "currency": 110,
+    "end_interval": 110,
+    "original_reservation_mapping": 94,
+    "overlap_interval": 110,
+    "paid_service": 62,
+    "principal": 110,
+    "request_key": 110,
+    "stage": 110,
+    "start_interval": 110,
+    "trusted_meter_receipt": 110,
+    "trusted_settlement_receipt": 110,
+}
+ALL_EVENT_FIELDS = (
+    "principal", "request_key", "stage", "currency", "start_interval",
+    "end_interval", "overlap_interval", "trusted_meter_receipt",
+    "trusted_settlement_receipt",
+)
+REQUIRED_EVIDENCE_FIELDS = {
+    "currency", "end_interval", "original_reservation_mapping",
+    "overlap_interval", "paid_service", "principal", "request_key",
+    "settlement_status", "stage", "start_interval", "stop_scope",
+    "trusted_meter_receipt", "trusted_settlement_receipt",
+}
+EVENT_FIELDS = {
+    "body_byte_count", "body_sha256", "evidence_key", "kind", "profile",
+    "required_evidence", "reservation", "run", "scalar_fields", "sources",
+}
+SOURCE_FIELDS = {
+    "artifact_body_sha256", "byte_count", "classification", "path", "sha256",
+}
+MANIFEST_FIELDS = {
+    "artifacts", "authorization", "decision", "events", "schema_version",
+    "scope", "source", "summary",
+}
+HEX64 = set("0123456789abcdef")
+RENAME_EXCL = 0x00000004
+RENAME_NOFOLLOW_ANY = 0x00000010
+
+
+class RequestFailure(ValueError):
+    """A fail-closed request-generator rejection."""
+
+
+def require(condition, message):
+    if not condition:
+        raise RequestFailure(message)
+
+
+def valid_hash(value):
+    return type(value) is str and len(value) == 64 and set(value) <= HEX64
+
+
+def canonical_bytes(value):
+    return (json.dumps(value, sort_keys=True, indent=2,
+                       ensure_ascii=False) + "\n").encode("utf-8")
+
+
+def parse_manifest(raw):
+    def reject_constant(value):
+        raise RequestFailure("manifest contains a JSON constant: %s" % value)
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "manifest duplicates JSON key: %s" % key)
+            result[key] = value
+        return result
+
+    try:
+        value = json.loads(
+            raw.decode("utf-8"), parse_constant=reject_constant,
+            object_pairs_hook=unique_object,
+        )
+    except UnicodeDecodeError as error:
+        raise RequestFailure("manifest is not UTF-8") from error
+    except json.JSONDecodeError as error:
+        raise RequestFailure("malformed manifest JSON: %s" % error) from error
+    require(type(value) is dict, "manifest is not a JSON object")
+    return value
+
+
+def validate_manifest(raw):
+    require(hashlib.sha256(raw).hexdigest() == MANIFEST_SHA256,
+            "manifest SHA-256 differs from the pinned basis")
+    manifest = parse_manifest(raw)
+    require(set(manifest) == MANIFEST_FIELDS,
+            "manifest top-level schema differs")
+    require(manifest.get("schema_version") == MANIFEST_SCHEMA_VERSION,
+            "unknown manifest schema version")
+    require(manifest.get("decision") == MANIFEST_DECISION,
+            "unknown manifest decision")
+    summary = manifest.get("summary")
+    require(type(summary) is dict, "manifest summary is malformed")
+    require(summary.get("artifact_count") == ARTIFACT_COUNT,
+            "manifest artifact count differs")
+    require(summary.get("event_count") == EVENT_COUNT,
+            "manifest event count differs")
+    require(summary.get("event_kind_counts") == EVENT_KIND_COUNTS,
+            "manifest event kind counts differ")
+    require(summary.get("missing_required_evidence_event_counts") == MISSING_COUNTS,
+            "manifest missing-evidence counts differ")
+
+    artifacts = manifest.get("artifacts")
+    require(type(artifacts) is list and len(artifacts) == ARTIFACT_COUNT,
+            "manifest artifact inventory differs")
+    artifact_paths = set()
+    for artifact in artifacts:
+        require(type(artifact) is dict and set(artifact) == {
+            "body_sha256", "byte_count", "hash_matches", "path",
+            "stored_sha256",
+        }, "manifest artifact record is malformed")
+        path = artifact["path"]
+        require(type(path) is str and bool(path) and not path.startswith("/")
+                and ".." not in Path(path).parts and path not in artifact_paths,
+                "manifest artifact path is malformed or duplicated")
+        artifact_paths.add(path)
+        require(valid_hash(artifact["stored_sha256"]) and
+                artifact["stored_sha256"] == artifact["body_sha256"] and
+                artifact["hash_matches"] is True,
+                "manifest artifact hash record is malformed")
+
+    events = manifest.get("events")
+    require(type(events) is list and len(events) == EVENT_COUNT,
+            "manifest event inventory differs")
+    keys = [event.get("evidence_key") for event in events]
+    require(all(valid_hash(key) for key in keys) and len(set(keys)) == EVENT_COUNT,
+            "manifest event keys are malformed or duplicated")
+    require(keys == sorted(keys), "manifest event inventory is not canonical")
+    referenced = []
+    for event in events:
+        require(type(event) is dict and set(event) == EVENT_FIELDS,
+                "manifest event record has an unknown schema")
+        require(type(event["required_evidence"]) is dict and
+                set(event["required_evidence"]) == REQUIRED_EVIDENCE_FIELDS,
+                "manifest required-evidence schema differs")
+        require(all(type(item) is dict and set(item) == {
+            "basis", "status", "value"
+        } and item["status"] in ("available", "missing")
+            for item in event["required_evidence"].values()),
+            "manifest required-evidence record is malformed")
+        require(type(event["sources"]) is list,
+                "manifest event source inventory is malformed")
+        for source in event["sources"]:
+            require(type(source) is dict and set(source) == SOURCE_FIELDS,
+                    "manifest event source reference is malformed")
+            require(source["classification"] ==
+                    "available-source-pointer-not-trusted-meter-receipt",
+                    "manifest source pointer is incorrectly classified as a receipt")
+            require(valid_hash(source["sha256"]) and
+                    source["sha256"] == source["artifact_body_sha256"],
+                    "manifest source reference hash is malformed")
+            require(source["path"] in artifact_paths,
+                    "manifest source reference is absent from the artifact inventory")
+            referenced.append(source["path"])
+    require(len(referenced) == 322 and len(set(referenced)) == 46,
+            "manifest source-reference counts differ")
+    return manifest
+
+
+def event_record(event):
+    required = event["required_evidence"]
+    return {
+        "evidence_key": event["evidence_key"],
+        "kind": event["kind"],
+        "run": event["run"],
+        "reservation": event["reservation"],
+        "profile": event["profile"],
+        "missing_required_fields": sorted(
+            name for name, item in required.items()
+            if item["status"] == "missing"
+        ),
+        "available_source_references": [
+            {
+                "path": source["path"],
+                "sha256": source["sha256"],
+                "relationship": "available-reference-not-receipt",
+            }
+            for source in event["sources"]
+        ],
+    }
+
+
+def request_for(manifest, manifest_hash):
+    summary = manifest["summary"]
+    return {
+        "schema_version": 1,
+        "request_kind": "metadata-only-accounting-evidence-request",
+        "basis": {
+            "manifest_sha256": manifest_hash,
+            "manifest_schema_version": manifest["schema_version"],
+            "manifest_decision": manifest["decision"],
+            "artifact_count": summary["artifact_count"],
+            "event_count": summary["event_count"],
+            "event_kind_counts": summary["event_kind_counts"],
+            "missing_required_evidence_event_counts": summary[
+                "missing_required_evidence_event_counts"
+            ],
+        },
+        "authority": {
+            "request_authorizes_nothing": True,
+            "migration": False,
+            "settlement": False,
+            "stop_release": False,
+            "execution": False,
+        },
+        "global_requests": [
+            {
+                "id": "original-reservation-mappings",
+                "missing_event_count": 94,
+                "required_original_record": "reservation request to reservation mapping",
+            },
+            {
+                "id": "paid-service-proof",
+                "missing_event_count": 62,
+                "required_original_record": "authenticated paid-service account record",
+            },
+            {
+                "id": "all-event-accounting-identity-interval-and-receipts",
+                "missing_event_count": 110,
+                "required_fields": list(ALL_EVENT_FIELDS),
+            },
+            {
+                "id": "historical-campaign-stop-resolution",
+                "scope": "campaign",
+                "basis_event_count": 110,
+                "required_original_record": "authoritative campaign stop-state history and reason",
+            },
+        ],
+        "event_records": [event_record(event) for event in manifest["events"]],
+        "evidence_standard": {
+            "acceptable_records": "original authenticated records only",
+            "required_properties": [
+                "authenticated principal and service identities",
+                "request key, run/reservation mapping, stage, and currency",
+                "UTC start, end, and overlap intervals",
+                "trusted meter and settlement receipts with provenance",
+            ],
+            "unacceptable_substitutes": [
+                "inferred values",
+                "reconstructed or substitute records",
+                "missing values converted to zero",
+                "source pointers treated as meter or settlement receipts",
+            ],
+        },
+    }
+
+
+def markdown_for(request, request_hash):
+    basis = request["basis"]
+    return "\n".join([
+        "# Accounting evidence request — metadata only",
+        "",
+        "This request authorizes no migration, settlement, stop release, hold release, reservation, dispatch, or execution.",
+        "",
+        "## Pinned basis",
+        "",
+        "- Manifest SHA-256: `%s`" % basis["manifest_sha256"],
+        "- Manifest decision: `%s`" % basis["manifest_decision"],
+        "- Parsed inventory: **%d artifacts / %d events**." % (
+            basis["artifact_count"], basis["event_count"]
+        ),
+        "- Canonical `REQUEST.json` SHA-256: `%s`" % request_hash,
+        "",
+        "## Global requests",
+        "",
+        "1. **Original reservation mappings:** provide authoritative mappings for **94 events**.",
+        "2. **Paid-service proof:** provide authenticated service-account proof for **62 events**.",
+        "3. **All-event accounting proof:** for all **110 events**, provide principal, request key, stage, currency, UTC start/end/overlap intervals, trusted meter receipt, and trusted settlement receipt.",
+        "4. **Historical campaign stop:** provide the authoritative campaign stop-state history, scope, and resolution provenance.",
+        "",
+        "The 110 event-specific records, including exact missing-field lists and preserved source references, are in `REQUEST.json`.",
+        "",
+        "## Evidence standard",
+        "",
+        "Acceptable evidence is an original authenticated record with identities, UTC intervals, overlap computation, and provenance. Inferred, reconstructed, substitute, or zero-filled values are not acceptable. A retained source pointer is only an available reference and is never a meter, settlement, reservation, or stop receipt.",
+        "",
+    ])
+
+
+def rename_exclusive(source, destination):
+    library = ctypes.CDLL(None, use_errno=True)
+    function = library.renamex_np
+    function.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint]
+    function.restype = ctypes.c_int
+    result = function(os.fsencode(str(source)), os.fsencode(str(destination)),
+                      RENAME_EXCL | RENAME_NOFOLLOW_ANY)
+    if result != 0:
+        error_number = ctypes.get_errno()
+        raise OSError(error_number, os.strerror(error_number), str(source),
+                      None, str(destination))
+
+
+def write_private_file(path, payload):
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(str(path), flags, 0o600)
+    try:
+        stream = os.fdopen(descriptor, "wb")
+    except Exception:
+        os.close(descriptor)
+        raise
+    try:
+        stream.write(payload)
+        stream.flush()
+        os.fsync(stream.fileno())
+    finally:
+        stream.close()
+
+
+def fsync_directory(path):
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(str(path), flags)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def validate_output_path(path):
+    path = Path(path)
+    require(path.is_absolute() and str(path) == os.path.normpath(str(path)),
+            "output path is not an absolute normalized lexical path")
+    parent = path.parent
+    parent_info = os.lstat(parent)
+    require(stat.S_ISDIR(parent_info.st_mode), "output parent is not a directory")
+    require(parent_info.st_uid == os.getuid(),
+            "output parent is not owned by the current UID")
+    require(stat.S_IMODE(parent_info.st_mode) & 0o022 == 0,
+            "output parent is group/world-writable")
+    ancestor = parent
+    while ancestor.parent != ancestor:
+        require(not stat.S_ISLNK(os.lstat(ancestor).st_mode),
+                "output ancestor is a symlink: %s" % ancestor)
+        ancestor = ancestor.parent
+    try:
+        final_info = os.lstat(path)
+    except FileNotFoundError:
+        pass
+    else:
+        require(not stat.S_ISLNK(final_info.st_mode),
+                "output directory is a symlink")
+        raise RequestFailure("output directory already exists")
+    return path
+
+
+def publish_request(request, output_path):
+    request_payload = canonical_bytes(request)
+    request_hash = hashlib.sha256(request_payload).hexdigest()
+    markdown_payload = markdown_for(request, request_hash).encode("utf-8")
+    output_path = validate_output_path(output_path)
+    parent = output_path.parent
+    temporary = Path(tempfile.mkdtemp(
+        prefix=".%s." % output_path.name, suffix=".tmp", dir=parent
+    ))
+    write_private_file(temporary / "REQUEST.json", request_payload)
+    write_private_file(temporary / "REQUEST.md", markdown_payload)
+    fsync_directory(temporary)
+    rename_exclusive(temporary, output_path)
+    fsync_directory(parent)
+    return request_hash
+
+
+def generate(manifest_path, output_path):
+    raw = Path(manifest_path).read_bytes()
+    manifest_hash = hashlib.sha256(raw).hexdigest()
+    manifest = validate_manifest(raw)
+    request = request_for(manifest, manifest_hash)
+    request_hash = publish_request(request, Path(output_path).absolute())
+    return request, request_hash
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Generate a pinned metadata-only accounting evidence request."
+    )
+    parser.add_argument("manifest", nargs="?", type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument("output_directory", nargs="?", type=Path,
+                        default=DEFAULT_OUTPUT)
+    arguments = parser.parse_args(argv)
+    request, request_hash = generate(
+        arguments.manifest, arguments.output_directory.absolute()
+    )
+    print(json.dumps({
+        "event_count": request["basis"]["event_count"],
+        "request_sha256": request_hash,
+    }, sort_keys=True, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (RequestFailure, OSError, ValueError) as error:
+        print("accounting-evidence-request: %s" % error, file=sys.stderr)
+        sys.exit(1)

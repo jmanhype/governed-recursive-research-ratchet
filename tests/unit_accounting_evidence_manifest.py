@@ -2,11 +2,14 @@
 """Fixture tests for the read-only accounting evidence manifest."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import runpy
 import sqlite3
+import stat
 import tempfile
 import unittest
+from unittest import mock
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/collect-accounting-evidence-manifest"
@@ -19,6 +22,16 @@ class AccountingEvidenceManifest(unittest.TestCase):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         root = Path(temporary.name)
+        output_root = Path(tempfile.mkdtemp(prefix="grrr-manifest-", dir="/private/tmp"))
+        output_root.chmod(0o700)
+
+        def remove_output_root():
+            for child in output_root.iterdir():
+                child.unlink()
+            output_root.rmdir()
+
+        self.addCleanup(remove_output_root)
+        self.output_root = output_root
         artifact_a = b'{"artifact":"a"}'
         artifact_b = b'{"artifact":"b"}'
         source_a = {
@@ -145,7 +158,7 @@ class AccountingEvidenceManifest(unittest.TestCase):
         return root, database, report_path, expected
 
     def collect(self, root, database, report, expected, name="MANIFEST.json"):
-        output = root / name
+        output = self.output_root / name
         manifest = MODULE["manifest_for"](database, report, output, expected)
         return manifest, output
 
@@ -163,6 +176,80 @@ class AccountingEvidenceManifest(unittest.TestCase):
         self.assertEqual([row["evidence_key"] for row in manifest["events"]], ["1" * 64, "2" * 64])
         parsed = json.loads(output.read_text())
         self.assertEqual(parsed, manifest)
+
+    def test_root_invocation_is_rejected_before_source_or_output_access(self):
+        root, database, report, expected = self.make_fixture()
+        output = self.output_root / "MANIFEST.json"
+        with mock.patch.object(MODULE["os"], "getuid", return_value=0):
+            with self.assertRaisesRegex(
+                MODULE["EvidenceFailure"], "collector must not run as root"
+            ):
+                MODULE["manifest_for"](
+                    root / "absent.sqlite", report, output, expected
+                )
+        self.assertFalse(output.exists())
+
+    def test_world_writable_parent_is_rejected(self):
+        root, database, report, expected = self.make_fixture()
+        output = Path("/private/tmp") / ("grrr-rejected-%d.json" % os.getpid())
+        with self.assertRaisesRegex(MODULE["EvidenceFailure"], "unsafe output parent"):
+            MODULE["manifest_for"](database, report, output, expected)
+        self.assertFalse(output.exists())
+
+    def test_symlinked_output_ancestor_is_rejected(self):
+        root, database, report, expected = self.make_fixture()
+        ancestor = Path(tempfile.mkdtemp(prefix="grrr-ancestor-", dir="/private/tmp"))
+        ancestor.chmod(0o700)
+        nested = ancestor / "nested"
+        nested.mkdir()
+        nested.chmod(0o700)
+        self.addCleanup(ancestor.rmdir)
+        self.addCleanup(nested.rmdir)
+        link = ancestor.parent / (ancestor.name + "-link")
+        link.symlink_to(ancestor, target_is_directory=True)
+        self.addCleanup(link.unlink)
+        with self.assertRaisesRegex(MODULE["EvidenceFailure"], "output ancestor is a symlink"):
+            MODULE["manifest_for"](
+                database, report, link / "nested" / "MANIFEST.json", expected
+            )
+        self.assertFalse((ancestor / "MANIFEST.json").exists())
+
+    def test_final_output_symlink_is_rejected(self):
+        root, database, report, expected = self.make_fixture()
+        output = self.output_root / "MANIFEST.json"
+        output.symlink_to(self.output_root / "absent-target")
+        with self.assertRaisesRegex(MODULE["EvidenceFailure"], "final output is a symlink"):
+            self.collect(root, database, report, expected)
+        self.assertTrue(output.is_symlink())
+
+    def test_existing_final_output_is_rejected(self):
+        root, database, report, expected = self.make_fixture()
+        output = self.output_root / "MANIFEST.json"
+        output.write_bytes(b"existing")
+        with self.assertRaisesRegex(MODULE["EvidenceFailure"], "final output already exists"):
+            self.collect(root, database, report, expected)
+        self.assertEqual(output.read_bytes(), b"existing")
+
+    def test_successful_output_is_exclusive_private_and_atomic(self):
+        root, database, report, expected = self.make_fixture()
+        manifest, output = self.collect(root, database, report, expected)
+        self.assertEqual(stat.S_IMODE(output.stat().st_mode), 0o600)
+        self.assertEqual([path.name for path in self.output_root.iterdir()], ["MANIFEST.json"])
+        self.assertEqual(json.loads(output.read_text()), manifest)
+
+    def test_failed_publication_leaves_final_absent_and_diagnostic_temp(self):
+        root, database, report, expected = self.make_fixture()
+        output = self.output_root / "MANIFEST.json"
+        failure = OSError("injected rename failure")
+        with mock.patch.object(MODULE["ctypes"], "CDLL", side_effect=failure):
+            with self.assertRaises(OSError):
+                self.collect(root, database, report, expected)
+        self.assertFalse(output.exists() or output.is_symlink())
+        siblings = list(self.output_root.iterdir())
+        self.assertEqual(len(siblings), 1)
+        self.assertTrue(siblings[0].name.startswith(".MANIFEST.json."))
+        self.assertTrue(siblings[0].name.endswith(".tmp"))
+        self.assertEqual(stat.S_IMODE(siblings[0].stat().st_mode), 0o600)
 
     def test_source_hash_mismatch_is_rejected_before_readback(self):
         root, database, report, expected = self.make_fixture()
