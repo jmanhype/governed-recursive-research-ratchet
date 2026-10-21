@@ -6,14 +6,14 @@ cd "$ROOT"
 /usr/bin/python3 -I -S -B scripts/qemu-build-preflight
 SOURCE="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2"
 printf '%s  %s\n' 7222d581694f1022ba6ab661907af6abf552243e80c9725cc4a7a064d70df4e0 "$SOURCE/meson.build" | shasum -a 256 -c -
-BUILD="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2/build-fdt-patched"
+BUILD="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2/build-dynamic"
 test ! -e "$BUILD"
 mkdir -m 700 "$BUILD"
 cd "$BUILD"
 "$SOURCE/configure" \
   --prefix=/Library/GRRR/qemu-reviewed \
   --target-list=aarch64-softmmu \
-  --static --without-default-features \
+  --without-default-features \
   --disable-modules --disable-plugins --disable-module-upgrades \
   --disable-pixman --disable-cocoa --disable-gtk --disable-sdl \
   --disable-vnc --disable-docs --disable-tools --disable-guest-agent \

@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+"""Static closure inventory only: otool reads files; QEMU is never executed."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+
+def inspect(binary):
+    pending = [binary.absolute()]
+    files = {}
+    blockers = []
+    while pending:
+        path = pending.pop()
+        resolved = path.resolve(strict=True)
+        if str(resolved) in files:
+            continue
+        if len(files) >= 128:
+            raise RuntimeError('closure exceeds bounded inventory')
+        raw = resolved.read_bytes()
+        loads = subprocess.run(['/usr/bin/otool', '-L', str(resolved)], check=True,
+                               capture_output=True, text=True, timeout=10).stdout
+        commands = subprocess.run(['/usr/bin/otool', '-l', str(resolved)], check=True,
+                                  capture_output=True, text=True, timeout=10).stdout
+        dependencies = []
+        for line in loads.splitlines()[1:]:
+            name = line.strip().split(' (compatibility version', 1)[0]
+            if name == str(path) or name == str(resolved):
+                continue  # dylib install identity, not another dependency.
+            dependencies.append(name)
+            if name.startswith(('/usr/lib/', '/System/Library/')):
+                continue  # sealed OS dependency, separately bind build number.
+            if not name.startswith('/'):
+                blockers.append({'file': str(resolved), 'dependency': name,
+                                 'reason': 'tokenized resolution requires explicit review'})
+                continue
+            dependency = Path(name)
+            if dependency.exists():
+                pending.append(dependency)
+            else:
+                blockers.append({'file': str(resolved), 'dependency': name, 'reason': 'missing absolute dependency'})
+        files[str(resolved)] = {
+            'observed_path': str(path), 'sha256': hashlib.sha256(raw).hexdigest(),
+            'bytes': len(raw), 'dependencies': dependencies, 'otool_L': loads,
+            'has_lc_rpath': 'cmd LC_RPATH\n' in commands,
+            'has_dyld_environment': 'cmd LC_DYLD_ENVIRONMENT\n' in commands}
+        if files[str(resolved)]['has_dyld_environment']:
+            blockers.append({'file': str(resolved), 'reason': 'embedded loader environment'})
+    return {'version': 1, 'files': files, 'blockers': blockers,
+            'inspection': 'static only; does not prove dlopen/data paths or runtime loading',
+            'qemu_executed': False, 'installed': False, 'root': '/Library/GRRR/qemu',
+            'system_build': subprocess.run(['/usr/bin/sw_vers', '-buildVersion'], check=True,
+                                           capture_output=True, text=True).stdout.strip()}
+
+
+if __name__ == '__main__':
+    print(json.dumps(inspect(Path(sys.argv[1])), sort_keys=True, indent=2))
