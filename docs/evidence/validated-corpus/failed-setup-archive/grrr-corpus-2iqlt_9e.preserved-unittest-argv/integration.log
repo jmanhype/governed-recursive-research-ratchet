@@ -1,0 +1,11 @@
+/private/tmp/grrr-corpus-2iqlt_9e (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: /private/tmp/grrr-corpus-2iqlt_9e (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+AttributeError: module '__main__' has no attribute '/private/tmp/grrr-corpus-2iqlt_9e'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

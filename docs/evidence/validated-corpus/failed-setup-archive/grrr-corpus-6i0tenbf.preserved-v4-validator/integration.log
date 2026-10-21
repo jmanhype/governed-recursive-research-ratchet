@@ -1,0 +1,20 @@
+ERROR
+
+======================================================================
+ERROR: setUpClass (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-6i0tenbf/code/validated_corpus.py", line 26, in setUpClass
+    config = validate_config(root_record(cls.runtime/'runner/config.json'))
+  File "/private/tmp/grrr-corpus-6i0tenbf/code/trusted_execution.py", line 143, in validate_config
+    fields(config, {'version', 'profile', 'image', 'supervisor', 'helper', 'host_code', 'operator_uid', 'limits',
+  File "/private/tmp/grrr-corpus-6i0tenbf/code/common.py", line 56, in fields
+    require(isinstance(record, dict) and required <= record.keys()
+  File "/private/tmp/grrr-corpus-6i0tenbf/code/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Unknown or missing fields
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.012s
+
+FAILED (errors=1)
