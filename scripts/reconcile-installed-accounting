@@ -1,0 +1,167 @@
+#!/usr/bin/python3
+"""Read-only, hash-bound analysis. Never initializes SQLite or releases a hold."""
+import hashlib
+import json
+from decimal import Decimal
+from pathlib import Path
+import shutil
+import sqlite3
+import sys
+
+BASE = Path('/Library/GRRR/accounting')
+PINS = {
+    'budget.sqlite': '9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234',
+    'receipt.json': '9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde',
+    'active.json': 'cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b',
+}
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def check(ok, reason):
+    if not ok:
+        raise RuntimeError(reason)
+
+
+def summarize(proposal):
+    events = proposal['events']
+    reservations = [e for e in events if e['kind'] == 'reserved']
+    observations = [e for e in events if e['execution_seconds'] is not None]
+    stops = [e for e in events if str(e['kind']).startswith('stop-')]
+    maxima = {}
+    for event in reservations:
+        # An evidence digest is never promoted to a real reservation identity.
+        maximum = event['maximum_seconds']
+        check(maximum is None or type(maximum) is int and maximum >= 0, 'invalid maximum')
+        maxima[event['event_sha256']] = maximum
+    measured = [Decimal(str(e['execution_seconds'])) for e in observations]
+    check(all(d.is_finite() and d >= 0 for d in measured), 'invalid reported duration')
+    return {
+        'decision': 'blocked-ambiguous-history',
+        'reservation_evidence': reservations, 'observation_evidence': observations,
+        'stop_evidence': stops, 'all_events': events,
+        'attempts': proposal['attempts'], 'measurements': proposal['measurements'],
+        'reservation_event_maximum_seconds': maxima,
+        'sum_of_visible_event_maxima_seconds_not_authoritative': sum(v for v in maxima.values() if v is not None),
+        'maximum_single_observed_duration_seconds_lower_bound': str(max(measured, default=Decimal(0))),
+        'sum_observation_seconds_not_authoritative': str(sum(measured, Decimal(0))),
+        'historical_worst_case': {'execution_seconds': None, 'review_seconds': None, 'money_cents': None},
+        'admission_encumbrance': {'poc': {'money_cents': 5000, 'execution_seconds': 21600, 'review_seconds': 3600},
+                                 'milestone_including_poc': {'money_cents': 15000, 'execution_seconds': 86400, 'review_seconds': 10800}},
+        'historical_campaign_stop': None, 'migration_safety_stopped': 1,
+        'components': proposal['components'], 'required_evidence': proposal['unrecoverable_from_visible_exports'],
+        'rules': [
+            'Event digest deduplicates repeated exports only; conflicting events remain separate.',
+            'Run or evidence digest is not a reservation ID. Missing IDs require source-backed mapping.',
+            'Do not sum repeated snapshots, replay intervals, or nested measurements as separate charges.',
+            'Without start/end intervals and stage mapping, observation sums are not cumulative elapsed usage.',
+            'Unsettled maximum remains held; unknown unbounded historical effects prevent a finite upper bound.',
+            'POC is included in milestone; full admission encumbrances are not additive historical charges.',
+            'Run stops remain run-scoped; no campaign stop/reset is inferred.',
+            'Missing money/review is unknown. Reported zero is not a trusted settlement or paid-service proof.',
+            'Fractional reported durations remain decimal evidence, never rounded authoritative charges.',
+        ],
+    }
+
+
+def inspect():
+    before = {}
+    for name, expected in PINS.items():
+        path = BASE / name
+        info = path.lstat()
+        check(not path.is_symlink() and info.st_uid == 0 and info.st_gid == 0
+              and info.st_mode & 0o777 == 0o444 and info.st_nlink == 1, 'unsafe installed file')
+        before[name] = sha(path.read_bytes())
+        check(before[name] == expected, 'installed pin differs')
+    active = json.loads((BASE / 'active.json').read_bytes())
+    info = (BASE / 'budget.sqlite').stat()
+    check((info.st_dev, info.st_ino) == (active['device'], active['inode']) ==
+          (16777229, 681781547), 'store identity differs')
+    # mode=ro prevents accidental creation/writes; immutable avoids journal files.
+    with sqlite3.connect((BASE / 'budget.sqlite').as_uri() + '?mode=ro&immutable=1', uri=True) as db:
+        db.execute('PRAGMA query_only=ON')
+        check(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)], 'integrity failure')
+        check(db.execute('SELECT * FROM state').fetchall() == [(1, 1)], 'gate changed')
+        check(db.execute('SELECT COUNT(*) FROM reservations').fetchone()[0] == 0, 'unexpected reservation')
+        receipt = json.loads(db.execute("SELECT body FROM metadata WHERE name='receipt'").fetchone()[0])
+        proposal_raw = db.execute("SELECT body FROM metadata WHERE name='proposal'").fetchone()[0]
+        check(sha(proposal_raw) == receipt['proposal_sha256'], 'proposal mismatch')
+        proposal = json.loads(proposal_raw)
+        artifacts = db.execute('SELECT path,sha256,body FROM artifacts').fetchall()
+        check(all(sha(raw) == expected for path, expected, raw in artifacts), 'artifact mismatch')
+        events = dict(db.execute('SELECT evidence_key,body FROM legacy_events'))
+        check(set(events) == {e['event_sha256'] for e in proposal['events']}, 'event inventory differs')
+        check(all(json.loads(events[e['event_sha256']]) == e for e in proposal['events']), 'event differs')
+    report = summarize(proposal)
+    report['installed'] = {'pins_before': before, 'device': info.st_dev, 'inode': info.st_ino,
+                           'artifact_count': len(artifacts), 'zero_reservations': True,
+                           'proposal_sha256': receipt['proposal_sha256'],
+                           'campaign': active['campaign'], 'store_id': active['store_id']}
+    report['artifact_sources'] = {path: expected for path, expected, raw in artifacts}
+    report['free_bytes_observed'] = shutil.disk_usage(BASE).free
+    report['space_gate'] = 'blocked' if report['free_bytes_observed'] < 15_000_000_000 else 'floor-only'
+    after = {name: sha((BASE / name).read_bytes()) for name in PINS}
+    check(before == after, 'installed state changed during inspection')
+    report['installed']['pins_after'] = after
+    report['mutation_performed'] = False
+    return report
+
+
+def markdown(report):
+    lines = ['# Installed accounting reconciliation — BLOCKED', '',
+             'Read-only inspection; no migration or execution authority.', '',
+             '## Measured inventory', '',
+             '- Artifacts: ' + str(report['installed']['artifact_count']),
+             '- Visible reservation events: ' + str(len(report['reservation_evidence'])),
+             '- Observations: ' + str(len(report['observation_evidence'])),
+             '- Stop events: ' + str(len(report['stop_evidence'])),
+             '- Sum of visible event maxima (NOT authoritative): ' +
+             str(report['sum_of_visible_event_maxima_seconds_not_authoritative']) + ' seconds.',
+             '- Maximum observed duration (lower bound only): ' +
+             report['maximum_single_observed_duration_seconds_lower_bound'] + ' seconds.',
+             '- Sum of observations (NOT authoritative): ' +
+             report['sum_observation_seconds_not_authoritative'] + ' seconds.',
+             '- Free bytes observed: ' + str(report['free_bytes_observed']) + '; space gate: ' + report['space_gate'],
+             '', '## Required reconciliation keys', '',
+             'Every key below is an evidence digest, NOT a new reservation identity.',
+             'Exact source paths/hashes and scalar JSON pointers are preserved in report.json.',
+             '', '| Kind | Run | Reservation | Max seconds | Observed seconds | Evidence key |',
+             '|---|---|---|---|---|---|']
+    for event in report['all_events']:
+        if event['kind'] == 'reserved' or event['execution_seconds'] is not None or str(event['kind']).startswith('stop-'):
+            lines.append('| ' + ' | '.join(str(event[k]) for k in
+                         ('kind', 'run', 'reservation', 'maximum_seconds', 'execution_seconds', 'event_sha256')) + ' |')
+    lines += ['', '## Overlap / charge / stop rules', '']
+    lines += ['- ' + rule for rule in report['rules']]
+    lines += ['', '## Worst case and admission', '',
+              'Historical execution, review and money upper bounds are unknown, not finite.',
+              'POC remains encumbered at $50 / 21600 execution seconds / 3600 review seconds.',
+              'Milestone INCLUDING POC remains encumbered at $150 / 86400 execution seconds / 10800 review seconds.',
+              'These are admission barriers, not recovered charges. Campaign stop is unknown;',
+              'the separate migration safety gate remains stopped=1.', '',
+              '## Exact no-mutation next-step review plan', '',
+              '1. Independently recheck installed pins/device/inode and all source hashes in report.json.',
+              '2. For each listed evidence digest, collect original evaluator receipts and invocation boundaries;',
+              '   preserve conflicting/maxima events and map missing reservation IDs only with original evidence.',
+              '3. Obtain explicit POC/milestone stage mapping, money-service records, and start/end intervals',
+              '   for preparation, selector, execution, replay and review; identify overlaps before aggregation.',
+              '4. Reconcile ten earlier/nonaccepted attempts (nine nonzero, three zero exits across all twelve).',
+              '   Missing invocation/duration evidence cannot be reconstructed from a success or exit code.',
+              '5. Independently distinguish run stop fences/acks from campaign state; never clear either by inference.',
+              '6. Review a future complete migration preserving every original artifact/event, source digest,',
+              '   unresolved maximum, fractional measurement, campaign/store ancestry, and stop history.',
+              '   Require authenticated settlements, cumulative POC carry-forward, explicit authorization,',
+              '   staged identity/inode/device binding and concurrent restart tests before any proposed release.',
+              '7. Do not mutate this store, replace active, create reservations, or run guest controls.',
+              '   Space is separately below the execution floor. Any eventual installation needs a new reviewed plan.',
+              '', '## Evidence unavailable from preserved exports', '']
+    lines += ['- ' + gap for gap in report['required_evidence']]
+    lines += ['', 'No complete migration is unambiguous from these artifacts alone.']
+    return '\n'.join(lines)
+
+
+if __name__ == '__main__':
+    report = inspect()
+    print(markdown(report) if sys.argv[1:] == ['--markdown'] else json.dumps(report, sort_keys=True, indent=2))
