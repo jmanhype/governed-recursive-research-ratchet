@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+"""Read-only space gate before any upstream fetch/build; never invokes QEMU."""
+import json
+from pathlib import Path
+import shutil
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+FLOOR = 15_000_000_000
+# This is headroom, not an authorization to consume the execution floor.
+HEADROOM = 2_000_000_000
+
+
+def main():
+    available = shutil.disk_usage(ROOT).free
+    reason = ('already-below-execution-floor' if available < FLOOR else
+              'insufficient-build-headroom' if available - HEADROOM < FLOOR else
+              'space-preflight-only')
+    receipt = {
+        'version': 1, 'requested_version': '11.1.2', 'available_bytes': available,
+        'minimum_host_free_bytes': FLOOR, 'required_build_headroom_bytes': HEADROOM,
+        'status': 'blocked' if reason != 'space-preflight-only' else 'preflight-pass',
+        'reason': reason, 'source_commit': None, 'source_archive_sha256': None,
+        'binary_sha256': None, 'closure_sha256': None,
+        'source_fetched': False, 'configure_run': False, 'build_run': False,
+        'qemu_executed': False, 'root_installation_performed': False,
+        'note': 'Space pass is not a build, installation, or execution approval.',
+    }
+    print(json.dumps(receipt, sort_keys=True, indent=2))
+    return 1 if receipt['status'] == 'blocked' else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

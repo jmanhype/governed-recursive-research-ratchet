@@ -1,0 +1,3 @@
+6225335a9970a555888175ebe988914a3bf683628ad440a978500a7edf1e59eb  scripts/qemu-build-preflight
+273e21b97fe94c114fd41847c82fa4d1e08d394bb423d48e0f810ab085f6bda1  docs/evidence/trusted-observation/qemu-source-build/preflight.json
+99f81b9c170feb5470e1e5b39d4359b7a30650d4c76dada6165d8da749e77626  docs/evidence/trusted-observation/qemu-source-build/BLOCKED.md
