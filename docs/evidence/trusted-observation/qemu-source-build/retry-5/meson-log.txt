@@ -1,0 +1,153 @@
+Build started at 2026-10-20T22:11:20.250013
+Main binary: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build-fdt-paths/pyvenv/bin/python3.14
+Build Options: 
+Python system: Darwin
+The Meson build system
+Version: 1.11.1
+Source dir: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/fdt-search-probe
+Build dir: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe
+Build type: native build
+Project name: pinned-fdt-search-probe
+Project version: undefined
+-----------
+Detecting compiler via: `cc --version` -> 0
+stdout:
+Apple clang version 17.0.0 (clang-1700.0.13.3)
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+-----------
+Running command: -x c -E -dM -
+-----
+-----------
+Detecting linker via: `cc -Wl,--version` -> 1
+stderr:
+ld: unknown options: --version 
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+-----------
+-----------
+Detecting Apple linker via: `cc -Wl,-v` -> 0
+stderr:
+@(#)PROGRAM:ld PROJECT:ld-1167.4.1
+BUILD 20:00:10 Mar 12 2025
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+will use ld-classic for: armv6 armv7 armv7s i386 armv6m armv7k armv7m armv7em
+LTO support using: LLVM version 17.0.0 (static support for 29, runtime is 29)
+TAPI support using: Apple TAPI version 17.0.0 (tapi-1700.0.3.4)
+-----------
+Sanity check compiler command line: cc -o sanity_check_for_c.exe sanity_check_for_c.c
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Sanity check built target output for host machine c compiler
+ -- Running test binary command:  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/sanity_check_for_c.exe
+-----------
+Sanity check: `/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/sanity_check_for_c.exe` -> 0
+ -- stdout:
+ 
+ -- stderr:
+ 
+ -- returncode: 0
+C compiler for the host machine: cc (clang 17.0.0 "Apple clang version 17.0.0 (clang-1700.0.13.3)")
+C linker for the host machine: cc ld64 1167.4.1
+-----------
+Detecting archiver via: `llvm-ar-17 --version` -> [Errno 2] No such file or directory: 'llvm-ar-17'
+-----------
+Detecting archiver via: `llvm-ar --version` -> [Errno 2] No such file or directory: 'llvm-ar'
+-----------
+Detecting archiver via: `ar --version` -> 1
+stderr:
+usage:  ar -d [-TLsv] archive file ...
+	ar -m [-TLsv] archive file ...
+	ar -m [-abiTLsv] position archive file ...
+	ar -p [-TLsv] archive [file ...]
+	ar -q [-cTLsv] archive file ...
+	ar -r [-cuTLsv] archive file ...
+	ar -r [-abciuTLsv] position archive file ...
+	ar -t [-TLsv] archive [file ...]
+	ar -x [-ouTLsv] archive [file ...]
+-----------
+-----------
+Detecting compiler via: `cc --version` -> 0
+stdout:
+Apple clang version 17.0.0 (clang-1700.0.13.3)
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+-----------
+Running command: -x c -E -dM -
+-----
+-----------
+Detecting linker via: `cc -Wl,--version` -> 1
+stderr:
+ld: unknown options: --version 
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+-----------
+-----------
+Detecting Apple linker via: `cc -Wl,-v` -> 0
+stderr:
+@(#)PROGRAM:ld PROJECT:ld-1167.4.1
+BUILD 20:00:10 Mar 12 2025
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+will use ld-classic for: armv6 armv7 armv7s i386 armv6m armv7k armv7m armv7em
+LTO support using: LLVM version 17.0.0 (static support for 29, runtime is 29)
+TAPI support using: Apple TAPI version 17.0.0 (tapi-1700.0.3.4)
+-----------
+Sanity check compiler command line: cc -o sanity_check_for_c.exe sanity_check_for_c.c
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Sanity check built target output for build machine c compiler
+ -- Running test binary command:  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/sanity_check_for_c.exe
+-----------
+Sanity check: `/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/sanity_check_for_c.exe` -> 0
+ -- stdout:
+ 
+ -- stderr:
+ 
+ -- returncode: 0
+C compiler for the build machine: cc (clang 17.0.0 "Apple clang version 17.0.0 (clang-1700.0.13.3)")
+C linker for the build machine: cc ld64 1167.4.1
+Build machine cpu family: aarch64
+Build machine cpu: aarch64
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+Target machine cpu family: aarch64
+Target machine cpu: aarch64
+Running compile:
+Working directory:  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/tmpnlfrb5qv
+Code:
+
+        #include<stddef.h>
+        #include<stdio.h>
+        int main(void) {
+            printf("%ld\n", (long)(sizeof(void *)));
+            return 0;
+        }
+-----------
+Command line: `cc /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/tmpnlfrb5qv/testfile.c -o /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/tmpnlfrb5qv/output.exe -O0 -U_FORTIFY_SOURCE -Werror=implicit-function-declaration` -> 0
+Program stdout:
+
+8
+
+Program stderr:
+
+
+Running compile:
+Working directory:  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/tmpubuz25qo
+Code:
+
+-----------
+Command line: `cc /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/tmpubuz25qo/testfile.c -o /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-private/tmpubuz25qo/output.obj -c -O0 -U_FORTIFY_SOURCE -Werror=implicit-function-declaration -Werror=unknown-warning-option -Werror=unused-command-line-argument -Werror=ignored-optimization-argument --print-search-dirs` -> 0
+stdout:
+programs: =/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+libraries: =/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17
+-----------
+
+tests/fdt-search-probe/meson.build:3:9: ERROR: C static library 'fdt' not found

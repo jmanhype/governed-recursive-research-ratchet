@@ -1,0 +1,8 @@
+{
+  "accounting_authorized": false,
+  "execution_authorized": false,
+  "input_bytes": 67010088,
+  "input_files_checked": 218,
+  "installed": false,
+  "plan_sha256": "d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd"
+}

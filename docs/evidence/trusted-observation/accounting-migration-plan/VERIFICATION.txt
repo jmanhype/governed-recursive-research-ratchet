@@ -1,0 +1,90 @@
+== Basis and boundary ==
+Worktree: .claude/worktrees/dev-GRRR-gu87
+Branch: story/GRRR-gu87
+Basis commit: 6f47e896f9a07fab78f168b48fc857ff698985a9
+Scope: launcher fail-closed preflight plus proposal-only migration design.
+No root/sudo, protected-path mutation, stop release, hold release, reservation,
+settlement, QEMU process, guest, candidate execution, story delivery, or push.
+
+== Focused no-guest unit coverage ==
+Command:
+/usr/bin/python3 -I -B -m unittest discover -s tests -p unit_trusted_host.py -v
+Exit: 0
+Summary: Ran 10 tests; OK
+
+Command:
+/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p unit_trusted_host.py -v
+Exit: 0
+Summary: Ran 10 tests; OK
+
+The added test writes a temporary conservative active record without directory,
+invokes the production accounting preflight, and requires a structured
+RecoveryRequired failure before budget.sqlite can be accessed.
+
+Command-form note: one initial system-python attempt selected the test by
+dotted module name and failed to import a tests package before running any
+test. The repository's required discovery form above passed 10/10. A first pvg
+verify invocation was also launched from the main checkout with worktree-relative
+paths and failed stat; rerunning it in the story worktree passed as recorded
+below. Neither was a production or test-case failure.
+
+== Full no-guest unit coverage ==
+Command:
+/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v
+Exit: 0
+Summary: Ran 117 tests in 3.505s; OK
+
+Command:
+/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v
+Exit: 0
+Summary: Ran 117 tests in 3.170s; OK
+
+No integration or guest suite was run because this follow-up explicitly
+forbids QEMU/guest/candidate execution.
+
+== In-memory compilation under both interpreters ==
+Commands:
+/usr/bin/python3 -I -B -c 'from pathlib import Path; paths=("scripts/trusted-identity-integration","research/persistent_budget.py","tests/unit_trusted_host.py"); [compile(Path(p).read_bytes(),p,"exec") for p in paths]'
+/opt/homebrew/bin/python3 -B -c 'from pathlib import Path; paths=("scripts/trusted-identity-integration","research/persistent_budget.py","tests/unit_trusted_host.py"); [compile(Path(p).read_bytes(),p,"exec") for p in paths]'
+Exit: 0 for both.
+
+The launcher and test files are extensionless/Python sources; compile() was
+used without generating bytecode artifacts.
+
+== Evidence JSON and live binding assertions ==
+Commands:
+/usr/bin/python3 -I -B -m json.tool docs/evidence/trusted-observation/accounting-migration-plan/PLAN.json
+/opt/homebrew/bin/python3 -B -m json.tool docs/evidence/trusted-observation/accounting-migration-plan/INPUT-READBACK.json
+/usr/bin/python3 -I -B -c '<one-line assertion loading PLAN.json and INPUT-READBACK.json, hashing the three protected files, and asserting proposal-only/stopped/source mappings>'
+Exit: 0 for all.
+Final assertion output: accounting-plan-live-readback: PASS
+
+== pvg verify ==
+Command, from the story worktree:
+pvg verify --include-tests --format=text scripts/trusted-identity-integration research/persistent_budget.py tests/unit_trusted_host.py docs/evidence/trusted-observation/accounting-migration-plan/PLAN.md docs/evidence/trusted-observation/accounting-migration-plan/PLAN.json docs/evidence/trusted-observation/accounting-migration-plan/INPUT-READBACK.json
+Exit: 0
+Output: VERIFY: PASSED (2 files scanned, 0 issues)
+
+== Git whitespace check ==
+Command: git diff --check
+Exit: 0
+Output: empty
+
+== Final read-only protected store check ==
+Before and after the immutable SQLite read, SHA-256 values were:
+- active.json: cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+- budget.sqlite: 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+- receipt.json: 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde
+
+URI: file:///Library/GRRR/accounting/budget.sqlite?mode=ro&immutable=1
+PRAGMA query_only=ON
+integrity_check: ok
+state: 1 row, stopped=1
+metadata: 2
+artifacts: 259
+legacy_events: 110
+reservations: 0
+
+The active record still lacks directory. Its hash and database hash remained
+identical before and after all checks. research/persistent_budget.py is
+unchanged and validate_store was not weakened.

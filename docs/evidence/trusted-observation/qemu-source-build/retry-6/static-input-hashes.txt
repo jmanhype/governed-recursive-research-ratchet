@@ -1,0 +1,15 @@
+afd2af87295f3a110410c6d96fdc9176f723eaa52d309e88fd97c2a4b1ba58ef  /opt/homebrew/Cellar/glib/2.90.1/lib/libglib-2.0.a
+77dcf975f1568218bdb48b1da5c62b14b9ff481feedf7b9b87b40d43f6a6e6f5  /opt/homebrew/Cellar/gettext/1.0/lib/libintl.a
+535f1ffeeff811735d796afcfd5f525e71227dc4496637f188d7569dd05b751c  /opt/homebrew/Cellar/pcre2/10.49/lib/libpcre2-8.a
+7352a67a6a1a15554d996d38886812e858bebbbcbf3985901724cab444ee3b3b  /opt/homebrew/Cellar/glib/2.90.1/.brew/glib.rb
+170f5a29d2eb95b9dd1f1f754c0f9b90692c3d5dcf6db02c199c93e2c445177d  /opt/homebrew/Cellar/gettext/1.0/.brew/gettext.rb
+94c19a0d869da4990a8f3f371e37c986ad72124d2d94032e061c4a9019f9e174  /opt/homebrew/Cellar/pcre2/10.49/.brew/pcre2.rb
+e300d8485ab8b46848de66eb429e10b4097af5cd848629c9d1ea48d3a8114793  /opt/homebrew/Cellar/glib/2.90.1/INSTALL_RECEIPT.json
+f9cefe18f7be29d3b8c9f152577b8a664b75e921878d0b4dbac0b1bf246a4773  /opt/homebrew/Cellar/gettext/1.0/INSTALL_RECEIPT.json
+0127639382c2f834b12245a1c53d70647ad740db8b2c3a07f3946d6c58f69dde  /opt/homebrew/Cellar/pcre2/10.49/INSTALL_RECEIPT.json
+9e34664ce148099b28ba7e69891fb554052c7ccf79e02f36e47dcf7740837ff4  /opt/homebrew/Cellar/glib/2.90.1/sbom.spdx.json
+0bb235c3abb3743d38445897f6cdd9e4f15d79a2b72ec892001f7f5a4356412c  /opt/homebrew/Cellar/gettext/1.0/sbom.spdx.json
+f080255c20aeb62038ddd83f4495074f37640f1dc24e6f40d33f7497a30c7c8c  /opt/homebrew/Cellar/pcre2/10.49/sbom.spdx.json
+fa6f36630bb1e0c571d34b2bbdf188d08495c9dbf58f28cac112f303fc1f58fb  /opt/homebrew/Cellar/glib/2.90.1/LGPL-2.1-or-later.txt
+197d8a73ffee0d6b09adba2f9c677b5f5aede24edf89258a68e48248d010d811  /opt/homebrew/Cellar/pcre2/10.49/LICENCE.md
+e79e9c8a0c85d735ff98185918ec94ed7d175efc377012787aebcf3b80f0d90b  /opt/homebrew/Cellar/gettext/1.0/COPYING

@@ -1,0 +1,5 @@
+1474a6ef89624613732e0fc9e6d9fe5338b8885916cf64ab8c1c6097123f3ef6  /opt/homebrew/Cellar/ninja/1.13.2/bin/ninja
+1686836060a476b6801c01aa98a5db491c0b479672ddccccd5c52e5ab6f1d257  /opt/homebrew/Cellar/ninja/1.13.2/INSTALL_RECEIPT.json
+6e5309e103ab11da01bd45b1886813e4beb60ad068260e9c7c8a42acfb8aa720  /opt/homebrew/Cellar/ninja/1.13.2/.brew/ninja.rb
+eb7e9ab9690124c5c9f42bdc81383d886a3dede26345b6ed15bbad7caf81f7ea  /opt/homebrew/Cellar/ninja/1.13.2/COPYING
+9405ed5001c73ca207aa7d93d30799c858366669e43c1c3df7c8631a66a0bf1f  /opt/homebrew/Cellar/ninja/1.13.2/sbom.spdx.json

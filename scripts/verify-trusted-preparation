@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Independent non-executing verification against an explicitly retained receipt.
+
+Usage: python3 scripts/verify-trusted-preparation PREPARATION_DIR RECEIPT_SHA256
+This verifies bytes and bindings only, never guest behavior or execution approval.
+"""
+import importlib.machinery
+import importlib.util
+import json
+from pathlib import Path
+import sys
+import tarfile
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, identifier, require
+
+loader = importlib.machinery.SourceFileLoader('trusted_prepare', str(ROOT / 'scripts/prepare-trusted-observation'))
+spec = importlib.util.spec_from_loader(loader.name, loader)
+prepare = importlib.util.module_from_spec(spec)
+loader.exec_module(prepare)
+
+
+def verify(target: Path, receipt_hash: str) -> dict:
+    identifier(receipt_hash, True)
+    raw = (target / 'preparation.json').read_bytes()
+    require(digest(raw) == receipt_hash, 'IntegrityFailure', 'Preparation receipt differs from retained anchor')
+    receipt = json.loads(raw)
+    profile_raw = (target / 'prepared-profile.json').read_bytes()
+    profile = json.loads(profile_raw)
+    require(digest(profile_raw) == receipt['profile_sha256'] and profile['dispatch_enabled'] is False
+            and profile['authorization'] == 'development-review-only',
+            'IntegrityFailure', 'Prepared profile differs or purports to enable execution')
+    binding_raw = (target / 'development-binding.json').read_bytes()
+    binding = json.loads(binding_raw)
+    require(digest(binding_raw) == receipt['development_binding_sha256']
+            == profile['development_binding_sha256'] and binding['execution_authorized'] is False
+            and binding['proposal_sha256'] == prepare.PROPOSAL,
+            'IntegrityFailure', 'Development binding differs')
+    for name, hashed in receipt['supervisor_source_hashes'].items():
+        require(Path(name).name == name and digest((ROOT / 'research/trusted-supervisor' / name).read_bytes()) == hashed,
+                'IntegrityFailure', 'Supervisor source changed')
+    require(digest((ROOT / 'research/trusted-guest.sh').read_bytes()) == profile['guest_script_sha256'],
+            'IntegrityFailure', 'Guest bootstrap changed')
+    media = target / 'media'
+    require(prepare.elf_identity(media / 'supervis') == receipt['supervisor']
+            and prepare.elf_identity(media / 'helper') == receipt['helper'],
+            'IntegrityFailure', 'Guest executable bytes changed')
+    expected = {name: record['sha256'] for name, record in receipt['primary_iso_readback'].items()}
+    require(digest((target / 'input.iso').read_bytes()) == receipt['image_sha256']
+            == profile['input_image_sha256'], 'IntegrityFailure', 'Detached image changed')
+    require(prepare.iso_readback(target / 'input.iso', expected) == receipt['primary_iso_readback'],
+            'IntegrityFailure', 'Detached image read-back differs')
+    with tarfile.open(media / 'vlt.tar') as archive:
+        files = receipt['source']['files']
+        members = archive.getmembers()
+        require(sorted(m.name for m in members) == sorted(files), 'IntegrityFailure', 'Source archive membership differs')
+        for member in members:
+            require(member.isfile() and not Path(member.name).is_absolute()
+                    and '..' not in Path(member.name).parts, 'IntegrityFailure', 'Unsafe source archive member')
+            require(digest(archive.extractfile(member).read()) == files[member.name]['sha256'],
+                    'IntegrityFailure', 'Source archive file changed')
+    require(receipt['candidate_execution_performed'] is False and receipt['vm_execution_performed'] is False,
+            'IntegrityFailure', 'Unexpected execution claim')
+    return {'receipt_sha256': receipt_hash, 'supervisor_sha256': receipt['supervisor']['sha256'],
+            'helper_sha256': receipt['helper']['sha256'],
+            'image_sha256': receipt['image_sha256'], 'profile_sha256': receipt['profile_sha256'],
+            'source_files_verified': len(receipt['source']['files']), 'iso_files_verified': len(expected),
+            'execution_performed': False, 'execution_approval': 'absent', 'guest_behavior': 'not-run'}
+
+
+if __name__ == '__main__':
+    require(len(sys.argv) == 3, 'InvalidInput', 'Usage: verify-trusted-preparation PREPARATION_DIR RECEIPT_SHA256')
+    print(canonical(verify(Path(sys.argv[1]).resolve(strict=True), sys.argv[2])).decode())

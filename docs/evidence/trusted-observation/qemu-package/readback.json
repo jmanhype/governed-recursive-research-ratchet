@@ -1,0 +1,10 @@
+{
+  "data_count": 185,
+  "execution_authorized": false,
+  "files_checked": 191,
+  "installation_sha256": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+  "qemu_executed": false,
+  "root_ownership_verified": false,
+  "runtime_loading_verified": false,
+  "staging_readback": "pass"
+}

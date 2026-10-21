@@ -1,0 +1,9 @@
+d74ba56dbc19b07c39aaf058cb919c7faee177c0294db0b2764b20f3e7fccd4d  scripts/build-qemu-upstream
+b0ff337919fec53a23ab89298b927959327e082edcd45221f201d94a728e1a98  docs/evidence/trusted-observation/qemu-source-build/retry-6/build.txt
+408d1419819597ef27792a0fd80b7981befc2ba570e8e1e60ba59971a069f816  docs/evidence/trusted-observation/qemu-source-build/retry-6/config-host.mak.txt
+513b85e48ea308891ffa48edfc9ed069012bb703506b7b77ecdc762c1ce691e2  docs/evidence/trusted-observation/qemu-source-build/retry-6/fdt-readback.txt
+0f4fd4b6342bb07fc97f9bc75befff61a5512817604e4f4fa89a1eada661cc13  docs/evidence/trusted-observation/qemu-source-build/retry-6/meson-log.txt
+f5d1f1a4d163ac38d04720bc3aa5891f967c7d763dfabce0d334248acd24023e  docs/evidence/trusted-observation/qemu-source-build/retry-6/source-hashes.txt
+8599b6f131fd69e8358857b000d55e59ad19b81812209693d1a0bd5fe622a19f  docs/evidence/trusted-observation/qemu-source-build/retry-6/static-input-hashes.txt
+b4c5972e399846af2139edf7132b8ba530ad9d306f4d7c3050522468495d8cc7  docs/evidence/trusted-observation/qemu-source-build/retry-6/fdt-static.patch
+ddb206fb2f7a2c54d3ea0216f3d667fbff1a6fea9ecd102f3f91b9d8c962c718  docs/evidence/trusted-observation/qemu-source-build/retry-6/STATUS.md

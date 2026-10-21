@@ -1,0 +1,257 @@
+#!/usr/bin/python3
+"""Standalone stdlib-only blocked evidence store builder/verifier/provisioner.
+
+Install mode must be independently placed under /Library/GRRR/bootstrap and
+invoked by the pinned canonical interpreter with -I -S -B. No application import.
+No allowance, settlement, complete migration, QEMU invocation or stop release.
+"""
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import sqlite3
+import stat
+import subprocess
+import sys
+
+PYTHON = '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9'
+PYTHON_SHA = '5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26'
+JSON_PATH = Path(PYTHON).parents[1] / 'lib/python3.9/json/__init__.py'
+TOOLCHAIN = {Path(PYTHON): PYTHON_SHA,
+             JSON_PATH: '332fabb72a4a1ed02c9207a7619ab339dac8f0b6862e16f6499147121b302a27'}
+BASE = Path('/Library/GRRR/accounting')
+BOOTSTRAP = Path('/Library/GRRR/bootstrap/conservative-genesis')
+PROFILES = ['synthetic', 'offline', 'trusted-observation']
+CEILINGS = {'poc': [5000, 21600_000000, 3600_000000],
+            'milestone': [15000, 86400_000000, 10800_000000]}
+
+
+def check(ok, reason):
+    if not ok:
+        raise RuntimeError(reason)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+
+
+def read(path, maximum=134217728):
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
+        info = os.fstat(stream.fileno())
+        check(stat.S_ISREG(info.st_mode) and info.st_nlink == 1 and info.st_size <= maximum, 'unsafe input')
+        raw = stream.read(maximum + 1)
+        check(len(raw) == info.st_size, 'input changed')
+        return raw
+
+
+def safe_metadata(info, listing):
+    check(info.st_uid == 0 and info.st_gid == 0 and not stat.S_ISLNK(info.st_mode)
+          and not info.st_mode & 0o022, 'mutable protected path')
+    check(b'+' not in listing.split(None, 1)[0], 'ACL rejected')
+
+
+def protected(path, toolchain=False):
+    check(path.is_absolute() and '..' not in path.parts, 'absolute canonical path required')
+    check(not toolchain or path in TOOLCHAIN, 'unreviewed toolchain exception')
+    for item in reversed((path, *path.parents)):
+        info = item.lstat()
+        listing = subprocess.run(['/bin/ls', '-lde', str(item)], check=True, capture_output=True,
+                                 timeout=2, env={'PATH': '/usr/bin:/bin'}).stdout
+        safe_metadata(info, listing)
+    if path.is_file():
+        check(path.stat().st_nlink == 1, 'multiple links rejected')
+        check(toolchain or not path.stat().st_mode & 0o222, 'protected file writable')
+    if toolchain:
+        check(sha(read(path)) == TOOLCHAIN[path], 'toolchain hash differs')
+
+
+def verify_toolchain():
+    for path in TOOLCHAIN:
+        protected(path, toolchain=True)
+    result = subprocess.run([PYTHON, '-I', '-S', '-B', '--version'], check=True,
+                            capture_output=True, timeout=5, env={'PATH': '/usr/bin:/bin'})
+    check(result.stdout.strip() == b'Python 3.9.6', 'canonical interpreter version differs')
+
+
+def build(root, output):
+    check(os.getuid() != 0 and not output.exists(), 'nonroot fresh preparation directory required')
+    check(shutil.disk_usage(root).free >= 15_350_000_000, 'preparation space floor')
+    proposal_path = root / 'docs/evidence/trusted-observation/accounting-reconciliation/genesis-proposal.json'
+    proposal_raw = read(proposal_path)
+    proposal = json.loads(proposal_raw)
+    check(proposal['execution_gate'] == 'blocked' and not proposal['migration_authorized'], 'wrong proposal')
+    output.mkdir(mode=0o700, parents=True)
+    campaign = sha(b'GRRR-gu87 conservative campaign ' + sha(proposal_raw).encode())
+    store_id = sha(b'conservative-genesis-v1 ' + campaign.encode())
+    receipt = {'schema': 'conservative-genesis', 'version': 1,
+               'campaign': campaign, 'store_id': store_id, 'proposal_sha256': sha(proposal_raw),
+               'unresolved_history': True, 'execution_gate': 'blocked',
+               'historical_campaign_stop': None, 'migration_safety_stopped': 1,
+               'reset_allowance': False, 'profiles': PROFILES,
+               'encumbrances': CEILINGS, 'milestone_includes_poc': True,
+               'complete_migration': False, 'release_authorized': False}
+    receipt_raw = canonical(receipt)
+    dbpath = output / 'budget.sqlite'
+    with sqlite3.connect(dbpath) as db:
+        db.executescript("""
+        PRAGMA journal_mode=DELETE;
+        PRAGMA synchronous=FULL;
+        CREATE TABLE state(id INTEGER PRIMARY KEY CHECK(id=1), stopped INTEGER NOT NULL CHECK(stopped=1));
+        INSERT INTO state VALUES(1,1);
+        CREATE TABLE metadata(name TEXT PRIMARY KEY, body BLOB NOT NULL);
+        CREATE TABLE artifacts(path TEXT PRIMARY KEY, sha256 TEXT NOT NULL, body BLOB NOT NULL);
+        CREATE TABLE legacy_events(evidence_key TEXT PRIMARY KEY, body BLOB NOT NULL);
+        CREATE TABLE reservations(id TEXT PRIMARY KEY);
+        CREATE TRIGGER block_reservation BEFORE INSERT ON reservations BEGIN SELECT RAISE(ABORT,'conservative migration stopped'); END;
+        CREATE TRIGGER block_state_update BEFORE UPDATE ON state BEGIN SELECT RAISE(ABORT,'release requires independent migration'); END;
+        CREATE TRIGGER block_state_delete BEFORE DELETE ON state BEGIN SELECT RAISE(ABORT,'release requires independent migration'); END;
+        """)
+        db.execute('INSERT INTO metadata VALUES(?,?)', ('receipt', receipt_raw))
+        db.execute('INSERT INTO metadata VALUES(?,?)', ('proposal', proposal_raw))
+        inventory = dict(proposal['artifacts'])
+        for attempt in proposal['attempts']:
+            inventory[attempt['path'] + '/manifest.json'] = attempt['manifest_sha256']
+        for name, expected in sorted(inventory.items()):
+            path = Path(name)
+            check(not path.is_absolute() and '..' not in path.parts, 'invalid evidence path')
+            raw = read(root / path)
+            check(sha(raw) == expected, 'original evidence changed')
+            db.execute('INSERT INTO artifacts VALUES(?,?,?)', (name, expected, raw))
+        for event in proposal['events']:
+            # Evidence key is NOT a reservation identity. Raw events remain in artifacts.
+            db.execute('INSERT INTO legacy_events VALUES(?,?)',
+                       (event['event_sha256'], canonical(event)))
+    (output / 'receipt.json').write_bytes(receipt_raw)
+    verify(dbpath, receipt)
+    plan = {'schema': 'conservative-genesis-provisioning', 'version': 1,
+            'decision': 'proposed-blocked-provisioning-only', 'destination': str(BASE),
+            'installer_sha256': sha(read(Path(__file__))), 'python_sha256': PYTHON_SHA,
+            'database_source': str(dbpath.resolve()), 'database_sha256': sha(read(dbpath)),
+            'receipt_source': str((output / 'receipt.json').resolve()),
+            'receipt_sha256': sha(receipt_raw), 'campaign': campaign, 'store_id': store_id,
+            'minimum_free_bytes': 15_000_000_000, 'execution_authorized': False}
+    (output / 'plan.json').write_bytes(canonical(plan))
+    return plan
+
+
+def verify(path, receipt):
+    check(receipt['schema'] == 'conservative-genesis' and receipt['unresolved_history'] is True
+          and receipt['migration_safety_stopped'] == 1 and receipt['historical_campaign_stop'] is None
+          and receipt['execution_gate'] == 'blocked' and receipt['complete_migration'] is False
+          and receipt['reset_allowance'] is False and receipt['release_authorized'] is False
+          and receipt['encumbrances'] == CEILINGS and receipt['profiles'] == PROFILES
+          and receipt['milestone_includes_poc'] is True, 'receipt violates blocked semantics')
+    with sqlite3.connect(path.as_uri() + '?mode=ro', uri=True) as db:
+        check(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)], 'integrity failure')
+        check(db.execute('SELECT * FROM state').fetchall() == [(1, 1)], 'migration gate changed')
+        check(db.execute('SELECT * FROM reservations').fetchall() == [], 'fabricated reservations')
+        check(db.execute('SELECT body FROM metadata WHERE name="receipt"').fetchone()[0] == canonical(receipt),
+              'receipt binding changed')
+        proposal = json.loads(db.execute('SELECT body FROM metadata WHERE name="proposal"').fetchone()[0])
+        check(sha(db.execute('SELECT body FROM metadata WHERE name="proposal"').fetchone()[0])
+              == receipt['proposal_sha256'], 'proposal changed')
+        expected = dict(proposal['artifacts'])
+        expected.update({a['path'] + '/manifest.json': a['manifest_sha256'] for a in proposal['attempts']})
+        rows = db.execute('SELECT path,sha256,body FROM artifacts').fetchall()
+        check({name: digest for name, digest, raw in rows} == expected, 'source inventory differs')
+        check(all(sha(raw) == digest for name, digest, raw in rows), 'raw evidence changed')
+        check(dict(db.execute('SELECT evidence_key,body FROM legacy_events')) ==
+              {e['event_sha256']: canonical(e) for e in proposal['events']}, 'events differ')
+    return {'verified': True, 'schema': 'conservative-genesis', 'stopped': 1,
+            'database_sha256': sha(read(path)), 'artifact_count': len(rows)}
+
+
+def reserve(path, profile, stage, maximum):
+    check(profile in PROFILES and stage in CEILINGS, 'unknown scope')
+    # Even a zero-cost request never passes; no duplicate-key bypass.
+    with sqlite3.connect(path.as_uri() + '?mode=rw', uri=True, timeout=5) as db:
+        db.execute('BEGIN IMMEDIATE')
+        check(db.execute('SELECT stopped FROM state').fetchall() == [(1,)], 'unsafe gate')
+        raise RuntimeError('conservative-genesis stopped: reconciliation and explicit authorization required')
+
+
+def install(plan_path, expected, authorization):
+    check(os.getuid() == 0, 'root-only installation')
+    check(Path(__file__) == BOOTSTRAP and sys.executable == PYTHON
+          and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode, 'isolated canonical bootstrap required')
+    for path in (BOOTSTRAP, plan_path):
+        protected(path)
+    verify_toolchain()
+    check(Path(json.__file__) == JSON_PATH, 'stdlib origin differs')
+    raw = read(plan_path, 65536)
+    check(sha(raw) == expected and authorization == 'INSTALL_BLOCKED_CONSERVATIVE_GENESIS:' + expected,
+          'exact provisioning authorization required')
+    plan = json.loads(raw)
+    check(set(plan) == {'schema', 'version', 'decision', 'destination', 'execution_authorized',
+                       'installer_sha256', 'python_sha256', 'minimum_free_bytes',
+                       'database_source', 'database_sha256', 'receipt_source', 'receipt_sha256',
+                       'campaign', 'store_id'}, 'unexpected plan fields')
+    check(plan['schema'] == 'conservative-genesis-provisioning' and plan['version'] == 1
+          and plan['decision'] == 'proposed-blocked-provisioning-only'
+          and plan['destination'] == str(BASE) and plan['execution_authorized'] is False
+          and plan['installer_sha256'] == sha(read(BOOTSTRAP))
+          and plan['python_sha256'] == PYTHON_SHA and plan['minimum_free_bytes'] == 15_000_000_000,
+          'plan mismatch')
+    # Lock the preexisting protected parent directory: no writable lockfile needed.
+    protected(BASE.parent)
+    lock = os.open(BASE.parent, os.O_RDONLY)
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        check(not os.path.lexists(BASE), 'existing/partial accounting state: refuse, never overwrite or reset')
+        database = read(Path(plan['database_source']))
+        receipt_raw = read(Path(plan['receipt_source']), 65536)
+        check(sha(database) == plan['database_sha256'] and sha(receipt_raw) == plan['receipt_sha256'],
+              'prepared bytes differ')
+        receipt = json.loads(receipt_raw)
+        check(receipt['campaign'] == plan['campaign'] and receipt['store_id'] == plan['store_id'],
+              'identity mismatch')
+        check(shutil.disk_usage(BASE.parent).free - len(database) - 1048576 >= plan['minimum_free_bytes'],
+              'space floor')
+        BASE.mkdir(mode=0o755)
+        os.chown(BASE, 0, 0)
+        # Any later failure leaves an inactive partial store; next attempt refuses.
+        for name, data in [('budget.sqlite', database), ('receipt.json', receipt_raw)]:
+            with open(BASE / name, 'xb') as stream:
+                stream.write(data)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.chmod(BASE / name, 0o444)
+            os.chown(BASE / name, 0, 0)
+        verify(BASE / 'budget.sqlite', receipt)
+        info = (BASE / 'budget.sqlite').stat()
+        binding = {'schema': 'conservative-genesis', 'execution_gate': 'blocked', 'stopped': 1,
+                   'unresolved_history': True, 'campaign': receipt['campaign'], 'store_id': receipt['store_id'],
+                   'device': info.st_dev, 'inode': info.st_ino, 'database_sha256': sha(database),
+                   'receipt_sha256': sha(receipt_raw), 'plan_sha256': expected}
+        # Intentionally incompatible with complete migration active schema.
+        with open(BASE / 'active.json', 'xb') as stream:
+            stream.write(canonical(binding))
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.chmod(BASE / 'active.json', 0o444)
+        os.chown(BASE / 'active.json', 0, 0)
+        directory = os.open(BASE, os.O_RDONLY)
+        os.fsync(directory)
+        os.close(directory)
+        os.fsync(lock)
+        return binding
+    finally:
+        os.close(lock)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 4 and sys.argv[1] == 'build':
+        result = build(Path(sys.argv[2]).resolve(), Path(sys.argv[3]).resolve())
+    elif len(sys.argv) == 4 and sys.argv[1] == 'verify':
+        result = verify(Path(sys.argv[2]).resolve(), json.loads(read(Path(sys.argv[3]))))
+    elif len(sys.argv) == 5 and sys.argv[1] == 'install':
+        result = install(Path(sys.argv[2]), sys.argv[3], sys.argv[4])
+    else:
+        raise SystemExit('build ROOT OUTPUT | verify DATABASE RECEIPT | install PROTECTED_PLAN SHA AUTHORIZATION')
+    print(json.dumps(result, sort_keys=True, indent=2))

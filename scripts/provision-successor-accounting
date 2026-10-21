@@ -1,0 +1,309 @@
+#!/usr/bin/python3
+"""Provision the distinct GRRR-POC-2 successor accounting namespace.
+
+Install mode is root-only from the independently installed bootstrap:
+  python3.9 -I -S -B /Library/GRRR/bootstrap/provision-successor-accounting \
+    install PROTECTED_PLAN PLAN_SHA256 AUTHORIZATION
+
+The stopped /Library/GRRR/accounting predecessor is read only. This installer
+creates a fresh Budget-compatible store, performs no reservation, and never
+executes QEMU, a guest, paid dispatch, migration, or stop release.
+"""
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import sqlite3
+import stat
+import subprocess
+import sys
+from contextlib import closing
+
+BASE = Path('/Library/GRRR/accounting-poc2')
+OLD_ACTIVE = Path('/Library/GRRR/accounting/active.json')
+BOOTSTRAP = Path('/Library/GRRR/bootstrap/provision-successor-accounting')
+PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')
+PYTHON_SHA256 = '5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26'
+OLD_ACTIVE_SHA256 = 'cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b'
+OLD_RECEIPT_SHA256 = '9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde'
+AUTHORIZATION_REFERENCE = hashlib.sha256(
+    b'GRRR-POC-2 fresh successor to stopped unresolved GRRR accounting').hexdigest()
+PROTECTED_UID = 0
+PROTECTED_GID = 0
+EVALUATOR_UID = 320
+EVALUATOR_GID = 320
+PROFILES = ['synthetic', 'offline', 'trusted-observation']
+BUDGET = {'currency': 'USD', 'money_cents': 5000,
+          'execution_seconds': 21600, 'review_seconds': 3600}
+
+
+def check(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'),
+                      ensure_ascii=True, allow_nan=False).encode('ascii')
+
+
+def unique(pairs):
+    result = {}
+    for key, value in pairs:
+        check(key not in result, 'duplicate JSON field')
+        result[key] = value
+    return result
+
+
+def safe_metadata(info, listing):
+    check(info.st_uid == PROTECTED_UID
+          and info.st_gid == PROTECTED_GID
+          and not stat.S_ISLNK(info.st_mode) and not info.st_mode & 0o022,
+          'unsafe protected path metadata')
+    check(b'+' not in listing.split(None, 1)[0], 'ACL-bearing protected path')
+
+
+def protected(path, directory=False, readonly=True):
+    check(path.is_absolute() and '..' not in path.parts, 'normalized absolute path required')
+    for member in reversed((path, *path.parents)):
+        info = member.lstat()
+        listing = subprocess.run(['/bin/ls', '-lde', str(member)], check=True, capture_output=True,
+                                 timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+        safe_metadata(info, listing)
+    info = path.lstat()
+    check(stat.S_ISDIR(info.st_mode) if directory else stat.S_ISREG(info.st_mode),
+          'protected path type differs')
+    if not directory:
+        check(info.st_nlink == 1 and (not readonly or not info.st_mode & 0o222),
+              'protected file must be single-link read-only')
+
+
+def read_regular(path, maximum):
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
+    with os.fdopen(os.open(path, flags), 'rb') as stream:
+        info = os.fstat(stream.fileno())
+        check(stat.S_ISREG(info.st_mode) and info.st_size <= maximum, 'invalid regular input')
+        raw = stream.read(maximum + 1)
+        check(len(raw) == info.st_size, 'input changed while read')
+        return raw
+
+
+def hashed_identifier(value, label='identifier'):
+    check(isinstance(value, str) and len(value) == 64
+          and all(character in '0123456789abcdef' for character in value),
+          'invalid ' + label)
+    return value
+
+
+def identities(old_active_sha256, authorization_reference):
+    seed = sha(b'GRRR-POC-2\0' + old_active_sha256.encode('ascii')
+               + b'\0' + authorization_reference.encode('ascii'))
+    return (sha(b'campaign\0' + seed.encode('ascii')),
+            sha(b'store\0' + seed.encode('ascii')))
+
+
+def plan():
+    campaign, store_id = identities(OLD_ACTIVE_SHA256, AUTHORIZATION_REFERENCE)
+    return {
+        'schema': 'GRRR-POC-2-successor-accounting',
+        'version': 1,
+        'decision': 'approved-successor-accounting-provisioning-only',
+        'authorization_reference': AUTHORIZATION_REFERENCE,
+        'predecessor': {
+            'active_path': str(OLD_ACTIVE), 'active_sha256': OLD_ACTIVE_SHA256,
+            'receipt_sha256': OLD_RECEIPT_SHA256, 'status': 'stopped-unresolved',
+        },
+        'destination': str(BASE), 'execution_authorized': False, 'paid_dispatch': False,
+        'budget': dict(BUDGET), 'evaluator_uid': EVALUATOR_UID, 'evaluator_gid': EVALUATOR_GID,
+        'installer_sha256': sha(Path(__file__).read_bytes()), 'python_sha256': PYTHON_SHA256,
+        'campaign': campaign, 'store_id': store_id,
+    }
+
+
+def validate_old_active(raw):
+    active = json.loads(raw, object_pairs_hook=unique)
+    check(set(active) == {'schema', 'campaign', 'store_id', 'database_sha256', 'device',
+                          'execution_gate', 'inode', 'plan_sha256', 'receipt_sha256',
+                          'stopped', 'unresolved_history'}, 'old active schema differs')
+    for key in ('campaign', 'store_id', 'database_sha256', 'plan_sha256', 'receipt_sha256'):
+        hashed_identifier(active[key], 'old active digest')
+    check(active['schema'] == 'conservative-genesis'
+          and active['execution_gate'] == 'blocked'
+          and active['stopped'] == 1 and active['unresolved_history'] is True
+          and type(active['device']) is int and type(active['inode']) is int
+          and active['receipt_sha256'] == OLD_RECEIPT_SHA256,
+          'old predecessor is not the exact stopped unresolved binding')
+    return active
+
+
+def validate_plan(raw, expected, authorization, old_raw):
+    check(sha(raw) == expected, 'plan bytes differ')
+    check(authorization == 'INSTALL_GRRR_POC2_SUCCESSOR_ACCOUNTING:'
+          + expected + ':' + AUTHORIZATION_REFERENCE, 'exact plan authorization required')
+    value = json.loads(raw, object_pairs_hook=unique)
+    check(set(value) == {'schema', 'version', 'decision', 'authorization_reference',
+                         'predecessor', 'destination', 'execution_authorized', 'paid_dispatch',
+                         'budget', 'evaluator_uid', 'evaluator_gid', 'installer_sha256',
+                         'python_sha256', 'campaign', 'store_id'}, 'successor plan schema differs')
+    check(value['schema'] == 'GRRR-POC-2-successor-accounting'
+          and value['version'] == 1
+          and value['decision'] == 'approved-successor-accounting-provisioning-only'
+          and value['authorization_reference'] == AUTHORIZATION_REFERENCE
+          and value['destination'] == str(BASE)
+          and value['execution_authorized'] is False and value['paid_dispatch'] is False,
+          'successor plan authority differs')
+    predecessor = value['predecessor']
+    check(isinstance(predecessor, dict)
+          and set(predecessor) == {'active_path', 'active_sha256', 'receipt_sha256', 'status'}
+          and predecessor['active_path'] == str(OLD_ACTIVE)
+          and predecessor['active_sha256'] == OLD_ACTIVE_SHA256
+          and predecessor['receipt_sha256'] == OLD_RECEIPT_SHA256
+          and predecessor['status'] == 'stopped-unresolved', 'unsafe ancestor disposition')
+    check(value['budget'] == BUDGET and value['evaluator_uid'] == EVALUATOR_UID
+          and value['evaluator_gid'] == EVALUATOR_GID, 'fresh ceilings or identity differ')
+    check(value['installer_sha256'] == sha(BOOTSTRAP.read_bytes())
+          and value['python_sha256'] == PYTHON_SHA256, 'reviewed installer binding differs')
+    check(sha(old_raw) == OLD_ACTIVE_SHA256, 'old active bytes differ')
+    validate_old_active(old_raw)
+    check((value['campaign'], value['store_id'])
+          == identities(sha(old_raw), value['authorization_reference']),
+          'deterministic successor identity differs')
+    return value
+
+
+def write_exclusive(path, raw, mode):
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW
+    with os.fdopen(os.open(path, flags, mode), 'wb') as stream:
+        stream.write(raw)
+        os.fchmod(stream.fileno(), mode)
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+def fsync_directory(path):
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def create_database(path, campaign, store_id, prior_receipt):
+    with closing(sqlite3.connect(path, isolation_level=None)) as db:
+        db.execute('PRAGMA journal_mode=DELETE')
+        db.execute('PRAGMA synchronous=FULL')
+        db.executescript("""
+          CREATE TABLE reservations(
+            id TEXT PRIMARY KEY, key TEXT UNIQUE NOT NULL, binding BLOB NOT NULL,
+            run TEXT NOT NULL, stage TEXT NOT NULL, maximum BLOB NOT NULL,
+            actual BLOB, receipt TEXT);
+          CREATE TABLE metering(
+            id TEXT PRIMARY KEY, reservation TEXT UNIQUE NOT NULL, body BLOB NOT NULL);
+          CREATE TABLE overhead(
+            key TEXT PRIMARY KEY, category TEXT NOT NULL, duration_us INTEGER NOT NULL);
+          CREATE TABLE state(id INTEGER PRIMARY KEY CHECK(id=1), stopped INTEGER NOT NULL);
+          INSERT INTO state VALUES(1,0);
+          CREATE TABLE store_identity(
+            campaign TEXT NOT NULL, store_id TEXT NOT NULL, prior_history_receipt TEXT NOT NULL);
+        """)
+        db.execute('INSERT INTO store_identity VALUES(?,?,?)',
+                   (campaign, store_id, prior_receipt))
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def verify_database(path, binding):
+    with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True)) as db:
+        check(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)], 'database integrity differs')
+        check(db.execute('PRAGMA journal_mode').fetchall() == [('delete',)], 'unreviewed journal mode')
+        check(db.execute('SELECT id,stopped FROM state').fetchall() == [(1, 0)], 'fresh stop state differs')
+        check(db.execute('SELECT campaign,store_id,prior_history_receipt FROM store_identity').fetchall()
+              == [(binding['campaign'], binding['store_id'], binding['prior_history_receipt'])],
+              'fresh store identity differs')
+        for table in ('reservations', 'metering', 'overhead'):
+            check(db.execute('SELECT * FROM ' + table).fetchall() == [], 'fresh ' + table + ' is not empty')
+
+
+def install(plan_path, expected, authorization):
+    check(os.getuid() == PROTECTED_UID, 'root-only successor installation')
+    check(Path(__file__).absolute() == BOOTSTRAP and Path(sys.executable) == PYTHON
+          and sys.version_info[:3] == (3, 9, 6) and sys.flags.isolated
+          and sys.flags.no_site and sys.dont_write_bytecode,
+          'isolated canonical successor bootstrap required')
+    check(BASE != OLD_ACTIVE.parent, 'successor must not replace predecessor')
+    check(plan_path.parent == BOOTSTRAP.parent, 'successor plan must live in protected bootstrap')
+    protected(BOOTSTRAP)
+    protected(PYTHON, readonly=False)
+    check(sha(read_regular(PYTHON, 134217728)) == PYTHON_SHA256,
+          'canonical successor interpreter bytes differ')
+    protected(plan_path)
+    protected(OLD_ACTIVE)
+    protected(BASE.parent, directory=True)
+    plan_raw = read_regular(plan_path, 65536)
+    old_raw = read_regular(OLD_ACTIVE, 65536)
+    value = validate_plan(plan_raw, expected, authorization, old_raw)
+    lock = os.open(BASE.parent, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        check(not os.path.lexists(BASE), 'existing/partial successor state: refuse reset')
+        BASE.mkdir(mode=0o755)
+        os.chown(BASE, PROTECTED_UID, PROTECTED_GID)
+        os.chmod(BASE, 0o755)
+        protected(BASE, directory=True)
+        directory = BASE / value['store_id']
+        directory.mkdir(mode=0o700)
+        os.chown(directory, EVALUATOR_UID, EVALUATOR_GID)
+        os.chmod(directory, 0o700)
+        database = directory / 'budget.sqlite'
+        create_database(database, value['campaign'], value['store_id'], OLD_RECEIPT_SHA256)
+        os.chown(database, EVALUATOR_UID, EVALUATOR_GID)
+        os.chmod(database, 0o600)
+        info = database.stat()
+        binding = {'version': 1, 'campaign': value['campaign'], 'store_id': value['store_id'],
+                   'directory': str(directory), 'prior_history_receipt': OLD_RECEIPT_SHA256,
+                   'profiles': list(PROFILES), 'device': info.st_dev, 'inode': info.st_ino}
+        verify_database(database, binding)
+        write_exclusive(BASE / 'launch.lock', b'', 0o444)
+        os.chown(BASE / 'launch.lock', PROTECTED_UID, PROTECTED_GID)
+        write_exclusive(BASE / 'active.json', canonical(binding), 0o444)
+        os.chown(BASE / 'active.json', PROTECTED_UID, PROTECTED_GID)
+        protected(BASE / 'launch.lock')
+        protected(BASE / 'active.json')
+        check(read_regular(BASE / 'active.json', 65536) == canonical(binding), 'active read-back differs')
+        check(stat.S_IMODE(directory.stat().st_mode) == 0o700
+              and (directory.stat().st_uid, directory.stat().st_gid) == (EVALUATOR_UID, EVALUATOR_GID)
+              and stat.S_IMODE(database.stat().st_mode) == 0o600
+              and (database.stat().st_uid, database.stat().st_gid) == (EVALUATOR_UID, EVALUATOR_GID),
+              'private evaluator store metadata differs')
+        check(stat.S_IMODE((BASE / 'launch.lock').stat().st_mode) == 0o444
+              and ((BASE / 'launch.lock').stat().st_uid, (BASE / 'launch.lock').stat().st_gid)
+              == (PROTECTED_UID, PROTECTED_GID)
+              and stat.S_IMODE((BASE / 'active.json').stat().st_mode) == 0o444
+              and ((BASE / 'active.json').stat().st_uid, (BASE / 'active.json').stat().st_gid)
+              == (PROTECTED_UID, PROTECTED_GID), 'protected active metadata differs')
+        fsync_directory(directory)
+        fsync_directory(BASE)
+        os.fsync(lock)
+        return binding
+    finally:
+        os.close(lock)
+
+
+if __name__ == '__main__':
+    try:
+        if len(sys.argv) == 5 and sys.argv[1] == 'install':
+            print(canonical(install(Path(sys.argv[2]), sys.argv[3], sys.argv[4])).decode('ascii'))
+        else:
+            raise SystemExit('install PROTECTED_PLAN PLAN_SHA256 AUTHORIZATION')
+    except Exception as exc:
+        print(json.dumps({'successor_accounting': 'not-installed', 'error': str(exc),
+                          'execution_authorized': False, 'paid_dispatch': False}))
+        raise SystemExit(1)

@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "kind": "conservative-accounting-migration-design",
+  "status": "proposal-only",
+  "basis_commit": "6f47e896f9a07fab78f168b48fc857ff698985a9",
+  "execution_authorized": false,
+  "migration_authorized": false,
+  "installation_authorized": false,
+  "stop_release_authorized": false,
+  "runtime_claim_allowed": false,
+  "preserve_source_stopped": 1,
+  "source": {
+    "root": "/Library/GRRR/accounting",
+    "active_sha256": "cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b",
+    "database_sha256": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+    "receipt_sha256": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+    "device": 16777229,
+    "database_inode": 681781547,
+    "sqlite_integrity": "ok",
+    "state_rows": 1,
+    "stopped": 1,
+    "reservations": 0,
+    "artifacts": 259,
+    "legacy_events": 110,
+    "reconciliation_report_sha256": "5f250685e29f5dd571b39d589a343aa84ab236527527f146fd09a2cc9bf524b4c"
+  },
+  "source_evidence_requirements": [
+    "hash-and-stat-active-database-receipt-before-and-after",
+    "immutable-sqlite-query-only-integrity-and-count-check",
+    "rehash-all-artifact-and-event-bodies",
+    "collect-original-receipts-and-invocation-boundaries",
+    "preserve-conflicting-and-duplicate-events",
+    "collect-stage-currency-paid-service-and-overlap-intervals",
+    "missing-or-overlapping-evidence-remains-unresolved"
+  ],
+  "mapping": {
+    "campaign": "preserve-as-candidate-ancestry",
+    "source_store_id": "preserve-as-source-identity-not-new-runtime-id",
+    "artifacts": {"target": "legacy_artifacts", "required_rows": 259, "byte_preservation": true},
+    "legacy_events": {"target": "legacy_events", "required_rows": 110, "byte_preservation": true},
+    "state": {"source": [1, 1], "target": [1, 1]},
+    "reservations": {"source": 0, "target": 0, "promote_legacy_events": false},
+    "settlements": {"promote_observations": false, "missing_receipt_value": "unresolved-full-hold"},
+    "encumbrance": {
+      "poc": {"money_cents": 5000, "execution_seconds": 21600, "review_seconds": 3600},
+      "milestone_including_poc": {"money_cents": 15000, "execution_seconds": 86400, "review_seconds": 10800},
+      "scope": "admission-control-not-historical-charge"
+    }
+  },
+  "candidate_target": {
+    "active_required_fields": ["version", "campaign", "store_id", "directory", "prior_history_receipt", "profiles", "device", "inode"],
+    "profiles": ["synthetic", "offline", "trusted-observation"],
+    "runtime_tables": ["reservations", "metering", "overhead", "state"],
+    "identity_table": "store_identity",
+    "preservation_tables": ["legacy_artifacts", "legacy_events", "migration_source", "migration_controls"],
+    "identity_rules": [
+      "deterministic-new-store-id-from-source-campaign-source-store-id-source-db-hash-and-plan-digest",
+      "prior-history-receipt-digests-complete-ancestry-and-preservation-manifest",
+      "candidate-hash-device-and-inode-bound-after-fresh-build",
+      "evaluator-owned-private-directory-and-database",
+      "no-symlink-acl-or-multiple-links"
+    ]
+  },
+  "mandatory_gates": [
+    "private-fresh-build-from-frozen-source-manifest",
+    "readback-all-259-artifacts-and-110-events",
+    "independent-canonical-projection-reproduction",
+    "separate-operator-installation-authorization",
+    "later-independent-runtime-adapter-review",
+    "no-current-store-mutation-or-stop-release"
+  ],
+  "rollback_scope": {
+    "allowed": ["newly-created-candidate-namespace", "newly-created-candidate-active-binding"],
+    "forbidden": ["current-conservative-store", "current-active-record", "current-database", "preserved-artifacts-or-events"]
+  }
+}

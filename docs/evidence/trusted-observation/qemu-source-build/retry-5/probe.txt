@@ -1,0 +1,36 @@
+{
+  "available_bytes": 17983676416,
+  "binary_sha256": null,
+  "build_run": false,
+  "closure_sha256": null,
+  "configure_run": false,
+  "minimum_host_free_bytes": 15000000000,
+  "note": "Space pass is not a build, installation, or execution approval.",
+  "qemu_executed": false,
+  "reason": "space-preflight-only",
+  "requested_version": "11.1.2",
+  "required_build_headroom_bytes": 2000000000,
+  "root_installation_performed": false,
+  "source_archive_sha256": null,
+  "source_commit": null,
+  "source_fetched": false,
+  "status": "preflight-pass",
+  "version": 1
+}
+programs: =/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+libraries: =/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17
+The Meson build system
+Version: 1.11.1
+Source dir: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/fdt-search-probe
+Build dir: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe
+Build type: native build
+Project name: pinned-fdt-search-probe
+Project version: undefined
+C compiler for the host machine: cc (clang 17.0.0 "Apple clang version 17.0.0 (clang-1700.0.13.3)")
+C linker for the host machine: cc ld64 1167.4.1
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+
+tests/fdt-search-probe/meson.build:3:9: ERROR: C static library 'fdt' not found
+
+A full log can be found at /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/fdt-environment-probe/meson-logs/meson-log.txt

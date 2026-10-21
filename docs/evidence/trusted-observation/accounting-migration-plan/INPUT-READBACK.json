@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "observation_date": "2026-10-21",
+  "basis_commit": "6f47e896f9a07fab78f168b48fc857ff698985a9",
+  "access_mode": "read-hash-only",
+  "mutation_performed": false,
+  "root_sudo_qemu_guest_or_candidate_execution": false,
+  "files": {
+    "active.json": {
+      "sha256": "cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b",
+      "size_bytes": 540,
+      "mode": "0444",
+      "owner_group": "0:0",
+      "device": 16777229,
+      "inode": 681781564,
+      "hard_links": 1,
+      "directory_field_present": false,
+      "record": {
+        "schema": "conservative-genesis",
+        "execution_gate": "blocked",
+        "stopped": 1,
+        "unresolved_history": true,
+        "campaign": "3140196739a3301df3492a82a282fdd2475a63566847513bc29d5317382d8f46",
+        "store_id": "12f4ce0101556ece7b7b2839077c3dc9de8c2a4bec98dbc0d570f2b5c61faec9",
+        "device": 16777229,
+        "inode": 681781547,
+        "database_sha256": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+        "receipt_sha256": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+        "plan_sha256": "7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459"
+      }
+    },
+    "budget.sqlite": {
+      "sha256_before": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+      "sha256_after": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+      "size_bytes": 72384512,
+      "mode": "0444",
+      "owner_group": "0:0",
+      "device": 16777229,
+      "inode": 681781547,
+      "hard_links": 1,
+      "sqlite_open_uri": "file:///Library/GRRR/accounting/budget.sqlite?mode=ro&immutable=1",
+      "query_only": true,
+      "integrity_check": "ok",
+      "counts": {
+        "state": 1,
+        "metadata": 2,
+        "artifacts": 259,
+        "legacy_events": 110,
+        "reservations": 0
+      },
+      "state": [1, 1]
+    },
+    "receipt.json": {
+      "sha256": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+      "size_bytes": 662,
+      "mode": "0444",
+      "owner_group": "0:0",
+      "device": 16777229,
+      "inode": 681781551,
+      "hard_links": 1,
+      "complete_migration": false,
+      "release_authorized": false,
+      "reset_allowance": false,
+      "migration_safety_stopped": 1
+    }
+  },
+  "committed_reconciliation_basis": {
+    "report": "docs/evidence/trusted-observation/installed-reconciliation/REPORT.md",
+    "report_sha256": "5f250685e29f5dd571b39d589a343aa84ab236527527f146fd09a2cc9bf524b4c",
+    "report_json": "docs/evidence/trusted-observation/installed-reconciliation/report.json",
+    "report_json_sha256": "2bd034edfc99d433ea9bc01d8fb6b1afd7715a18dea975fc20188459c747359e",
+    "visible_reservation_events": 48,
+    "observations": 48,
+    "stop_events": 8,
+    "denied_events": 6,
+    "historical_worst_case": "unknown",
+    "full_admission_encumbrance": true
+  },
+  "launcher_preflight": {
+    "source_line_before_fix": 77,
+    "old_failure_mode": "KeyError when conservative active.json lacks directory",
+    "required_failure_code": "RecoveryRequired",
+    "persistent_budget_validate_store_weakened": false,
+    "guest_or_runtime_execution": false
+  }
+}

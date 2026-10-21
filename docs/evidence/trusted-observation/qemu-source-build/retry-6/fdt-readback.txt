@@ -1,0 +1,8 @@
+/opt/homebrew/Cellar/dtc/1.8.1/lib/libfdt.a: OK
+/opt/homebrew/Cellar/dtc/1.8.1/include/fdt.h: OK
+/opt/homebrew/Cellar/dtc/1.8.1/include/libfdt.h: OK
+/opt/homebrew/Cellar/dtc/1.8.1/include/libfdt_env.h: OK
+/opt/homebrew/Cellar/dtc/1.8.1/.brew/dtc.rb: OK
+/opt/homebrew/Cellar/dtc/1.8.1/INSTALL_RECEIPT.json: OK
+/opt/homebrew/Cellar/dtc/1.8.1/sbom.spdx.json: OK
+/opt/homebrew/Cellar/dtc/1.8.1/lib/pkgconfig/libfdt.pc: OK

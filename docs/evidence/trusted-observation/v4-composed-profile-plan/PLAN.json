@@ -1,0 +1,115 @@
+{
+  "basis_worktree_commit": "cab53ad70f43187275b06223d195147c27dd81fb",
+  "composed_dispatch_disabled_record": {
+    "accounting": {
+      "active_sha256": "cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b",
+      "database_sha256": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+      "execution_gate": "blocked",
+      "interpretation": "intentional blocker; not an allowance or release",
+      "receipt_sha256": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+      "reservation_count": 0,
+      "stopped": true
+    },
+    "controls": {
+      "dispatch_enabled": false,
+      "execution_authorized": false,
+      "host_shares": false,
+      "network": false,
+      "paid_dispatch": false,
+      "read_only_inputs": true
+    },
+    "kind": "planning-only-composed-profile",
+    "limits": {
+      "boot_seconds": 30,
+      "command_seconds": 240,
+      "kill_wait_seconds": 2,
+      "memory_mib": 1024,
+      "minimum_host_free_bytes": 15000000000,
+      "output_bytes": 1048576,
+      "stop_ack_seconds": 2,
+      "term_grace_seconds": 5,
+      "total_seconds": 300,
+      "vcpus": 1,
+      "wire_bytes": 3145728,
+      "workspace_mib": 512
+    },
+    "qemu": {
+      "executable_sha256": "352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da",
+      "installation_manifest_sha256": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+      "root": "/Library/GRRR/qemu"
+    },
+    "v4": {
+      "development-binding.json": "9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209",
+      "helper": "14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e",
+      "input.iso": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6",
+      "preparation.json": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7",
+      "prepared-profile.json": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205",
+      "supervisor": "a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"
+    },
+    "version": 1
+  },
+  "current_code_can_consume_v4": false,
+  "dispatch_enabled": false,
+  "execution_authorized": false,
+  "fail_closed_and_rollback": {
+    "measure_free_space_before_and_after": true,
+    "minimum_host_free_bytes": 15000000000,
+    "never_mutate": [
+      "committed v3 evidence",
+      "installed QEMU closure",
+      "conservative accounting history"
+    ],
+    "partial_preservation": "refuse final namespace and retain diagnostics for review",
+    "rollback_scope": "only the newly created v4 preservation namespace, after explicit authorization",
+    "unknown_or_error_outcome": "blocked; no retry or missing-cost-to-zero conversion"
+  },
+  "future_root_preservation": {
+    "authorization": "separate operator root authorization required; not requested here",
+    "destination_namespace": "/Library/GRRR/trusted-observation/v4/",
+    "file_mode": "0444",
+    "file_owner_group": "root:wheel",
+    "files": {
+      "development-binding.json": "9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209",
+      "helper": "14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e",
+      "input.iso": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6",
+      "preparation.json": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7",
+      "prepared-profile.json": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205",
+      "supervisor": "a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"
+    },
+    "requirements": [
+      "verify every ancestor directory is root:wheel, non-symlink, ACL-free, and has no group/world write bits before creation; do not change system-directory permissions",
+      "create a complete private staging directory first; never expose a partial final namespace",
+      "use exclusive create for every file and final directory; refuse if destination or any member exists",
+      "each regular file must be root:wheel 0444, st_nlink=1, non-symlink, ACL-free, and byte-verified",
+      "preserve v4 ISO, receipt, profile, development binding, supervisor, and helper identities exactly",
+      "refuse partial state on any mismatch and retain diagnostic evidence without automatic retry"
+    ]
+  },
+  "kind": "trusted-observation-v4-preservation-and-composed-profile-plan",
+  "mandatory_later_gates": [
+    "independent review of this plan and any source revision",
+    "separate root-controlled v4 preservation authorization and readback",
+    "conservative accounting history resolution or reviewed migration to the evaluator-owned persistent schema",
+    "separate exact execution approval after all preceding gates pass"
+  ],
+  "required_source_revision_before_any_runtime_claim": {
+    "changes": [
+      "replace v3 PROFILE with exact live v4 prepared-profile digest",
+      "replace v3 IMAGE with exact live v4 ISO digest",
+      "replace v3 RECEIPT with exact live v4 preparation-receipt digest",
+      "replace unused legacy Homebrew QEMU_SHA with exact installed immutable manifest digest",
+      "add and validate explicit helper identity beside supervisor identity",
+      "bind asset verification and launch inputs to v4 and installed QEMU without v3 fallback"
+    ],
+    "file": "research/trusted_execution.py",
+    "tests": [
+      "v3 config/approval/receipt/QEMU must be rejected",
+      "only exact v4 identities and installed QEMU digest may validate",
+      "partial/mutated assets, ACLs, symlinks, hard links, and mode failures must reject",
+      "tests must remain no-guest until separate execution authorization"
+    ]
+  },
+  "runtime_claim_allowed": false,
+  "schema": 1,
+  "status": "planning-only"
+}

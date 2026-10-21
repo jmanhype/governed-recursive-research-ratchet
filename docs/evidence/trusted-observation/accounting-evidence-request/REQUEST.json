@@ -1,0 +1,4055 @@
+{
+  "authority": {
+    "execution": false,
+    "migration": false,
+    "request_authorizes_nothing": true,
+    "settlement": false,
+    "stop_release": false
+  },
+  "basis": {
+    "artifact_count": 259,
+    "event_count": 110,
+    "event_kind_counts": {
+      "denied": 6,
+      "observation": 8,
+      "offline-observation": 40,
+      "reserved": 48,
+      "stop-fenced": 4,
+      "stop-outcome": 4
+    },
+    "manifest_decision": "blocked-ambiguous-history",
+    "manifest_schema_version": 1,
+    "manifest_sha256": "8c64d70cc0f3b903620ed45094133ceffaf5e48107427fcfc2204b73daa06270",
+    "missing_required_evidence_event_counts": {
+      "currency": 110,
+      "end_interval": 110,
+      "original_reservation_mapping": 94,
+      "overlap_interval": 110,
+      "paid_service": 62,
+      "principal": 110,
+      "request_key": 110,
+      "stage": 110,
+      "start_interval": 110,
+      "trusted_meter_receipt": 110,
+      "trusted_settlement_receipt": 110
+    }
+  },
+  "event_records": [
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0f41979f20051b8721c089a1c2cb60df97c3ec25843178b1bdb63cd597e16a42"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "f119531fb2769aa3655c01e3a75e0cf83dd1341cdc94db73eab5121f4b089f1b"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "26819a7a83e6686a1cbe61770599208e088f1758ab8d2b9c37d884db51b5d9ab"
+        }
+      ],
+      "evidence_key": "04e5fa081439e5b4701eb6df4c70eb371963cb02465218f610316b93a892e2c4",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "bdcbeef18af444cca3677017ad3546a8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        }
+      ],
+      "evidence_key": "0631a90736da69fe2dd06e24b3104dcb8113867e3424d839c5158c57a64fe2a0",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f2cb1745c1f445b79ded41c30d93747b"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        }
+      ],
+      "evidence_key": "067bbd2a5ec32bc9b6ab7306cd66b9f8e63db1ec16ed7a738d14f001c072faf7",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "a207a5575038431dadae8ae1e10d37c5",
+      "run": "2c91e5b6d3844deab31d7f7c7c36ad24"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "91f8a24d6e85aa98cc00839f662a66b5e25654061757b89c7674be173e2a7ca5"
+        }
+      ],
+      "evidence_key": "0750ce81b4fe795dfc71359c6ed1d3b36afd090fc5d86279a980ae20c0b05da4",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "49784fe7c6114ae1a9d9c185043b6dae"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        }
+      ],
+      "evidence_key": "07f67fde28854905c037de4d76465635167411a340cf90c51a98c9c4c1a756b4",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "3092b6252b424e6a89e5d382b6c5aee2"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dc60e1af8bf9ea05716472c131f366148da4a30c2dce50ab88dfad60fd243ae4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "969494c78168ba5f639b793cc8eee608025244c8b01f2fad5d42e8e3fc8a14a3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6cd68634e1c0923f83d8d0552857e8aa7a07e584c1b66c8996e620e949bbc2a8"
+        }
+      ],
+      "evidence_key": "0af3103f08743cf2ec71aab4aa0ba33dc3909de2a89f43013c247742baa9db7c",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f23eba24a9244f8d839bf0c0a2c1662c"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9150880d45f4989a71add33e075a5dee3f66a5c394f98fd4508c2481a1a52bd1"
+        }
+      ],
+      "evidence_key": "0e47c1b5c2e2282564af9c121c1602c6af4f14658f546d33703b3051a74aff04",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "a7f370bab3034931a46f05f8ab6312d0"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "134e301011495f57cda7968ada7d8485c1a6406e1dd84b7113c715cee962f3c7",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "094af62daa82497faabed600dabe01eb",
+      "run": "ef6ff46c5e774fef85de2cab930524b4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dc60e1af8bf9ea05716472c131f366148da4a30c2dce50ab88dfad60fd243ae4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6cd68634e1c0923f83d8d0552857e8aa7a07e584c1b66c8996e620e949bbc2a8"
+        }
+      ],
+      "evidence_key": "15ac86ae71f03ea1863cab8660141be9bbf21b0e342bffc879ee98bd55ebde41",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "6c3b927b96ca4aa6aede98a49a7d50f8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        }
+      ],
+      "evidence_key": "17fe0900d4b70be15cafd3f4820a7d3e2d8891b9214e8be218ed5c4b43afcfe6",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "80b4764d94bd49fab58c291df848b003"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0f41979f20051b8721c089a1c2cb60df97c3ec25843178b1bdb63cd597e16a42"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "26819a7a83e6686a1cbe61770599208e088f1758ab8d2b9c37d884db51b5d9ab"
+        }
+      ],
+      "evidence_key": "196fd3a757fe60e6212a17d6d0c0354aee68289d66f0aaa2dcf65bfab18f118b",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "9d8a4d53366c4a85bed3a68d53839c82"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+        }
+      ],
+      "evidence_key": "1e5b6c1f2dda1b5999bb5e60cc4d7b7540a71e43147545e3610a258f52925e18",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "e95524fe36f94069bb642cbfea3dab2c"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        }
+      ],
+      "evidence_key": "21072514d193ba2101e1d834d9764412bfda50527900bc41935aa05b1249388c",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "a1a4a1b9e6a249e29241bf8eb80ded32"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "61fb38d903e00a047d43dd2b2f1b62e89bc96b2a4e539739f48421487664b3ba"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "5021eee77f12958074a3830137876e80f9450234de77c34c88a3d2c225089b20"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9150880d45f4989a71add33e075a5dee3f66a5c394f98fd4508c2481a1a52bd1"
+        }
+      ],
+      "evidence_key": "215b6c5efdfa70df0f878d412eed5d3092e2e8be6a3a19ccb616db996362504c",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "d7626f94e35e4382a5389348ff789610"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        }
+      ],
+      "evidence_key": "22aee5d58d78519c5d9f7e9f96560b0f75861047f1eb404366b50fc5953230ca",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "4b24b3c4efff412087a018898f7362f8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "24a444862597e54c8853ff5914a02e3d67cca55558bc6bdd9c28b5548084da47",
+      "kind": "stop-fenced",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "ef6ff46c5e774fef85de2cab930524b4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        }
+      ],
+      "evidence_key": "24c263787402542421d39665f86999fe4f47e4e8450212323fa31bd9d72c84d2",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "e1a5702ccc1b44ebbf0f6664dd1d75ca"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "3df67b6a699905466cc86ae686c043b26f2b5e240c7fe378613926bf11a9b1e3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "18e768cfbfebea93f2836c29821ae69a4e31abc6cbaa3d68103d923890df73a3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "55a8d4cbe9daaab863da2037f66c5430304be2f5e2a330871fcea759335f1e86"
+        }
+      ],
+      "evidence_key": "25ad79282998b68235065e7fa1fc4d8aa417f35462e822dd2f1d722d6c147f69",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "119982122fc24db8b97f64add4544e06"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        }
+      ],
+      "evidence_key": "26bdbdd4700a76882067be4427e68065a5da34185900ec209182542e514f0165",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "52daf761855d4f4db5e7629b81906024"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "2785941c10c802f1f0bb0870eaba713b3c13b959cdb4b6f9f9793cf475f8bc48",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "2d9e40eb14e14cd69c04c51418332ea0",
+      "run": "589d8dfb92ae436e8c3b4bbd4bda6803"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        }
+      ],
+      "evidence_key": "2aa3e13ac77e5a8df50ff9858c0d59645ac291a2419bb22692dca7c3a143e180",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "ee491732e19a47f09ab59a1d8dbdd2d7"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "2b7dec9690adc579f998483d702433d56e1cfd965b86d3e5625c90b6bd97d9b8",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "c0a1f297b87b4b688951342ec6270c7c",
+      "run": "bfd6af84e45d44d0863d73b029f50b79"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0f41979f20051b8721c089a1c2cb60df97c3ec25843178b1bdb63cd597e16a42"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "f119531fb2769aa3655c01e3a75e0cf83dd1341cdc94db73eab5121f4b089f1b"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "26819a7a83e6686a1cbe61770599208e088f1758ab8d2b9c37d884db51b5d9ab"
+        }
+      ],
+      "evidence_key": "40358ced7108f12edc05a68ec575992aeb376901234107ee2a4790a55d38b3db",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "bdcbeef18af444cca3677017ad3546a8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        }
+      ],
+      "evidence_key": "407c6e7d5a7728fb9a269e5a777b357ca76a17dfeb0d0591d8b35d360af664e9",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "a207a5575038431dadae8ae1e10d37c5",
+      "run": "2c91e5b6d3844deab31d7f7c7c36ad24"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        }
+      ],
+      "evidence_key": "409fd7b6e5646a89500888a6a2b9379480beaff58728e980ec20999854af8ad5",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f2cb1745c1f445b79ded41c30d93747b"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "3df67b6a699905466cc86ae686c043b26f2b5e240c7fe378613926bf11a9b1e3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "18e768cfbfebea93f2836c29821ae69a4e31abc6cbaa3d68103d923890df73a3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "55a8d4cbe9daaab863da2037f66c5430304be2f5e2a330871fcea759335f1e86"
+        }
+      ],
+      "evidence_key": "4184909f690a7926c14efab1f351370a2a042a3cad4596a6ad5c0dc70b6d6cad",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "119982122fc24db8b97f64add4544e06"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        }
+      ],
+      "evidence_key": "488140ef7f282e73c9495be53a7baa03e41de4be65ce2da70cdf5f803e3a449f",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "6d2787fcb5884c7f8663ce135bb83e95"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "5c7ccca0c4d08087fa38ce34b41258dbea2e9af15c0a8f0e94d3f5cac05f4ea9"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6afec512d72d3558c90bad7a312ee348c9e0fdcf87b6a6da5d44903a1996de47"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "80253d0d6a9deb3d15b1488a048e96a6b876f5fa4c6f3f5eb20bbce763677828"
+        }
+      ],
+      "evidence_key": "4917f57658c0ade11156fdd5a2136b7dc01b56f661168c215eba1b45bbd280c3",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "9eed928d3666460a879848279a3e3788"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        }
+      ],
+      "evidence_key": "4b7f2200fb1f06482b743da2cb88fbdfd29e00197644563ab1615be71dcfdbe5",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "b0261c776ae44131afb7629dd60413d5"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "4cb592efe0a6db168d8cd47f6da7fe8c033ffc42317df702a2d7789e8ffcce98",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "2d9e40eb14e14cd69c04c51418332ea0",
+      "run": "589d8dfb92ae436e8c3b4bbd4bda6803"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "26819a7a83e6686a1cbe61770599208e088f1758ab8d2b9c37d884db51b5d9ab"
+        }
+      ],
+      "evidence_key": "4cd764cd10db00c6f8df8dba219e85ce33482b56946eea6ec7a11d37b2565dfd",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "2fb2ae10d53f4aaab3ec6c981f6ebbbd"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "61fb38d903e00a047d43dd2b2f1b62e89bc96b2a4e539739f48421487664b3ba"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "5021eee77f12958074a3830137876e80f9450234de77c34c88a3d2c225089b20"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9150880d45f4989a71add33e075a5dee3f66a5c394f98fd4508c2481a1a52bd1"
+        }
+      ],
+      "evidence_key": "4d6c71d62a5a982754c0d8ab7e0a0d340bed02860db37f290e2b64bcb67c67c1",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "d7626f94e35e4382a5389348ff789610"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        }
+      ],
+      "evidence_key": "4dcb0a41f243f3b529b4a6ae8f1f2d777238948e5def6a22ffcb1c6f70c86b94",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f7107a41ab0a44b99be6cbc5424ddb6e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "91f8a24d6e85aa98cc00839f662a66b5e25654061757b89c7674be173e2a7ca5"
+        }
+      ],
+      "evidence_key": "4e2112dcb77d8d2c23cbcc75aeffe1043b83f88ab35d2a29ba55f0a2c8377f9d",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "49784fe7c6114ae1a9d9c185043b6dae"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0be93caaa60c6f6b872b30a4b117c267095f614f09acfbcf5fc0565e5aa5d518"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "b99ca23bf954a5bb0bc3d9b63bdcc55647399bd6ea9ef37a8c514d5e44a2f5a4"
+        }
+      ],
+      "evidence_key": "4f47f0027a929d59b321abd00a067cf9de0c0f87b6f0d8beb91e1afe05279317",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "2fc6bbce8e0c46dbbc574a687d9d2ca2"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "4f69ae8cb8ef2aaa2f0e669cc589cd4d4385cbb3ca170ee28a5fe1e33dddab02",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "02fa01a7d8b44471ad25d5d6f8297e90",
+      "run": "e6dd110b2d75433582edf448734e3174"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "4f9ad08858bcd4f7608c25e13eae1609bc3462d75b3b6f13a75534b61327e572",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "e16dc3d717f84e5c83244837a621ec9e",
+      "run": "5408e0f7165b40c385def0073fc1d41e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        }
+      ],
+      "evidence_key": "50b56177c80b69dea39d0e51707ece6e87baa1014ecd413250106004798684e3",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "3ec8437e265a48399785b6427a21f36e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "51c1a509244f7583ae67465d33d2e71c8420d1d7af5ed44e1bd92346de37aec4",
+      "kind": "denied",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": null
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9fae89d439c208ae0002be1bec3e92cd9555d3af017cf3aaf434efd4cdd9fead"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+        }
+      ],
+      "evidence_key": "5733d52f4c03829e0e0794acacc38d927def7175ee688323ea2a97f90aed7a45",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "b2dc7793850e4e20bc860629d8938634"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "55a8d4cbe9daaab863da2037f66c5430304be2f5e2a330871fcea759335f1e86"
+        }
+      ],
+      "evidence_key": "58a6917c5ddea94c52c369817ffd528e608ad5bf78e009b1a14d99b6aa3c7209",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "3107463ad33847efa12c785ce79e0518"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        }
+      ],
+      "evidence_key": "5b2e033bf0db95ba30779f4109a5f86bafe4775b35920631dc8a845986ce9141",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f7107a41ab0a44b99be6cbc5424ddb6e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        }
+      ],
+      "evidence_key": "5f6d35d8c57bef851ebbac2a1861782c4d8ebb94bf4da9518287ca9f4b2a897b",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "80b4764d94bd49fab58c291df848b003"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+        }
+      ],
+      "evidence_key": "6040a3ef70f825d1c81561bde0d9d4c35207dca6d5f431c673a6d52c4cfce3d2",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "e95524fe36f94069bb642cbfea3dab2c"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        }
+      ],
+      "evidence_key": "62c4f6cee9d30d9a388c7fc58cc970e9d49c95ec64d0ac5a877d75558beff089",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "9e10defffa2440559bd03d5e56c1de0e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "659dc8801bd93bdd0df550eadcb43b5831584cdc344b70666295363ce8a73c3c",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "094af62daa82497faabed600dabe01eb",
+      "run": "ef6ff46c5e774fef85de2cab930524b4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "69bcb5aa2f551f4d4d48d3ad426e37320b0217ba929084eaa1a45ce78d29a703",
+      "kind": "stop-fenced",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "ef6ff46c5e774fef85de2cab930524b4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0f41979f20051b8721c089a1c2cb60df97c3ec25843178b1bdb63cd597e16a42"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "26819a7a83e6686a1cbe61770599208e088f1758ab8d2b9c37d884db51b5d9ab"
+        }
+      ],
+      "evidence_key": "6c8c46741cfb4db681a1d9193bd9bbb83e84b30c3b37f980b81250ff45630023",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "9d8a4d53366c4a85bed3a68d53839c82"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "6cd08031b05fd7fd53746b4605f1e951b5e6454d6c7206eb20975c87ad5c5216",
+      "kind": "stop-fenced",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "e6dd110b2d75433582edf448734e3174"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        }
+      ],
+      "evidence_key": "6cd347c6bfa6d277947cddcd14b12c794fb0afb42a2660c7c8e1a7be9ff50a19",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "df33d93313a44b5082fe165ccafc21a3"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "720391cb768e004f96717995c8c5f601611485001ab12e02155368c20b0d09fb",
+      "kind": "stop-outcome",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "e6dd110b2d75433582edf448734e3174"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        }
+      ],
+      "evidence_key": "746d65b92dc696932e440407699fde17c94c00415e994a5969237ee43377e104",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "a1a4a1b9e6a249e29241bf8eb80ded32"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "7b6f2f45d62e7fc020756985bce5e6c393d98d37e21366e01c7d44ec4a1af759"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cb08fc010b3dde198ca2f57e7e431f75b1136ceb95afc1c5a6c560b81ed481f8"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "91f8a24d6e85aa98cc00839f662a66b5e25654061757b89c7674be173e2a7ca5"
+        }
+      ],
+      "evidence_key": "77224165ebb0fac856ae8f817bede4740996199b9fe1b61274f33e6c1ca7befb",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "748135fb69974d699014e16650749352"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9fae89d439c208ae0002be1bec3e92cd9555d3af017cf3aaf434efd4cdd9fead"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "777d47a7694b7d35698621d95c6fc4541700944eee8424a66dbd16017ea65bbe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+        }
+      ],
+      "evidence_key": "7826115aed85b727f6518b67fbbcb986461ca261d69b3f7c889d3a64020e6e46",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "77face10b0414b60ab43cc8f559d898c"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "8003fe91698dabeb474710d43faf714862aa3ee3a94391b14f13b0b2731478b4",
+      "kind": "stop-outcome",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "ef6ff46c5e774fef85de2cab930524b4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        }
+      ],
+      "evidence_key": "83585a4431d0b98d1b35c3d9656efe290188455777ec8ba3c4dcfcc16f7bd2cc",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "4b24b3c4efff412087a018898f7362f8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "b99ca23bf954a5bb0bc3d9b63bdcc55647399bd6ea9ef37a8c514d5e44a2f5a4"
+        }
+      ],
+      "evidence_key": "839a42eb0cff3d1452ae8d7b21e3df63d88c297b063321479ba60793827d94bc",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "e838db12cac74962a88cc107597eba09"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "5c7ccca0c4d08087fa38ce34b41258dbea2e9af15c0a8f0e94d3f5cac05f4ea9"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "80253d0d6a9deb3d15b1488a048e96a6b876f5fa4c6f3f5eb20bbce763677828"
+        }
+      ],
+      "evidence_key": "84a567e2ee23b5e2190f19e1d45da7422f9881c550f5eaad1d015068d3a03267",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "5e49354355a8498886d60a059bfc7eb7"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "85dfc0627d5222fe1d55c47cca17e077db637020a4ffde9d89f7297c688e541d",
+      "kind": "stop-outcome",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "ef6ff46c5e774fef85de2cab930524b4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9fae89d439c208ae0002be1bec3e92cd9555d3af017cf3aaf434efd4cdd9fead"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "777d47a7694b7d35698621d95c6fc4541700944eee8424a66dbd16017ea65bbe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+        }
+      ],
+      "evidence_key": "868601267eec303eba351eac2c863ea0490ebfb37cb5fc8488a818bfabc815de",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "77face10b0414b60ab43cc8f559d898c"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "94e08084b0ee6c6531ad72c3aa587b8214c1901a26c00bf4b05f5ef78c0cb7f4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "26819a7a83e6686a1cbe61770599208e088f1758ab8d2b9c37d884db51b5d9ab"
+        }
+      ],
+      "evidence_key": "89b5df7df06d9f9eb2bed185a1ce92f581fffd1d5f61984ae1ec318b74c0e2ee",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "2fb2ae10d53f4aaab3ec6c981f6ebbbd"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "8e8f9f04beb8b8ddb95a4410262573858bcc5ff730d334566cd7ea1b13952a30",
+      "kind": "denied",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": null
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "7b6f2f45d62e7fc020756985bce5e6c393d98d37e21366e01c7d44ec4a1af759"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "91f8a24d6e85aa98cc00839f662a66b5e25654061757b89c7674be173e2a7ca5"
+        }
+      ],
+      "evidence_key": "9267755d162491072537360e1a26fcbe02ed5d2cfea097553bdb90d1cb867f8d",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "bcae881bebaf4484a83a2de63a245965"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        }
+      ],
+      "evidence_key": "95b08c84f75c24e1d860bd02dd6e56216bc77b96f151cd7337822dcaf45bc9e2",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "6d2787fcb5884c7f8663ce135bb83e95"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "7b6f2f45d62e7fc020756985bce5e6c393d98d37e21366e01c7d44ec4a1af759"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "91f8a24d6e85aa98cc00839f662a66b5e25654061757b89c7674be173e2a7ca5"
+        }
+      ],
+      "evidence_key": "98cc256e987d4f2453a0ea3a53993bdfa8f0d19fe69a12cb2581b70fb449c31d",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "bcae881bebaf4484a83a2de63a245965"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6cd68634e1c0923f83d8d0552857e8aa7a07e584c1b66c8996e620e949bbc2a8"
+        }
+      ],
+      "evidence_key": "996551b80cab8fe0a716c39e45e5504c5d17bc68c3b9aafd29c62396e4ec6cea",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "b1a5f83013ce4818a4fd75b45392d53d"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        }
+      ],
+      "evidence_key": "9a95de0d727ed045d60f5e493b7cc530b890e5c9ed041117db7e1c20e6bc2af0",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "5caf08242968429fb7cb8684aaa21c38",
+      "run": "a02c3fb065a6474d90928225c4f2896d"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "9c32cbbb139040c58073b027c8cbc524e640c5b3a7be977ced2736ef351b4830",
+      "kind": "denied",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": null
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6cd68634e1c0923f83d8d0552857e8aa7a07e584c1b66c8996e620e949bbc2a8"
+        }
+      ],
+      "evidence_key": "9c86a85125899904779c509c35556b027ab45e8ed297145fbc29e491ca52b942",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "b1a5f83013ce4818a4fd75b45392d53d"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dc60e1af8bf9ea05716472c131f366148da4a30c2dce50ab88dfad60fd243ae4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "969494c78168ba5f639b793cc8eee608025244c8b01f2fad5d42e8e3fc8a14a3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6cd68634e1c0923f83d8d0552857e8aa7a07e584c1b66c8996e620e949bbc2a8"
+        }
+      ],
+      "evidence_key": "a14f1b349beaa275ebd12e0e00c6c8b334ccb88db1880e7dee57f438dff06642",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f23eba24a9244f8d839bf0c0a2c1662c"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "5c7ccca0c4d08087fa38ce34b41258dbea2e9af15c0a8f0e94d3f5cac05f4ea9"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6afec512d72d3558c90bad7a312ee348c9e0fdcf87b6a6da5d44903a1996de47"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "80253d0d6a9deb3d15b1488a048e96a6b876f5fa4c6f3f5eb20bbce763677828"
+        }
+      ],
+      "evidence_key": "a19a60f39f12a4a72eaf96b49f59bcf38472ff8c8c6386723fd088fbc2fb842a",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "9eed928d3666460a879848279a3e3788"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        }
+      ],
+      "evidence_key": "a25e5c387b000b70232f6bacb3f4729f241c4bb4bd20ee1f29f96235ad462a52",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "3092b6252b424e6a89e5d382b6c5aee2"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "80253d0d6a9deb3d15b1488a048e96a6b876f5fa4c6f3f5eb20bbce763677828"
+        }
+      ],
+      "evidence_key": "a4242db7f1fd65648c3c72640cf1a91762d2ce5ad3f1a91adb9415d276d7538b",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "137a3646c2f04dce8315bbb3ff7bc72d"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        }
+      ],
+      "evidence_key": "a9f3b120a6e5ca6b069dabd7932b8671ae60c8142aeb935a62f6cccdf141552d",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "5caf08242968429fb7cb8684aaa21c38",
+      "run": "a02c3fb065a6474d90928225c4f2896d"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "7b6f2f45d62e7fc020756985bce5e6c393d98d37e21366e01c7d44ec4a1af759"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cb08fc010b3dde198ca2f57e7e431f75b1136ceb95afc1c5a6c560b81ed481f8"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "91f8a24d6e85aa98cc00839f662a66b5e25654061757b89c7674be173e2a7ca5"
+        }
+      ],
+      "evidence_key": "aafeb3111f3ad3bc57d4ac8c60a551ae6eaceace4434e2f0ec313ca7f8684d8e",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "748135fb69974d699014e16650749352"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9150880d45f4989a71add33e075a5dee3f66a5c394f98fd4508c2481a1a52bd1"
+        }
+      ],
+      "evidence_key": "ad62c80f58471484e5f226460cf9544b4801af8e05798ddc2f1b651497c09505",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "a7f370bab3034931a46f05f8ab6312d0"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "ae535998b80ef393dcf9fb7943277b0b916aecce9f6fb9b2b1aae3130d502c4e",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "c0a1f297b87b4b688951342ec6270c7c",
+      "run": "bfd6af84e45d44d0863d73b029f50b79"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "b99ca23bf954a5bb0bc3d9b63bdcc55647399bd6ea9ef37a8c514d5e44a2f5a4"
+        }
+      ],
+      "evidence_key": "af7de7e8086a8f3908d789bc68536ca0ed9b5284810490bed34083d6e0ccf08f",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "e838db12cac74962a88cc107597eba09"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        }
+      ],
+      "evidence_key": "b81e6c5c1b29439e4350a0e056a8870b6b518663a3ae3828081110e5ea8c0f79",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "b0261c776ae44131afb7629dd60413d5"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "3df67b6a699905466cc86ae686c043b26f2b5e240c7fe378613926bf11a9b1e3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "55a8d4cbe9daaab863da2037f66c5430304be2f5e2a330871fcea759335f1e86"
+        }
+      ],
+      "evidence_key": "bc2a7cff3b56c6c97f85287c0ae08408c69c700c5384c40f9edacd7832d4ae5f",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "50737a5d37b64382a69f1364cf8fb260"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9fae89d439c208ae0002be1bec3e92cd9555d3af017cf3aaf434efd4cdd9fead"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+        }
+      ],
+      "evidence_key": "bc4bf4e90c95039fb4d5ab10fbd2684f76771b47a66c33eac1777e6149c10f77",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "b2dc7793850e4e20bc860629d8938634"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/f7107a41ab0a44b99be6cbc5424ddb6e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "06ef26ebd004d800aa89e0c97422f0cfb5227836a1c1ff6db077ebcba1ea0ea6"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "581db664e04d32f168238a1cf1e04820d3eb077a5947382195ce6cf8660edc97"
+        }
+      ],
+      "evidence_key": "be54b6cec8817c689a1f175e2869e123da732ee4f696a14c602a12a8df09d3d5",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "e1a5702ccc1b44ebbf0f6664dd1d75ca"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        }
+      ],
+      "evidence_key": "c2470d1afeb25135b5cbece7d83af9637f774cbac9fb51c219a88deafc8f30db",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "dba78e49ccca4c629ae3ff19e369fbce"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dc60e1af8bf9ea05716472c131f366148da4a30c2dce50ab88dfad60fd243ae4"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6b0b7d4e6647b43a59a38dff72bcb93332b8ecf4233cc9b8a725ebbe17fe21f2"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6cd68634e1c0923f83d8d0552857e8aa7a07e584c1b66c8996e620e949bbc2a8"
+        }
+      ],
+      "evidence_key": "c2f766cb2d9ede5a22049a582aa8b45d1dc0d49704a58ed47e5fb9f3cdb8eb13",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "6c3b927b96ca4aa6aede98a49a7d50f8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        }
+      ],
+      "evidence_key": "c3e97aaef2639ad56b9c6e3032aca73db2195039651276d7e18feb9f828baf61",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "d30b621c5b0b435cbfe8e7854e9011c1"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        }
+      ],
+      "evidence_key": "c6a0cb9cf1a83868d9b270fc8d387e98f6b5e5883f7b5e081e7a630a5650f137",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "ee491732e19a47f09ab59a1d8dbdd2d7"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0be93caaa60c6f6b872b30a4b117c267095f614f09acfbcf5fc0565e5aa5d518"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "321013e006237128b77bcf8571064fabc0528546b48284d109420816d3430c65"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "b99ca23bf954a5bb0bc3d9b63bdcc55647399bd6ea9ef37a8c514d5e44a2f5a4"
+        }
+      ],
+      "evidence_key": "c78b4624cbd4294073c6d832f8a4eac8bb0302f2d5bf6bd244e4a0bc2c75a41e",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "56ec1d13b9364ab58fa660c0d76d7fb8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/d30b621c5b0b435cbfe8e7854e9011c1.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a2c20ccd2e7e41f461ffe06987d01cac56cb05e3e28864034ab2088f25a82d32"
+        }
+      ],
+      "evidence_key": "c9cec09e4120ef585a197ccb5e8f89f7470c6193df3f382d24d4a2232b91e626",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "d30b621c5b0b435cbfe8e7854e9011c1"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "61fb38d903e00a047d43dd2b2f1b62e89bc96b2a4e539739f48421487664b3ba"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9150880d45f4989a71add33e075a5dee3f66a5c394f98fd4508c2481a1a52bd1"
+        }
+      ],
+      "evidence_key": "c9d4ae5d16db1e195657b029b0f8ff586d32be9dc43cfb08ba7eb8788401a3dc",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f8feacd58a694960b32363c00da2bbe4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "ca57ea592cc582f4dadb2ca8c8cc097f20be2c48aa0f03cd748a44c7dd5e0f85",
+      "kind": "denied",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": null
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "55a8d4cbe9daaab863da2037f66c5430304be2f5e2a330871fcea759335f1e86"
+        }
+      ],
+      "evidence_key": "cab7865fa798362dd3aec9f438e04948c3f6d1bea17ad5658208d039a7f941f7",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "3107463ad33847efa12c785ce79e0518"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "cd8409607f368d8b5f15c6b7fecc1b5be79164fed55fdb88a00a7c0be5abaf25",
+      "kind": "stop-fenced",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "e6dd110b2d75433582edf448734e3174"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        }
+      ],
+      "evidence_key": "cfbdc1dc91af343d6ccc8b668449e46322141b01f9dd72c7df25ec6d50e8fea9",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "a874ac93bd794d30b00bbac5884130ce",
+      "run": "824221898a5b4ccf960a462624105562"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/9e10defffa2440559bd03d5e56c1de0e.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0d100ee46ca18e74e9ea14c3f71d8e36451ec64378e0c73e44c4b5d7799c330a"
+        }
+      ],
+      "evidence_key": "cfd489a382a9221590542910adb013a689f01e2470d71ce64960f485e728f54c",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "9e10defffa2440559bd03d5e56c1de0e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        }
+      ],
+      "evidence_key": "d0c12363948b72c2376ae769d9ff5f69127269ac7ae1974d36f625587dd0f7f2",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "52daf761855d4f4db5e7629b81906024"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "d18de15ae4ee3b8d2b1086130ccda8abf858b2c0964226e7195bbd9656fdb951",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "02fa01a7d8b44471ad25d5d6f8297e90",
+      "run": "e6dd110b2d75433582edf448734e3174"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "5c7ccca0c4d08087fa38ce34b41258dbea2e9af15c0a8f0e94d3f5cac05f4ea9"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "80253d0d6a9deb3d15b1488a048e96a6b876f5fa4c6f3f5eb20bbce763677828"
+        }
+      ],
+      "evidence_key": "d212208ee75f6bf90451025a6e03651c77a077f9a62ac7cbdb6f0091534670ac",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "5e49354355a8498886d60a059bfc7eb7"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        }
+      ],
+      "evidence_key": "d42f2badc20486e96ac825a3567ddc5d99de19aabf5e8882306db986c91fa469",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "dba78e49ccca4c629ae3ff19e369fbce"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "dd82a024610d3d4c1cf8cf1600af869de933ea4cf3c7ce1741fddf5fac3b3c20",
+      "kind": "denied",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": null
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0be93caaa60c6f6b872b30a4b117c267095f614f09acfbcf5fc0565e5aa5d518"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "b99ca23bf954a5bb0bc3d9b63bdcc55647399bd6ea9ef37a8c514d5e44a2f5a4"
+        }
+      ],
+      "evidence_key": "dfcad03f86b40a107ce683518d9c1fb20aed1d8e88c328aedfe06f616f015ce1",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "2fc6bbce8e0c46dbbc574a687d9d2ca2"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/f2cb1745c1f445b79ded41c30d93747b.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "11a5e60c21dc9e836b6b92aeb883482a2233775485128da6a565c938455b935d"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0be93caaa60c6f6b872b30a4b117c267095f614f09acfbcf5fc0565e5aa5d518"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0eda4675de4f28ef82a17269470829ef3b757c1f9ac73b21b9372b7805db9640"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/stop.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "321013e006237128b77bcf8571064fabc0528546b48284d109420816d3430c65"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "b99ca23bf954a5bb0bc3d9b63bdcc55647399bd6ea9ef37a8c514d5e44a2f5a4"
+        }
+      ],
+      "evidence_key": "e022c9aa62ae002dbb610ea0e700c0645655c9c14a2cae0978792f1514ecbc20",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "56ec1d13b9364ab58fa660c0d76d7fb8"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1"
+        }
+      ],
+      "evidence_key": "e0b071a1edc3246b4b77f1dfc1e1175bd25256a5ed21f7bec5ef4f2b801827cd",
+      "kind": "denied",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": null
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd"
+        }
+      ],
+      "evidence_key": "e0c0186cf505c8356e9f1f29b0999f1e6784f4f606c3e9b1c09707c7697c5299",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "a874ac93bd794d30b00bbac5884130ce",
+      "run": "824221898a5b4ccf960a462624105562"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/80b4764d94bd49fab58c291df848b003.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "6e1a033393a88f7e7950454d4a9d48389e729c99ac41012a26202824f969c138"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "3df67b6a699905466cc86ae686c043b26f2b5e240c7fe378613926bf11a9b1e3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "c6fee6d60802c6e1292018d14f520e396defad059dc2147bc3b69a81f2e93dbf"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "55a8d4cbe9daaab863da2037f66c5430304be2f5e2a330871fcea759335f1e86"
+        }
+      ],
+      "evidence_key": "f3da2370b4e19ae8b831a13ee0dd7c6da8858e49326ddfaed0ab3ade7dd16903",
+      "kind": "reserved",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "50737a5d37b64382a69f1364cf8fb260"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "f5987a7183e168be36615514ec4e4d5f98315160fb25da20c063cc125a6f97b7",
+      "kind": "observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": "e16dc3d717f84e5c83244837a621ec9e",
+      "run": "5408e0f7165b40c385def0073fc1d41e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221"
+        }
+      ],
+      "evidence_key": "f5a742a6c0c45378278f7626fce612b75d48c43a4cecea40698bd4be17469b0e",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "3ec8437e265a48399785b6427a21f36e"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/force.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "61fb38d903e00a047d43dd2b2f1b62e89bc96b2a4e539739f48421487664b3ba"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "0bfb888541d52a38ec9f7ac8513aa61a134d04c240fd74c0b84a18a17247bffe"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "9150880d45f4989a71add33e075a5dee3f66a5c394f98fd4508c2481a1a52bd1"
+        }
+      ],
+      "evidence_key": "f9b1c9b9f294669cf170c447bab68c6d7b67244e56bc0dd99c2628c601596544",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "f8feacd58a694960b32363c00da2bbe4"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/output.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "84a8e8d6eef6c758cdc9661a2185e4716629556143b89b5d8438b6599ee58b22"
+        },
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/watchdog.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "80253d0d6a9deb3d15b1488a048e96a6b876f5fa4c6f3f5eb20bbce763677828"
+        }
+      ],
+      "evidence_key": "fb13ebac24e2ae4bdcfc779719598e9a7f555b417fb5b9c94e4030b84c2a507c",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "137a3646c2f04dce8315bbb3ff7bc72d"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/clean.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "74f9337b880f8f1dacb6bd0a540bd864344cec918dba563f27696b4d06e863fc"
+        },
+        {
+          "path": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/faulty.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "a0ef2d027af1f3e4195f27c882e8026c573cb21b6271f0a649dc451678ec29c7"
+        }
+      ],
+      "evidence_key": "fcab48b0176eab5f67531415e6ef9eea4e9845db3c1b035b7cec937bc677597f",
+      "kind": "stop-outcome",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "bounded-challenge",
+      "reservation": null,
+      "run": "e6dd110b2d75433582edf448734e3174"
+    },
+    {
+      "available_source_references": [
+        {
+          "path": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/df33d93313a44b5082fe165ccafc21a3.json",
+          "relationship": "available-reference-not-receipt",
+          "sha256": "cef380caa0f94f907e20af8baba9cc37975d1e6fad924533f3ba9fa08aeb9ff3"
+        }
+      ],
+      "evidence_key": "fd4ec477d08596b110660968ff24af6d665df23f1af678223b4746cd71f57d3f",
+      "kind": "offline-observation",
+      "missing_required_fields": [
+        "currency",
+        "end_interval",
+        "original_reservation_mapping",
+        "overlap_interval",
+        "paid_service",
+        "principal",
+        "request_key",
+        "stage",
+        "start_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ],
+      "profile": "offline-preflight",
+      "reservation": null,
+      "run": "df33d93313a44b5082fe165ccafc21a3"
+    }
+  ],
+  "evidence_standard": {
+    "acceptable_records": "original authenticated records only",
+    "required_properties": [
+      "authenticated principal and service identities",
+      "request key, run/reservation mapping, stage, and currency",
+      "UTC start, end, and overlap intervals",
+      "trusted meter and settlement receipts with provenance"
+    ],
+    "unacceptable_substitutes": [
+      "inferred values",
+      "reconstructed or substitute records",
+      "missing values converted to zero",
+      "source pointers treated as meter or settlement receipts"
+    ]
+  },
+  "global_requests": [
+    {
+      "id": "original-reservation-mappings",
+      "missing_event_count": 94,
+      "required_original_record": "reservation request to reservation mapping"
+    },
+    {
+      "id": "paid-service-proof",
+      "missing_event_count": 62,
+      "required_original_record": "authenticated paid-service account record"
+    },
+    {
+      "id": "all-event-accounting-identity-interval-and-receipts",
+      "missing_event_count": 110,
+      "required_fields": [
+        "principal",
+        "request_key",
+        "stage",
+        "currency",
+        "start_interval",
+        "end_interval",
+        "overlap_interval",
+        "trusted_meter_receipt",
+        "trusted_settlement_receipt"
+      ]
+    },
+    {
+      "basis_event_count": 110,
+      "id": "historical-campaign-stop-resolution",
+      "required_original_record": "authoritative campaign stop-state history and reason",
+      "scope": "campaign"
+    }
+  ],
+  "request_kind": "metadata-only-accounting-evidence-request",
+  "schema_version": 1
+}

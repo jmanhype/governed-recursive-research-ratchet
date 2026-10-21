@@ -133,7 +133,7 @@ def main() -> int:
             os.chown(directory, uid, uid)
             module_dir = directory / 'code'
             module_dir.mkdir(mode=0o755)
-            for filename in ('common.py', 'policy.py', 'offline.py', 'execution.py', 'offline_execution.py', 'ledger.py'):
+            for filename in ('common.py', 'policy.py', 'offline.py', 'execution.py', 'offline_execution.py', 'ledger.py', 'budget.py', 'persistent_budget.py', 'trusted_install.py'):
                 readonly(module_dir / filename, (ROOT / 'research' / filename).read_bytes())
         readonly(runtime / 'runner/code/offline_probe.py', (ROOT / 'tests/integration/offline_probe.py').read_bytes())
         # Probe code needs traversable runner code only, not runner workspace access.

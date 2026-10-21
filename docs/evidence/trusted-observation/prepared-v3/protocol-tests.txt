@@ -1,0 +1,7 @@
+=== RUN   TestFixedRequest
+--- PASS: TestFixedRequest (0.00s)
+=== RUN   TestUnknownDuplicateMalformedAndExecutableFields
+--- PASS: TestUnknownDuplicateMalformedAndExecutableFields (0.00s)
+PASS
+coverage: 90.6% of statements
+ok  	command-line-arguments	0.160s	coverage: 90.6% of statements

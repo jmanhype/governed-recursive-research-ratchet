@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+"""Read-only host binding, not an execution approval or successful launch plan."""
+import importlib.machinery
+import importlib.util
+from pathlib import Path
+import shutil
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest
+from trusted_execution import IMAGE, LIMITS, PROFILE, RECEIPT, SUPERVISOR
+
+loader = importlib.machinery.SourceFileLoader('trusted_launcher_review', str(ROOT / 'scripts/trusted-identity-integration'))
+spec = importlib.util.spec_from_loader(loader.name, loader)
+module = importlib.util.module_from_spec(spec)
+loader.exec_module(module)
+code = module.inventory()
+print(canonical({'version': 1, 'host_code': digest(canonical(code)), 'files': code,
+    'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'receipt': RECEIPT,
+    'limits': LIMITS, 'host_evaluator_uid': 320, 'host_executor_uid': 321,
+    'bootstrap_sha256': digest((ROOT / 'scripts/trusted-root-bootstrap').read_bytes()),
+    'interpreter_sha256': digest(Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9').read_bytes()),
+    'qemu_installation_approval': None, 'persistent_accounting_binding': None, 'execution_profile': None,
+    'guest_supervisor_uid': 0, 'guest_candidate_uid': 1000, 'guest_candidate_gid': 1000,
+    'network': False, 'host_shares': False, 'paid_dispatch': False, 'read_only_inputs': True,
+    'free_bytes': shutil.disk_usage('/private/tmp').free,
+    'execution_authorized': False, 'execution_performed': False,
+    'review_scope': 'security-fix source binding only; installation/accounting provisioning and independent review pending'}).decode())

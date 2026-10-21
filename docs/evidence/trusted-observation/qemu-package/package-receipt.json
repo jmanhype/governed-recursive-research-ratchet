@@ -1,0 +1,22 @@
+{
+  "data_count": 185,
+  "execution_authorized": false,
+  "files": {
+    "bin/qemu-system-aarch64": "352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da",
+    "lib/libglib-2.0.0.dylib": "d079259cc233208c80938170c06a4734d4d0d4ac8be75f5bb1df322c52bffe7b",
+    "lib/libintl.8.dylib": "925b627b3cd7b6334aaad8c54e9f182563c5fda7c19daf99d0a106d1c08e0d75",
+    "lib/libpcre2-8.0.dylib": "6adc5f7e794acfc9f82c7b74f1b4a854f3f30ea8650ddce457f25643fd6d9957"
+  },
+  "installation_sha256": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+  "installed": false,
+  "ownership": "staging user, not root",
+  "qemu_executed": false,
+  "runtime_loading_verified": false,
+  "static_load_commands": {
+    "bin/qemu-system-aarch64": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/staged-qemu/bin/qemu-system-aarch64:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 210.5.6)\n\t/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.12)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3423.0.0)\n\t/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit (compatibility version 1.0.0, current version 275.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)\n\t/Library/GRRR/qemu/lib/libglib-2.0.0.dylib (compatibility version 9001.0.0, current version 9001.1.0)\n",
+    "lib/libglib-2.0.0.dylib": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/staged-qemu/lib/libglib-2.0.0.dylib:\n\t/Library/GRRR/qemu/lib/libglib-2.0.0.dylib (compatibility version 9001.0.0, current version 9001.1.0)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/Library/GRRR/qemu/lib/libintl.8.dylib (compatibility version 13.0.0, current version 13.6.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)\n\t/Library/GRRR/qemu/lib/libpcre2-8.0.dylib (compatibility version 17.0.0, current version 17.1.0)\n\t/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation (compatibility version 300.0.0, current version 5027.0.69)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/usr/lib/libobjc.A.dylib (compatibility version 1.0.0, current version 228.0.0)\n",
+    "lib/libintl.8.dylib": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/staged-qemu/lib/libintl.8.dylib:\n\t/Library/GRRR/qemu/lib/libintl.8.dylib (compatibility version 13.0.0, current version 13.6.0)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3423.0.0)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)\n",
+    "lib/libpcre2-8.0.dylib": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/staged-qemu/lib/libpcre2-8.0.dylib:\n\t/Library/GRRR/qemu/lib/libpcre2-8.0.dylib (compatibility version 17.0.0, current version 17.1.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)\n"
+  },
+  "version": 1
+}

@@ -1,0 +1,258 @@
+#!/usr/bin/env python3
+"""Dedicated trusted-observation launcher. --dry-run never stages or launches.
+
+Usage: trusted-identity-integration --dry-run VM_ASSETS PREPARED_V4 QEMU_MANIFEST
+Root entry is ONLY the independently installed trusted-root-bootstrap.
+This checkout script must never be invoked as root.
+No sudo, credential handling, fallback executor, or implied execution approval.
+"""
+import ctypes
+import fcntl
+import importlib.machinery
+import importlib.util
+import json
+import os
+from pathlib import Path
+import pwd
+import shutil
+import signal
+import sqlite3
+import subprocess
+import sys
+import tempfile
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+if os.getuid() == 0:
+    if not (sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode
+            and ROOT.parent == Path('/Library/GRRR/snapshots')):
+        raise SystemExit('Root checkout execution prohibited; independently verified bootstrap required')
+    for protected_parent in (ROOT, *ROOT.parents):
+        if protected_parent.is_symlink() or protected_parent.stat().st_uid != 0 or protected_parent.stat().st_mode & 0o022:
+            raise SystemExit('Mutable snapshot ancestor')
+sys.path.insert(0, str(ROOT / 'research'))
+from common import Failure, canonical, digest, require
+from execution import ASSETS
+from trusted_execution import (IMAGE, LIMITS, PROFILE, QEMU_MANIFEST, RECEIPT, SUPERVISOR, HELPER,
+                               root_record, validate_approval, validate_config, configuration_digest)
+from trusted_install import immutable, record, verify_qemu
+from persistent_budget import ACTIVE, validate_store
+
+CODE = ('research/common.py', 'research/execution.py', 'research/budget.py', 'research/ledger.py',
+        'research/observation.py', 'research/trusted_execution.py', 'research/trusted_evaluation.py',
+        'scripts/trusted-identity-integration', 'scripts/verify-trusted-preparation',
+        'scripts/prepare-trusted-observation', 'research/offline.py',
+        'tests/integration/trusted_observation.py', 'tests/integration/trusted_probe.py',
+        'tests/unit_trusted_observation.py', 'research/policy.py', 'research/trusted_install.py',
+        'research/trusted_transport.py', 'research/persistent_budget.py', 'research/isolated_entry.py',
+        'scripts/trusted-root-bootstrap', 'research/trusted-guest.sh',
+        'tests/launch_lock_probe.py',
+        'research/trusted-supervisor/protocol.go', 'research/trusted-supervisor/protocol_test.go',
+        'research/trusted-supervisor/candidate_helper_linux.go', 'research/trusted-supervisor/supervisor_linux.go')
+
+
+def inventory() -> dict:
+    return {name: digest((ROOT / name).read_bytes()) for name in CODE}
+
+
+def validate_accounting(accounting: dict) -> None:
+    directory = accounting.get('directory') if isinstance(accounting, dict) else None
+    require(isinstance(directory, str) and directory != '',
+            'RecoveryRequired', 'Persistent accounting directory missing from reviewed binding')
+    validate_store(accounting, Path(directory) / 'budget.sqlite')
+
+
+def prepare_plan(vm: Path, prepared: Path, qemu_manifest: Path, operator=None) -> dict:
+    loader = importlib.machinery.SourceFileLoader('trusted_readback', str(ROOT / 'scripts/verify-trusted-preparation'))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    module = importlib.util.module_from_spec(spec)
+    loader.exec_module(module)
+    readback = module.verify(prepared, RECEIPT)
+    require(readback['profile_sha256'] == PROFILE and readback['supervisor_sha256'] == SUPERVISOR
+            and readback['helper_sha256'] == HELPER and readback['image_sha256'] == IMAGE,
+            'IntegrityFailure', 'v4 pinned artifacts differ')
+    assets = {name: vm / (name if name.endswith('.iso') else 'boot/' + name) for name in ASSETS}
+    assets['input.iso'] = prepared / 'input.iso'
+    for name, expected in dict(ASSETS, **{'input.iso': IMAGE}).items():
+        require(not assets[name].is_symlink() and assets[name].is_file()
+                and digest(assets[name].read_bytes()) == expected, 'IntegrityFailure', 'Asset mismatch: ' + name)
+    installation = record(qemu_manifest)
+    require(digest(canonical(installation)) == QEMU_MANIFEST,
+            'IntegrityFailure', 'Installed QEMU manifest differs')
+    verify_qemu(installation)
+    accounting = record(ACTIVE)
+    validate_accounting(accounting)
+    free = shutil.disk_usage('/private/tmp').free
+    require(free >= LIMITS['minimum_host_free_bytes'], 'BudgetExceeded', 'Host free space below fixed floor')
+    operator = ROOT.stat().st_uid if operator is None else operator
+    code = inventory()
+    config = {'version': 1, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER,
+        'host_code': digest(canonical(code)), 'operator_uid': operator, 'limits': LIMITS,
+        'network': False, 'host_shares': False, 'paid_dispatch': False, 'read_only_inputs': True,
+        'qemu_installation': QEMU_MANIFEST, 'accounting_binding': digest(canonical(accounting)),
+        'bootstrap_sha256': digest((ROOT / 'scripts/trusted-root-bootstrap').read_bytes()),
+        'python_sha256': digest(Path(sys.executable).read_bytes())}
+    config['execution_profile'] = configuration_digest(config)
+    validate_config(config)
+    return {'version': 1, 'config': config, 'code': code, 'assets': {k: str(v) for k, v in assets.items()},
+            'asset_hashes': dict(ASSETS, **{'input.iso': IMAGE}), 'readback': readback,
+            'free_bytes': free, 'qemu_installation': installation,
+            'execution_authorized': False, 'execution_performed': False}
+
+
+def readonly(path: Path, data: bytes) -> None:
+    with path.open('xb') as stream:
+        stream.write(data)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.chown(path, 0, 0)
+    subprocess.run(['/bin/chmod', '-N', str(path)], check=True, capture_output=True, timeout=5)
+    path.chmod(0o444)
+
+
+def clone(source: Path, target: Path, expected: str) -> None:
+    require(not source.is_symlink() and source.is_file() and not target.exists(),
+            'IntegrityFailure', 'Unsafe clone path')
+    library = ctypes.CDLL(None, use_errno=True)
+    require(hasattr(library, 'clonefile'), 'GateBlocked', 'APFS clonefile unavailable; no fallback')
+    function = library.clonefile
+    function.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int)
+    function.restype = ctypes.c_int
+    require(function(os.fsencode(source), os.fsencode(target), 0) == 0,
+            'GateBlocked', 'APFS clone failed; no fallback')
+    os.chown(target, 0, 0)
+    subprocess.run(['/bin/chmod', '-N', str(target)], check=True, capture_output=True, timeout=5)
+    target.chmod(0o444)
+    require(digest(target.read_bytes()) == expected, 'IntegrityFailure', 'Cloned asset changed')
+
+
+def identity(uid: int) -> None:
+    os.setgroups([])
+    os.setgid(uid)
+    os.setuid(uid)
+    os.umask(0o077)
+
+
+def cease(process: subprocess.Popen) -> None:
+    for sig, wait in ((signal.SIGTERM, 5), (signal.SIGKILL, 2)):
+        try:
+            os.killpg(process.pid, sig)
+        except ProcessLookupError:
+            pass
+        try:
+            process.wait(timeout=wait)
+        except subprocess.TimeoutExpired:
+            if sig == signal.SIGKILL:
+                raise Failure('RecoveryRequired', 'Service process cessation unconfirmed')
+
+
+def launch(plan: dict, approval: Path, review: Path) -> int:
+    require(os.getuid() == 0, 'Unauthorized', 'AWAITING_PARENT_IDENTITY_RUN: root launcher required')
+    approved, reviewed = root_record(approval), root_record(review)
+    validate_approval(approved, plan['config'], reviewed)
+    lock_path = ACTIVE.parent / 'launch.lock'
+    immutable(lock_path)
+    lock_fd = os.open(lock_path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        fcntl.flock(lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        os.close(lock_fd)
+        raise Failure('Stopped', 'Another launcher holds the campaign lock; no new effects')
+    accounting = record(ACTIVE)
+    require(digest(canonical(accounting)) == plan['config']['accounting_binding'],
+            'StaleBinding', 'Accounting binding changed')
+    database = Path(accounting['directory']) / 'budget.sqlite'
+    validate_store(accounting, database)
+    with sqlite3.connect(database.as_uri() + '?mode=ro', uri=True) as db:
+        require(db.execute('SELECT stopped FROM state').fetchall() == [(0,)],
+                'Stopped', 'Persistent campaign stop requires explicit reviewed recovery')
+    for name, uid in (('_grrr_evaluator', 320), ('_grrr_runner', 321)):
+        account = pwd.getpwnam(name)
+        require((account.pw_uid, account.pw_gid, account.pw_shell) == (uid, uid, '/usr/bin/false'),
+                'Unauthorized', 'Service identity configuration differs')
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-trusted-', dir='/private/tmp'))
+    subprocess.run(['/bin/chmod', '-N', str(runtime)], check=True, capture_output=True, timeout=5)
+    runtime.chmod(0o711)
+    service = None
+    print('PRIVATE_RUNTIME=' + str(runtime), flush=True)
+    environment = {'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'}
+    try:
+        for name, mode, owner in (('ipc', 0o1777, 0), ('runner', 0o755, 0),
+                                 ('evaluator', 0o700, 320), ('code', 0o755, 0),
+                                 ('runner/assets', 0o755, 0), ('runner/scratch', 0o700, 321)):
+            path = runtime / name
+            path.mkdir()
+            os.chown(path, owner, owner)
+            subprocess.run(['/bin/chmod', '-N', str(path)], check=True, capture_output=True, timeout=5)
+            path.chmod(mode)
+        for name, hashed in plan['code'].items():
+            data = (ROOT / name).read_bytes()
+            require(digest(data) == hashed, 'IntegrityFailure', 'Code changed after approval check')
+            target = runtime / 'code' / Path(name).name
+            readonly(target, data)
+            require(digest(target.read_bytes()) == hashed, 'IntegrityFailure', 'Staged code differs')
+        for name, source in plan['assets'].items():
+            clone(Path(source), runtime / 'runner/assets' / name, plan['asset_hashes'][name])
+        for name, data in (('config.json', plan['config']), ('approval.json', approved), ('license.json', reviewed)):
+            readonly(runtime / 'runner' / name, canonical(data))
+        readonly(runtime / 'runner/qemu-installation.json', canonical(plan['qemu_installation']))
+        readonly(runtime / 'plan.json', canonical(plan))
+        readonly(runtime / 'evaluator/expectation', b'SUPERVISOR-OWNED-CONTENT\n')
+        require(shutil.disk_usage(runtime).free >= LIMITS['minimum_host_free_bytes'],
+                'BudgetExceeded', 'Space floor crossed while staging; no service started')
+        with (runtime / 'service.log').open('xb') as log:
+            service = subprocess.Popen([sys.executable, '-I', '-S', '-B', str(runtime / 'code/isolated_entry.py'), 'trusted_execution.py',
+                str(runtime / 'runner')], cwd=runtime, stdout=log, stderr=subprocess.STDOUT,
+                env=environment, preexec_fn=lambda: identity(321), start_new_session=True)
+        deadline = time.monotonic() + 5
+        while (not (runtime / 'ipc/executor.sock').exists() or not (runtime / 'ipc/executor-control.sock').exists()) and service.poll() is None and time.monotonic() < deadline:
+            time.sleep(0.05)
+        require(service.poll() is None and (runtime / 'ipc/executor.sock').exists()
+                and (runtime / 'ipc/executor-control.sock').exists(),
+                'Unavailable', 'Executor did not start; no guest dispatched')
+        probes = []
+        for uid in (321, plan['config']['operator_uid']):
+            result = subprocess.run([sys.executable, '-I', '-S', '-B', str(runtime / 'code/isolated_entry.py'), 'trusted_probe.py', str(runtime)],
+                cwd=runtime, env=environment, preexec_fn=lambda uid=uid: identity(uid),
+                capture_output=True, timeout=15)
+            require(result.returncode == 0, 'GateBlocked', 'Actual host identity denial probe failed')
+            probes.append(json.loads(result.stdout))
+        readonly(runtime / 'host-probes.json', canonical(probes))
+        with (runtime / 'integration.log').open('xb') as log:
+            result = subprocess.run([sys.executable, '-I', '-S', '-B', str(runtime / 'code/isolated_entry.py'), 'trusted_observation.py', str(runtime)],
+                cwd=runtime, env=environment, preexec_fn=lambda: identity(320), stdout=log,
+                stderr=subprocess.STDOUT, timeout=3600)
+        return result.returncode
+    finally:
+        if service is not None:
+            cease(service)
+        # Keep private runtime intact for independent parent evidence review.
+        print('RETAINED_PRIVATE_RUNTIME=' + str(runtime), flush=True)
+        os.close(lock_fd)
+
+
+def main() -> int:
+    require(len(sys.argv) in (5, 7) and sys.argv[1] in ('--dry-run', '--bootstrap-run'),
+            'InvalidInput', __doc__)
+    mode = sys.argv[1]
+    require((mode == '--dry-run' and len(sys.argv) == 5) or (mode == '--bootstrap-run' and len(sys.argv) == 7),
+            'InvalidInput', __doc__)
+    if mode == '--bootstrap-run':
+        require(os.getuid() == 0, 'Unauthorized', 'AWAITING_PARENT_IDENTITY_RUN: root launcher required')
+    qemu_manifest = Path(sys.argv[4] if mode == '--dry-run' else sys.argv[6])
+    operator = None if mode == '--dry-run' else root_record(Path(sys.argv[4]))['operator_uid']
+    plan = prepare_plan(Path(sys.argv[2]).resolve(strict=True), Path(sys.argv[3]).resolve(strict=True),
+                        qemu_manifest, operator)
+    if mode == '--dry-run':
+        print(canonical(plan).decode())
+        return 0
+    return launch(plan, Path(sys.argv[4]), Path(sys.argv[5]))
+
+
+if __name__ == '__main__':
+    try:
+        raise SystemExit(main())
+    except (Failure, OSError, ValueError) as exc:
+        print(canonical({'trusted_observation': 'not-run', 'execution_authorized': False,
+                         'error': exc.record if isinstance(exc, Failure) else type(exc).__name__}).decode())
+        raise SystemExit(1)

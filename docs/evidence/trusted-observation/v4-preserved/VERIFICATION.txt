@@ -1,0 +1,37 @@
+== Nonroot protected-copy preflight ==
+Command: canonical CLT Python -I -S -B /Library/GRRR/bootstrap/install-v4-preservation-1957ab3 --preflight
+Exit: 0
+Result: six exact source files verified; destination and staging absent;
+mutation false; free space 32234430464 bytes.
+
+== Root-controlled preservation ==
+Command: canonical CLT Python -I -S -B /Library/GRRR/bootstrap/install-v4-preservation-1957ab3
+Invocation: root, empty environment, PATH=/usr/bin:/bin, LC_ALL=C
+Exit: 0
+Result: installed=true; six files published; free space before 32189837312 and
+after 32111394816 bytes; execution/dispatch/runtime claim all false.
+
+== Independent parent readback ==
+Commands:
+/usr/bin/find /Library/GRRR/trusted-observation -maxdepth 3 -print
+/usr/bin/stat and /bin/ls -ldeO on both directories and all six files
+/usr/bin/shasum -a 256 /Library/GRRR/trusted-observation/v4/*
+/usr/bin/cmp each preserved member against its reviewed source
+Exit: 0.
+Result: exactly six regular members; no symlinks; all files root:wheel 0444,
+single-link and ACL-free; all six byte-match their reviewed source.
+
+The preparation verifier itself expects the original preparation-directory
+layout with `media/supervis` and `media/helper`; it was therefore run against
+that source root, not misrepresented as a direct verifier of this deliberately
+flat six-member preservation namespace. Source verifier exit 0 verified seven
+ISO payloads, 52 source files, execution false, and approval absent.
+
+== Private staging and protected state ==
+Commands used trusted `/usr/bin/stat`, `/bin/ls`, and `/usr/bin/find` under root
+only to inspect the 0700 staging root.
+Exit: 0.
+Result: staging member count zero. QEMU manifest/executable and conservative
+accounting hashes remained unchanged. SQLite integrity was `ok`; state was
+stopped; reservations were zero; artifact count was 259. Current free space was
+32003608576 bytes.

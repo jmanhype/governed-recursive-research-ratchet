@@ -1,0 +1,8 @@
+4e0b39a4f3fbf096a750584b614f9749d67d51047e60ea8b3329f984c3f98577  /opt/homebrew/Cellar/dtc/1.8.1/lib/libfdt.a
+f1762a7e8de699e4c2dde3f39b2c1bee7380e8a13017036f7096b688efa059d4  /opt/homebrew/Cellar/dtc/1.8.1/include/fdt.h
+8d3dae9430681e8809f949431afda745af36c32308acae39b67fc14f0fae92e3  /opt/homebrew/Cellar/dtc/1.8.1/include/libfdt.h
+687b9e736f5e5b26812dc3e01609ba3a90c902442cd6f9446030a1f093a0f911  /opt/homebrew/Cellar/dtc/1.8.1/include/libfdt_env.h
+4e18d5fd5c059b1c385482cfdfe99406255888a3dea1d44e00c15414ba811ccb  /opt/homebrew/Cellar/dtc/1.8.1/.brew/dtc.rb
+087f989a53668296790b1654b9a49bbfdd304cfc99c7c2e3bf47f3572babd5ec  /opt/homebrew/Cellar/dtc/1.8.1/INSTALL_RECEIPT.json
+50085b96a01e8b4950451e863cf6a43754a4de790a593e66953d358b3a400c1c  /opt/homebrew/Cellar/dtc/1.8.1/sbom.spdx.json
+3becc6d5c04687e4857c7beeb86ea8cbb691aef93a8ef758e1a061fb51f33d7e  /opt/homebrew/Cellar/dtc/1.8.1/lib/pkgconfig/libfdt.pc

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/scripts/package-qemu-closure", line 154, in <module>
+    print(json.dumps(package(*map(Path, sys.argv[1:])), sort_keys=True, indent=2))
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/scripts/package-qemu-closure", line 34, in package
+    check(shutil.disk_usage(ROOT).free >= 17_000_000_000, 'conservative packaging floor unavailable')
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/scripts/package-qemu-closure", line 28, in check
+    raise RuntimeError(message)
+RuntimeError: conservative packaging floor unavailable

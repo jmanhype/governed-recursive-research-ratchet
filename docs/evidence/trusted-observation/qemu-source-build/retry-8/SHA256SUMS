@@ -1,0 +1,11 @@
+af036f8ee46bf8da4be352416393454fde079b1e3b09a61816223d606b2cd232  docs/evidence/trusted-observation/qemu-source-build/retry-8/build.txt
+efce10b49e9bfc7bc3e059ca0e402fe249117d641cf83ffd4c89137cf070163c  docs/evidence/trusted-observation/qemu-source-build/retry-8/config-host.h.txt
+9b520cdce68f1f3e4030c568f98ba04115808c57d3b2c50a46b018ed8005a0d8  docs/evidence/trusted-observation/qemu-source-build/retry-8/homebrew-tests.txt
+d332ef227e19a57ea593c4206dd0f4dfdcc6bd224ea1228061f44af80a6965bb  docs/evidence/trusted-observation/qemu-source-build/retry-8/meson-log.txt
+f6977a7112605151e10a4b1cd7dd5a3bed3bc3ac3aa3a0e64993c1b10fc049c9  docs/evidence/trusted-observation/qemu-source-build/retry-8/package-errors.txt
+213011a9a7f3865ceced98b435d302b9473056109533a534319586747e055209  docs/evidence/trusted-observation/qemu-source-build/retry-8/pvg-verify.txt
+bab352f733715c35700d8af509460b1f0d3191e97a62a179051960c8d2eaae44  docs/evidence/trusted-observation/qemu-source-build/retry-8/system-tests.txt
+24325a98071ad106832594708b6ada2cb2162d29949ce13529772c6db776d5aa  docs/evidence/trusted-observation/qemu-source-build/retry-8/closure-inspection.json
+7b402fd5acf303ae0898820cf8541d2756daee399a39c038b6dae52da08053e8  docs/evidence/trusted-observation/qemu-source-build/retry-8/host-binding.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  docs/evidence/trusted-observation/qemu-source-build/retry-8/package-receipt.json
+c9600ebae4852bf299ae7fbc60f249498561a3952ce586bb396f07c1b2d766ac  docs/evidence/trusted-observation/qemu-source-build/retry-8/STATUS.md

@@ -1,0 +1,9 @@
+ea0c5dca13d931a9de1d52cf204024cddfc4a510fbb53e3efe32c7bb7c5420f2  scripts/prepare-qemu-upstream
+bde69e26fb95feb4183def7c3231f5bb7d4d63064803d629f5d0e8cd8c62c2ec  scripts/build-qemu-upstream
+cbc31cc32f9a72cf65d7d88b6bd08fd6b5ae66778db548ea83d0692609ad1191  docs/evidence/trusted-observation/qemu-source-build/retry-1/build.txt
+7d4eb4c7abd4cd1946afa25ee503bb2a32a8429ac008c660db7094cbd5f451d5  docs/evidence/trusted-observation/qemu-source-build/retry-1/configure-help.txt
+ff978235db27dfc9da288e34bd22088e799b8b34964962f0e7b09e3af6681b6f  docs/evidence/trusted-observation/qemu-source-build/retry-1/license-hashes.txt
+376ed8643a61d21a22c8adaef72b64b03d1c96450365424169187798c0ddb7cf  docs/evidence/trusted-observation/qemu-source-build/retry-1/prepare.txt
+3f950579fb1a245b267d459a4c249f8d3d15d50393841133df5bf6a75dda4e50  docs/evidence/trusted-observation/qemu-source-build/retry-1/source-hashes.txt
+026edd87eaacdfb537b692d417227b1169e47d634a16e5edf4dbdf13fb1c6033  docs/evidence/trusted-observation/qemu-source-build/retry-1/tag.txt
+33a0f0f1131262a8822383bd92edca3f74271f16a6735962e18f3d3637925a8f  docs/evidence/trusted-observation/qemu-source-build/retry-1/STATUS.md

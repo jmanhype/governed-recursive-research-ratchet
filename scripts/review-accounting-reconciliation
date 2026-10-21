@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Validate accepted exports and emit a BLOCKED reconciliation inventory only."""
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import digest, require
+from accounting_reconciliation import summarize
+
+ACCEPTED = (
+    ('bounded-challenge', 'attempt-20261020T153803Z-4d13bc7b', 'verify-evidence',
+     '5758264cf727dd9abd1c84e9b3b3c0d7b28575f2919271c5a105ebc26e9def54'),
+    ('offline-preflight', 'attempt-20261020T233115Z-6e1e938c', 'verify-offline-evidence',
+     '85fbaadbae832ebb67110bbdfe980025fc011d6adb720866054acb4c690b1c16'),
+)
+
+
+def main():
+    events, sources, verifier_results, earlier = [], {}, {}, []
+    for lane, attempt, verifier, expected in ACCEPTED:
+        directory = ROOT / 'docs/evidence' / lane / attempt
+        require(digest((directory / 'manifest.json').read_bytes()) == expected,
+                'IntegrityFailure', 'Accepted manifest changed')
+        command = [sys.executable, '-I', '-S', '-B', str(ROOT / 'scripts' / verifier), str(directory)]
+        result = subprocess.run(command, check=True, capture_output=True, timeout=60)
+        verified = json.loads(result.stdout)
+        verifier_results[lane] = {'manifest_sha256': verified['manifest_sha256'],
+                                  'test_counts': verified['test_counts'],
+                                  'verifier_sha256': digest((ROOT / 'scripts' / verifier).read_bytes())}
+        manifest = json.loads((directory / 'manifest.json').read_bytes())
+        for name, expected_file in manifest['artifacts'].items():
+            path = directory / name
+            relative = str(path.relative_to(ROOT))
+            raw = path.read_bytes()
+            require(len(raw) <= 32 * 1024 * 1024 and digest(raw) == expected_file,
+                    'IntegrityFailure', 'Accepted artifact changed or too large')
+            sources[relative] = expected_file
+            if path.suffix != '.json':
+                continue
+            value = json.loads(raw)
+            if isinstance(value, dict) and 'snapshot_id' in value:
+                for row in value['events']:
+                    events.append({'source': relative, 'event': row['event']})
+        # Preserve prior attempts as unresolved evidence, not clean accepted runs.
+        for path in sorted(directory.parent.glob('attempt-*/manifest.json')):
+            if path.parent != directory:
+                earlier.append({'manifest': str(path.relative_to(ROOT)),
+                                'sha256': digest(path.read_bytes()), 'reconciled': False})
+    report = summarize(events)
+    report['visible_counts'] = {
+        'deduplicated_legacy_reservations': len(report['known_legacy_reservations']),
+        'deduplicated_observations': len(report['known_legacy_observations']),
+        'stop_events': len(report['known_stop_events']),
+        'conflicts_or_unmapped': len(report['conflicts']), 'earlier_attempts': len(earlier)}
+    report.update({'accepted_source_artifacts': sources, 'accepted_verification': verifier_results,
+                   'earlier_attempts_requiring_reconciliation': earlier,
+                   'database_created': False, 'accounting_store_modified': False,
+                   'operator_action': 'Reconcile listed gaps; do not synthesize zero cost or reset allowance.'})
+    print(json.dumps(report, sort_keys=True, indent=2))
+
+
+if __name__ == '__main__':
+    main()

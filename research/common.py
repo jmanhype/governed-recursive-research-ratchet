@@ -73,11 +73,22 @@ def receive(conn: socket.socket) -> dict:
         data.extend(chunk)
         require(len(data) <= MAX_WIRE, 'InvalidInput', 'Wire record too large')
     try:
-        value = json.loads(data)
+        value = json.loads(data, object_pairs_hook=unique_fields,
+                           parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
     except (ValueError, UnicodeError) as exc:
         raise Failure('InvalidInput', 'Invalid JSON') from exc
     require(isinstance(value, dict), 'InvalidInput', 'Expected object')
     return value
+
+
+def unique_fields(pairs: list[tuple[str, Any]]) -> dict:
+    """Reject duplicate JSON keys rather than silently selecting the last one."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('Duplicate JSON field')
+        result[key] = value
+    return result
 
 
 def call(path: Path, request: dict, timeout: float = 310) -> dict:
@@ -91,8 +102,16 @@ def call(path: Path, request: dict, timeout: float = 310) -> dict:
             response = receive(conn)
         except (OSError, TimeoutError) as exc:
             raise Failure('Unavailable', 'Endpoint unavailable; query operation before retry') from exc
+    fields(response, set(), {'ok', 'error'})
+    require(len(response) == 1, 'InvalidInput', 'Ambiguous response envelope')
     if 'error' in response:
         error = response['error']
+        fields(error, {'code', 'message', 'operation', 'retryable', 'receipt'})
+        require(error['code'] in ('Unauthorized', 'InvalidInput', 'StaleBinding', 'GateBlocked',
+                'BudgetUnknown', 'BudgetExceeded', 'Stopped', 'IntegrityFailure', 'Unavailable',
+                'RecoveryRequired') and isinstance(error['message'], str)
+                and len(error['message']) <= 1024 and error['retryable'] is False,
+                'RecoveryRequired', 'Unknown or invalid remote error; do not retry effects')
         raise Failure(error['code'], error['message'], error['operation'])
     return response['ok']
 

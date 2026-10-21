@@ -1,0 +1,9 @@
+ddf68cf016c9be88a8ee3f21e79f204487504bfd664563b8553f59c2403a9ee5  docs/TRUSTED-OBSERVATION-HOST-WIP.md
+a4c939a9509f03b4c84f095ee9d6a30fdeb433c924028477861a008a3b190837  docs/evidence/trusted-observation/host-adapter-wip/dry-run.json
+28ab650bfae3d6928fa969f883794262ef4e277477a167f1a9b846b864b46b9d  docs/evidence/trusted-observation/host-adapter-wip/host-binding.json
+160ab48ba944d09b5e7cfa0d3ecef9e6de40a2265cc4fb949f6ac04ec3656d18  docs/evidence/trusted-observation/host-adapter-wip/nonroot-run.json
+32c0100266e5253402f6d962bf931de7ac5b92f0d70c0a3d2def74a4620020c7  docs/evidence/trusted-observation/host-adapter-wip/readback.json
+d2b80980d7cba07618fa9d6142cb0954d9c83f924c2aab2d742e446f503e72e5  docs/evidence/trusted-observation/host-adapter-wip/mandatory-not-run.log
+58f6786769382040ae1cc2005d92b28a359605afa74eac5115ac10dd7266e57d  docs/evidence/trusted-observation/host-adapter-wip/pvg-verify.log
+eecd3495160ff526196faf42f05cbbc8961513cb1b0a632ead53b2f8322627b4  docs/evidence/trusted-observation/host-adapter-wip/trace-coverage.log
+6f0fde822e2444a72eda080439f085a36432bb57e34c77552b3917b7cddcae1e  docs/evidence/trusted-observation/host-adapter-wip/unit.log

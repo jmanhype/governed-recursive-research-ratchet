@@ -1,0 +1,6 @@
+$ /usr/bin/python3 -I -B -m py_compile research/trusted_execution.py research/trusted_evaluation.py tests/unit_trusted_host.py tests/unit_trusted_v4_source.py scripts/trusted-identity-integration scripts/verify-trusted-preparation
+$ /opt/homebrew/bin/python3 -B -m py_compile research/trusted_execution.py research/trusted_evaluation.py tests/unit_trusted_host.py tests/unit_trusted_v4_source.py scripts/trusted-identity-integration scripts/verify-trusted-preparation
+$ git diff --check
+$ grep -F " | None" research/trusted_execution.py research/trusted_evaluation.py tests/unit_trusted_v4_source.py tests/unit_trusted_host.py
+$ pvg verify --include-tests --format=text research/trusted_execution.py research/trusted_evaluation.py scripts/trusted-identity-integration scripts/verify-trusted-preparation tests/unit_trusted_host.py tests/unit_trusted_v4_source.py
+VERIFY: PASSED (4 files scanned, 0 issues)

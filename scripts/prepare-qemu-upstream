@@ -1,0 +1,19 @@
+#!/bin/sh
+# Provisioning build preparation only. Never invokes QEMU or installs as root.
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+/usr/bin/python3 -I -S -B scripts/qemu-build-preflight
+DEST="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2"
+test ! -e "$DEST"
+mkdir -m 700 "$DEST"
+git ls-remote https://gitlab.com/qemu-project/qemu.git refs/tags/v11.1.2 'refs/tags/v11.1.2^{}' > "$DEST/tag.txt"
+grep -q '^4fc49f46dc95d4a27de2509e7fceb2931e91faeb.*refs/tags/v11.1.2\^{}$' "$DEST/tag.txt"
+curl --fail --location --proto '=https' --tlsv1.2 \
+  https://download.qemu.org/qemu-11.1.2.tar.xz -o "$DEST/source.tar.xz"
+printf '%s  %s\n' 731b5681e4bb18be313231579b8efd0296c5b015fa36dc533874b639ba838016 "$DEST/source.tar.xz" | shasum -a 256 -c -
+/usr/bin/python3 -I -S -B scripts/qemu-build-preflight
+tar -xJf "$DEST/source.tar.xz" -C "$DEST"
+shasum -a 256 "$DEST/qemu-11.1.2/COPYING" "$DEST/qemu-11.1.2/COPYING.LIB" > "$DEST/license-hashes.txt"
+/usr/bin/python3 -I -S -B scripts/qemu-build-preflight
+printf '%s\n' "Pinned source prepared; configure/build is separate. QEMU not executed."

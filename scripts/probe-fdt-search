@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+/usr/bin/python3 -I -S -B scripts/qemu-build-preflight
+BASE="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2"
+BUILD="$BASE/fdt-environment-probe"
+test ! -e "$BUILD"
+export LIBRARY_PATH=/opt/homebrew/Cellar/dtc/1.8.1/lib
+export CPATH=/opt/homebrew/Cellar/dtc/1.8.1/include
+/usr/bin/cc -print-search-dirs
+"$BASE/build-fdt-paths/pyvenv/bin/meson" setup "$BUILD" "$ROOT/tests/fdt-search-probe"
+grep -q '/opt/homebrew/Cellar/dtc/1.8.1/lib/libfdt.a' "$BUILD/meson-logs/meson-log.txt"

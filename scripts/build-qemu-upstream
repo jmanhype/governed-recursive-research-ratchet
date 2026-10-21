@@ -1,0 +1,31 @@
+#!/bin/sh
+# Synchronous source build only. No QEMU execution, installation, or fallback.
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+/usr/bin/python3 -I -S -B scripts/qemu-build-preflight
+SOURCE="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2"
+printf '%s  %s\n' 7222d581694f1022ba6ab661907af6abf552243e80c9725cc4a7a064d70df4e0 "$SOURCE/meson.build" | shasum -a 256 -c -
+BUILD="$ROOT/.tmp-sr_pm/qemu-upstream-11.1.2/build-final-prefix"
+test ! -e "$BUILD"
+mkdir -m 700 "$BUILD"
+cd "$BUILD"
+"$SOURCE/configure" \
+  --prefix=/Library/GRRR/qemu \
+  --target-list=aarch64-softmmu \
+  --without-default-features \
+  --disable-modules --disable-plugins --disable-module-upgrades \
+  --disable-pixman --disable-cocoa --disable-gtk --disable-sdl \
+  --disable-vnc --disable-docs --disable-tools --disable-guest-agent \
+  --disable-download --enable-hvf --enable-tcg --enable-fdt=system \
+  --extra-cflags=-I/opt/homebrew/Cellar/dtc/1.8.1/include \
+  --extra-ldflags=-L/opt/homebrew/Cellar/dtc/1.8.1/lib \
+  --audio-drv-list= --python=/opt/homebrew/bin/python3
+grep -q '/opt/homebrew/Cellar/dtc/1.8.1/lib/libfdt.a' meson-logs/meson-log.txt
+/usr/bin/python3 -I -S -B "$ROOT/scripts/qemu-build-preflight"
+# Only the requested system target; never `make test` or `make install`.
+make -j2 qemu-system-aarch64
+/usr/bin/python3 -I -S -B "$ROOT/scripts/qemu-build-preflight"
+shasum -a 256 qemu-system-aarch64
+/usr/bin/otool -L qemu-system-aarch64
+/usr/bin/otool -l qemu-system-aarch64

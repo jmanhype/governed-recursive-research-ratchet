@@ -70,7 +70,7 @@ class Executor:
         run = identifier(request['run'])
         identifier(reservation)
         identifier(key)
-        require(fence == 0, 'StaleBinding', 'Stale execution epoch')
+        require(type(fence) is int and fence == 0, 'StaleBinding', 'Stale execution epoch')
         require(request['variant'] in VARIANTS and request['probe'] in (None, 'stop', 'output', 'deadline'),
                 'InvalidInput', 'Variant not frozen/allowlisted')
         require(Path(self.qemu).is_file(), 'Unavailable', 'Approved VM executable absent')

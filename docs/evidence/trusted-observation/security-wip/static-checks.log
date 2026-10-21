@@ -1,0 +1,5 @@
+py_compile_exit=0
+git_diff_check_exit=0
+       0 .tmp-sr_pm/trusted-observation/guest-security-diff.txt
+a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6  .tmp-sr_pm/trusted-observation/prepared-v3/media/supervis
+799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233  .tmp-sr_pm/trusted-observation/prepared-v3/input.iso

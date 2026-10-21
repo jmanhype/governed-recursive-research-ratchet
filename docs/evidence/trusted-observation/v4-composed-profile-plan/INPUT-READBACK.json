@@ -1,0 +1,128 @@
+{
+  "assertions": {
+    "accounting_active_expected_digest_match": true,
+    "accounting_database_expected_digest_match": true,
+    "accounting_integrity_ok": true,
+    "accounting_stopped": true,
+    "accounting_zero_reservations": true,
+    "free_space_floor_pass": true,
+    "json_source": "all hashes in this file computed from referenced live/tracked bytes",
+    "profile_limits_equal_except_image_hash": true,
+    "qemu_executable_expected_digest_match": true,
+    "qemu_manifest_expected_digest_match": true,
+    "v3_code_rejects_v4": true
+  },
+  "basis": {
+    "free_bytes": 32432611328,
+    "free_space_floor_bytes": 15000000000,
+    "free_space_floor_pass": true,
+    "planning_only": true,
+    "story_branch": "story/GRRR-gu87",
+    "worktree_commit": "cab53ad70f43187275b06223d195147c27dd81fb"
+  },
+  "committed_v3_profile_comparison": {
+    "all_other_fields_equal": true,
+    "different_fields": [
+      "input_image_sha256"
+    ],
+    "v3_input_image_sha256": "799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233",
+    "v4_input_image_sha256": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6"
+  },
+  "current_v3_code": {
+      "IMAGE": "799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233",
+    "PROFILE": "3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0",
+    "QEMU_SHA": "7299ef807db462f913be5d1b89a71ea12590416175be0be5e87c2349594c6542",
+    "RECEIPT": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c",
+    "trusted_execution_sha256": "50d39636090c8903e55ccd9af39478afc3f0c9101cb47933935a2c9d66b330dc",
+    "validate_approval_v4_rejection": {
+      "code": "GateBlocked",
+      "message": "Exact local-use provenance review absent",
+      "operation": "unknown",
+      "receipt": null,
+      "retryable": false
+    },
+    "validate_config_v4_rejection": {
+      "code": "GateBlocked",
+      "message": "Trusted profile capabilities differ",
+      "operation": "unknown",
+      "receipt": null,
+      "retryable": false
+    }
+  },
+  "installed_conservative_accounting": {
+    "active_bytes": 540,
+    "active_sha256": "cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b",
+    "current_code_rejection": {
+      "code": "InvalidInput",
+      "message": "Unknown or missing fields",
+      "operation": "unknown",
+      "receipt": null,
+      "retryable": false
+    },
+    "database_bytes": 72384512,
+    "database_sha256": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+    "execution_gate": "blocked",
+    "receipt_sha256": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+    "reservation_count": 0,
+    "sqlite_integrity_check": [
+      [
+        "ok"
+      ]
+    ],
+    "state_rows": [
+      [
+        1,
+        1
+      ]
+    ],
+    "unresolved_history": true
+  },
+  "installed_qemu": {
+    "build_record_sha256": "ffa50fc7c5d0021d6b45b985d1478851aacefbb45a341fd876ab1a05ed984a25",
+    "data_inventory_count": 185,
+    "executable_relative_path": "bin/qemu-system-aarch64",
+    "executable_sha256": "352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da",
+    "file_inventory_count": 4,
+    "manifest_bytes": 16699,
+    "manifest_canonical_sha256": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+    "manifest_raw_sha256": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+    "root": "/Library/GRRR/qemu"
+  },
+  "live_v4": {
+    "files": {
+      "development-binding.json": {
+        "bytes": 234,
+        "sha256": "9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209"
+      },
+      "helper": {
+        "bytes": 2883214,
+        "sha256": "14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e"
+      },
+      "input.iso": {
+        "bytes": 71483392,
+        "sha256": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6"
+      },
+      "preparation.json": {
+        "bytes": 16240,
+        "sha256": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7"
+      },
+      "prepared-profile.json": {
+        "bytes": 2441,
+        "sha256": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205"
+      },
+      "supervisor": {
+        "bytes": 3991473,
+        "sha256": "a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"
+      }
+    },
+    "receipt": {
+      "candidate_execution_performed": false,
+      "execution_performed": false,
+      "iso_payload_file_count": 7,
+      "source_commit": "129e0b3f15a3bd6af949ee47d76f6855c582ab73",
+      "source_file_count": 52
+    },
+    "root": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/trusted-observation/prepared-v3-recovery"
+  },
+  "schema": 1
+}

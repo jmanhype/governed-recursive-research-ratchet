@@ -1,0 +1,141 @@
+{
+  "accounting": {
+    "artifacts": 259,
+    "integrity": "ok",
+    "reservations": 0,
+    "state": [
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  "authorization_plan_commit": "1957ab3478c67cd6082e92e3e67da35e4457e644",
+  "directories": {
+    "/Library/GRRR/trusted-observation": {
+      "bytes": 96,
+      "device": 16777229,
+      "inode": 682138280,
+      "links": 3,
+      "mode": "0o755",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "type": "directory"
+    },
+    "/Library/GRRR/trusted-observation/v4": {
+      "bytes": 256,
+      "device": 16777229,
+      "inode": 682138281,
+      "links": 8,
+      "mode": "0o755",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "type": "directory"
+    }
+  },
+  "dispatch_enabled": false,
+  "execution_authorized": false,
+  "files": {
+    "development-binding.json": {
+      "bytes": 234,
+      "device": 16777229,
+      "inode": 682138282,
+      "links": 1,
+      "mode": "0o444",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "sha256": "9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209",
+      "type": "regular"
+    },
+    "helper": {
+      "bytes": 2883214,
+      "device": 16777229,
+      "inode": 682138283,
+      "links": 1,
+      "mode": "0o444",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "sha256": "14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e",
+      "type": "regular"
+    },
+    "input.iso": {
+      "bytes": 71483392,
+      "device": 16777229,
+      "inode": 682138284,
+      "links": 1,
+      "mode": "0o444",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "sha256": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6",
+      "type": "regular"
+    },
+    "preparation.json": {
+      "bytes": 16240,
+      "device": 16777229,
+      "inode": 682138285,
+      "links": 1,
+      "mode": "0o444",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "sha256": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7",
+      "type": "regular"
+    },
+    "prepared-profile.json": {
+      "bytes": 2441,
+      "device": 16777229,
+      "inode": 682138286,
+      "links": 1,
+      "mode": "0o444",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "sha256": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205",
+      "type": "regular"
+    },
+    "supervisor": {
+      "bytes": 3991473,
+      "device": 16777229,
+      "inode": 682138287,
+      "links": 1,
+      "mode": "0o444",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "sha256": "a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6",
+      "type": "regular"
+    }
+  },
+  "free_bytes_after": 32111394816,
+  "free_bytes_before": 32189837312,
+  "free_bytes_current": 31965835264,
+  "member_count": 6,
+  "plan_basis_commit": "cab53ad70f43187275b06223d195147c27dd81fb",
+  "preserved_root": "/Library/GRRR/trusted-observation/v4",
+  "private_staging": {
+    "member_count": 0,
+    "mode_verified_by_parent": "0o700",
+    "path": "/Library/GRRR/.grrr-v4-preservation-stage-1957ab3"
+  },
+  "protected_installer": {
+    "bytes": 11822,
+    "device": 16777229,
+    "inode": 682130955,
+    "links": 1,
+    "mode": "0o444",
+    "owner_gid": 0,
+    "owner_uid": 0,
+    "path": "/Library/GRRR/bootstrap/install-v4-preservation-1957ab3",
+    "sha256": "0044e034e21921cb09032e27b33e4a013f71540dc83deed21180d766f961deba",
+    "type": "regular"
+  },
+  "protected_state": {
+    "/Library/GRRR/accounting/active.json": "cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b",
+    "/Library/GRRR/accounting/budget.sqlite": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+    "/Library/GRRR/accounting/receipt.json": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+    "/Library/GRRR/qemu/bin/qemu-system-aarch64": "352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da",
+    "/Library/GRRR/qemu/installation.json": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625"
+  },
+  "qemu_or_guest_executed": false,
+  "runtime_claim_allowed": false,
+  "schema": "trusted-observation-v4-preserved",
+  "source_byte_matches": 6,
+  "version": 1
+}

@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+"""Non-root immutable-prefix packaging; never executes any packaged image."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tarfile
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest
+from trusted_install import absolute_dependencies, macho_loads
+
+FINAL = Path('/Library/GRRR/qemu')
+SOURCE_HASH = '731b5681e4bb18be313231579b8efd0296c5b015fa36dc533874b639ba838016'
+
+
+def run(args):
+    return subprocess.run(args, check=True, capture_output=True, text=True, timeout=30,
+                          env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+
+
+def check(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def package(build, source, inventory_path, output):
+    build, source, inventory_path, output = (p.absolute() for p in (build, source, inventory_path, output))
+    check(os.getuid() != 0, 'packaging is non-root only')
+    check(shutil.disk_usage(ROOT).free >= 17_000_000_000, 'conservative packaging floor unavailable')
+    check(not output.exists(), 'fresh staging directory required')
+    check(digest((source.parent / 'source.tar.xz').read_bytes()) == SOURCE_HASH,
+          'upstream archive provenance differs')
+    check(digest((source / 'meson.build').read_bytes()) ==
+          '7222d581694f1022ba6ab661907af6abf552243e80c9725cc4a7a064d70df4e0',
+          'reviewed FDT-only patch differs')
+    upstream = {}
+    with tarfile.open(source.parent / 'source.tar.xz', 'r:xz') as archive:
+        for member in archive:
+            if member.isfile() and (member.name.startswith('qemu-11.1.2/pc-bios/') or
+                    member.name in ('qemu-11.1.2/accel/hvf/entitlements.plist',
+                                    'qemu-11.1.2/COPYING', 'qemu-11.1.2/COPYING.LIB')):
+                upstream[member.name.removeprefix('qemu-11.1.2/')] = digest(archive.extractfile(member).read())
+    for name, expected in upstream.items():
+        check(digest((source / name).read_bytes()) == expected, 'upstream data or entitlement changed')
+    inventory = json.loads(inventory_path.read_bytes())
+    check(not inventory['blockers'] and len(inventory['files']) <= 16, 'unresolved loader closure')
+    config = (build / 'config-host.h').read_text()
+    check('#define CONFIG_PREFIX "/Library/GRRR/qemu"' in config and
+          '#undef CONFIG_MODULES' in config and '#undef CONFIG_PLUGIN' in config,
+          'prefix or module/plugin build boundary differs')
+    binary = (build / 'qemu-system-aarch64').resolve()
+    mapping = {}
+    for name, entry in inventory['files'].items():
+        path = Path(name)
+        check(digest(path.read_bytes()) == entry['sha256'], 'closure input changed')
+        relative = ('bin/' if path == binary else 'lib/') + path.name
+        check(relative not in mapping.values(), 'duplicate closure basename')
+        mapping[name] = relative
+        mapping[entry['observed_path']] = relative
+    output.mkdir(mode=0o700)
+    signatures = {}
+    for name, entry in inventory['files'].items():
+        source_path = Path(name)
+        target = output / mapping[name]
+        target.parent.mkdir(exist_ok=True)
+        shutil.copyfile(source_path, target)
+        check(digest(target.read_bytes()) == entry['sha256'], 'copy read-back differs')
+        deps, rpaths = macho_loads(target.read_bytes())
+        if source_path != binary:
+            run(['/usr/bin/install_name_tool', '-id', str(FINAL / mapping[name]), str(target)])
+        for dependency in deps:
+            if dependency.startswith(('/usr/lib/', '/System/Library/')):
+                continue
+            resolved = str(Path(dependency).resolve(strict=True))
+            check(resolved in mapping, 'unlisted non-system dependency')
+            run(['/usr/bin/install_name_tool', '-change', dependency,
+                 str(FINAL / mapping[resolved]), str(target)])
+        for rpath in rpaths:
+            run(['/usr/bin/install_name_tool', '-delete_rpath', rpath, str(target)])
+        sign = ['/usr/bin/codesign', '--force', '--sign', '-']
+        if source_path == binary:
+            sign += ['--entitlements', str(source / 'accel/hvf/entitlements.plist')]
+        run(sign + [str(target)])
+        run(['/usr/bin/codesign', '--verify', '--strict', str(target)])
+        signatures[mapping[name]] = run(['/usr/bin/otool', '-L', str(target)])
+        os.chmod(target, 0o555 if source_path == binary else 0o444)
+    # Preserve the entire bounded, pinned upstream pc-bios data tree (no symlinks).
+    # The direct-kernel profile does not authorize selection of additional firmware.
+    data = {}
+    entries = sorted((source / 'pc-bios').rglob('*'))
+    check(len(entries) <= 512 and all(not p.is_symlink() for p in entries), 'unsafe upstream data tree')
+    for path in entries:
+        if not path.is_file():
+            continue
+        relative = str(path.relative_to(source / 'pc-bios'))
+        check('pc-bios/' + relative in upstream, 'unlisted upstream data')
+        target = output / 'data' / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, target)
+        data[relative] = digest(path.read_bytes())
+        check(digest(target.read_bytes()) == data[relative], 'data read-back differs')
+        os.chmod(target, 0o444)
+    for name in ('COPYING', 'COPYING.LIB'):
+        relative = 'licenses/QEMU-' + name
+        target = output / 'data' / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source / name, target)
+        data[relative] = upstream[name]
+        os.chmod(target, 0o444)
+    files = {relative: digest((output / relative).read_bytes()) for relative in set(mapping.values())}
+    for relative in files:
+        deps, rpaths = macho_loads((output / relative).read_bytes())
+        absolute_dependencies(FINAL, deps, rpaths, files)
+        check(b'/Library/GRRR/qemu-reviewed' not in (output / relative).read_bytes(),
+              'historical compiled prefix remains')
+    configure = [line for line in (build / 'config.status').read_text().splitlines()
+                 if line.startswith('exec ')]
+    check(len(configure) == 1, 'configure provenance missing')
+    import shlex
+    invocation = shlex.split(configure[0])
+    check(invocation[1] == str(source / 'configure') and invocation[-1] == '$@',
+          'unexpected configure recreation command')
+    args = invocation[2:-1]
+    check('--prefix=' + str(FINAL) in args and '--disable-modules' in args and
+          '--disable-plugins' in args and '--static' not in args, 'build option provenance differs')
+    review = digest(inventory_path.read_bytes())
+    build_record = {'version': '11.1.2', 'source_sha256': SOURCE_HASH,
+                    'executable_sha256': files['bin/qemu-system-aarch64'],
+                    'configure': args, 'review_reference': review}
+    manifest = {'version': 1, 'root': str(FINAL), 'executable': 'bin/qemu-system-aarch64',
+                'files': files, 'data_files': data, 'system_build': inventory['system_build'],
+                'build_record_sha256': digest(canonical(build_record)), 'review_reference': review}
+    for name, value in [('build-record.json', build_record), ('installation.json', manifest)]:
+        (output / name).write_bytes(canonical(value))
+        os.chmod(output / name, 0o444)
+    for path in output.rglob('*'):
+        if path.is_dir():
+            os.chmod(path, 0o755)
+    os.chmod(output, 0o755)
+    check(shutil.disk_usage(ROOT).free >= 15_000_000_000, 'execution floor violated')
+    return {'version': 1, 'installation_sha256': digest(canonical(manifest)),
+            'files': files, 'data_count': len(data), 'static_load_commands': signatures,
+            'installed': False, 'qemu_executed': False, 'ownership': 'staging user, not root',
+            'runtime_loading_verified': False, 'execution_authorized': False}
+
+
+if __name__ == '__main__':
+    check(len(sys.argv) == 5, 'BUILD SOURCE CLOSURE_INVENTORY NEW_STAGING_DIRECTORY required')
+    print(json.dumps(package(*map(Path, sys.argv[1:])), sort_keys=True, indent=2))

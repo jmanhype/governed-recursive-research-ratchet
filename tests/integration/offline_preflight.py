@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'research'))
 from common import EVALUATOR, Failure, call, canonical, digest, require
 from ledger import Ledger, verifySnapshot
 from policy import loadPolicy
+from persistent_budget import PersistentBudget
 
 RUNTIME = Path(sys.argv[1]).resolve()
 
@@ -28,9 +29,13 @@ class OfflinePreflight(unittest.TestCase):
         cls.ledger = Ledger(cls.root)
         require(cls.ledger.tip() == '0' * 64, 'RecoveryRequired', 'Never reuse preflight ledger')
         cls.reserved = 0
+        cls.budget = PersistentBudget('offline')
 
     def dispatch(self, probe: str | None = None) -> dict:
-        run, reservation, key = (uuid.uuid4().hex for _ in range(3))
+        run, key = (uuid.uuid4().hex for _ in range(2))
+        reservation = self.budget.reserve(EVALUATOR, run,
+            {'currency': 'USD', 'money_cents': 0, 'execution_us': 300000000, 'review_us': 0},
+            key, binding=digest(canonical({'profile': self.policy_ref, 'probe': probe})))['id']
         self.__class__.reserved += 300
         self.assertLessEqual(self.reserved, 21600)
         self.ledger.snapshot({'kind': 'reserved', 'run': run, 'maximum_seconds': 300,
@@ -85,6 +90,9 @@ class OfflinePreflight(unittest.TestCase):
         self.assertTrue(observed['termination']['ceased'])
         self.assertTrue(observed['assets_unchanged'])
         self.assertLessEqual(observed['seconds'], 300)
+        # Until a separately reviewed complete offline meter adapter exists,
+        # retain the shared worst-case hold even for a successful control.
+        # No missing/incomplete cost is converted to zero or fresh allowance.
         return observed
 
     def test_01_actual_permission_and_misconfiguration_controls(self) -> None:
