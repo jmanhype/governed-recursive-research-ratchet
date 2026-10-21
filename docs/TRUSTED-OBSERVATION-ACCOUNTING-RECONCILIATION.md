@@ -49,7 +49,7 @@ No coverage claim for mandatory guest acceptance criteria is made.
 ## All-visible-attempt genesis proposal (2026-10-21)
 
 `scripts/propose-accounting-genesis` additionally inventories all twelve attempt
-manifests (two accepted, ten earlier failures), verifies their referenced bytes,
+manifests (two accepted, ten earlier/nonaccepted attempts), verifies their referenced bytes,
 deduplicates event hashes across exports, preserves run/reservation identities and
 source hashes, and extracts scalar duration fields with exact JSON pointers.
 See `accounting-reconciliation/genesis-proposal.json`. Earlier failed attempt
@@ -63,6 +63,9 @@ ALL cumulative milestone ceilings ($150, 24 execution hours, 3 review hours).
 These overlapping admission holds are not additive historical charges or a reset;
 both stages admit no work. Even this cannot prove prior usage did not exceed a
 ceiling. POC carry-forward requires no fresh milestone allowance.
+
+Nine manifests report nonzero exit; three report zero. Nonaccepted is not
+synonymous with nonzero exit, and no zero exit implies complete cost accounting.
 
 The mathematical evidence-only lower bound takes the maximum measured run
 duration, not a sum of potentially overlapping executions/replays. Zero money and
