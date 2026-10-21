@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T13:09:00Z
-content_hash: "sha256:af1ee8bbc25ad64b12958c05ca4a03b0eaec653441006aaf6fef9e8e024181e7"
+updated_at: 2026-10-21T14:20:06Z
+content_hash: "sha256:9a2bac7d258187d314fd3e611a513f231bebeb5ef5e48822a90101073a2875ad"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -138,6 +138,40 @@ V4 RECOVERY HASH CORRECTION AND INDEPENDENT VERIFICATION (2026-10-21, commit a7e
 V4 RECOVERY REVIEW CORRECTIONS (2026-10-21, commit f51cd71): Corrected the authentic retained-v3 receipt anchor to 775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c and preserved any earlier ae9d0c0c prose only as a mistyped-anchor variant. Replaced ambiguous bytes_equal with byte_lengths_equal. Added CONTAINER-DIAGNOSTIC.txt showing unchanged recovered media produced ISO hashes 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6 and 941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1a8dd1909c77da09827b0 with equal 71483392-byte lengths and 18 differing timestamp-bearing positions. The v3/v4 metadata-only cause remains inferred, not proven, because the exact v3 container is unavailable. Authentic v3 anchor rejects the v4 receipt; v4 anchor verifies. Evidence manifest 5/5 passes; 108 no-guest Python units pass. No execution or authorization granted.
 CONTAINER DIAGNOSTIC HASH CORRECTION (2026-10-21, commit cab53ad): The repeat ISO hash is 941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1d8dd1909c77da09827b0, derived and rechecked from the actual input-repro.iso bytes. The prior ...da1a8dd... prose variant was a transcription error. The refreshed 5-entry evidence manifest passes, and diagnostic/live hash equality was independently asserted. No execution or authorization granted.
 INDEPENDENT V4 RECOVERY SECURITY REVIEW (2026-10-21, commit cab53ad): SECURITY_REVIEW: V4_RECOVERY_EVIDENCE_APPROVED. Reviewer independently confirmed actual repeat-container hash 941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1d8dd1909c77da09827b0, 5/5 evidence-manifest entries, authentic retained-v3 receipt anchor, byte_lengths_equal semantics, and explicit qualification that metadata-only v3/v4 causation is unproven. This approves evidence only. It is not exact-v3 recovery, execution readiness, AC success, stop/hold release, accounting migration, guest execution, or operator authorization.
+## Trusted-observation v4 preservation/composed-profile plan — planning only
+
+### Scope and basis
+- Basis: clean story worktree `cab53ad70f43187275b06223d195147c27dd81fb`. Operator authorized planning only; no root install, code implementation, accounting mutation, QEMU/guest execution, delivery, or push.
+- Concise planned evidence is under `docs/evidence/trusted-observation/v4-composed-profile-plan/`: `PLAN.md`, `PLAN.json`, `INPUT-READBACK.json`, `VERIFICATION.txt`, and `SHA256SUMS`. Binary/ISO assets remain only in main `.tmp-sr_pm`.
+
+### Direct live-file readback and assertions
+- v4 verifier bound to receipt `3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7`: exit 0; 7 ISO payloads, 52 source files, execution/approval absent.
+- Programmatic generator read live v4/QEMU/accounting/tracked-v3 bytes and emitted all digest-bearing JSON values; JSON parse and independent committed-to-live assertions passed.
+- Immutable QEMU manifest `e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625`; executable `352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da`; executable hashed, not run.
+- Conservative accounting active `cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b`; database `9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234`; SQLite integrity ok; state `(1,1)`; reservations 0; execution gate blocked/unresolved history true. This is a blocker, never allowance.
+- Current `trusted_execution.py` retains v3 profile/ISO/receipt and legacy Homebrew QEMU constant. Direct no-runtime checks reject v4 config (`GateBlocked`) and v4 receipt approval (`GateBlocked`); persistent accounting binding is incompatible (`InvalidInput`). Current code cannot consume v4.
+- v3/v4 profile comparison differs only at `input_image_sha256`; all limits and other fields remain equal. Free-space readings 32,432,611,328 and 32,634,998,784 bytes both exceed 15 GB and 32 GB.
+- Checksum, JSON, `git diff --check`, and explicit-path `pvg verify` passed.
+
+### Plan outcome
+- Future separately authorized preservation must exclusively create a complete root:wheel 0444, ACL-free, symlink-free, single-link v4 namespace and refuse partial state.
+- Source revision plus no-guest tests are mandatory before any runtime claim: exact v4 identities/helper and installed QEMU digest; reject v3 and unsafe states.
+- Proposed composed v4 record remains dispatch-disabled and execution-unauthorized, binds conservative stopped accounting as a blocker, preserves unchanged limits, and requires independent review, root preservation, accounting-history resolution/migration, then separate execution approval.
+- Rollback may affect only a newly created v4 namespace; never v3 evidence, QEMU, or accounting history. All unknowns/partial states fail closed.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Planning-only evidence prepared and verified at `cab53ad`; one local docs commit will follow. No story AC is claimed.
+
+### proof
+- [ ] AC #1: unchanged pending; no execution.
+- [ ] AC #2: unchanged pending; no execution.
+- [ ] AC #3: unchanged pending; no execution.
+- [ ] AC #4: unchanged pending; no execution.
+- [ ] AC #5: unchanged pending; no execution.
+- [ ] AC #6: unchanged pending; no execution.
 
 ## Trusted-observation v4 recovery commit
 - Local story-only evidence commit: `cac854d3e0ddeb3ae8d16466068ddae7a0be7751` (`docs(GRRR-gu87): prove trusted-observation v4 recovery`).
