@@ -38,7 +38,7 @@ from trusted_install import immutable, record, verify_qemu
 CODE = ('research/common.py', 'research/execution.py', 'research/budget.py', 'research/ledger.py',
         'research/trusted_execution.py', 'research/trusted_install.py', 'research/trusted_transport.py',
         'research/isolated_entry.py', 'research/corpus_execution.py', 'research/corpus_evaluation.py',
-        'tests/integration/validated_corpus.py', 'tests/integration/trusted_probe.py',
+        'tests/integration/validated_corpus.py', 'tests/integration/corpus_probe.py',
         'scripts/validated-corpus-identity-integration', 'scripts/validated-corpus-root-bootstrap')
 
 
@@ -141,9 +141,10 @@ def launch(plan, approval, license_review):
         require(service.poll() is None and (runtime/'ipc/executor.sock').exists() and (runtime/'ipc/executor-control.sock').exists(),'Unavailable','Executor failed to start')
         for uid in (321,plan['config']['operator_uid']):
             result=subprocess.run([sys.executable,'-I','-S','-B',str(runtime/'code/isolated_entry.py'),
-                'trusted_probe.py',str(runtime)],cwd=runtime,capture_output=True,timeout=15,
+                'corpus_probe.py',str(runtime)],cwd=runtime,capture_output=True,timeout=15,
                 env=environment,preexec_fn=lambda uid=uid:identity(uid))
-            require(result.returncode==0,'GateBlocked','Identity denial probe failed')
+            require(result.returncode==0,'GateBlocked','Identity denial probe failed: '+
+                    result.stderr.decode('utf-8','replace')[:2048])
         with (runtime/'integration.log').open('xb') as log:
             result=subprocess.run([sys.executable,'-I','-S','-B',str(runtime/'code/isolated_entry.py'),
                 'validated_corpus.py',str(runtime)],cwd=runtime,stdout=log,stderr=subprocess.STDOUT,

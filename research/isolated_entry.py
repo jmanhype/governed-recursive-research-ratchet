@@ -11,7 +11,7 @@ if root.is_symlink() or root.stat().st_uid != 0 or root.stat().st_mode & 0o022:
     raise SystemExit('Root-controlled code directory required')
 if sys.argv[1] not in ('trusted_execution.py', 'trusted_observation.py', 'trusted_probe.py',
                        'control_worker.py', 'safe_stop.py', 'safe_stop_probe.py',
-                       'corpus_execution.py', 'validated_corpus.py'):
+                       'corpus_execution.py', 'validated_corpus.py', 'corpus_probe.py'):
     raise SystemExit('Unregistered identity program')
 for path in root.iterdir():
     if path.is_symlink() or not path.is_file() or path.stat().st_uid != 0 or path.stat().st_mode & 0o222:

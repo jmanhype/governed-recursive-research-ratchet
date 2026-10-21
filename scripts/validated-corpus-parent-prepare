@@ -16,7 +16,7 @@ BOOTSTRAP = Path('/Library/GRRR/bootstrap/validated-corpus-root-bootstrap')
 CODE = ('research/common.py','research/execution.py','research/budget.py','research/ledger.py',
         'research/trusted_execution.py','research/trusted_install.py','research/trusted_transport.py',
         'research/isolated_entry.py','research/corpus_execution.py','research/corpus_evaluation.py',
-        'tests/integration/validated_corpus.py','tests/integration/trusted_probe.py',
+        'tests/integration/validated_corpus.py','tests/integration/corpus_probe.py',
         'scripts/validated-corpus-identity-integration','scripts/validated-corpus-root-bootstrap')
 
 
