@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T01:10:17Z
-content_hash: "sha256:c9edf9841ce7104e32d58d8eaa336ae787262cc465950e3571579b6e78146bd6"
+updated_at: 2026-10-21T01:27:31Z
+content_hash: "sha256:9261feeab7780e2924e94edaccfcab208c90de512c3fc74eb849f7b653a04c33"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -111,6 +111,54 @@ OPERATOR TRUSTED-OBSERVATION PROFILE DEVELOPMENT/REVIEW APPROVAL (2026-10-20):
 - Before execution, operator must separately approve parent-mediated identity execution and guest negative controls after reviewing completed supervisor and detached input-image hashes.
 DISPOSABLE OFFLINE RUNTIME CLEANUP (2026-10-21): removed only old root-owned /private/tmp/grrr-offline-jwxgpr6a (175M/121 files) and /private/tmp/grrr-offline-m5qlaapy (200M/127 files); durable evidence was already committed. Free space now 15,481,393,152 bytes. No project/model/output data touched.
 REGENERABLE DEVELOPMENT CACHE CLEANUP (2026-10-21): removed only /Users/speed/.cache/opencode (190M, 11,996 files) and /Users/speed/.cache/codebase-memory-mcp (143M, 24 files); free space now 15,461,191,680 bytes. Manifest main checkout .tmp-sr_pm/development-cache-cleanup-manifest.txt. No model/project/output data touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- WIP implementation commit `87a8766`; development/review evidence commit `d53deaf`.
+- Dedicated profile-specific executor, evaluator receipt adapter, root launcher,
+  and ten real mandatory scenarios staged; no root/sudo/QEMU/guest execution.
+- Exact host-code inventory SHA-256:
+  `8f4c4aec14549d3d0f458e4cf0fc3837d19586e539ed38716d8fcdb7db423fc8`.
+- Pinned v3 supervisor/image/profile unchanged. Independent preparation readback:
+  7 ISO entries and 52 source entries verified; exit 0.
+- Unit suite 59/59 pass. Corrected Python trace line coverage: trusted executor
+  41.8%, evaluator adapter 50.0%, root launcher 18.5%; not branch/integration proof.
+- pvg verify explicit paths: 5 recognized files, 0 issues. py_compile and diff check pass.
+- Nonroot --run fails Unauthorized before staging. --dry-run fails BudgetExceeded
+  at unchanged 15 GB floor. Latest free-space binding: 14,683,729,920 bytes.
+- Mandatory suite: 10 required, 0 executed, 0 skipped, 1 actual-identity setup
+  error. Mandatory guest gate not-run. No mocked service/identity used in it.
+- Evidence manifest SHA-256:
+  `e722138ce3ca14c6b15147d0047462f3f03249d526be2404de36ad76c3f404ce`;
+  all manifest entries independently rehashed successfully.
+- Exact limits, authorization request, record schemas, parent command, test
+  mapping and remaining review gaps: `docs/TRUSTED-OBSERVATION-HOST-WIP.md`.
+- Claim retained. No deliver/accept/close/push. Existing synthetic/offline
+  profile resources and launchers unchanged by this checkpoint.
+
+### proof
+- [ ] AC #1: actual approved isolated invocation remains not-run.
+- [ ] AC #2: real service/guest adversarial cases staged, unexecuted.
+- [ ] AC #3: candidate-inaccessible supervisor behavior/race observation unproven.
+- [ ] AC #4: actual identity and cross-profile persistent accounting review pending.
+- [ ] AC #5: real metering, overlap/review, epoch and lost-receipt controls pending.
+- [ ] AC #6: real watchdog/store exhaustion/no-retry controls pending.
+
+### AC Verification
+All six ACs remain incomplete; static/unit pass is not behavioral proof.
+Independent security/PM review must address expanded diff, cross-profile budget
+lifecycle and restart/recovery before delivery.
+
+AWAITING_PARENT_IDENTITY_RUN
+
+After separate operator execution/local-use approval AND restored 15 GB floor,
+from the story worktree, parent authorized root identity only:
+`python3 scripts/trusted-identity-integration --run ../../../.tmp-sr_pm/vm .tmp-sr_pm/trusted-observation/prepared-v3 /private/tmp/grrr-trusted-execution-approval.json /private/tmp/grrr-trusted-license-review.json`
+
+Those two approval files do not exist from this checkpoint; the development-only
+approval does not authorize this command. No credentials requested or stored.
+
 ## nd_contract
 status: in_progress
 
