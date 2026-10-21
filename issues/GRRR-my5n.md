@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:27:05Z
-content_hash: "sha256:479568f50afb117fba5fa7ecf83c0d845991685be4449ac4b3909075a8f72f41"
+content_hash: "sha256:4219c29b0339371a60d43c505702999670abd80c96d371d0ed1ab8190064f90e"
 blocks: [GRRR-c875, GRRR-6sso]
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
@@ -98,7 +98,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed: 2026-10-21
+- Epic integration includes accepted GRRR-gu87 at merge commit 0f04e11; durable v4 run evidence is available as a real recovery input.
+
+### proof
+- [ ] AC #1 through AC #6 pending.
 
 ## History
 - 2026-10-20T03:19:02Z dep_added: blocked_by GRRR-gu87
