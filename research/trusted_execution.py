@@ -75,7 +75,7 @@ def _safe_ancestors(path: Path) -> None:
         require(_acl_free(ancestor), 'Unauthorized', 'ACL-bearing protected ancestor')
 
 
-def protected_bytes(path: Path, expected: str | None = None, maximum: int = PRESERVED_FILE_MAX_BYTES) -> bytes:
+def protected_bytes(path: Path, expected=None, maximum: int = PRESERVED_FILE_MAX_BYTES) -> bytes:
     """Open one no-follow root-owned 0444 regular file and optionally bind its bytes."""
     require(path.is_absolute(), 'Unauthorized', 'Absolute protected path required')
     try:

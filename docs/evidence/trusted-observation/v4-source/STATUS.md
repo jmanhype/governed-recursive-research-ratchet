@@ -27,15 +27,24 @@ values and Homebrew paths remain rejected.
 
 ## No-guest verification
 
-- `python3 -m unittest discover -s tests -p 'unit*.py' -v`:
-  **116 passed, 0 failed, 0 skipped** (`UNIT.txt`).
-- Focused `tests/unit_trusted_v4_source.py`: **8 passed, 0 failed, 0 skipped**,
-  covering exact v4 shape, v3/Homebrew rejection, helper/QEMU mismatch, absent
-  approval, stopped conservative accounting, and temp-fixture metadata,
-  membership, symlink, hard-link, mutation, ACL, mode, owner, and size failures.
-- Python compilation and `git diff --check`: pass. Explicit-path
-  `pvg verify --include-tests`: pass, **4 recognized files, 0 issues**
-  (`STATIC.txt`).
+Python 3.9 correction: `protected_bytes` no longer uses the Python 3.10-only
+evaluated `str | None` parameter annotation. The corrected evidence supersedes
+the first commit's Homebrew-only test claim.
+
+- Canonical `/usr/bin/python3` (3.9.6), invoked with `-I -B`:
+  `unittest discover -s tests -p 'unit*.py' -v` — **116 passed, 0 failed,
+  0 skipped**.
+- Homebrew `/opt/homebrew/bin/python3` (3.14.3), invoked with `-B`: the same
+  full no-guest suite — **116 passed, 0 failed, 0 skipped** (`UNIT.txt`).
+- Focused `tests/unit_trusted_v4_source.py` under both interpreters:
+  **8 passed, 0 failed, 0 skipped** in each run. Coverage includes exact v4
+  shape, v3/Homebrew rejection, helper/QEMU mismatch, absent approval, stopped
+  conservative accounting, and temp-fixture metadata, membership, symlink,
+  hard-link, mutation, ACL, mode, owner, and size failures.
+- Python 3.9 and Homebrew Python compilation both pass. `git diff --check`
+  passes; no evaluated `| None` annotation remains in the changed trusted
+  source/tests. Explicit-path `pvg verify --include-tests`: pass, **4 recognized
+  files, 0 issues** (`STATIC.txt`).
 - Read-only installed-state check (`READBACK.txt`): all six preserved v4 hashes
   match; immutable QEMU manifest and executable hashes match; SQLite integrity
   is `ok`; conservative accounting remains stopped with zero reservations. QEMU
@@ -44,3 +53,6 @@ values and Homebrew paths remain rejected.
 Dispatch remains blocked by exact-root-record approval absence and the stopped
 conservative accounting state. The ten mandatory guest controls remain not-run;
 this is not a runtime, isolation, race, correctness, or admission claim.
+
+`SHA256SUMS` records worktree-root-relative evidence paths and is checked from
+the worktree root, not from inside the evidence directory.
