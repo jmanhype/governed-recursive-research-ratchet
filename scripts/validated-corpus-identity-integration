@@ -132,6 +132,8 @@ def launch(plan, approval, license_review):
         readonly(runtime/'plan.json',canonical(plan))
         readonly(runtime/'evaluator/corpus/manifest.json',(ROOT/'corpus/manifest.json').read_bytes())
         readonly(runtime/'evaluator/corpus/truth.json',(ROOT/'corpus/protected/truth.json').read_bytes())
+        readonly(runtime/'evaluator/expectation',b'EVALUATOR-OWNED-TRUTH\n')
+        budget=runtime/'evaluator/budget.sqlite'; budget.write_bytes(b''); os.chown(budget,320,320); budget.chmod(0o600)
         with (runtime/'service.log').open('xb') as log:
             service=subprocess.Popen([sys.executable,'-I','-S','-B',str(runtime/'code/isolated_entry.py'),
                 'corpus_execution.py',str(runtime/'runner')],cwd=runtime,stdout=log,stderr=subprocess.STDOUT,
