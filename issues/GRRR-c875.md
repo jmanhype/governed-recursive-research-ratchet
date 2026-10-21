@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T21:18:06Z
-content_hash: "sha256:bfff4ebe774996170a0624cb8d10df0c3ce58a97583b701e5ca72e747e5e629e"
+updated_at: 2026-10-21T21:18:23Z
+content_hash: "sha256:acb29bca29d8f182347e21db5da72f1781d03f1041a5d13920567ef3f8c86927"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
@@ -107,7 +107,7 @@ status: new
 
 
 ## Notes
-
+DELIVERY CORRECTION: The preceding Implementation Evidence and delivered proof are authoritative for commit 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83; this note exists to let pvg story deliver append the final authoritative contract.
 
 ## nd_contract
 status: delivered
