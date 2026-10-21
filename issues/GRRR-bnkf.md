@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-21T21:23:42Z
-content_hash: "sha256:613d239f2d01177baf6921fc6e4005df7a49790e3681f4f67469e4d40268c3e0"
+content_hash: "sha256:39782b7766d69949f7054aa9a075ac1aeb972a3b9ce7b9f439487c56b6981619"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 assignee: dev-GRRR-bnkf
@@ -106,7 +106,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed 2026-10-21 under operator completion authorization.
+- Worktree created from merged epic HEAD a0022a3.
+
+### proof
+- [ ] AC items pending.
 
 ## History
 - 2026-10-20T03:19:03Z dep_added: blocked_by GRRR-c875
