@@ -1,0 +1,237 @@
+#!/usr/bin/python3
+"""Provision reviewed bytes only; never build, execute QEMU, or initialize budget.
+
+Independently install and hash this stdlib-only script as
+/Library/GRRR/bootstrap/provision-trusted-host before invoking with -I -S -B.
+Arguments: ROOT_CONTROLLED_PLAN EXPECTED_PLAN_SHA256
+Partial installation is retained for inspection; inconsistent existing state
+always fails. No application import occurs before complete source read-back.
+"""
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import subprocess
+import sys
+
+BASE = Path('/Library/GRRR')
+PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')
+PROFILES = ['synthetic', 'offline', 'trusted-observation']
+
+
+def check(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+
+
+def unique(pairs):
+    result = {}
+    for key, value in pairs:
+        check(key not in result, 'duplicate JSON field')
+        result[key] = value
+    return result
+
+
+def protected(path, readonly=True):
+    check(path.is_absolute() and str(path) == str(path.absolute()) and '..' not in path.parts,
+          'absolute normalized path required')
+    for member in reversed((path, *path.parents)):
+        info = member.lstat()
+        check(not stat.S_ISLNK(info.st_mode) and info.st_uid == 0 and not info.st_mode & 0o022,
+              'mutable protected ancestor')
+        listing = subprocess.run(['/bin/ls', '-lde', str(member)], capture_output=True,
+                                 check=True, timeout=2, env={'PATH': '/usr/bin:/bin'}).stdout
+        check(b'+' not in listing.split(None, 1)[0], 'ACL-bearing protected path')
+    if path.is_file():
+        info = path.stat()
+        check(info.st_nlink == 1 and (not readonly or not info.st_mode & 0o222),
+              'protected file must be single-link and readonly')
+
+
+def read_regular(path, maximum):
+    # Hash the same opened bytes that will be installed, not a later path read.
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
+        info = os.fstat(stream.fileno())
+        check(stat.S_ISREG(info.st_mode) and info.st_size <= maximum, 'invalid input file')
+        raw = stream.read(maximum + 1)
+        check(len(raw) == info.st_size, 'input changed or exceeds bound')
+        return raw
+
+
+def validate_plan(plan):
+    check(set(plan) == {'version', 'decision', 'installer_sha256', 'python_sha256',
+                       'host_code', 'files', 'source_files', 'qemu_manifest',
+                       'migration', 'campaign', 'store_id', 'database_sha256'},
+          'provisioning plan schema differs')
+    check(plan['version'] == 1 and plan['decision'] == 'approved-provisioning-only',
+          'provisioning authority missing')
+    for key in ('installer_sha256', 'python_sha256', 'host_code', 'campaign',
+                'store_id', 'database_sha256'):
+        check(isinstance(plan[key], str) and len(plan[key]) == 64 and
+              all(c in '0123456789abcdef' for c in plan[key]), 'invalid binding digest')
+    check(isinstance(plan['files'], list) and 0 < len(plan['files']) <= 1024, 'bounded inventory required')
+    seen = set()
+    for item in plan['files']:
+        check(set(item) == {'source', 'destination', 'sha256', 'size'}, 'file schema differs')
+        path = Path(item['destination'])
+        check(not path.is_absolute() and str(path) == item['destination'] and
+              '..' not in path.parts and path.parts[0] in ('bootstrap', 'snapshots', 'qemu-reviewed'),
+              'unregistered installation destination')
+        check(item['destination'] not in seen, 'duplicate destination')
+        seen.add(item['destination'])
+        check(type(item['size']) is int and 0 <= item['size'] <= 268435456, 'file bound differs')
+        check(isinstance(item['sha256'], str) and len(item['sha256']) == 64 and
+              all(c in '0123456789abcdef' for c in item['sha256']), 'invalid file digest')
+    check('bootstrap/provision-trusted-host' not in seen, 'installer cannot replace itself')
+    check(isinstance(plan['source_files'], dict) and
+          sha(canonical(plan['source_files'])) == plan['host_code'], 'source inventory binding differs')
+    for name, digest in plan['source_files'].items():
+        path = Path(name)
+        check(not path.is_absolute() and str(path) == name and '..' not in path.parts,
+              'unsafe source member')
+        check(any(item['destination'] == 'snapshots/provisioned/' + name and
+                  item['sha256'] == digest for item in plan['files']), 'source inventory incomplete')
+    check(plan['qemu_manifest'] == 'qemu-reviewed/installation.json', 'fixed QEMU manifest required')
+    migration = plan['migration']
+    check(set(migration) == {'database_source', 'receipt_source', 'receipt_sha256'},
+          'migration authority required')
+    return plan
+
+
+def install_file(target, raw, mode=0o444):
+    if target.exists() or target.is_symlink():
+        protected(target)
+        check(read_regular(target, len(raw)) == raw and stat.S_IMODE(target.stat().st_mode) == mode,
+              'existing installation inconsistent; refusing overwrite')
+        return
+    for directory in reversed((target.parent, *target.parent.parents)):
+        if directory == BASE or BASE in directory.parents:
+            if not directory.exists():
+                directory.mkdir(mode=0o755)
+            protected(directory)
+    fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, mode)
+    with os.fdopen(fd, 'wb') as stream:
+        stream.write(raw)
+        stream.flush()
+        os.fsync(stream.fileno())
+    protected(target)
+    check(read_regular(target, len(raw)) == raw, 'installation read-back differs')
+
+
+def main():
+    check(os.getuid() == 0 and sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode,
+          'root isolated independently installed provisioner required')
+    check(Path(__file__).absolute() == BASE / 'bootstrap/provision-trusted-host',
+          'never execute mutable checkout installer as root')
+    protected(Path(__file__).absolute())
+    check(Path(sys.executable) == PYTHON, 'canonical interpreter required')
+    check(sys.version_info[:3] == (3, 9, 6), 'reviewed interpreter version differs')
+    protected(PYTHON, readonly=False)
+    for search in sys.path:
+        path = Path(search)
+        protected(path if path.exists() else path.parent, readonly=False)
+    check(len(sys.argv) == 3, __doc__)
+    plan_path = Path(sys.argv[1])
+    protected(plan_path)
+    raw_plan = read_regular(plan_path, 1048576)
+    check(sha(raw_plan) == sys.argv[2], 'operator plan bytes differ')
+    plan = validate_plan(json.loads(raw_plan, object_pairs_hook=unique))
+    check(sha(Path(__file__).read_bytes()) == plan['installer_sha256'], 'installer pin differs')
+    check(sha(PYTHON.read_bytes()) == plan['python_sha256'], 'interpreter pin differs')
+    # Preflight all inputs before any installation; total bounded to prevent host exhaustion.
+    check(sum(item['size'] for item in plan['files']) <= 1073741824, 'installation exceeds 1 GiB staging bound')
+    import shutil
+    check(shutil.disk_usage(BASE).free - sum(item['size'] for item in plan['files']) >= 15000000000,
+          'installation would violate 15 GB floor')
+    for item in plan['files']:
+        raw = read_regular(Path(item['source']), item['size'])
+        check(len(raw) == item['size'] and sha(raw) == item['sha256'], 'input integrity differs')
+    migration = plan['migration']
+    receipt = read_regular(Path(migration['receipt_source']), 1048576)
+    check(sha(receipt) == migration['receipt_sha256'], 'migration receipt differs')
+    history = json.loads(receipt, object_pairs_hook=unique)
+    check(history.get('decision') == 'approved-complete-accounting-migration' and
+          history.get('profiles') == PROFILES and history.get('campaign') == plan['campaign'] and
+          history.get('store_id') == plan['store_id'] and
+          isinstance(history.get('prior_sources'), list) and len(history['prior_sources']) > 0 and
+          history.get('unresolved_history') is False and history.get('reset_allowance') is False,
+          'complete prior-history reconciliation required; no fresh allowance')
+    database = read_regular(Path(migration['database_source']), 67108864)
+    check(sha(database) == plan['database_sha256'], 'prior database differs')
+    for item in plan['files']:
+        raw = read_regular(Path(item['source']), item['size'])
+        check(sha(raw) == item['sha256'], 'input changed after preflight')
+        install_file(BASE / item['destination'], raw,
+                     0o555 if item['destination'].startswith('qemu-reviewed/bin/') else 0o444)
+    # Only now import authenticated source; no repository-relative import roots.
+    root = BASE / 'snapshots/provisioned'
+    for name, expected in plan['source_files'].items():
+        protected(root / name)
+        check(sha((root / name).read_bytes()) == expected, 'source read-back differs')
+    check({str(path.relative_to(root)) for path in root.rglob('*') if not path.is_dir()}
+          == set(plan['source_files']), 'unlisted source snapshot content')
+    sys.path.insert(0, str(root / 'research'))
+    from trusted_install import verify_qemu, record
+    qemu = record(BASE / plan['qemu_manifest'])
+    verify_qemu(qemu)
+    from persistent_budget import validate_store
+    accounting = BASE / 'accounting'
+    if not accounting.exists():
+        accounting.mkdir(mode=0o755)
+    protected(accounting)
+    install_file(accounting / 'launch.lock', b'')
+    import fcntl
+    lock = os.open(accounting / 'launch.lock', os.O_RDONLY | os.O_NOFOLLOW)
+    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    try:
+        directory = accounting / plan['store_id']
+        target = directory / 'budget.sqlite'
+        active_path = accounting / 'active.json'
+        if active_path.exists():
+            active = record(active_path)
+            check(active['campaign'] == plan['campaign'] and active['store_id'] == plan['store_id'] and
+                  active['prior_history_receipt'] == migration['receipt_sha256'],
+                  'existing campaign differs; refusing reset')
+            info = directory.lstat()
+            check(stat.S_ISDIR(info.st_mode) and info.st_uid == 320 and
+                  stat.S_IMODE(info.st_mode) == 0o700, 'private accounting directory differs')
+            validate_store(active, target)
+        else:
+            # Never manufacture tables, rows, receipts, or a zero-cost initial state.
+            check(not directory.exists() and not directory.is_symlink(),
+                  'partial accounting installation requires explicit recovery')
+            directory.mkdir(mode=0o700)
+            fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+            with os.fdopen(fd, 'wb') as stream:
+                stream.write(database)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.chown(target, 320, 320)
+            os.chown(directory, 320, 320)
+            info = target.stat()
+            active = {'version': 1, 'campaign': plan['campaign'], 'store_id': plan['store_id'],
+                      'directory': str(directory), 'prior_history_receipt': migration['receipt_sha256'],
+                      'profiles': PROFILES, 'device': info.st_dev, 'inode': info.st_ino}
+            check(sha(target.read_bytes()) == plan['database_sha256'], 'database read-back differs')
+            validate_store(active, target)
+            install_file(accounting / 'migration.json', receipt)
+            install_file(active_path, canonical(active))
+        install_file(BASE / 'bootstrap/provisioning-readback.json', canonical({
+            'version': 1, 'plan_sha256': sha(raw_plan), 'host_code': plan['host_code'],
+            'accounting_binding': sha(canonical(active)), 'qemu_installation': sha(canonical(qemu)),
+            'execution_authorized': False, 'runtime_loading_tested': False, 'guest_executed': False}))
+    finally:
+        os.close(lock)
+
+
+if __name__ == '__main__':
+    main()

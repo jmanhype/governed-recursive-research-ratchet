@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""Read-only provenance/genesis inventory. Never grants allowance or executes QEMU."""
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+CELLAR = Path('/opt/homebrew/Cellar/qemu/11.1.2')
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    sources = {}
+    observations = []
+    accepted = (
+        'docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b',
+        'docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c')
+    def visit(value, location, file):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key in ('seconds', 'duration_us', 'execution_us', 'review_us', 'money_cents',
+                           'maximum', 'actual', 'reservation', 'stopped', 'elapsed', 'elapsed_seconds'):
+                    observations.append({'file': file, 'json_path': location + [key], 'value': item})
+                visit(item, location + [key], file)
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                visit(item, location + [index], file)
+    for directory in accepted:
+        for file in sorted((ROOT / directory).glob('*.json')):
+            relative = str(file.relative_to(ROOT))
+            sources[relative] = sha(file)
+            visit(json.loads(file.read_bytes()), [], relative)
+    provenance = {name: sha(CELLAR / name) for name in (
+        'INSTALL_RECEIPT.json', 'sbom.spdx.json', '.brew/qemu.rb', 'bin/qemu-system-aarch64')}
+    formula = (CELLAR / '.brew/qemu.rb').read_text()
+    print(json.dumps({
+        'version': 1, 'decision': 'reconciliation-required', 'execution_gate': 'blocked',
+        'reset_allowance': False, 'prior_sources': sources, 'known_observations': observations,
+        'aggregation': None, 'unresolved_history': True,
+        'unresolved': ['Exact cumulative prior review duration unavailable',
+                       'Earlier failed attempts and overlapping/replayed execution require reconciliation',
+                       'Persistent holds, stops and trusted settlement receipts must be reconciled before migration'],
+        'qemu_provenance': provenance, 'qemu_origin': 'installed Homebrew bottle; not a new upstream build',
+        'qemu_formula_explicitly_disables_modules': '--disable-modules' in formula,
+        'qemu_formula_explicitly_disables_plugins': '--disable-plugins' in formula,
+        'qemu_installation': None, 'qemu_executed': False,
+        'qemu_blocker': 'No reviewed proof of disabled/pinned dynamic module/plugin loading; no closure fabricated',
+    }, sort_keys=True, indent=2))
+
+
+if __name__ == '__main__':
+    main()
