@@ -1,0 +1,69 @@
+{
+  "blockers": [],
+  "files": {
+    "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build-final-prefix/qemu-system-aarch64": {
+      "bytes": 35997808,
+      "dependencies": [
+        "/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor",
+        "/usr/lib/libz.1.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+        "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+        "/usr/lib/libSystem.B.dylib",
+        "/opt/homebrew/opt/glib/lib/libglib-2.0.0.dylib"
+      ],
+      "has_dyld_environment": false,
+      "has_lc_rpath": true,
+      "observed_path": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build-final-prefix/qemu-system-aarch64",
+      "otool_L": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/build-final-prefix/qemu-system-aarch64:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 210.5.6)\n\t/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.12)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3423.0.0)\n\t/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit (compatibility version 1.0.0, current version 275.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)\n\t/opt/homebrew/opt/glib/lib/libglib-2.0.0.dylib (compatibility version 9001.0.0, current version 9001.1.0)\n",
+      "sha256": "616b0284fbaba079be4e2701061741eb9e9bae44e55af3980730f89497bd14f2"
+    },
+    "/opt/homebrew/Cellar/gettext/1.0/lib/libintl.8.dylib": {
+      "bytes": 230048,
+      "dependencies": [
+        "/usr/lib/libiconv.2.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+        "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "has_dyld_environment": false,
+      "has_lc_rpath": false,
+      "observed_path": "/opt/homebrew/opt/gettext/lib/libintl.8.dylib",
+      "otool_L": "/opt/homebrew/Cellar/gettext/1.0/lib/libintl.8.dylib:\n\t/opt/homebrew/opt/gettext/lib/libintl.8.dylib (compatibility version 13.0.0, current version 13.6.0)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3423.0.0)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)\n",
+      "sha256": "c4ccc12dacd99bae7cf3e04f6a1a16909b9f6e096f203712a8241462f539785b"
+    },
+    "/opt/homebrew/Cellar/glib/2.90.1/lib/libglib-2.0.0.dylib": {
+      "bytes": 1362816,
+      "dependencies": [
+        "/usr/lib/libiconv.2.dylib",
+        "/opt/homebrew/opt/gettext/lib/libintl.8.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/opt/homebrew/opt/pcre2/lib/libpcre2-8.0.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation",
+        "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+        "/usr/lib/libobjc.A.dylib"
+      ],
+      "has_dyld_environment": false,
+      "has_lc_rpath": false,
+      "observed_path": "/opt/homebrew/opt/glib/lib/libglib-2.0.0.dylib",
+      "otool_L": "/opt/homebrew/Cellar/glib/2.90.1/lib/libglib-2.0.0.dylib:\n\t/opt/homebrew/opt/glib/lib/libglib-2.0.0.dylib (compatibility version 9001.0.0, current version 9001.1.0)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/opt/homebrew/opt/gettext/lib/libintl.8.dylib (compatibility version 13.0.0, current version 13.6.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)\n\t/opt/homebrew/opt/pcre2/lib/libpcre2-8.0.dylib (compatibility version 17.0.0, current version 17.1.0)\n\t/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation (compatibility version 300.0.0, current version 5027.0.69)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/usr/lib/libobjc.A.dylib (compatibility version 1.0.0, current version 228.0.0)\n",
+      "sha256": "9ccb24305a227967f6c13eec59c3469228e600236664e3710ab92d6228e938eb"
+    },
+    "/opt/homebrew/Cellar/pcre2/10.49/lib/libpcre2-8.0.dylib": {
+      "bytes": 574096,
+      "dependencies": [
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "has_dyld_environment": false,
+      "has_lc_rpath": false,
+      "observed_path": "/opt/homebrew/opt/pcre2/lib/libpcre2-8.0.dylib",
+      "otool_L": "/opt/homebrew/Cellar/pcre2/10.49/lib/libpcre2-8.0.dylib:\n\t/opt/homebrew/opt/pcre2/lib/libpcre2-8.0.dylib (compatibility version 17.0.0, current version 17.1.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)\n",
+      "sha256": "1c0890a01bd446b5174e4ce7c35e1e14f39d2e88b7b5160572198ec26647d2da"
+    }
+  },
+  "inspection": "static only; does not prove dlopen/data paths or runtime loading",
+  "installed": false,
+  "qemu_executed": false,
+  "root": "/Library/GRRR/qemu",
+  "system_build": "26A428",
+  "version": 1
+}
