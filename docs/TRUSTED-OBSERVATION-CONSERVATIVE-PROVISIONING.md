@@ -1,5 +1,8 @@
 # Conservative-genesis provisioning proposal — no execution authority
 
+**Historical v2 plan — superseded, do not invoke this command.** Current bootstrap,
+plan and parent command are in `TRUSTED-OBSERVATION-CONSERVATIVE-TOOLCHAIN-FIX.md`.
+
 Prepared only; `/Library/GRRR/accounting` has NOT been created. Installed QEMU,
 bootstrap, runtime inventory and guest v3 artifacts are unchanged.
 

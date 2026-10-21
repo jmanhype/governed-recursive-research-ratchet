@@ -6,6 +6,7 @@ import runpy
 import sqlite3
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,3 +69,31 @@ class ConservativeGenesis(unittest.TestCase):
     def test_root_installation_refused_without_identity(self):
         with self.assertRaisesRegex(RuntimeError, 'root-only'):
             self.api['install'](self.output / 'plan.json', '0' * 64, '')
+
+    def test_real_canonical_toolchain_reviewed_owner_write_is_allowed(self):
+        self.api['verify_toolchain']()
+        for path in self.api['TOOLCHAIN']:
+            with self.assertRaisesRegex(RuntimeError, 'writable'):
+                self.api['protected'](path)
+
+    def test_toolchain_exception_cannot_extend_to_arbitrary_files(self):
+        with self.assertRaisesRegex(RuntimeError, 'unreviewed'):
+            self.api['protected'](self.output / 'receipt.json', toolchain=True)
+        with self.assertRaisesRegex(RuntimeError, 'mutable'):
+            self.api['protected'](self.output / 'receipt.json')
+        link = self.output / 'link'
+        link.symlink_to(self.api['PYTHON'])
+        with self.assertRaises(RuntimeError):
+            self.api['protected'](link)
+
+    def test_metadata_negative_modes_ownership_and_acl(self):
+        # Pure metadata predicate cases; real filesystem/toolchain covered above.
+        for uid, gid, mode, listing in (
+                (501, 0, 0o100644, b'-rw-r--r--'),
+                (0, 20, 0o100644, b'-rw-r--r--'),
+                (0, 0, 0o100664, b'-rw-rw-r--'),
+                (0, 0, 0o100646, b'-rw-r--rw-'),
+                (0, 0, 0o120777, b'lrwxrwxrwx'),
+                (0, 0, 0o100644, b'-rw-r--r--+')):
+            with self.subTest(uid=uid, gid=gid, mode=mode, listing=listing), self.assertRaises(RuntimeError):
+                self.api['safe_metadata'](SimpleNamespace(st_uid=uid, st_gid=gid, st_mode=mode), listing)

@@ -18,6 +18,9 @@ import sys
 
 PYTHON = '/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9'
 PYTHON_SHA = '5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26'
+JSON_PATH = Path(PYTHON).parents[1] / 'lib/python3.9/json/__init__.py'
+TOOLCHAIN = {Path(PYTHON): PYTHON_SHA,
+             JSON_PATH: '332fabb72a4a1ed02c9207a7619ab339dac8f0b6862e16f6499147121b302a27'}
 BASE = Path('/Library/GRRR/accounting')
 BOOTSTRAP = Path('/Library/GRRR/bootstrap/conservative-genesis')
 PROFILES = ['synthetic', 'offline', 'trusted-observation']
@@ -47,16 +50,33 @@ def read(path, maximum=134217728):
         return raw
 
 
-def protected(path):
+def safe_metadata(info, listing):
+    check(info.st_uid == 0 and info.st_gid == 0 and not stat.S_ISLNK(info.st_mode)
+          and not info.st_mode & 0o022, 'mutable protected path')
+    check(b'+' not in listing.split(None, 1)[0], 'ACL rejected')
+
+
+def protected(path, toolchain=False):
+    check(path.is_absolute() and '..' not in path.parts, 'absolute canonical path required')
+    check(not toolchain or path in TOOLCHAIN, 'unreviewed toolchain exception')
     for item in reversed((path, *path.parents)):
         info = item.lstat()
-        check(info.st_uid == 0 and not stat.S_ISLNK(info.st_mode) and not info.st_mode & 0o022,
-              'mutable protected path')
         listing = subprocess.run(['/bin/ls', '-lde', str(item)], check=True, capture_output=True,
                                  timeout=2, env={'PATH': '/usr/bin:/bin'}).stdout
-        check(b'+' not in listing.split(None, 1)[0], 'ACL rejected')
+        safe_metadata(info, listing)
     if path.is_file():
-        check(not path.stat().st_mode & 0o222, 'protected file writable')
+        check(path.stat().st_nlink == 1, 'multiple links rejected')
+        check(toolchain or not path.stat().st_mode & 0o222, 'protected file writable')
+    if toolchain:
+        check(sha(read(path)) == TOOLCHAIN[path], 'toolchain hash differs')
+
+
+def verify_toolchain():
+    for path in TOOLCHAIN:
+        protected(path, toolchain=True)
+    result = subprocess.run([PYTHON, '-I', '-S', '-B', '--version'], check=True,
+                            capture_output=True, timeout=5, env={'PATH': '/usr/bin:/bin'})
+    check(result.stdout.strip() == b'Python 3.9.6', 'canonical interpreter version differs')
 
 
 def build(root, output):
@@ -160,10 +180,10 @@ def install(plan_path, expected, authorization):
     check(os.getuid() == 0, 'root-only installation')
     check(Path(__file__) == BOOTSTRAP and sys.executable == PYTHON
           and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode, 'isolated canonical bootstrap required')
-    for path in (BOOTSTRAP, Path(PYTHON), plan_path):
+    for path in (BOOTSTRAP, plan_path):
         protected(path)
-    check(sha(read(Path(PYTHON))) == PYTHON_SHA, 'interpreter mismatch')
-    protected(Path(json.__file__))
+    verify_toolchain()
+    check(Path(json.__file__) == JSON_PATH, 'stdlib origin differs')
     raw = read(plan_path, 65536)
     check(sha(raw) == expected and authorization == 'INSTALL_BLOCKED_CONSERVATIVE_GENESIS:' + expected,
           'exact provisioning authorization required')
