@@ -1,0 +1,57 @@
+Accounting evidence manifest verification (GRRR-gu87)
+=====================================================
+
+Scope: private read-only protected-source evidence collection only.
+No /Library/GRRR mutation, candidate-store build/install, stop release,
+hold settlement/release, reservation creation, QEMU/guest/candidate execution,
+root/sudo invocation, story delivery, or push occurred.
+
+Live collection command (exit 0):
+  ./scripts/collect-accounting-evidence-manifest \
+    /Library/GRRR/accounting/budget.sqlite \
+    docs/evidence/trusted-observation/installed-reconciliation/report.json \
+    docs/evidence/trusted-observation/accounting-evidence-manifest/MANIFEST.json
+
+Observed counts:
+  artifacts=259; legacy_events=110; metadata=2; reservations=0; state=1
+  event kinds: reserved=48, offline-observation=40, observation=8,
+  denied=6, stop-fenced=4, stop-outcome=4
+  event source references=322; distinct referenced artifacts=46
+  artifact hash mismatches=0; prior key mismatches=0;
+  prior source mismatches=0
+
+Focused fixture tests:
+  /usr/bin/python3 -I -B -m unittest discover -s tests \
+    -p 'unit_accounting_evidence_manifest.py' -v
+  Result: 6 tests, 6 passed, 0 failed, 0 skipped.
+
+Full no-guest unit suites:
+  /usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v
+  Result: 123 tests, 123 passed, 0 failed, 0 skipped.
+
+  /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v
+  Result: 123 tests, 123 passed, 0 failed, 0 skipped.
+
+Compile checks:
+  /usr/bin/python3 -I -B -m py_compile \
+    scripts/collect-accounting-evidence-manifest \
+    tests/unit_accounting_evidence_manifest.py
+  /opt/homebrew/bin/python3 -B -m py_compile \
+    scripts/collect-accounting-evidence-manifest \
+    tests/unit_accounting_evidence_manifest.py
+  Both exited 0.
+
+JSON parse checks under both interpreters exited 0.
+`git diff --check` exited 0.
+
+Independent live rerun to a fresh temporary output exited 0 and was byte
+identical (`cmp` exit 0) to the committed manifest. Protected source hashes
+before and after both collection runs were exactly:
+  active.json  cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+  budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+  receipt.json  9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde
+
+MANIFEST.json SHA-256:
+  8c64d70cc0f3b903620ed45094133ceffaf5e48107427fcfc2204b73daa06270
+
+This evidence authorizes nothing.

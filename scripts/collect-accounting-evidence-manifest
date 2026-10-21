@@ -1,0 +1,595 @@
+#!/usr/bin/python3
+"""Collect a hash-only accounting manifest without granting any authority.
+
+The collector deliberately refuses an absent or ambiguous source value.  It
+does not copy artifact bodies, initialize SQLite, mutate accounting state, or
+interpret an available source pointer as a trusted meter receipt.
+"""
+import argparse
+import hashlib
+import math
+import json
+import os
+from pathlib import Path
+import sqlite3
+import stat
+import sys
+
+
+LIVE_EXPECTATIONS = {
+    "active_sha256": "cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b",
+    "active_device": 16777229,
+    "active_gid": 0,
+    "active_inode": 681781564,
+    "active_mode": 0o100444,
+    "active_nlink": 1,
+    "active_uid": 0,
+    "database_device": 16777229,
+    "database_gid": 0,
+    "database_inode": 681781547,
+    "database_mode": 0o100444,
+    "database_nlink": 1,
+    "database_sha256": "9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234",
+    "database_uid": 0,
+    "prior_report_sha256": "2bd034edfc99d433ea9bc01d8fb6b1afd7715a18dea975fc20188459c747359e",
+    "receipt_sha256": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+    "receipt_device": 16777229,
+    "receipt_gid": 0,
+    "receipt_inode": 681781551,
+    "receipt_mode": 0o100444,
+    "receipt_nlink": 1,
+    "receipt_uid": 0,
+}
+
+EVENT_FIELDS = {
+    "event_sha256", "kind", "run", "reservation", "profile",
+    "execution_seconds", "maximum_seconds", "money_cents", "paid_dispatch",
+    "settled", "stop_scope", "sources",
+}
+SCALAR_FIELDS = (
+    "execution_seconds", "maximum_seconds", "money_cents", "paid_dispatch",
+    "settled", "stop_scope",
+)
+TABLES = ("artifacts", "legacy_events", "metadata", "reservations", "state")
+REQUIRED_COUNTS = {
+    "artifacts": 259, "legacy_events": 110, "metadata": 2,
+    "reservations": 0, "state": 1,
+}
+HEX64 = set("0123456789abcdef")
+EVENT_KINDS = {
+    "reserved", "observation", "offline-observation", "denied",
+    "stop-fenced", "stop-outcome",
+}
+
+
+class EvidenceFailure(ValueError):
+    """A fail-closed collector rejection."""
+
+
+def require(condition, message):
+    if not condition:
+        raise EvidenceFailure(message)
+
+
+def sha256_bytes(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def stat_record(info):
+    return {
+        "device": info.st_dev,
+        "inode": info.st_ino,
+        "mode": info.st_mode,
+        "uid": info.st_uid,
+        "gid": info.st_gid,
+        "nlink": info.st_nlink,
+        "size_bytes": info.st_size,
+        "atime_ns": info.st_atime_ns,
+        "mtime_ns": info.st_mtime_ns,
+        "ctime_ns": info.st_ctime_ns,
+    }
+
+
+def open_regular_file(path):
+    """Open a final path without following a symlink and read it from one fd."""
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(str(path), flags)
+    try:
+        info = os.fstat(descriptor)
+        require(stat.S_ISREG(info.st_mode), "source is not a regular file: %s" % path)
+        chunks = []
+        while True:
+            chunk = os.read(descriptor, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        return b"".join(chunks), info
+    except Exception:
+        os.close(descriptor)
+        raise
+    else:
+        os.close(descriptor)
+
+
+def stable_stat_matches(before, after):
+    keys = ("device", "inode", "mode", "uid", "gid", "nlink", "size_bytes",
+            "mtime_ns", "ctime_ns")
+    return all(before[key] == after[key] for key in keys)
+
+
+def valid_hash(value):
+    return (type(value) is str and len(value) == 64 and set(value) <= HEX64)
+
+
+def source_readback(path, expected_hash, expected_database=None):
+    raw, info = open_regular_file(path)
+    observed = sha256_bytes(raw)
+    require(observed == expected_hash,
+            "source hash mismatch for %s" % path)
+    if expected_database is not None:
+        require((info.st_dev, info.st_ino, info.st_uid, info.st_gid,
+                 info.st_mode, info.st_nlink) == expected_database,
+                "database identity mismatch")
+    return raw, {
+        "path": str(path), "sha256": observed,
+        "expected_sha256": expected_hash, "hash_matches": True,
+        "stat": stat_record(info),
+    }
+
+
+def source_identity(expected, prefix):
+    keys = (prefix + "_device", prefix + "_inode", prefix + "_uid",
+            prefix + "_gid", prefix + "_mode", prefix + "_nlink")
+    return None if any(key not in expected for key in keys) else tuple(
+        expected[key] for key in keys
+    )
+
+
+def parse_json_bytes(raw, label):
+    def reject_constant(value):
+        raise EvidenceFailure("malformed %s JSON constant: %s" % (label, value))
+
+    def object_with_unique_keys(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "duplicate %s JSON key: %s" % (label, key))
+            result[key] = value
+        return result
+
+    try:
+        value = json.loads(
+            raw.decode("utf-8"), parse_constant=reject_constant,
+            object_pairs_hook=object_with_unique_keys,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise EvidenceFailure("malformed %s JSON: %s" % (label, error)) from error
+    require(type(value) is dict, "%s is not a JSON object" % label)
+    return value
+
+
+def validate_sources(event_key, sources, artifact_index, prior_sources):
+    require(type(sources) is list and sources, "event %s has no sources" % event_key)
+    seen_paths = set()
+    records = []
+    for source in sources:
+        require(type(source) is dict and set(source) == {"path", "sha256"},
+                "event %s has a malformed source" % event_key)
+        path, digest = source["path"], source["sha256"]
+        require(type(path) is str and path and not path.startswith("/") and ".." not in Path(path).parts,
+                "event %s has an unsafe source path" % event_key)
+        require(valid_hash(digest), "event %s has an invalid source hash" % event_key)
+        require(path not in seen_paths, "event %s duplicates a source path" % event_key)
+        seen_paths.add(path)
+        artifact = artifact_index.get(path)
+        require(artifact is not None,
+                "event %s source is absent from artifacts: %s" % (event_key, path))
+        require(artifact["stored_sha256"] == digest and artifact["body_sha256"] == digest,
+                "event %s source hash differs from artifact body: %s" % (event_key, path))
+        records.append({
+            "path": path,
+            "sha256": digest,
+            "artifact_body_sha256": artifact["body_sha256"],
+            "byte_count": artifact["byte_count"],
+            "classification": "available-source-pointer-not-trusted-meter-receipt",
+        })
+    require([(row["path"], row["sha256"]) for row in records] ==
+            [(row.get("path"), row.get("sha256")) for row in prior_sources],
+            "event %s source correspondence differs from prior report" % event_key)
+    return records
+
+
+def evidence_requirement(value, available=False, basis="field absent or null"):
+    return {
+        "status": "available" if available else "missing",
+        "value": value if available else None,
+        "basis": basis if available else "not present in preserved event; not inferred",
+    }
+
+
+def event_requirements(event):
+    reservation = event.get("reservation")
+    paid = event.get("paid_dispatch")
+    settled = event.get("settled")
+    stop_scope = event.get("stop_scope")
+    return {
+        "original_reservation_mapping": evidence_requirement(
+            reservation, type(reservation) is str and bool(reservation),
+            "preserved reservation pointer only; not an authoritative mapping or receipt",
+        ),
+        "principal": evidence_requirement(None, False),
+        "request_key": evidence_requirement(None, False),
+        "stage": evidence_requirement(None, False),
+        "currency": evidence_requirement(None, False),
+        "paid_service": evidence_requirement(
+            paid, type(paid) is bool,
+            "preserved paid_dispatch field only; not a service-account receipt",
+        ),
+        "start_interval": evidence_requirement(None, False),
+        "end_interval": evidence_requirement(None, False),
+        "overlap_interval": evidence_requirement(None, False),
+        "trusted_meter_receipt": evidence_requirement(None, False),
+        "settlement_status": evidence_requirement(
+            settled, type(settled) is bool,
+            "preserved settlement projection; not a trusted settlement receipt",
+        ),
+        "trusted_settlement_receipt": evidence_requirement(None, False),
+        "stop_scope": evidence_requirement(
+            stop_scope, type(stop_scope) is str and bool(stop_scope),
+            "preserved stop scope; run scope is not campaign state",
+        ),
+    }
+
+
+def classify_event(event_key, body, artifact_index, prior_event):
+    require(type(body) is bytes, "event %s body is not a BLOB" % event_key)
+    event = parse_json_bytes(body, "event %s" % event_key)
+    require(set(event) == EVENT_FIELDS,
+            "event %s field inventory differs" % event_key)
+    require(valid_hash(event_key), "invalid evidence key")
+    require(event["event_sha256"] == event_key,
+            "event %s contains a different key" % event_key)
+    require(event["kind"] in EVENT_KINDS, "invalid event kind")
+    for field in ("run", "reservation", "profile"):
+        require(event[field] is None or
+                (type(event[field]) is str and bool(event[field])),
+                "event %s has malformed %s" % (event_key, field))
+    execution = event["execution_seconds"]
+    maximum = event["maximum_seconds"]
+    money = event["money_cents"]
+    require(execution is None or (
+                type(execution) in (int, float) and math.isfinite(execution)
+                and execution >= 0),
+            "event %s execution_seconds is malformed" % event_key)
+    require(maximum is None or (type(maximum) is int and 0 <= maximum <= 2**63 - 1),
+            "event %s maximum_seconds is malformed" % event_key)
+    require(money is None or (type(money) is int and 0 <= money <= 2**63 - 1),
+            "event %s money_cents is malformed" % event_key)
+    require(event["paid_dispatch"] is None or type(event["paid_dispatch"]) is bool,
+            "event %s paid_dispatch is malformed" % event_key)
+    require(type(event["settled"]) is bool, "event %s settled is not boolean" % event_key)
+    require(event["stop_scope"] is None or (
+                type(event["stop_scope"]) is str and bool(event["stop_scope"])),
+            "event %s stop_scope is malformed" % event_key)
+    require(type(event["sources"]) is list, "event %s sources is not a list" % event_key)
+    scalars = {field: event[field] for field in SCALAR_FIELDS}
+    sources = validate_sources(event_key, event["sources"], artifact_index,
+                               prior_event.get("sources"))
+    require(event == prior_event,
+            "event %s content differs from prior report" % event_key)
+    return {
+        "evidence_key": event_key,
+        "body_sha256": sha256_bytes(body),
+        "body_byte_count": len(body),
+        "kind": event["kind"],
+        "run": event["run"],
+        "reservation": event["reservation"],
+        "profile": event["profile"],
+        "scalar_fields": scalars,
+        "sources": sources,
+        "required_evidence": event_requirements(event),
+    }
+
+
+def validate_prior_report(report, database_hash, active, receipt, expected):
+    require(report.get("decision") == "blocked-ambiguous-history",
+            "prior report decision differs")
+    require(type(report.get("all_events")) is list, "prior report all_events is malformed")
+    keys = [item.get("event_sha256") for item in report["all_events"]]
+    require(all(valid_hash(key) for key in keys), "prior report contains an invalid key")
+    require(len(keys) == len(set(keys)) == expected["event_count"],
+            "prior report event count or uniqueness differs")
+    artifacts = report.get("artifact_sources")
+    require(type(artifacts) is dict and len(artifacts) == expected["artifact_count"],
+            "prior report artifact inventory differs")
+    installed = report.get("installed", {})
+    require(installed.get("artifact_count") == expected["artifact_count"],
+            "prior report artifact count differs")
+    pins = installed.get("pins_before", {})
+    require(pins.get("budget.sqlite") == database_hash, "prior report database pin differs")
+    require(pins.get("active.json") == expected["active_sha256"],
+            "prior report active pin differs")
+    require(pins.get("receipt.json") == expected["receipt_sha256"],
+            "prior report receipt pin differs")
+    require(installed.get("pins_after") == pins, "prior report readback pins differ")
+    require(installed.get("campaign") == active["campaign"] == receipt["campaign"],
+            "campaign identity differs")
+    require(installed.get("store_id") == active["store_id"] == receipt["store_id"],
+            "store identity differs")
+    return {item["event_sha256"]: item for item in report["all_events"]}
+
+
+def query_database(path, expected_counts):
+    uri = Path(path).as_uri() + "?mode=ro&immutable=1"
+    connection = sqlite3.connect(uri, uri=True)
+    try:
+        connection.execute("PRAGMA query_only=ON")
+        integrity = connection.execute("PRAGMA integrity_check").fetchall()
+        require(integrity == [("ok",)], "SQLite integrity check failed")
+        names = connection.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+        ).fetchall()
+        require([row[0] for row in names] == list(TABLES), "SQLite table inventory differs")
+        counts = {}
+        for table in TABLES:
+            counts[table] = connection.execute(
+                'SELECT COUNT(*) FROM "%s"' % table.replace('"', '""')
+            ).fetchone()[0]
+        require(counts == expected_counts, "SQLite count readback differs")
+        state = [list(row) for row in connection.execute(
+            "SELECT id,stopped FROM state ORDER BY id"
+        ).fetchall()]
+        require(state == [[1, 1]], "migration safety state differs")
+        artifacts = connection.execute(
+            "SELECT path,sha256,body FROM artifacts ORDER BY path"
+        ).fetchall()
+        events = connection.execute(
+            "SELECT evidence_key,body FROM legacy_events ORDER BY evidence_key"
+        ).fetchall()
+        metadata = connection.execute(
+            "SELECT name,body FROM metadata ORDER BY name"
+        ).fetchall()
+        reservations = connection.execute(
+            "SELECT id FROM reservations ORDER BY id"
+        ).fetchall()
+        require(reservations == [], "protected store unexpectedly has reservations")
+        return {
+            "integrity_check": integrity, "table_counts": counts, "state": state,
+            "artifacts": artifacts, "events": events, "metadata": metadata,
+        }
+    finally:
+        connection.close()
+
+
+def manifest_for(database_path, prior_report_path, output_path, expectations=None):
+    """Return the manifest after writing exactly the requested fresh output."""
+    expected = dict(LIVE_EXPECTATIONS)
+    if expectations is not None:
+        expected.update(expectations)
+    expected.setdefault("artifact_count", REQUIRED_COUNTS["artifacts"])
+    expected.setdefault("event_count", REQUIRED_COUNTS["legacy_events"])
+    expected_counts = dict(REQUIRED_COUNTS)
+    expected_counts["artifacts"] = expected.get("artifact_count", REQUIRED_COUNTS["artifacts"])
+    expected_counts["legacy_events"] = expected.get("event_count", REQUIRED_COUNTS["legacy_events"])
+    database_path = Path(database_path)
+    prior_report_path = Path(prior_report_path)
+    output_path = Path(output_path)
+    root = database_path.parent
+    active_path = root / "active.json"
+    receipt_path = root / "receipt.json"
+
+    active_raw, active_before = source_readback(
+        active_path, expected["active_sha256"], source_identity(expected, "active")
+    )
+    database_raw, database_before = source_readback(
+        database_path, expected["database_sha256"],
+        (expected["database_device"], expected["database_inode"],
+         expected["database_uid"], expected["database_gid"],
+         expected["database_mode"], expected["database_nlink"]),
+    )
+    receipt_raw, receipt_before = source_readback(
+        receipt_path, expected["receipt_sha256"], source_identity(expected, "receipt")
+    )
+    prior_raw, prior_before = source_readback(
+        prior_report_path, expected["prior_report_sha256"]
+    )
+    active = parse_json_bytes(active_raw, "active")
+    receipt = parse_json_bytes(receipt_raw, "receipt")
+    prior = parse_json_bytes(prior_raw, "prior report")
+
+    database_hash = sha256_bytes(database_raw)
+    require(active.get("database_sha256") == database_hash,
+            "active database hash differs")
+    require(active.get("receipt_sha256") == expected["receipt_sha256"],
+            "active receipt hash differs")
+    require((active.get("device"), active.get("inode")) ==
+            (expected["database_device"], expected["database_inode"]),
+            "active database identity differs")
+    require(active.get("stopped") == 1 and active.get("execution_gate") == "blocked"
+            and active.get("unresolved_history") is True,
+            "active gate identity differs")
+    require(receipt.get("migration_safety_stopped") == 1
+            and receipt.get("execution_gate") == "blocked"
+            and receipt.get("release_authorized") is False
+            and receipt.get("reset_allowance") is False
+            and receipt.get("unresolved_history") is True,
+            "receipt gate identity differs")
+    require(receipt.get("campaign") == active.get("campaign")
+            and receipt.get("store_id") == active.get("store_id"),
+            "active/receipt identity differs")
+
+    prior_events = validate_prior_report(
+        prior, database_hash, active, receipt, expected
+    )
+    query = query_database(database_path, expected_counts)
+    metadata = {}
+    for name, body in query["metadata"]:
+        metadata[name] = body
+    require(set(metadata) == {"proposal", "receipt"}, "metadata inventory differs")
+    receipt_metadata = parse_json_bytes(metadata["receipt"], "database receipt")
+    require(sha256_bytes(metadata["receipt"]) == expected["receipt_sha256"],
+            "database receipt hash differs")
+    require(receipt_metadata == receipt, "database receipt content differs")
+    proposal_hash = sha256_bytes(metadata["proposal"])
+    require(proposal_hash == receipt.get("proposal_sha256"),
+            "database proposal hash differs")
+
+    artifact_records = []
+    artifact_index = {}
+    artifact_conflicts = 0
+    for path, stored_hash, body in query["artifacts"]:
+        require(type(path) is str and bool(path), "artifact path is malformed")
+        require(valid_hash(stored_hash), "artifact stored hash is malformed")
+        body_hash = sha256_bytes(body)
+        matches = body_hash == stored_hash
+        artifact_conflicts += not matches
+        record = {
+            "path": path, "stored_sha256": stored_hash,
+            "body_sha256": body_hash, "byte_count": len(body),
+            "hash_matches": matches,
+        }
+        artifact_records.append(record)
+        require(path not in artifact_index, "duplicate artifact path")
+        artifact_index[path] = record
+    require(artifact_conflicts == 0, "artifact body hash mismatch")
+    prior_artifacts = prior.get("artifact_sources")
+    require({row["path"]: row["stored_sha256"] for row in artifact_records} == prior_artifacts,
+            "artifact inventory differs from prior report")
+
+    event_records = []
+    event_keys = []
+    for event_key, body in query["events"]:
+        require(event_key not in event_keys, "duplicate evidence key")
+        event_keys.append(event_key)
+        prior_event = prior_events.get(event_key)
+        require(prior_event is not None,
+                "database event is absent from prior report: %s" % event_key)
+        event_records.append(classify_event(event_key, body, artifact_index, prior_event))
+    require(len(event_records) == expected_counts["legacy_events"],
+            "event inventory count differs")
+    require(set(event_keys) == set(prior_events), "event key correspondence differs")
+
+    _, active_after_raw = source_readback(
+        active_path, expected["active_sha256"], source_identity(expected, "active")
+    )
+    _, database_after_raw = source_readback(
+        database_path, expected["database_sha256"],
+        (expected["database_device"], expected["database_inode"],
+         expected["database_uid"], expected["database_gid"],
+         expected["database_mode"], expected["database_nlink"]),
+    )
+    _, receipt_after_raw = source_readback(
+        receipt_path, expected["receipt_sha256"], source_identity(expected, "receipt")
+    )
+    require(stable_stat_matches(active_before["stat"], active_after_raw["stat"]),
+            "active metadata changed during collection")
+    require(stable_stat_matches(database_before["stat"], database_after_raw["stat"]),
+            "database metadata changed during collection")
+    require(stable_stat_matches(receipt_before["stat"], receipt_after_raw["stat"]),
+            "receipt metadata changed during collection")
+
+    kind_counts = {}
+    missing_counts = {}
+    for event in event_records:
+        kind_counts[event["kind"]] = kind_counts.get(event["kind"], 0) + 1
+        for name, requirement in event["required_evidence"].items():
+            if requirement["status"] == "missing":
+                missing_counts[name] = missing_counts.get(name, 0) + 1
+    referenced_paths = {
+        source["path"] for event in event_records for source in event["sources"]
+    }
+    source_reference_count = sum(len(event["sources"]) for event in event_records)
+    manifest = {
+        "schema_version": 1,
+        "decision": "blocked-ambiguous-history",
+        "authorization": {
+            "migration_authorized": False,
+            "settlement_authorized": False,
+            "stop_release_authorized": False,
+            "execution_authorized": False,
+            "collection_authorizes_nothing": True,
+        },
+        "source": {
+            "active": {**active_before, "stat_after": active_after_raw["stat"],
+                       "identity": active},
+            "database": {
+                **database_before,
+                "stat_after": database_after_raw["stat"],
+                "sqlite": {
+                    "uri_mode": "mode=ro&immutable=1",
+                    "query_only": True,
+                    "integrity_check": "ok",
+                    "table_counts": query["table_counts"],
+                    "state": query["state"],
+                },
+            },
+            "receipt": {**receipt_before, "stat_after": receipt_after_raw["stat"],
+                        "identity": receipt},
+            "prior_report": prior_before,
+            "metadata": [
+                {"name": name, "sha256": sha256_bytes(body),
+                 "byte_count": len(body)}
+                for name, body in sorted(metadata.items())
+            ],
+            "readback": {
+                "source_hashes_unchanged": True,
+                "source_stable_metadata_unchanged": True,
+                "artifact_hashes_verified": len(artifact_records),
+                "event_body_hashes_verified": len(event_records),
+            },
+        },
+        "artifacts": artifact_records,
+        "events": event_records,
+        "summary": {
+            "artifact_count": len(artifact_records),
+            "event_count": len(event_records),
+            "event_kind_counts": kind_counts,
+            "event_source_reference_count": source_reference_count,
+            "event_referenced_artifact_count": len(referenced_paths),
+            "artifact_hash_mismatches": artifact_conflicts,
+            "prior_event_key_mismatches": 0,
+            "prior_source_mismatches": 0,
+            "missing_required_evidence_event_counts": missing_counts,
+        },
+        "scope": {
+            "artifact_bodies_copied": False,
+            "raw_logs_copied": False,
+            "available_source_pointer_is_trusted_meter_receipt": False,
+            "unknown_values_preserved_as_null": True,
+        },
+    }
+
+    payload = (json.dumps(manifest, sort_keys=True, indent=2,
+                          ensure_ascii=False) + "\n").encode("utf-8")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(str(output_path), flags, 0o600)
+    try:
+        view = memoryview(payload)
+        while view:
+            written = os.write(descriptor, view)
+            view = view[written:]
+    finally:
+        os.close(descriptor)
+    return manifest
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Collect a canonical read-only accounting evidence manifest."
+    )
+    parser.add_argument("database", type=Path)
+    parser.add_argument("prior_report", type=Path)
+    parser.add_argument("output", type=Path)
+    arguments = parser.parse_args(argv)
+    manifest = manifest_for(
+        arguments.database, arguments.prior_report, arguments.output
+    )
+    print(json.dumps(manifest["summary"], sort_keys=True, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (EvidenceFailure, OSError, sqlite3.Error) as error:
+        print("accounting-evidence-manifest: %s" % error, file=sys.stderr)
+        sys.exit(1)
