@@ -45,3 +45,38 @@ historical completeness from accepted integration checks.
 New reconciliation code is an offline review utility, not part of the approved
 runtime snapshot. All ten trusted-observation guest controls remain not-run.
 No coverage claim for mandatory guest acceptance criteria is made.
+
+## All-visible-attempt genesis proposal (2026-10-21)
+
+`scripts/propose-accounting-genesis` additionally inventories all twelve attempt
+manifests (two accepted, ten earlier failures), verifies their referenced bytes,
+deduplicates event hashes across exports, preserves run/reservation identities and
+source hashes, and extracts scalar duration fields with exact JSON pointers.
+See `accounting-reconciliation/genesis-proposal.json`. Earlier failed attempt
+timings remain evidence, not discarded because their tests failed.
+
+Known reservation maxima remain individual unsettled holds. Missing identities
+are not fabricated. Missing bounds for omitted effects cannot honestly yield a
+finite historical upper bound: that field is null. Instead the proposed admission
+baseline encumbers ALL POC ceilings ($50, 6 execution hours, 1 review hour) and
+ALL cumulative milestone ceilings ($150, 24 execution hours, 3 review hours).
+These overlapping admission holds are not additive historical charges or a reset;
+both stages admit no work. Even this cannot prove prior usage did not exceed a
+ceiling. POC carry-forward requires no fresh milestone allowance.
+
+The mathematical evidence-only lower bound takes the maximum measured run
+duration, not a sum of potentially overlapping executions/replays. Zero money and
+review lower bounds are explicitly not observed $0/zero review or settlement.
+Preparation, selector, replay, review and complete execution totals stay unknown.
+Explicit run stops stay run-scoped; campaign stop state remains unknown.
+
+The proposed logical genesis schema retains immutable legacy events, all source
+references, reported scalar measurements, unresolved holds and stop events before
+any future mapping into runtime reservations. `stopped=1` would represent a NEW
+migration safety gate, not an invented historical campaign stop. No database,
+approved migration receipt, or accounting provisioning command is produced.
+
+This is complete for visible attempt exports, not a claim that every historical
+invocation is recoverable. Missing effects, review history, intervals, stage
+assignment, trusted receipts and campaign stop scope are genuinely absent from
+the available export schema and require external reconstruction/approval.

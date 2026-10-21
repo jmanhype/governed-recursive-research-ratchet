@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Read-only complete visible-export inventory; never opens an accounting store."""
+import json
+from decimal import Decimal
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require
+from accounting_reconciliation import micros
+from budget import CEILINGS, DIMENSIONS
+
+
+def proposal(root):
+    events, measurements, artifacts, attempts = {}, [], {}, []
+    for lane in ('bounded-challenge', 'offline-preflight', 'trusted-observation'):
+        for manifest in sorted((root / 'docs/evidence' / lane).glob('attempt-*/manifest.json')):
+            raw = manifest.read_bytes()
+            body = json.loads(raw)
+            attempt = str(manifest.parent.relative_to(root))
+            attempts.append({'path': attempt, 'manifest_sha256': digest(raw),
+                             'exit_code': body.get('exit_code'), 'complete_history': False})
+            for name, expected in body.get('artifacts', {}).items():
+                path = manifest.parent / name
+                require(path.resolve().parent == manifest.parent.resolve() and not path.is_symlink(),
+                        'IntegrityFailure', 'Unsafe artifact path')
+                data = path.read_bytes()
+                require(len(data) <= 32 * 1024 * 1024 and digest(data) == expected,
+                        'IntegrityFailure', 'Artifact mismatch')
+                source = str(path.relative_to(root))
+                artifacts[source] = expected
+                if path.suffix != '.json':
+                    continue
+                value = json.loads(data)
+                if isinstance(value, dict) and 'snapshot_id' in value:
+                    for entry in value.get('events', []):
+                        event = entry['event']
+                        identity = digest(canonical(event))
+                        row = events.setdefault(identity, {
+                            'event_sha256': identity, 'kind': event.get('kind'),
+                            'run': event.get('run'), 'reservation': event.get('reservation'),
+                            'sources': [], 'profile': lane,
+                            'maximum_seconds': event.get('maximum_seconds'),
+                            'execution_seconds': event.get('execution_seconds'),
+                            'money_cents': event.get('money_cents'),
+                            'paid_dispatch': event.get('paid_dispatch'),
+                            'stop_scope': 'run' if event.get('run') and str(event.get('kind')).startswith('stop-') else 'unresolved',
+                            'settled': False})
+                        row['sources'].append({'path': source, 'sha256': expected})
+                # Preserve exact scalar measurements with JSON paths, never raw log text.
+                def visit(node, pointer=''):
+                    if isinstance(node, dict):
+                        for key, val in node.items():
+                            location = pointer + '/' + key
+                            if key in ('execution_seconds', 'elapsed_seconds', 'duration_seconds',
+                                       'review_seconds', 'maximum_seconds', 'reserved_total_seconds'):
+                                if val is not None:
+                                    micros(val)
+                                measurements.append({'source': source, 'sha256': expected,
+                                                     'pointer': location, 'field': key, 'seconds': val})
+                            elif key not in ('objects', 'raw', 'stdout', 'stderr', 'output'):
+                                visit(val, location)
+                    elif isinstance(node, list):
+                        for index, val in enumerate(node):
+                            visit(val, pointer + '/' + str(index))
+                visit(value)
+    # Different reports of one run may overlap; max is a lower bound, never sum.
+    run_lower, reservation_max = {}, {}
+    for key, event in events.items():
+        run = event['run']
+        if run and event['execution_seconds'] is not None:
+            run_lower[run] = max(run_lower.get(run, Decimal(0)),
+                                 Decimal(micros(event['execution_seconds'])))
+        if event['maximum_seconds'] is not None:
+            identity = event['reservation'] or run or key
+            reservation_max[identity] = max(reservation_max.get(identity, Decimal(0)),
+                                            Decimal(micros(event['maximum_seconds'])))
+    lower = str(max(run_lower.values(), default=Decimal(0)))
+    ceilings = {stage: dict(zip(DIMENSIONS, caps)) for stage, caps in CEILINGS.items()}
+    return {
+        'version': 1, 'decision': 'proposed-blocked-genesis', 'execution_gate': 'blocked',
+        'migration_authorized': False, 'database_created': False,
+        'attempts': attempts, 'artifacts': artifacts, 'events': list(events.values()),
+        'measurements': measurements, 'known_run_execution_us': {k: str(v) for k, v in run_lower.items()},
+        'known_reservation_holds_us': {k: str(v) for k, v in reservation_max.items()},
+        'bounds': {stage: {
+            'exact_evidence_only_lower_bound': {'execution_us': lower, 'review_us': '0', 'money_cents': '0'},
+            'lower_bound_authoritative': False,
+            'lower_bound_note': 'Maximum observed run duration avoids unknown inter-run overlap; zero is a mathematical lower bound, not observed zero usage.',
+            'conservative_admission_hold': cap,
+            'historical_usage_upper_bound': None,
+            'hold_note': 'Full ceiling encumbered for unknown history; not a claim that history stayed below ceiling.'
+        } for stage, cap in ceilings.items()},
+        'components': {key: {'measured_total': None, 'status': 'unknown-conservative'}
+                       for key in ('preparation', 'selector', 'execution', 'replay', 'review')},
+        'genesis_schema': {
+            'legacy_events': 'event_sha256 primary key; all source hashes; run/reservation nullable; never fabricate identity',
+            'legacy_measurements': 'source hash + JSON pointer primary key; reported scalar, no settlement authority',
+            'unresolved_holds': 'scope + dimension primary key; full ceiling; reason; no receipt; release requires independent reconciliation',
+            'stop_events': 'event hash primary key; run scope when explicit; unknown campaign state preserved',
+            'migration_binding': 'campaign/store IDs require approval; imported event/source digest; gate blocked; no reset',
+            'runtime_state': 'stopped=1 for migration gate, not a claim of a historical campaign stop',
+        },
+        'campaign_stop_state': None, 'reset_allowance': False,
+        'trusted_guest_invocations': {'observed': 0, 'basis': 'No attempt manifests; authorization remains absent, not proof of universal absence.'},
+        'unrecoverable_from_visible_exports': [
+            'Complete invocation inventory and durations for omitted or pre-snapshot effects',
+            'Review/replay/preparation/selector cumulative times and overlap intervals',
+            'Stage assignment, historical campaign ceiling compliance and campaign stop state',
+            'Missing trusted metering receipts, unmapped reservation identity and paid-service proof'],
+    }
+
+
+if __name__ == '__main__':
+    print(json.dumps(proposal(ROOT), sort_keys=True, indent=2))
