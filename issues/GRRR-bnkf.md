@@ -1,18 +1,19 @@
 ---
 id: GRRR-bnkf
 title: "Inspect a frozen representative vlt defect corpus"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, integration, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-21T21:54:20Z
-content_hash: "sha256:1844e15a44f235596b53378e8054aa8d21a883516a82242a703fa3b17e7bfad5"
+updated_at: 2026-10-21T21:55:30Z
+content_hash: "sha256:9b201e17c7a5dffd26a122899a7c03f470f33626412dce2ae44623d16089043a"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
-follows: [GRRR-c875, GRRR-my5n]
+follows: [GRRR-c875, GRRR-my5n, GRRR-gu87]
+assignee: dev-GRRR-bnkf
 ---
 
 ## Description
@@ -420,12 +421,15 @@ status: in_progress
 - 2026-10-21T21:50:04Z auto-follows: linked to predecessor GRRR-my5n
 - 2026-10-21T21:54:19Z status: in_progress -> open
 - 2026-10-21T21:54:19Z released by speed
+- 2026-10-21T21:55:30Z status: open -> in_progress
+- 2026-10-21T21:55:30Z auto-follows: linked to predecessor GRRR-gu87
+- 2026-10-21T21:55:30Z claimed by dev-GRRR-bnkf
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-dbbi]], [[GRRR-z3w9]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-c875]]
-- Follows: [[GRRR-c875]], [[GRRR-my5n]]
+- Follows: [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
 
 ## Comments
 
