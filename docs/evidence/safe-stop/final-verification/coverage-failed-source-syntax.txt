@@ -1,0 +1,15 @@
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.045s
+
+OK
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/inorout.py:508: CoverageWarning: Module research/control.py was never imported. (module-not-imported)
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/inorout.py:508: CoverageWarning: Module research/control_worker.py was never imported. (module-not-imported)
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/inorout.py:508: CoverageWarning: Module research/trusted_transport.py was never imported. (module-not-imported)
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+/Users/speed/miniconda3/lib/python3.12/site-packages/coverage/control.py:892: CoverageWarning: No data was collected. (no-data-collected)
+  self._warn("No data was collected.", slug="no-data-collected")
+No data to report.
+EXIT=1

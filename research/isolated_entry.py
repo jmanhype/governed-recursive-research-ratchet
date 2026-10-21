@@ -9,7 +9,8 @@ if not (sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_byteco
     raise SystemExit('Isolated Python required')
 if root.is_symlink() or root.stat().st_uid != 0 or root.stat().st_mode & 0o022:
     raise SystemExit('Root-controlled code directory required')
-if sys.argv[1] not in ('trusted_execution.py', 'trusted_observation.py', 'trusted_probe.py'):
+if sys.argv[1] not in ('trusted_execution.py', 'trusted_observation.py', 'trusted_probe.py',
+                       'control_worker.py', 'safe_stop.py', 'safe_stop_probe.py'):
     raise SystemExit('Unregistered identity program')
 for path in root.iterdir():
     if path.is_symlink() or not path.is_file() or path.stat().st_uid != 0 or path.stat().st_mode & 0o222:

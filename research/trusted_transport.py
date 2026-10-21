@@ -6,6 +6,7 @@ import socket
 import threading
 import time
 from common import EVALUATOR, Failure, MAX_WIRE, canonical, peer_uid, require, unique_fields
+from common import fields, receive, socket_path
 
 
 class AuthenticatedServer:
@@ -98,3 +99,30 @@ class AuthenticatedServer:
         self.closed.set()
         self.listener.close()
         self.thread.join(timeout=1)
+
+
+def control_call(path: Path, request: dict, *, expected_uid: int, timeout: float) -> dict:
+    """Call a dedicated control endpoint and authenticate its server UID first."""
+    import socket
+    require(timeout > 0 and timeout <= 15, 'InvalidInput', 'Control timeout differs from bounds')
+    with socket.socket(socket.AF_UNIX) as conn:
+        conn.settimeout(timeout)
+        try:
+            conn.connect(socket_path(path))
+            require(peer_uid(conn) == expected_uid, 'Unauthorized', 'Control server identity mismatch')
+            conn.sendall(canonical(request) + b'\n')
+            response = receive(conn)
+        except (OSError, TimeoutError) as exc:
+            raise Failure('Unavailable', 'Control endpoint unavailable; query durable state') from exc
+    fields(response, set(), {'ok', 'error'})
+    require(len(response) == 1, 'InvalidInput', 'Ambiguous control response')
+    if 'error' in response:
+        error = response['error']
+        fields(error, {'code', 'message', 'operation', 'retryable', 'receipt'})
+        require(error['code'] in ('Unauthorized', 'InvalidInput', 'StaleBinding', 'GateBlocked',
+                'BudgetUnknown', 'BudgetExceeded', 'Stopped', 'IntegrityFailure', 'Unavailable',
+                'RecoveryRequired') and isinstance(error['message'], str)
+                and len(error['message']) <= 1024 and error['retryable'] is False,
+                'RecoveryRequired', 'Unknown control error; do not retry effects')
+        raise Failure(error['code'], error['message'], error['operation'])
+    return response['ok']

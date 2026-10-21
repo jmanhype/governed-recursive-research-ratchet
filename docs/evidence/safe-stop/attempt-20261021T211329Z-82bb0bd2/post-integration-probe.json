@@ -1,0 +1,1 @@
+{"code": 0, "mode": "unavailable-control", "stderr": "", "stdout": "{\"denied\": true, \"error\": {\"code\": \"Unavailable\", \"message\": \"Control endpoint unavailable; query durable state\", \"operation\": \"unknown\", \"receipt\": null, \"retryable\": false}, \"mode\": \"unavailable-control\", \"uid\": 501}\n", "uid": 501}

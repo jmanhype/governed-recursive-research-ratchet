@@ -4,8 +4,8 @@ from pathlib import Path
 import subprocess
 import sys
 ROOT = Path(__file__).resolve().parents[1]
-if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight'], ['trusted-observation'], ['durable-evidence']):
-    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|durable-evidence', file=sys.stderr)
+if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight'], ['trusted-observation'], ['durable-evidence'], ['safe-stop']):
+    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|durable-evidence|safe-stop', file=sys.stderr)
     raise SystemExit(2)
 if sys.argv[1] == 'offline-preflight':
     import json
@@ -24,6 +24,10 @@ try:
     if sys.argv[1] == 'durable-evidence':
         result = subprocess.run([sys.executable, '-I', '-S', '-B',
                                  str(ROOT / 'scripts/durable-identity-integration')], cwd=ROOT, timeout=360)
+        raise SystemExit(result.returncode)
+    if sys.argv[1] == 'safe-stop':
+        result = subprocess.run([sys.executable, '-I', '-S', '-B',
+                                 str(ROOT / 'scripts/safe-stop-identity-integration')], cwd=ROOT, timeout=180)
         raise SystemExit(result.returncode)
     if sys.argv[1] == 'trusted-observation':
         print('FAIL: trusted-observation requires approved isolated identity launcher; 10 required, 0 executed, 0 skipped; gate not-run', file=sys.stderr)

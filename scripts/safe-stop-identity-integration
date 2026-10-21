@@ -1,0 +1,262 @@
+#!/usr/bin/env python3
+"""Parent-mediated safe-stop identity launcher; no sudo, guest, paid work, or mocks."""
+from __future__ import annotations
+import json
+import os
+from pathlib import Path
+import pwd
+import shutil
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+PYTHON = '/usr/bin/python3'
+RUNS = ('run-operator', 'run-watchdog', 'run-race', 'run-unavailable',
+        'run-trigger', 'run-admission', 'run-crash')
+CODE = ('research/common.py', 'research/ledger.py', 'research/trusted_transport.py',
+        'research/control.py', 'research/control_worker.py', 'research/isolated_entry.py',
+        'tests/integration/hung_runner.py', 'tests/integration/safe_stop.py',
+        'tests/integration/safe_stop_probe.py')
+
+
+def identity(uid: int) -> None:
+    os.setgroups([])
+    os.setgid(uid)
+    os.setuid(uid)
+    os.umask(0o077)
+
+
+def exclusive_copy(source: Path, target: Path, mode: int) -> None:
+    if target.exists():
+        raise RuntimeError('evidence destination exists: ' + str(target))
+    target.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+    shutil.copyfile(source, target)
+    os.chmod(target, mode)
+
+
+def preserve(source: Path, evidence: Path) -> None:
+    if source.is_file():
+        exclusive_copy(source, evidence / source.name, 0o444)
+    elif source.is_dir():
+        for child in sorted(source.rglob('*')):
+            target = evidence / source.name / child.relative_to(source)
+            if child.is_dir():
+                target.mkdir(parents=True, exist_ok=True, mode=0o755)
+            elif child.is_file() and not child.is_symlink():
+                exclusive_copy(child, target, 0o444)
+
+
+def readonly(path: Path, data: bytes, mode: int = 0o444) -> None:
+    if path.exists():
+        raise RuntimeError('staging destination exists: ' + str(path))
+    path.write_bytes(data)
+    os.chmod(path, mode)
+
+
+def wait_for(path: Path, process: subprocess.Popen, timeout: float = 8) -> None:
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline and not path.exists() and process.poll() is None:
+        time.sleep(0.05)
+    if process.poll() is not None or not path.exists():
+        raise RuntimeError('required process failed before ' + str(path))
+
+
+def cease(process: subprocess.Popen) -> None:
+    if process is None:
+        return
+    if process.poll() is not None:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=2)
+        return
+    except subprocess.TimeoutExpired:
+        pass
+    if process.poll() is not None:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError('process cessation unconfirmed: ' + str(process.pid))
+
+
+def evidence_receipt(attempt: str, runtime: Path | None, code: int,
+                     summary: dict | None, error: str | None = None) -> Path:
+    evidence = ROOT / 'docs/evidence/safe-stop' / attempt
+    evidence.mkdir(parents=True, exist_ok=True, mode=0o700)
+    record = {'version': 1, 'exit_code': code, 'runtime': str(runtime) if runtime else None,
+              'identities': {'evaluator': 320, 'runner': 321, 'operator': ROOT.stat().st_uid},
+              'integration_summary': summary,
+              'guest_executed': False, 'paid_dispatch': False,
+              'error': error, 'admission': 'blocked'}
+    readonly(evidence / 'manifest.json', json.dumps(record, sort_keys=True).encode('ascii'))
+    return evidence
+
+
+def run() -> int:
+    attempt = 'attempt-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8]
+    if os.getuid() != 0:
+        message = 'AWAITING_PARENT_IDENTITY_RUN: safe-stop requires root identity launcher; no credentials requested'
+        evidence = evidence_receipt(attempt, None, 1, None, message)
+        readonly(evidence / 'launcher.log', (message + '\n').encode('ascii'))
+        print(message)
+        return 1
+    operator = ROOT.stat().st_uid
+    if operator != 501:
+        raise RuntimeError('This approved safe-stop profile binds operator UID 501')
+    for name, uid in (('_grrr_evaluator', 320), ('_grrr_runner', 321)):
+        account = pwd.getpwnam(name)
+        if (account.pw_uid, account.pw_gid, account.pw_shell) != (uid, uid, '/usr/bin/false'):
+            raise RuntimeError('restricted identity differs: ' + name)
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-safe-stop-', dir='/private/tmp'))
+    runtime.chmod(0o711)
+    processes = {}
+    logs = []
+    integration = None
+    summary = None
+    code = 1
+    error = None
+    try:
+        for name, owner, mode in (('ipc', 0, 0o1777), ('logs', 0, 0o755),
+                                  ('ready', 0, 0o1777), ('code', 0, 0o755),
+                                  ('evaluator', 320, 0o700), ('runner', 321, 0o700)):
+            path = runtime / name
+            path.mkdir(mode=mode)
+            os.chown(path, owner, owner)
+            path.chmod(mode)
+        for name in CODE:
+            readonly(runtime / 'code' / Path(name).name, (ROOT / name).read_bytes())
+        baseline = runtime / 'baseline.bin'
+        baseline_bytes = b'GRRR-SAFE-STOP-PROTECTED-BASELINE-v1\n'
+        readonly(baseline, baseline_bytes)
+        sys.path.insert(0, str(ROOT / 'research'))
+        from common import canonical, digest
+        baseline_digest = digest(baseline_bytes)
+        pids = {}
+        environment = {'PATH': '/usr/bin:/bin', 'HOME': '/var/empty',
+                       'PYTHONDONTWRITEBYTECODE': '1'}
+        for run in RUNS:
+            stream = (runtime / 'logs' / (run + '.log')).open('xb')
+            logs.append(stream)
+            process = subprocess.Popen([PYTHON, '-I', '-S', '-B',
+                                        str(runtime / 'code' / 'hung_runner.py'), run,
+                                        str(runtime / 'ready' / run)],
+                                       cwd=runtime, stdin=subprocess.DEVNULL, stdout=stream,
+                                       stderr=subprocess.STDOUT, start_new_session=True,
+                                       preexec_fn=lambda: identity(321), env=environment)
+            processes[run] = process
+            pids[run] = process.pid
+            wait_for(runtime / 'ready' / run, process)
+        worker_log = (runtime / 'logs' / 'control-worker.log').open('xb')
+        logs.append(worker_log)
+        worker = subprocess.Popen([PYTHON, '-I', '-S', '-B',
+                                   str(runtime / 'code' / 'isolated_entry.py'), 'control_worker.py',
+                                   str(runtime / 'ipc' / 'control-worker.sock'),
+                                   str(baseline), baseline_digest],
+                                  cwd=runtime, stdin=subprocess.DEVNULL, stdout=worker_log,
+                                  stderr=subprocess.STDOUT, start_new_session=True,
+                                  preexec_fn=lambda: identity(321), env=environment)
+        processes['control-worker'] = worker
+        wait_for(runtime / 'ipc' / 'control-worker.sock', worker)
+        readonly(runtime / 'processes.json', canonical(pids).decode('ascii').encode('ascii'))
+        integration_log = (runtime / 'integration.log').open('xb')
+        logs.append(integration_log)
+        integration = subprocess.Popen([PYTHON, '-I', '-S', '-B',
+                                         str(runtime / 'code' / 'isolated_entry.py'),
+                                         'safe_stop.py', str(runtime)],
+                                        cwd=runtime, stdin=subprocess.DEVNULL,
+                                        stdout=integration_log, stderr=subprocess.STDOUT,
+                                        start_new_session=True,
+                                        preexec_fn=lambda: identity(320), env=environment)
+        processes['integration'] = integration
+        wait_for(runtime / 'evaluator' / 'service-ready', integration, timeout=15)
+        probes = {}
+        modes = (('denied-runner', 321), ('denied-watchdog-operator', operator),
+                 ('authorized-operator', operator))
+        for mode, uid in modes:
+            result = subprocess.run([PYTHON, '-I', '-S', '-B',
+                                     str(runtime / 'code' / 'isolated_entry.py'),
+                                     'safe_stop_probe.py',
+                                     str(runtime), mode], cwd=runtime, capture_output=True,
+                                    text=True, timeout=10,
+                                    preexec_fn=lambda uid=uid: identity(uid), env=environment)
+            probes[mode] = {'code': result.returncode, 'stdout': result.stdout,
+                            'stderr': result.stderr}
+            if result.returncode != 0:
+                raise RuntimeError('identity probe failed: ' + mode + ' ' + result.stdout + result.stderr)
+        readonly(runtime / 'external-probes.json',
+                 json.dumps(probes, sort_keys=True).encode('ascii'))
+        try:
+            integration.wait(timeout=120)
+            code = integration.returncode
+        except subprocess.TimeoutExpired:
+            error = 'integration exceeded 120 seconds'
+            code = 1
+        summary_path = runtime / 'evaluator' / 'integration-summary.json'
+        if summary_path.is_file():
+            summary = json.loads(summary_path.read_bytes())
+        unavailable = subprocess.run([PYTHON, '-I', '-S', '-B',
+                                      str(runtime / 'code' / 'isolated_entry.py'),
+                                      'safe_stop_probe.py', str(runtime),
+                                      'unavailable-control'], cwd=runtime,
+                                     capture_output=True, text=True, timeout=10,
+                                     preexec_fn=lambda: identity(operator), env=environment)
+        readonly(runtime / 'post-integration-probe.json', json.dumps({
+            'mode': 'unavailable-control', 'uid': operator,
+            'code': unavailable.returncode, 'stdout': unavailable.stdout,
+            'stderr': unavailable.stderr}, sort_keys=True).encode('ascii'))
+        if unavailable.returncode != 0:
+            error = 'unavailable-control procedure failed'
+            code = 1
+    except Exception as exc:
+        error = type(exc).__name__ + ': ' + str(exc)
+        code = 1
+    finally:
+        for name in ('integration', 'control-worker', *reversed(RUNS)):
+            if name in processes:
+                try:
+                    cease(processes[name])
+                except Exception:
+                    if error is None:
+                        error = 'cleanup failed for ' + name
+                    code = 1
+        for stream in logs:
+            stream.close()
+        evidence = evidence_receipt(attempt, runtime, code, summary, error)
+        for source in (runtime / 'integration.log', runtime / 'processes.json',
+                       runtime / 'external-probes.json', runtime / 'post-integration-probe.json',
+                       baseline,
+                       runtime / 'logs', runtime / 'evaluator'):
+            if source.exists():
+                preserve(source, evidence)
+        from common import canonical, digest
+        hashes = {str(path.relative_to(evidence)): digest(path.read_bytes())
+                  for path in sorted(evidence.rglob('*'))
+                  if path.is_file() and path.name != 'manifest.json'}
+        manifest = json.loads((evidence / 'manifest.json').read_bytes())
+        manifest['artifacts'] = hashes
+        (evidence / 'manifest.json').unlink()
+        readonly(evidence / 'manifest.json', canonical(manifest).decode('ascii').encode('ascii'))
+        for path in evidence.rglob('*'):
+            os.chown(path, operator, ROOT.stat().st_gid)
+            os.chmod(path, 0o755 if path.is_dir() else 0o444)
+        os.chown(evidence, operator, ROOT.stat().st_gid)
+        evidence.chmod(0o755)
+    print(json.dumps({'exit_code': code, 'evidence': str(evidence), 'runtime': str(runtime),
+                      'summary': summary, 'error': error}, sort_keys=True))
+    return code
+
+
+if __name__ == '__main__':
+    raise SystemExit(run())
