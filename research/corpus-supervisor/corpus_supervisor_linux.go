@@ -156,7 +156,7 @@ func observe(request request) (map[string]any, error) {
 	for _, path := range []string{"/work/control/supervisor", "/work/control/expectation"} { if err := private(path); err != nil { return nil, err } }
 	before, err := hashFile("/work/control/supervisor"); if err != nil { return nil, err }
 	if value, err := os.ReadFile("/work/control/expectation"); err != nil || string(value) != "EVALUATOR-OWNED-TRUTH\n" { return nil, errors.New("protected expectation differs") }
-	if err := stage(request); err != nil { return nil, err }
+	if err := stage(request); err != nil { return nil, fmt.Errorf("stage: %w", err) }
 	lock, err := os.OpenFile("/work/vault/.vlt.lock", os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666); if err != nil { return nil, err }
 	defer lock.Close(); if err := lock.Chmod(0666); err != nil { return nil, err }
 	if err := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX|syscall.LOCK_NB); err != nil { return nil, err }
@@ -175,7 +175,7 @@ func observe(request request) (map[string]any, error) {
 	for deadline := time.Now().Add(time.Second); time.Now().Before(deadline); {
 		if status, err = credentials(command.Process.Pid); err == nil { break }; time.Sleep(time.Millisecond)
 	}
-	if err != nil { return nil, err }
+	if err != nil { return nil, fmt.Errorf("credentials: %w", err) }
 	lockInfo, err := lock.Stat(); if err != nil { return nil, err }
 	kernelLocks, err := os.ReadFile("/proc/locks"); if err != nil { return nil, err }
 	owner, inode := fmt.Sprintf(" %d ", os.Getpid()), fmt.Sprintf(":%d ", lockInfo.Sys().(*syscall.Stat_t).Ino)
@@ -194,7 +194,11 @@ func main() {
 	runtime.LockOSThread(); raw, err := io.ReadAll(io.LimitReader(os.Stdin, 4097)); if err != nil { os.Exit(3) }
 	request, decodeErr := decodeRequest(raw); var result map[string]any
 	if decodeErr == nil { result, err = observe(request) } else { err = decodeErr }
-	if err != nil { result = map[string]any{"version":1, "run":request.Run, "error":"corpus-observation-failed", "verified":false, "admission":"blocked"} }
+	if err != nil {
+		result = map[string]any{"version":1, "run":request.Run, "error":"corpus-observation-failed",
+			"error_detail":err.Error(), "verified":false, "admission":"blocked"}
+		fmt.Fprintln(os.Stderr, "corpus observation failed: "+err.Error())
+	}
 	encoded, encodeErr := json.Marshal(result); if encodeErr != nil || len(encoded) > 1048576 || err != nil { os.Exit(3) }
 	if _, writeErr := io.Copy(os.Stdout, bytes.NewReader(append(encoded, '\n'))); writeErr != nil { os.Exit(3) }
 }
