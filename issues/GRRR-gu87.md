@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T16:38:38Z
-content_hash: "sha256:733a944a0dac37ba78dfb338346b46893e3bda8ae819942f922a070e95491e6d"
+updated_at: 2026-10-21T16:55:02Z
+content_hash: "sha256:78b34cc5ad41de410973aae21f25ed9aa2457732ed8b8266e156ff85d899c498"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -148,6 +148,43 @@ INDEPENDENT V4 SOURCE REVISION REVIEW (2026-10-21, clean commit 6f47e896f9a07fab
 OPERATOR ACCOUNTING NEXT-GATE AUTHORIZATION (2026-10-21): Operator agreed to continue the fail-closed accounting gate. Authorized work is limited to (1) making launcher handling of the current conservative active record return structured RecoveryRequired instead of KeyError, with no dispatch, and (2) producing a planning-only conservative-accounting migration/evidence-resolution design. Do not mutate /Library/GRRR/accounting, clear stopped, release holds, settle unknown history, create reservations, execute QEMU/guest code, authorize runtime dispatch, or claim migration completeness.
 INDEPENDENT ACCOUNTING MIGRATION PLAN REVIEW (2026-10-21, commit c9003ea6f2491d61581192ca2338ccbe415ec841): SECURITY_REVIEW: ACCOUNTING_MIGRATION_PLAN_APPROVED. Reviewer verified evidence 6/6, unchanged protected accounting hashes, normal CLI preflight before accounting-path construction, structured RecoveryRequired behavior, and unchanged validate_store. The proposal preserves stopped=1, 259 artifacts, 110 events, full encumbrances, and unknown costs without promoting evidence to reservations/settlements. Fresh candidate, provenance, independent reproduction, installation authorization, adapter review, and restricted rollback remain mandatory. launch() direct directory lookup cannot bypass normal preflight and direct invocation fails without authority; future adapter review must enforce unresolved-history/encumbrance controls, not merely preserve rows. This approves proposal-only scope and grants no candidate build, migration, installation, stop release, or execution.
 OPERATOR PRIVATE ACCOUNTING EVIDENCE-MANIFEST AUTHORIZATION (2026-10-21): Authorize read-only evidence-manifest collection at commit c9003ea6f2491d61581192ca2338ccbe415ec841. Scope is limited to verifying and inventorying the current protected accounting source, its 259 artifacts, 110 legacy events, committed reconciliation sources, available event fields, and explicit missing migration evidence. Preserve protected hashes and stopped=1; classify unknowns rather than inferring reservations, intervals, stage assignments, receipts, settlements, or zero costs. Do not build/install a candidate store, mutate accounting, release stops/holds, dispatch work, execute QEMU/guest code, deliver the full story, or push.
+## Implementation Evidence (IN PROGRESS — private evidence manifest only)
+
+PROOF:
+
+- Commit: `1903c3c` on `story/GRRR-gu87`; worktree clean after commit; no push.
+- Collector: `scripts/collect-accounting-evidence-manifest` uses O_NOFOLLOW regular-file reads, SQLite `mode=ro&immutable=1`, `PRAGMA query_only=ON`, before/after source hash/stat checks, exact table counts/state, all artifact and event body hashes, and prior-report event-key/source correspondence. It writes only its fresh output path.
+- Focused fixture command: `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit_accounting_evidence_manifest.py' -v` — exit 0; 6 passed, 0 failed, 0 skipped. Coverage includes exact inventory/correspondence, hash mismatch rejection, explicit missing evidence, no protected fixture mutation, and malformed/duplicate event rejection.
+- Full no-guest unit commands: `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v` — exit 0; 123 passed, 0 failed, 0 skipped. `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v` — exit 0; 123 passed, 0 failed, 0 skipped.
+- Compile commands under `/usr/bin/python3 -I -B` and `/opt/homebrew/bin/python3 -B` both exited 0. JSON parse under both interpreters verified 259 artifacts and 110 events. `git diff --check` and staged diff check exited 0.
+- Live collector command: `./scripts/collect-accounting-evidence-manifest /Library/GRRR/accounting/budget.sqlite docs/evidence/trusted-observation/installed-reconciliation/report.json docs/evidence/trusted-observation/accounting-evidence-manifest/MANIFEST.json` — exit 0. Independent fresh-output rerun was byte-identical.
+- Live inventory: 259 artifacts; 110 events (48 reserved, 40 offline-observation, 8 observation, 6 denied, 4 stop-fenced, 4 stop-outcome); 322 source references across 46 artifacts; 0 artifact/prior-key/prior-source mismatches; integrity ok; state `[[1,1]]`; reservations 0.
+- Missing required evidence counts are explicit in `MANIFEST.json`: principal 110, request key 110, stage 110, currency 110, start interval 110, end interval 110, overlap interval 110, trusted meter receipt 110, trusted settlement receipt 110, original reservation mapping 94, paid service 62. No unknown was converted to zero.
+- Protected hashes before and after collection remained `active.json cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b`, `budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234`, `receipt.json 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde`.
+- Evidence: `docs/evidence/trusted-observation/accounting-evidence-manifest/MANIFEST.json` SHA-256 `8c64d70cc0f3b903620ed45094133ceffaf5e48107427fcfc2204b73daa06270`; REPORT/VERIFICATION/SHA256SUMS rehashed OK.
+- `pvg verify` explicit changed paths with `--include-tests --format=text` — `VERIFY: PASSED (1 files scanned, 0 issues)`.
+- No protected mutation, candidate-store build/install, stop release, settlement/cancel, reservation, QEMU/guest/candidate execution, root/sudo use, delivery, or push occurred. Available source pointers are not trusted meter receipts; manifest collection authorizes nothing.
+
+LEARNINGS:
+
+- Hash-only event classification must preserve `null` explicitly: an available legacy pointer can describe a field without becoming principal, meter, settlement, or interval authority.
+- Exact prior-report equality is stronger than matching only event keys; source order, path, and hash must all agree while every database body is independently hashed.
+- The collector can stay Python 3.9-compatible and fail closed without creating SQLite journals when opened immutable and query-only.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Private read-only manifest completed at commit `1903c3c`; focused and full no-guest suites passed under both Pythons; live source readback remained pinned and unchanged.
+
+### proof
+- [x] Scoped evidence-manifest collector, tests, canonical manifest, concise evidence, and hashes committed locally at `1903c3c` without delivery.
+- [ ] Original story AC #1: real approved isolated challenge remains not-run.
+- [ ] Original story AC #2: full real adversarial guest/service observation remains incomplete.
+- [ ] Original story AC #3: candidate-inaccessible supervisor race/locking proof remains incomplete.
+- [ ] Original story AC #4: actual identity and persistent accounting integration remains incomplete.
+- [ ] Original story AC #5: real metering/review/overlap/epoch proof remains incomplete.
+- [ ] Original story AC #6: real watchdog/store/lost-response proof remains incomplete.
 
 # Conservative accounting fail-closed checkpoint — story remains in progress
 
