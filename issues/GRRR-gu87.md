@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:14:13Z
-content_hash: "sha256:b128b3ba44bd8868d6d04d2e6f1c7c599405284feb0c015d1c06e24e4a2ddb2d"
+updated_at: 2026-10-21T20:15:23Z
+content_hash: "sha256:fd741db5a4a177e7911e012aed21b10aedfc9c2bb93312cc5ee87edc4442b534"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -1228,3 +1228,25 @@ status: delivered
 ### proof
 - [x] GRRR-gu87 AC #1 through #6 delivered as recorded in the preceding terminal delivery comment.
 - [ ] Independent replay/review/admission remain downstream and blocked by design.
+
+### 2026-10-21T20:15:23Z speed
+LEARNINGS:
+- The preserved v4 namespace needed a hash-verified prepared-tree reconstruction; flat final artifacts alone were not launchable without mutating protected state.
+- Operator-inaccessible source paths must be staged into identity-readable, hash-bound locations before UID-320 dry-runs.
+- Approval records must validate every hash length at generation time: one missing character produced a consistent but invalid review digest and a correct pre-guest failure.
+- Control success intentionally remains `verified=false` and `admission=blocked`; it proves evaluator boundaries, not candidate correctness or promotion.
+
+DISCOVERED_BUG:
+  title: Homebrew Python no-guest suite emits SQLite ResourceWarnings
+  context: During full no-guest verification under /opt/homebrew/bin/python3, trusted-import tests emitted ResourceWarnings while finalizing SQLite connections. System Python and the real ten-control integration run were clean; this does not affect the delivered v4 control evidence, but the warning indicates test-resource cleanup debt.
+  affected_files: tests/unit_trusted_import_closure.py, research/trusted_install.py
+  discovered_during: GRRR-gu87
+
+## nd_contract
+status: delivered
+
+### evidence
+- PM review verified delivery proof 9/9, static stub scan clean, evidence hashes 16/16, and real integration summary 10/10 with zero skips/failures/errors.
+
+### proof
+- [x] Delivery remains complete; the ResourceWarning is disclosed as test-resource cleanup debt and is not part of the integration acceptance path.
