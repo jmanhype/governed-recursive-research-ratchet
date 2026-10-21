@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T21:23:31Z
-content_hash: "sha256:821e95086af2623a22005cc712135b54cafb66bb20745a0c7ff57e064a7d8ccd"
+content_hash: "sha256:97b2a568e3d358d493d798aec7a26d523ea4036d5a62d8664a02836a0e7c08d4"
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
 follows: [GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -109,6 +109,18 @@ status: new
 
 ## Notes
 DELIVERY CORRECTION: The preceding Implementation Evidence and delivered proof are authoritative for commit 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83; this note exists to let pvg story deliver append the final authoritative contract.
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-21.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-21]: Delivery proof passed 9/9. PM independently verified all 18 final-evidence checksums, actual UID 320/321/501 integration 8/8 with zero skips/failures/errors, no mocks or environment gates, operator/runner/watchdog denial probes, bounded forced cessation, baseline preservation, durable recovery/admission fence evidence, clean static scan, and no remaining process. Scope remains host-control only; no guest, admission, promotion, accounting release, paid dispatch, or production mutation is claimed.
 
