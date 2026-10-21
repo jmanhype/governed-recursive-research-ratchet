@@ -1,0 +1,63 @@
+== Basis and boundary ==
+Worktree: .claude/worktrees/dev-GRRR-gu87
+Branch: story/GRRR-gu87
+Basis commit: cab53ad70f43187275b06223d195147c27dd81fb
+Scope: planning/readback only. No root install, source implementation,
+accounting mutation, QEMU/guest execution, delivery, push, or execution request.
+
+== v4 verifier ==
+Command: python3 scripts/verify-trusted-preparation ../../../.tmp-sr_pm/trusted-observation/prepared-v3-recovery 3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7
+Exit: 0
+Output:
+{"execution_approval":"absent","execution_performed":false,"guest_behavior":"not-run","image_sha256":"57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6","iso_files_verified":7,"profile_sha256":"a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205","receipt_sha256":"3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7","source_files_verified":52,"supervisor_sha256":"a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"}
+
+== JSON parse ==
+Commands:
+python3 -m json.tool docs/evidence/trusted-observation/v4-composed-profile-plan/PLAN.json
+python3 -m json.tool docs/evidence/trusted-observation/v4-composed-profile-plan/INPUT-READBACK.json
+Exit: 0 for both.
+
+== Programmatic readback generator ==
+Command from main checkout: python3 .tmp-sr_pm/v4-plan/generate_plan_readback.py
+Exit: 0. The generator reads live v4, installed QEMU, installed accounting,
+and committed v3 profile bytes; asserts all recorded hashes and states; and
+emitted the digest-bearing JSON values used by these evidence files.
+
+== Independent live-to-committed assertions ==
+Exit: 0.
+PASS: live v4/QEMU/accounting digests, stopped/zero reservations, limits,
+controls, and free-space floor match committed JSON.
+
+Readback details:
+- QEMU installation manifest canonical SHA-256:
+  e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625.
+- QEMU executable SHA-256:
+  352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da.
+- QEMU executable was read and hashed only; it was not executed.
+- Conservative active record SHA-256:
+  cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b.
+- Conservative database SHA-256:
+  9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234.
+- SQLite read-only integrity_check: ok.
+- State row: (1, 1), meaning stopped.
+- Reservations: 0.
+- Execution gate: blocked; unresolved history remains true.
+- v3/v4 profiles differ only at input_image_sha256; every recorded limit and
+  all other profile fields are equal.
+
+== Current-code v4 rejection ==
+At cab53ad, trusted_execution.py retains v3 PROFILE, IMAGE, RECEIPT, and the
+legacy Homebrew QEMU digest. Direct no-runtime calls produced:
+- validate_config(v4-shaped exact binding): GateBlocked — Trusted profile
+  capabilities differ.
+- validate_approval(v4 receipt): GateBlocked — Exact local-use provenance
+  review absent.
+- persistent_budget.validate_store(active conservative binding): InvalidInput —
+  Unknown or missing fields.
+
+Therefore current code cannot consume v4 and no runtime claim is made.
+
+== Free-space floor ==
+INPUT-READBACK generation measured 32,432,611,328 bytes free.
+Final assertion measured 32,634,998,784 bytes free.
+Both exceed the 15,000,000,000-byte floor.
