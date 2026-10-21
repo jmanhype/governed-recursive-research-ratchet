@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-21T21:51:27Z
-content_hash: "sha256:25a0f38deb657131202b06ba50c0b7f486aea4ad8fcfe895726e4936f151c6b0"
+updated_at: 2026-10-21T21:52:21Z
+content_hash: "sha256:3fd6eb91224a8feb6c855d3fbbf4a0ea5f5936d7377a02e409f9fe18bf9fbe2a"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 assignee: dev-GRRR-bnkf
@@ -107,6 +107,23 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+## Implementation Evidence
+
+Commands run:
+- ./scripts/test-story validated-corpus: 9 executed, 0 failed, 0 skipped.
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v: 166 passed, 0 failed, 0 skipped.
+- /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v: 166 passed, 0 failed, 0 skipped.
+- pvg verify explicit changed paths: PASSED, 0 issues.
+- python3 -m py_compile explicit changed Python files: PASSED.
+- git diff --check: PASSED.
+
+Summary:
+Frozen corpus GRRR-validated-corpus-v1 contains 24 defects, 8 clean controls, 16 critical defects, 10/10 required categories, and 32 unique reconstructed variants. Arbitrary seeded guest execution and all downstream replay/review/admission gates remain explicitly not-run or blocked.
+
+SHA: 0995477971f81ae35f07c2e644a8b5f1195b7307
+
+- [x] AC #1 through AC #6 evidence and explicit blockers are recorded in the authoritative delivered contract and docs/evidence/validated-corpus/.
+
 ## Implementation Evidence (DELIVERED)
 
 PROOF:
