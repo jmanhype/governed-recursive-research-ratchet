@@ -8,12 +8,12 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T21:18:23Z
-content_hash: "sha256:acb29bca29d8f182347e21db5da72f1781d03f1041a5d13920567ef3f8c86927"
+updated_at: 2026-10-21T21:18:24Z
+content_hash: "sha256:c7a04eb3e73e8e4751b6bfd120340d3cee922d010dd7969ba2d5c1b933b8f4c4"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
-follows: [GRRR-my5n, GRRR-gu87]
+follows: [GRRR-my5n, GRRR-gu87, GRRR-90te]
 ---
 
 ## Description
@@ -247,11 +247,13 @@ status: in_progress
 - 2026-10-21T20:53:17Z claimed by dev-GRRR-c875
 - 2026-10-21T21:18:05Z status: in_progress -> in_progress
 - 2026-10-21T21:18:06Z auto-follows: linked to predecessor GRRR-gu87
+- 2026-10-21T21:18:24Z status: in_progress -> in_progress
+- 2026-10-21T21:18:24Z auto-follows: linked to predecessor GRRR-90te
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-bnkf]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-my5n]]
-- Follows: [[GRRR-my5n]], [[GRRR-gu87]]
+- Follows: [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]]
 
 ## Comments
