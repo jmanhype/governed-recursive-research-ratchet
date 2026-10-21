@@ -134,7 +134,7 @@ class Mandatory(unittest.TestCase):
                     conn.sendall(raw)
                     conn.shutdown(socket.SHUT_WR)
                 except BrokenPipeError:
-                    pass
+                    self.assertGreater(len(raw), MAX_WIRE, 'Small wire record unexpectedly lost transport')
                 response = receive(conn)
                 self.assertEqual(response['error']['code'], 'InvalidInput')
         objects = self.runtime / 'evaluator/objects'

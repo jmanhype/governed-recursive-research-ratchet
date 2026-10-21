@@ -1,0 +1,26 @@
+...........................................................
+----------------------------------------------------------------------
+Ran 59 tests in 0.172s
+
+OK
+lines   cov%   module   (path)
+   59   6.8%   __editable___codex_shim_0_1_0_finder   (/Users/speed/Library/Python/3.14/lib/python/site-packages/__editable___codex_shim_0_1_0_finder.py)
+  154   98.1%   budget   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/budget.py)
+  135   59.3%   common   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/common.py)
+  195   14.4%   execution   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/execution.py)
+   75   18.7%   ledger   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/ledger.py)
+   74   94.6%   observation   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/observation.py)
+  186   46.8%   offline   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/offline.py)
+  205   19.5%   offline_execution   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/offline_execution.py)
+   37   51.4%   policy   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/policy.py)
+   57   52.6%   runner   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/runner.py)
+  162   18.5%   scripts   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/scripts/trusted-identity-integration)
+  100   50.0%   trusted_evaluation   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/trusted_evaluation.py)
+  273   41.8%   trusted_execution   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/trusted_execution.py)
+   82   98.8%   unit_contracts   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/unit_contracts.py)
+   79   98.7%   unit_offline   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/unit_offline.py)
+  122   99.2%   unit_offline_runtime   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/unit_offline_runtime.py)
+  145   99.3%   unit_trusted_host   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/unit_trusted_host.py)
+  199   99.5%   unit_trusted_observation   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/unit_trusted_observation.py)
+   69   98.6%   unit_trusted_preparation   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/tests/unit_trusted_preparation.py)
+  245   38.0%   unittest.runner   (/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py)
