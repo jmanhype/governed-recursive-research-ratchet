@@ -65,7 +65,7 @@ def load_prepare_module():
 
 def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
     require(not target.exists(), 'InvalidInput', 'Use a fresh corpus preparation directory')
-    initial_free = space(target.parent, 500000000)
+    initial_free = space(target.parent, 250000000)
     archive_raw, source_files = validated_corpus.pinned_source()
     source_inventory = validated_corpus.root_record(PRESERVED_ROOT / 'preparation.json')['source']['files']
     go_raw = validated_corpus.pinned_iso_member('go.tgz')
