@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-20T23:57:36Z
-content_hash: "sha256:e52c97704e6e37698f05f8a660e484ea06389f49ec7688e6904858af0669b7fb"
+updated_at: 2026-10-21T00:49:31Z
+content_hash: "sha256:17a9b2bea86256c658d92e9070d2ef1ca77d7b9a8be6ab41875b40302d0fe7d4"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -102,6 +102,14 @@ status: new
 
 
 ## Notes
+OPERATOR TRUSTED-OBSERVATION PROFILE DEVELOPMENT/REVIEW APPROVAL (2026-10-20):
+- Approved development and review—but not execution—of the distinct trusted-observation supervisor profile bound to proposal SHA-256 1830a92ad2cbd91788051304ec8f6acaebf256b85065b2db2c07271b6906e3f6.
+- Approved exact proposal limits: 1024 MiB RAM; 1 vCPU; 512 MiB guest /work; 30s boot; 240s command timeout; 300s total invocation; 2s stop acknowledgement target; 5s TERM grace; 2s force-kill wait; 1 MiB guest output cap; 3 MiB IPC wire cap; 15 GB minimum host free space; host evaluator UID 320; host executor UID 321; guest supervisor UID 0; candidate UID/GID 1000/1000; networking, host shares, and paid dispatch disabled.
+- Existing synthetic and offline profiles remain unchanged.
+- Authorized work: implement and pin the guest supervisor and detached input image, perform static/unit review, and present completed supervisor/image hashes for separate execution approval.
+- Not authorized: guest execution of this new profile, resource expansion, paid calls, host fallback, production mutation, automatic admission, or treating proposal isolation properties as demonstrated.
+- Before execution, operator must separately approve parent-mediated identity execution and guest negative controls after reviewing completed supervisor and detached input-image hashes.
+
 ## nd_contract
 status: in_progress
 
