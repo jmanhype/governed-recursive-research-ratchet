@@ -3,6 +3,7 @@ import base64
 import copy
 import importlib.machinery
 import importlib.util
+import json
 import os
 from pathlib import Path
 import sys
@@ -173,6 +174,26 @@ class HostContracts(unittest.TestCase):
         self.assertIn('tests/integration/trusted_observation.py', inventory)
         self.assertIn('scripts/trusted-identity-integration', inventory)
         self.assertNotIn('scripts/identity-integration', inventory)
+
+    def test_conservative_active_binding_requires_recovery_before_store_path(self):
+        loader = importlib.machinery.SourceFileLoader('trusted_launcher_recovery', str(ROOT / 'scripts/trusted-identity-integration'))
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        module = importlib.util.module_from_spec(spec)
+        loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as folder:
+            active = Path(folder) / 'active.json'
+            active.write_bytes(canonical({
+                'schema': 'conservative-genesis', 'execution_gate': 'blocked', 'stopped': 1,
+                'unresolved_history': True, 'campaign': 'a' * 64, 'store_id': 'b' * 64,
+                'device': 16777229, 'inode': 681781547,
+                'database_sha256': 'c' * 64, 'receipt_sha256': 'd' * 64,
+                'plan_sha256': 'e' * 64}))
+            binding = json.loads(active.read_bytes())
+            with self.assertRaises(Failure) as raised:
+                module.validate_accounting(binding)
+            self.assertEqual(raised.exception.record['code'], 'RecoveryRequired')
+            self.assertIn('directory missing', raised.exception.record['message'])
+            self.assertFalse((Path(folder) / 'budget.sqlite').exists())
 
 
 if __name__ == '__main__':

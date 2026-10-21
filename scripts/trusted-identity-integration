@@ -55,6 +55,13 @@ def inventory() -> dict:
     return {name: digest((ROOT / name).read_bytes()) for name in CODE}
 
 
+def validate_accounting(accounting: dict) -> None:
+    directory = accounting.get('directory') if isinstance(accounting, dict) else None
+    require(isinstance(directory, str) and directory != '',
+            'RecoveryRequired', 'Persistent accounting directory missing from reviewed binding')
+    validate_store(accounting, Path(directory) / 'budget.sqlite')
+
+
 def prepare_plan(vm: Path, prepared: Path, qemu_manifest: Path, operator=None) -> dict:
     loader = importlib.machinery.SourceFileLoader('trusted_readback', str(ROOT / 'scripts/verify-trusted-preparation'))
     spec = importlib.util.spec_from_loader(loader.name, loader)
@@ -74,7 +81,7 @@ def prepare_plan(vm: Path, prepared: Path, qemu_manifest: Path, operator=None) -
             'IntegrityFailure', 'Installed QEMU manifest differs')
     verify_qemu(installation)
     accounting = record(ACTIVE)
-    validate_store(accounting, Path(accounting['directory']) / 'budget.sqlite')
+    validate_accounting(accounting)
     free = shutil.disk_usage('/private/tmp').free
     require(free >= LIMITS['minimum_host_free_bytes'], 'BudgetExceeded', 'Host free space below fixed floor')
     operator = ROOT.stat().st_uid if operator is None else operator
