@@ -88,10 +88,18 @@ class CorpusSession:
 
     def accept(self, request: dict, result: dict) -> dict:
         require(request['run'] in self.pending, 'StaleBinding', 'Unknown corpus invocation')
-        validate_receipt(result, request, self.config['execution_profile'])
         seconds = max(result['seconds'], time.monotonic()-self.pending[request['run']][1])
         usage = {'currency': 'USD', 'money_cents': 0, 'execution_us': math.ceil(seconds*1000000), 'review_us': 0}
         hashed = self.ledger.object(canonical(result))
+        self.record({'kind': 'corpus-raw-receipt', 'objects': [hashed], 'run': request['run'],
+                     'challenge': request['challenge'], 'validated': False})
+        try:
+            validate_receipt(result, request, self.config['execution_profile'])
+        except Failure as exc:
+            self.record({'kind': 'corpus-validation-failed', 'run': request['run'],
+                         'challenge': request['challenge'], 'objects': [hashed], 'error': exc.record,
+                         'reservation': 'held'})
+            raise
         self.record({'kind': 'corpus-receipt', 'objects': [hashed], 'run': request['run'],
                      'challenge': request['challenge']})
         meter = self.budget.meter(EVALUATOR, request['reservation'], usage, hashed)

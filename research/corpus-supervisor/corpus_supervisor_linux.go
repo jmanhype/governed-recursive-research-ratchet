@@ -123,6 +123,20 @@ func credentials(pid int) (map[string]string, error) {
 	return status, nil
 }
 
+func prctl(option, value uintptr) error {
+	_, _, errno := syscall.RawSyscall6(syscall.SYS_PRCTL, option, value, 0, 0, 0, 0)
+	if errno != 0 { return errno }
+	return nil
+}
+
+func restrictThread() error {
+	if err := prctl(38, 1); err != nil { return err }
+	for capability := uintptr(0); capability < 64; capability++ {
+		if err := prctl(24, capability); err != nil && err != syscall.EINVAL { return err }
+	}
+	return nil
+}
+
 func terminate() error {
 	deadline := time.Now().Add(2*time.Second)
 	for {
@@ -153,6 +167,7 @@ func observe(request request) (map[string]any, error) {
 	command.SysProcAttr = &syscall.SysProcAttr{Credential: &syscall.Credential{Uid: 1000, Gid: 1000}, Setsid: true, Pdeathsig: syscall.SIGKILL}
 	null, err := os.Open("/dev/null"); if err != nil { return nil, err }; defer null.Close(); command.Stdin = null
 	output := &capture{}; command.Stdout, command.Stderr = output, output
+	if err := restrictThread(); err != nil { return nil, err }
 	started := time.Now(); if err := command.Start(); err != nil { return nil, err }
 	defer terminate()
 	done := make(chan error, 1); go func() { done <- command.Wait() }()
