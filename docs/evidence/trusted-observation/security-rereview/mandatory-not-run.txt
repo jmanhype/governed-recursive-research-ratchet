@@ -1,0 +1,1 @@
+FAIL: trusted-observation requires approved isolated identity launcher; 10 required, 0 executed, 0 skipped; gate not-run
