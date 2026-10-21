@@ -1,0 +1,33 @@
+test_01_preflight_stop_before_candidate (__main__.Mandatory) ... ok
+test_02_clean_guest_supervisor_observation (__main__.Mandatory) ... ok
+test_03_forgery_and_malformed_candidate_data (__main__.Mandatory) ... ok
+test_04_actual_mutation_and_control_impersonation (__main__.Mandatory) ... ok
+test_05_service_wire_schema_and_filesystem_controls (__main__.Mandatory) ... ok
+test_06_real_atomic_budget_ceilings_and_unknowns (__main__.Mandatory) ... test_ceiling_all_dimensions_poc_carry_forward (__main__.ActualIdentityBudget) ... ok
+test_concurrent_connections_cannot_overspend (__main__.ActualIdentityBudget) ... ok
+test_duplicate_binding_and_stage (__main__.ActualIdentityBudget) ... ok
+test_execution_replay_review_and_overhead_are_additive (__main__.ActualIdentityBudget) ... ok
+test_missing_delayed_metering_keeps_maximum (__main__.ActualIdentityBudget) ... ok
+test_missing_prior_store_never_creates_empty_allowance (__main__.ActualIdentityBudget) ... ok
+test_overrun_halts_and_retains_maximum (__main__.ActualIdentityBudget) ... ok
+test_real_store_exhaustion_does_not_create_reservation (__main__.ActualIdentityBudget) ... ok
+test_receipt_cannot_settle_another_reservation (__main__.ActualIdentityBudget) ... ok
+test_restart_preserves_cross_profile_hold_and_stop (__main__.ActualIdentityBudget) ... ok
+test_second_launcher_lock_is_rejected (__main__.ActualIdentityBudget) ... ok
+test_unknown_maximum_and_currency (__main__.ActualIdentityBudget) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.143s
+
+OK
+ok
+test_07_reservation_not_lease_epoch_and_delayed_receipt (__main__.Mandatory) ... ok
+test_08_lost_response_no_repeated_effect (__main__.Mandatory) ... ok
+test_09_watchdog_cessation_and_halt (__main__.Mandatory) ... ok
+test_10_evaluator_store_exhaustion_before_effect (__main__.Mandatory) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 226.185s
+
+OK
+{"required": 10, "executed": 10, "skipped": 0, "failures": 0, "errors": 0, "mandatory_guest_gate": "executed", "verified": false, "admission": "blocked"}
