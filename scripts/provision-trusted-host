@@ -84,7 +84,7 @@ def validate_plan(plan):
         check(set(item) == {'source', 'destination', 'sha256', 'size'}, 'file schema differs')
         path = Path(item['destination'])
         check(not path.is_absolute() and str(path) == item['destination'] and
-              '..' not in path.parts and path.parts[0] in ('bootstrap', 'snapshots', 'qemu-reviewed'),
+              '..' not in path.parts and path.parts[0] in ('bootstrap', 'snapshots', 'qemu'),
               'unregistered installation destination')
         check(item['destination'] not in seen, 'duplicate destination')
         seen.add(item['destination'])
@@ -100,7 +100,7 @@ def validate_plan(plan):
               'unsafe source member')
         check(any(item['destination'] == 'snapshots/provisioned/' + name and
                   item['sha256'] == digest for item in plan['files']), 'source inventory incomplete')
-    check(plan['qemu_manifest'] == 'qemu-reviewed/installation.json', 'fixed QEMU manifest required')
+    check(plan['qemu_manifest'] == 'qemu/installation.json', 'fixed QEMU manifest required')
     migration = plan['migration']
     check(set(migration) == {'database_source', 'receipt_source', 'receipt_sha256'},
           'migration authority required')
@@ -171,7 +171,7 @@ def main():
         raw = read_regular(Path(item['source']), item['size'])
         check(sha(raw) == item['sha256'], 'input changed after preflight')
         install_file(BASE / item['destination'], raw,
-                     0o555 if item['destination'].startswith('qemu-reviewed/bin/') else 0o444)
+                     0o555 if item['destination'].startswith('qemu/bin/') else 0o444)
     # Only now import authenticated source; no repository-relative import roots.
     root = BASE / 'snapshots/provisioned'
     for name, expected in plan['source_files'].items():

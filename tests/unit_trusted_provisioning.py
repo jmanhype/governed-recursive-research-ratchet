@@ -21,7 +21,7 @@ class Provisioning(unittest.TestCase):
                 'source_files': {'research/common.py': 'c'*64},
                 'files': [{'source': '/untrusted/input', 'destination': 'snapshots/provisioned/research/common.py',
                            'sha256': 'c'*64, 'size': 1}],
-                'qemu_manifest': 'qemu-reviewed/installation.json',
+                'qemu_manifest': 'qemu/installation.json',
                 'migration': {'database_source': '/prior/db', 'receipt_source': '/prior/receipt',
                               'receipt_sha256': 'd'*64},
                 'campaign': 'e'*64, 'store_id': 'f'*64, 'database_sha256': 'a'*64}

@@ -211,7 +211,7 @@ class TrustedExecutor:
             require(path.is_file() and not path.is_symlink() and path.stat().st_uid == 0
                     and path.stat().st_mode & 0o222 == 0 and digest(path.read_bytes()) == hashed,
                     'IntegrityFailure', 'Untrusted or changed asset')
-        args = [str(executable), '-L', str(Path(installation['root']) / 'data'),
+        args = [str(executable), '-no-user-config', '-L', str(Path(installation['root']) / 'data'),
                 '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '1024', '-smp', '1',
                 '-kernel', str(assets / 'vmlinuz-virt'), '-initrd', str(assets / 'initramfs-virt'),
                 '-append', 'modules=loop,squashfs,sd-mod,usb-storage console=ttyAMA0',
@@ -225,6 +225,7 @@ class TrustedExecutor:
             require(not self.active, 'BudgetExceeded', 'Concurrent launch rejected')
             process = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                 cwd=self.root, env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty',
+                                   'LC_ALL': 'C', 'LANG': 'C',
                                    'TMPDIR': str(self.root / 'scratch')})
             self.active[run] = process
             self.launches += 1

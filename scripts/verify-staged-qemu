@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""Read-back staging bytes, not root ownership or runtime behavior."""
+import json
+import os
+from pathlib import Path
+import stat
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require
+from trusted_install import absolute_dependencies, macho_loads
+
+
+def verify(root):
+    manifest = json.loads((root / 'installation.json').read_bytes())
+    require(manifest['root'] == '/Library/GRRR/qemu', 'IntegrityFailure', 'Wrong final prefix')
+    files = dict(manifest['files'])
+    files.update({'data/' + k: v for k, v in manifest['data_files'].items()})
+    files['build-record.json'] = manifest['build_record_sha256']
+    files['installation.json'] = digest(canonical(manifest))
+    members = list(root.rglob('*'))
+    require(len(members) <= 1024 and not any(p.is_symlink() for p in members),
+            'IntegrityFailure', 'Unsafe staged tree')
+    require({str(p.relative_to(root)) for p in members if p.is_file()} == set(files),
+            'IntegrityFailure', 'Unexpected staged files')
+    for name, expected in files.items():
+        path = root / name
+        info = path.lstat()
+        require(info.st_uid == os.getuid() and info.st_nlink == 1 and
+                stat.S_ISREG(info.st_mode) and not info.st_mode & 0o222,
+                'IntegrityFailure', 'Unsafe staged file')
+        require(digest(path.read_bytes()) == expected, 'IntegrityFailure', 'Staged bytes differ')
+    for name in manifest['files']:
+        path = root / name
+        dependencies, rpaths = macho_loads(path.read_bytes())
+        absolute_dependencies(Path(manifest['root']), dependencies, rpaths, manifest['files'])
+        require(b'/Library/GRRR/qemu-reviewed' not in path.read_bytes(),
+                'IntegrityFailure', 'Historical compiled prefix')
+        subprocess.run(['/usr/bin/codesign', '--verify', '--strict', str(path)],
+                       check=True, capture_output=True, timeout=10)
+    build = json.loads((root / 'build-record.json').read_bytes())
+    require(build['executable_sha256'] == manifest['files'][manifest['executable']] and
+            '--disable-modules' in build['configure'] and '--disable-plugins' in build['configure'] and
+            '--prefix=/Library/GRRR/qemu' in build['configure'],
+            'IntegrityFailure', 'Build record differs')
+    return {'installation_sha256': files['installation.json'], 'files_checked': len(files),
+            'data_count': len(manifest['data_files']), 'staging_readback': 'pass',
+            'root_ownership_verified': False, 'runtime_loading_verified': False,
+            'qemu_executed': False, 'execution_authorized': False}
+
+
+if __name__ == '__main__':
+    print(json.dumps(verify(Path(sys.argv[1])), sort_keys=True, indent=2))

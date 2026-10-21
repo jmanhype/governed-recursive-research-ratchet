@@ -82,7 +82,7 @@ def verify_qemu(manifest: dict):
             'InvalidInput', 'Installation manifest version differs')
     identifier(manifest['review_reference'], True)
     root = Path(manifest['root'])
-    require(root.parent == Path('/Library/GRRR') and root.name.startswith('qemu-'),
+    require(root == Path('/Library/GRRR/qemu'),
             'Unauthorized', 'QEMU requires independent protected installation')
     immutable(root, directory=True)
     build = record(root / 'build-record.json')
@@ -125,6 +125,16 @@ def verify_qemu(manifest: dict):
             immutable(member, directory=True)
     require({str(p.relative_to(root / 'data')) for p in data_members if not p.is_dir()}
             == set(manifest['data_files']), 'IntegrityFailure', 'Uninventoried QEMU data member')
+    members = list(root.rglob('*'))
+    require(len(members) <= 1024 and all(not p.is_symlink() for p in members),
+            'IntegrityFailure', 'Unbounded or linked installation tree')
+    expected = set(manifest['files']) | {'installation.json', 'build-record.json'} | {
+        'data/' + name for name in manifest['data_files']}
+    require({str(p.relative_to(root)) for p in members if not p.is_dir()} == expected,
+            'IntegrityFailure', 'Uninventoried installation/configuration member')
+    for member in members:
+        if member.is_dir():
+            immutable(member, directory=True)
     actual_build = subprocess.run(['/usr/bin/sw_vers', '-buildVersion'], capture_output=True,
         check=True, timeout=2, env={'PATH': '/usr/bin:/bin'}).stdout.decode().strip()
     require(actual_build == manifest['system_build'], 'StaleBinding', 'Sealed system dependency build changed')
