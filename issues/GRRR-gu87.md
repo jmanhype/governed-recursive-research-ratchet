@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:11:43Z
-content_hash: "sha256:dd6161c7962ec1953ae799d8d026162b44b5cfa88092a85575b39f78e6f8d59e"
+updated_at: 2026-10-21T20:13:13Z
+content_hash: "sha256:c675d4332a179a5e9cb83b76471bea33f192c6abd1001927e902bf51ab8966a4"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -1176,3 +1176,40 @@ status: in_progress
 - [x] This terminal block supersedes only the pointer wording; it does not alter code, tests, commit, status, or prior evidence.
 - [ ] Parent GRRR-gu87 real-guest integration ACs remain pending and authoritative status is in_progress.
 
+
+### 2026-10-21T20:13:13Z speed
+## Implementation Evidence
+
+Real v4 trusted-observation execution was performed through the protected root bootstrap and actual host identities. Durable evidence is in story commit 141823fe7e19e43fd3d2bfcc0fe4be8303e42642 at docs/evidence/trusted-observation/v4-run-9d3df87. The package contains the exact plan, ten-test integration log, summary, host denial probes, evaluator ledger, verified snapshot, and eight bound objects. READBACK.json verifies all 16 content hashes.
+
+## CI/Test Results
+
+No-guest units: 152/152 passed under /usr/bin/python3 and /opt/homebrew/bin/python3. Focused successor suite: 7/7 under both interpreters. Real mandatory guest suite: 10 required, 10 executed, 0 skipped, 0 failures, 0 errors. Host probes: UID 321 and UID 501 all denied. Ledger: 30 chained events and 8 objects verified. Successor DB integrity ok, stopped=1, 11 reservations, 8 settled, 3 pending. Predecessor remains stopped/unresolved with 259 artifacts, 110 events, and zero reservations.
+
+Commands run:
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p "unit*.py"
+- /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p "unit*.py"
+- canonical Python 3.9 -I -S -B /Library/GRRR/bootstrap/trusted-root-bootstrap-grrr-poc2-9d3df87 ... (exact protected ten-control invocation)
+- protected read-only successor/predecessor/v4/QEMU/approval verification
+- git diff --check
+- pvg verify --include-tests
+
+Summary: All six GRRR-gu87 integration ACs are delivered with real offline VM, UID 320 evaluator, UID 321 runner, pinned supervisor/helper/image/QEMU, trusted accounting, adversarial controls, metering, watchdog, lost-response, and store-exhaustion evidence. Candidate correctness, independent replay, reviewer outcome, admission, promotion, and production deployment remain intentionally blocked.
+
+Commit SHA: 141823fe7e19e43fd3d2bfcc0fe4be8303e42642
+
+## nd_contract
+status: delivered
+
+### evidence
+- Implementation commits 56697da and 9d3df87; durable run evidence commit 141823f; worktree clean; no push.
+- Protected accounting and v4 assets reverified read-only after execution; no paid call, production mutation, old-account release, candidate admission, promotion, or automatic merge.
+
+### proof
+- [x] AC #1: real isolated structured challenge completed.
+- [x] AC #2: malformed/forged/oversized/role/traversal/wire controls rejected.
+- [x] AC #3: supervisor separation, mutation, impersonation, race/locking, and cessation observed.
+- [x] AC #4: actual UID-320 persistent budget ceilings/concurrency/idempotency proven.
+- [x] AC #5: trusted-meter settlement and conservative delayed/missing holds proven.
+- [x] AC #6: watchdog, deadline, exhaustion, lost response, and no-repeat halt proven.
+- [ ] Independent replay/review/admission intentionally remain downstream and blocked.
