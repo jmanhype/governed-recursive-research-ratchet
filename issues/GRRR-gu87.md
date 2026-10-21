@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T03:34:38Z
-content_hash: "sha256:0ca8212486461a2b6077344ff3175a299338fd9effb6b80a6952c7da0494492e"
+updated_at: 2026-10-21T03:36:03Z
+content_hash: "sha256:213748a53b5d209e27009bb0f9503d0d3ed0fcc711e4e3f0cab3ebaa8976cc58"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -125,6 +125,8 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 948M/11,155 files; Google cache 929M/12,978 files; partially regenerated Codex cache reduced to ~20K; com.spacefs.launcher 751M/487 files; dev.zcode.app.ShipIt 772M/779 files; @zcodedesktop-updater 476M/3 files. Current free space 18,042,109,952 bytes. Manifests: .tmp-sr_pm/provisioning-cache-cleanup-manifest.txt and .tmp-sr_pm/provisioning-cache-cleanup-round2-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU PACKAGING CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/ms-playwright (554M, 359 files). Current free space 17,356,939,264 bytes. Manifest .tmp-sr_pm/qemu-packaging-cache-cleanup-manifest.txt. No model/project/output data touched.
+REGENERABLE QEMU PACKAGE ROUND 2 CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/loom-updater (209M, 2 files). Current free space after cleanup measured 17,199,886,336 bytes, about 199.9 MB above the 17 GB packaging gate. Manifest .tmp-sr_pm/qemu-package-round2-cache-cleanup-manifest.txt. No application data/models/projects/outputs touched.
+
 ## nd_contract
 status: in_progress
 
