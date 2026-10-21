@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T21:18:46Z
-content_hash: "sha256:e44d6e1aec771138e53c7eb391ea71d3fc2a7145de23383fdd50ec6a14116138"
+updated_at: 2026-10-21T21:21:49Z
+content_hash: "sha256:728510971e334e4105728cde783586288c9abcb2afc19d7460aa2a31abd65d1c"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
@@ -270,3 +270,53 @@ status: in_progress
 - Follows: [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]], [[GRRR-0g4n]]
 
 ## Comments
+
+### 2026-10-21T21:21:49Z speed
+## Implementation Evidence
+
+### CI/Test Results
+Commands run:
+- sudo ./scripts/test-story safe-stop
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p unit_safe_stop.py -v
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py'
+- /opt/homebrew/bin/python3 -B -W error::ResourceWarning -m unittest discover -s tests -p 'unit*.py'
+- pvg verify --include-tests --format=text on explicit changed implementation/test/script paths
+- git diff --check
+
+Summary:
+- Real UID-320/321/501 safe-stop integration: 8/8 executed, 0 skipped, 0 failures, 0 errors.
+- Focused unit suite: 7/7. Full no-guest unit suites: 166/166 under system Python and 166/166 under Homebrew Python.
+- pvg verify: 10 recognized files, 0 issues. py_compile: exit 0. git diff --check: exit 0.
+- Final evidence: docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0.
+
+SHA: 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83
+
+### AC Verification
+- [x] AC #1: real UID-501 operator path, UID-321/UID-501 denial probes, and optional urgent reason proven.
+- [x] AC #2: atomic durable stop/epoch transaction, same-key receipt, distinct-key reference, and one cancellation proven.
+- [x] AC #3: real launch/stop race serializes, tracks pre-fence work, and rejects post-fence launch proven.
+- [x] AC #4: separate UID-321 worker forced KILL in 1.013065625 s and verified baseline proven.
+- [x] AC #5: unavailable cancellation and failed recording remain recovery-required/fenced, never safe-stopped.
+- [x] AC #6: durable admission-fence rejection with no registry effect proven.
+- [x] AC #7: all six hard triggers preserve evidence/baseline; unavailable control returns Unavailable, never success.
+
+LEARNINGS:
+- Explicit SQLite closing/reaping and root-controlled import routing were required for a clean exact-identity run.
+- Complete failure history and operator-authorized cache inventory are preserved in docs/evidence/safe-stop.
+
+DISCOVERED_BUG:
+  title: Homebrew SQLite test cleanup emitted unclosed-connection warnings
+  context: Existing with sqlite3.connect(...) paths did not close connections. They were fixed with contextlib.closing and an explicit commit where needed; the final warning-as-error suite passes.
+  affected_files: scripts/conservative-genesis, scripts/reconcile-installed-accounting, tests/unit_conservative_genesis.py
+  discovered_during: GRRR-c875
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit SHA: 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83.
+- Final real-identity evidence docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0 passed 8/8 with zero skips.
+
+### proof
+- [x] AC #1 through AC #7 verified by real integration, full units, pvg verify, py_compile, and git diff --check.
+
