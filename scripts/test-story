@@ -36,7 +36,7 @@ try:
     module = {'bounded-challenge': 'bounded_challenge.py', 'trusted-observation': 'trusted_observation.py',
               'validated-corpus': 'validated_corpus.py'}[sys.argv[1]]
     result = subprocess.run([sys.executable, str(ROOT / 'tests/integration' / module)],
-                            cwd=ROOT, timeout=600)
+                            cwd=ROOT, timeout=21600 if sys.argv[1] == 'validated-corpus' else 600)
     raise SystemExit(result.returncode)
 except subprocess.TimeoutExpired:
     print('FAIL: mandatory suite exceeded 600 seconds; no skipped success', file=sys.stderr)

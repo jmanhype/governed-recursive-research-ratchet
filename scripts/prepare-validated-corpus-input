@@ -132,6 +132,7 @@ def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
                'supervisor_sha256': elf(media / 'corpus-supervis')['sha256'],
                'helper_sha256': elf(media / 'corpus-helper')['sha256'],
                'guest_script_sha256': expected['guest.sh'], 'limits': LIMITS,
+               'qemu_installation_sha256': QEMU_MANIFEST,
                'network': False, 'host_shares': False, 'read_only_inputs': True, 'paid_dispatch': False}
     (target / 'prepared-profile.json').write_bytes(canonical(profile))
     receipt = {'version': 1, 'kind': 'corpus-preparation-not-execution', 'vm_execution_performed': False,
