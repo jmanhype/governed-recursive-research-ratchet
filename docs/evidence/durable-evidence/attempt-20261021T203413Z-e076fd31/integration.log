@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/grrr-durable-68sk6er5/evaluator/code/durable_evidence.py", line 11, in <module>
+    from common import EVALUATOR, GATES, Failure, digest
+ModuleNotFoundError: No module named 'common'

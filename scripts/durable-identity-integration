@@ -1,0 +1,128 @@
+#!/usr/bin/python3
+"""Parent-mediated durable-evidence identity launcher; no sudo or guest execution."""
+import json
+import os
+from pathlib import Path
+import pwd
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')
+EXPORT_BASE = Path('/Users/Shared/GRRR/durable-evidence')
+
+
+def identity(uid):
+    os.setgroups([])
+    os.setgid(uid)
+    os.setuid(uid)
+    os.umask(0o077)
+
+
+def exclusive_copy(source, target, mode):
+    if target.exists():
+        raise RuntimeError('evidence destination exists: ' + str(target))
+    target.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+    shutil.copyfile(source, target)
+    os.chmod(target, mode)
+
+
+def preserve(source, evidence):
+    if source.is_file():
+        exclusive_copy(source, evidence / source.name, 0o444)
+    elif source.is_dir():
+        for child in sorted(source.rglob('*')):
+            relative = child.relative_to(source)
+            target = evidence / source.name / relative
+            if child.is_dir():
+                target.mkdir(parents=True, exist_ok=True, mode=0o755)
+            else:
+                exclusive_copy(child, target, 0o444)
+
+
+def main():
+    if os.getuid() != 0:
+        print('AWAITING_PARENT_IDENTITY_RUN: durable-evidence requires root identity launcher', file=sys.stderr)
+        return 1
+    for name, uid in (('_grrr_evaluator', 320), ('_grrr_runner', 321)):
+        account = pwd.getpwnam(name)
+        if (account.pw_uid, account.pw_gid, account.pw_shell) != (uid, uid, '/usr/bin/false'):
+            raise RuntimeError('restricted identity differs: ' + name)
+    operator = ROOT.stat().st_uid
+    if operator in (0, 320, 321):
+        raise RuntimeError('separate operator ownership required')
+    attempt = 'attempt-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + uuid.uuid4().hex[:8]
+    runtime = Path(tempfile.mkdtemp(prefix='grrr-durable-', dir='/private/tmp'))
+    os.chmod(runtime, 0o711)
+    evaluator = runtime / 'evaluator'
+    evaluator.mkdir(mode=0o700)
+    os.chown(evaluator, 320, 320)
+    code = evaluator / 'code'
+    code.mkdir(mode=0o700)
+    os.chown(code, 320, 320)
+    for name, source in (
+            ('common.py', ROOT / 'research/common.py'),
+            ('ledger.py', ROOT / 'research/ledger.py'),
+            ('durable_evidence.py', ROOT / 'tests/integration/durable_evidence.py'),
+            ('durable_probe.py', ROOT / 'tests/integration/durable_probe.py')):
+        target = code / name
+        shutil.copyfile(source, target)
+        os.chown(target, 320, 320)
+        os.chmod(target, 0o400)
+    public_probe = runtime / 'durable_probe.py'
+    shutil.copyfile(ROOT / 'tests/integration/durable_probe.py', public_probe)
+    os.chown(public_probe, 0, 0)
+    os.chmod(public_probe, 0o555)
+    EXPORT_BASE.mkdir(mode=0o755, parents=True, exist_ok=True)
+    if EXPORT_BASE.is_symlink() or EXPORT_BASE.stat().st_uid != 0:
+        raise RuntimeError('unsafe durable export base')
+    export_parent = EXPORT_BASE / ('durable-' + uuid.uuid4().hex)
+    export_parent.mkdir(mode=0o700)
+    os.chown(export_parent, 320, 320)
+    export = export_parent / 'export'
+    evidence = ROOT / 'docs/evidence/durable-evidence' / attempt
+    evidence.mkdir(mode=0o700, parents=True)
+    environment = {'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'PYTHONDONTWRITEBYTECODE': '1'}
+    result = None
+    try:
+        with (runtime / 'integration.log').open('xb') as log:
+            result = subprocess.run([str(PYTHON), '-I', '-S', '-B', str(code / 'durable_evidence.py'),
+                                     str(runtime), str(export)], cwd=runtime, stdout=log,
+                                    stderr=subprocess.STDOUT, timeout=300,
+                                    preexec_fn=lambda: identity(320), env=environment)
+        probes = []
+        for uid in (321, operator):
+            probe = subprocess.run([str(PYTHON), '-I', '-S', '-B', str(public_probe), str(runtime)],
+                                    capture_output=True, text=True, timeout=15,
+                                    preexec_fn=lambda uid=uid: identity(uid), env=environment)
+            if probe.returncode != 0:
+                raise RuntimeError('identity denial probe failed for UID ' + str(uid) + ': '
+                                   + probe.stdout.strip() + probe.stderr.strip())
+            probes.append(json.loads(probe.stdout))
+        (runtime / 'identity-probes.json').write_text(json.dumps(probes, sort_keys=True) + '\n')
+    finally:
+        preserve(export, evidence)
+        preserve(runtime / 'integration.log', evidence)
+        preserve(runtime / 'identity-probes.json', evidence)
+        preserve(evaluator / 'integration-summary.json', evidence)
+        preserve(evaluator / 'summary.json', evidence)
+        for path in evidence.rglob('*'):
+            os.chown(path, operator, ROOT.stat().st_gid)
+            if path.is_dir():
+                os.chmod(path, 0o755)
+            else:
+                os.chmod(path, 0o444)
+        os.chown(evidence, operator, ROOT.stat().st_gid)
+        os.chmod(evidence, 0o755)
+    print(json.dumps({'exit_code': result.returncode if result else 1,
+                      'private_runtime': str(runtime), 'external_export': str(export),
+                      'durable_evidence': str(evidence), 'guest_executed': False}, sort_keys=True))
+    return result.returncode if result else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

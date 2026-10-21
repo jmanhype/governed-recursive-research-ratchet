@@ -1,0 +1,33 @@
+test_01_evaluator_history_compare_append_and_immutability (__main__.Mandatory) ... ok
+test_02_interrupted_object_recovery_and_no_retry (__main__.Mandatory) ... ok
+test_03_export_and_independent_trusted_anchor_verification (__main__.Mandatory) ... ERROR
+test_04_actual_store_exhaustion_retains_failure (__main__.Mandatory) ... ERROR
+
+======================================================================
+ERROR: test_03_export_and_independent_trusted_anchor_verification (__main__.Mandatory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-durable-5x65mfz_/evaluator/code/durable_evidence.py", line 91, in test_03_export_and_independent_trusted_anchor_verification
+    manifest = export_snapshot(snapshot, self.export)
+  File "/private/tmp/grrr-durable-5x65mfz_/evaluator/code/ledger.py", line 230, in export_snapshot
+    require(destination.is_absolute() and '..' not in destination.parts and not destination.exists(),
+  File "/private/tmp/grrr-durable-5x65mfz_/evaluator/code/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Export destination differs
+
+======================================================================
+ERROR: test_04_actual_store_exhaustion_retains_failure (__main__.Mandatory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-durable-5x65mfz_/evaluator/code/durable_evidence.py", line 116, in test_04_actual_store_exhaustion_retains_failure
+    store = Ledger(fixture)
+  File "/private/tmp/grrr-durable-5x65mfz_/evaluator/code/ledger.py", line 26, in __init__
+    root.mkdir(mode=0o700, exist_ok=True)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1313, in mkdir
+    self._accessor.mkdir(self, mode)
+PermissionError: [Errno 13] Permission denied: '/private/tmp/grrr-durable-5x65mfz_/exhaustion'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.011s
+
+FAILED (errors=2)
