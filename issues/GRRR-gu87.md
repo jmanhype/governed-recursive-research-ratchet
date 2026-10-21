@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T02:39:32Z
-content_hash: "sha256:b177edc4e7a7dce85dfebf4e2bfa4ddab13973ab3bcd309b4b49683e37cb0932"
+updated_at: 2026-10-21T02:45:50Z
+content_hash: "sha256:49d60e3fbd163ee550939cc7fe687af840ec23a65ee965a5d5fabe8df8c0b70b"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -122,6 +122,17 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 - Approved creating/reconciling one protected persistent campaign accounting store across synthetic/offline/trusted profiles, including prior charges, unresolved holds, stops, migration receipt, store identity, inode/device binding, active state, and campaign lock. No fresh allowance or silent reset.
 - Approved installed-state review and non-guest permission/import-origin/accounting restart/concurrency/replacement-denial checks, followed by composition of final installation/accounting/bootstrap/interpreter bindings and exact composed execution-profile digest.
 - Not authorized: QEMU guest execution, ten trusted-observation controls, paid calls, resource expansion, host fallback, production mutation, automatic admission, or candidate-correctness certification. Separate execution approval remains mandatory.
+## nd_contract
+status: in_progress
+
+### evidence
+- Upstream QEMU 11.1.2 build assignment stopped at first read-only gate: scripts/qemu-build-preflight exit 1; available 13738397696 bytes versus mandatory 15000000000 floor. Receipt docs/evidence/trusted-observation/qemu-source-build/preflight.json.
+- No source fetch/configure/build/sign/package/root/QEMU execution, no cleanup. Source commit/archive/binary/closure hashes null. Both Python py_compile checks pass; pvg verify recognized 0 files (not substantive coverage). Application and pinned v3 artifacts unchanged.
+- Claim retained. Await independently authorized parent space recovery; no executable provisioning command or execution request.
+
+### proof
+- [ ] AC #1-#6: Mandatory guest controls remain unauthorized and not-run; upstream build blocked before fetch.
+
 ## nd_contract
 status: in_progress
 
