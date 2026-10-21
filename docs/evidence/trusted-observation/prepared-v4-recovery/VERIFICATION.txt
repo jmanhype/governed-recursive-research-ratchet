@@ -4,6 +4,11 @@ Exit: 0
 Output:
 {"execution_approval":"absent","execution_performed":false,"guest_behavior":"not-run","image_sha256":"57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6","iso_files_verified":7,"profile_sha256":"a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205","receipt_sha256":"3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7","source_files_verified":52,"supervisor_sha256":"a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6"}
 
+== Authentic retained-v3 anchor rejection ==
+Command: python3 scripts/verify-trusted-preparation ../../../.tmp-sr_pm/trusted-observation/prepared-v3-recovery 775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c
+Exit: 1
+Output: common.Failure: Preparation receipt differs from retained anchor
+
 == Python no-guest unit suite ==
 Command: python3 -m unittest discover -s tests -p 'unit*.py' -v
 Exit: 0

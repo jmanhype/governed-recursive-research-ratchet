@@ -35,14 +35,18 @@ python3 scripts/prepare-trusted-observation \
   ../../../.tmp-sr_pm/trusted-observation/prepared-v3-recovery
 ```
 
-The first retained-anchor attempt correctly failed:
+The first retained-anchor attempt correctly failed. The command reproduced below
+uses the authentic retained receipt hash:
 
 ```bash
 python3 scripts/verify-trusted-preparation \
   ../../../.tmp-sr_pm/trusted-observation/prepared-v3-recovery \
-  775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d0c0c
+  775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c
 # Exit 1: Preparation receipt differs from retained anchor.
 ```
+
+An earlier prose transcription ended `...ae9d0c0c`; if encountered in history it
+is a mistyped-anchor variant, not the authentic retained-anchor check.
 
 The v4 candidate is verified against its own recovered receipt anchor:
 

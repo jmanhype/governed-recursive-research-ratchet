@@ -54,8 +54,11 @@ recovered v4 receipt/profile proved these mappings exactly equal:
   and dispatch-disable limits.
 
 Both ISOs are exactly 71,483,392 bytes. The container hash nevertheless differs
-because `hdiutil` emits nondeterministic container metadata/timestamps; payload
-equality does not make the v4 container byte-identical to v3.
+despite identical inventoried payload bytes. A same-media `hdiutil` diagnostic
+reproduced different container hashes and timestamp-bearing metadata bytes, but
+the original v3 container is unavailable, so that diagnostic does not prove that
+every v3/v4 container difference is metadata. Such causation remains inferred;
+payload equality does not make the v4 container byte-identical to v3.
 
 The only top-level receipt/context differences are:
 

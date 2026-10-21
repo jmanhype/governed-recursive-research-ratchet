@@ -2,7 +2,7 @@
   "schema": 1,
   "comparison": "committed-v3-receipt-vs-recovered-v4-receipt",
   "original_v3": {
-    "receipt_sha256": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d0c0c",
+    "receipt_sha256": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c",
     "profile_sha256": "3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0",
     "image_sha256": "799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233"
   },
@@ -65,7 +65,7 @@
     "input_iso.sha256": {
       "v3": "799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233",
       "v4": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6",
-      "bytes_equal": true,
+      "byte_lengths_equal": true,
       "bytes": 71483392
     },
     "prepared_profile.sha256": {
@@ -73,7 +73,7 @@
       "v4": "a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205"
     },
     "receipt.sha256": {
-      "v3": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d0c0c",
+      "v3": "775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d6c0c",
       "v4": "3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7"
     }
   },

@@ -1,0 +1,22 @@
+# Same-media ISO container diagnostic — not exact-v3 recovery
+
+Command run once against the unchanged recovered media directory:
+
+```bash
+/usr/bin/hdiutil makehybrid -iso -joliet -default-volume-name GRRR_TRUSTED \
+  -o <main-repo>/.tmp-sr_pm/trusted-observation/prepared-v3-recovery/input-repro.iso \
+  <main-repo>/.tmp-sr_pm/trusted-observation/prepared-v3-recovery/media
+```
+
+Results:
+
+- First recovered container: `57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6`
+- Repeat container: `941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1a8dd1909c77da09827b0`
+- Both are 71,483,392 bytes.
+- `cmp` reported 18 differing byte positions: 12 ASCII volume-descriptor
+  timestamp positions and six additional timestamp-bearing metadata positions.
+
+This demonstrates `hdiutil` container nondeterminism from unchanged payload
+inputs. It does **not** compare to or recover the unavailable v3 container, and
+it does not prove that all v3/v4 differences are metadata. No QEMU or guest code
+was executed.
