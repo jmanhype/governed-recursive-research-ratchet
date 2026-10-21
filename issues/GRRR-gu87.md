@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T03:01:10Z
-content_hash: "sha256:317925aee2b4dbf820c06017c4aa71b4d40358e872ecb569e02cf38b700871a0"
+updated_at: 2026-10-21T03:12:39Z
+content_hash: "sha256:009df845218a16eeeddb4bc15c71b3703f0ab1a818f067ea2d1066a049f010ea"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -124,6 +124,17 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 - Not authorized: QEMU guest execution, ten trusted-observation controls, paid calls, resource expansion, host fallback, production mutation, automatic admission, or candidate-correctness certification. Separate execution approval remains mandatory.
 REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 948M/11,155 files; Google cache 929M/12,978 files; partially regenerated Codex cache reduced to ~20K; com.spacefs.launcher 751M/487 files; dev.zcode.app.ShipIt 772M/779 files; @zcodedesktop-updater 476M/3 files. Current free space 18,042,109,952 bytes. Manifests: .tmp-sr_pm/provisioning-cache-cleanup-manifest.txt and .tmp-sr_pm/provisioning-cache-cleanup-round2-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- Authorized minimal Meson static FDT environment probe exited 1: C static library fdt not found. Exact LIBRARY_PATH/CPATH supplied. No QEMU configure retry followed because prerequisite failed.
+- Pinned Meson source shows static lookup enumerates explicit dirs plus compiler --print-search-dirs; Apple clang output ignores LIBRARY_PATH there. Full real probe logs/source hashes retained in qemu-source-build/retry-5. Proposed explicit dirs/static source patch requires separate review; none applied.
+- No QEMU/root/install/guest execution or execution request. Claim retained; v3 and host pins unchanged.
+
+### proof
+- [ ] AC #1-#6: Mandatory trusted guest suite unauthorized/not-run; build blocked at isolated FDT search probe.
+
 ## nd_contract
 status: in_progress
 
