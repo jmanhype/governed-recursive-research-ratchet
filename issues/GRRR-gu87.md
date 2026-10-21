@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T14:24:50Z
-content_hash: "sha256:3b999373d23af5225342f709f238a7d826d76bfc1904a85a17a43a85c71ec763"
+updated_at: 2026-10-21T14:25:35Z
+content_hash: "sha256:140b5bd16eeacb4f31bf81fac41144d3675be4f86c129dc8cc21f1600a10345d"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -139,6 +139,7 @@ V4 RECOVERY REVIEW CORRECTIONS (2026-10-21, commit f51cd71): Corrected the authe
 CONTAINER DIAGNOSTIC HASH CORRECTION (2026-10-21, commit cab53ad): The repeat ISO hash is 941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1d8dd1909c77da09827b0, derived and rechecked from the actual input-repro.iso bytes. The prior ...da1a8dd... prose variant was a transcription error. The refreshed 5-entry evidence manifest passes, and diagnostic/live hash equality was independently asserted. No execution or authorization granted.
 INDEPENDENT V4 RECOVERY SECURITY REVIEW (2026-10-21, commit cab53ad): SECURITY_REVIEW: V4_RECOVERY_EVIDENCE_APPROVED. Reviewer independently confirmed actual repeat-container hash 941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1d8dd1909c77da09827b0, 5/5 evidence-manifest entries, authentic retained-v3 receipt anchor, byte_lengths_equal semantics, and explicit qualification that metadata-only v3/v4 causation is unproven. This approves evidence only. It is not exact-v3 recovery, execution readiness, AC success, stop/hold release, accounting migration, guest execution, or operator authorization.
 V4 PLAN REVIEW CORRECTIONS (2026-10-21, commit 1957ab3): Corrected the v3 source/profile input-image digest in INPUT-READBACK.json to the authoritative 799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233 and clarified directory policy: ancestor directories must be root:wheel, non-symlink, ACL-free, and free of group/world write bits; system-directory permissions must not be changed. Preserved regular files remain no-write root:wheel 0444. Manifest refreshed 4/4. Live destination /Library/GRRR/trusted-observation is absent; current /Library and /Library/GRRR metadata was read only. v4 verifier still passes and conservative accounting remains integrity-ok, stopped=1, zero reservations. Planning-only boundary unchanged.
+INDEPENDENT V4 PRESERVATION PLAN REVIEW (2026-10-21, commit 1957ab3): SECURITY_REVIEW: V4_PRESERVATION_PLAN_APPROVED. Reviewer confirmed authoritative v3 ISO identity in both readback fields, directory policy limited to root:wheel/non-symlink/ACL-free/no group-world-write without changing system permissions, preserved-file root:wheel 0444 policy, and 4/4 evidence-manifest entries. Planning-only, dispatch-disabled, accounting-blocked, and separate-authorization boundaries remain unchanged. This approves the plan only; it grants no implementation, root installation, accounting migration, stop/hold release, guest execution, or promotion authority.
 
 ## Trusted-observation v4 planning commit
 - Local story-only planning commit: `79a326e3a1668a5938abe1752e85f4edf985a778` (`docs(GRRR-gu87): plan v4 preservation profile`).
