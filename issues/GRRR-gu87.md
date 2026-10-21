@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T03:42:07Z
-content_hash: "sha256:9368b24e430915a2085496e3c2d51814795ef2abe874198d95acf32e309522b4"
+updated_at: 2026-10-21T03:45:52Z
+content_hash: "sha256:c8913d457d8b3353329ef9321ab6d1d8a77e6dd1e2e9b2db1d09a267b8702932"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -126,6 +126,8 @@ REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 94
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU PACKAGING CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/ms-playwright (554M, 359 files). Current free space 17,356,939,264 bytes. Manifest .tmp-sr_pm/qemu-packaging-cache-cleanup-manifest.txt. No model/project/output data touched.
 REGENERABLE QEMU PACKAGE ROUND 2 CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/loom-updater (209M, 2 files). Current free space after cleanup measured 17,199,886,336 bytes, about 199.9 MB above the 17 GB packaging gate. Manifest .tmp-sr_pm/qemu-package-round2-cache-cleanup-manifest.txt. No application data/models/projects/outputs touched.
+INDEPENDENT QEMU INSTALLER/PACKAGE REVIEW (2026-10-21, HEAD dd4f6d3): SECURITY_REVIEW: READY_FOR_QEMU_INSTALL. Verified provisioner f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df; plan d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd; installation manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625; evidence manifest 5f87b465bea46d326d46076a2523d4e48484d95d0d7d372d66db565e050177fa; 191-file package readback; absolute dependencies/no LC_RPATH; four signatures; signed QEMU 352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da. Parent must install exact root-owned bootstrap/plan, umask 022, verify hashes/ancestors/interpreter, enforce 15GB floor, retain failure state, and perform mandatory no-QEMU post-install checks. Accounting and guest execution remain blocked.
+
 ## nd_contract
 status: in_progress
 
