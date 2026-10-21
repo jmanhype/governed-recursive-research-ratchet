@@ -31,10 +31,9 @@ if os.getuid() == 0:
 
 sys.path.insert(0, str(ROOT/'research'))
 from common import Failure, canonical, digest, require
-from corpus_execution import HELPER, IMAGE, LIMITS, PROFILE, RECEIPT, SUPERVISOR, QEMU_MANIFEST, validate_preserved
+from corpus_execution import CORPUS_FREEZE, HELPER, IMAGE, LIMITS, PROFILE, RECEIPT, SUPERVISOR, QEMU_MANIFEST, validate_preserved
 from execution import ASSETS
 from trusted_install import immutable, record, verify_qemu
-from validated_corpus import CORPUS_FREEZE
 
 CODE = ('research/common.py', 'research/execution.py', 'research/budget.py', 'research/ledger.py',
         'research/trusted_execution.py', 'research/trusted_install.py', 'research/trusted_transport.py',
