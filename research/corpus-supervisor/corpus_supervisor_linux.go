@@ -103,7 +103,7 @@ func stage(request request) error {
 		if bytes.Equal(anchor, replacement) || bytes.Count(data, anchor) != 1 { return errors.New("seed anchor is not unique") }
 		if err := os.WriteFile(path, bytes.Replace(data, anchor, replacement, 1), 0644); err != nil { return err }
 	} else if current.Kind != "clean-control" || current.File != nilString { return errors.New("unknown seed kind") }
-	probePath := "/root/inputs/probes/" + request.Challenge + ".go"
+	probePath := "/root/probes/" + request.Challenge + ".go"
 	if err := private(probePath); err != nil { return err }
 	data, err := os.ReadFile(probePath); if err != nil || len(data) > 65536 { return errors.New("unsafe probe") }
 	return os.WriteFile("/work/candidate/source/grrr_corpus_probe_test.go", data, 0644)

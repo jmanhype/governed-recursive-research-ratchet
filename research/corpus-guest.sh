@@ -30,8 +30,8 @@ sha256sum -c input.sum
 tar -xzf go.tgz -C /work
 chmod -R a-w /work/go; chmod 755 /work/go /work/go/bin /work/go/pkg/tool
 tar -xf vlt.tar -C /root/source
-mkdir /root/inputs/probes
-tar -xf probes.tar -C /root/inputs/probes
+mkdir /root/probes
+tar -xf probes.tar -C /root/probes
 cd /root/source && sha256sum -c /root/inputs/source.sum
 cp /root/inputs/corpus-supervis /work/control/supervisor
 cp /root/inputs/corpus-helper /work/bin/corpus-helper

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-stusofr6",
+  "bootstrap_commit": "909a382fc4636740917c4f6bc2d8de6e648d13d8",
+  "guest_started": true,
+  "failure": "Guest bootstrap attempted mkdir under the read-only ISO mount at /root/inputs/probes",
+  "integrity": "Boot, mount, input checksums, source archive, Go archive, probes, seeds, helper, and supervisor all passed before failure",
+  "candidate_executed": false,
+  "fix": "Extract probes to writable root-private /root/probes; candidate still receives only its selected staged probe"
+}
