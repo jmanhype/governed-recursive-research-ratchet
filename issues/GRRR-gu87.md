@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T02:53:40Z
-content_hash: "sha256:19d7b612e511b5bf221eec8f5b8f2eb2d6d0e2a8045ee618d8c916d7cd4f6527"
+updated_at: 2026-10-21T03:01:10Z
+content_hash: "sha256:317925aee2b4dbf820c06017c4aa71b4d40358e872ecb569e02cf38b700871a0"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -124,6 +124,17 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 - Not authorized: QEMU guest execution, ten trusted-observation controls, paid calls, resource expansion, host fallback, production mutation, automatic admission, or candidate-correctness certification. Separate execution approval remains mandatory.
 REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 948M/11,155 files; Google cache 929M/12,978 files; partially regenerated Codex cache reduced to ~20K; com.spacefs.launcher 751M/487 files; dev.zcode.app.ShipIt 772M/779 files; @zcodedesktop-updater 476M/3 files. Current free space 18,042,109,952 bytes. Manifests: .tmp-sr_pm/provisioning-cache-cleanup-manifest.txt and .tmp-sr_pm/provisioning-cache-cleanup-round2-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- Ninja 1.13.2 executable/formula/receipt/SBOM/license provenance recorded. Genuine configure first failed because required FDT disabled. Parent-authorized fresh system-FDT retry failed at Meson 2048 prefer_static fdt not found. Further parent-authorized fresh retry with exact dtc 1.8.1 include/link paths also failed at same library-search gate.
+- Exact libfdt.a/header/formula/receipt/SBOM hashes retained; no successful static archive selection claimed. Full configure/Meson logs and status docs preserved in qemu-source-build/retry-2, retry-3, retry-4. No prior directory overwritten.
+- Static/minimal/no-module/no-plugin flags unchanged; no target build, QEMU execution, root installation or execution request. Claim retained. Next work is library-search diagnosis, not repeated linker-flag retries.
+
+### proof
+- [ ] AC #1-#6: Mandatory trusted guest suite remains unauthorized/not-run; source build blocked at FDT selection.
+
 ## nd_contract
 status: in_progress
 
