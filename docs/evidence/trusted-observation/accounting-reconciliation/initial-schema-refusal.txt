@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/scripts/review-accounting-reconciliation", line 61, in <module>
+    main()
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/scripts/review-accounting-reconciliation", line 52, in main
+    report = summarize(events)
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/accounting_reconciliation.py", line 45, in summarize
+    require(isinstance(reservation, str) and reservation, 'RecoveryRequired', 'Missing reservation identity')
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/research/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Missing reservation identity

@@ -1,0 +1,28 @@
+{
+  "accounting_present": false,
+  "audit_uid": 501,
+  "directories_including_root": 20,
+  "files": 221,
+  "identity_denials_reexecuted": false,
+  "installation_sha256": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+  "installed_pins": {
+    "bootstrap/provision-trusted-host": "f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df",
+    "bootstrap/qemu-provisioning-plan.json": "d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd",
+    "bootstrap/qemu-provisioning-readback.json": "e434e72e02d4b0ac71b76d948a632cec53f3514e9f7599265ee12c0d0a13048b",
+    "bootstrap/trusted-root-bootstrap": "615cbfab84ddce1d84b397da9b4e99d2a51c1404bfd637defcc313238512ed9f",
+    "qemu/bin/qemu-system-aarch64": "352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da"
+  },
+  "qemu_executed_by_audit": false,
+  "readback": {
+    "accounting_touched": false,
+    "execution_authorized": false,
+    "guest_executed": false,
+    "host_code": "7e887f77bfc1a57f1a4fa26cb95c72e5567836ce98fb08553ae02e6a19744a97",
+    "plan_sha256": "d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd",
+    "qemu_installation": "e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625",
+    "runtime_loading_tested": false,
+    "version": 1
+  },
+  "symlinks": 0,
+  "version": 1
+}

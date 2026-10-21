@@ -1,0 +1,409 @@
+{
+  "accepted_source_artifacts": {
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/absent-vm-service.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/absent-vm.log": "9537360f4a7f3de9993bb68f25004c2a4aebc768702114329702ea3b451f9e00",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.anchor": "eb4ac214f0be301112e6294ab2bf1a9b3608b3d9ecffd4885b6122895d120896",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json": "762913430f973eb6b1c158d69fea4a3206c8fa91e4aa7b6e89112771d7a5f92c",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.md": "96d2549ed21623c380955d505255902f5656d508574a8c64c2aa7191c6847a55",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.anchor": "f8229d7376c2a2fc9dc31bf47ae549e8d9263764bf6d71c752c9f61e88fceb94",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/deadline-control.json": "36099e0fb90cea1b6e344c331e2a4388e98aecb895ec748c13ee14a32f827fd6",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/evaluator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.anchor": "2a88a51269d00bde4837806ea3985d0b2fcd81c0484ea37624c4e8d159d8dc6e",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json": "2b21d7e5b4b20d9e50e23df7b7e1c20af69a79b10974bc4d9f00a6473e9893bd",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.md": "eb78f1763f7b9d043ad03467d95218f4d58da005007695aeb28f18afc82db463",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/missing-policy.log": "96a18c3d77e9abc77d9c2f01afd0732220e63c39bbb009346b4e9c10e611a05c",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/negative-controls.json": "7b6ad2252dd79ac23c68feea7dff93704e525c4d1e23c1bfd3764c89a0271442",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.anchor": "3ca01d0fd6abcaf4b54a088e8d0d0b7406bf6087fbf05baf8e94b3dd8521a9c0",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/output-control.json": "37d0e9a8f9839b9eab7eb2dcb797d34d984bdbda1b4e47f109f7a73b406f39e1",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/permissions.txt": "d2f5e4632f6e0b32cd8db798278d9ef6b60bdb6631824d68a342f72d1b926c33",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/prior-failure-preserved.json": "b02e3568839d447cceba15cdba3093e2e9704c0d2a55bc1fb848a4dcf757ab46",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/runner.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/runtime-binding.json": "a42495c1062e6d826ebdad43aeb838a138e28e3780ea36ea6da2aadb69c23272",
+    "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/test-output.txt": "3a4fa144133976f27014091dfd3dec95e72dca767df28b2907a7eb36ae396bfe",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json": "ff8e3b5e9c9b5491ca241a27c25d2ae3260d36bf652a17da1a51ad055dd4dc09",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json": "ac7de59cb875a728eef7ceac368645451047fb3b41d72f7b622e6e5871321c6e",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/baseline-receipt.json": "cd26c3022ac378d726136079b0989eed5ff8842b6afaf613fdfa2420256ebd50",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/binding.json": "47fd1073759c81220e838f89dd778f97f73b0a85ed50ee3a9db66fd42d9bd689",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-1.json": "72aec6ab2287d7c53e0e94847ac33a789131a0e04f4259b83b15437f069e282e",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/build-2.json": "014761f445c027afef2cfef97563bddcc1142028982bf0117ffe3818d9095066",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/controls.json": "9e87df2f74cd65160c699c9c71166bb980dc1f375185c93ff4154fab9524deb2",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/dependency-service.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/dependency.log": "39157d875270f95d53e974a2fa688a6b8b3e4615fcca50f56decc7aa6b51c2d3",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/executor.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force-ack.json": "6960b9b1360d21b343576509bd1e538eb8ac9d99df03f1f626f8343d23827371",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/force.json": "9fae89d439c208ae0002be1bec3e92cd9555d3af017cf3aaf434efd4cdd9fead",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/identity-service.log": "482ce2f7ceddb24f23dddb1aa301bdc9acd3548fcffc05f8a2d2d63bbe91da29",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/image-service.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/image.log": "919c609216d653c694b976904ab95bea50f7a7e6c84fad137ebec58abdc25ffa",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/license-review.json": "4ce0bb6c8533eb9036b28d0145f6856a80a8f66a0cb93cee0fe6124b5acc8aaf",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/network-service.log": "0d424063139200e44768921ad99d3ee98507a42b8ae2b01c3b28ab6ab960c4dc",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/output.json": "dca491638eee5176a3843be48a2320aad295774bf31b619bbeaff760a6dbe221",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/policy.json": "2e08f0288355a64eba22b75fdeb1e62ac14dfaea3be26cbee38ece6eb4051d47",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/profile-approval.json": "3474c0a20999af6048ba862bc37e274da79ca89cbaef1ed84d2c1fe5f7b71ed5",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/protected-paths.log": "162e1a557e2bfe1bdc3ae25c9b1e0f855e64ee175dbdfe859e96f7509bb95f81",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/share-service.log": "0e82c2d6675f2e7f256d6e453115da9bbdb5205853589d65c8a6ebd09e1965e3",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop-ack.json": "8f9c869aadc05150c12ab9d0d2d21447e6eaee5a005f33dc7b68baff75d69099",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/stop.json": "777d47a7694b7d35698621d95c6fc4541700944eee8424a66dbd16017ea65bbe",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/test-output.txt": "1a88076a5222ac0217f6eb59d642049d1bb3138c3d457d657dbcadcdd7246946",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/unauthorized-peer.log": "40d2d734904c450cda6313209fd6ed84d7124577335f5314b198afa361cbfb72",
+    "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/watchdog.json": "95f02a9892357a337e2d7c3faaf2b1f8cb3bae0dcee1e75f811327f87ccb19fc"
+  },
+  "accepted_verification": {
+    "bounded-challenge": {
+      "manifest_sha256": "5758264cf727dd9abd1c84e9b3b3c0d7b28575f2919271c5a105ebc26e9def54",
+      "test_counts": {
+        "errors": 0,
+        "executed": 12,
+        "failures": 0,
+        "required": 12,
+        "skipped": 0
+      },
+      "verifier_sha256": "658945f5063184c29afc2b2f4fc075c72b223f731c79795f7586f2563c6b0fc1"
+    },
+    "offline-preflight": {
+      "manifest_sha256": "85fbaadbae832ebb67110bbdfe980025fc011d6adb720866054acb4c690b1c16",
+      "test_counts": {
+        "errors": 0,
+        "executed": 6,
+        "failures": 0,
+        "required": 6,
+        "skipped": 0
+      },
+      "verifier_sha256": "c9bd27c7277e2f7fc38172e28d14e4167d42ad75c0006707d9275a275c8eefab"
+    }
+  },
+  "accounting_store_modified": false,
+  "campaign_stop_state": null,
+  "campaign_totals": null,
+  "conflicts": [
+    {
+      "event_sha256": "868601267eec303eba351eac2c863ea0490ebfb37cb5fc8488a818bfabc815de",
+      "fields": [
+        "idempotency_key",
+        "kind",
+        "maximum_seconds",
+        "objects",
+        "paid_dispatch",
+        "reserved_total_seconds",
+        "run",
+        "version"
+      ],
+      "kind": "unmapped_legacy_reservation",
+      "reported_maximum_seconds": 300,
+      "reported_reserved_total_seconds": 300,
+      "reported_run": "77face10b0414b60ab43cc8f559d898c",
+      "settled": false,
+      "source": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json"
+    },
+    {
+      "event_sha256": "5733d52f4c03829e0e0794acacc38d927def7175ee688323ea2a97f90aed7a45",
+      "fields": [
+        "idempotency_key",
+        "kind",
+        "maximum_seconds",
+        "objects",
+        "paid_dispatch",
+        "reserved_total_seconds",
+        "run",
+        "version"
+      ],
+      "kind": "unmapped_legacy_reservation",
+      "reported_maximum_seconds": 300,
+      "reported_reserved_total_seconds": 600,
+      "reported_run": "b2dc7793850e4e20bc860629d8938634",
+      "settled": false,
+      "source": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json"
+    },
+    {
+      "event_sha256": "1e5b6c1f2dda1b5999bb5e60cc4d7b7540a71e43147545e3610a258f52925e18",
+      "fields": [
+        "idempotency_key",
+        "kind",
+        "maximum_seconds",
+        "objects",
+        "paid_dispatch",
+        "reserved_total_seconds",
+        "run",
+        "version"
+      ],
+      "kind": "unmapped_legacy_reservation",
+      "reported_maximum_seconds": 300,
+      "reported_reserved_total_seconds": 900,
+      "reported_run": "e95524fe36f94069bb642cbfea3dab2c",
+      "settled": false,
+      "source": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json"
+    },
+    {
+      "event_sha256": "50b56177c80b69dea39d0e51707ece6e87baa1014ecd413250106004798684e3",
+      "fields": [
+        "idempotency_key",
+        "kind",
+        "maximum_seconds",
+        "objects",
+        "paid_dispatch",
+        "reserved_total_seconds",
+        "run",
+        "version"
+      ],
+      "kind": "unmapped_legacy_reservation",
+      "reported_maximum_seconds": 300,
+      "reported_reserved_total_seconds": 1200,
+      "reported_run": "3ec8437e265a48399785b6427a21f36e",
+      "settled": false,
+      "source": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json"
+    },
+    {
+      "event_sha256": "d0c12363948b72c2376ae769d9ff5f69127269ac7ae1974d36f625587dd0f7f2",
+      "fields": [
+        "idempotency_key",
+        "kind",
+        "maximum_seconds",
+        "objects",
+        "paid_dispatch",
+        "reserved_total_seconds",
+        "run",
+        "version"
+      ],
+      "kind": "unmapped_legacy_reservation",
+      "reported_maximum_seconds": 300,
+      "reported_reserved_total_seconds": 1500,
+      "reported_run": "52daf761855d4f4db5e7629b81906024",
+      "settled": false,
+      "source": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/52daf761855d4f4db5e7629b81906024.json"
+    },
+    {
+      "event_sha256": "4b7f2200fb1f06482b743da2cb88fbdfd29e00197644563ab1615be71dcfdbe5",
+      "fields": [
+        "idempotency_key",
+        "kind",
+        "maximum_seconds",
+        "objects",
+        "paid_dispatch",
+        "reserved_total_seconds",
+        "run",
+        "version"
+      ],
+      "kind": "unmapped_legacy_reservation",
+      "reported_maximum_seconds": 300,
+      "reported_reserved_total_seconds": 1800,
+      "reported_run": "b0261c776ae44131afb7629dd60413d5",
+      "settled": false,
+      "source": "docs/evidence/offline-preflight/attempt-20261020T233115Z-6e1e938c/b0261c776ae44131afb7629dd60413d5.json"
+    }
+  ],
+  "database_created": false,
+  "decision": "reconciliation-required",
+  "earlier_attempts_requiring_reconciliation": [
+    {
+      "manifest": "docs/evidence/bounded-challenge/attempt-20261020T152048Z-d6f75d1f/manifest.json",
+      "reconciled": false,
+      "sha256": "8cf4adc598f707f54c5a4bd89b7c2b47456ecda91083fc60f9b01cc68c4ca839"
+    },
+    {
+      "manifest": "docs/evidence/bounded-challenge/attempt-20261020T152641Z-49296ef3/manifest.json",
+      "reconciled": false,
+      "sha256": "efcbb0e55b05c4607340ddb3fa5250caa2673e433719f8ceb3f0b8a08ff292b9"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T174216Z-4fb11b30/manifest.json",
+      "reconciled": false,
+      "sha256": "61c86a32c4382896fceb19bc292326d95866d0aa50c0f85e3e56e6b99290aed6"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T174728Z-f95be96e/manifest.json",
+      "reconciled": false,
+      "sha256": "527404ee2f94dc5c1047875d70bb58b4c6406573e5286936b86171cd1c66758f"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T175506Z-fa0b9915/manifest.json",
+      "reconciled": false,
+      "sha256": "55605bfee9b16ee44d7a0bd22d7e3c3afa3df96a1a8262659d3b03d2394c8ad4"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T180443Z-105b1565/manifest.json",
+      "reconciled": false,
+      "sha256": "736ab9cc127676679ba06056187a1f48f42d83b279f6d3439df7106463fff3ab"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T181134Z-fa91663f/manifest.json",
+      "reconciled": false,
+      "sha256": "1c9bc1a336dfcc62650d1159154642199b04d3fc450cd20b841703a226330411"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T181714Z-41dd85d6/manifest.json",
+      "reconciled": false,
+      "sha256": "8621b8081417a6fe589eea7fa82cedbd17a1820f9845fde570463c188206084c"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T182702Z-768d552e/manifest.json",
+      "reconciled": false,
+      "sha256": "b4e19f303ae9cf644484de878014a9b51e142cc4989c0a5eb55c8174222ced0b"
+    },
+    {
+      "manifest": "docs/evidence/offline-preflight/attempt-20261020T205833Z-60a4135e/manifest.json",
+      "reconciled": false,
+      "sha256": "0a0b4707b4c4f6a40d9dab62b2d4948cabf3e858fd47d8dad2e9db5aacb93ebb"
+    }
+  ],
+  "execution_gate": "blocked",
+  "known_legacy_observations": [
+    {
+      "event_sha256": "134e301011495f57cda7968ada7d8485c1a6406e1dd84b7113c715cee962f3c7",
+      "reported_execution_us": "1325165.3750048717000000",
+      "reported_review_seconds": null,
+      "reservation": "094af62daa82497faabed600dabe01eb",
+      "run": "ef6ff46c5e774fef85de2cab930524b4",
+      "settlement_authorized": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "event_sha256": "4cb592efe0a6db168d8cd47f6da7fe8c033ffc42317df702a2d7789e8ffcce98",
+      "reported_execution_us": "4467508.666988579000000",
+      "reported_review_seconds": null,
+      "reservation": "2d9e40eb14e14cd69c04c51418332ea0",
+      "run": "589d8dfb92ae436e8c3b4bbd4bda6803",
+      "settlement_authorized": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "event_sha256": "a9f3b120a6e5ca6b069dabd7932b8671ae60c8142aeb935a62f6cccdf141552d",
+      "reported_execution_us": "6300877.542002127000000",
+      "reported_review_seconds": null,
+      "reservation": "5caf08242968429fb7cb8684aaa21c38",
+      "run": "a02c3fb065a6474d90928225c4f2896d",
+      "settlement_authorized": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "event_sha256": "067bbd2a5ec32bc9b6ab7306cd66b9f8e63db1ec16ed7a738d14f001c072faf7",
+      "reported_execution_us": "1292395.5419973936000000",
+      "reported_review_seconds": null,
+      "reservation": "a207a5575038431dadae8ae1e10d37c5",
+      "run": "2c91e5b6d3844deab31d7f7c7c36ad24",
+      "settlement_authorized": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "event_sha256": "cfbdc1dc91af343d6ccc8b668449e46322141b01f9dd72c7df25ec6d50e8fea9",
+      "reported_execution_us": "1294578.0000009108000000",
+      "reported_review_seconds": null,
+      "reservation": "a874ac93bd794d30b00bbac5884130ce",
+      "run": "824221898a5b4ccf960a462624105562",
+      "settlement_authorized": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json"
+    }
+  ],
+  "known_legacy_reservations": [
+    {
+      "authority": "legacy evidence only",
+      "event_sha256": "659dc8801bd93bdd0df550eadcb43b5831584cdc344b70666295363ce8a73c3c",
+      "maximum_execution_us": 300000000,
+      "reported_money_cents": 0,
+      "reported_review_seconds": null,
+      "reservation": "094af62daa82497faabed600dabe01eb",
+      "run": "ef6ff46c5e774fef85de2cab930524b4",
+      "settled": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "authority": "legacy evidence only",
+      "event_sha256": "2785941c10c802f1f0bb0870eaba713b3c13b959cdb4b6f9f9793cf475f8bc48",
+      "maximum_execution_us": 300000000,
+      "reported_money_cents": 0,
+      "reported_review_seconds": null,
+      "reservation": "2d9e40eb14e14cd69c04c51418332ea0",
+      "run": "589d8dfb92ae436e8c3b4bbd4bda6803",
+      "settled": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "authority": "legacy evidence only",
+      "event_sha256": "9a95de0d727ed045d60f5e493b7cc530b890e5c9ed041117db7e1c20e6bc2af0",
+      "maximum_execution_us": 300000000,
+      "reported_money_cents": 0,
+      "reported_review_seconds": null,
+      "reservation": "5caf08242968429fb7cb8684aaa21c38",
+      "run": "a02c3fb065a6474d90928225c4f2896d",
+      "settled": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "authority": "legacy evidence only",
+      "event_sha256": "407c6e7d5a7728fb9a269e5a777b357ca76a17dfeb0d0591d8b35d360af664e9",
+      "maximum_execution_us": 300000000,
+      "reported_money_cents": 0,
+      "reported_review_seconds": null,
+      "reservation": "a207a5575038431dadae8ae1e10d37c5",
+      "run": "2c91e5b6d3844deab31d7f7c7c36ad24",
+      "settled": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "authority": "legacy evidence only",
+      "event_sha256": "e0c0186cf505c8356e9f1f29b0999f1e6784f4f606c3e9b1c09707c7697c5299",
+      "maximum_execution_us": 300000000,
+      "reported_money_cents": 0,
+      "reported_review_seconds": null,
+      "reservation": "a874ac93bd794d30b00bbac5884130ce",
+      "run": "824221898a5b4ccf960a462624105562",
+      "settled": false,
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/faulty.json"
+    }
+  ],
+  "known_stop_events": [
+    {
+      "campaign_stop_state": null,
+      "epoch": 1,
+      "event_sha256": "69bcb5aa2f551f4d4d48d3ad426e37320b0217ba929084eaa1a45ce78d29a703",
+      "kind": "stop-fenced",
+      "run": "ef6ff46c5e774fef85de2cab930524b4",
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "campaign_stop_state": null,
+      "epoch": null,
+      "event_sha256": "8003fe91698dabeb474710d43faf714862aa3ee3a94391b14f13b0b2731478b4",
+      "kind": "stop-outcome",
+      "run": "ef6ff46c5e774fef85de2cab930524b4",
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "campaign_stop_state": null,
+      "epoch": 1,
+      "event_sha256": "24a444862597e54c8853ff5914a02e3d67cca55558bc6bdd9c28b5548084da47",
+      "kind": "stop-fenced",
+      "run": "ef6ff46c5e774fef85de2cab930524b4",
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    },
+    {
+      "campaign_stop_state": null,
+      "epoch": null,
+      "event_sha256": "85dfc0627d5222fe1d55c47cca17e077db637020a4ffde9d89f7297c688e541d",
+      "kind": "stop-outcome",
+      "run": "ef6ff46c5e774fef85de2cab930524b4",
+      "source": "docs/evidence/bounded-challenge/attempt-20261020T153803Z-4d13bc7b/clean.json"
+    }
+  ],
+  "migration_authorized": false,
+  "note": "Even complete accepted-run observations do not prove cumulative campaign history.",
+  "operator_action": "Reconcile listed gaps; do not synthesize zero cost or reset allowance.",
+  "remaining_allowance": null,
+  "required_evidence": [
+    "complete_invocation_inventory_including_failed_attempts",
+    "cumulative_review_and_replay_duration",
+    "selector_and_preparation_separation",
+    "prior_hold_settlement_receipts",
+    "campaign_and_run_stop_scope_reconciliation",
+    "cross_profile_poc_carry_forward"
+  ],
+  "reset_allowance": false,
+  "unresolved_history": true,
+  "version": 1,
+  "visible_counts": {
+    "conflicts_or_unmapped": 6,
+    "deduplicated_legacy_reservations": 5,
+    "deduplicated_observations": 5,
+    "earlier_attempts": 10,
+    "stop_events": 4
+  }
+}

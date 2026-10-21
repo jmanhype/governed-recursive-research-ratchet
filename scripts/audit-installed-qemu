@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+"""Read-only installed-state audit; no QEMU invocation or identity switching."""
+import json
+import os
+from pathlib import Path
+import stat
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require
+from trusted_install import immutable, record, verify_qemu
+
+
+if __name__ == '__main__':
+    require(os.getuid() != 0, 'Unauthorized', 'Read-back is non-root')
+    base = Path('/Library/GRRR')
+    pins = {
+        'bootstrap/provision-trusted-host': 'f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df',
+        'bootstrap/trusted-root-bootstrap': '615cbfab84ddce1d84b397da9b4e99d2a51c1404bfd637defcc313238512ed9f',
+        'bootstrap/qemu-provisioning-plan.json': 'd1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd',
+        'bootstrap/qemu-provisioning-readback.json': 'e434e72e02d4b0ac71b76d948a632cec53f3514e9f7599265ee12c0d0a13048b',
+        'qemu/bin/qemu-system-aarch64': '352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da',
+    }
+    for name, expected in pins.items():
+        immutable(base / name)
+        require(digest((base / name).read_bytes()) == expected, 'IntegrityFailure', 'Installed pin differs')
+    manifest = record(base / 'qemu/installation.json')
+    verify_qemu(manifest)
+    paths = list(base.rglob('*'))
+    require(len(paths) <= 1024 and all(not p.is_symlink() for p in paths), 'IntegrityFailure', 'Unexpected tree')
+    files, directories = [], []
+    for path in [base, *paths]:
+        info = path.lstat()
+        expected = 0o755 if path.is_dir() else (0o555 if path == base / 'qemu/bin/qemu-system-aarch64' else 0o444)
+        require(info.st_uid == 0 and info.st_gid == 0 and stat.S_IMODE(info.st_mode) == expected,
+                'IntegrityFailure', 'Installed ownership/mode differs')
+        (directories if path.is_dir() else files).append(str(path.relative_to(base)))
+    require(not (base / 'accounting').exists(), 'RecoveryRequired', 'Unexpected accounting provisioning')
+    readback = record(base / 'bootstrap/qemu-provisioning-readback.json')
+    require(all(readback[key] is False for key in ('accounting_touched', 'execution_authorized',
+            'guest_executed', 'runtime_loading_tested')), 'IntegrityFailure', 'Installed boundary differs')
+    print(json.dumps({'version': 1, 'installed_pins': pins, 'readback': readback,
+                      'installation_sha256': digest(canonical(manifest)), 'files': len(files),
+                      'directories_including_root': len(directories), 'symlinks': 0,
+                      'audit_uid': os.getuid(), 'accounting_present': False,
+                      'qemu_executed_by_audit': False, 'identity_denials_reexecuted': False},
+                     sort_keys=True, indent=2))
