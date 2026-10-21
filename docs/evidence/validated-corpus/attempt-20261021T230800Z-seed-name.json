@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-_l8wy_tb",
+  "bootstrap_commit": "e3b65742613e083c3308b596750fe67cd9a78052",
+  "guest_started": true,
+  "exact_error": "stage: open /root/inputs/corpus-seeds.json: no such file or directory",
+  "cause": "Packaged and verified member is ISO-8660 name seeds.json; supervisor expected corpus-seeds.json",
+  "candidate_executed": false,
+  "fix": "Read the exact packaged seeds.json path"
+}

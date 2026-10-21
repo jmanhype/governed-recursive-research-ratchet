@@ -86,7 +86,7 @@ func copyTree(source, target string) error {
 }
 
 func stage(request request) error {
-	raw, err := os.ReadFile("/root/inputs/corpus-seeds.json"); if err != nil { return err }
+	raw, err := os.ReadFile("/root/inputs/seeds.json"); if err != nil { return err }
 	if len(raw) > 1048576 { return errors.New("oversized seed catalog") }
 	var seeds []seed
 	if err := json.Unmarshal(raw, &seeds); err != nil { return err }
