@@ -1,0 +1,9 @@
+Executable=/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/staged-qemu/lib/libpcre2-8.0.dylib
+Identifier=libpcre2-8-55554944d5e8721e717e33faafc243784cd7ee3a
+Format=Mach-O thin (arm64)
+CodeDirectory v=20400 size=1324 flags=0x2(adhoc) hashes=35+2 location=embedded
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements count=0 size=12
