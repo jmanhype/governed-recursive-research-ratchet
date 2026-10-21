@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T21:18:46Z
-content_hash: "sha256:83f2b36d71b10b21f502ef98f444b5cb9d7b4a64da38d61988ab7945bf88782b"
+content_hash: "sha256:e44d6e1aec771138e53c7eb391ea71d3fc2a7145de23383fdd50ec6a14116138"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
@@ -108,6 +108,17 @@ status: new
 
 ## Notes
 DELIVERY CORRECTION: The preceding Implementation Evidence and delivered proof are authoritative for commit 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83; this note exists to let pvg story deliver append the final authoritative contract.
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-21.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
 
 ## nd_contract
 status: delivered
