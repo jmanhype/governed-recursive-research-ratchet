@@ -106,7 +106,8 @@ def prepare(source: Path, archive: Path, vm: Path, target: Path) -> dict:
     shutil.copyfile(ROOT / 'research/trusted-guest.sh', media / 'guest.sh')
     compiler = Path('/opt/homebrew/bin/go').resolve(strict=True)
     compiler_hash = digest(compiler.read_bytes())
-    compiler_license = compiler.parent.parent / 'LICENSE'
+    # Homebrew stores the Go license at the formula prefix, above libexec.
+    compiler_license = compiler.parents[2] / 'LICENSE'
     require(compiler_license.is_file(), 'GateBlocked', 'Host compiler license unavailable for review')
     compiler_version = capture([str(compiler), 'version']).decode().strip()
     require(compiler_version == 'go version go1.26.7 darwin/arm64',
