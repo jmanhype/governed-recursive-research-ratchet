@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T14:26:09Z
-content_hash: "sha256:2b129fe69fdce219c078faad7fe5d7f55798ac0adfa2c4a5d442b73f7c3fef19"
+updated_at: 2026-10-21T14:33:55Z
+content_hash: "sha256:d634fb8f34580738d0a468c240ae3812eb9eba3c0d2e94f2d4aeb269e003b421"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -139,6 +139,7 @@ CONTAINER DIAGNOSTIC HASH CORRECTION (2026-10-21, commit cab53ad): The repeat IS
 INDEPENDENT V4 RECOVERY SECURITY REVIEW (2026-10-21, commit cab53ad): SECURITY_REVIEW: V4_RECOVERY_EVIDENCE_APPROVED. Reviewer independently confirmed actual repeat-container hash 941f0dc282edf7057f7e3d239cfb60f64c9f20ad6da1d8dd1909c77da09827b0, 5/5 evidence-manifest entries, authentic retained-v3 receipt anchor, byte_lengths_equal semantics, and explicit qualification that metadata-only v3/v4 causation is unproven. This approves evidence only. It is not exact-v3 recovery, execution readiness, AC success, stop/hold release, accounting migration, guest execution, or operator authorization.
 V4 PLAN REVIEW CORRECTIONS (2026-10-21, commit 1957ab3): Corrected the v3 source/profile input-image digest in INPUT-READBACK.json to the authoritative 799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233 and clarified directory policy: ancestor directories must be root:wheel, non-symlink, ACL-free, and free of group/world write bits; system-directory permissions must not be changed. Preserved regular files remain no-write root:wheel 0444. Manifest refreshed 4/4. Live destination /Library/GRRR/trusted-observation is absent; current /Library and /Library/GRRR metadata was read only. v4 verifier still passes and conservative accounting remains integrity-ok, stopped=1, zero reservations. Planning-only boundary unchanged.
 INDEPENDENT V4 PRESERVATION PLAN REVIEW (2026-10-21, commit 1957ab3): SECURITY_REVIEW: V4_PRESERVATION_PLAN_APPROVED. Reviewer confirmed authoritative v3 ISO identity in both readback fields, directory policy limited to root:wheel/non-symlink/ACL-free/no group-world-write without changing system permissions, preserved-file root:wheel 0444 policy, and 4/4 evidence-manifest entries. Planning-only, dispatch-disabled, accounting-blocked, and separate-authorization boundaries remain unchanged. This approves the plan only; it grants no implementation, root installation, accounting migration, stop/hold release, guest execution, or promotion authority.
+OPERATOR V4 ROOT PRESERVATION AUTHORIZATION (2026-10-21): Authorize root-controlled v4 preservation at independently reviewed plan commit 1957ab3478c67cd6082e92e3e67da35e4457e644. Scope is limited to exclusive-create preservation of the exact six planned v4 files under /Library/GRRR/trusted-observation/v4/ using private staging, safe ancestors, root:wheel 0444 regular files, ACL/symlink/hard-link rejection, byte verification, and the plan's 15 GB floor. Refuse existing or partial state. Rollback authority is limited to the newly created v4 namespace only. This does not authorize source implementation, QEMU or guest execution, accounting mutation/migration, stop/hold release, candidate admission, promotion, or any change to Apple/system permissions.
 
 ## Trusted-observation v4 planning commit
 - Local story-only planning commit: `79a326e3a1668a5938abe1752e85f4edf985a778` (`docs(GRRR-gu87): plan v4 preservation profile`).
