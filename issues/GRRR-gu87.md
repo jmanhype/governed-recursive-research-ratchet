@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T00:49:31Z
-content_hash: "sha256:17a9b2bea86256c658d92e9070d2ef1ca77d7b9a8be6ab41875b40302d0fe7d4"
+updated_at: 2026-10-21T00:54:12Z
+content_hash: "sha256:0308d4b70b2e484a8d5ccf3925e69b075e265b02555aa024ea8d11cd1d791ee4"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -109,6 +109,7 @@ OPERATOR TRUSTED-OBSERVATION PROFILE DEVELOPMENT/REVIEW APPROVAL (2026-10-20):
 - Authorized work: implement and pin the guest supervisor and detached input image, perform static/unit review, and present completed supervisor/image hashes for separate execution approval.
 - Not authorized: guest execution of this new profile, resource expansion, paid calls, host fallback, production mutation, automatic admission, or treating proposal isolation properties as demonstrated.
 - Before execution, operator must separately approve parent-mediated identity execution and guest negative controls after reviewing completed supervisor and detached input-image hashes.
+DISPOSABLE OFFLINE RUNTIME CLEANUP (2026-10-21): removed only old root-owned /private/tmp/grrr-offline-jwxgpr6a (175M/121 files) and /private/tmp/grrr-offline-m5qlaapy (200M/127 files); durable evidence was already committed. Free space now 15,481,393,152 bytes. No project/model/output data touched.
 
 ## nd_contract
 status: in_progress
