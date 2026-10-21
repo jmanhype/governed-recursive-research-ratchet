@@ -44,7 +44,7 @@ func main() {
 	if err != nil { os.Exit(3) }
 	environment := append(os.Environ(), "GOCACHE=/work/candidate/cache", "GOPATH=/work/candidate/gopath",
 		"GOTMPDIR=/work/candidate/tmp", "GOFLAGS=-mod=readonly")
-	build := exec.Command("/work/go/bin/go", "test", "-c", "-o", "/work/candidate/probe", "./...")
+	build := exec.Command("/work/go/bin/go", "test", "-c", "-o", "/work/candidate/probe", ".")
 	build.Dir = source
 	build.Env = environment
 	buildRaw, buildErr := build.CombinedOutput()

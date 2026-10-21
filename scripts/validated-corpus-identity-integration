@@ -39,6 +39,7 @@ from validated_corpus import CORPUS_FREEZE
 CODE = ('research/common.py', 'research/execution.py', 'research/budget.py', 'research/ledger.py',
         'research/trusted_execution.py', 'research/trusted_install.py', 'research/trusted_transport.py',
         'research/isolated_entry.py', 'research/corpus_execution.py', 'research/corpus_evaluation.py',
+        'research/validated_corpus.py',
         'tests/integration/validated_corpus.py', 'tests/integration/trusted_probe.py',
         'scripts/validated-corpus-identity-integration', 'scripts/validated-corpus-root-bootstrap')
 
@@ -109,7 +110,7 @@ def launch(plan, approval, license_review):
     from trusted_execution import validate_approval
     approved, reviewed = root_record(approval), root_record(license_review)
     validate_approval(approved, plan['config'], reviewed)
-    lock_path = Path('/Library/GRRR/validated-corpus/v2/launch.lock'); immutable(lock_path)
+    lock_path = Path('/Library/GRRR/validated-corpus/v2-launch.lock'); immutable(lock_path)
     descriptor = os.open(lock_path,os.O_RDONLY|os.O_NOFOLLOW)
     try: fcntl.flock(descriptor,fcntl.LOCK_EX|fcntl.LOCK_NB)
     except BlockingIOError: os.close(descriptor); raise Failure('Stopped','Another corpus launcher is active')

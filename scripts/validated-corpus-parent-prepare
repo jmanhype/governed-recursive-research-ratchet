@@ -10,10 +10,13 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = Path('/Library/GRRR/validated-corpus/v2')
+RECORDS = Path('/Library/GRRR/validated-corpus/v2-records')
+LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 BOOTSTRAP = Path('/Library/GRRR/bootstrap/validated-corpus-root-bootstrap')
 CODE = ('research/common.py','research/execution.py','research/budget.py','research/ledger.py',
         'research/trusted_execution.py','research/trusted_install.py','research/trusted_transport.py',
         'research/isolated_entry.py','research/corpus_execution.py','research/corpus_evaluation.py',
+        'research/validated_corpus.py',
         'tests/integration/validated_corpus.py','tests/integration/trusted_probe.py',
         'scripts/validated-corpus-identity-integration','scripts/validated-corpus-root-bootstrap')
 
@@ -36,15 +39,15 @@ def main():
     current=subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],capture_output=True,check=True,text=True).stdout.strip()
     if current != commit: raise RuntimeError('worktree commit differs')
     files={name:sha((ROOT/name).read_bytes()) for name in CODE}
-    profile_raw=(prepared/'prepared-profile.json').read_bytes(); profile=json.loads(profile_raw)
+    profile_raw=(prepared/'prepared-profile.json').read_bytes(); profile=json.loads(profile_raw); profile_hash=sha(profile_raw)
     license_review={'version':1,'decision':'approved-local-use','preparation_receipt':'3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7',
                     'compiler':'e670dfa79b080bad7f7d6b1d7131145c8c49068096650ebf0ac6292f098db60d',
                     'guest_toolchain':'3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797',
                     'authorization_reference':sha(b'GRRR-bnkf-operator-isolated-corpus-completion-authorization')}
     accounting=sha(canonical({'kind':'disposable-corpus-budget','corpus_freeze':profile['corpus_freeze_digest'],
-                              'profile':profile['profile_sha256']}))
+                              'profile':profile_hash}))
     limits=profile['limits']; operator=ROOT.stat().st_uid
-    config={'version':1,'profile':profile['profile_sha256'],'image':profile['image_sha256'],
+    config={'version':1,'profile':profile_hash,'image':profile['image_sha256'],
             'supervisor':profile['supervisor_sha256'],'helper':profile['helper_sha256'],
             'host_code':sha(canonical(files)),'operator_uid':operator,'limits':limits,
             'network':False,'host_shares':False,'paid_dispatch':False,'read_only_inputs':True,
@@ -53,24 +56,24 @@ def main():
             'python_sha256':sha(Path(sys.executable).read_bytes())}
     execution=sha(canonical(config)); config['execution_profile']=execution
     approval={'version':1,'decision':'approved-trusted-execution','operator_uid':operator,
-              'profile':config['profile'],'image':config['image'],'supervisor':config['supervisor'],
+              'profile':profile_hash,'image':config['image'],'supervisor':config['supervisor'],
               'helper':config['helper'],'host_code':config['host_code'],
               'license_review_sha256':sha(canonical(license_review)),
               'authorization_reference':license_review['authorization_reference'],
               'qemu_installation':config['qemu_installation'],'accounting_binding':accounting,
               'bootstrap_sha256':config['bootstrap_sha256'],'python_sha256':config['python_sha256'],
               'execution_profile':execution}
-    TARGET.parent.mkdir(parents=True,exist_ok=True); TARGET.mkdir(mode=0o755)
+    TARGET.parent.mkdir(parents=True,exist_ok=True); TARGET.mkdir(mode=0o755); RECORDS.mkdir(mode=0o700)
     for name in ('input.iso','preparation.json','prepared-profile.json'):
         shutil.copyfile(prepared/name,TARGET/name); os.chmod(TARGET/name,0o444)
-    exclusive(TARGET/'approval.json',canonical(approval)); exclusive(TARGET/'license.json',canonical(license_review))
-    exclusive(TARGET/'binding.json',canonical({'version':1,'files':files})); exclusive(TARGET/'launch.lock',b'')
+    exclusive(RECORDS/'approval.json',canonical(approval)); exclusive(RECORDS/'license.json',canonical(license_review))
+    exclusive(RECORDS/'binding.json',canonical({'version':1,'files':files})); exclusive(LOCK,b'')
     shutil.copyfile(ROOT/'scripts/validated-corpus-root-bootstrap',BOOTSTRAP); os.chmod(BOOTSTRAP,0o444)
-    for path in (TARGET,*TARGET.iterdir(),BOOTSTRAP):
+    for path in (TARGET,*TARGET.iterdir(),RECORDS,*RECORDS.iterdir(),LOCK,BOOTSTRAP):
         os.chown(path,0,0)
         if path.is_file(): subprocess.run(['/bin/chmod','-N',str(path)],check=True,capture_output=True)
-    print(json.dumps({'prepared':str(TARGET),'binding':str(TARGET/'binding.json'),
-                      'approval':str(TARGET/'approval.json'),'license':str(TARGET/'license.json'),
+    print(json.dumps({'prepared':str(TARGET),'binding':str(RECORDS/'binding.json'),
+                      'approval':str(RECORDS/'approval.json'),'license':str(RECORDS/'license.json'),
                       'bootstrap':str(BOOTSTRAP),'execution_profile':execution},sort_keys=True))
 
 
