@@ -62,6 +62,7 @@ def unique(pairs):
 
 def safe_metadata(info, listing):
     check(info.st_uid == PROTECTED_UID
+          and info.st_gid == PROTECTED_GID
           and not stat.S_ISLNK(info.st_mode) and not info.st_mode & 0o022,
           'unsafe protected path metadata')
     check(b'+' not in listing.split(None, 1)[0], 'ACL-bearing protected path')
@@ -238,8 +239,11 @@ def install(plan_path, expected, authorization):
           and sys.flags.no_site and sys.dont_write_bytecode,
           'isolated canonical successor bootstrap required')
     check(BASE != OLD_ACTIVE.parent, 'successor must not replace predecessor')
+    check(plan_path.parent == BOOTSTRAP.parent, 'successor plan must live in protected bootstrap')
     protected(BOOTSTRAP)
     protected(PYTHON, readonly=False)
+    check(sha(read_regular(PYTHON, 134217728)) == PYTHON_SHA256,
+          'canonical successor interpreter bytes differ')
     protected(plan_path)
     protected(OLD_ACTIVE)
     protected(BASE.parent, directory=True)

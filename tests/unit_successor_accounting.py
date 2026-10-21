@@ -64,14 +64,15 @@ class SuccessorAccounting(unittest.TestCase):
         self.old_active.chmod(0o444)
         self.old_before = (self.old_raw, self.old_active.stat())
         self.base = self.root / 'accounting-poc2'
+        test_python = Path(sys.executable).resolve()
         values = {
             'BASE': self.base, 'OLD_ACTIVE': self.old_active, 'BOOTSTRAP': installed,
-            'PYTHON': Path(sys.executable), 'PYTHON_SHA256': digest(Path(sys.executable).read_bytes()),
+            'PYTHON': test_python, 'PYTHON_SHA256': digest(test_python.read_bytes()),
             'OLD_ACTIVE_SHA256': digest(self.old_raw),
             'PROTECTED_UID': os.getuid(), 'PROTECTED_GID': os.getgid(),
             'EVALUATOR_UID': os.getuid(), 'EVALUATOR_GID': os.getgid(),
             'protected': lambda path, directory=False, readonly=True: None,
-            'sys': SimpleNamespace(executable=sys.executable, version_info=(3, 9, 6),
+            'sys': SimpleNamespace(executable=str(test_python), version_info=(3, 9, 6),
                                    dont_write_bytecode=True,
                                    flags=SimpleNamespace(isolated=True, no_site=True,
                                                          dont_write_bytecode=True)),
@@ -191,10 +192,15 @@ class SuccessorAccounting(unittest.TestCase):
             self.module.install(changed_path, changed_expected, changed_authorization)
         self.assertFalse(self.base.exists())
 
-        metadata = type('Metadata', (), {'st_uid': os.getuid(), 'st_gid': os.getuid(),
+        metadata = type('Metadata', (), {'st_uid': os.getuid(), 'st_gid': os.getgid(),
                                           'st_mode': 0o100644})()
         with self.assertRaisesRegex(RuntimeError, 'ACL'):
             self.module.safe_metadata(metadata, b'-rw-r--r--+ 1 root root ...')
+
+        wrong_group = type('Metadata', (), {'st_uid': os.getuid(), 'st_gid': os.getgid() + 1,
+                                            'st_mode': 0o100644})()
+        with self.assertRaisesRegex(RuntimeError, 'unsafe protected path metadata'):
+            self.module.safe_metadata(wrong_group, b'-rw-r--r--  1 user group ...')
 
     def test_runtime_reservation_and_ceiling_rejection(self):
         binding, _ = self.install()
