@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T02:07:30Z
-content_hash: "sha256:74c35deda11d36aec4ecb12616121e6cd924d4ad77ce55112eb57f260ea36c82"
+updated_at: 2026-10-21T02:11:02Z
+content_hash: "sha256:5efab4366a64b7c46aea61b09b824f16d0a05f199396ca7738d2f85b382792c7"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -114,6 +114,8 @@ REGENERABLE DEVELOPMENT CACHE CLEANUP (2026-10-21): removed only /Users/speed/.c
 REGENERABLE UPDATER CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/autoclaw-updater (1.2G, 3 files) and /Users/speed/Library/Caches/voyager-updater (1.0G, 5 files); free space now 16,972,693,504 bytes. Manifest main checkout .tmp-sr_pm/updater-cache-cleanup-manifest.txt. No application data, models, projects, credentials, or outputs touched.
 INDEPENDENT SECURITY REVIEW (2026-10-21, commit d53deaf60290c5795a29ca279ec6919a15b44fb3): SECURITY_REVIEW: CHANGES_REQUIRED. Blocking findings: (1) fresh per-launch budget DB resets cross-run/profile ceilings; use one protected persistent accounting store and test restart/concurrency/cross-profile exhaustion; (2) mode-0666 service allows eight pre-auth slow readers for 310s and can starve stop/status; authenticate before payload reads, reserve control capacity, and add saturation tests; (3) mutable operator-owned Homebrew QEMU path is hashed then executed; use immutable root-controlled reviewed executable/deps or equivalent race-resistant binding and test replacement; (4) root imports/executes checkout code before validating approval inventory; use independently verified root-controlled bootstrap/source snapshot before privileged execution. Preparation pins/hashes matched and ten-scenario harness exists, but no execution approval should be requested until blockers are fixed and re-reviewed.
 INDEPENDENT SECURITY RE-REVIEW (2026-10-21, commit 7fee2ba0fa456fc9edd1b9ce1bfdbc284cd338a1): SECURITY_REVIEW: CHANGES_REQUIRED. Original persistent accounting/control-availability designs substantially addressed, but two new high blockers remain: (1) staged trusted_observation.py derives /private/tmp/research and /private/tmp/tests paths ahead of isolated verified code, allowing host-writable modules to load as UID 320; preserve verified directory structure or remove unsafe path manipulation and add poisoned-path regression; (2) QEMU @rpath validation checks manifest membership but not actual loader selection/order, allowing unlisted earlier shadow libraries; validate all search directories/candidates and mutable ancestors or forbid @rpath, with shadow/symlink/ambiguity negatives. Immutable installation/accounting migration/bootstrap provisioning and composed execution digest remain pending; no execution approval.
+INDEPENDENT SECURITY RE-REVIEW 2 (2026-10-21, current clean HEAD 8be2a19/source db53a47): SECURITY_REVIEW: READY_FOR_PROVISIONING. Staged import escape and @rpath shadowing blockers are closed. Host inventory 742625e1254dc50a41642508e3df1db6d7f1bf019079861bfbc77003dc50255a; bootstrap 615cbfab84ddce1d84b397da9b4e99d2a51c1404bfd637defcc313238512ed9f; evidence manifest 93d2c52eaccd267dc98eb56a6602df03f5b5118e0a006d5f8cb349bd81816f33. Required provisioning-only authorization before execution: independently install bootstrap/interpreter under /Library/GRRR/bootstrap; install immutable QEMU 11.1.2 closure with absolute deps/no LC_RPATH and provenance; reconcile persistent synthetic/offline/trusted accounting into one protected campaign DB with receipt/identity/inode binding/lock; independently review installed state and permission/import/accounting/replacement controls; compose final bindings/digest; then separately request exact local-use execution approval. All ten guest scenarios remain not-run.
+
 ## nd_contract
 status: in_progress
 
