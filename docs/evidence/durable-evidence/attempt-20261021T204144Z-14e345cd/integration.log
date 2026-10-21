@@ -1,0 +1,9 @@
+test_01_evaluator_history_compare_append_and_immutability (__main__.Mandatory) ... ok
+test_02_interrupted_object_recovery_and_no_retry (__main__.Mandatory) ... ok
+test_03_export_and_independent_trusted_anchor_verification (__main__.Mandatory) ... ok
+test_04_actual_store_exhaustion_retains_failure (__main__.Mandatory) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.014s
+
+OK
