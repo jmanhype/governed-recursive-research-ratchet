@@ -91,7 +91,7 @@ def main():
     read_json(license_path, True)
     qemu = read_json(qemu_path, True)
     check(sha(canonical(qemu)) == approval['qemu_installation'], 'installation approval differs')
-    active = read_json(Path('/Library/GRRR/accounting/active.json'), True)
+    active = read_json(Path('/Library/GRRR/accounting-poc2/active.json'), True)
     check(sha(canonical(active)) == approval['accounting_binding'], 'accounting approval differs')
     snapshots = Path('/Library/GRRR/snapshots')
     protected(snapshots, directory=True)

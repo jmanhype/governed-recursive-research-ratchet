@@ -4,11 +4,12 @@ import json
 from pathlib import Path
 import sqlite3
 import stat
+from contextlib import closing
 from budget import Budget, vector, CEILINGS
 from common import EVALUATOR, canonical, digest, fields, identifier, require
 from trusted_install import immutable, record
 
-ACTIVE = Path('/Library/GRRR/accounting/active.json')
+ACTIVE = Path('/Library/GRRR/accounting-poc2/active.json')
 PROFILES = ('synthetic', 'offline', 'trusted-observation')
 
 
@@ -26,7 +27,7 @@ def validate_store(binding, path):
             and type(binding['device']) is int and type(binding['inode']) is int
             and (info.st_dev, info.st_ino) == (binding['device'], binding['inode']),
             'RecoveryRequired', 'Persistent database missing or unsafe')
-    with sqlite3.connect(path.as_uri() + '?mode=ro', uri=True) as db:
+    with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True)) as db:
         require(db.execute('PRAGMA journal_mode').fetchall() == [('delete',)],
                 'RecoveryRequired', 'Unreviewed persistent journal mode')
         require(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)],
