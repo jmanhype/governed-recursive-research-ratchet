@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:46:48Z
-content_hash: "sha256:37a2dcf75a0b0055dc7b713289c590fba1d602e42d3f36d17308343e7e79ac50"
+content_hash: "sha256:9c53d4a4f85e099c7c83821f54dc3456cde34d964ccf747896e8ab2846240c58"
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
 follows: [GRRR-gu87, GRRR-90te]
@@ -99,6 +99,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-21.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-21]: Delivery proof passed 9/9. PM independently verified the trusted export against anchor 0955178e5c5d47e512ebdd2505b7f31cb7bcbb60cd6b3503c493dfc1f5cf0a37, recovery retry/promotion denial, UID-321 and UID-501 filesystem denial probes, clean static scan, clean story branch, and no remaining process. The 61-file commit count is primarily preserved failed and successful integration evidence; implementation is six files and 913 insertions, explained by mandatory crash/recovery/export controls. The disclosed Homebrew ResourceWarning remains test cleanup debt and does not affect this acceptance path.
 
