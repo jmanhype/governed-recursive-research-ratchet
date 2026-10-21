@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T12:35:29Z
-content_hash: "sha256:fc54bff5306ea3641158cc7b68e508e6cf68e703a30357124d3476b4bbcf7e57"
+updated_at: 2026-10-21T12:36:00Z
+content_hash: "sha256:7d082dd5842647f9193a2cdbf96cbbbcb21f1eaf1b0655a5555bf4d40e4db569"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -134,6 +134,14 @@ OPERATOR CONSERVATIVE ACCOUNTING PLAN APPROVAL (2026-10-21): approved exact plan
 CONSERVATIVE ACCOUNTING INSTALL RECORD (2026-10-21T05:33:30Z): Operator approved exact plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459. Fresh preflight matched bootstrap 07484611331e38165dcf8d3cb872455806572ca5451289d7b30ea9a9ffccbc97, plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459, database 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234, and receipt 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde; independently verified 259 artifacts with stopped=1 before root placement. Parent placed exact bootstrap/plan as root:wheel 0444 and invoked only the reviewed canonical install command. Installed active binding: device=16777229, inode=681781547, stopped=1, execution_gate=blocked, unresolved_history=true, store_id=12f4ce0101556ece7b7b2839077c3dc9de8c2a4bec98dbc0d570f2b5c61faec9, active SHA256 cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b. Independent post-install verification confirmed exact hashes, root:wheel ownership, modes 0444, no ACL indicators, single links, exact device/inode binding, SQLite integrity ok, 259 artifacts, empty reservations, SQL reservation/state-release denials, all six profile/stage zero-cost reservation denials, rejection by synthetic/offline/trusted-observation runtime validators, and unchanged database hash after denials. Free space after verification was 15065124864 bytes. No QEMU execution, candidate execution, hold release, stop clearing, fresh allowance, complete migration, Apple permission change, or promotion is authorized or claimed. Evidence: install console 633418ffaf46866bc4bc337634c6ca1f68468a2d5924df1bf2d67273960efccf; verification JSON 85b6f9e0a2770ba63fa7b0850b47ea3e903df8a6d4d9287426fd9295a3687ae8.
 INDEPENDENT INSTALLED-RECONCILIATION REVIEW (2026-10-21, commit c717a85456624a0e659898d94ed0e8070a76ae97): SECURITY_REVIEW: RECONCILIATION_REPORT_APPROVED. Reviewer independently verified all 8 evidence-manifest entries, live report equivalence excluding mutable free space, unchanged DB/receipt/active pins, device 16777229/inode 681781547, 259 artifacts, 110 events, 12 attempts, and zero runtime reservations. Coverage is 48 reservations + 48 observations + 8 stops + 6 denied events; denied events remain in report.json even when omitted from the human table. Read-only mode=ro&immutable=1/query_only inspection preserved unknown upper bounds and did not settle history or release holds. Reviewer observed free space 12844036096 bytes, below preparation/execution floors. This approves only the report; it grants no mutation, migration, guest execution, stop clearing, hold release, fresh allowance, or promotion authority.
 WORKTREE RECOVERY INCIDENT AND NEW MANDATORY ASSET GATE (2026-10-21): After pvg reported the active story stalled, pvg loop recover removed .claude/worktrees/dev-GRRR-gu87 and reset GRRR-gu87 to open while preserving branch story/GRRR-gu87 at c717a85456624a0e659898d94ed0e8070a76ae97. The removal also removed ignored local preparation assets that prior evidence explicitly said must be preserved before worktree cleanup. Immediate read-back found the exact prepared-v3 input.iso 799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233, supervisor a9a0fd9a8471bc1859e5ab91c3766a139942562f719784fec51b8254eb8307d6, and helper 14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e absent from the repo, /Library/GRRR, and /private/tmp; no Time Machine destination is configured. Committed preparation evidence, source code on the preserved branch, shared base VM inputs, immutable installed QEMU, and the protected conservative accounting store remain. Do not treat the lost local bytes as currently available or dispatch execution. Before any future execution request, a fresh worktree and independently rebuilt/rehashed preparation must match the pinned v3 artifacts under restored >=15 GB free space and separate authorization. This incident does not alter stopped=1, zero reservations, or the ambiguous-history reconciliation blockers.
+## nd_contract
+status: in_progress
+
+### evidence
+- Recovery claim retained: 2026-10-21. Restored story worktree .claude/worktrees/dev-GRRR-gu87 at clean story/GRRR-gu87 HEAD c717a85456624a0e659898d94ed0e8070a76ae97. Recovery is preparation-only; guest/candidate execution remains unauthorized.
+
+### proof
+- [ ] Recovery artifact hashes and verification pending.
 
 ## nd_contract
 status: in_progress
