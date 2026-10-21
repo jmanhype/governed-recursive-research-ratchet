@@ -81,8 +81,9 @@ def decode_candidate(raw: bytes, challenge: str) -> dict:
     value = json.loads(raw)
     fields(value, {'version', 'challenge', 'test', 'build_exit', 'build_output_sha256',
                    'repetitions', 'internal_error'})
-    require(value['version'] == 1 and value['challenge'] == challenge
-            and value['test'] == 'TestGRRR' + challenge[-4:] and value['build_exit'] in (0, 1, 2)
+    short_challenge = challenge[-4:]
+    require(value['version'] == 1 and value['challenge'] == short_challenge
+            and value['test'] == 'TestGRRR' + short_challenge and value['build_exit'] in (0, 1, 2)
             and isinstance(value['build_output_sha256'], str) and len(value['build_output_sha256']) == 64
             and value['internal_error'] is False and isinstance(value['repetitions'], list)
             and len(value['repetitions']) == 3, 'InvalidInput', 'Candidate observation differs')

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-8vhq3uh5",
+  "bootstrap_commit": "b19f57cd924a6fe54c73cc5113366bac9976bd2d",
+  "guest_started": true,
+  "scenario": "GRRR-VC-D001",
+  "observed": {
+    "supervisor_exit": 0,
+    "candidate_exit_success": true,
+    "NoNewPrivs": 1,
+    "capabilities": "all zero",
+    "kernel_lock_held_by_supervisor": true,
+    "repetitions": 3,
+    "deterministic": true
+  },
+  "host_failure": "decode_candidate compared helper's public short ID D001 to the full supervisor challenge GRRR-VC-D001",
+  "candidate_executed": true,
+  "fix": "Decode candidate observation against the public short challenge ID while retaining full supervisor/run binding"
+}
