@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:13:13Z
-content_hash: "sha256:c675d4332a179a5e9cb83b76471bea33f192c6abd1001927e902bf51ab8966a4"
+updated_at: 2026-10-21T20:14:13Z
+content_hash: "sha256:b128b3ba44bd8868d6d04d2e6f1c7c599405284feb0c015d1c06e24e4a2ddb2d"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -1213,3 +1213,18 @@ status: delivered
 - [x] AC #5: trusted-meter settlement and conservative delayed/missing holds proven.
 - [x] AC #6: watchdog, deadline, exhaustion, lost response, and no-repeat halt proven.
 - [ ] Independent replay/review/admission intentionally remain downstream and blocked.
+
+### 2026-10-21T20:14:13Z speed
+### CI/Test Results
+
+No-guest units: 152/152 under system Python and 152/152 under Homebrew Python. Focused successor suite: 7/7 under both. Real mandatory guest suite: 10 required / 10 executed / 0 skipped / 0 failures / 0 errors. Ledger verification passed for 30 events and 8 objects. Successor/predecessor SQLite integrity checks passed. All results are bound to evidence commit 141823fe7e19e43fd3d2bfcc0fe4be8303e42642.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Terminal format correction only; all substantive delivery evidence and AC proof remain in the preceding delivered comment and docs/evidence/trusted-observation/v4-run-9d3df87.
+
+### proof
+- [x] GRRR-gu87 AC #1 through #6 delivered as recorded in the preceding terminal delivery comment.
+- [ ] Independent replay/review/admission remain downstream and blocked by design.
