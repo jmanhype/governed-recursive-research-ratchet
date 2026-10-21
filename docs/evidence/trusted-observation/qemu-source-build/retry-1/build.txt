@@ -1,0 +1,19 @@
+{
+  "available_bytes": 16987373568,
+  "binary_sha256": null,
+  "build_run": false,
+  "closure_sha256": null,
+  "configure_run": false,
+  "minimum_host_free_bytes": 15000000000,
+  "note": "Space pass is not a build, installation, or execution approval.",
+  "qemu_executed": false,
+  "reason": "insufficient-build-headroom",
+  "requested_version": "11.1.2",
+  "required_build_headroom_bytes": 2000000000,
+  "root_installation_performed": false,
+  "source_archive_sha256": null,
+  "source_commit": null,
+  "source_fetched": false,
+  "status": "blocked",
+  "version": 1
+}

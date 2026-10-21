@@ -1,0 +1,2 @@
+dd3ce02338c3a48abb6ba59b48809f7108a8bd242cb0cc8be90daafa30707c28  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/COPYING
+31c90ce76b6f5aab90a205851e71d5c27e31c0aa3d7017a4383b98a6fe3f1faa  /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/.tmp-sr_pm/qemu-upstream-11.1.2/qemu-11.1.2/COPYING.LIB
