@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+"""Archive small evidence from failed corpus setups; never copies large VM media."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import stat
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+EVIDENCE = ROOT/'docs/evidence/validated-corpus/failed-setup-archive'
+
+
+def digest(path: Path) -> str:
+    value = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024*1024), b''):
+            value.update(chunk)
+    return value.hexdigest()
+
+
+def selected(path: Path, source: Path) -> bool:
+    relative = path.relative_to(source).parts
+    if path.name == 'input.iso' or 'runner/assets' in path.as_posix() or relative[:1] == ('code',):
+        return False
+    if source.name.startswith('corpus-approved-'):
+        return False
+    if relative[:1] == ('evaluator',):
+        return path.is_file() and path.stat().st_size <= 64*1024*1024
+    return path.is_file() and path.stat().st_size <= 2*1024*1024
+
+
+def archive(source: Path) -> Path:
+    if not source.is_dir(): raise RuntimeError('missing source: '+str(source))
+    target = EVIDENCE/source.name
+    target.mkdir(parents=True, exist_ok=False)
+    inventory = []
+    copied = []
+    for path in sorted(source.rglob('*')):
+        info = path.lstat()
+        item = {'path':str(path.relative_to(source)), 'bytes':info.st_size,
+                'uid':info.st_uid, 'mode':oct(stat.S_IMODE(info.st_mode)),
+                'type':'directory' if stat.S_ISDIR(info.st_mode) else
+                      'symlink' if stat.S_ISLNK(info.st_mode) else 'file'}
+        if path.is_file() and not path.is_symlink():
+            item['sha256'] = digest(path)
+        inventory.append(item)
+        if selected(path, source):
+            destination = target/path.relative_to(source)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path,destination)
+            destination.chmod(0o444)
+            copied.append(item['path'])
+    (target/'inventory.json').write_text(json.dumps(inventory,sort_keys=True,separators=(',',':'))+'\n')
+    (target/'selected-files.json').write_text(json.dumps(copied,sort_keys=True,separators=(',',':'))+'\n')
+    return target
+
+
+def main() -> int:
+    if os.getuid() != 0 or len(sys.argv) < 2:
+        raise RuntimeError('Usage: archive-failed-corpus-paths PATH...')
+    for name in sys.argv[1:]:
+        print(archive(Path(name).resolve(strict=True)))
+    operator = ROOT.stat().st_uid
+    for path in EVIDENCE.rglob('*'):
+        os.chown(path,operator,ROOT.stat().st_gid)
+        path.chmod(0o755 if path.is_dir() else 0o444)
+    os.chown(EVIDENCE,operator,ROOT.stat().st_gid)
+    EVIDENCE.chmod(0o755)
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
