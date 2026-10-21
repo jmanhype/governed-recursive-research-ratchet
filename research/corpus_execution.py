@@ -17,7 +17,7 @@ from trusted_execution import (QEMU_EXECUTABLE, QEMU_EXECUTABLE_PATH, QEMU_MANIF
 from trusted_install import record
 from trusted_transport import AuthenticatedServer
 
-PROFILE = '95d6ab4097775859a8dc21ddfb1a992a1188d852f8bc1e47ec5ac388bdfe3313'
+PROFILE = '95d6ab4097775859a8dc21ddfb1a992a1182d852f8bc1e47ec5ac388bdfe3313'
 IMAGE = '2d642539a19ba8a47faf03c6c6e341bb89254ec556f9f054fb7ef61b312292ca'
 SUPERVISOR = '65f35aa4dbb273b4337ba1eecd39dcd9ad3059fa9ec9b211f6c55a25bdd88096'
 HELPER = '8c1706ed51f37bc0e0f0cb0861409a4ed256bf7a34b20c118eb630fe05dfd6c8'
