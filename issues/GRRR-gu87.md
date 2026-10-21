@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T05:49:48Z
-content_hash: "sha256:bff89c106aec34f178b213ef594d5789d067a342e00c38096c33ba8f832fff3d"
+content_hash: "sha256:130b333e4e7687bc7eecc21858d267319b73d41bf667b450218dbcad15bc2367"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -681,3 +681,6 @@ AWAITING_PARENT_IDENTITY_RUN
 - Follows: [[GRRR-90te]]
 
 ## Comments
+
+### 2026-10-21T05:49:48Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
