@@ -8,8 +8,8 @@ labels: [milestone-1, integration, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-21T21:54:19Z
-content_hash: "sha256:37f94d3217bae19e9076eb1ef4e92b239455b0299b754ce5e987701f539e9a97"
+updated_at: 2026-10-21T21:54:20Z
+content_hash: "sha256:e041cb2cccb51af32bc410f0802bd1fbcd09ce0a086ae244bf49ac3e2e81e73e"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n]
@@ -507,3 +507,21 @@ status: delivered
 - [x] AC #4: three-repetition pre-registered arm plan remains unapproved and unmeasured (Code: `corpus/evaluation-plan.json`, Test: plan test, Evidence: same file).
 - [x] AC #5: static fixture checks plus accepted v4 observation path reference; downstream gates remain not-run (Code: `research/validated_corpus.py`, Test: snapshot/gap tests, Evidence: accepted v4 snapshot).
 - [x] AC #6: counts/digests/gaps are operator-reviewable and selector-visible data excludes protected labels (Code: `corpus/manifest.json`, Test: full integration suite, Evidence: `docs/evidence/validated-corpus/REPORT.md`).
+
+### 2026-10-21T21:54:20Z speed
+## PM Decision
+REJECTED [2026-10-21]:
+EXPECTED: AC #1 and AC #5 require at least 24 seeded defects plus clean negatives to be validated through real isolated executions using the accepted executor/observation path, with reproducible expected behavior for every included scenario.
+DELIVERED: Frozen corpus at commit 0995477 has 24 defects, 8 clean controls, required categories, manifests, 9/9 corpus tests, and 166/166 full units, but arbitrary seeded-variant isolated execution is explicitly not-run because the fixed v4 input/profile supports only original variants.
+GAP: Host-only/in-memory reconstruction and static corpus checks do not satisfy the mandatory real isolated fixture-validation requirement. This is a substantive execution gap, not a downstream replay/admission gate.
+FIX: Create and independently review a new pinned corpus input/profile that carries the frozen seeded variants and clean controls, then execute every included scenario through the accepted trusted-observation/isolated executor path under UID 320/321. Preserve per-scenario clean/faulty observations, deterministic repetitions, ledger receipts, and blocked downstream gates. Do not weaken isolation, claim host-only execution as isolated, or release existing stopped accounting without a reviewed successor/recovery plan.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Corpus quality is strong, but required real seeded-variant isolated execution is absent.
+
+### proof
+- [ ] AC #1: real isolated seeded-variant fixture validation missing.
+- [ ] AC #5: per-scenario reproducible clean/faulty behavior through accepted executor missing.
