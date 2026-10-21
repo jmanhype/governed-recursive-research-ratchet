@@ -1,7 +1,7 @@
 ---
 id: GRRR-c875
 title: "Stop a hung research run through independent trusted control"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T21:23:30Z
-content_hash: "sha256:2c4113bd91cd914ceefe637e25f5bc8142cc1ef399793365eabda8ce0e87f1a0"
-blocks: [GRRR-bnkf, GRRR-6sso]
+content_hash: "sha256:821e95086af2623a22005cc712135b54cafb66bb20745a0c7ff57e064a7d8ccd"
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
 follows: [GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
+closed_at: 2026-10-21T21:23:30Z
+close_reason: "Accepted: real independent UID-separated safe-stop, durable fence/recovery, and admission gate evidence"
 ---
 
 ## Description
@@ -274,10 +275,12 @@ status: in_progress
 - 2026-10-21T21:18:24Z auto-follows: linked to predecessor GRRR-90te
 - 2026-10-21T21:18:45Z status: in_progress -> in_progress
 - 2026-10-21T21:18:45Z auto-follows: linked to predecessor GRRR-0g4n
+- 2026-10-21T21:23:30Z status: in_progress -> closed
+- 2026-10-21T21:23:31Z dep_removed: no_longer_blocks GRRR-bnkf
+- 2026-10-21T21:23:31Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-bnkf]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-my5n]]
 - Follows: [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]], [[GRRR-0g4n]]
 
