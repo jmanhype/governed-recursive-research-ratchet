@@ -9,12 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:46:48Z
-content_hash: "sha256:9c53d4a4f85e099c7c83821f54dc3456cde34d964ccf747896e8ab2846240c58"
+content_hash: "sha256:69ea8007e593d47c1193d47efcd235ac257227d255668c66f39816d6ca39b153"
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
 follows: [GRRR-gu87, GRRR-90te]
 closed_at: 2026-10-21T20:46:47Z
 close_reason: "Accepted: durable UID-320 ledger, crash recovery, trusted export, and identity denials proven"
+led_to: [GRRR-c875]
 ---
 
 ## Description
@@ -216,6 +217,7 @@ status: in_progress
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-gu87]]
 - Follows: [[GRRR-gu87]], [[GRRR-90te]]
+- Led to: [[GRRR-c875]]
 
 ## Comments
 

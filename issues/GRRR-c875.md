@@ -1,17 +1,19 @@
 ---
 id: GRRR-c875
 title: "Stop a hung research run through independent trusted control"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-20T03:20:56Z
-content_hash: "sha256:d7dfce86a6f612d1d8f75ed0869179c006bf4b9138a4617ee4913344fefe2033"
+updated_at: 2026-10-21T20:53:17Z
+content_hash: "sha256:0411129ef9288e71de03c64c6540afc64baf7c5af60f5f057eda17154be7b416"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
+assignee: dev-GRRR-c875
+follows: [GRRR-my5n]
 ---
 
 ## Description
@@ -112,10 +114,14 @@ status: new
 - 2026-10-20T03:19:03Z dep_added: blocks GRRR-bnkf
 - 2026-10-20T03:19:05Z dep_added: blocks GRRR-6sso
 - 2026-10-21T20:46:47Z dep_removed: was_blocked_by GRRR-my5n
+- 2026-10-21T20:53:17Z status: open -> in_progress
+- 2026-10-21T20:53:17Z auto-follows: linked to predecessor GRRR-my5n
+- 2026-10-21T20:53:17Z claimed by dev-GRRR-c875
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-bnkf]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-my5n]]
+- Follows: [[GRRR-my5n]]
 
 ## Comments
