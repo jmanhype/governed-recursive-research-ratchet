@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T04:58:42Z
-content_hash: "sha256:b2e655b7a7db67cca3dc84a356247d99ecc711fb24550a9b7cc1a966dfbb5c0b"
+updated_at: 2026-10-21T05:02:16Z
+content_hash: "sha256:4d0d1d2cd0a0f841ec04bd95a3927ce8235c89cf15bbc7e24021c1a3f0e3e14c"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -129,6 +129,18 @@ REGENERABLE QEMU PACKAGE ROUND 2 CACHE CLEANUP (2026-10-21): removed only /Users
 INDEPENDENT QEMU INSTALLER/PACKAGE REVIEW (2026-10-21, HEAD dd4f6d3): SECURITY_REVIEW: READY_FOR_QEMU_INSTALL. Verified provisioner f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df; plan d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd; installation manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625; evidence manifest 5f87b465bea46d326d46076a2523d4e48484d95d0d7d372d66db565e050177fa; 191-file package readback; absolute dependencies/no LC_RPATH; four signatures; signed QEMU 352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da. Parent must install exact root-owned bootstrap/plan, umask 022, verify hashes/ancestors/interpreter, enforce 15GB floor, retain failure state, and perform mandatory no-QEMU post-install checks. Accounting and guest execution remain blocked.
 REGENERABLE INSTALL CACHE CLEANUP (2026-10-21): removed generated QEMU build/source trees and safe caches, preserving staged QEMU package; then removed .cache/codex-runtimes 3.2G/54,169 files plus GeminiMacOS 257M, deno 165M, ollama cache 190M, node-gyp 125M, electron 109M, Comet 103M, GeoServices 100M, go-build 97M. Current free space 16,862,380,032 bytes. Manifests .tmp-sr_pm/before-qemu-install-cleanup-manifest.txt and .tmp-sr_pm/install-cache-final-cleanup-manifest.txt. Hugging Face model cache, Ollama models, whisper cache, projects, outputs, downloads, credentials, and application data were not touched.
 EXACT QEMU PROVISIONING PLAN d1bf4b29 INSTALLED AND INDEPENDENTLY CHECKED (2026-10-21): root-owned /Library/GRRR/bootstrap and /Library/GRRR/qemu installed without launching QEMU. Bootstrap provisioner f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df, trusted-root-bootstrap 615cbfab84ddce1d84b397da9b4e99d2a51c1404bfd637defcc313238512ed9f, plan d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd. Readback SHA e434e72e02d4b0ac71b76d948a632cec53f3514e9f7599265ee12c0d0a13048b; fields accounting_touched=false, execution_authorized=false, guest_executed=false, runtime_loading_tested=false; host inventory 7e887f77bfc1a57f1a4fa26cb95c72e5567836ce98fb08553ae02e6a19744a97 and QEMU installation manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625. Independent plan check verified 218 entries; installed tree exactly 221 files/19 directories, no symlinks, root:wheel, dirs 0755, QEMU executable 0555, other files 0444. QEMU SHA 352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da. Four Mach-O images verify strict codesign and contain no LC_RPATH; non-system deps absolute /Library/GRRR/qemu paths; QEMU entitlement is Hypervisor-only. OS build 27.0/26A428. UID 320 and 321 can read/execute installed QEMU/snapshot but writes/links denied. /Library/GRRR/accounting absent and no unauthorized artifacts created. Free space after install 16,730,546,176 bytes.
+## nd_contract
+status: in_progress
+
+### evidence
+- WIP a149103: read-only all-visible-attempt genesis proposal; twelve manifest inventories, exact artifact hashes, deduplicated event/run/reservation references, scalar measurements with JSON pointers, run-scoped stops retained.
+- Proposal SHA256 257dda8fbf17639df5b457a0011da22b78e2c40fb0480360ef7c4c9c13d70c4c; GENESIS-SHA256SUMS ec2e23f301cdd0ba71d047ec1c358cef3a2328be405f90145da33061097fdaa7, 7/7 verified. Previous SHA256SUMS describes prior commit 0b538c5; revised design is bound by GENESIS-SHA256SUMS.
+- Both system/Homebrew Python 96/96 tests; pvg explicit paths passed (one Python file scanned; extensionless proposal script executed separately). No accounting store exists; no root/QEMU/guest execution.
+- Historical upper bound cannot be established from missing effects/time history. Proposed fail-closed admission holds encumber full POC and milestone ceilings, retaining individual known maxima; no zero settlement, no reset, no fabricated stage mapping. Mathematical lower bound is non-authoritative and overlap-safe. Logical genesis schema proposed only, execution blocked.
+
+### proof
+- [ ] AC #1-#6: mandatory guest controls not-run; missing historical review/preparation/replay/selector duration, effect inventory, receipts, stage assignment and campaign stop scope require reconciliation. Claim retained.
+
 ## nd_contract
 status: in_progress
 
