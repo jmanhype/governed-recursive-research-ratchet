@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T03:36:03Z
-content_hash: "sha256:213748a53b5d209e27009bb0f9503d0d3ed0fcc711e4e3f0cab3ebaa8976cc58"
+updated_at: 2026-10-21T03:42:07Z
+content_hash: "sha256:9368b24e430915a2085496e3c2d51814795ef2abe874198d95acf32e309522b4"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -126,6 +126,17 @@ REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 94
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU PACKAGING CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/ms-playwright (554M, 359 files). Current free space 17,356,939,264 bytes. Manifest .tmp-sr_pm/qemu-packaging-cache-cleanup-manifest.txt. No model/project/output data touched.
 REGENERABLE QEMU PACKAGE ROUND 2 CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/loom-updater (209M, 2 files). Current free space after cleanup measured 17,199,886,336 bytes, about 199.9 MB above the 17 GB packaging gate. Manifest .tmp-sr_pm/qemu-package-round2-cache-cleanup-manifest.txt. No application data/models/projects/outputs touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- Non-root package completed, QEMU never executed. Independent staged readback both Pythons: 191 files, 185 data; all non-system dependencies absolute under /Library/GRRR/qemu, LC_RPATH removed, signatures verified. Installation manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625; signed QEMU 352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da.
+- Exact QEMU-only parent provisioning plan d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd; installer f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df. Plan excludes accounting fields and installer returns before accounting. All current plan inputs read back.
+- Both unit suites 85/85; both Python syntax checks and pvg pass. docs/TRUSTED-OBSERVATION-QEMU-PACKAGED.md records exact AWAITING_PARENT_IDENTITY_RUN command, independent bootstrap setup, data/config boundary and remaining gates. Host inventory 7e887f77bfc1a57f1a4fa26cb95c72e5567836ce98fb08553ae02e6a19744a97; v3 guest/bootstrap unchanged.
+- No root/install/QEMU/guest execution performed. Independent security review and parent provisioning pending. Accounting unreconciled; composed execution binding absent. Claim retained, no execution approval request.
+
+### proof
+- [ ] AC #1-#6: Mandatory guest controls remain unauthorized/not-run; packaged closure is not candidate correctness or admission proof.
 
 ## nd_contract
 status: in_progress
