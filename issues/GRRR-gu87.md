@@ -1,7 +1,7 @@
 ---
 id: GRRR-gu87
 title: "Reject forged observations before spending evaluation authority"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, integration]
@@ -9,10 +9,11 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T18:02:52Z
-content_hash: "sha256:8d7d4ae67a990c480998e3a76e441bb7e38194bee1a889df5f39bff527050c16"
+content_hash: "sha256:e65d9642681bfe713083bd22c1e853368990928840a03c14a5cd90f147b394cd"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
+assignee: dev-GRRR-gu87
 ---
 
 ## Description
@@ -1031,6 +1032,8 @@ AWAITING_PARENT_IDENTITY_RUN
 - 2026-10-21T16:38:38Z claimed by dev-GRRR-gu87
 - 2026-10-21T16:58:28Z status: in_progress -> open
 - 2026-10-21T16:58:28Z released by speed
+- 2026-10-21T18:02:52Z status: open -> in_progress
+- 2026-10-21T18:02:52Z claimed by dev-GRRR-gu87
 
 ## Links
 - Parent: [[GRRR-2t3h]]
