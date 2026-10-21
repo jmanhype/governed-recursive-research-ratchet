@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import runpy
 import stat
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -88,6 +89,75 @@ class AccountingEvidenceRequest(unittest.TestCase):
             with self.assertRaisesRegex(MODULE["RequestFailure"], "SHA-256 differs"):
                 MODULE["generate"](MANIFEST, output)
         self.assertFalse(output.exists())
+
+    def test_effective_root_invocation_is_refused_before_manifest_read(self):
+        parent, output = self.output_location()
+        with mock.patch.object(MODULE["os"], "getuid", return_value=501), \
+                mock.patch.object(MODULE["os"], "geteuid", return_value=0):
+            with self.assertRaisesRegex(MODULE["RequestFailure"], "real or effective root"):
+                MODULE["generate"](parent / "absent-manifest.json", output)
+        self.assertFalse(output.exists())
+
+    def test_direct_private_tmp_output_is_rejected_for_private_publication(self):
+        parent, output = self.output_location()
+        direct = Path("/private/tmp") / ("grrr-request-rejected-%d" % MODULE["os"].getpid())
+        with self.assertRaisesRegex(MODULE["RequestFailure"], "unsafe output parent"):
+            MODULE["generate"](MANIFEST, direct)
+        self.assertFalse(direct.exists() or direct.is_symlink())
+
+    def test_acl_bearing_output_ancestor_is_rejected(self):
+        parent, output = self.output_location()
+        ancestor = Path(tempfile.mkdtemp(prefix="grrr-request-acl-", dir="/private/tmp"))
+        ancestor.chmod(0o700)
+        self.addCleanup(ancestor.rmdir)
+        nested = ancestor / "private"
+        nested.mkdir()
+        nested.chmod(0o700)
+        self.addCleanup(nested.rmdir)
+
+        def ls_result(command, *_args, **_kwargs):
+            token = "drwx------+" if command[-1] == str(ancestor) else "drwx------"
+            return subprocess.CompletedProcess(
+                command, 0, stdout="%s  1 user  group  1 %s\n" % (
+                    token, command[-1]
+                )
+            )
+
+        with mock.patch.object(subprocess, "run", side_effect=ls_result):
+            with self.assertRaisesRegex(MODULE["RequestFailure"], "ACL"):
+                MODULE["generate"](MANIFEST, nested / "request")
+        self.assertFalse((nested / "request").exists())
+
+    def test_group_writable_output_ancestor_is_rejected(self):
+        parent, output = self.output_location()
+        ancestor = Path(tempfile.mkdtemp(prefix="grrr-request-unsafe-", dir="/private/tmp"))
+        ancestor.chmod(0o700)
+
+        def restore_ancestor():
+            ancestor.chmod(0o700)
+            ancestor.rmdir()
+
+        self.addCleanup(restore_ancestor)
+        nested = ancestor / "private"
+        nested.mkdir()
+        nested.chmod(0o700)
+        self.addCleanup(nested.rmdir)
+        ancestor.chmod(0o770)
+        with self.assertRaisesRegex(MODULE["RequestFailure"], "group/world-writable"):
+            MODULE["generate"](MANIFEST, nested / "request")
+        self.assertFalse((nested / "request").exists())
+
+    def test_parent_path_replacement_is_detected_before_staging(self):
+        parent, output = self.output_location()
+        identity = mock.Mock(side_effect=[True, False])
+        globals_dict = MODULE["publish_request"].__globals__
+        with mock.patch.dict(globals_dict, {"parent_fd_matches_path": identity}):
+            with self.assertRaisesRegex(
+                MODULE["RequestFailure"], "publication parent identity changed"
+            ):
+                MODULE["generate"](MANIFEST, output)
+        self.assertFalse(output.exists() or output.is_symlink())
+        self.assertEqual(list(parent.iterdir()), [])
 
     def test_unknown_decision_is_refused_after_hash_pin(self):
         parent, output = self.output_location()

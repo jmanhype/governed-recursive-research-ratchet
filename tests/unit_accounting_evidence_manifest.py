@@ -7,6 +7,7 @@ from pathlib import Path
 import runpy
 import sqlite3
 import stat
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -182,7 +183,20 @@ class AccountingEvidenceManifest(unittest.TestCase):
         output = self.output_root / "MANIFEST.json"
         with mock.patch.object(MODULE["os"], "getuid", return_value=0):
             with self.assertRaisesRegex(
-                MODULE["EvidenceFailure"], "collector must not run as root"
+                MODULE["EvidenceFailure"], "collector must not run as real or effective root"
+            ):
+                MODULE["manifest_for"](
+                    root / "absent.sqlite", report, output, expected
+                )
+        self.assertFalse(output.exists())
+
+    def test_effective_root_invocation_is_rejected_before_source_or_output_access(self):
+        root, database, report, expected = self.make_fixture()
+        output = self.output_root / "MANIFEST.json"
+        with mock.patch.object(MODULE["os"], "getuid", return_value=501), \
+                mock.patch.object(MODULE["os"], "geteuid", return_value=0):
+            with self.assertRaisesRegex(
+                MODULE["EvidenceFailure"], "real or effective root"
             ):
                 MODULE["manifest_for"](
                     root / "absent.sqlite", report, output, expected
@@ -213,6 +227,65 @@ class AccountingEvidenceManifest(unittest.TestCase):
                 database, report, link / "nested" / "MANIFEST.json", expected
             )
         self.assertFalse((ancestor / "MANIFEST.json").exists())
+
+    def test_acl_bearing_output_ancestor_is_rejected(self):
+        root, database, report, expected = self.make_fixture()
+        ancestor = Path(tempfile.mkdtemp(prefix="grrr-acl-", dir="/private/tmp"))
+        ancestor.chmod(0o700)
+        self.addCleanup(ancestor.rmdir)
+        output_parent = ancestor / "private"
+        output_parent.mkdir()
+        output_parent.chmod(0o700)
+        self.addCleanup(output_parent.rmdir)
+
+        def ls_result(command, *_args, **_kwargs):
+            token = "drwx------+" if command[-1] == str(ancestor) else "drwx------"
+            return subprocess.CompletedProcess(
+                command, 0, stdout="%s  1 user  group  1 %s\n" % (
+                    token, command[-1]
+                )
+            )
+
+        with mock.patch.object(subprocess, "run", side_effect=ls_result):
+            with self.assertRaisesRegex(MODULE["EvidenceFailure"], "ACL"):
+                MODULE["manifest_for"](
+                    database, report, output_parent / "MANIFEST.json", expected
+                )
+        self.assertFalse((output_parent / "MANIFEST.json").exists())
+
+    def test_group_writable_output_ancestor_is_rejected(self):
+        root, database, report, expected = self.make_fixture()
+        ancestor = Path(tempfile.mkdtemp(prefix="grrr-unsafe-ancestor-", dir="/private/tmp"))
+        ancestor.chmod(0o700)
+
+        def restore_ancestor():
+            ancestor.chmod(0o700)
+            ancestor.rmdir()
+
+        self.addCleanup(restore_ancestor)
+        output_parent = ancestor / "private"
+        output_parent.mkdir()
+        output_parent.chmod(0o700)
+        self.addCleanup(output_parent.rmdir)
+        ancestor.chmod(0o770)
+        with self.assertRaisesRegex(MODULE["EvidenceFailure"], "group/world-writable"):
+            MODULE["manifest_for"](
+                database, report, output_parent / "MANIFEST.json", expected
+            )
+        self.assertFalse((output_parent / "MANIFEST.json").exists())
+
+    def test_parent_path_replacement_is_detected_before_staging(self):
+        root, database, report, expected = self.make_fixture()
+        output = self.output_root / "MANIFEST.json"
+        identity = mock.Mock(side_effect=[True, False])
+        globals_dict = MODULE["publish_payload"].__globals__
+        with mock.patch.dict(globals_dict, {"parent_fd_matches_path": identity}):
+            with self.assertRaisesRegex(
+                MODULE["EvidenceFailure"], "publication parent identity changed"
+            ):
+                self.collect(root, database, report, expected)
+        self.assertFalse(output.exists() or output.is_symlink())
+        self.assertEqual(list(self.output_root.iterdir()), [])
 
     def test_final_output_symlink_is_rejected(self):
         root, database, report, expected = self.make_fixture()

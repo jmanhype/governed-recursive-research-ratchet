@@ -6,9 +6,10 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import secrets
 import stat
+import subprocess
 import sys
-import tempfile
 
 
 DEFAULT_MANIFEST = Path(
@@ -77,6 +78,11 @@ class RequestFailure(ValueError):
 def require(condition, message):
     if not condition:
         raise RequestFailure(message)
+
+
+def reject_root_invocation():
+    require(os.getuid() != 0 and os.geteuid() != 0,
+            "generator must not run as real or effective root")
 
 
 def valid_hash(value):
@@ -310,39 +316,67 @@ def markdown_for(request, request_hash):
     ])
 
 
-def rename_exclusive(source, destination):
+def ancestor_has_no_acl(path):
+    try:
+        result = subprocess.run(
+            ["/bin/ls", "-lde", str(path)], stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, text=True,
+        )
+    except OSError as error:
+        raise RequestFailure("ACL inspection failed for %s" % path) from error
+    require(result.returncode == 0,
+            "ACL inspection failed for %s: %s" % (path, result.stderr or ""))
+    lines = result.stdout.splitlines()
+    require(lines, "ACL inspection returned no mode for %s" % path)
+    return "+" not in lines[0].split()[0]
+
+
+def parent_fd_matches_path(descriptor, path):
+    fd_info = os.fstat(descriptor)
+    path_info = os.lstat(path)
+    identity = ("st_dev", "st_ino", "st_mode", "st_uid", "st_gid")
+    return all(getattr(fd_info, name) == getattr(path_info, name)
+               for name in identity)
+
+
+def require_parent_fd_matches_path(descriptor, path):
+    try:
+        matches = parent_fd_matches_path(descriptor, path)
+    except OSError as error:
+        raise RequestFailure(
+            "publication parent identity became unavailable: %s" % path
+        ) from error
+    require(matches, "publication parent identity changed: %s" % path)
+
+
+def renameat_exclusive(parent_fd, temporary_name, final_name):
     library = ctypes.CDLL(None, use_errno=True)
-    function = library.renamex_np
-    function.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint]
+    function = library.renameatx_np
+    function.argtypes = [
+        ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+        ctypes.c_uint,
+    ]
     function.restype = ctypes.c_int
-    result = function(os.fsencode(str(source)), os.fsencode(str(destination)),
-                      RENAME_EXCL | RENAME_NOFOLLOW_ANY)
+    result = function(
+        parent_fd, os.fsencode(temporary_name), parent_fd,
+        os.fsencode(final_name), RENAME_EXCL | RENAME_NOFOLLOW_ANY,
+    )
     if result != 0:
         error_number = ctypes.get_errno()
-        raise OSError(error_number, os.strerror(error_number), str(source),
-                      None, str(destination))
+        raise OSError(error_number, os.strerror(error_number), temporary_name,
+                      None, final_name)
 
 
-def write_private_file(path, payload):
+def write_private_file(parent_fd, name, payload):
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(str(path), flags, 0o600)
+    descriptor = os.open(name, flags, 0o600, dir_fd=parent_fd)
     try:
-        stream = os.fdopen(descriptor, "wb")
-    except Exception:
-        os.close(descriptor)
-        raise
-    try:
-        stream.write(payload)
-        stream.flush()
-        os.fsync(stream.fileno())
-    finally:
-        stream.close()
-
-
-def fsync_directory(path):
-    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(str(path), flags)
-    try:
+        view = memoryview(payload)
+        while view:
+            written = os.write(descriptor, view)
+            if written <= 0:
+                raise OSError("payload write made no progress")
+            view = view[written:]
         os.fsync(descriptor)
     finally:
         os.close(descriptor)
@@ -354,16 +388,33 @@ def validate_output_path(path):
             "output path is not an absolute normalized lexical path")
     parent = path.parent
     parent_info = os.lstat(parent)
-    require(stat.S_ISDIR(parent_info.st_mode), "output parent is not a directory")
-    require(parent_info.st_uid == os.getuid(),
-            "output parent is not owned by the current UID")
-    require(stat.S_IMODE(parent_info.st_mode) & 0o022 == 0,
-            "output parent is group/world-writable")
+    effective_uid = os.geteuid()
     ancestor = parent
-    while ancestor.parent != ancestor:
-        require(not stat.S_ISLNK(os.lstat(ancestor).st_mode),
-                "output ancestor is a symlink: %s" % ancestor)
+    while True:
+        info = os.lstat(ancestor)
+        require(stat.S_ISDIR(info.st_mode),
+                "unsafe output ancestor is a symlink or not a directory: %s" % ancestor)
+        require(ancestor_has_no_acl(ancestor),
+                "unsafe output ancestor has an ACL: %s" % ancestor)
+        mode = stat.S_IMODE(info.st_mode)
+        if ancestor == Path("/private/tmp"):
+            require(info.st_uid == 0,
+                    "bounded /private/tmp exception is not root-owned")
+            require(mode & 0o1000 and mode & 0o022 == 0o022,
+                    "bounded /private/tmp exception is not sticky world-writable")
+        else:
+            require(mode & 0o022 == 0,
+                    "unsafe output ancestor is group/world-writable: %s" % ancestor)
+            require(info.st_uid in (effective_uid, 0),
+                    "unsafe output ancestor owner: %s" % ancestor)
+        if ancestor.parent == ancestor:
+            break
         ancestor = ancestor.parent
+    require(stat.S_ISDIR(parent_info.st_mode), "output parent is not a directory")
+    require(parent_info.st_uid == effective_uid,
+            "unsafe output parent: not owned by the current non-root effective UID")
+    require(stat.S_IMODE(parent_info.st_mode) & 0o022 == 0,
+            "unsafe output parent is group/world-writable")
     try:
         final_info = os.lstat(path)
     except FileNotFoundError:
@@ -381,18 +432,42 @@ def publish_request(request, output_path):
     markdown_payload = markdown_for(request, request_hash).encode("utf-8")
     output_path = validate_output_path(output_path)
     parent = output_path.parent
-    temporary = Path(tempfile.mkdtemp(
-        prefix=".%s." % output_path.name, suffix=".tmp", dir=parent
-    ))
-    write_private_file(temporary / "REQUEST.json", request_payload)
-    write_private_file(temporary / "REQUEST.md", markdown_payload)
-    fsync_directory(temporary)
-    rename_exclusive(temporary, output_path)
-    fsync_directory(parent)
+    temporary_name = ".%s.%d.%s.tmp" % (
+        output_path.name, os.getpid(), secrets.token_hex(16)
+    )
+    parent_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    parent_fd = os.open(str(parent), parent_flags)
+    staging_fd = None
+    try:
+        require_parent_fd_matches_path(parent_fd, parent)
+        require_parent_fd_matches_path(parent_fd, parent)
+        os.mkdir(temporary_name, 0o700, dir_fd=parent_fd)
+        staging_flags = (
+            os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) |
+            getattr(os, "O_NOFOLLOW", 0)
+        )
+        staging_fd = os.open(
+            temporary_name, staging_flags, dir_fd=parent_fd
+        )
+        try:
+            write_private_file(staging_fd, "REQUEST.json", request_payload)
+            write_private_file(staging_fd, "REQUEST.md", markdown_payload)
+            os.fsync(staging_fd)
+        finally:
+            os.close(staging_fd)
+            staging_fd = None
+        require_parent_fd_matches_path(parent_fd, parent)
+        renameat_exclusive(parent_fd, temporary_name, output_path.name)
+        os.fsync(parent_fd)
+    finally:
+        if staging_fd is not None:
+            os.close(staging_fd)
+        os.close(parent_fd)
     return request_hash
 
 
 def generate(manifest_path, output_path):
+    reject_root_invocation()
     raw = Path(manifest_path).read_bytes()
     manifest_hash = hashlib.sha256(raw).hexdigest()
     manifest = validate_manifest(raw)
