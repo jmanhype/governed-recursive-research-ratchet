@@ -1,7 +1,7 @@
 ---
 id: GRRR-gu87
 title: "Reject forged observations before spending evaluation authority"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:15:24Z
-content_hash: "sha256:4fcd2b4f4873d92e67455dbf07a8e15ad292fd1fd5e6112901b8579e65f518ff"
-blocks: [GRRR-my5n, GRRR-6sso]
+content_hash: "sha256:7b6fbcb4040a328d6a38d8576d65ca4d1e7975069edaa3a8f2175a9846f2c37b"
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
 assignee: dev-GRRR-gu87
+closed_at: 2026-10-21T20:15:24Z
+close_reason: "Accepted: real 10/10 trusted-observation controls with durable evidence and preserved fail-closed boundaries"
 ---
 
 ## Description
@@ -1153,10 +1154,12 @@ AWAITING_PARENT_IDENTITY_RUN
 - 2026-10-21T18:53:12Z status: open -> in_progress
 - 2026-10-21T18:53:12Z claimed by dev-GRRR-gu87
 - 2026-10-21T20:11:43Z status: in_progress -> in_progress
+- 2026-10-21T20:15:24Z status: in_progress -> closed
+- 2026-10-21T20:15:24Z dep_removed: no_longer_blocks GRRR-my5n
+- 2026-10-21T20:15:24Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-my5n]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-90te]]
 - Follows: [[GRRR-90te]], [[GRRR-0g4n]]
 
