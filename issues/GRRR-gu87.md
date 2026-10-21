@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T05:02:16Z
-content_hash: "sha256:4d0d1d2cd0a0f841ec04bd95a3927ce8235c89cf15bbc7e24021c1a3f0e3e14c"
+updated_at: 2026-10-21T05:11:19Z
+content_hash: "sha256:c7d9b0fb60abfcc76f6a1c987a0aa28710b6b5c3c3c5d61f5a50184663a8aa69"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -129,6 +129,19 @@ REGENERABLE QEMU PACKAGE ROUND 2 CACHE CLEANUP (2026-10-21): removed only /Users
 INDEPENDENT QEMU INSTALLER/PACKAGE REVIEW (2026-10-21, HEAD dd4f6d3): SECURITY_REVIEW: READY_FOR_QEMU_INSTALL. Verified provisioner f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df; plan d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd; installation manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625; evidence manifest 5f87b465bea46d326d46076a2523d4e48484d95d0d7d372d66db565e050177fa; 191-file package readback; absolute dependencies/no LC_RPATH; four signatures; signed QEMU 352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da. Parent must install exact root-owned bootstrap/plan, umask 022, verify hashes/ancestors/interpreter, enforce 15GB floor, retain failure state, and perform mandatory no-QEMU post-install checks. Accounting and guest execution remain blocked.
 REGENERABLE INSTALL CACHE CLEANUP (2026-10-21): removed generated QEMU build/source trees and safe caches, preserving staged QEMU package; then removed .cache/codex-runtimes 3.2G/54,169 files plus GeminiMacOS 257M, deno 165M, ollama cache 190M, node-gyp 125M, electron 109M, Comet 103M, GeoServices 100M, go-build 97M. Current free space 16,862,380,032 bytes. Manifests .tmp-sr_pm/before-qemu-install-cleanup-manifest.txt and .tmp-sr_pm/install-cache-final-cleanup-manifest.txt. Hugging Face model cache, Ollama models, whisper cache, projects, outputs, downloads, credentials, and application data were not touched.
 EXACT QEMU PROVISIONING PLAN d1bf4b29 INSTALLED AND INDEPENDENTLY CHECKED (2026-10-21): root-owned /Library/GRRR/bootstrap and /Library/GRRR/qemu installed without launching QEMU. Bootstrap provisioner f6190845f01c4935759e03dcc1df0a04bb2ce56986ecf439c972fefd1dbbe1df, trusted-root-bootstrap 615cbfab84ddce1d84b397da9b4e99d2a51c1404bfd637defcc313238512ed9f, plan d1bf4b297c3d31f48e494abfb3c1bd9456d438b8f4e328d62787841e0aaf0fcd. Readback SHA e434e72e02d4b0ac71b76d948a632cec53f3514e9f7599265ee12c0d0a13048b; fields accounting_touched=false, execution_authorized=false, guest_executed=false, runtime_loading_tested=false; host inventory 7e887f77bfc1a57f1a4fa26cb95c72e5567836ce98fb08553ae02e6a19744a97 and QEMU installation manifest e40888d8d14bc9c2b8db38d8468bc53fdbf77421b284d9eacbbce1d37818b625. Independent plan check verified 218 entries; installed tree exactly 221 files/19 directories, no symlinks, root:wheel, dirs 0755, QEMU executable 0555, other files 0444. QEMU SHA 352108bbc46171ed74ee3ef0b74ac1f32403c7e076ebac623ce2c265724699da. Four Mach-O images verify strict codesign and contain no LC_RPATH; non-system deps absolute /Library/GRRR/qemu paths; QEMU entitlement is Hypervisor-only. OS build 27.0/26A428. UID 320 and 321 can read/execute installed QEMU/snapshot but writes/links denied. /Library/GRRR/accounting absent and no unauthorized artifacts created. Free space after install 16,730,546,176 bytes.
+## nd_contract
+status: in_progress
+
+### evidence
+- Commit 9803520 stages standalone conservative-genesis builder/verifier/root provisioner; no installation executed. /Library/GRRR/accounting absent. Existing QEMU/bootstrap/guest pins unchanged.
+- Prepared database 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234 contains 259 raw hash-bound artifacts. Canonical receipt 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde remains unresolved_history=true, stopped=1, complete_migration=false; cannot satisfy complete installer/runtime schema.
+- Exact plan 0fe2d1cb4e989c75640497194e3efe0bb9a365a3d755a619eaae1c94685f306a; standalone bootstrap c411ab2a67ae924eca90889b60306a4a9582b9edc69e029e31770bb321474635. Parent identity command and exact provisioning-only authorization text in docs/TRUSTED-OBSERVATION-CONSERVATIVE-PROVISIONING.md.
+- System/Homebrew Python 102/102 each. Real SQLite concurrent/reopen zero-cost denial across three profiles/two stages, stop triggers, evidence verification, existing-state refusal and actual runtime schema rejection. pvg explicit paths passed (one .py scanned; extensionless script executed separately). SHA256SUMS 259c0455f7854d66cc7853ba60bdd16b2bc28810d63f4e42b1e870d6854cda60: 11/11 verified.
+- Corrected history: ten earlier/nonaccepted attempts, nine nonzero and three zero exit manifests. POC included in milestone hold, not additive historical charges. No historical stop inferred, no synthesized reservation IDs/settlements/epochs, no fractional measurement conversion to authoritative usage.
+
+### proof
+- [ ] AC #1-#6: privileged provisioning and guest controls not-run; historical gaps unresolved. AWAITING_PARENT_IDENTITY_RUN only after independent review and exact provisioning authorization. No execution approval requested; claim retained.
+
 ## nd_contract
 status: in_progress
 
