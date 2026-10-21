@@ -32,6 +32,8 @@ chmod -R a-w /work/go; chmod 755 /work/go /work/go/bin /work/go/pkg/tool
 tar -xf vlt.tar -C /root/source
 mkdir /root/probes
 tar -xf probes.tar -C /root/probes
+chmod 700 /root/probes
+chmod 600 /root/probes/*
 cd /root/source && sha256sum -c /root/inputs/source.sum
 cp /root/inputs/corpus-supervis /work/control/supervisor
 cp /root/inputs/corpus-helper /work/bin/corpus-helper

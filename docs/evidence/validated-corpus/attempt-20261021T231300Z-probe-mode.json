@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-e5mtep6w",
+  "bootstrap_commit": "fc6fcc8b2969c3104b42b1fae892f555b178bc4a",
+  "guest_started": true,
+  "exact_error": "stage: private regular root file required",
+  "cause": "Guest tar restored archived probe mode 0644; supervisor correctly requires root-private 0600",
+  "candidate_executed": false,
+  "fix": "Set root-private modes explicitly after extraction"
+}
