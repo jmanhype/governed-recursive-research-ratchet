@@ -1,6 +1,7 @@
 """Supplementary parsing/accounting tests; UID substitution is NOT identity proof."""
 import concurrent.futures
 import copy
+import fcntl
 import os
 from pathlib import Path
 import socket
@@ -42,6 +43,36 @@ class BudgetChecks:
         with self.assertRaises(Failure):
             vector(dict(resources(), currency='EUR'))
         self.assertEqual(self.budget.totals(self.principal)['pending'], 0)
+
+    def test_restart_preserves_cross_profile_hold_and_stop(self) -> None:
+        # Distinct profile bindings share one physical allowance, not one per run.
+        self.budget.reserve(self.principal, 'synthetic', resources(5000), 'synthetic',
+                            binding=digest(b'synthetic'))
+        self.budget.db.close()
+        self.budget = Budget(self.path, existing=True)
+        self.assertEqual(self.budget.totals(self.principal)['pending'], 1)
+        with self.assertRaises(Failure):
+            self.budget.reserve(self.principal, 'offline', resources(1), 'offline',
+                                binding=digest(b'offline'))
+        self.budget.halt()
+        self.budget.db.close()
+        self.budget = Budget(self.path, existing=True)
+        with self.assertRaises(Failure):
+            self.budget.reserve(self.principal, 'trusted', resources(), 'trusted',
+                                binding=digest(b'trusted-observation'))
+
+    def test_missing_prior_store_never_creates_empty_allowance(self) -> None:
+        missing = self.path.parent / 'missing.sqlite'
+        with self.assertRaises((OSError, sqlite3.Error, Failure)):
+            Budget(missing, existing=True)
+        self.assertFalse(missing.exists())
+
+    def test_second_launcher_lock_is_rejected(self) -> None:
+        lock = self.path.parent / 'launch.lock'
+        with lock.open('wb') as first, lock.open('rb') as second:
+            fcntl.flock(first, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            with self.assertRaises(BlockingIOError):
+                fcntl.flock(second, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
     def test_duplicate_binding_and_stage(self) -> None:
         first = self.reserve('same', resources(execution=100))

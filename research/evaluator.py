@@ -1,4 +1,5 @@
 """Protected evaluator: transport auth, reservations, assertions, durable evidence."""
+from __future__ import annotations
 import os
 from pathlib import Path
 import threading
@@ -9,7 +10,7 @@ from common import (EVALUATOR, RUNNER, DENIED, GATES, VARIANTS, Failure, call,
                     canonical, digest, fields, identifier, require, serve)
 from ledger import Ledger, verifySnapshot
 from policy import loadPolicy
-from budget import Budget
+from persistent_budget import PersistentBudget
 from observation import validate_observation, gate
 
 
@@ -28,7 +29,7 @@ class Evaluator:
         self.reserved = 0
         self.halted = False
         self.cessation_unknown: set[str] = set()
-        self.budget = Budget(root / 'budget.sqlite')
+        self.budget = PersistentBudget('synthetic')
         self.preflight = False
         self.stops: dict[str, tuple[str, dict]] = {}
         self.executor = root.parent / 'ipc/executor.sock'

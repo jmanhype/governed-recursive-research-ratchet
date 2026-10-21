@@ -4,6 +4,7 @@ Integer microseconds and USD cents avoid float rounding at ceilings. SQLite
 BEGIN IMMEDIATE serializes separate connections/processes, not just threads.
 Unknown outcomes never release a reservation. No paid capability is added.
 """
+from __future__ import annotations
 import json
 import os
 from pathlib import Path
@@ -24,6 +25,10 @@ def storage_guard(method: Callable) -> Callable:
     @wraps(method)
     def guarded(self: 'Budget', *args: Any, **kwargs: Any) -> Any:
         try:
+            if self.existing_identity is not None:
+                info = self.path.lstat()
+                require((info.st_dev, info.st_ino) == self.existing_identity and info.st_nlink == 1
+                        and not self.path.is_symlink(), 'RecoveryRequired', 'Persistent accounting path changed')
             return method(self, *args, **kwargs)
         except (sqlite3.Error, OSError) as exc:
             self.failed = True
@@ -46,15 +51,18 @@ def vector(value: dict) -> dict:
 
 class Budget:
     """One protected database for POC and milestone; POC is never reset away."""
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, *, existing: bool = False) -> None:
         require(os.getuid() == EVALUATOR, 'Unauthorized', 'Budget requires evaluator identity')
         require(not path.is_symlink() and path.parent.stat().st_uid == EVALUATOR
                 and path.parent.stat().st_mode & 0o077 == 0,
                 'Unauthorized', 'Budget parent is not private evaluator storage')
         self.lock = threading.RLock()
+        self.path = path
+        self.existing_identity = (path.stat().st_dev, path.stat().st_ino) if existing else None
         self.failed = False
         self.stop_persistence_unknown = False
-        self.db = sqlite3.connect(path, timeout=5, check_same_thread=False, isolation_level=None)
+        self.db = sqlite3.connect(path.as_uri() + '?mode=rw' if existing else path,
+                                  uri=existing, timeout=5, check_same_thread=False, isolation_level=None)
         os.chmod(path, 0o600)
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.executescript("""
@@ -185,6 +193,7 @@ class Budget:
             require(previous is None or previous == (category, duration_us), 'StaleBinding', 'Overhead key changed')
             self.db.execute('INSERT OR IGNORE INTO overhead VALUES(?,?,?)', (key, category, duration_us))
 
+    @storage_guard
     def totals(self, principal: int) -> dict:
         """Project charged usage plus outstanding worst-case holds in both stages."""
         self.authorized(principal)

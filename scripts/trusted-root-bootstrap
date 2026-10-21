@@ -1,0 +1,136 @@
+#!/usr/bin/python3
+"""Install independently, root-owned and reviewed; NEVER execute checkout as root.
+
+Invocation from the immutable installation, not this checkout:
+  /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9
+    -I -S -B /Library/GRRR/bootstrap/trusted-root-bootstrap
+    SOURCE_BUNDLE HOST_BINDING APPROVAL LICENSE_REVIEW QEMU_MANIFEST VM_ASSETS PREPARED
+No imports from SOURCE_BUNDLE occur before complete approval-bound snapshotting.
+"""
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import stat
+import subprocess
+import sys
+import tempfile
+
+
+def check(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True, allow_nan=False).encode()
+
+
+def unique(pairs):
+    value = {}
+    for key, item in pairs:
+        check(key not in value, 'duplicate JSON key')
+        value[key] = item
+    return value
+
+
+def protected(path, directory=False, readonly=True):
+    check(path.is_absolute() and '..' not in path.parts, 'normalized absolute protected path required')
+    for member in reversed((path, *path.parents)):
+        info = member.lstat()
+        check(not stat.S_ISLNK(info.st_mode) and info.st_uid == 0 and info.st_mode & 0o022 == 0,
+              'mutable or symlinked protected ancestor')
+        listing = subprocess.run(['/bin/ls', '-lde', str(member)], check=True, capture_output=True,
+                                 timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+        check(b'+' not in listing.split(None, 1)[0], 'protected path has ACL')
+    info = path.lstat()
+    check(stat.S_ISDIR(info.st_mode) if directory else stat.S_ISREG(info.st_mode), 'protected path type')
+    if not directory:
+        check(info.st_nlink == 1 and (not readonly or info.st_mode & 0o222 == 0),
+              'protected file must be single-link read-only')
+
+
+def read_json(path, trusted=False):
+    if trusted:
+        protected(path)
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
+        info = os.fstat(stream.fileno())
+        check(stat.S_ISREG(info.st_mode) and info.st_size <= 1048576, 'invalid JSON file')
+        return json.loads(stream.read(1048577), object_pairs_hook=unique)
+
+
+def main():
+    check(os.getuid() == 0 and sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode,
+          'root-controlled isolated bootstrap required; no execution from checkout')
+    check(len(sys.argv) == 8, __doc__)
+    self_path = Path(__file__).absolute()
+    protected(self_path)
+    check(self_path.parent == Path('/Library/GRRR/bootstrap'), 'unregistered bootstrap installation')
+    interpreter = Path(sys.executable)
+    check(interpreter == Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9'),
+          'canonical root-controlled Python interpreter required')
+    protected(interpreter, readonly=False)
+    for search in sys.path:
+        path = Path(search)
+        protected(path if path.exists() else path.parent, directory=not path.is_file())
+    source, binding_path, approval_path, license_path, qemu_path, vm, prepared = map(Path, sys.argv[1:])
+    approval = read_json(approval_path, True)
+    check(approval.get('decision') == 'approved-trusted-execution', 'execution not authorized')
+    check(approval.get('bootstrap_sha256') == sha(self_path.read_bytes()), 'bootstrap approval pin differs')
+    check(approval.get('python_sha256') == sha(interpreter.read_bytes()), 'interpreter approval pin differs')
+    binding = read_json(binding_path)
+    files = binding['files']
+    check(isinstance(files, dict) and 0 < len(files) <= 128, 'invalid complete source inventory')
+    check(sha(canonical(files)) == approval['host_code'], 'source inventory not approved')
+    check('scripts/trusted-identity-integration' in files, 'launcher missing from bundle')
+    read_json(license_path, True)
+    qemu = read_json(qemu_path, True)
+    check(sha(canonical(qemu)) == approval['qemu_installation'], 'installation approval differs')
+    active = read_json(Path('/Library/GRRR/accounting/active.json'), True)
+    check(sha(canonical(active)) == approval['accounting_binding'], 'accounting approval differs')
+    snapshots = Path('/Library/GRRR/snapshots')
+    protected(snapshots, directory=True)
+    check(shutil.disk_usage(snapshots).free >= 15000000000, 'fixed space floor unavailable')
+    os.umask(0o077)
+    target = Path(tempfile.mkdtemp(prefix='approved-', dir=snapshots))
+    for name, expected in files.items():
+        relative = Path(name)
+        check(not relative.is_absolute() and '..' not in relative.parts and str(relative) == name,
+              'unsafe bundle member')
+        with os.fdopen(os.open(source / relative, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
+            info = os.fstat(stream.fileno())
+            check(stat.S_ISREG(info.st_mode) and info.st_size <= 10485760, 'unsafe source member')
+            data = stream.read(10485761)
+        check(sha(data) == expected, 'source changed or absent before snapshot')
+        destination = target / relative
+        destination.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+        with destination.open('xb') as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        destination.chmod(0o444)
+        check(sha(destination.read_bytes()) == expected, 'snapshot readback differs')
+    for directory in sorted((p for p in target.rglob('*') if p.is_dir()), reverse=True):
+        directory.chmod(0o555)
+    target.chmod(0o555)
+    # Only now may root import the reviewed application, from the immutable copy.
+    result = subprocess.run([str(interpreter), '-I', '-S', '-B',
+        str(target / 'scripts/trusted-identity-integration'), '--bootstrap-run',
+        str(vm.absolute()), str(prepared.absolute()), str(approval_path.absolute()),
+        str(license_path.absolute()), str(qemu_path.absolute())],
+        cwd=target, env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty'}, timeout=3700)
+    return result.returncode
+
+
+if __name__ == '__main__':
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        print(json.dumps({'trusted_observation': 'not-run', 'bootstrap_failure': str(exc),
+                          'execution_authorized': False}))
+        raise SystemExit(1)

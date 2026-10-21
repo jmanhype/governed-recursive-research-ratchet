@@ -1,5 +1,12 @@
 # GRRR-gu87 — dedicated host adapter, unexecuted WIP
 
+**Historical/rejected security checkpoint:** independent review returned
+`SECURITY_REVIEW: CHANGES_REQUIRED` after this document. The direct checkout
+root command and host-code approval pin below are withdrawn, not executable
+instructions. Consult `TRUSTED-OBSERVATION-SECURITY-WIP.md` for the successor
+design and remaining review/provisioning blockers. Historical evidence hashes
+apply to the committed versions at `d53deaf`, not this added status annotation.
+
 This checkpoint is development/review only. No root launcher, QEMU process, guest
 candidate, paid request, admission, production mutation, or push was executed.
 The story remains claimed/in progress, not delivered. Source implementation

@@ -21,6 +21,7 @@ from common import EVALUATOR, Failure, MAX_WIRE, call, canonical, digest, peer_u
 from unit_trusted_observation import BudgetChecks
 from observation import regular_artifact
 from trusted_evaluation import Session
+from budget import Budget
 from trusted_execution import root_record, validate_config, validate_approval
 
 
@@ -42,9 +43,10 @@ class Mandatory(unittest.TestCase):
                           root_record(cls.runtime / 'runner/license.json'))
         cls.session = Session(cls.runtime / 'evaluator')
         cls.endpoint = cls.session.endpoint
+        cls.control = cls.session.control
 
     def status(self, run='status'):
-        return call(self.endpoint, {'action': 'status', 'run': run})
+        return call(self.control, {'action': 'status', 'run': run})
 
     def wait(self, run, predicate, seconds=305):
         deadline = time.monotonic() + seconds
@@ -60,11 +62,21 @@ class Mandatory(unittest.TestCase):
         with ThreadPoolExecutor(1) as pool:
             future = pool.submit(call, self.endpoint, request)
             self.wait(request['run'], lambda value: value['ready'], 45)
-            started = time.monotonic()
-            receipt = call(self.endpoint, {'action': 'stop', 'run': request['run']})
-            self.assertLess(time.monotonic() - started, 2)
-            self.assertTrue(receipt['fenced'])
-            result = future.result(timeout=9)
+            saturation = []
+            try:
+                for _ in range(16):
+                    conn = socket.socket(socket.AF_UNIX)
+                    conn.settimeout(1)
+                    conn.connect(str(self.endpoint))
+                    saturation.append(conn)  # authenticated idle data peers, no payload
+                started = time.monotonic()
+                receipt = call(self.control, {'action': 'stop', 'run': request['run']})
+                self.assertLess(time.monotonic() - started, 2)
+                self.assertTrue(receipt['fenced'])
+                result = future.result(timeout=9)
+            finally:
+                for conn in saturation:
+                    conn.close()
         self.assertTrue(result['ceased'])
         self.assertFalse(result['transport_complete'])
         with self.assertRaises(Failure):
@@ -157,14 +169,14 @@ class Mandatory(unittest.TestCase):
     def test_06_real_atomic_budget_ceilings_and_unknowns(self):
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(ActualIdentityBudget)
         result = unittest.TextTestRunner(verbosity=2).run(suite)
-        self.assertEqual(result.testsRun, 9)
+        self.assertEqual(result.testsRun, 12)
         self.assertTrue(result.wasSuccessful())
         self.assertFalse(result.skipped)
 
     def test_07_reservation_not_lease_epoch_and_delayed_receipt(self):
         before = self.status()['launches']
         request = self.session.prepare()
-        call(self.endpoint, {'action': 'stop', 'run': request['run']})
+        call(self.control, {'action': 'stop', 'run': request['run']})
         with self.assertRaises(Failure) as stopped:
             call(self.endpoint, request)
         self.assertEqual(stopped.exception.record['code'], 'Stopped')
@@ -204,12 +216,17 @@ class Mandatory(unittest.TestCase):
         with self.assertRaises(Failure):
             self.session.accept(request, result)
         self.assertTrue(self.status()['halted'])
+        self.session.budget.halt()
         with self.assertRaises(Failure):
             call(self.endpoint, dict(request, run=uuid.uuid4().hex, key=uuid.uuid4().hex))
 
     def test_10_evaluator_store_exhaustion_before_effect(self):
         before = self.status()['launches']
-        store = self.session.budget
+        # Never deliberately exhaust the persistent production accounting store.
+        # This actual UID-320 SQLite fault fixture has no dispatch capability.
+        fixture = self.runtime / 'evaluator/store-exhaustion'
+        fixture.mkdir(mode=0o700)
+        store = Budget(fixture / 'budget.sqlite')
         pages = store.db.execute('PRAGMA page_count').fetchone()[0]
         store.db.execute('PRAGMA max_page_count=' + str(pages))
         error = None
@@ -225,7 +242,10 @@ class Mandatory(unittest.TestCase):
         self.assertEqual(error.record['code'], 'RecoveryRequired')
         self.assertIn('full', str(error.__cause__))
         with self.assertRaises(Failure):
-            self.session.prepare()
+            store.reserve(EVALUATOR, 'after-full',
+                {'currency': 'USD', 'money_cents': 0, 'execution_us': 1, 'review_us': 0}, 'after-full')
+        self.assertTrue(self.session.budget.totals(EVALUATOR)['stopped'])
+        store.db.close()
         self.assertEqual(self.status()['launches'], before)
 
 

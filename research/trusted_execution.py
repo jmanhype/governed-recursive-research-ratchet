@@ -12,6 +12,8 @@ import time
 import uuid
 from common import EVALUATOR, RUNNER, Failure, canonical, digest, fields, identifier, require, serve, unique_fields
 from execution import ASSETS, QEMU
+from trusted_install import verify_qemu
+from trusted_transport import AuthenticatedServer
 
 PROFILE = '3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0'
 IMAGE = '799ec744f27e7329686e5acb8a3e1f663c82a321f7bc1d4bc940ea5c97068233'
@@ -23,6 +25,10 @@ LIMITS = {'memory_mib': 1024, 'workspace_mib': 512, 'vcpus': 1, 'boot_seconds': 
           'command_seconds': 240, 'total_seconds': 300, 'stop_ack_seconds': 2,
           'term_grace_seconds': 5, 'kill_wait_seconds': 2, 'output_bytes': 1048576,
           'wire_bytes': 3145728, 'minimum_host_free_bytes': 15000000000}
+
+
+def configuration_digest(config):
+    return digest(canonical({key: value for key, value in config.items() if key != 'execution_profile'}))
 
 
 def root_record(path: Path) -> dict:
@@ -42,8 +48,13 @@ def root_record(path: Path) -> dict:
 
 def validate_config(config: dict) -> dict:
     fields(config, {'version', 'profile', 'image', 'supervisor', 'host_code', 'operator_uid', 'limits',
-                    'network', 'host_shares', 'paid_dispatch', 'read_only_inputs'})
+                    'network', 'host_shares', 'paid_dispatch', 'read_only_inputs',
+                    'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile'})
     identifier(config['host_code'], True)
+    for name in ('qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256'):
+        identifier(config[name], True)
+    require(config['execution_profile'] == configuration_digest(config),
+            'StaleBinding', 'Composed execution profile differs from reviewed configuration')
     require(config['version'] == 1 and type(config['version']) is int
             and config['profile'] == PROFILE and config['image'] == IMAGE
             and config['supervisor'] == SUPERVISOR and config['limits'] == LIMITS
@@ -57,10 +68,12 @@ def validate_config(config: dict) -> dict:
 
 def validate_approval(approval: dict, config: dict, review: dict) -> None:
     fields(approval, {'version', 'decision', 'operator_uid', 'profile', 'image', 'supervisor',
-                      'host_code', 'license_review_sha256', 'authorization_reference'})
+                      'host_code', 'license_review_sha256', 'authorization_reference',
+                      'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile'})
     require(approval['version'] == 1 and type(approval['version']) is int
             and approval['decision'] == 'approved-trusted-execution'
-            and all(approval[k] == config[k] for k in ('operator_uid', 'profile', 'image', 'supervisor', 'host_code'))
+            and all(approval[k] == config[k] for k in ('operator_uid', 'profile', 'image', 'supervisor', 'host_code',
+                                                      'qemu_installation', 'accounting_binding', 'bootstrap_sha256', 'python_sha256', 'execution_profile'))
             and approval['license_review_sha256'] == digest(canonical(review)),
             'GateBlocked', 'No execution approval for exact code/profile/license binding')
     identifier(approval['authorization_reference'], True)
@@ -187,7 +200,10 @@ class TrustedExecutor:
                 'StaleBinding', 'Configuration changed')
         validate_approval(root_record(self.root / 'approval.json'), self.config, root_record(self.root / 'license.json'))
         require(shutil.disk_usage(self.root).free >= 15000000000, 'BudgetExceeded', 'Host free space below floor')
-        require(digest(Path(QEMU).read_bytes()) == QEMU_SHA, 'IntegrityFailure', 'QEMU bytes changed')
+        installation = root_record(self.root / 'qemu-installation.json')
+        require(digest(canonical(installation)) == self.config['qemu_installation'],
+                'IntegrityFailure', 'QEMU installation approval differs')
+        executable = verify_qemu(installation)
         assets = self.root / 'assets'
         expected = dict(ASSETS, **{'input.iso': IMAGE})
         for name, hashed in expected.items():
@@ -195,7 +211,8 @@ class TrustedExecutor:
             require(path.is_file() and not path.is_symlink() and path.stat().st_uid == 0
                     and path.stat().st_mode & 0o222 == 0 and digest(path.read_bytes()) == hashed,
                     'IntegrityFailure', 'Untrusted or changed asset')
-        args = [QEMU, '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '1024', '-smp', '1',
+        args = [str(executable), '-L', str(Path(installation['root']) / 'data'),
+                '-machine', 'virt', '-cpu', 'host', '-accel', 'hvf', '-m', '1024', '-smp', '1',
                 '-kernel', str(assets / 'vmlinuz-virt'), '-initrd', str(assets / 'initramfs-virt'),
                 '-append', 'modules=loop,squashfs,sd-mod,usb-storage console=ttyAMA0',
                 '-cdrom', str(assets / 'alpine-virt-3.22.6-aarch64.iso'),
@@ -304,7 +321,9 @@ class TrustedExecutor:
                   'guest': guest, 'error': error, 'transport_complete': error is None,
                   'ceased': process.poll() is not None, 'forced': forced, 'seconds': time.monotonic() - started,
                   'raw_sha256': digest(bytes(raw)), 'raw_bytes': len(raw), 'raw_base64': base64.b64encode(raw).decode(),
-                  'exit_code': exit_code, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR}
+                  'exit_code': exit_code, 'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR,
+                  'execution_profile': self.config['execution_profile'],
+                  'qemu_installation': self.config['qemu_installation']}
         with self.lock:
             self.results[run] = result
         return result
@@ -313,4 +332,7 @@ class TrustedExecutor:
 if __name__ == '__main__':
     import sys
     root = Path(sys.argv[1]).resolve(strict=True)
-    serve(root.parent / 'ipc/executor.sock', TrustedExecutor(root).handle)
+    executor = TrustedExecutor(root)
+    data_server = AuthenticatedServer(root.parent / 'ipc/executor.sock', executor.handle)
+    control_server = AuthenticatedServer(root.parent / 'ipc/executor-control.sock', executor.handle, control=True)
+    threading.Event().wait()

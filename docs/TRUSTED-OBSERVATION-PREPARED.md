@@ -105,12 +105,20 @@ rewritten as success.
 
 ## Remaining mandatory work and approval
 
+**Historical checkpoint statement (91a7ad5), not current availability:**
 No dedicated trusted-profile host dispatch adapter/root identity launcher exists
 yet. Existing synthetic/offline launchers **must not** be repurposed to run this
 image. They are not a valid `AWAITING_PARENT_IDENTITY_RUN` command for this profile.
 Finish and independently review that adapter, strict evaluator schema/expected
 results, root-controlled execution-approval binding, and real integration cases.
 All six story ACs remain incomplete end to end; claim remains in progress.
+
+**Current status:** a dedicated adapter/launcher was subsequently staged at
+`87a8766`/`d53deaf`, then independent security review required changes to persistent
+accounting, IPC control availability, executable binding and bootstrap trust.
+The later security-fix checkpoint supersedes the execution instructions below.
+Do not execute a checkout launcher as root or request guest execution before
+that review and missing root-controlled prerequisites are resolved.
 
 Recommended operator authorization, **after** adapter/security/license review:
 

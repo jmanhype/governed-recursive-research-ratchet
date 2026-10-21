@@ -5,6 +5,7 @@ Usage: python3 scripts/prepare-trusted-observation SOURCE GO_ARCHIVE VM_ASSETS N
 Only trusted supervisor/helper sources are cross-compiled on host. Pinned vlt
 source is inventoried and packaged, never built/executed here.
 """
+from __future__ import annotations
 import json
 import os
 from pathlib import Path

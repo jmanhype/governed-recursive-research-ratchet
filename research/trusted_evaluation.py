@@ -5,21 +5,22 @@ import os
 from pathlib import Path
 import time
 import uuid
-from budget import Budget
+from persistent_budget import PersistentBudget
 from common import EVALUATOR, Failure, call, canonical, digest, fields, require
 from ledger import Ledger
-from trusted_execution import PROFILE, IMAGE, SUPERVISOR, decode_guest
+from trusted_execution import PROFILE, IMAGE, SUPERVISOR, decode_guest, root_record, validate_config
 
 EXPECTED = b'SUPERVISOR-OWNED-CONTENT\n'
 
 
-def validate_receipt(value: dict, request: dict) -> dict:
+def validate_receipt(value: dict, request: dict, execution_profile: str, installation: str) -> dict:
     fields(value, {'version', 'run', 'key', 'reservation', 'guest', 'error', 'transport_complete',
                    'ceased', 'forced', 'seconds', 'raw_sha256', 'raw_bytes', 'raw_base64',
-                   'exit_code', 'profile', 'image', 'supervisor'})
+                   'exit_code', 'profile', 'image', 'supervisor', 'execution_profile', 'qemu_installation'})
     require(type(value['version']) is int and value['version'] == 1
             and all(value[k] == request[k] for k in ('run', 'key', 'reservation'))
-            and value['profile'] == PROFILE and value['image'] == IMAGE and value['supervisor'] == SUPERVISOR,
+            and value['profile'] == PROFILE and value['image'] == IMAGE and value['supervisor'] == SUPERVISOR
+            and value['execution_profile'] == execution_profile and value['qemu_installation'] == installation,
             'StaleBinding', 'Receipt binding differs')
     require(all(type(value[k]) is bool for k in ('ceased', 'forced', 'transport_complete'))
             and value['ceased'] and type(value['seconds']) in (float, int)
@@ -58,9 +59,13 @@ class Session:
         require(os.getuid() == EVALUATOR, 'Unauthorized', 'Actual evaluator UID 320 required')
         self.root = root
         self.endpoint = root.parent / 'ipc/executor.sock'
+        self.control = root.parent / 'ipc/executor-control.sock'
+        self.config = validate_config(root_record(root.parent / 'runner/config.json'))
         self.expected = (root / 'expectation').read_bytes()
         require(self.expected == EXPECTED, 'IntegrityFailure', 'Protected expectation differs')
-        self.budget = Budget(root / 'budget.sqlite')
+        self.budget = PersistentBudget('trusted-observation')
+        require(self.budget.binding_hash == self.config['accounting_binding'],
+                'RecoveryRequired', 'Persistent accounting approval differs')
         self.ledger = Ledger(root)
         self.pending = {}
 
@@ -88,7 +93,7 @@ class Session:
     def accept(self, request: dict, result: dict) -> dict:
         require(request['run'] in self.pending, 'StaleBinding', 'Unknown evaluator invocation')
         try:
-            validate_receipt(result, request)
+            validate_receipt(result, request, self.config['execution_profile'], self.config['qemu_installation'])
             # Charge the larger measurement. Overhead or delayed receipt is never
             # subtracted from execution or treated as free; >maximum fails closed.
             seconds = max(result['seconds'], time.monotonic() - self.pending[request['run']][1])
