@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T12:36:00Z
-content_hash: "sha256:7d082dd5842647f9193a2cdbf96cbbbcb21f1eaf1b0655a5555bf4d40e4db569"
+updated_at: 2026-10-21T12:39:26Z
+content_hash: "sha256:63a287051518cd7638195d293f192d5da33f4e486b8e63e041178ef72a02c48d"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -134,6 +134,41 @@ OPERATOR CONSERVATIVE ACCOUNTING PLAN APPROVAL (2026-10-21): approved exact plan
 CONSERVATIVE ACCOUNTING INSTALL RECORD (2026-10-21T05:33:30Z): Operator approved exact plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459. Fresh preflight matched bootstrap 07484611331e38165dcf8d3cb872455806572ca5451289d7b30ea9a9ffccbc97, plan 7c46b634e367eb732aebef26c4a09504571f552ab6a09fdcb6095f721a580459, database 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234, and receipt 9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde; independently verified 259 artifacts with stopped=1 before root placement. Parent placed exact bootstrap/plan as root:wheel 0444 and invoked only the reviewed canonical install command. Installed active binding: device=16777229, inode=681781547, stopped=1, execution_gate=blocked, unresolved_history=true, store_id=12f4ce0101556ece7b7b2839077c3dc9de8c2a4bec98dbc0d570f2b5c61faec9, active SHA256 cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b. Independent post-install verification confirmed exact hashes, root:wheel ownership, modes 0444, no ACL indicators, single links, exact device/inode binding, SQLite integrity ok, 259 artifacts, empty reservations, SQL reservation/state-release denials, all six profile/stage zero-cost reservation denials, rejection by synthetic/offline/trusted-observation runtime validators, and unchanged database hash after denials. Free space after verification was 15065124864 bytes. No QEMU execution, candidate execution, hold release, stop clearing, fresh allowance, complete migration, Apple permission change, or promotion is authorized or claimed. Evidence: install console 633418ffaf46866bc4bc337634c6ca1f68468a2d5924df1bf2d67273960efccf; verification JSON 85b6f9e0a2770ba63fa7b0850b47ea3e903df8a6d4d9287426fd9295a3687ae8.
 INDEPENDENT INSTALLED-RECONCILIATION REVIEW (2026-10-21, commit c717a85456624a0e659898d94ed0e8070a76ae97): SECURITY_REVIEW: RECONCILIATION_REPORT_APPROVED. Reviewer independently verified all 8 evidence-manifest entries, live report equivalence excluding mutable free space, unchanged DB/receipt/active pins, device 16777229/inode 681781547, 259 artifacts, 110 events, 12 attempts, and zero runtime reservations. Coverage is 48 reservations + 48 observations + 8 stops + 6 denied events; denied events remain in report.json even when omitted from the human table. Read-only mode=ro&immutable=1/query_only inspection preserved unknown upper bounds and did not settle history or release holds. Reviewer observed free space 12844036096 bytes, below preparation/execution floors. This approves only the report; it grants no mutation, migration, guest execution, stop clearing, hold release, fresh allowance, or promotion authority.
 WORKTREE RECOVERY INCIDENT AND NEW MANDATORY ASSET GATE (2026-10-21): After pvg reported the active story stalled, pvg loop recover removed .claude/worktrees/dev-GRRR-gu87 and reset GRRR-gu87 to open while preserving branch story/GRRR-gu87 at c717a85456624a0e659898d94ed0e8070a76ae97. The removal also removed ignored local preparation assets that prior evidence explicitly said must be preserved before worktree cleanup. Immediate read-back found the exact prepared-v3 input.iso 799ec744f27e7329686e5acb8a3e1f663c82a321d1f6d4bc940ea5c97068233, supervisor a9a0fd9a8471bc1859e5ab91c3766a139942562f719784fec51b8254eb8307d6, and helper 14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e absent from the repo, /Library/GRRR, and /private/tmp; no Time Machine destination is configured. Committed preparation evidence, source code on the preserved branch, shared base VM inputs, immutable installed QEMU, and the protected conservative accounting store remain. Do not treat the lost local bytes as currently available or dispatch execution. Before any future execution request, a fresh worktree and independently rebuilt/rehashed preparation must match the pinned v3 artifacts under restored >=15 GB free space and separate authorization. This incident does not alter stopped=1, zero reservations, or the ambiguous-history reconciliation blockers.
+## Trusted-observation v3 recovery attempt — fail closed on non-reproducible ISO/profile
+
+### Commands and inputs
+- Claim: `pvg story claim GRRR-gu87`; restored `.claude/worktrees/dev-GRRR-gu87` at clean `story/GRRR-gu87` HEAD `c717a85456624a0e659898d94ed0e8070a76ae97`.
+- Source: `git clone https://github.com/paivot-ai/vlt .tmp-sr_pm/trusted-observation/source-recovery`, then detached checkout `129e0b3f15a3bd6af949ee47d76f6855c582ab73`; verified `HEAD:LICENSE` blob `c004659349c7a1f6c55e5107b53a0766085e8d2e`, clean status, 52 source files.
+- Go: downloaded official `https://go.dev/dl/go1.26.10.linux-arm64.tar.gz` to `.tmp-sr_pm/trusted-observation/go1.26.10.linux-arm64.tar.gz`; SHA-256 `3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797`.
+- Shared assets rehashed before preparation: Alpine `09d601858d72484c89d576fb735215cccf54a92a03e67ca4a7fa7e4b8ec4a7a2`, kernel `dd37c4460f933ec909ff022c34944ff7e1a5300aff99750e3bdc02cd4074c332`, initramfs `899b8023e92db85345375b3ad10c2c9e5b977dc35a0429489ab2476ebad507ec`, Homebrew QEMU `7299ef807db462f913be5d1b89a71ea12590416175be0be5e87c2349594c6542`. QEMU was not executed.
+- Preparation: from the story worktree, `python3 scripts/prepare-trusted-observation <main-repo>/source-recovery <main-repo>/go1.26.10.linux-arm64.tar.gz <main-repo>/.tmp-sr_pm/vm <main-repo>/prepared-v3-recovery`. It completed the non-executing preparation path; receipt says `vm_execution_performed=false` and `candidate_execution_performed=false`. Wrapper shell then exited 1 on zsh `PIPESTATUS` under `set -u`; this was after preparation output and did not alter artifacts.
+- Verification: `python3 scripts/verify-trusted-preparation .../prepared-v3-recovery 775a767ca74f9c18678fc998111b0c9870df1a68db68e453b6af0c50ae9d0c0c` exited 1: `IntegrityFailure: Preparation receipt differs from retained anchor`.
+
+### Recovery hashes
+- Supervisor MATCH: `a9a0fd9a8471bc1859e5ab91c3746a139942562f719784fec51b8254eb8307d6`.
+- Helper MATCH: `14603a520a8a7d6f460aaa6057097da78e0cdba97a3e620ee8d4fcd3c5b62d2e`.
+- Input ISO MISMATCH: required `799ec744f27e7329686e5acb8a3e1f663c82a321d7bc1d4bc940ea5c97068233`, recovered `57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6`.
+- Prepared profile MISMATCH: required `3edebcd4b85ae7ce666d953bd3c5527606a7043c42294a0f60000875f8d2eec0`, recovered `a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205`.
+- Recovery receipt SHA-256 `3d280af9e69ff05300cb0058194db14995a2d4baf927ef84d24e1199c7e70fa7`; development binding remains `9fd432900036552fcdeb95ed1433937e01fbc45b73250aba91f6ed87a0efc209`.
+- All seven primary ISO payload entries match the retained v3 receipt byte-for-byte, including `vlt.tar` `e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e`; only ISO container bytes/hash and fields embedding path/free-space context differ. No source was edited or retried to force acceptance.
+
+### Boundary state
+- No story commit was made because exact ISO/profile verification failed; story branch remains `c717a85`. Worktree is clean. No QEMU/guest/candidate execution, root/sudo, accounting mutation, push, AC claim, delivery, acceptance, or execution-approval request.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Preparation-only recovery inputs retained under main `.tmp-sr_pm/trusted-observation`; exact output at `prepared-v3-recovery`. Exact-pins gate failed closed on ISO/profile/receipt mismatch.
+
+### proof
+- [ ] AC #1: unchanged pending; no execution.
+- [ ] AC #2: unchanged pending; no execution.
+- [ ] AC #3: unchanged pending; no execution.
+- [ ] AC #4: unchanged pending; no execution.
+- [ ] AC #5: unchanged pending; no execution.
+- [ ] AC #6: unchanged pending; no execution.
+
 ## nd_contract
 status: in_progress
 
