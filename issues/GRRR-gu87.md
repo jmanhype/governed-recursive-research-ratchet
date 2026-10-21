@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T18:02:52Z
-content_hash: "sha256:e65d9642681bfe713083bd22c1e853368990928840a03c14a5cd90f147b394cd"
+updated_at: 2026-10-21T18:15:58Z
+content_hash: "sha256:7d1a2eafbe6c4923c7dd97e00e0bf3a656e0c49d122c13c49a595122c5dd8680"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
@@ -150,6 +150,30 @@ INDEPENDENT ACCOUNTING MIGRATION PLAN REVIEW (2026-10-21, commit c9003ea6f2491d6
 OPERATOR PRIVATE ACCOUNTING EVIDENCE-MANIFEST AUTHORIZATION (2026-10-21): Authorize read-only evidence-manifest collection at commit c9003ea6f2491d61581192ca2338ccbe415ec841. Scope is limited to verifying and inventorying the current protected accounting source, its 259 artifacts, 110 legacy events, committed reconciliation sources, available event fields, and explicit missing migration evidence. Preserve protected hashes and stopped=1; classify unknowns rather than inferring reservations, intervals, stage assignments, receipts, settlements, or zero costs. Do not build/install a candidate store, mutate accounting, release stops/holds, dispatch work, execute QEMU/guest code, deliver the full story, or push.
 INDEPENDENT ACCOUNTING EVIDENCE MANIFEST REVIEW (2026-10-21, commit 1903c3cc920b34b4fabcbf4b3f9582e212c32cfb): SECURITY_REVIEW: ACCOUNTING_EVIDENCE_MANIFEST_APPROVED for non-root private metadata collection only. Reviewer verified protected hashes/device/inodes/root ownership/0444/single links, immutable query-only SQLite, all 259 artifact hashes, 110 event/source correspondences, explicit missing-evidence classification, no settlement authority from pointers/observations, and exclusive output creation. Evidence manifest 3/3 from its directory; bare filenames are valid but instructions must state that working directory. Nonblocking hardening follow-ups: close successful-read descriptors with finally/context manager, explicitly reject root and constrain output ancestors before broader future use, and add atomic publication/fsync if this becomes durable collection evidence. Current approval excludes root and unsafe output locations. No migration, installation, settlement, stop/hold release, or execution is authorized.
 OPERATOR ACCOUNTING EVIDENCE REQUEST/HARDENING AUTHORIZATION (2026-10-21): Operator approved continuing the fail-closed accounting path after manifest commit 1903c3cc920b34b4fabcbf4b3f9582e212c32cfb. Authorized scope: (1) harden the non-root private manifest collector to close read descriptors, reject root invocation, validate a private safe output parent/final path, and atomically fsync publication without overwriting existing output; (2) generate a metadata-only evidence-request package directly from the committed manifest, enumerating missing original identities, request keys, stages, currency/paid-service proof, start/end/overlap intervals, trusted meter/settlement receipts, reservation mappings, and campaign-stop resolution. Unknowns must remain explicit requests, never inferred values or authority. Do not mutate protected accounting, build/install a candidate store, release stops/holds, settle history, dispatch work, execute QEMU/guest code, deliver the full story, or push.
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator-authorized follow-up only: hardened the existing non-root private manifest collector and generated a metadata-only evidence request. No /Library/GRRR mutation, candidate accounting build/install, stop/hold release, settlement, reservation, dispatch, QEMU/guest/candidate execution, root/sudo invocation, story delivery, or push occurred.
+- Local story commit: 8881cf449193f51865ae41671a255eb02e6e9ecb on story/GRRR-gu87 (six files): collector, generator, two focused test files, REQUEST.json, REQUEST.md. Worktree clean after commit.
+- Collector hardening evidence: open_regular_file closes every descriptor via finally; root UID rejection precedes source/output access; absolute normalized output path plus all ancestors, symlink, ownership, group/world-write, existing-final checks; 0600 O_EXCL sibling payload fsync followed by Darwin renamex_np RENAME_EXCL|RENAME_NOFOLLOW_ANY and parent fsync. Failure leaves diagnostic temp with final absent; no overwrite/retry.
+- Request generator evidence: stdlib Python 3.9 script reads the pinned manifest metadata only (no source bodies), refuses unknown top-level schema, schema version, decision, counts, event inventory, or manifest hash; publishes REQUEST.json/REQUEST.md exclusively and atomically as a private package. REQUEST.json has 110 event records, 322 available references explicitly marked not receipts, 94 missing original reservation mappings, 62 missing paid-service proofs, all-event principal/request/stage/currency/UTC interval/overlap/trusted meter/settlement requests, and campaign-scoped historical stop resolution.
+- Commands/results: /usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit_accounting_evidence_manifest.py' -v => 13 passed, 0 failed, 0 skipped; same interpreter for unit_accounting_evidence_request.py => 6 passed, 0 failed, 0 skipped.
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v => 136 passed, 0 failed, 0 skipped. /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v => 136 passed, 0 failed, 0 skipped (pre-existing unrelated sqlite ResourceWarnings only). py_compile of both scripts and both test files exited 0 under both interpreters.
+- Live collector as UID 501 to private 0700 parent: artifacts=259, events=110, kind counts denied=6 observation=8 offline-observation=40 reserved=48 stop-fenced=4 stop-outcome=4, source references=322 across 46 artifacts, mismatches=0. Fresh output /private/tmp/grrr-live-manifest.QeXaQ7/MANIFEST.json is mode 0600 and byte-identical (cmp exit 0) to committed MANIFEST; both SHA-256 8c64d70cc0f3b903620ed45094133ceffaf5e48107427fcfc2204b73daa06270.
+- Fresh generator output /private/tmp/grrr-request-live.9gGN9u/accounting-evidence-request/REQUEST.json and REQUEST.md are byte-identical (cmp exit 0) to committed package and parse under both interpreters. Committed REQUEST.json SHA-256 e597a4ce884d04080682d884f1ae121bad981aa01917bfd2544a88373e6a2b71; REQUEST.md SHA-256 2824b5badc38d5dcefa1b6dc69bedc5621e75c1bde6aed4e4a561cd4cfc6becf.
+- Explicit pvg verify on all six changed paths with --include-tests --format text: PASSED, 2 recognized files scanned, 0 issues (extensionless scripts and evidence documents were still explicitly supplied). git diff --check exited 0 before commit.
+
+### proof
+- [x] Follow-up collector fd lifecycle, non-root gate, private output validation, and atomic durable publication are implemented and covered by 13 no-skip focused tests.
+- [x] Metadata-only REQUEST generator is schema/hash/count-pinned, contains all 110 event records with exact missing fields and non-receipt source references, and is covered by 6 no-skip focused tests.
+- [x] Both interpreters pass the full no-guest unit suite (136/136 each), compilation, live collector byte-identity, generator reproducibility, explicit pvg verify, and whitespace checks.
+- [ ] Original GRRR-gu87 AC #1: real isolated challenge remains pending separate authorization/proof.
+- [ ] Original GRRR-gu87 AC #2: full adversarial trusted-observation behavioral proof remains pending.
+- [ ] Original GRRR-gu87 AC #3: supervisor separation/race proof in the real guest remains pending.
+- [ ] Original GRRR-gu87 AC #4: evaluator identity/shared accounting integration proof remains pending.
+- [ ] Original GRRR-gu87 AC #5: real cross-service metering/overlap/review proof remains pending.
+- [ ] Original GRRR-gu87 AC #6: watchdog/store/lost-response integration proof remains pending.
 
 ## Implementation Evidence (IN PROGRESS — private evidence manifest only)
 
