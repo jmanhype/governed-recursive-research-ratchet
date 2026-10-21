@@ -24,7 +24,6 @@ for name in ('executor.sock', 'executor-control.sock'):
     with socket.socket(socket.AF_UNIX) as conn:
         conn.settimeout(2); conn.connect(str(root/'ipc'/name))
         require(peer_uid(conn) == RUNNER, 'Unauthorized', 'Corpus server identity differs')
-        conn.sendall(canonical({'action': 'status', 'run': 'probe'})+b'\n')
         response = receive(conn)
         denials[name+'-peer-role'] = response.get('error', {}).get('code') == 'Unauthorized'
 record_path = root/'runner/qemu-installation.json'

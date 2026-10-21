@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-7wqke0iu",
+  "bootstrap_commit": "f56d57994e57fd6c3ee48a69be72c4f26ca52d09",
+  "failure": "Corpus probe sent a status payload to the preauthenticated unauthorized data socket; server rejection could close it first and cause BrokenPipeError",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "fix": "Authenticate server UID, connect, and receive the pre-auth rejection without sending any payload"
+}
