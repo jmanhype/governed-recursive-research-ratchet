@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T20:45:40Z
-content_hash: "sha256:12a29fd06f0b22d98f90cde2008e17ca22d8e51f1418453583efe3f2deb1ef92"
+updated_at: 2026-10-21T20:46:06Z
+content_hash: "sha256:b3af60ea26e53f68167faaa3bc4f5b1094ea284b3c420d00eded16c3b78b549e"
 blocks: [GRRR-c875, GRRR-6sso]
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
@@ -191,3 +191,41 @@ status: in_progress
 - Follows: [[GRRR-gu87]], [[GRRR-90te]]
 
 ## Comments
+
+### 2026-10-21T20:46:06Z speed
+## Implementation Evidence
+
+Implementation commit: 1c2a1c595703abf6a94e96792c5f1deb60841ca8. Final real-identity evidence is docs/evidence/durable-evidence/attempt-20261021T204415Z-c360927f. It contains a 4/4 no-skip integration log, trusted-anchor summary, UID-321/UID-501 denial probes, and a reviewer-readable snapshot/export copy. External export: /Users/Shared/GRRR/durable-evidence/durable-e9bf620ac3a3438d9aef883d9d7c02ee/export. Snapshot: 83567fa3aaeb646ac040454f49070767b1a758bbecb650d462570833b51a11c2. Anchor: 0955178e5c5d47e512ebdd2505b7f31cb7bcbb60cd6b3503c493dfc1f5cf0a37.
+
+### CI/Test Results
+
+Commands run:
+- /usr/bin/python3 -I -B -W error -m unittest discover -s tests -p unit_durable_evidence.py -v
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p "unit*.py"
+- /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p "unit*.py"
+- ./scripts/test-story durable-evidence as UID 501, then through the root parent launcher
+- pvg verify --include-tests on all six changed implementation/test/script paths
+- git diff --check
+
+Summary: focused units 7/7; full units 159/159 under system Python and 159/159 under Homebrew; real integration 4/4, 0 skipped, 0 failures, 0 errors; ledger coverage 98%; pvg verify 4 recognized files, 0 issues. The Homebrew run disclosed 36 existing SQLite ResourceWarnings.
+
+Commit SHA: 1c2a1c595703abf6a94e96792c5f1deb60841ca8
+
+### AC Verification
+- [x] AC #1: evaluator-only immutable hash-linked history and API/filesystem denial proven.
+- [x] AC #2: full explicit event/gate/usage/recovery schema proven.
+- [x] AC #3: object-first publication, transaction rollback, and idempotency crash semantics proven.
+- [x] AC #4: modified/truncated/missing-object/wrong-anchor snapshots rejected against retained anchor.
+- [x] AC #5: external manifest/snapshot/object/verifier export independently verified.
+- [x] AC #6: interrupted work, preserved reservations, no retry/promotion, altered object, missing anchor, and store exhaustion handled.
+- [ ] Admission and promotion intentionally remain blocked.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Story commit 1c2a1c595703abf6a94e96792c5f1deb60841ca8; no push; worktree clean.
+
+### proof
+- [x] AC #1 through AC #6 delivered with real UID-320 evidence.
+- [ ] Downstream admission/promotion remains intentionally blocked.
