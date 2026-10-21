@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T01:27:31Z
-content_hash: "sha256:9261feeab7780e2924e94edaccfcab208c90de512c3fc74eb849f7b653a04c33"
+updated_at: 2026-10-21T01:28:34Z
+content_hash: "sha256:7e3221ffb5e7f7c29f86f1a45676408dbdcbe5347542aad26b0e1eeb7d76d7b5"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -111,6 +111,8 @@ OPERATOR TRUSTED-OBSERVATION PROFILE DEVELOPMENT/REVIEW APPROVAL (2026-10-20):
 - Before execution, operator must separately approve parent-mediated identity execution and guest negative controls after reviewing completed supervisor and detached input-image hashes.
 DISPOSABLE OFFLINE RUNTIME CLEANUP (2026-10-21): removed only old root-owned /private/tmp/grrr-offline-jwxgpr6a (175M/121 files) and /private/tmp/grrr-offline-m5qlaapy (200M/127 files); durable evidence was already committed. Free space now 15,481,393,152 bytes. No project/model/output data touched.
 REGENERABLE DEVELOPMENT CACHE CLEANUP (2026-10-21): removed only /Users/speed/.cache/opencode (190M, 11,996 files) and /Users/speed/.cache/codebase-memory-mcp (143M, 24 files); free space now 15,461,191,680 bytes. Manifest main checkout .tmp-sr_pm/development-cache-cleanup-manifest.txt. No model/project/output data touched.
+REGENERABLE UPDATER CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/autoclaw-updater (1.2G, 3 files) and /Users/speed/Library/Caches/voyager-updater (1.0G, 5 files); free space now 16,972,693,504 bytes. Manifest main checkout .tmp-sr_pm/updater-cache-cleanup-manifest.txt. No application data, models, projects, credentials, or outputs touched.
+
 ## nd_contract
 status: in_progress
 
