@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T21:21:49Z
-content_hash: "sha256:728510971e334e4105728cde783586288c9abcb2afc19d7460aa2a31abd65d1c"
+updated_at: 2026-10-21T21:23:30Z
+content_hash: "sha256:2c4113bd91cd914ceefe637e25f5bc8142cc1ef399793365eabda8ce0e87f1a0"
 blocks: [GRRR-bnkf, GRRR-6sso]
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
@@ -108,7 +108,19 @@ status: new
 
 ## Notes
 DELIVERY CORRECTION: The preceding Implementation Evidence and delivered proof are authoritative for commit 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83; this note exists to let pvg story deliver append the final authoritative contract.
+## PM Decision
+ACCEPTED [2026-10-21]: Delivery proof passed 9/9. PM independently verified all 18 final-evidence checksums, actual UID 320/321/501 integration 8/8 with zero skips/failures/errors, no mocks or environment gates, operator/runner/watchdog denial probes, bounded forced cessation, baseline preservation, durable recovery/admission fence evidence, clean static scan, and no remaining process. Scope remains host-control only; no guest, admission, promotion, accounting release, paid dispatch, or production mutation is claimed.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Commit 3f4a9cf2c52ae5992f76ff5350e63518ba1fad83.
+- Final evidence docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0.
+
+### proof
+- [x] AC #1 through AC #7 reviewed against real identity evidence.
+- [ ] Guest behavior, admission, promotion, and accounting release remain intentionally out of scope/blocked.
 
 ## nd_contract
 status: delivered
