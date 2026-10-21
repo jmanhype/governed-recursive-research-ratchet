@@ -1,18 +1,17 @@
 ---
 id: GRRR-bnkf
 title: "Inspect a frozen representative vlt defect corpus"
-status: in_progress
+status: open
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-21T21:52:21Z
-content_hash: "sha256:3fd6eb91224a8feb6c855d3fbbf4a0ea5f5936d7377a02e409f9fe18bf9fbe2a"
+updated_at: 2026-10-21T21:54:19Z
+content_hash: "sha256:37f94d3217bae19e9076eb1ef4e92b239455b0299b754ce5e987701f539e9a97"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
-assignee: dev-GRRR-bnkf
 follows: [GRRR-c875, GRRR-my5n]
 ---
 
@@ -407,6 +406,8 @@ status: in_progress
 - 2026-10-21T21:23:42Z claimed by dev-GRRR-bnkf
 - 2026-10-21T21:50:04Z status: in_progress -> in_progress
 - 2026-10-21T21:50:04Z auto-follows: linked to predecessor GRRR-my5n
+- 2026-10-21T21:54:19Z status: in_progress -> open
+- 2026-10-21T21:54:19Z released by speed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
