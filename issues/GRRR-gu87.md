@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
-updated_at: 2026-10-21T03:24:35Z
-content_hash: "sha256:6d594315c7f1c7778cc175b27b5864a3d044a670ec4d95d092f1f782b38d8902"
+updated_at: 2026-10-21T03:34:38Z
+content_hash: "sha256:0ca8212486461a2b6077344ff3175a299338fd9effb6b80a6952c7da0494492e"
 blocks: [GRRR-my5n, GRRR-6sso]
 was_blocked_by: [GRRR-90te]
 assignee: dev-GRRR-gu87
@@ -125,6 +125,17 @@ OPERATOR TRUSTED-OBSERVATION PROVISIONING-ONLY APPROVAL (2026-10-21):
 REGENERABLE PROVISIONING CACHE CLEANUP (2026-10-21): removed Citro Labs cache 948M/11,155 files; Google cache 929M/12,978 files; partially regenerated Codex cache reduced to ~20K; com.spacefs.launcher 751M/487 files; dev.zcode.app.ShipIt 772M/779 files; @zcodedesktop-updater 476M/3 files. Current free space 18,042,109,952 bytes. Manifests: .tmp-sr_pm/provisioning-cache-cleanup-manifest.txt and .tmp-sr_pm/provisioning-cache-cleanup-round2-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU BUILD CACHE CLEANUP (2026-10-21): removed only now.typeless.desktop.ShipIt 529M/227 files; com.meta.endo 544M/748 files; antigravity-updater 349M/3 files; typeless-updater 349M/3 files. Current free space 18,674,339,840 bytes. Manifest .tmp-sr_pm/qemu-build-cache-cleanup-manifest.txt. No model/project/output/credential data touched.
 REGENERABLE QEMU PACKAGING CACHE CLEANUP (2026-10-21): removed only /Users/speed/Library/Caches/ms-playwright (554M, 359 files). Current free space 17,356,939,264 bytes. Manifest .tmp-sr_pm/qemu-packaging-cache-cleanup-manifest.txt. No model/project/output data touched.
+## nd_contract
+status: in_progress
+
+### evidence
+- Prefix-only fresh dynamic build completed and signed; binary 616b0284fbaba079be4e2701061741eb9e9bae44e55af3980730f89497bd14f2. Compiled fallbacks now /Library/GRRR/qemu. No QEMU executed.
+- Packaging script independently refused before staging because free space fell below 17 GB after brief near-threshold pass. No dependency rewrite/copy/signing yet. Exact logs in qemu-source-build/retry-8; stable packaging margin required.
+- Staged package/readback tools; exact-prefix/full-tree validator; no-user-config and C locale host hardening. New host inventory 7e887f77bfc1a57f1a4fa26cb95c72e5567836ce98fb08553ae02e6a19744a97; provisioner 206df1f4aead529be79dc2f89fd3089f0f0b616422797a7f3e8e4054ec913c49. Independent review required. v3/bootstrap unchanged.
+- Both Python suites 84/84; py_compile both pass; explicit pvg 3 files zero issues. Claim retained; no root/install/guest execution or execution approval request.
+
+### proof
+- [ ] AC #1-#6: Mandatory suite unauthorized/not-run; package incomplete and accounting unreconciled.
 
 ## nd_contract
 status: in_progress
