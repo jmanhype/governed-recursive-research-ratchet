@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-0jrh1cip",
+  "bootstrap_commit": "00ac25436a077ef15d5f1e9b42589a214b614663",
+  "guest_started": true,
+  "clean_control": "GRRR-VC-C001",
+  "exact_build_failure": "go: opening /work/candidate/source/go.mod: permission denied",
+  "cause": "Supervisor root umask made staged source files 0600",
+  "candidate_executed": false,
+  "fix": "Harden staged source tree to directories 0555 and regular files 0444 after one-time mutation/probe staging"
+}

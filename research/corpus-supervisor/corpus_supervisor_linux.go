@@ -85,6 +85,16 @@ func copyTree(source, target string) error {
 	})
 }
 
+func hardenSource(path string) error {
+	return filepath.WalkDir(path, func(current string, entry fs.DirEntry, err error) error {
+		if err != nil { return err }
+		if current == path { return os.Chmod(path, 0555) }
+		if entry.IsDir() { return os.Chmod(current, 0555) }
+		if entry.Type().IsRegular() { return os.Chmod(current, 0444) }
+		return errors.New("non-regular staged source member")
+	})
+}
+
 func stage(request request) error {
 	raw, err := os.ReadFile("/root/inputs/seeds.json"); if err != nil { return err }
 	if len(raw) > 1048576 { return errors.New("oversized seed catalog") }
@@ -106,7 +116,8 @@ func stage(request request) error {
 	probePath := "/root/probes/" + request.Challenge + ".go"
 	if err := private(probePath); err != nil { return err }
 	data, err := os.ReadFile(probePath); if err != nil || len(data) > 65536 { return errors.New("unsafe probe") }
-	return os.WriteFile("/work/candidate/source/grrr_corpus_probe_test.go", data, 0644)
+	if err := os.WriteFile("/work/candidate/source/grrr_corpus_probe_test.go", data, 0644); err != nil { return err }
+	return hardenSource("/work/candidate/source")
 }
 
 const nilString = ""
