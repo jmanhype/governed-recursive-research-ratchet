@@ -130,6 +130,9 @@ def launch(plan, approval, license_review):
         readonly(runtime/'plan.json',canonical(plan))
         readonly(runtime/'evaluator/corpus/manifest.json',(ROOT/'corpus/manifest.json').read_bytes())
         readonly(runtime/'evaluator/corpus/truth.json',(ROOT/'corpus/protected/truth.json').read_bytes())
+        batch_source = Path('/Library/GRRR/validated-corpus/v2-records/batch.json')
+        if batch_source.is_file():
+            readonly(runtime/'evaluator/corpus/batch.json',batch_source.read_bytes())
         readonly(runtime/'evaluator/expectation',b'EVALUATOR-OWNED-TRUTH\n')
         budget=runtime/'evaluator/budget.sqlite'; budget.write_bytes(b''); os.chown(budget,320,320); budget.chmod(0o600)
         with (runtime/'service.log').open('xb') as log:

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "partial_runtime": "/private/tmp/grrr-corpus-v9vql4c8",
+  "bootstrap_commit": "6e4856893e170b43d648ff1cb3690601291b693f",
+  "partial_observations": 17,
+  "disk_issue": "macOS purgeable/swap pressure crossed the 15 GB floor during sequential VMs despite post-cleanup headroom",
+  "fixture_issue": "D007 probe exercised resolveLink while its seed mutation changes Vault.resolve alias lookup",
+  "fixes": [
+    "D007 now calls Vault.resolve",
+    "Protected batch.json selects an operator-approved subset per launcher so parent can purge between batches"
+  ],
+  "candidate_executed": true,
+  "verified": false
+}
