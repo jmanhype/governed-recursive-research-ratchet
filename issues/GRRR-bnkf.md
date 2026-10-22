@@ -4,11 +4,11 @@ title: "Inspect a frozen representative vlt defect corpus"
 status: in_progress
 priority: 1
 type: task
-labels: [milestone-1, integration]
+labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-22T03:34:35Z
+updated_at: 2026-10-22T03:34:36Z
 content_hash: "sha256:8868304c4c7d4c68d72046a47a675371c6c4e8394a7febad2e9ecd437a8a9f58"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
