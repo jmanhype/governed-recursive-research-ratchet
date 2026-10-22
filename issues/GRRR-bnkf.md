@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-22T03:34:36Z
-content_hash: "sha256:a5a1fd7c652372dee2463cd17c50ce2d3bc2bc018e22abb7cdfc25fee9634325"
+updated_at: 2026-10-22T03:35:07Z
+content_hash: "sha256:f7a9129df0a82d9f6075351bc2ecf7b5f32ab2fb572e5b1ca64660a38a5b50a8"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -107,7 +107,22 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+## nd_contract
+status: delivered
 
+### evidence
+- Final code/profile commit: 2dc3ca8b4598af0a777122b98602729ac858459a
+- Final evidence commit: 3f6d8dcfb407438591ad13c9bc14d60886bb0d73
+- Four final v2.2 isolated batches all passed 4/4 integration tests: 32/32 scenarios, 96/96 repetitions, 24 defects, 8 clean controls.
+- Evidence root: docs/evidence/validated-corpus/v2.2-batched-run/
+
+### proof
+- [x] AC #1: real isolated fixture validation completed for 24 defects plus 8 clean controls; verified finding/admission not claimed.
+- [x] AC #2: all required categories represented.
+- [x] AC #3: corpus v2.2 explicitly versioned after failed/superseded attempts; protected/public separation preserved.
+- [x] AC #4: evaluation plan remains pre-registered and measurement blocked.
+- [x] AC #5: every final scenario has three deterministic real isolated repetitions with durable ledger evidence.
+- [x] AC #6: operator-reviewable consolidated evidence, counts, hashes, and blocked downstream gates recorded.
 
 ## nd_contract
 status: delivered
