@@ -125,7 +125,7 @@ def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
     readback = prepare.iso_readback(image, expected)
     final_free = space(target)
     manifest = json.loads((root / 'corpus/manifest.json').read_bytes())
-    profile = {'version': 1, 'profile': 'GRRR-validated-corpus-v2-isolated',
+    profile = {'version': 1, 'profile': 'GRRR-validated-corpus-v2.1-isolated',
                'corpus_freeze_digest': manifest['freeze_digest'], 'authorization': 'required',
                'dispatch_enabled': False, 'source_commit': validated_corpus.SOURCE_COMMIT,
                'source_archive_sha256': digest(archive_raw), 'image_sha256': digest(image.read_bytes()),

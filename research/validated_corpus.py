@@ -18,8 +18,8 @@ from trusted_execution import IMAGE, PRESERVED_ROOT, root_record
 SOURCE_ARCHIVE = 'e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e'
 SOURCE_COMMIT = '129e0b3f15a3bd6af949ee47d76f6855c582ab73'
 LICENSE_BLOB = 'c004659349c7a1f6c55e5107b53a0766085e8d2e'
-CORPUS_VERSION = 'GRRR-validated-corpus-v2-isolated'
-FROZEN_AT = '2026-10-21T22:00:00Z'
+CORPUS_VERSION = 'GRRR-validated-corpus-v2.1-isolated'
+FROZEN_AT = '2026-10-22T02:20:00Z'
 CATEGORIES = (
     'filename-title-resolution', 'alias-collision-precedence', 'case-path-lookup',
     'links-headings-inert', 'frontmatter-index-invalidation', 'rename-delete-cache',
@@ -52,9 +52,8 @@ DEFECTS = (
      'Embed syntax is represented as an embed and participates in backlinks.'),
     ('wikilinks.go', 'wl.BlockID = fragment[1:]', 'wl.BlockID = fragment', False,
      'A block-reference ID excludes its caret prefix.'),
-    ('wikilinks.go', '`(?i)!?\\[\\[(?:` + strings.Join(quoted, "|") + `)`',
-     '`(?i)\\[\\[(?:` + strings.Join(quoted, "|") + `)`', True,
-     'Embed backlinks use the same target match as wikilink backlinks.'),
+    ('wikilinks.go', 'if len(m) > 4 {', 'if false {', True,
+     'Wikilink display text is captured.'),
     ('commands.go', 'if len(matches) > 1 {', 'if false {', False,
      'Duplicate headings return an ambiguous-heading error instead of selecting the first.'),
     ('frontmatter.go', "if line == \"\" || line[0] == ' ' || line[0] == '\\t' {",

@@ -23,10 +23,10 @@ if _, err := v.resolve("ALIAS"); err != nil { t.Fatalf("alias lookup is case-sen
 'D008': r'''text := "```go\n[[Ignored]]\n```\n"; if links := ParseWikilinks(text); len(links) != 0 { t.Fatalf("inert link observed: %#v", links) }''',
 'D009': r'''links := ParseWikilinks("![[Note]]"); if len(links) != 1 || !links[0].Embed { t.Fatalf("embed not observed: %#v", links) }''',
 'D010': r'''links := ParseWikilinks("[[Note#^abc]]"); if len(links) != 1 || links[0].BlockID != "abc" { t.Fatalf("block ID differs: %#v", links) }''',
-'D011': r'''v := vaultProbe(t); writeProbe(t, filepath.Join(v.dir, "Target.md"), "# Target"); writeProbe(t, filepath.Join(v.dir, "Source.md"), "![[Target]]\n")
-results, err := FindBacklinks(v.dir, "Target"); requireProbe(t, err); requireContainsProbe(t, results, "Source.md")''',
+'D011': r'''links := ParseWikilinks("[[Target|Display]]"); if len(links) != 1 || links[0].Display != "Display" { t.Fatalf("display text differs: %#v", links) }''',
 'D012': r'''lines := strings.Split("## Same\na\n## Same\nb\n", "\n"); _, err := findSection(lines, "## Same")
-requireProbe(t, err); if !strings.Contains(err.Error(), "ambiguous") { t.Fatal("duplicate heading was not ambiguous") }''',
+if err == nil { t.Fatal("duplicate heading was not ambiguous") }
+requireProbe(t, err); if !strings.Contains(err.Error(), "ambiguous") { t.Fatal("duplicate heading error differs") }''',
 'D013': r'''v := vaultProbe(t); writeProbe(t, filepath.Join(v.dir, "Note.md"), "---\nmetadata:\n  type: nested\n---\nbody\n")
 requireProbe(t, v.PropertySet("Note", "type", "changed")); yaml, _, ok := ExtractFrontmatter(readFileProbe(t, filepath.Join(v.dir, "Note.md")))
 if !ok || FrontmatterGetValue(yaml, "type") != "changed" { t.Fatalf("top-level property missing: %q", yaml) }''',
