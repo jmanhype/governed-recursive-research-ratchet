@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Root-only protected batch selector for bounded corpus launchers."""
+import json
+import os
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+TARGET = Path('/Library/GRRR/validated-corpus/v2-records/batch.json')
+
+
+def main() -> int:
+    if os.getuid() != 0 or len(sys.argv) != 4:
+        raise RuntimeError('Usage: validated-corpus-batch BATCH_ID START_INDEX END_INDEX')
+    batch_id, start, end = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+    if not (0 <= start < end <= 32 and end-start <= 8 and batch_id == f'batch-{start//8+1}'):
+        raise RuntimeError('invalid bounded batch')
+    ids = json.loads((ROOT/'corpus/manifest.json').read_bytes())['challenge_ids']
+    value = {'version': 1, 'batch_id': batch_id, 'challenge_ids': ids[start:end]}
+    temporary = TARGET.with_suffix('.json.tmp')
+    temporary.write_text(json.dumps(value, sort_keys=True, separators=(',', ':'))+'\n')
+    os.chmod(temporary, 0o444)
+    if TARGET.exists():
+        TARGET.unlink()
+    os.replace(temporary, TARGET)
+    print(json.dumps(value, sort_keys=True))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
