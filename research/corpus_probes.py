@@ -19,7 +19,7 @@ if _, ok := v.resolveLink("note"); !ok { t.Fatal("lowercase title did not resolv
 'D006': r'''v := vaultProbe(t); writeProbe(t, filepath.Join(v.dir, "photo.png"), "image")
 if _, ok := v.resolveLink("photo.png"); !ok { t.Fatal("attachment did not resolve") }''',
 'D007': r'''v := vaultProbe(t); writeProbe(t, filepath.Join(v.dir, "Target.md"), "---\naliases: [Alias]\n---\n")
-if _, err := v.resolve("alias"); err != nil { t.Fatalf("alias lookup is case-sensitive: %v", err) }''',
+if _, err := v.resolve("ALIAS"); err != nil { t.Fatalf("alias lookup is case-sensitive: %v", err) }''',
 'D008': r'''text := "```go\n[[Ignored]]\n```\n"; if links := ParseWikilinks(text); len(links) != 0 { t.Fatalf("inert link observed: %#v", links) }''',
 'D009': r'''links := ParseWikilinks("![[Note]]"); if len(links) != 1 || !links[0].Embed { t.Fatalf("embed not observed: %#v", links) }''',
 'D010': r'''links := ParseWikilinks("[[Note#^abc]]"); if len(links) != 1 || links[0].BlockID != "abc" { t.Fatalf("block ID differs: %#v", links) }''',
