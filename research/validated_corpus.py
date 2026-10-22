@@ -18,8 +18,8 @@ from trusted_execution import IMAGE, PRESERVED_ROOT, root_record
 SOURCE_ARCHIVE = 'e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e'
 SOURCE_COMMIT = '129e0b3f15a3bd6af949ee47d76f6855c582ab73'
 LICENSE_BLOB = 'c004659349c7a1f6c55e5107b53a0766085e8d2e'
-CORPUS_VERSION = 'GRRR-validated-corpus-v2.1-isolated'
-FROZEN_AT = '2026-10-22T02:20:00Z'
+CORPUS_VERSION = 'GRRR-validated-corpus-v2.2-isolated'
+FROZEN_AT = '2026-10-22T02:45:00Z'
 CATEGORIES = (
     'filename-title-resolution', 'alias-collision-precedence', 'case-path-lookup',
     'links-headings-inert', 'frontmatter-index-invalidation', 'rename-delete-cache',

@@ -17,12 +17,12 @@ from trusted_execution import (QEMU_EXECUTABLE, QEMU_EXECUTABLE_PATH, QEMU_MANIF
 from trusted_install import record
 from trusted_transport import AuthenticatedServer
 
-PROFILE = 'babda433624b634f0c2559278ca6214d30fc571aabfe4e709060a14279270400'
-IMAGE = '379a33b2c09af877bf40a7920cd1b42f52fbc57b42e74ac28807322427efa595'
+PROFILE = 'b3b92a6382c1ed276862675540ab07ba399a4e0dc8bcdc7254138e5abc86db71'
+IMAGE = '6c3cb672f367fd5164672e0a2d36f720dcc705414c6dcf96ab9e9d3adfa327f3'
 SUPERVISOR = '9164823ed00177d78a416b066b74b975bee953a4d1fd16017951a1791b587076'
 HELPER = '1d3c95fc11668924219073c5294d3dbd3a22e3b509e1ebbef7d7f46b0a9db0e8'
-RECEIPT = '1dbe7da28a067a21c811ad12f17725e94b40eb1d97c42e7d69765e701b759943'
-CORPUS_FREEZE = '3b1de7ca0fb921b38b4063c1bd93b2d3feee9b27398459801586d7d05e83c4db'
+RECEIPT = '755af0f8d9fc632287b5b099fc7ac913ad9a01970f0ad84145a2c15fce96815c'
+CORPUS_FREEZE = 'dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529'
 PRESERVED_ROOT = Path('/Library/GRRR/validated-corpus/v2')
 PRESERVED = {'input.iso': IMAGE, 'preparation.json': RECEIPT, 'prepared-profile.json': PROFILE}
 LIMITS = {'memory_mib': 1024, 'workspace_mib': 512, 'vcpus': 1, 'boot_seconds': 45,

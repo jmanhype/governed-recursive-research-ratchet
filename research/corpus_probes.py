@@ -39,7 +39,7 @@ if _, err := v.Move("Source.md", "Target.md"); err != ErrDestinationExists { t.F
 'D017': r'''v := vaultProbe(t); os.MkdirAll(filepath.Join(v.dir, "_inbox"), 0755); writeProbe(t, filepath.Join(v.dir, "_inbox", "Note.md"), "# Note"); writeProbe(t, filepath.Join(v.dir, "Ref.md"), "[[_inbox/Note]]\n")
 _, err := v.Move("_inbox/Note.md", "decisions/Note.md"); requireProbe(t, err); requireContainsProbe(t, []string{readFileProbe(t, filepath.Join(v.dir, "Ref.md"))}, "[[decisions/Note]]")''',
 'D018': r'''v := vaultProbe(t); writeProbe(t, filepath.Join(v.dir, "Old.md"), "# Old"); _, _ = v.resolve("Old")
-_, err := v.Delete("Old", "", true); requireProbe(t, err); if _, err = v.resolve("Old"); err == nil { t.Fatal("deleted note remained indexed") }''',
+_, err := v.Delete("Old", "", false); requireProbe(t, err); if _, err = v.resolve("Old"); err == nil { t.Fatal("trashed note remained indexed") }''',
 'D019': r'''dir := t.TempDir(); release, err := LockVault(dir, true); requireProbe(t, err); defer release()
 done := make(chan error, 1); go func() { _, err := LockVault(dir, true); done <- err }()
 select { case err := <-done: requireProbe(t, err) ; case <-time.After(2 * time.Second): t.Fatal("second lock waited unbounded") }''',
@@ -47,7 +47,7 @@ select { case err := <-done: requireProbe(t, err) ; case <-time.After(2 * time.S
 if got := readFileProbe(t, filepath.Join(v.dir, "Note.md")); got != "# One\nTwo" { t.Fatalf("append bytes differ: %q", got) }''',
 'D021': r'''if _, err := safePath(t.TempDir(), "/tmp/absolute"); err != ErrPathTraversal { t.Fatalf("absolute path denial differs: %v", err) }''',
 'D022': r'''if _, err := safePath(t.TempDir(), "../escape"); err != ErrPathTraversal { t.Fatalf("traversal denial differs: %v", err) }''',
-'D023': r'''ranges := expandAndMerge([]int{0, 1}, 1, 3); if len(ranges) != 1 || ranges[0] != (lineRange{0, 2}) { t.Fatalf("adjacent ranges not merged: %#v", ranges) }''',
+'D023': r'''ranges := expandAndMerge([]int{0, 2}, 1, 5); if len(ranges) != 1 || ranges[0] != (lineRange{0, 3}) { t.Fatalf("adjacent ranges not merged: %#v", ranges) }''',
 'D024': r'''v := vaultProbe(t); path := filepath.Join(v.dir, "Note.md"); writeProbe(t, path, "first"); v.registry.register(v.dir, path, []byte("first")); writeProbe(t, path, "changed")
 if got := v.VerifyIntegrity("Note")["Note"]; got != IntegrityMismatch { t.Fatalf("tampering was not reported: %v", got) }''',
 'C001': r'''v := vaultProbe(t); requireProbe(t, v.Create("Note", "Note.md", "# Exact", false, false)); got, err := v.Read("Note", ""); requireProbe(t, err); if got.Content != "# Exact" { t.Fatalf("round trip differs: %q", got.Content) }''',
