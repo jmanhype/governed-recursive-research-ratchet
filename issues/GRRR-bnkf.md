@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-22T03:35:07Z
-content_hash: "sha256:f7a9129df0a82d9f6075351bc2ecf7b5f32ab2fb572e5b1ca64660a38a5b50a8"
+updated_at: 2026-10-22T03:35:53Z
+content_hash: "sha256:a7437df613495f69e2170872c930136f26f9442b9ac80df301b78d728f1ff3bc"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -655,3 +655,21 @@ status: rejected
 ### proof
 - [ ] AC #1: real isolated seeded-variant fixture validation missing.
 - [ ] AC #5: per-scenario reproducible clean/faulty behavior through accepted executor missing.
+
+### 2026-10-22T03:35:53Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Final code/profile commit: 2dc3ca8b4598af0a777122b98602729ac858459a
+- Final evidence commit: 3f6d8dcfb407438591ad13c9bc14d60886bb0d73
+- Four final v2.2 isolated batches all passed 4/4 integration tests: 32/32 scenarios, 96/96 repetitions, 24 defects, 8 clean controls.
+- Evidence root: docs/evidence/validated-corpus/v2.2-batched-run/
+
+### proof
+- [x] AC #1: real isolated fixture validation completed for 24 defects plus 8 clean controls; verified finding/admission not claimed.
+- [x] AC #2: all required categories represented.
+- [x] AC #3: corpus v2.2 explicitly versioned after failed/superseded attempts; protected/public separation preserved.
+- [x] AC #4: evaluation plan remains pre-registered and measurement blocked.
+- [x] AC #5: every final scenario has three deterministic real isolated repetitions with durable ledger evidence.
+- [x] AC #6: operator-reviewable consolidated evidence, counts, hashes, and blocked downstream gates recorded.
