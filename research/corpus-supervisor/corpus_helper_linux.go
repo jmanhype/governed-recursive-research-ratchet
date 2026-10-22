@@ -41,8 +41,8 @@ func main() {
 	challenge := os.Args[1]
 	if len(challenge) != 4 || challenge[0] != 'D' && challenge[0] != 'C' { os.Exit(3) }
 	for _, character := range challenge[1:] { if character < '0' || character > '9' { os.Exit(3) } }
-	source, err := os.Getwd()
-	if err != nil { os.Exit(3) }
+	source := "/work/candidate/source"
+	if err := os.Chdir(source); err != nil { os.Exit(3) }
 	environment := append(os.Environ(), "GOCACHE=/work/candidate/cache", "GOPATH=/work/candidate/gopath",
 		"GOTMPDIR=/work/candidate/tmp", "GOFLAGS=-mod=readonly")
 	build := exec.Command("/work/go/bin/go", "test", "-c", "-o", "/work/candidate/probe", ".")
