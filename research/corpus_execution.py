@@ -17,11 +17,11 @@ from trusted_execution import (QEMU_EXECUTABLE, QEMU_EXECUTABLE_PATH, QEMU_MANIF
 from trusted_install import record
 from trusted_transport import AuthenticatedServer
 
-PROFILE = 'c4ee45f2a0ee02af6bd2a54f4c43e779de20cacdc6d2c2c79c537a00944db271'
-IMAGE = 'b44741da227c2699f300f45cea371ceec2d82003f6cee1290780222d52e0c52e'
+PROFILE = 'fb8d04586a36c682eedb2af2026bca0c3661a4635cccb42dd994498734bdac9d'
+IMAGE = 'a7d5316ca3d9adbc5c9c9b0682dcf391a412d82e696863cb6861acc3827cb1d7'
 SUPERVISOR = '9164823ed00177d78a416b066b74b975bee953a4d1fd16017951a1791b587076'
 HELPER = '1d3c95fc11668924219073c5294d3dbd3a22e3b509e1ebbef7d7f46b0a9db0e8'
-RECEIPT = '7289f71b726a146962f7ef09b6efa07a59e537a4c4b84861181a21b9db02f88d'
+RECEIPT = 'a89fd4614f9cfa9d891aee67f7be5dea2e0b5de08d26759beb9b036805edca03'
 CORPUS_FREEZE = '30d463052af3e988638484a24ec03e1965d37e05bd358c0ecb243a249754d48c'
 PRESERVED_ROOT = Path('/Library/GRRR/validated-corpus/v2')
 PRESERVED = {'input.iso': IMAGE, 'preparation.json': RECEIPT, 'prepared-profile.json': PROFILE}
