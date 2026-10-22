@@ -41,14 +41,21 @@ class ValidatedCorpus(unittest.TestCase):
             cls.selected = manifest_ids; cls.batch_id = 'single-full-corpus'
 
     @classmethod
-    def tearDownClass(cls):
-        if not hasattr(cls, 'session'): return
+    def finalize(cls):
+        if getattr(cls, 'finalized', False):
+            return
         summary = getattr(cls, 'summary', {'required': len(getattr(cls, 'selected', [])), 'executed': 0, 'skipped': 0,
                                             'failures': 1, 'errors': 0})
         snapshot = cls.session.ledger.snapshot({'kind':'validated-corpus-suite', 'summary': summary},
                                                 uuid.uuid4().hex)
         (cls.session.root/'snapshot.json').write_bytes(canonical(snapshot))
         (cls.session.root/'summary.json').write_bytes(canonical(summary))
+        cls.finalized = True
+
+    @classmethod
+    def tearDownClass(cls):
+        if not hasattr(cls, 'session'): return
+        cls.finalize()
         cls.session.budget.db.close()
 
     def test_01_every_scenario_three_real_isolated_repetitions(self):
@@ -74,6 +81,7 @@ class ValidatedCorpus(unittest.TestCase):
                                   'mandatory_isolated_fixture_gate': 'executed',
                                   'elapsed_seconds': time.monotonic()-self.started,
                                   'verified': False, 'admission': 'blocked'}
+        self.__class__.finalize()
 
     def test_02_counts_and_clean_fault_partition(self):
         observations = json.loads((self.session.root/'observations.json').read_bytes())
