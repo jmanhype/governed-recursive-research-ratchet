@@ -8,8 +8,8 @@ labels: [milestone-1, integration, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-21T21:55:30Z
-content_hash: "sha256:fa23806755b474fae934e9f0a3b3e0837ce931017863c263b0d82547a28843ea"
+updated_at: 2026-10-22T03:34:13Z
+content_hash: "sha256:c353055f1c02c6f46fca73fb7ae07462b055e8143ccf21db7a5e78f10e2eb07a"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87]
@@ -107,6 +107,84 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+## Implementation Evidence (DELIVERED)
+
+PROOF:
+
+### Final revision
+
+- Branch: `story/GRRR-bnkf`
+- Code/profile commit: `2dc3ca8b4598af0a777122b98602729ac858459a`
+- Code + evidence commit: `3f6d8dcfb407438591ad13c9bc14d60886bb0d73`
+- Worktree is clean at the evidence commit.
+
+### Corrected frozen corpus
+
+- Corpus: `GRRR-validated-corpus-v2.2-isolated`
+- Freeze digest: `dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529`
+- Input image SHA-256: `6c3cb672f367fd5164672e0a2d36f720dcc705414c6dcf96ab9e9d3adfa327f3`
+- Profile SHA-256: `b3b92a6382c1ed276862675540ab07ba399a4e0dc8bcdc7254138e5abc86db71`
+- Preparation receipt SHA-256: `755af0f8d9fc632287b5b099fc7ac913ad9a01970f0ad84145a2c15fce96815c`
+
+The v2.0/v2.1 probe defects and all failed/superseded attempts remain preserved under `docs/evidence/validated-corpus/failed-setup-archive/` and `superseded-batches/`; they are not counted as final observations.
+
+### Real isolated fixture validation
+
+Four parent-mediated, UID-separated, offline, 8-scenario batches all passed all four integration tests. Each summary reports 8 required, 8 executed, 24 repetitions, 0 failures, 0 errors, 0 skipped, fixture gate executed, verified false, and admission blocked.
+
+- Batch 1: `docs/evidence/validated-corpus/successful-batches/v2.2-batch-1-znzk0hd5/`
+- Batch 2: `docs/evidence/validated-corpus/successful-batches/v2.2-batch-2-pg9tma_b/`
+- Batch 3: `docs/evidence/validated-corpus/successful-batches/v2.2-batch-3-4pkzsdin/`
+- Batch 4: `docs/evidence/validated-corpus/successful-batches/v2.2-batch-4-zov6lwyz/`
+- Consolidated report: `docs/evidence/validated-corpus/v2.2-batched-run/REPORT.md`
+- Consolidated aggregate: `docs/evidence/validated-corpus/v2.2-batched-run/aggregate.json`
+
+Measured result: **32/32 scenarios**, **24 defect scenarios**, **8 clean controls**, and **96/96 deterministic repetitions**. D007, D011, D012, D018, and D023 all pass in the final v2.2 corpus. Every final observation is marked `verified: false` and `admission: blocked`.
+
+### Verification
+
+Commands run at the final code/profile revision:
+
+- `./scripts/generate-validated-corpus` — PASS; emitted freeze digest `dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529`.
+- `scripts/prepare-validated-corpus-input ...` — PASS; no VM/candidate execution during preparation.
+- Four isolated root-bootstrap launches — PASS; each integration log reports `Ran 4 tests ... OK`.
+- `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit*.py' -v` — **166 passed, 0 failed, 0 skipped**.
+- `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit*.py' -v` — **166 passed, 0 failed, 0 skipped**.
+- `pvg verify --include-tests ... --format=text` — `VERIFY: PASSED (4 files scanned, 0 issues)`.
+- `shasum -a 256 -c docs/evidence/validated-corpus/v2.2-batched-run/SHA256SUMS` — **3/3 OK**.
+- `git diff --check` — PASS.
+
+All four durable batch ledgers/snapshots were independently verified with the existing ledger verifier during aggregate construction. The aggregate confirms exact manifest order, exact challenge IDs, expected clean/defect behavior, three repetitions per scenario, unique scenarios, and four verifiable snapshots.
+
+### AC Verification
+
+- [x] AC #1: 24 defect scenarios plus 8 clean controls validated through real isolated executions; manifest, protected truth, variants, source/spec references, critical labels, and execution evidence are hash-bound. Preliminary only: no verified defect finding or contract admission is claimed.
+- [x] AC #2: all 10 required categories remain represented across the corrected frozen corpus.
+- [x] AC #3: corpus v2.2 explicitly supersedes failed v2.0/v2.1 freezes rather than silently repairing them; public projections exclude protected truth, anchors, replacements, critical labels, and holdout membership.
+- [x] AC #4: arm order, fixed seeds, three repetitions, stopping, feedback, deduplication, cost, denominator, uncertainty, and approval remain pre-registered with measurement blocked.
+- [x] AC #5: final v2.2 execution used the accepted trusted-observation/isolated executor path under actual UID separation; every included scenario has three deterministic clean/fault observations. Downstream replay, review, admission, and selector comparison remain explicitly not-run/blocked.
+- [x] AC #6: consolidated counts/digests/gaps and per-batch evidence are operator-reviewable; selector comparison remains blocked and preliminary observations are not credited as verified discoveries.
+
+### Remaining gates
+
+- Independent allegation replay: not-run (later story).
+- Reviewer outcome: not-run (later story).
+- Contract admission: blocked.
+- Selector-arm comparison and recursive adaptation: not-run/blocked.
+- Automatic merge/production promotion: disabled.
+
+LEARNINGS:
+
+- An unanchored regex can make removal of an optional prefix behavior-neutral; probes must exercise the actual semantic difference, not merely a syntactic mutation.
+- D018's mutation is in the trash branch, so a permanent-delete probe cannot detect it.
+- A single match cannot validate adjacent-range merging; D023 needs two adjacent ranges.
+- Snapshot/summary finalization must occur before the tests that inspect those files; class teardown is too late.
+- Batching preserved the host disk floor while retaining one complete ledger per batch; failed and superseded runs remain clearly separated rather than being mixed into the final denominator.
+
+### DISCOVERED_BUG
+
+None in pvg/nd/vlt core. The fixture defects were authored corpus scenarios. The transient v2.2 D016 `RecoveryRequired` attempt is preserved at `failed-setup-archive/grrr-corpus-ozvpqtfw/` and was followed by a complete successful batch retry; it is not hidden or counted as success.
+
 ## nd_contract
 status: in_progress
 
