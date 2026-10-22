@@ -1,0 +1,9 @@
+test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) ... ok
+test_02_counts_and_clean_fault_partition (__main__.ValidatedCorpus) ... ok
+test_03_durable_ledger_snapshot_is_verifiable (__main__.ValidatedCorpus) ... ok
+test_04_downstream_gates_remain_blocked (__main__.ValidatedCorpus) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 247.710s
+
+OK

@@ -1,0 +1,299 @@
+test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) ... FAIL
+test_02_counts_and_clean_fault_partition (__main__.ValidatedCorpus) ... ERROR
+test_03_durable_ledger_snapshot_is_verifiable (__main__.ValidatedCorpus) ... ERROR
+test_04_downstream_gates_remain_blocked (__main__.ValidatedCorpus) ... ERROR
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D005')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D006')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D007')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D008')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D009')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D010')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D011')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D012')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D013')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D014')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D015')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D016')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D017')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D018')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D019')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D020')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D021')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D022')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D023')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D024')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 49, in test_01_every_scenario_three_real_isolated_repetitions
+    result, decision = self.session.execute(challenge); guest = result['guest']
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/corpus_evaluation.py", line 115, in execute
+    result = call(self.endpoint, request); return result, self.accept(request, result)
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/common.py", line 115, in call
+    raise Failure(error['code'], error['message'], error['operation'])
+common.Failure: Host free space below floor
+
+======================================================================
+ERROR: test_02_counts_and_clean_fault_partition (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 69, in test_02_counts_and_clean_fault_partition
+    observations = json.loads((self.session.root/'observations.json').read_bytes())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/grrr-corpus-vzkz3gm9/evaluator/observations.json'
+
+======================================================================
+ERROR: test_03_durable_ledger_snapshot_is_verifiable (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 76, in test_03_durable_ledger_snapshot_is_verifiable
+    snapshot = json.loads((self.session.root/'snapshot.json').read_bytes())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/grrr-corpus-vzkz3gm9/evaluator/snapshot.json'
+
+======================================================================
+ERROR: test_04_downstream_gates_remain_blocked (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 82, in test_04_downstream_gates_remain_blocked
+    summary = json.loads((self.session.root/'summary.json').read_bytes())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/grrr-corpus-vzkz3gm9/evaluator/summary.json'
+
+======================================================================
+FAIL: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-vzkz3gm9/code/validated_corpus.py", line 60, in test_01_every_scenario_three_real_isolated_repetitions
+    self.assertEqual(len(observations), 32)
+AssertionError: 12 != 32
+
+----------------------------------------------------------------------
+Ran 4 tests in 287.270s
+
+FAILED (failures=1, errors=23)

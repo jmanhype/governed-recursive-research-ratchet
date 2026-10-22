@@ -1,0 +1,70 @@
+test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) ... FAIL
+test_02_counts_and_clean_fault_partition (__main__.ValidatedCorpus) ... ERROR
+test_03_durable_ledger_snapshot_is_verifiable (__main__.ValidatedCorpus) ... ERROR
+test_04_downstream_gates_remain_blocked (__main__.ValidatedCorpus) ... ERROR
+
+======================================================================
+ERROR: test_02_counts_and_clean_fault_partition (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-les7s87f/code/validated_corpus.py", line 79, in test_02_counts_and_clean_fault_partition
+    observations = json.loads((self.session.root/'observations.json').read_bytes())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/grrr-corpus-les7s87f/evaluator/observations.json'
+
+======================================================================
+ERROR: test_03_durable_ledger_snapshot_is_verifiable (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-les7s87f/code/validated_corpus.py", line 87, in test_03_durable_ledger_snapshot_is_verifiable
+    snapshot = json.loads((self.session.root/'snapshot.json').read_bytes())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/grrr-corpus-les7s87f/evaluator/snapshot.json'
+
+======================================================================
+ERROR: test_04_downstream_gates_remain_blocked (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-les7s87f/code/validated_corpus.py", line 93, in test_04_downstream_gates_remain_blocked
+    summary = json.loads((self.session.root/'summary.json').read_bytes())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/grrr-corpus-les7s87f/evaluator/summary.json'
+
+======================================================================
+FAIL: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus) (challenge='GRRR-VC-D007')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-les7s87f/code/validated_corpus.py", line 62, in test_01_every_scenario_three_real_isolated_repetitions
+    self.assertEqual(decision['fixture_validation'], 'pass')
+AssertionError: 'fail' != 'pass'
+- fail
++ pass
+
+
+======================================================================
+FAIL: test_01_every_scenario_three_real_isolated_repetitions (__main__.ValidatedCorpus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/grrr-corpus-les7s87f/code/validated_corpus.py", line 69, in test_01_every_scenario_three_real_isolated_repetitions
+    self.assertEqual(len(observations), len(self.selected))
+AssertionError: 7 != 8
+
+----------------------------------------------------------------------
+Ran 4 tests in 187.846s
+
+FAILED (failures=2, errors=3)
