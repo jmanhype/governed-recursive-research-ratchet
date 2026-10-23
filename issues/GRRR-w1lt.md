@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T21:20:29Z
-content_hash: "sha256:1764ef9d12fbf9cf8c57bdb22be110874455d02be1b50792518093cf245fe403"
+updated_at: 2026-10-23T21:20:55Z
+content_hash: "sha256:307e54f00965e6d66686cefd8ecf712cb532a42a41a201a4651f47934b270871"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,47 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `/usr/bin/python3 -B docs/evidence/replay-prerequisites/runtime-smoke-live/verify-copies.py`
+- `/opt/homebrew/bin/python3 -B docs/evidence/replay-prerequisites/runtime-smoke-live/verify-copies.py`
+- Both required Pythons: `-B -m unittest discover -s tests -p 'unit_replay*.py'` and `-B -m unittest discover -s tests -p 'unit_*.py'` at e0dfaf3.
+- `/usr/bin/python3 -B -m trace --count --missing --summary --coverdir /tmp/grrr-w1lt-delivery-coverage --module unittest discover -s tests -p 'unit_replay*.py'` at03ff000.
+- `pvg verify docs/evidence/replay-prerequisites/runtime-smoke-live --format=text`
+- `shasum -a 256 -c docs/evidence/replay-prerequisites/runtime-smoke-live/SHA256SUMS`
+- `git diff --check`; `git diff --cached --check`.
+
+Summary: unit PASS (32 focused /198 full on each required Python,0 failures/errors/skips); fresh trace32 PASS; copied-live-evidence verification2 PASS; checksum18 PASS; static PASS (1 file,0issues); parent live integration1 successful normal C001 lifecycle. Historic failed attempts preserved, not hidden.
+Coverage: no-guest replay_prerequisites62%, replay_runtime96%, replay_smoke31%. Parent protected live execution not instrumented; no root coverage claim.
+
+### Commit
+- Branch: story/GRRR-w1lt
+- SHA: 3283c0ee854d7cae2a98d5c2977c00eb0164ce8d
+- Executed implementation: e0dfaf33d3b2725a2fad63401d2b717a8365e0a6
+
+### pvg verify
+VERIFY: PASSED (1 files scanned, 0 issues)
+
+### AC Verification
+| AC # | Requirement | Code Location | Test Location | Status |
+|---|---|---|---|---|
+| 1 | Approved exact policy/limits/denials | docs/replay-policy-v1.json | policy tests and parent unchanged hash | PASS |
+| 2 | Reviewed root provisioning, UID boundaries/assets | scripts/replay-root-prepare | prior base live report and runtime-smoke-live parent probes | PASS |
+| 3 | Protected exact preflight before dispatch | research/replay_prerequisites.py | parent sanitized preflight and negative tests | PASS |
+| 4 | Offline parent lifecycle, no exposed protected state, retained failures | research/replay_smoke.py | live lifecycle24.019100959s, copied settled DB/hash-chain/guest evidence, ceased children | PASS |
+| 5 | GRRR-z3w9 blocked until acceptance, no relabeled ReplayReceipt | unchanged tracker dependency and smoke scope | live BlockedBy=[GRRR-w1lt], all smoke authorization flagsfalse | PASS |
+
+LEARNINGS:
+- Exact group vectors and private modes must match live platform behavior.
+- Preserve spawn registration before handling stop and always attempt KILL on uncertain observation.
+- Parent source/access observations and worker read-only copy verification are distinct evidence.
+
+Downstream not-run: PM acceptance, independent allegation replay/verdict/ReplayReceipt/failure sequence, contract admission/promotion. No root/QEMU/VM/protected mutation/push by worker. See preceding full PROOF and LIVE-REPORT.md for exact evidence and limitations. DISCOVERED_BUG: none unresolved in prerequisite scope.
+
 ## Implementation Evidence (DELIVERY REQUESTED)
 
 PROOF:
