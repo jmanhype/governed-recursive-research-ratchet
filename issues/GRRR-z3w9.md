@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T21:52:12Z
-content_hash: "sha256:a18d541e2667176718673bb9105491446f48baf8eed0ff041290ac49014e550e"
+updated_at: 2026-10-23T21:52:57Z
+content_hash: "sha256:16158853a3a70cc30a90f1bc03cbcee2e3266cde659f2eb59537edaacd21c95f"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt]
 follows: [GRRR-bnkf, GRRR-w1lt]
@@ -108,6 +108,63 @@ status: new
 
 
 ## Notes
+## Partial implementation evidence — BLOCKED, NOT DELIVERED
+
+PROOF:
+- Branch story/GRRR-z3w9; WIP commit 40f851e37804cc3b853d20e17744ec770792c95f.
+- Python versions: /usr/bin/python3 = 3.9.6; /opt/homebrew/bin/python3 = 3.14.3.
+- `/usr/bin/python3 tests/unit_independent_replay.py`: 17 tests, 0 failures/errors/skips; exit 0.
+- `/opt/homebrew/bin/python3 tests/unit_independent_replay.py`: 17 tests, 0 failures/errors/skips; exit 0.
+- `/usr/bin/python3 -m unittest discover -s tests -p 'unit_*.py'`: final 215 tests, 0 failures/errors/skips, 20.174s; exit 0.
+- `/opt/homebrew/bin/python3 -m unittest discover -s tests -p 'unit_*.py'`: final 215 tests, 0 failures/errors/skips, 19.408s; exit 0.
+- Initial system full run: 205 tests, 1 error, 19.237s, conservative-genesis preparation-space-floor refusal. Preserved separately in initial-full-failure.txt. Parent reported safe staging cleanup; both final suites subsequently passed. No cleanup by this worker.
+- Both interpreters ran `scripts/test-story independent-replay`: exit 1, 0 integration tests executed, 1 setUpClass error, 0 skips, actual Dedicated UID/GID required. This is a blocked integration run, not success.
+- Both interpreters ran `-m py_compile research/replay.py research/replay_smoke.py scripts/replay-root-prepare scripts/test-story tests/unit_independent_replay.py tests/unit_replay_smoke.py tests/integration/independent_replay.py`: exit 0.
+- `git diff --check`: exit 0.
+- `pvg verify research/replay.py research/replay_smoke.py scripts/replay-root-prepare scripts/test-story tests/unit_independent_replay.py tests/unit_replay_smoke.py tests/integration/independent_replay.py docs/INDEPENDENT-REPLAY-WIP.md --format=text`: VERIFY PASSED, 5 files scanned, 0 issues. This is not security approval.
+- Coverage command: `/usr/bin/python3 -m trace --count --missing --summary --coverdir /private/tmp/grrr-z3w9-no-guest-coverage --module unittest discover -s tests -p unit_independent_replay.py`: 17 tests pass; replay.py 42% of 362 executable lines; unit_independent_replay.py 99% of 124 lines. Privileged/live branches intentionally remain unexecuted.
+- Evidence directory: docs/evidence/independent-replay/no-guest/ (committed logs). No VM, QEMU, sudo, root execution, /Library/GRRR mutation or paid call performed.
+- research/replay.py SHA256 bd60de46037c23b99f17eaaeca105d280c5dac1531758cc62ebb03a738961323.
+- scripts/replay-root-prepare SHA256 e6b3140f5ffaee1f620763eaeff05c2eecd537356bcc267cb486d096420e6a59.
+- Direct D011 maintainer specification: source archive e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e, wikilinks_test.go member 218eebc6314ce14c555c579db24b85ccc4ccb425e3cd51f93d1c52a9049da570, TestParseWikilinks/link with display text and g.Display comparison loop.
+
+### AC verification
+| AC | Implementation and test locations | Status |
+| 1 fresh evaluator-controlled reconstruction | research/replay.py; root mode/shared lifecycle; tests/unit_independent_replay.py | PARTIAL draft. No live execution; cumulative replay profile absent; replay-specific guest profile unfinished. |
+| 2 pinned specification confirmation | maintainer_specification and finding in research/replay.py; exact archived maintainer case checked by unit tests | No-guest byte/spec mapping PASS for D011 only; no verified live defect claimed. |
+| 3 Finding plus mandatory gates | finding, gate_inventory, reproduce; invalid-claim receipt draft; baseline/seed result draft | PARTIAL. Pure contracts tested, actual evaluator receipts unproven. Admission always blocked. |
+| 4 all real integration paths | tests/integration/independent_replay.py; scripts/test-story independent-replay | UNMET. Actual identity blocks operator execution; failed-build/interruption/failure-sequence expectations remain red and need real guest fixtures. |
+| 5 approved two-failure stop and retained evidence | failure_transition and ledger atomic callback/export in research/replay.py | PARTIAL. Pure transition tests pass; actual persistent replay sequence not executed. |
+
+### Unresolved gates / continuation
+Independent security review, registered cumulative replay accounting with preserved prior usage/holds and explicit stop recovery, new versioned replay guest profile, full real fault-mode implementation, fresh parent installation, actual UID-separated live integration, reviewer outcome and all admission/comparison/promotion gates remain blocked/not-run. Existing C001 smoke is not reused or relabeled. The current root command is a future candidate only, NOT approved for installation/execution. docs/INDEPENDENT-REPLAY-WIP.md contains exact continuation map and parent-command candidate.
+
+LEARNINGS:
+- corpus specification_digest is a commit/filename label hash, not specification content; exact upstream table/assertion bytes provide a valid D011 mapping without inventing human approval.
+- Failed rebuild must be Inconclusive, not the corpus fixture verdict's defect classification.
+- The lifecycle smoke's separate Budget database cannot become independent replay accounting; cumulative store registration/history must be preserved.
+- Current corpus transport hard-codes media/profile identities and variant==challenge. Real clean-D011/rebuild/interruption fixtures require a separate reviewed replay profile, not frozen-corpus mutation or synthetic receipts.
+- Graph coverage was stale for corpus_execution and untracked for replay prerequisites; exact source reads supplied the missing evidence. pvg notes search failed because the story worktree has no .vault knowledge directory; no raw issue files were read.
+
+DISCOVERED_BUG:
+  title: Independent replay has no registered cumulative campaign accounting profile
+  context: PersistentBudget.PROFILES excludes independent-replay; parent reports the active successor store stopped. A fresh replay allowance would reset campaign usage. Draft preflight refuses before namespace creation. Requires independently reviewed registration/history/stop-recovery decision, not a new empty database.
+  affected_files: research/persistent_budget.py; research/replay.py
+  discovered_during: GRRR-z3w9
+
+## nd_contract
+status: new
+
+### evidence
+- Partial WIP 40f851e37804cc3b853d20e17744ec770792c95f; no delivery or acceptance claimed.
+- Final no-guest full suites 215/215 on both Python interpreters; live integration blocked.
+
+### proof
+- [ ] AC #1: fresh live replay/cumulative accounting unproven.
+- [ ] AC #2: byte-pinned D011 mapping exists; independent reproduction unproven.
+- [ ] AC #3: actual complete ReplayReceipt unproven.
+- [ ] AC #4: required real guest fault modes incomplete.
+- [ ] AC #5: actual durable two-failure sequence unproven.
 
 
 ## History
