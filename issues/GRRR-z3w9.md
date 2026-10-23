@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T18:42:50Z
-content_hash: "sha256:6b2cd875a6d814e00295b2f64b6c913071d3340b7cea2ba15d2f704f5f86941e"
+updated_at: 2026-10-23T18:51:22Z
+content_hash: "sha256:b1c4528f4deb65f9d1fe28e7498b954c918b01fbe6626089b5dc1fb8d515258c"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf]
 assignee: dev-GRRR-z3w9
@@ -127,3 +127,26 @@ status: new
 - Follows: [[GRRR-bnkf]]
 
 ## Comments
+
+### 2026-10-23T18:51:22Z speed
+BLOCKED: Mandatory independent-replay execution prerequisites are unavailable, and no source changes were made.
+
+Exact preflight at worktree story/GRRR-z3w9, HEAD 663a6b4 (clean):
+- Current worker UID is 501; the accepted evaluator path requires actual UID 320 and runner UID 321.
+- No fresh replay runtime exists: find /private/tmp -maxdepth 1 -type d -name 'grrr-replay-*' returned 0.
+- No active corpus runtime exists: find /private/tmp -maxdepth 1 -type d -name 'grrr-corpus-*' returned 0.
+- The replay-capable preserved executor is root-owned under /Library/GRRR and invokes QEMU; this worker is explicitly prohibited from sudo, QEMU, or mutating /Library/GRRR.
+- Corpus v2.2 identity checks passed: version GRRR-validated-corpus-v2.2-isolated, freeze dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529, source commit 129e0b3f15a3bd6af949ee47d76f6855c582ab73; all 7 manifest-listed artifacts matched SHA-256.
+- No operator-approved numeric replay-stop policy was found. docs/ARCHITECTURE.md contains only the proposed threshold of two consecutive independent replay failures; execution must not infer approval.
+- ./scripts/test-story independent-replay is not wired because implementation without a real success/failure execution path would create an unverifiable/gated suite, contrary to the story.
+
+Required parent-mediated request:
+1. Approve an explicit replay policy record binding run scope, two consecutive independent replay failures, watchdog/grace limits, and the corpus/source identities above.
+2. Prepare a fresh root-owned disposable replay runtime with UID 320 evaluator, UID 321 runner, preserved QEMU/assets, evaluator-owned budget/ledger/expectations, and a protected replay policy/spec projection.
+3. Only then dispatch this story again. The parent must provide/execute the approved launcher; do not reuse or mutate /Library/GRRR as this worker.
+
+DISCOVERED_BUG:
+  title: Independent replay lacks approved privileged execution prerequisites
+  context: GRRR-z3w9 requires a fresh evaluator-controlled VM replay and an approved numeric consecutive-failure stop policy. The accepted corpus inputs are intact, but no fresh runtime or approval record exists, and the worker cannot create the required UID-separated QEMU environment without violating its explicit privileges.
+  affected_files: research/replay.py (proposed); tests/integration/independent_replay.py (proposed); scripts/test-story
+  discovered_during: GRRR-z3w9
