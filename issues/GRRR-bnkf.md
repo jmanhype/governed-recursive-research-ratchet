@@ -1,7 +1,7 @@
 ---
 id: GRRR-bnkf
 title: "Inspect a frozen representative vlt defect corpus"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-23T18:36:37Z
-content_hash: "sha256:a4189a6c8a6afa43c0dd6e6f5e18ac01ddc57d3f4cb783b70407795d04081f50"
-blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
+content_hash: "sha256:df01ac2cf8ec6f88c0a4c7c6094638217b4e29baa15457a5a700b760314c66ac"
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 assignee: dev-GRRR-bnkf
+closed_at: 2026-10-23T18:36:37Z
+close_reason: "Accepted: final corpus v2.2 provides independently hash-verified real isolated fixture validation for 24 defects and 8 clean controls across 96 deterministic repetitions, while downstream replay, admission, comparison, and promotion remain explicitly blocked."
 ---
 
 ## Description
@@ -561,10 +562,13 @@ status: in_progress
 - 2026-10-21T21:55:30Z claimed by dev-GRRR-bnkf
 - 2026-10-22T03:34:35Z status: in_progress -> in_progress
 - 2026-10-22T03:34:35Z auto-follows: linked to predecessor GRRR-90te
+- 2026-10-23T18:36:37Z status: in_progress -> closed
+- 2026-10-23T18:36:37Z dep_removed: no_longer_blocks GRRR-dbbi
+- 2026-10-23T18:36:37Z dep_removed: no_longer_blocks GRRR-z3w9
+- 2026-10-23T18:36:37Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-dbbi]], [[GRRR-z3w9]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-c875]]
 - Follows: [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]]
 
