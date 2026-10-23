@@ -18,7 +18,7 @@ LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 CODE = {
     'budget.py': '8fffe1390b4094c6519cc4d37e83774aa6eb5c9402b5e3f2a40f748d320de5ab',
     'ledger.py': '90dc7b0d33cdb2b7eab6854d0a2237939ba2b9f9c75cc06d89e595c0a9285514',
-    'replay_smoke.py': 'da36fdba58fa651ba80b8977ae062be7778be33499ae73a675c13557fed4f1a6',
+    'replay_smoke.py': '2b388ac81f6e4ff5a5cbf48c80ec5c5ac9c9f39931fe77ba3e0fbccc01b7bebb',
     'replay_runtime.py': 'f6c77cc8e3290ff0706134a1b107a320bf65d25a4fdf7a183dcc4b23d4fe665a',
     'common.py': '33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21',
     'corpus_execution.py': '9613c1874502f7204ab3546bb4a8d20230f2431bad20583cda4b39b7c1ad84f4',
@@ -27,7 +27,7 @@ CODE = {
     'trusted_install.py': 'b7bc2b7c169c3d9e3d24d159f076d22a6505febbb41d9e11a3d1d2fc3576e32e',
     'trusted_transport.py': '024d34efa5d8e7d482fcdf213e2b807ef013b7870f59fd23258cc9c2ded9419b',
     'validated_corpus.py': 'a62e2f219d696f895d69af4b7a13b32dd7222ed842b2089525f62e547d852476',
-    'replay_prerequisites.py': '20efcaf9b07b6feac4c70f7758bab37ac743a5aaff863134e36c60d5623432ae',
+    'replay_prerequisites.py': '0c283e17ec34e4b0dad033ecfc04ba9e23b3ae39006dd242c6df4a3551845384',
 }
 POLICY = '355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a'
 PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')
@@ -224,8 +224,8 @@ def identity_entry() -> int:
     roles = {'--smoke-runner': 321, '--smoke-evaluator': 320}
     check(len(sys.argv) == 2 and sys.argv[1] in roles, 'Unregistered identity role')
     check(os.getuid() == roles[sys.argv[1]] and os.geteuid() == roles[sys.argv[1]], 'Wrong service identity')
-    check(os.getgid() == roles[sys.argv[1]] and os.getegid() == roles[sys.argv[1]]
-          and set(os.getgroups()) <= {roles[sys.argv[1]]}, 'Wrong service group boundary')
+    check(os.getgid() == roles[sys.argv[1]] and os.getegid() == roles[sys.argv[1]],
+          'Wrong service primary group')
     check(sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode
           and Path(sys.executable) == PYTHON, 'Isolated reviewed runtime required')
     validate_location(Path(__file__).absolute())
@@ -235,6 +235,8 @@ def identity_entry() -> int:
     for name, hashed in CODE.items():
         read(INSTALL / name, hashed)
     sys.path.insert(0, str(INSTALL))
+    from replay_prerequisites import validate_service_groups
+    validate_service_groups(roles[sys.argv[1]], os.getgroups())
     from replay_smoke import runner, evaluator
     return runner() if sys.argv[1] == '--smoke-runner' else evaluator()
 

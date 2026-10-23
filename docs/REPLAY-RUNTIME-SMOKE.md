@@ -40,13 +40,13 @@ Do not replace the historical base namespace's nine-file code snapshot. Inputs
 remain the exact previously reviewed 14-file corpus/VM/source/policy inventory;
 only the separate installation review record changes. Preserve all old evidence.
 
-Launcher SHA256: `c2085274072c4b147865b38d5a953fde3249347a5473373a24218ac9d3226325`.
+Launcher SHA256: `aa48f31bfca3f38c6e4792a685574bb09437fdef9b2f41d38813d7ad189bc698`.
 Changed CODE pins:
 
 | Member | SHA256 |
 |---|---|
-| replay_smoke.py | da36fdba58fa651ba80b8977ae062be7778be33499ae73a675c13557fed4f1a6 |
-| replay_prerequisites.py | 20efcaf9b07b6feac4c70f7758bab37ac743a5aaff863134e36c60d5623432ae |
+| replay_smoke.py | 2b388ac81f6e4ff5a5cbf48c80ec5c5ac9c9f39931fe77ba3e0fbccc01b7bebb |
+| replay_prerequisites.py | 0c283e17ec34e4b0dad033ecfc04ba9e23b3ae39006dd242c6df4a3551845384 |
 | corpus_execution.py | 9613c1874502f7204ab3546bb4a8d20230f2431bad20583cda4b39b7c1ad84f4 |
 | budget.py (added closure member) | 8fffe1390b4094c6519cc4d37e83774aa6eb5c9402b5e3f2a40f748d320de5ab |
 | ledger.py (added closure member) | 90dc7b0d33cdb2b7eab6854d0a2237939ba2b9f9c75cc06d89e595c0a9285514 |
@@ -81,8 +81,23 @@ parent only** may execute this exact fixed command:
 No inherited DYLD_*, PYTHON*, credentials, HOME, caller-selected runtime paths or
 other variables may reach interpreter/native-loader startup. The root launcher
 starts fixed runner/evaluator child commands with an equivalent explicit exec
-environment `{PATH:/usr/bin:/bin, LC_ALL:C}`, isolated flags, and supplementary
-groups cleared before dropping to real/effective UID/GID 321 or 320. Child
+environment `{PATH:/usr/bin:/bin, LC_ALL:C}` and isolated flags. Before dropping
+root privilege, it validates pwd/getgrouplist against the exact reviewed account
+vector, calls initgroups for that account, then setgid/setuid to 321 or 320.
+macOS repopulates account memberships on setuid: supplementary groups are NOT
+empty. Every role entry requires the exact current approved vector:
+
+- UID 320 `_grrr_evaluator`: groups `{12,61,100,320,701}`.
+- UID 321 `_grrr_runner`: groups `{12,61,100,321,701}`.
+
+Shared groups are everyone (12), localaccounts (61), _lpoperator (100), and
+com.apple.sharepoint.group.1 (701). These existing memberships are explicitly
+reviewed, not silently treated as empty or harmless. No root/wheel (0), staff
+(20), admin (80), operator 501, opposite service group, or any unlisted membership
+is permitted. Missing groups also fail. Account changes require renewed review;
+this package creates or changes no group membership. Root real/effective UID/GID
+must be removed before any service entry; positive drop execution remains a
+parent-only live gate. Child
 commands cannot be entered by the operator or by root pretending to be a role.
 Runtime/ancestor/ACL/hash verification is not relaxed.
 
@@ -126,6 +141,13 @@ ACL absence, no-follow/nonblocking opening, one link, a 16 KiB bound and stable
 metadata across the read. Public protected_bytes remains unchanged at 0444.
 Revision evidence: `evidence/replay-prerequisites/runtime-smoke-r2/`; prior smoke
 evidence describes the superseded 6b90f01 package, not this corrected revision.
+
+The d89cec7 parent attempt subsequently failed at runner identity entry before VM
+readiness: parent reports exit_codes=[1], children_ceased=true, elapsed 0.128s.
+Its partial runtime-smoke state remains preserved. This group-vector correction
+has new evidence under `evidence/replay-prerequisites/runtime-smoke-r3/`; no retry
+or cleanup is authorized by the correction itself. Parent must renew review and
+preserve the failed attempt before separately authorizing a fresh namespace.
 
 ## Still not-run
 

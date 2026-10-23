@@ -18,7 +18,8 @@ from corpus_execution import (CorpusExecutor, CORPUS_FREEZE, PROFILE, IMAGE, SUP
                               HELPER, LIMITS as CORPUS_LIMITS, decode_guest, validate_request)
 from execution import ASSETS
 from replay_prerequisites import (REPLAY_ROOT, LOCK, POLICY_SHA256, check_absent,
-                                  protected_preflight, validate_policy)
+                                  protected_preflight, validate_policy, approved_account_groups,
+                                  validate_service_groups, ACCOUNT_NAMES)
 from trusted_execution import configuration_digest, protected_bytes, root_record, QEMU_MANIFEST
 from trusted_install import immutable
 from trusted_transport import AuthenticatedServer, control_call
@@ -39,8 +40,9 @@ def validate_scope(value: dict) -> dict:
 def require_identity(uid: int) -> None:
     """Require the actual dedicated identity, not caller-supplied role fields."""
     require(os.getuid() == uid and os.geteuid() == uid and os.getgid() == uid
-            and os.getegid() == uid and set(os.getgroups()) <= {uid},
-            'Unauthorized', 'Dedicated UID/GID and no auxiliary groups required')
+            and os.getegid() == uid,
+            'Unauthorized', 'Dedicated UID/GID required')
+    validate_service_groups(uid, os.getgroups())
 
 
 def scope_event(kind: str, **values: object) -> dict:
@@ -313,8 +315,9 @@ def launch(parent: object, review: dict, code: dict) -> int:
         success = False
         stop = DeferredStop()
         def start(role: str, uid: int) -> subprocess.Popen:
+            approved_account_groups(uid)
             def identity() -> None:
-                os.setgroups([])
+                os.initgroups(ACCOUNT_NAMES[uid], uid)
                 os.setgid(uid)
                 os.setuid(uid)
                 os.umask(0o077)

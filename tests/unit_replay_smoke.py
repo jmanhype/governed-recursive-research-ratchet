@@ -13,12 +13,26 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 from common import Failure
-from replay_prerequisites import PREPARED_MODE, read_private_file, private_record
+from replay_prerequisites import (PREPARED_MODE, read_private_file, private_record,
+                                  approved_account_groups, validate_service_groups, ACCOUNT_NAMES)
 from replay_smoke import (SCOPE, CHALLENGE, SmokeExecutor, scope_event, validate_scope,
                           runner, evaluator, launch, cease_groups, present_groups, validate_result)
 
 
 class RuntimeSmoke(unittest.TestCase):
+    def test_real_macos_account_vectors_and_nonmember_rejection(self):
+        for uid in (320, 321):
+            observed = {int(value) for value in subprocess.check_output(
+                ['/usr/bin/id', '-G', ACCOUNT_NAMES[uid]]).split()}
+            self.assertEqual(observed, {uid, 12, 61, 100, 701})
+            self.assertEqual(approved_account_groups(uid), observed)
+            validate_service_groups(uid, list(observed))
+            for extra in (0, 20, 80, 501, 99999, 641 - uid):
+                with self.subTest(uid=uid, extra=extra), self.assertRaises(Failure):
+                    validate_service_groups(uid, list(observed | {extra}))
+            with self.assertRaises(Failure):
+                validate_service_groups(uid, [uid])
+
     def test_prepared_private_record_contract(self):
         self.assertEqual(PREPARED_MODE, 0o400)
         with tempfile.TemporaryDirectory() as directory:

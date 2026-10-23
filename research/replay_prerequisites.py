@@ -24,6 +24,27 @@ MANIFEST_SHA256 = '32fb59c74ea96653c50e3deea0d66474bafdd78caf96c3e9c4c589aba703e
 REPLAY_ROOT = Path('/Library/GRRR/independent-replay')
 LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 PREPARED_MODE = 0o400
+ACCOUNT_NAMES = {320: '_grrr_evaluator', 321: '_grrr_runner'}
+ACCOUNT_GROUPS = {uid: frozenset((uid, 12, 61, 100, 701)) for uid in ACCOUNT_NAMES}
+
+
+def approved_account_groups(uid: int) -> frozenset:
+    """Compute live macOS membership and compare with the independently reviewed vector."""
+    require(uid in ACCOUNT_NAMES, 'Unauthorized', 'Unapproved service identity')
+    account = pwd.getpwuid(uid)
+    require(account.pw_name == ACCOUNT_NAMES[uid] and account.pw_uid == uid
+            and account.pw_gid == uid and account.pw_dir == '/var/empty'
+            and account.pw_shell in ('/usr/bin/false', '/bin/false'),
+            'GateBlocked', 'Dedicated identity boundary differs')
+    groups = frozenset(os.getgrouplist(account.pw_name, account.pw_gid))
+    require(groups == ACCOUNT_GROUPS[uid], 'GateBlocked', 'Account group membership differs')
+    return groups
+
+
+def validate_service_groups(uid: int, groups: list) -> None:
+    require(all(type(group) is int for group in groups)
+            and frozenset(groups) == approved_account_groups(uid),
+            'Unauthorized', 'Service group vector differs')
 
 
 def read_private_file(path: Path, uid: int, gid: int) -> bytes:
@@ -155,11 +176,7 @@ def protected_preflight(corpus: Path, vm: Path, archive: Path, policy_path: Path
     require(executable == QEMU_EXECUTABLE_PATH and digest(executable.read_bytes()) == QEMU_EXECUTABLE,
             'IntegrityFailure', 'QEMU executable differs')
     for uid in (320, 321):
-        account = pwd.getpwuid(uid)
-        require(account.pw_uid == uid and account.pw_gid == uid
-                and account.pw_dir == '/var/empty'
-                and account.pw_shell in ('/usr/bin/false', '/bin/false'),
-                'GateBlocked', 'Dedicated identity boundary differs')
+        approved_account_groups(uid)
     immutable(REPLAY_ROOT.parent, directory=True)
     check_namespace(installed)
     require(shutil.disk_usage(REPLAY_ROOT.parent).free >= policy['limits']['minimum_host_free_bytes'],
