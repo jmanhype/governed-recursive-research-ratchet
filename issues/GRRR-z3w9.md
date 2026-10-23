@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T21:52:57Z
-content_hash: "sha256:bb1db89f994e7c3d0a13115bc6775186a18cbf9194a89fc41a0ac5984bbdf85b"
+updated_at: 2026-10-23T21:53:28Z
+content_hash: "sha256:95f6cbc54f53eade52909300e726f96ed4f1fdf1cc92438b3cf921d161045ac4"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt]
 follows: [GRRR-bnkf, GRRR-w1lt]
@@ -218,3 +218,6 @@ DISCOVERED_BUG:
 
 ### 2026-10-23T21:52:12Z speed
 BLOCKED: Partial WIP only. PersistentBudget has no independent-replay profile; parent reports active cumulative store stopped. Fresh allowance is forbidden. Real replay-specific failed-rebuild, interruption and consecutive-failure guest fixtures/modes remain unfinished and require continuation plus independent review. No guest or protected mutation performed. See docs/INDEPENDENT-REPLAY-WIP.md; story will not be delivered.
+
+### 2026-10-23T21:53:28Z speed
+Partial handoff: verify-delivery returned 1 passed / 8 failed, as expected for an undelivered partial story. It is NOT delivery proof. Claim released; story remains open. Source WIP 40f851e; integration evidence refreshed against that source. Full PROOF/AC/LEARNINGS and unresolved gates are appended in nd. No push or protected execution.
