@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
 updated_at: 2026-10-23T21:28:22Z
-content_hash: "sha256:a1719727aa54989245b1af4f7d3b257f192a33a9a7848b8680357eab7e707d29"
+content_hash: "sha256:56464e2e80cd6c352beb96996f90acb1329e3b8b95a7c168908afafe053d5228"
 blocks: [GRRR-z3w9]
 follows: [GRRR-bnkf, GRRR-c875, GRRR-my5n]
 ---
@@ -72,6 +72,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-23.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence
 
 PROOF: Rejection closure — documentation only. Commit 1120b161583515afa6b755232b969bcb41849bbd changes only docs/REPLAY-RUNTIME-SMOKE.md. It now records reviewed e0dfaf3 installation, successful sanitized preflight/provisioning, 24.019100959s successful C001 lifecycle with evaluator success/ceased children, passed UID/access/repeat probes, settled budget/ledger and preserved failed evidence. Historical commands are explicitly not execution authorization. Prior delivery, stale-doc PM rejection and this rework are stated. Independent replay/ReplayReceipt/verdict/admission/comparison/promotion remain downstream not-run.
