@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-23T22:30:26Z
-content_hash: "sha256:e2a12fbee02564dd1a9f1f59e5ed3cfd0b25a8bda6199abf70f5691d2ab6d21a"
+updated_at: 2026-10-23T22:32:35Z
+content_hash: "sha256:ead3f5e545c49656803d2483b605ac5579889e3382be25db0acb62761cb75ef4"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt]
@@ -74,6 +74,25 @@ status: new
 
 
 ## Notes
+## Independent Implementation Review
+
+SECURITY_REVIEW: CHANGES_REQUIRED
+
+- Reviewed implementation commit 8f90d35c9008478c4258f07c171442e84de11235 without protected effects.
+- Blocking finding: registered PersistentBudget freezes reserve/verification only. Inherited settle(), meter(), and disclose_overhead() can mutate the stopped cumulative database and release a pending hold before later verification detects drift.
+- Required fix: registration-only version 2 must be read-only/fail-closed across every profile and mutation entrypoint until separately reviewed recovery. Add regressions for settlement, metering, overhead, and stale handles with unchanged bytes/inode and unchanged pending holds.
+- Reviewer otherwise observed baseline checks, atomic receipt publication, profile binding, stop-before-idempotency, source pins, and focused tests consistent, but this is not acceptance.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independent reviewer reproduced the mutation only in temporary fixtures; no protected operation.
+
+### proof
+- [ ] Runtime mutation freeze and regressions remain pending.
+- [ ] No installation, stop recovery, or replay is authorized.
+
 # GRRR-43i8 registration-only verification
 
 Status: implementation WIP, BLOCKED for privileged ACs; not delivered.
