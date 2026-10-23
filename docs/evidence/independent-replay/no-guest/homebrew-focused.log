@@ -1,0 +1,22 @@
+test_checkout_root_command_refuses_unprivileged_caller (__main__.IndependentReplayContracts.test_checkout_root_command_refuses_unprivileged_caller) ... ok
+test_clean_negative_never_becomes_defect (__main__.IndependentReplayContracts.test_clean_negative_never_becomes_defect) ... ok
+test_each_mandatory_gate_starts_not_run (__main__.IndependentReplayContracts.test_each_mandatory_gate_starts_not_run) ... ok
+test_exact_upstream_spec_bytes_and_assertion (__main__.IndependentReplayContracts.test_exact_upstream_spec_bytes_and_assertion) ... ok
+test_failed_rebuild_is_inconclusive_not_defect (__main__.IndependentReplayContracts.test_failed_rebuild_is_inconclusive_not_defect) ... ok
+test_forged_pass_logs_and_unknown_fields_rejected (__main__.IndependentReplayContracts.test_forged_pass_logs_and_unknown_fields_rejected) ... ok
+test_missing_source_object_fails (__main__.IndependentReplayContracts.test_missing_source_object_fails) ... ok
+test_nondeterminism_is_inconclusive (__main__.IndependentReplayContracts.test_nondeterminism_is_inconclusive) ... ok
+test_policy_approval_required_even_for_success (__main__.IndependentReplayContracts.test_policy_approval_required_even_for_success) ... ok
+test_reconstruct_seeded_candidate_from_actual_archive (__main__.IndependentReplayContracts.test_reconstruct_seeded_candidate_from_actual_archive) ... ok
+test_repeated_assertion_failure_requires_spec_and_baseline (__main__.IndependentReplayContracts.test_repeated_assertion_failure_requires_spec_and_baseline) ... ok
+test_reviewed_import_inventory_matches_checkout (__main__.IndependentReplayContracts.test_reviewed_import_inventory_matches_checkout) ... ok
+test_scope_and_actual_identity_fail_closed (__main__.IndependentReplayContracts.test_scope_and_actual_identity_fail_closed) ... ok
+test_tampered_source_harness_or_fixture_is_not_specification (__main__.IndependentReplayContracts.test_tampered_source_harness_or_fixture_is_not_specification) ... ok
+test_two_failures_stop_and_success_does_not_erase_history (__main__.IndependentReplayContracts.test_two_failures_stop_and_success_does_not_erase_history) ... ok
+test_unmapped_requirement_remains_ambiguous (__main__.IndependentReplayContracts.test_unmapped_requirement_remains_ambiguous) ... ok
+test_unregistered_cumulative_accounting_blocks_before_dispatch (__main__.IndependentReplayContracts.test_unregistered_cumulative_accounting_blocks_before_dispatch) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.049s
+
+OK

@@ -1,0 +1,9 @@
+Command: /usr/bin/python3 -m unittest discover -s tests -p 'unit_*.py'
+Captured tool output, initial run before parent-reported staging cleanup:
+ERROR: setUpClass (unit_conservative_genesis.ConservativeGenesis)
+tests/unit_conservative_genesis.py:25 -> scripts/conservative-genesis:85
+check(shutil.disk_usage(root).free >= 15_350_000_000, 'preparation space floor')
+RuntimeError: preparation space floor
+Ran 205 tests in 19.237s
+FAILED (errors=1)
+Subsequent full runs are separately retained; this failure is not overwritten.

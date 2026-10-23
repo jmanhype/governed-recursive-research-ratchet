@@ -18,7 +18,10 @@ LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 CODE = {
     'budget.py': '8fffe1390b4094c6519cc4d37e83774aa6eb5c9402b5e3f2a40f748d320de5ab',
     'ledger.py': '90dc7b0d33cdb2b7eab6854d0a2237939ba2b9f9c75cc06d89e595c0a9285514',
-    'replay_smoke.py': '2b388ac81f6e4ff5a5cbf48c80ec5c5ac9c9f39931fe77ba3e0fbccc01b7bebb',
+    'replay_smoke.py': '66d3c55170a5fb70d2bad15c309f1324a9be88de4855f365b9703e7c15645dc7',
+    'replay.py': 'bd60de46037c23b99f17eaaeca105d280c5dac1531758cc62ebb03a738961323',
+    'corpus_evaluation.py': 'a73b125c3fc3020ed448b9b07d637fce74ae468504262b5f839ceabffb8263b0',
+    'persistent_budget.py': 'afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263',
     'replay_runtime.py': 'f6c77cc8e3290ff0706134a1b107a320bf65d25a4fdf7a183dcc4b23d4fe665a',
     'common.py': '33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21',
     'corpus_execution.py': '9613c1874502f7204ab3546bb4a8d20230f2431bad20583cda4b39b7c1ad84f4',
@@ -136,8 +139,9 @@ def verify_destination(root: Path, expected: dict) -> None:
 
 def main() -> int:
     check(os.getuid() == 0 and os.geteuid() == 0, 'Root required; no effects performed')
-    check(sys.argv[1:] in (['--prepare'], ['--runtime-smoke']), 'Unregistered parent action')
+    check(sys.argv[1:] in (['--prepare'], ['--runtime-smoke'], ['--independent-replay']), 'Unregistered parent action')
     smoke = sys.argv[1:] == ['--runtime-smoke']
+    replay = sys.argv[1:] == ['--independent-replay']
     check(sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode, 'Isolated root required')
     check(Path(sys.executable) == PYTHON, 'Direct reviewed runtime required')
     validate_location(Path(__file__).absolute())
@@ -147,9 +151,10 @@ def main() -> int:
     check(set(review) == {'version', 'decision', 'launcher_sha256', 'python_sha256',
                          'code', 'policy_sha256', 'review_reference', 'runtime_identity',
                          'runtime_prelaunch_verified', 'preexec_boundary',
-                         'preexec_environment'} | ({'smoke'} if smoke else set()), 'Review schema differs')
+                         'preexec_environment'} | ({'smoke'} if smoke else {'replay'} if replay else set()),
+          'Review schema differs')
     check(type(review['version']) is int and review['version'] == 1
-          and review['decision'] == ('approved-replay-runtime-smoke' if smoke
+          and review['decision'] == ('approved-D011-independent-replay' if replay else 'approved-replay-runtime-smoke' if smoke
                                      else 'approved-replay-prerequisite-installation')
           and review['launcher_sha256'] == sha(read(SELF))
           and review['python_sha256'] == sha(Path(sys.executable).read_bytes())
@@ -170,8 +175,11 @@ def main() -> int:
     check(review['runtime_identity'] == IDENTITY and review['runtime_prelaunch_verified'] is True,
           'Mandatory trusted-parent runtime prelaunch verification absent')
     verify_runtime(current=True)
-    if smoke:
+    if smoke or replay:
         from replay_smoke import launch
+        if replay:
+            import replay as protocol
+            return launch(sys.modules[__name__], review, code, protocol)
         return launch(sys.modules[__name__], review, code)
     from replay_prerequisites import protected_preflight, PREPARED_MODE
     protected(LOCK)
@@ -221,7 +229,8 @@ def main() -> int:
 
 def identity_entry() -> int:
     """Only actual service identities enter the fixed reviewed code closure."""
-    roles = {'--smoke-runner': 321, '--smoke-evaluator': 320}
+    roles = {'--smoke-runner': 321, '--smoke-evaluator': 320,
+             '--replay-runner': 321, '--replay-evaluator': 320}
     check(len(sys.argv) == 2 and sys.argv[1] in roles, 'Unregistered identity role')
     check(os.getuid() == roles[sys.argv[1]] and os.geteuid() == roles[sys.argv[1]], 'Wrong service identity')
     check(os.getgid() == roles[sys.argv[1]] and os.getegid() == roles[sys.argv[1]],
@@ -237,13 +246,17 @@ def identity_entry() -> int:
     sys.path.insert(0, str(INSTALL))
     from replay_prerequisites import validate_service_groups
     validate_service_groups(roles[sys.argv[1]], os.getgroups())
-    from replay_smoke import runner, evaluator
-    return runner() if sys.argv[1] == '--smoke-runner' else evaluator()
+    if sys.argv[1].startswith('--replay-'):
+        from replay import runner, evaluator
+    else:
+        from replay_smoke import runner, evaluator
+    return runner() if sys.argv[1].endswith('-runner') else evaluator()
 
 
 if __name__ == '__main__':
     try:
-        raise SystemExit(identity_entry() if sys.argv[1:] in (['--smoke-runner'], ['--smoke-evaluator']) else main())
+        raise SystemExit(identity_entry() if sys.argv[1:] in (['--smoke-runner'], ['--smoke-evaluator'],
+                         ['--replay-runner'], ['--replay-evaluator']) else main())
     except Exception as exc:
         # No raw protected contents or private traceback escapes.
         print(canonical({'replay_dispatch': 'not-run', 'execution_authorized': False,

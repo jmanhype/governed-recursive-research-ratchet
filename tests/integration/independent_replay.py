@@ -1,0 +1,117 @@
+"""Mandatory real evaluator integration. Missing identity/infrastructure is an error.
+
+No fallback runs candidates on the host. Fault-injection evidence is mandatory;
+unit-level changed dictionaries do not satisfy failed-build/interrupt proof.
+"""
+import copy
+import json
+from pathlib import Path
+import sys
+import unittest
+
+if __name__ == '__main__':
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'research'))
+
+from common import EVALUATOR, Failure, GATES, canonical
+from corpus_evaluation import validate_receipt
+from replay import (CHALLENGE, INPUTS, POLICY_SHA256, SOURCE_ARCHIVE, ReplaySession,
+                    maintainer_specification, observation_outcome, finding)
+from replay_smoke import require_identity
+from trusted_execution import protected_bytes
+
+
+class IndependentReplay(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        require_identity(EVALUATOR)
+        cls.session = ReplaySession()
+        cls.addClassCleanup(cls.session.close)
+        cls.addClassCleanup(cls.session.export)
+        reservation = cls.session.reserve()
+        cls.receipt = cls.session.reproduce(cls.session.config['operator_uid'], cls.session.reference,
+                                            POLICY_SHA256, reservation['id'])
+        cls.events = [json.loads(row[0]) for row in cls.session.ledger.db.execute('SELECT body FROM events')]
+        cls.observations = []
+        for event in cls.events:
+            if event['kind'] == 'replay-raw-observation':
+                raw = (cls.session.ledger.objects / event['objects'][0]).read_bytes()
+                cls.observations.append((event['request'], json.loads(raw)))
+
+    def test_valid_seed_real_fresh_vms_and_specification(self) -> None:
+        self.assertEqual(self.receipt['finding'], 'Verified defect')
+        self.assertTrue(self.receipt['execution_complete'])
+        self.assertEqual(len(self.observations), 2)
+        self.assertNotEqual(self.observations[0][0]['run'], self.observations[1][0]['run'])
+        self.assertEqual(set(self.receipt['gates']), set(GATES))
+        self.assertEqual(self.receipt['admission'], 'blocked')
+        self.assertEqual(self.receipt['gates']['reviewer_outcome']['status'], 'not-run')
+
+    def test_clean_baseline_real_observation_is_not_defect(self) -> None:
+        self.assertEqual(len(self.observations), 2)
+        outcome = observation_outcome(self.observations[0][1]['guest']['candidate_observation'])
+        self.assertEqual(outcome, 'clean')
+        self.assertEqual(finding(outcome, self.session.specification, 'clean'), 'Not reproduced')
+
+    def test_forged_pass_logs_rejected_not_replayed(self) -> None:
+        self.assertEqual(len(self.observations), 2)
+        request, result = self.observations[1]
+        changed = copy.deepcopy(result)
+        changed['raw_base64'] = 'UEFTUw=='
+        with self.assertRaises(Failure):
+            validate_receipt(changed, request, self.session.config['execution_profile'])
+
+    def test_candidate_modified_harness_or_fixture_cannot_confirm_spec(self) -> None:
+        archive = protected_bytes(INPUTS / 'source.tar', SOURCE_ARCHIVE)
+        for marker in (b'link with display text', b'if g.Display != want.Display'):
+            with self.subTest(marker=marker), self.assertRaises(Failure):
+                maintainer_specification(archive.replace(marker, b'x' * len(marker), 1), CHALLENGE)
+
+    def test_stale_candidate_evaluator_binding_rejected(self) -> None:
+        with self.assertRaises(Failure):
+            self.session.reproduce(self.session.config['operator_uid'], '0' * 64, POLICY_SHA256, 'unused')
+        request, result = self.observations[1]
+        changed = copy.deepcopy(result)
+        changed['execution_profile'] = '0' * 64
+        with self.assertRaises(Failure):
+            validate_receipt(changed, request, self.session.config['execution_profile'])
+
+    def test_missing_source_object_cannot_confirm_spec(self) -> None:
+        with self.assertRaises(Failure):
+            maintainer_specification(b'', CHALLENGE)
+
+    def test_ambiguous_requirement_blocks_verification(self) -> None:
+        archive = protected_bytes(INPUTS / 'source.tar', SOURCE_ARCHIVE)
+        ambiguous = maintainer_specification(archive, 'GRRR-VC-D001')
+        outcome = observation_outcome(self.observations[1][1]['guest']['candidate_observation'])
+        self.assertEqual(finding(outcome, ambiguous, 'clean'), 'Specification ambiguity')
+
+    def test_real_failed_rebuild_evidence_required(self) -> None:
+        failed = [result for _, result in self.observations
+                  if result['guest']['candidate_observation']['build_exit'] != 0]
+        self.assertTrue(failed, 'Mandatory live failed-rebuild execution is absent; parsing is not proof')
+
+    def test_real_interrupted_replay_evidence_required(self) -> None:
+        interrupted = [result for _, result in self.observations
+                       if result.get('forced') is True
+                       or (result.get('error') or {}).get('code') == 'Stopped']
+        self.assertTrue(interrupted, 'Mandatory live interrupted replay execution is absent; '
+                        'a missing stop acknowledgment alone is not interruption proof')
+
+    def test_two_real_failure_receipts_retained_with_stop(self) -> None:
+        receipts = []
+        for event in self.events:
+            if event['kind'] == 'independent-replay-receipt':
+                receipts.append(json.loads((self.session.ledger.objects / event['objects'][0]).read_bytes()))
+        self.assertTrue(any(item['consecutive_failures'] == 2 and item['stopped'] for item in receipts),
+                        'Mandatory two-consecutive live failure sequence absent')
+        self.assertGreaterEqual(len(receipts), 3, 'Earlier failures must remain beside a successful fresh receipt')
+
+
+def run_tests() -> int:
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(IndependentReplay)
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    return 0 if result.wasSuccessful() and result.testsRun == 10 and not result.skipped else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(run_tests())
