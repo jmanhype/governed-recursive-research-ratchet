@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T20:36:37Z
-content_hash: "sha256:c4abaa5e8ef2291d8c99529c5078cf51cb6b755b47d721d1f1148e3b46231495"
+updated_at: 2026-10-23T20:45:00Z
+content_hash: "sha256:eea666d3df4a55fcba79afb6fb3ef647098d487db9999a5b3faf91437e69a5e0"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,37 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- PROOF: clean commit d89cec7f57367fe512fe11b71f63be3098312c6e corrects all three security-review findings against 6b90f01. No delivery or privileged operation.
+- Private prepared marker now uses bounded no-follow root-owned 0400 reader with shared creator mode; protected_bytes unchanged. Real ACL/mode/symlink fixture checks plus root-wrapper rejection passed.
+- Observation failure/deadline exhaustion cannot bypass tracked-group KILL attempts; uncertain cessation remains false. Real exhausted-deadline and TERM-resistant process-group regressions passed.
+- TERM/INT records deferred intent; spawned children register before checkpoint can unwind. Real child pre-exec signal regression proves registered-before-stop and no orphan.
+- Both /usr/bin/python3 and /opt/homebrew/bin/python3: focused unit_replay*.py 31 passed; full unit_*.py 197 passed; no errors/failures/skips. pvg verify explicit changed paths: 4 Python files, zero issues. git diff --check/staged check passed. All 12 evidence SHA256SUMS verified.
+- Exact logs/report: docs/evidence/replay-prerequisites/runtime-smoke-r2/. Updated review/install contract and unchanged exact sanitized parent command: docs/REPLAY-RUNTIME-SMOKE.md. Launcher SHA256 c2085274072c4b147865b38d5a953fde3249347a5473373a24218ac9d3226325.
+
+### proof
+| AC | Verifiable evidence | Status |
+|---|---|---|
+| #1 | Approved policy and C001-only scope unchanged | Fresh independent review required |
+| #2 | Corrected actual0400 private marker contract, safe metadata/ACL/no-follow read | Updated root-positive install/readback not-run |
+| #3 | Existing protected preflight/runtime/asset identity checks retained | Updated parent positive preflight not-run |
+| #4 | Fail-safe KILL and deferred signal registration; real harmless process regressions | UNRESOLVED: actual parent-mediated VM/service/accounting/stop lifecycle not-run |
+| #5 | No verdict/ReplayReceipt/admission or failure-counter mutation | GRRR-z3w9 separate, independent replay not-run |
+
+### unresolved not-run gates
+- Renewed independent review of d89cec7; parent archive/update installation/review and sanitized runtime audit.
+- Root-positive new smoke namespace/access/unchanged-asset probes; actual offline C001 execution, reserve/settle/ledger readback, normal/timeout/stop/TERM/KILL within480s.
+- No root/QEMU/VM, /Library/GRRR mutation, delivery/acceptance or push by worker. Keep in_progress.
+
+### LEARNINGS
+- Consumer permissions must match producer's exact mode; observation uncertainty must never disable forced cessation; async stop must not unwind child creation before registration.
+
+### DISCOVERED_BUG
+- All three reviewed findings fixed in this revision; none deferred.
+
 ## nd_contract
 status: in_progress
 
