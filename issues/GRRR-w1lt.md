@@ -1,15 +1,15 @@
 ---
 id: GRRR-w1lt
 title: "Bug: independent replay lacks approved privileged prerequisites"
-status: open
+status: blocked
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T18:55:10Z
-content_hash: "sha256:ed9cea0480e7a03c58b68a794872e9021d08f4f9aaa323944b0a152b8b4e7662"
+updated_at: 2026-10-23T18:55:39Z
+content_hash: "sha256:89c34d269adb7c07910b26cf1c94a50ae489c1c7437697e677e097a170f0766a"
 blocks: [GRRR-z3w9]
 ---
 
@@ -71,10 +71,26 @@ status: new
 
 
 ## Notes
+## Operator Input Required
 
+GRRR-w1lt cannot be implemented safely until the operator approves the replay-specific policy and privileged provisioning scope.
+
+Requested approval:
+- corpus: GRRR-validated-corpus-v2.2-isolated
+- freeze: dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529
+- source: 129e0b3f15a3bd6af949ee47d76f6855c582ab73
+- stop policy: stop after exactly two consecutive independent replay failures
+- per replay: 1 vCPU, 1024 MiB memory, 512 MiB disposable workspace, 45 s boot watchdog, 480 s total watchdog, 2 s stop acknowledgement, 5 s termination grace, 2 s kill wait, 1 MiB captured output, 3 MiB wire limit, 15 GiB host free-space floor
+- authority: evaluator UID 320 owns policy/expectations/budget/ledger; runner UID 321 owns only approved executor; root owns immutable replay/QEMU/corpus/spec assets and parent launcher
+- denials: no network, no host shares, no paid dispatch, no contract admission, no production mutation, no automatic merge or promotion
+- required review: independent security/architecture review before root installation or replay dispatch
+
+## nd_contract
+status: blocked
 
 ## History
 - 2026-10-23T18:55:10Z dep_added: blocks GRRR-z3w9
+- 2026-10-23T18:55:39Z status: open -> blocked
 
 ## Links
 - Parent: [[GRRR-2t3h]]
