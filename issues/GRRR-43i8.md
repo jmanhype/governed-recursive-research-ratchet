@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-23T22:41:58Z
-content_hash: "sha256:36b83bfec189d92d7c687e28d1e65a9ae33d522fc3239d48abe29ce676d08c78"
+updated_at: 2026-10-23T22:44:55Z
+content_hash: "sha256:cda44a5618045b37fc7552154c37198c58629852c6be768a8b1218016599a49f"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt]
@@ -74,6 +74,26 @@ status: new
 
 
 ## Notes
+## Independent BLOB-Fix Re-review
+
+SECURITY_REVIEW: READY_FOR_PROTECTED_REGISTRATION_REVIEW
+
+- Reviewed code commit 2dbf825e93376c6df5b974e339ea7846a9bc9165 and evidence commit cb9f83364523fc7575e1735910b8a525f5598321.
+- No blocking finding within the documented trusted-runtime boundary. Registered, stale, and partial-state guards cover settlement, metering, overhead, halt, inherited calls, SQL cursor paths, and writable blobopen; tests preserve DB bytes, inode, totals, and pending holds.
+- Independent reruns: Python 3.14 focused 30/30; Python 3.9 full 228/228; Python 3.14 full 228/228; diff check passed.
+- Boundary: this is not a sandbox against arbitrary evaluator code or base C misuse. Old processes/handles must cease and a privileged parent must establish exclusive writer control before registration.
+- Protected staging/installation/postflight, stop recovery, and replay remain unproven and require separate authorization/review. No privileged operation occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independent reviewer was read-only and reran no-guest suites only.
+
+### proof
+- [x] Registration-only implementation and no-guest tests reviewed.
+- [ ] Exact live protected inventory, immutable bootstrap/plan staging, protected registration/postflight, stop recovery, and replay remain blocked/not-run.
+
 # GRRR-43i8 incremental BLOB review correction
 
 Implementation: `2dbf825e93376c6df5b974e339ea7846a9bc9165`.
