@@ -23,6 +23,35 @@ POLICY_SHA256 = '355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77
 MANIFEST_SHA256 = '32fb59c74ea96653c50e3deea0d66474bafdd78caf96c3e9c4c589aba703e354'
 REPLAY_ROOT = Path('/Library/GRRR/independent-replay')
 LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
+PREPARED_MODE = 0o400
+
+
+def read_private_file(path: Path, uid: int, gid: int) -> bytes:
+    """Bounded no-follow read; explicit expected metadata also supports filesystem tests."""
+    def stable(info: os.stat_result) -> tuple:
+        return (info.st_dev, info.st_ino, info.st_mode, info.st_uid, info.st_gid,
+                info.st_nlink, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+    info = path.lstat()
+    require(stat.S_ISREG(info.st_mode) and info.st_uid == uid and info.st_gid == gid
+            and stat.S_IMODE(info.st_mode) == PREPARED_MODE and info.st_nlink == 1
+            and info.st_size <= 16384, 'IntegrityFailure', 'Private record metadata differs')
+    listing = subprocess.run(['/bin/ls', '-lde', str(path)], check=True, capture_output=True,
+                             timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+    require(bool(listing.split()) and b'+' not in listing.split()[0] and len(listing.splitlines()) == 1,
+            'IntegrityFailure', 'Private record ACL present')
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
+        require(stable(os.fstat(stream.fileno())) == stable(info), 'IntegrityFailure', 'Private record changed')
+        raw = stream.read(16385)
+        require(len(raw) == info.st_size and stable(os.fstat(stream.fileno())) == stable(info),
+                'IntegrityFailure', 'Private record changed during read')
+    require(stable(path.lstat()) == stable(info), 'IntegrityFailure', 'Private record path changed')
+    return raw
+
+
+def private_record(path: Path) -> bytes:
+    """Root-owned private record; immutable enforces every safe ancestor and ACL."""
+    immutable(path)
+    return read_private_file(path, 0, 0)
 
 
 def validate_policy(raw: bytes) -> dict:
@@ -89,8 +118,7 @@ def check_namespace(installed: bool) -> None:
         return
     immutable(REPLAY_ROOT, directory=True)
     marker = REPLAY_ROOT / 'private/prepared.json'
-    immutable(marker)
-    value = json.loads(protected_bytes(marker), object_pairs_hook=unique_fields)
+    value = json.loads(private_record(marker), object_pairs_hook=unique_fields)
     require(value == {'namespace': str(REPLAY_ROOT), 'root_installation': 'prepared',
                      'replay_dispatch': 'not-run', 'execution_authorized': False,
                      'verdict_engine': 'not-installed'}, 'GateBlocked', 'Namespace is not prerequisite-only')

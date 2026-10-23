@@ -7,16 +7,55 @@ import signal
 import subprocess
 import sys
 import time
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 from common import Failure
+from replay_prerequisites import PREPARED_MODE, read_private_file, private_record
 from replay_smoke import (SCOPE, CHALLENGE, SmokeExecutor, scope_event, validate_scope,
                           runner, evaluator, launch, cease_groups, present_groups, validate_result)
 
 
 class RuntimeSmoke(unittest.TestCase):
+    def test_prepared_private_record_contract(self):
+        self.assertEqual(PREPARED_MODE, 0o400)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'prepared.json'
+            path.write_bytes(b'{"root_installation":"prepared"}')
+            path.chmod(PREPARED_MODE)
+            self.assertEqual(read_private_file(path, os.getuid(), os.getgid()), path.read_bytes())
+            with self.assertRaises(Failure):
+                private_record(path)  # User-owned fixture is not root-positive proof.
+            for mode in (0o444, 0o600):
+                path.chmod(mode)
+                with self.assertRaises(Failure):
+                    read_private_file(path, os.getuid(), os.getgid())
+            path.chmod(PREPARED_MODE)
+            link = Path(directory) / 'link'
+            link.symlink_to(path)
+            with self.assertRaises(Failure):
+                read_private_file(link, os.getuid(), os.getgid())
+            subprocess.run(['/bin/chmod', '+a', 'everyone allow read', str(path)], check=True)
+            try:
+                with self.assertRaises(Failure):
+                    read_private_file(path, os.getuid(), os.getgid())
+            finally:
+                subprocess.run(['/bin/chmod', '-N', str(path)], check=True)
+        source = (ROOT / 'scripts/replay-root-prepare').read_text()
+        self.assertIn("'verdict_engine': 'not-installed'}), 0, PREPARED_MODE)", source)
+
+    def test_real_early_stop_registers_and_ceases_child(self):
+        result = subprocess.run([sys.executable, '-I', '-S', '-B',
+                                str(ROOT / 'tests/replay_smoke_process_probe.py'), '--early-stop'],
+                               capture_output=True, timeout=12, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn(b'registered-before-stop; no-orphan', result.stdout)
+
+    def test_exhausted_observation_still_kills_term_resistant_group(self):
+        self.assert_process_group_ceased('--ignore-term', exhausted=True)
+
     def test_installed_closure_is_exact_and_bytes_match(self):
         loader = importlib.machinery.SourceFileLoader('smoke_root_contract', str(ROOT / 'scripts/replay-root-prepare'))
         module = importlib.util.module_from_spec(importlib.util.spec_from_loader(loader.name, loader))
@@ -86,7 +125,7 @@ class RuntimeSmoke(unittest.TestCase):
     def test_real_term_resistant_group_is_killed_within_deadline(self):
         self.assert_process_group_ceased('--ignore-term')
 
-    def assert_process_group_ceased(self, mode):
+    def assert_process_group_ceased(self, mode, exhausted=False):
         process = subprocess.Popen([sys.executable, '-I', '-S', '-B',
                                     str(ROOT / 'tests/replay_smoke_process_probe.py'), mode],
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
@@ -96,7 +135,9 @@ class RuntimeSmoke(unittest.TestCase):
             child = int(process.stdout.readline())
             self.assertEqual(os.getpgid(child), process.pid)
             started = time.monotonic()
-            self.assertTrue(cease_groups([process], time.monotonic() + 7))
+            ceased = cease_groups([process], time.monotonic() - 1 if exhausted else time.monotonic() + 7)
+            self.assertEqual(ceased, not exhausted)
+            process.wait(timeout=2)
             self.assertLess(time.monotonic() - started, 7)
             if mode == '--ignore-term':
                 self.assertEqual(process.returncode, -signal.SIGKILL)

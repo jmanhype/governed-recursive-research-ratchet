@@ -203,24 +203,51 @@ def present_groups(groups: set, deadline: float) -> set:
 
 def cease_groups(processes: list, deadline: float) -> bool:
     """Signal all service/guest groups concurrently, never multiply grace periods."""
+    uncertain = False
     for sig, allowance in ((signal.SIGTERM, 5), (signal.SIGKILL, 2)):
         for process in processes:
             try:
                 os.killpg(process.pid, sig)
             except ProcessLookupError:
                 continue
-            except PermissionError:
-                if process.pid in present_groups({process.pid}, deadline):
-                    return False
+            except OSError:
+                uncertain = True
         until = min(deadline, time.monotonic() + allowance)
         while time.monotonic() < until:
-            for process in processes:
-                process.poll()
             # Group existence, not just service exit, establishes guest cessation.
-            if not present_groups({p.pid for p in processes}, deadline):
-                return True
+            try:
+                for process in processes:
+                    process.poll()
+                absent = not present_groups({p.pid for p in processes}, deadline)
+            except (Failure, OSError, subprocess.SubprocessError):
+                uncertain = True
+                break  # Still advance to KILL for every tracked group.
+            if absent:
+                if not uncertain:
+                    return True
+                break
             time.sleep(0.02)
     return False
+
+
+class DeferredStop:
+    """Signal handlers only record intent; never unwind an in-flight Popen."""
+    def __init__(self) -> None:
+        self.requested = False
+
+    def handler(self, signum: int, frame: object) -> None:
+        self.requested = True
+
+    def checkpoint(self) -> None:
+        require(not self.requested, 'Stopped', 'Parent stop requested')
+
+    def spawn(self, processes: list, args: list, **kwargs) -> subprocess.Popen:
+        self.checkpoint()
+        process = subprocess.Popen(args, **kwargs)
+        processes.append(process)
+        # Every successfully created child is tracked before stop can unwind.
+        self.checkpoint()
+        return process
 
 
 def launch(parent: object, review: dict, code: dict) -> int:
@@ -284,6 +311,7 @@ def launch(parent: object, review: dict, code: dict) -> int:
         processes, logs = [], []
         started = time.monotonic()
         success = False
+        stop = DeferredStop()
         def start(role: str, uid: int) -> subprocess.Popen:
             def identity() -> None:
                 os.setgroups([])
@@ -292,23 +320,19 @@ def launch(parent: object, review: dict, code: dict) -> int:
                 os.umask(0o077)
             log = (SMOKE / ('private/' + role + '.log')).open('xb')
             logs.append(log)
-            process = subprocess.Popen([str(parent.PYTHON), '-I', '-S', '-B', str(parent.SELF),
+            process = stop.spawn(processes, [str(parent.PYTHON), '-I', '-S', '-B', str(parent.SELF),
                                         '--smoke-' + role], cwd=SMOKE,
                                        env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'},
                                        stdout=log, stderr=subprocess.STDOUT,
                                        preexec_fn=identity, start_new_session=True)
-            processes.append(process)
             return process
         try:
-            def stop_parent(signum: int, frame: object) -> None:
-                # Repeated TERM must not interrupt the bounded cleanup below.
-                signal.signal(signal.SIGTERM, signal.SIG_IGN)
-                raise Failure('Stopped', 'Parent stop requested; cease all child groups')
-            signal.signal(signal.SIGTERM, stop_parent)
-            signal.signal(signal.SIGINT, stop_parent)
+            signal.signal(signal.SIGTERM, stop.handler)
+            signal.signal(signal.SIGINT, stop.handler)
             service = start('runner', RUNNER)
             ready_deadline = min(started + 473, time.monotonic() + 15)
             while time.monotonic() < ready_deadline and service.poll() is None:
+                stop.checkpoint()
                 if all((SMOKE / ('ipc/' + name)).is_socket()
                        for name in ('executor.sock', 'executor-control.sock')):
                     break
@@ -318,7 +342,9 @@ def launch(parent: object, review: dict, code: dict) -> int:
                     'Unavailable', 'Smoke service failed to become ready')
             evaluator_process = start('evaluator', EVALUATOR)
             while evaluator_process.poll() is None and time.monotonic() < started + 473:
+                stop.checkpoint()
                 time.sleep(0.02)
+            stop.checkpoint()
             success = evaluator_process.poll() == 0
         finally:
             signal.signal(signal.SIGTERM, signal.SIG_IGN)

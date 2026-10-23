@@ -40,13 +40,13 @@ Do not replace the historical base namespace's nine-file code snapshot. Inputs
 remain the exact previously reviewed 14-file corpus/VM/source/policy inventory;
 only the separate installation review record changes. Preserve all old evidence.
 
-Launcher SHA256: `366d5e498c36008186caf736eb243f84c7cde834a10edcd4cf8a7977bfb99b8c`.
+Launcher SHA256: `c2085274072c4b147865b38d5a953fde3249347a5473373a24218ac9d3226325`.
 Changed CODE pins:
 
 | Member | SHA256 |
 |---|---|
-| replay_smoke.py | 89c1e4e01b8d03e9c6fcaf86999662a78484334f55a5f0a52f09e537f6db84b4 |
-| replay_prerequisites.py | f013d32b2cb646e9dc28859c3df6ceafb8d2fb447736d945888d5ed40878da64 |
+| replay_smoke.py | da36fdba58fa651ba80b8977ae062be7778be33499ae73a675c13557fed4f1a6 |
+| replay_prerequisites.py | 20efcaf9b07b6feac4c70f7758bab37ac743a5aaff863134e36c60d5623432ae |
 | corpus_execution.py | 9613c1874502f7204ab3546bb4a8d20230f2431bad20583cda4b39b7c1ad84f4 |
 | budget.py (added closure member) | 8fffe1390b4094c6519cc4d37e83774aa6eb5c9402b5e3f2a40f748d320de5ab |
 | ledger.py (added closure member) | 90dc7b0d33cdb2b7eab6854d0a2237939ba2b9f9c75cc06d89e595c0a9285514 |
@@ -112,9 +112,20 @@ time and observed group cessation. A settled evaluator record alone cannot
 prove parent lifecycle completion; both records and live UID/asset/ledger probes
 must be reviewed. Failure paths retain logs, reservations and partial state.
 Nothing automatically retries or removes failed state.
-Parent TERM/INT requests enter the same bounded cleanup; repeated TERM/INT is
-ignored during cleanup. An uncatchable root SIGKILL/host failure cannot provide
+Parent TERM/INT handlers only record stop intent. Checkpoints occur after child
+registration and during work waits; signals cannot unwind Popen between creation
+and registration. Requests enter the same bounded cleanup; repeated TERM/INT is
+ignored during cleanup. Observation failures or exhausted observation deadlines
+never suppress the KILL phase for tracked groups; uncertain cessation stays false
+even if a later observation finds no processes. An uncatchable root SIGKILL/host failure cannot provide
 cessation proof and requires trusted-parent process inspection/recovery.
+
+The installed private prepared marker is read using its actual root-owned 0400
+contract, shared with its creator. The dedicated reader enforces safe ancestors,
+ACL absence, no-follow/nonblocking opening, one link, a 16 KiB bound and stable
+metadata across the read. Public protected_bytes remains unchanged at 0444.
+Revision evidence: `evidence/replay-prerequisites/runtime-smoke-r2/`; prior smoke
+evidence describes the superseded 6b90f01 package, not this corrected revision.
 
 ## Still not-run
 
