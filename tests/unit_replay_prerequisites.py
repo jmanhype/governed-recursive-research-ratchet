@@ -238,6 +238,17 @@ class ReplayPrerequisites(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(Failure):
                 check_idle(value)
 
+    def test_signed_process_uids_preserve_identity_and_qemu_denials(self):
+        check_idle(b'-2   345 /usr/sbin/distnoted\n+501 123 /usr/bin/python3\n')
+        for uid in (b'root', b'2.0', b'-', b'+', b'--2', b'+-2', b'2x'):
+            with self.subTest(uid=uid), self.assertRaises(Failure):
+                check_idle(uid + b' 345 /usr/sbin/distnoted')
+        for value in (b'320 345 /bin/false', b'+320 345 /bin/false',
+                      b'321 345 /bin/false', b'+321 345 /bin/false',
+                      b'-2 345 /Library/GRRR/qemu/bin/qemu-system-aarch64'):
+            with self.subTest(value=value), self.assertRaises(Failure):
+                check_idle(value)
+
     def test_actual_mutable_ancestor_and_symlink_denied(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'asset'

@@ -66,7 +66,10 @@ def check_idle(process_listing: bytes) -> None:
     require(bool(lines), 'GateBlocked', 'Empty process inventory')
     for line in lines:
         columns = line.split(None, 2)
-        require(len(columns) == 3 and columns[0].isdigit() and columns[1].isdigit(),
+        require(len(columns) == 3, 'GateBlocked', 'Malformed process inventory')
+        # macOS ps represents some service identities as signed UIDs (e.g. -2).
+        uid_digits = columns[0][1:] if columns[0].startswith(('+', '-')) else columns[0]
+        require(uid_digits.isdigit() and columns[1].isdigit(),
                 'GateBlocked', 'Malformed process inventory')
         uid = int(columns[0])
         executable = Path(columns[2]).name.lower()

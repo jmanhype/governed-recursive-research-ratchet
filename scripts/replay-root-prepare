@@ -24,7 +24,7 @@ CODE = {
     'trusted_install.py': 'b7bc2b7c169c3d9e3d24d159f076d22a6505febbb41d9e11a3d1d2fc3576e32e',
     'trusted_transport.py': '024d34efa5d8e7d482fcdf213e2b807ef013b7870f59fd23258cc9c2ded9419b',
     'validated_corpus.py': 'a62e2f219d696f895d69af4b7a13b32dd7222ed842b2089525f62e547d852476',
-    'replay_prerequisites.py': 'bf0035669eb0203777dfab146e376fb6025db36bfc9e1195b3d7591d6e7c64fc',
+    'replay_prerequisites.py': '85f7a14d271688d554f1af4e0e539a084fd66fd9bea7920cfdf712dd2d20a237',
 }
 POLICY = '355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a'
 PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')

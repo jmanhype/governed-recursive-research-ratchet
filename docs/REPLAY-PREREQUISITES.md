@@ -12,7 +12,13 @@ root-trusted. Install only independently reviewed bytes in root-owned 0444
 single-link files under safe, ACL-free ancestors.
 
 No root operation, identity change, QEMU invocation, VM, installation, replay,
-or /Library/GRRR mutation was performed by this package. No independent
+or /Library/GRRR mutation was performed by this developer worker. The parent
+reported a sanitized root preflight of installed revision 6e89e6: it failed
+before namespace creation because macOS reported UID -2 for distnoted. This
+revision accepts signed numeric UIDs without changing evaluator/runner or QEMU
+denials. Parent-controlled installed inputs remain partial; independent re-review
+and parent installation update are required before another live attempt.
+No independent
 ReplayReceipt exists. Corpus fixture ledgers remain corpus fixture ledgers.
 GRRR-z3w9 remains blocked until this prerequisite is accepted, and real
 replay must additionally pass the live gates below.
@@ -198,6 +204,14 @@ The root-owned canonical review record must contain exactly `version: 1`,
 `review_reference` (SHA-256 of independent review evidence). No such record is
 manufactured by this package. Missing review/inputs fail before mutation.
 The review pin is separate from the operator's policy approval.
+
+For the signed-UID correction, the root-owned review/install contract must use
+`code["replay_prerequisites.py"]` =
+`85f7a14d271688d554f1af4e0e539a084fd66fd9bea7920cfdf712dd2d20a237`
+and `launcher_sha256` =
+`2ba4b712044470c7c378cf487b9a10a47ad9ec1c8361c1db7a7deb49dc6aca55`.
+Policy, interpreter and runtime pins are unchanged. The old installed review
+must not be relabeled or reused as approval for the revised bytes.
 
 Both commands MUST cross the trusted `/usr/bin/env -i` boundary before starting
 the direct interpreter/native loader. The parent must not launch the interpreter

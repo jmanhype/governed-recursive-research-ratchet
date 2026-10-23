@@ -1,6 +1,8 @@
 # GRRR-w1lt no-guest prerequisite evidence
 
-Status: in_progress; independent review, root installation and replay not-run.
+Status: in_progress; revised-package re-review, successful root namespace
+preparation and replay not-run. Parent reports a partial old installation and
+failed live preflight of 6e89e6, before any replay namespace was created.
 No sudo/root, QEMU, VM, paid dispatch, /Library/GRRR mutation, commit push,
 contract admission, production change or promotion occurred in this work.
 
@@ -10,9 +12,9 @@ From the story worktree, under both /usr/bin/python3 (3.9.6) and
 /opt/homebrew/bin/python3 (3.14.3):
 
 - `PYTHON -B -m unittest discover -s tests -p unit_replay_prerequisites.py -v`:
-  19 tests passed, zero failures/errors/skips on each interpreter (environment-boundary revision).
+  20 tests passed, zero failures/errors/skips on each interpreter (signed-UID revision).
 - `PYTHON -B -m unittest discover -s tests -p 'unit_*.py'`:
-  185 tests passed, zero failures/errors/skips on each interpreter (environment-boundary revision).
+  186 tests passed, zero failures/errors/skips on each interpreter (signed-UID revision).
 - `pvg verify research/replay_prerequisites.py scripts/replay-prerequisites scripts/replay-root-prepare tests/unit_replay_prerequisites.py docs/replay-policy-v1.json docs/REPLAY-PREREQUISITES.md --format=text`:
   passed, 2 files scanned, 0 issues. The scanner does not count extensionless
   scripts; real subprocess tests load both scripts, and the launcher import
@@ -131,3 +133,28 @@ The root preparer still has not been invoked. All prior runtime, ancestor, ACL
 and destination checks remain intact; all previous root-positive/replay gates
 remain not-run. Existing coverage-r2.log is explicitly historical (18 tests),
 not a new coverage measurement for this environment-only correction.
+
+## Live signed-UID correction
+
+The parent reported that sanitized root preflight of installed 6e89e6 failed
+before mutation with Malformed process inventory on the actual process row
+`-2   345 /usr/sbin/distnoted`. No independent-replay namespace was created;
+the worker did not reproduce or retry this privileged invocation.
+
+check_idle now permits exactly one optional leading sign followed by decimal
+UID digits. Nonnumeric, empty/sign-only and repeated-sign fields still fail
+closed. PID parsing remains unsigned numeric. UID 320/321 (including +320/+321)
+and QEMU processes remain denied; tests cover those outcomes alongside the exact
+reported negative-UID row. This is a parser correction, not a weaker idle gate.
+
+The launcher code inventory was repinned to the new module bytes. The future
+parent must update both the module inventory and launcher hash after renewed
+review, as recorded in ../../REPLAY-PREREQUISITES.md. No installed file, policy,
+runtime identity or review record was modified by this worker.
+
+Revision scan: `pvg verify research/replay_prerequisites.py scripts/replay-root-prepare tests/unit_replay_prerequisites.py docs/REPLAY-PREREQUISITES.md docs/evidence/replay-prerequisites/README.md --format=text`.
+Remaining gates: renewed independent review, parent-controlled installation and
+review update, successful live protected preflight and root namespace creation,
+UID 320/321 probes, service/VM lifecycle, independent replay and ReplayReceipt.
+All remain not-run for the revised package. Prior failed live attempts must
+remain evidence; no successful root-positive claim follows from these tests.

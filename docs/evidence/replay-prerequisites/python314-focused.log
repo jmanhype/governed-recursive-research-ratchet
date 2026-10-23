@@ -16,9 +16,10 @@ test_real_corpus_bytes_success (unit_replay_prerequisites.ReplayPrerequisites.te
 test_root_launcher_paths_and_code_pins (unit_replay_prerequisites.ReplayPrerequisites.test_root_launcher_paths_and_code_pins) ... ok
 test_root_launcher_refuses_nonroot_before_effects (unit_replay_prerequisites.ReplayPrerequisites.test_root_launcher_refuses_nonroot_before_effects) ... ok
 test_runtime_inventory_and_root_entry_binding (unit_replay_prerequisites.ReplayPrerequisites.test_runtime_inventory_and_root_entry_binding) ... ok
+test_signed_process_uids_preserve_identity_and_qemu_denials (unit_replay_prerequisites.ReplayPrerequisites.test_signed_process_uids_preserve_identity_and_qemu_denials) ... ok
 test_symlink_corpus_member_rejected (unit_replay_prerequisites.ReplayPrerequisites.test_symlink_corpus_member_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 19 tests in 9.439s
+Ran 20 tests in 9.248s
 
 OK
