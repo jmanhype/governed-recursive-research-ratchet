@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T21:54:21Z
-content_hash: "sha256:f08d2ce5b756a6e2c6de6444410e86670f61837dd1302627cb89687e3b2f911a"
+updated_at: 2026-10-23T22:06:21Z
+content_hash: "sha256:f5ec4057a80f7e37bb612c427575d1ce25ef722d6e93ee55cff062274232b2ca"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875]
@@ -225,3 +225,6 @@ BLOCKED: Partial WIP only. PersistentBudget has no independent-replay profile; p
 
 ### 2026-10-23T21:53:28Z speed
 Partial handoff: verify-delivery returned 1 passed / 8 failed, as expected for an undelivered partial story. It is NOT delivery proof. Claim released; story remains open. Source WIP 40f851e; integration evidence refreshed against that source. Full PROOF/AC/LEARNINGS and unresolved gates are appended in nd. No push or protected execution.
+
+### 2026-10-23T22:06:21Z speed
+BLOCKED: V2 replay-only preparation and four fixed-mode source drafts exist, but cumulative independent-replay accounting is unregistered and the existing campaign store is stopped. No protected mutation or live guest execution is authorized for this worker. Independent security review, protected registration/stop-recovery preserving all prior usage and holds, immutable parent installation, and actual UID-separated live proof remain required. See docs/INDEPENDENT-REPLAY-V2-REVIEW.md for exact candidate commands and blockers. This is WIP, not delivery.
