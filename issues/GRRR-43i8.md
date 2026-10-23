@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-23T22:45:55Z
-content_hash: "sha256:d959b619cee84e3777eb639f79f9c0243ea10aeef4dcc572b110e54464e6bec7"
+updated_at: 2026-10-23T22:47:39Z
+content_hash: "sha256:c6e82ea87014be200c75e70e2c53c29db95ddf65fbef88b5a0b717244b7d713b"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt]
@@ -74,6 +74,25 @@ status: new
 
 
 ## Notes
+## Parent Preflight Revalidation
+
+- Revalidated story worktree at evidence commit cb9f83364523fc7575e1735910b8a525f5598321 and implementation commit 2dbf825e93376c6df5b974e339ea7846a9bc9165; both story and main worktrees are clean.
+- Rehashed reviewed sources: accounting_registration.py 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab; persistent_budget.py ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af; budget.py 41548c9f1c9f8f58e48587deaf56cd236fa78cc5716e799da9d678ab6b95b500; replay-root-prepare fb0828433d35fe7f96e46d19a127a32b19104ab53113f4929be30fa3d441ca37.
+- Protected active binding remains unchanged at SHA256 e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95 with the exact beba store identity and three legacy profiles; candidate protected bootstrap destination is absent; no QEMU/accounting runner process is visible; root free space is approximately 17.06 GB.
+- Independently reran focused registration suite on both required interpreters: 30/30 passed each, zero failures/errors/skips.
+- No protected staging, registration, stop release, replay, promotion, admission, or merge was performed. Operator authorization for protected staging/read-only inspect remains the gating action.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Direct live-state preflight and parent test rerun recorded.
+
+### proof
+- [x] Registration-only implementation remains independently review-ready.
+- [ ] Protected bootstrap staging and read-only inspect await explicit operator authorization.
+- [ ] Registration/installation, stop recovery, and replay remain not-run.
+
 ## Independent BLOB-Fix Re-review
 
 SECURITY_REVIEW: READY_FOR_PROTECTED_REGISTRATION_REVIEW
