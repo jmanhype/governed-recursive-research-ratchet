@@ -1,14 +1,39 @@
 # GRRR-w1lt: C001 runtime-lifecycle-only smoke
 
-Status: reviewable implementation, **not installed or run**. The parent already
-prepared the base namespace at 3f2658b; that evidence remains immutable under
-`evidence/replay-prerequisites/live-install/`. This revision requires fresh
-independent security/architecture review and parent installation. Do not rerun
-`--prepare`, reset the namespace, or reuse the former review approval.
+Status: the reviewed **e0dfaf33d3b2725a2fad63401d2b717a8365e0a6** package was
+installed; sanitized runtime preflight, parent provisioning and the one-shot
+offline C001 runtime-lifecycle smoke succeeded. GRRR-w1lt was delivered, then
+PM-rejected solely for stale documentation; this document is the rejection
+rework, submitted for redelivery, not acceptance. No further root/QEMU/VM
+execution is authorized or needed for this documentation-only rework. Do not
+rerun `--prepare` or `--runtime-smoke`, reset the namespace, or reuse approval.
+
+Canonical live evidence: [LIVE-REPORT.md](evidence/replay-prerequisites/runtime-smoke-live/LIVE-REPORT.md)
+and its checksummed copies. Earlier base preparation remains immutable under
+`evidence/replay-prerequisites/live-install/`. Parent-reported protected access
+observations are distinguished from worker read-only copy verification there.
+
+## Completed live prerequisite result
+
+- Parent lifecycle completed in **24.019100959s**, evaluator_succeeded=true,
+  children_ceased=true, exit_codes=[-15,0]. Offline C001 transport completed with
+  exit0, forced=false and error=null; supervisor unchanged, guest UID/GID1000,
+  no guest supplementary groups/capabilities, NoNewPrivs=1.
+- Parent UID/access probes passed: evaluator own policy readable; runner denied
+  evaluator/private, evaluator denied private/runner scratch, operator denied
+  evaluator; runner scratch usable. Root plan truncation attempts were denied
+  with unchanged hash; no service/QEMU processes remained. Repeat invocation
+  refused the existing namespace, proving the one-shot boundary.
+- Budget halted=0, one reservation settled at **0 USD / 22,823,014us**; ledger
+  reserved/transport/settled and object/raw hashes verified from read-only copies.
+  Reviewed recovery preserved the failed d89cec7 attempt by atomic rename with
+  unchanged inventory; failure and successful-run evidence remain separate.
+- All five prerequisite ACs have delivery proof. Independent replay, verdict,
+  ReplayReceipt and admission were neither implemented nor claimed by this smoke.
 
 ## Narrow authority
 
-Exactly one `GRRR-VC-C001` execution is allowed, labeled
+Exactly one `GRRR-VC-C001` execution was authorized and completed, labeled
 `C001-runtime-lifecycle-only`. No allegation classification, defect verification,
 independent ReplayReceipt, contract admission, promotion or merge is implemented.
 GRRR-z3w9 still owns those semantics. No corpus truth, supervisor, build, probe,
@@ -31,14 +56,14 @@ The exact 16106127360-byte host floor is rechecked immediately before guest spaw
 
 ## Installation and exact review contract
 
-Trusted parent must archive the previous installed launcher/package/review, then
-install this revision's root-owned read-only launcher at
+The reviewed parent installation archived the previous launcher/package/review
+and installed the e0dfaf3 root-owned read-only launcher at
 `/Library/GRRR/bootstrap/replay-root-prepare` and **exactly the 12 CODE members**
 in that script at `/Library/GRRR/replay-package`. CODE pins are executable checks,
 not suggestions; no extras/symlinks/ACLs or writable ancestors are permitted.
 Do not replace the historical base namespace's nine-file code snapshot. Inputs
 remain the exact previously reviewed 14-file corpus/VM/source/policy inventory;
-only the separate installation review record changes. Preserve all old evidence.
+the separate installation review record binds e0dfaf3. Preserve all old evidence.
 
 Launcher SHA256: `aa48f31bfca3f38c6e4792a685574bb09437fdef9b2f41d38813d7ad189bc698`.
 Changed CODE pins:
@@ -55,24 +80,24 @@ Root-owned `/Library/GRRR/replay-inputs/review.json` has exactly the original
 review fields (`version`, `decision`, `launcher_sha256`, `python_sha256`, `code`,
 `policy_sha256`, `review_reference`, `runtime_identity`,
 `runtime_prelaunch_verified`, `preexec_boundary`, `preexec_environment`) plus
-`smoke`. Set decision to `approved-replay-runtime-smoke`, version to integer 1,
-code to the exact 12-member CODE map, launcher hash above, and review_reference
-to the new independent review's SHA256. Unchanged policy/runtime/interpreter
+`smoke`. The installed decision is `approved-replay-runtime-smoke`, version integer1,
+code is the exact 12-member CODE map, launcher hash is above, and review_reference
+binds the independent review. Unchanged policy/runtime/interpreter
 pins and prelaunch attestation retain their prior strict meanings. `smoke` is:
 
 ```json
 {"attempts":1,"challenge":"GRRR-VC-C001","contract_admission_authorized":false,"independent_replay_authorized":false,"scope":"C001-runtime-lifecycle-only","total_seconds":480,"work_seconds":473}
 ```
 
-Before elevation run the same independently reviewed runtime audit, through the
-sanitized pre-exec boundary, from the reviewed checkout:
+Historical successful pre-elevation runtime audit command, preserved for the
+installation contract only; **do not rerun for this rework**:
 
 ```sh
 /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B scripts/replay-runtime-preflight
 ```
 
-After new review, installation and prelaunch verification, the **trusted root
-parent only** may execute this exact fixed command:
+Historical successful **trusted-root-parent** command after review, installation
+and prelaunch verification; **not current permission to execute again**:
 
 ```sh
 /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --runtime-smoke
@@ -96,8 +121,8 @@ reviewed, not silently treated as empty or harmless. No root/wheel (0), staff
 (20), admin (80), operator 501, opposite service group, or any unlisted membership
 is permitted. Missing groups also fail. Account changes require renewed review;
 this package creates or changes no group membership. Root real/effective UID/GID
-must be removed before any service entry; positive drop execution remains a
-parent-only live gate. Child
+must be removed before any service entry; the parent successfully exercised the
+dedicated identities and access boundaries in the recorded live run. Child
 commands cannot be entered by the operator or by root pretending to be a role.
 Runtime/ancestor/ACL/hash verification is not relaxed.
 
@@ -144,17 +169,22 @@ evidence describes the superseded 6b90f01 package, not this corrected revision.
 
 The d89cec7 parent attempt subsequently failed at runner identity entry before VM
 readiness: parent reports exit_codes=[1], children_ceased=true, elapsed 0.128s.
-Its partial runtime-smoke state remains preserved. This group-vector correction
-has new evidence under `evidence/replay-prerequisites/runtime-smoke-r3/`; no retry
-or cleanup is authorized by the correction itself. Parent must renew review and
-preserve the failed attempt before separately authorizing a fresh namespace.
+Its partial state was preserved under reviewed recovery before the separately
+reviewed e0dfaf3 fresh namespace succeeded. Group-vector correction tests remain
+under `evidence/replay-prerequisites/runtime-smoke-r3/`; the recovery record and
+successful live artifacts are under `evidence/replay-prerequisites/runtime-smoke-live/`.
+No automatic retry or cleanup is authorized.
 
-## Still not-run
+## Downstream not-run and acceptance boundary
 
-Independent review of this revision; parent installation/update and runtime
-audit; root-positive smoke provisioning; actual offline C001 VM execution;
-UID 320/321 ownership/access and protected asset unchanged probes for the new
-subnamespace; live runtime reservation/settlement and append-only evidence;
-live normal/timeout/stop/TERM/KILL and full child cessation within 480s.
-AC #4 is unresolved until those parent-mediated lifecycle proofs exist.
-No-guest tests are not a substitute. GRRR-w1lt remains in_progress; no delivery.
+Independent allegation replay, ReplayReceipt, verdict, contract admission,
+comparison and promotion remain downstream and **not-run**. GRRR-z3w9 remains
+blocked until independent PM acceptance of this prerequisite; the developer does
+not accept or close it. This documentation rework closes the stale-status
+rejection, not those downstream gates.
+
+The live run proves normal offline lifecycle/settlement/cessation. Live forced
+timeout/KILL fault injection is not claimed; real harmless no-guest process
+regressions cover those cleanup paths. No more privileged execution is needed
+or authorized for redelivery. Any future fresh runtime requires separate scope,
+authorization and preserved-state recovery; the completed namespace is not reusable.
