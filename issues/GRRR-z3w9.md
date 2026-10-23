@@ -1,18 +1,19 @@
 ---
 id: GRRR-z3w9
 title: "Verify a defect from fresh trusted inputs"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T21:53:28Z
-content_hash: "sha256:95f6cbc54f53eade52909300e726f96ed4f1fdf1cc92438b3cf921d161045ac4"
+updated_at: 2026-10-23T21:54:21Z
+content_hash: "sha256:f08d2ce5b756a6e2c6de6444410e86670f61837dd1302627cb89687e3b2f911a"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt]
-follows: [GRRR-bnkf, GRRR-w1lt]
+follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875]
+assignee: dev-GRRR-z3w9
 ---
 
 ## Description
@@ -184,12 +185,15 @@ status: new
 - 2026-10-23T21:30:43Z claimed by dev-GRRR-z3w9
 - 2026-10-23T21:52:57Z status: in_progress -> open
 - 2026-10-23T21:52:57Z released by speed
+- 2026-10-23T21:54:21Z status: open -> in_progress
+- 2026-10-23T21:54:21Z auto-follows: linked to predecessor GRRR-c875
+- 2026-10-23T21:54:21Z claimed by dev-GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-34ve]], [[GRRR-6sso]], [[GRRR-dbbi]]
 - Was blocked by: [[GRRR-bnkf]], [[GRRR-w1lt]]
-- Follows: [[GRRR-bnkf]], [[GRRR-w1lt]]
+- Follows: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-c875]]
 
 ## Comments
 
