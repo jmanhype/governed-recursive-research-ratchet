@@ -82,8 +82,22 @@ def check_absent(path: Path) -> None:
     require(not os.path.lexists(path), 'GateBlocked', 'Existing replay namespace; recovery review required')
 
 
+def check_namespace(installed: bool) -> None:
+    """Smoke may consume only a prepared root namespace; preparation still refuses it."""
+    if not installed:
+        check_absent(REPLAY_ROOT)
+        return
+    immutable(REPLAY_ROOT, directory=True)
+    marker = REPLAY_ROOT / 'private/prepared.json'
+    immutable(marker)
+    value = json.loads(protected_bytes(marker), object_pairs_hook=unique_fields)
+    require(value == {'namespace': str(REPLAY_ROOT), 'root_installation': 'prepared',
+                     'replay_dispatch': 'not-run', 'execution_authorized': False,
+                     'verdict_engine': 'not-installed'}, 'GateBlocked', 'Namespace is not prerequisite-only')
+
+
 def protected_preflight(corpus: Path, vm: Path, archive: Path, policy_path: Path,
-                        parent_lock: int = None) -> dict:
+                        parent_lock: int = None, installed: bool = False) -> dict:
     """Inspect actual protected assets; acquire existing lock read-only, never create it.
 
     A passing snapshot is not execution authority and does not close the review gate.
@@ -119,7 +133,7 @@ def protected_preflight(corpus: Path, vm: Path, archive: Path, policy_path: Path
                 and account.pw_shell in ('/usr/bin/false', '/bin/false'),
                 'GateBlocked', 'Dedicated identity boundary differs')
     immutable(REPLAY_ROOT.parent, directory=True)
-    check_absent(REPLAY_ROOT)
+    check_namespace(installed)
     require(shutil.disk_usage(REPLAY_ROOT.parent).free >= policy['limits']['minimum_host_free_bytes'],
             'BudgetExceeded', 'Approved 15 GiB free-space floor unavailable')
     immutable(LOCK)
@@ -139,7 +153,7 @@ def protected_preflight(corpus: Path, vm: Path, archive: Path, policy_path: Path
                                    check=True, capture_output=True, timeout=5,
                                    env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
         check_idle(processes)
-        check_absent(REPLAY_ROOT)
+        check_namespace(installed)
     return {'protected_assets': 'validated-read-only', 'corpus': corpus_binding,
             'policy_sha256': POLICY_SHA256, 'execution_authorized': False,
             'root_installation': 'not-run', 'replay_dispatch': 'not-run',

@@ -1,5 +1,10 @@
 # GRRR-w1lt replay prerequisite package — independent review required
 
+Current continuation: [runtime-lifecycle-only smoke contract](REPLAY-RUNTIME-SMOKE.md).
+The preparation-only command/hashes and nine-file inventory below document the
+historical 3f2658b package, not the new smoke installation. Successful parent
+preparation evidence is in `evidence/replay-prerequisites/live-install/`.
+
 ## Status and authority
 
 This is a reviewable prerequisite package with an executable root-only namespace

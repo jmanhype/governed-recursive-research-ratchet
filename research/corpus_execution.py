@@ -128,6 +128,13 @@ def decode_guest(raw: bytes, run: str, challenge: str) -> dict:
 
 
 class CorpusExecutor:
+    def spawn_guest(self, args: list) -> subprocess.Popen:
+        """Default corpus process isolation; bounded smoke overrides group ownership."""
+        return subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, cwd=self.root,
+                                env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'LC_ALL': 'C'},
+                                start_new_session=True)
+
     def __init__(self, root: Path):
         require(os.getuid() == RUNNER, 'Unauthorized', 'Corpus executor requires UID 321')
         self.root = root
@@ -191,10 +198,7 @@ class CorpusExecutor:
                 '-monitor', 'none', '-no-reboot', '-snapshot']
         with self.lock:
             require(not self.halted and run not in self.fenced, 'Stopped', 'Fence changed before launch')
-            process = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                       stderr=subprocess.STDOUT, cwd=self.root,
-                                       env={'PATH': '/usr/bin:/bin', 'HOME': '/var/empty', 'LC_ALL': 'C'},
-                                       start_new_session=True)
+            process = self.spawn_guest(args)
             self.active[run] = process; self.launches += 1
         started = time.monotonic(); raw = bytearray(); selector = selectors.DefaultSelector()
         selector.register(process.stdout, selectors.EVENT_READ)
