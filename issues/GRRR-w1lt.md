@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
 updated_at: 2026-10-23T21:28:21Z
-content_hash: "sha256:7eac1a793d6fb7d669be10023db7c4ee029b7353baa50331f38d060dca239d09"
+content_hash: "sha256:256ccbd7ad71410890f20e43f3733f9c08db1d82b319d47c6418abd6a992c832"
 blocks: [GRRR-z3w9]
 follows: [GRRR-bnkf, GRRR-c875]
 ---
@@ -692,3 +692,20 @@ status: rejected
 
 ### proof
 - [ ] Documentation gate: final runtime contract must accurately reconcile completed live lifecycle with consumed one-shot authority and downstream denials.
+
+### 2026-10-23T21:28:21Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Documentation-only PM rejection reworked at1120b161583515afa6b755232b969bcb41849bbd. Exact correction/commands/results in latest Implementation Evidence note. Only docs/REPLAY-RUNTIME-SMOKE.md changed; implementation/live evidence untouched.
+- pvg verify explicit doc passed (0 scanned,0issues); unstaged/staged diff checks passed. Parent successful e0dfaf3 lifecycle and copy-verification proof preserved, not rerun.
+
+### proof
+- [x] AC #1: original approved policy remains exact.
+- [x] AC #2: reviewed installation/provisioning correctly documented.
+- [x] AC #3: successful sanitized preflight correctly documented.
+- [x] AC #4: successful24.019100959s C001 lifecycle/probes/settlement and preserved failures correctly documented.
+- [x] AC #5: independent replay/ReplayReceipt/verdict/admission/comparison/promotion remain downstream not-run; PM acceptance still required.
+
+Redelivery only, not acceptance/closure. No further privileged execution authorized or needed.
