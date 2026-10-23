@@ -1,7 +1,7 @@
 ---
 id: GRRR-w1lt
 title: "Bug: independent replay lacks approved privileged prerequisites"
-status: open
+status: in_progress
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer]
@@ -9,8 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
 updated_at: 2026-10-23T19:15:39Z
-content_hash: "sha256:2e3db04157e095b208b424807ae66f4fa91774ce030fd3ef78f9b5ac0ded6bff"
+content_hash: "sha256:7eb272ca0064d853aa69a5cebc883e52b7b01168cbd2a4c8fead59835bc04fd6"
 blocks: [GRRR-z3w9]
+assignee: dev-GRRR-w1lt
+follows: [GRRR-bnkf]
 ---
 
 ## Description
@@ -119,9 +121,13 @@ status: blocked
 - 2026-10-23T18:55:10Z dep_added: blocks GRRR-z3w9
 - 2026-10-23T18:55:39Z status: open -> blocked
 - 2026-10-23T19:15:39Z status: blocked -> open
+- 2026-10-23T19:15:39Z status: open -> in_progress
+- 2026-10-23T19:15:39Z auto-follows: linked to predecessor GRRR-bnkf
+- 2026-10-23T19:15:39Z claimed by dev-GRRR-w1lt
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
+- Follows: [[GRRR-bnkf]]
 
 ## Comments
