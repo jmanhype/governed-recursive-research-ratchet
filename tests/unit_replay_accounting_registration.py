@@ -159,6 +159,108 @@ class Registration(unittest.TestCase):
                 replay.db.close()
         self.assertEqual(self.database.read_bytes(), self.before)
 
+    def persistent_context(self):
+        context = ExitStack()
+        context.enter_context(patch.object(persistent_budget, 'ACTIVE', self.active))
+        context.enter_context(patch.object(persistent_budget, 'immutable', lambda *a, **k: None))
+        context.enter_context(patch.object(persistent_budget, 'record', lambda p: registration.decode(p.read_bytes())))
+        return context
+
+    def assert_frozen_mutators(self, store):
+        with closing(sqlite3.connect(self.database)) as db:
+            receipt = db.execute('SELECT id FROM metering WHERE reservation=?', (self.hold['id'],)).fetchone()[0]
+        before = self.database.read_bytes()
+        inode = self.database.stat().st_ino
+        totals = store.totals(os.getuid())
+        operations = (
+            lambda: store.settle(os.getuid(), self.hold['id'], dict(reservation=self.hold['id'], receipt=receipt)),
+            lambda: store.meter(os.getuid(), self.hold['id'], vector(1, 1, 1), 'b' * 64),
+            lambda: store.disclose_overhead(os.getuid(), 'preparation', 5, 'overhead'),
+            lambda: store.halt(),
+            lambda: store.reserve(os.getuid(), 'old-run', vector(), 'uncertain'),
+            lambda: budget.Budget.settle(store, os.getuid(), self.hold['id'],
+                                        dict(reservation=self.hold['id'], receipt=receipt)),
+            lambda: budget.Budget.meter(store, os.getuid(), self.hold['id'], vector(1, 1, 1), 'b' * 64),
+            lambda: budget.Budget.disclose_overhead(store, os.getuid(), 'preparation', 5, 'overhead'),
+            lambda: budget.Budget.reserve(store, os.getuid(), 'old-run', vector(), 'uncertain'),
+            lambda: budget.Budget.halt(store),
+        )
+        for index, operation in enumerate(operations):
+            with self.subTest(operation=index), self.assertRaises(Failure):
+                operation()
+            self.assertEqual(self.database.read_bytes(), before)
+            self.assertEqual(self.database.stat().st_ino, inode)
+            self.assertEqual(store.totals(os.getuid()), totals)
+            self.assertEqual(totals['pending'], 1)
+        with self.assertRaises(sqlite3.DatabaseError):
+            store.db.execute('UPDATE state SET stopped=1 WHERE id=1')
+        sql = 'UPDATE reservations SET actual=maximum WHERE actual IS NULL'
+        cursor = getattr(store, 'prepublication_cursor', store.db.cursor())
+        for entry in (lambda: store.db.execute(sql), lambda: store.db.executemany(sql, [()]),
+                      lambda: store.db.executescript(sql), lambda: cursor.execute(sql),
+                      lambda: cursor.executemany(sql, [()]), lambda: cursor.executescript(sql)):
+            with self.assertRaises(sqlite3.DatabaseError):
+                entry()
+            self.assertEqual(store.totals(os.getuid()), totals)
+        self.assertEqual(self.database.read_bytes(), before)
+
+    def test_all_registered_profiles_freeze_every_mutator_and_base_entrypoint(self):
+        self.install()
+        with self.persistent_context():
+            for profile in registration.PROFILES:
+                with self.subTest(profile=profile):
+                    store = persistent_budget.PersistentBudget(profile)
+                    try:
+                        self.assert_frozen_mutators(store)
+                        with self.assertRaises(sqlite3.DatabaseError):
+                            store.db.execute('PRAGMA user_version=7')
+                    finally:
+                        store.db.close()
+        self.assertEqual(self.database.read_bytes(), self.before)
+        self.assertEqual(self.database.stat().st_ino, self.before_inode)
+
+    def test_stale_legacy_handles_and_reused_sql_refuse_after_registration(self):
+        with self.persistent_context():
+            handles = [persistent_budget.PersistentBudget(profile) for profile in registration.LEGACY]
+            try:
+                # Prepare/execute the identical SQL before publication. Cached
+                # statements must not bypass the authorizer after publication.
+                for store in handles:
+                    store.prepublication_cursor = store.db.cursor()
+                    store.db.execute('UPDATE state SET stopped=1 WHERE id=1')
+                self.assertEqual(self.database.read_bytes(), self.before)
+                self.install()
+                for store in handles:
+                    self.assert_frozen_mutators(store)
+            finally:
+                for store in handles:
+                    store.db.close()
+
+    def test_partial_registration_freezes_stale_legacy_mutators(self):
+        with self.persistent_context():
+            store = persistent_budget.PersistentBudget('offline')
+            try:
+                (self.base / 'registration').mkdir()
+                self.assert_frozen_mutators(store)
+            finally:
+                store.db.close()
+
+    def test_legacy_stopped_settlement_meter_and_overhead_still_work(self):
+        with self.persistent_context():
+            store = persistent_budget.PersistentBudget('offline')
+            try:
+                receipt = store.meter(os.getuid(), self.hold['id'], vector(1, 1, 1), 'b' * 64)
+                store.settle(os.getuid(), self.hold['id'], receipt)
+                store.disclose_overhead(os.getuid(), 'preparation', 5, 'overhead')
+                store.disclose_overhead(os.getuid(), 'preparation', 5, 'overhead')
+                store.halt()
+                totals = store.totals(os.getuid())
+                self.assertEqual(totals['pending'], 0)
+                self.assertEqual(totals['overhead_us'], {'preparation': 5})
+                self.assertTrue(totals['stopped'])
+            finally:
+                store.db.close()
+
     def test_partial_publication_blocks_legacy_and_retry_without_database_writes(self):
         with patch.object(registration.os, 'replace', side_effect=OSError('injected before commit')):
             with self.assertRaisesRegex(OSError, 'injected'):

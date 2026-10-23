@@ -13,6 +13,19 @@ this document describes the new source, not a protected installation receipt.
   the exact four-profile registration, complete root-owned receipt and exact old
   binding bytes, plus the unchanged stopped physical database. `independent-replay`
   is POC-only. Unknown/partial registration fails closed. There is no fresh store.
+- Version 2 connections open SQLite `mode=ro` and skip all chmod/schema/INSERT
+  initialization. Every mutation (reserve, meter, settle, overhead, halt), across
+  every profile and inherited base-class call, uses a live mutation guard. Legacy
+  handles recheck binding identity and absence of partial registration before
+  effects. Legacy stopped settlement behavior is unchanged until registration.
+- Persistent connections/cursors refresh their SQLite authorizer before each
+  execute/executemany/executescript entrypoint, rejecting writes, DDL and PRAGMA
+  after registration even on stale handles. Python 3.9 was measured reusing a
+  prepared authorization despite `cached_statements=0`; rearming prevents that
+  bypass. This is trusted-runtime API enforcement, not a sandbox against arbitrary
+  evaluator code deliberately disabling guards or opening its own SQLite handle.
+  The installer still requires an idle, exclusively controlled parent window;
+  registration during an already executing evaluator transaction is not permitted.
 - `Budget.reserve`: persisted stopped state is checked before duplicate-key reuse,
   including zero requests. Changed duplicates do not bypass a stop either.
 - `scripts/replay-root-prepare`: source Budget pin refreshed for this behavior.

@@ -15,6 +15,46 @@ PROFILES = ('synthetic', 'offline', 'trusted-observation')
 REGISTERED_PROFILES = PROFILES + ('independent-replay',)
 
 
+class RecheckingCursor(sqlite3.Cursor):
+    """Python 3.9 may cache statements even with cached_statements=0."""
+    def execute(self, sql: str, parameters: object = ()) -> sqlite3.Cursor:
+        self.connection.refresh_authorizer()
+        return super().execute(sql, parameters)
+
+    def executemany(self, sql: str, parameters: object) -> sqlite3.Cursor:
+        self.connection.refresh_authorizer()
+        return super().executemany(sql, parameters)
+
+    def executescript(self, sql: str) -> sqlite3.Cursor:
+        self.connection.refresh_authorizer()
+        return super().executescript(sql)
+
+
+class RecheckingConnection(sqlite3.Connection):
+    """Invalidate prepared authorization decisions before every SQL entrypoint."""
+    def set_authorizer(self, callback: object) -> None:
+        self.authorization = callback
+        super().set_authorizer(callback)
+
+    def refresh_authorizer(self) -> None:
+        callback = getattr(self, 'authorization', None)
+        if callback is not None:
+            super().set_authorizer(callback)
+
+    def cursor(self, factory: type = RecheckingCursor) -> sqlite3.Cursor:
+        require(factory is RecheckingCursor, 'Unauthorized', 'Unreviewed accounting cursor factory')
+        return super().cursor(factory)
+
+    def execute(self, sql: str, parameters: object = ()) -> sqlite3.Cursor:
+        return self.cursor().execute(sql, parameters)
+
+    def executemany(self, sql: str, parameters: object) -> sqlite3.Cursor:
+        return self.cursor().executemany(sql, parameters)
+
+    def executescript(self, sql: str) -> sqlite3.Cursor:
+        return self.cursor().executescript(sql)
+
+
 def validate_store(binding: dict, path: Path) -> None:
     registered = type(binding.get('version')) is int and binding['version'] == 2
     fields(binding, {'version', 'campaign', 'store_id', 'directory', 'prior_history_receipt', 'profiles',
@@ -82,10 +122,37 @@ class PersistentBudget(Budget):
         path = directory / 'budget.sqlite'
         validate_store(binding, path)
         require(profile in binding['profiles'], 'InvalidInput', 'Profile absent from active accounting binding')
-        super().__init__(path, existing=True)
         self.profile = profile
         self.store_id = binding['store_id']
         self.binding_hash = digest(canonical(binding))
+        super().__init__(path, existing=True, read_only=binding['version'] == 2,
+                         connection_factory=RecheckingConnection)
+        self.db.set_authorizer(self.authorize_sql)
+
+    def require_mutable(self) -> None:
+        """Recheck publication for every profile and stale handle, before any effect."""
+        super().require_mutable()
+        current = record(ACTIVE)
+        require(digest(canonical(current)) == self.binding_hash
+                and type(current['version']) is int and current['version'] == 1
+                and not os.path.lexists(self.path.parent.parent / 'registration'),
+                'RecoveryRequired', 'Accounting registration changed or partial; mutations frozen')
+
+    def authorize_sql(self, action: int, first: str, second: str, database: str, source: str) -> int:
+        """Defense for stale SQLite handles; uncached statements recheck each execution.
+
+        Only read/SELECT/function/transaction opcodes are intrinsically read-only.
+        Everything else, including PRAGMA, DDL, ATTACH, and writes, uses the same
+        live mutation guard. SQLite converts callback denial into DatabaseError.
+        """
+        if action in (sqlite3.SQLITE_READ, sqlite3.SQLITE_SELECT, sqlite3.SQLITE_FUNCTION,
+                      sqlite3.SQLITE_TRANSACTION, sqlite3.SQLITE_RECURSIVE):
+            return sqlite3.SQLITE_OK
+        try:
+            self.require_mutable()
+        except Exception:
+            return sqlite3.SQLITE_DENY
+        return sqlite3.SQLITE_OK
 
     def reserve(self, principal: int, run: str, maximum: dict, key: str,
                 stage: str = 'poc', binding: str = None) -> dict:
@@ -95,5 +162,6 @@ class PersistentBudget(Budget):
         if self.profile == 'independent-replay':
             require(stage == 'poc', 'InvalidInput', 'Independent replay is POC-only; no fresh allowance')
             validate_store(record(ACTIVE), self.path)
+        self.require_mutable()
         bound = digest(canonical({'profile': self.profile, 'request_binding': binding}))
         return super().reserve(principal, run, maximum, key, stage, bound)
