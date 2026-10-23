@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "seeded_variant_execution": {
+    "state": "not-run",
+    "reason": "The accepted pinned v4 profile and input admit only its fixed challenge variants; arbitrary corpus seeds require a new reviewed input/profile."
+  },
+  "full_no_guest_suite": {
+    "state": "pass-after-authorized-parent-cache-cleanup",
+    "system_python": "166 passed, 0 failed, 0 skipped",
+    "homebrew_python": "166 passed, 0 failed, 0 skipped"
+  },
+  "bounded_challenge_integration": {
+    "state": "not-run",
+    "reason": "This story worktree has no parent runtime binding; the mandatory entrypoint failed closed before tests."
+  },
+  "independent_replay": "not-run",
+  "reviewer_outcome": "not-run",
+  "contract_admission": "blocked",
+  "verified_finding": false
+}

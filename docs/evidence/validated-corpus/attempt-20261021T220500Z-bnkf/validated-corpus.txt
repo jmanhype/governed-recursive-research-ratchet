@@ -1,0 +1,14 @@
+test_accepted_v4_observation_is_internally_verified (__main__.ValidatedCorpus.test_accepted_v4_observation_is_internally_verified) ... ok
+test_concurrent_read_validation_is_deterministic (__main__.ValidatedCorpus.test_concurrent_read_validation_is_deterministic) ... ok
+test_counts_categories_and_independence (__main__.ValidatedCorpus.test_counts_categories_and_independence) ... ok
+test_downstream_gates_remain_not_run (__main__.ValidatedCorpus.test_downstream_gates_remain_not_run) ... ok
+test_missing_required_path_fails_closed (__main__.ValidatedCorpus.test_missing_required_path_fails_closed) ... ok
+test_plan_is_pre_registered_and_measurement_is_blocked (__main__.ValidatedCorpus.test_plan_is_pre_registered_and_measurement_is_blocked) ... ok
+test_public_artifact_tamper_fails_closed (__main__.ValidatedCorpus.test_public_artifact_tamper_fails_closed) ... ok
+test_public_projection_omits_protected_truth (__main__.ValidatedCorpus.test_public_projection_omits_protected_truth) ... ok
+test_seed_recipes_reproduce_against_exact_pinned_source (__main__.ValidatedCorpus.test_seed_recipes_reproduce_against_exact_pinned_source) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.346s
+
+OK

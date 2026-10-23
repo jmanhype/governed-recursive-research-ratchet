@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-5ocbl3fd",
+  "bootstrap_commit": "f1c976fab369f353a579bb898f94c0478a0eb41f",
+  "guest_started": true,
+  "first_scenario": "GRRR-VC-D001",
+  "raw_receipt": "4ea3edededb66b28f4e6b66330b9d64d08e0992f44ff4f84dc175b0944b9ec6e",
+  "raw_sha256": "dcf6482e7d5a40ac1a3a5544990af64d8e5dd0bf2bc91274190834cc2d748110",
+  "supervisor_exit": 3,
+  "diagnosis": "Supervisor swallowed the exact observe error; bootstrap integrity checks all passed",
+  "candidate_executed": true,
+  "fix": "Return stage/credentials context in JSON and stderr for the next diagnostic run"
+}

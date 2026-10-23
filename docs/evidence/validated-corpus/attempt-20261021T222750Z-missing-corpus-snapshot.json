@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-8pxlzrtz",
+  "bootstrap_commit": "2b82a23b18f84b5c1b740bb2e06db191af0827b7",
+  "failure": "FileNotFoundError after plan staging and before service.log",
+  "cause": "Root bootstrap snapshotted executable code but not corpus/manifest.json or corpus/protected/truth.json needed by the immutable launcher",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "observed": "runner/config.json, approval, QEMU record, assets, and plan.json were staged; no service log or sockets existed"
+}

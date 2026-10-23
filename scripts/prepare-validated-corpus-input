@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+"""Build the disposable one-scenario-at-a-time corpus input; never boot a VM.
+
+Usage: prepare-validated-corpus-input VM_ASSETS QEMU_MANIFEST NEW_PREPARATION
+Pinned vlt is packaged, never built or executed. Only trusted supervisor/helper
+sources are cross-compiled on the host.
+"""
+from __future__ import annotations
+import importlib.machinery
+import importlib.util
+import io
+import json
+import os
+from pathlib import Path
+import shutil
+import struct
+import subprocess
+import sys
+import tarfile
+import traceback
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require
+from corpus_probes import probe_source
+from execution import ASSETS
+from offline import TOOLCHAIN_SHA256
+from trusted_execution import PRESERVED_ROOT, QEMU_MANIFEST
+from trusted_install import record, verify_qemu
+import validated_corpus
+
+FLOOR = 15000000000
+LIMITS = {'memory_mib': 1024, 'workspace_mib': 512, 'vcpus': 1, 'boot_seconds': 45,
+          'command_seconds': 420, 'total_seconds': 480, 'stop_ack_seconds': 2,
+          'term_grace_seconds': 5, 'kill_wait_seconds': 2, 'output_bytes': 1048576,
+          'wire_bytes': 3145728, 'minimum_host_free_bytes': FLOOR}
+
+
+def space(path: Path, additional: int = 0) -> int:
+    free = shutil.disk_usage(path).free
+    require(free - additional >= FLOOR, 'BudgetExceeded', 'Preparation would cross 15 GB floor')
+    return free
+
+
+def capture(args: list[str], env: dict | None = None) -> bytes:
+    return subprocess.run(args, env=env, capture_output=True, check=True, timeout=300).stdout
+
+
+def elf(path: Path) -> dict:
+    raw = path.read_bytes()
+    require(len(raw) >= 64 and raw[:6] == b'\x7fELF\x02\x01'
+            and struct.unpack_from('<H', raw, 18)[0] == 183,
+            'IntegrityFailure', 'Expected static AArch64 supervisor ELF')
+    return {'sha256': digest(raw), 'bytes': len(raw), 'machine': 'AArch64', 'interpreter': None}
+
+
+def load_prepare_module():
+    loader = importlib.machinery.SourceFileLoader('trusted_prepare', str(ROOT / 'scripts/prepare-trusted-observation'))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    module = importlib.util.module_from_spec(spec)
+    loader.exec_module(module)
+    return module
+
+
+def build(root: Path, vm: Path, qemu_manifest: Path, target: Path) -> dict:
+    require(not target.exists(), 'InvalidInput', 'Use a fresh corpus preparation directory')
+    initial_free = space(target.parent, 250000000)
+    archive_raw, source_files = validated_corpus.pinned_source()
+    source_inventory = validated_corpus.root_record(PRESERVED_ROOT / 'preparation.json')['source']['files']
+    go_raw = validated_corpus.pinned_iso_member('go.tgz')
+    require(digest(go_raw) == TOOLCHAIN_SHA256, 'IntegrityFailure', 'Pinned Go archive differs')
+    installation = record(qemu_manifest)
+    require(digest(canonical(installation)) == QEMU_MANIFEST, 'IntegrityFailure', 'QEMU manifest differs')
+    verify_qemu(installation)
+    for name, expected in ASSETS.items():
+        path = vm / ('boot/' + name if name not in ('alpine-virt-3.22.6-aarch64.iso',) else name)
+        require(digest(path.read_bytes()) == expected, 'IntegrityFailure', 'VM asset differs: ' + name)
+    seeds = json.loads((root / 'corpus/protected/seeds.json').read_bytes())
+    public = json.loads((root / 'corpus/public/challenges.json').read_bytes())
+    require(len(seeds) == len(public) == 32, 'InvalidInput', 'Corpus projection counts differ')
+    target.mkdir(mode=0o700)
+    media = target / 'media'; media.mkdir(mode=0o700)
+    (media / 'vlt.tar').write_bytes(archive_raw)
+    (media / 'source.sum').write_text(''.join(item['sha256'] + '  ' + name + '\n'
+        for name, item in sorted(source_inventory.items())))
+    (media / 'go.tgz').write_bytes(go_raw)
+    shutil.copyfile(ROOT / 'research/corpus-guest.sh', media / 'guest.sh')
+    cache = target.parent / 'grrr-corpus-host-build-cache'
+    env = {'PATH': '/opt/homebrew/bin:/usr/bin:/bin', 'HOME': '/var/empty', 'GO111MODULE': 'off',
+           'GOOS': 'linux', 'GOARCH': 'arm64', 'CGO_ENABLED': '0', 'GOTOOLCHAIN': 'local',
+           'GOPROXY': 'off', 'GOSUMDB': 'off', 'GOCACHE': str(cache), 'GOMAXPROCS': '1'}
+    commands = []
+    for output, source in (('corpus-supervis', 'corpus_supervisor_linux.go'),
+                           ('corpus-helper', 'corpus_helper_linux.go')):
+        args = ['/opt/homebrew/bin/go', 'build', '-p=1', '-trimpath', '-buildvcs=false',
+                '-ldflags=-buildid=', '-o', str(media / output),
+                str(ROOT / 'research/corpus-supervisor' / source)]
+        commands.append(args); capture(args, env); space(target)
+    (media / 'seeds.json').write_bytes(canonical(seeds))
+    probes = {challenge['challenge']: probe_source(challenge['challenge'][-4:]).encode('utf-8')
+              for challenge in public}
+    with tarfile.open(media / 'probes.tar', 'x', format=tarfile.PAX_FORMAT) as archive:
+        for name, raw in sorted(probes.items()):
+            member = tarfile.TarInfo(name + '.go')
+            member.size, member.mode = len(raw), 0o644
+            archive.addfile(member, io.BytesIO(raw))
+    with tarfile.open(media / 'probes.tar') as archive:
+        require(archive.getnames() == sorted(name + '.go' for name in probes),
+                'IntegrityFailure', 'Probe archive membership differs')
+        for member in archive:
+            require(member.isfile() and not Path(member.name).is_absolute()
+                    and '..' not in Path(member.name).parts
+                    and digest(archive.extractfile(member).read()) == digest(probes[Path(member.name).stem]),
+                    'IntegrityFailure', 'Probe archive bytes differ')
+    expected = {path.name: digest(path.read_bytes()) for path in media.iterdir()}
+    (media / 'input.sum').write_text(''.join(value + '  ' + name + '\n'
+        for name, value in sorted(expected.items())))
+    expected['input.sum'] = digest((media / 'input.sum').read_bytes())
+    image = target / 'input.iso'
+    space(target, sum(path.stat().st_size for path in media.iterdir()) + 10000000)
+    capture(['/usr/bin/hdiutil', 'makehybrid', '-iso', '-joliet', '-default-volume-name', 'GRRR_CORPUS',
+             '-o', str(image), str(media)])
+    prepare = load_prepare_module()
+    readback = prepare.iso_readback(image, expected)
+    final_free = space(target)
+    manifest = json.loads((root / 'corpus/manifest.json').read_bytes())
+    profile = {'version': 1, 'profile': 'GRRR-validated-corpus-v2.2-isolated',
+               'corpus_freeze_digest': manifest['freeze_digest'], 'authorization': 'required',
+               'dispatch_enabled': False, 'source_commit': validated_corpus.SOURCE_COMMIT,
+               'source_archive_sha256': digest(archive_raw), 'image_sha256': digest(image.read_bytes()),
+               'supervisor_sha256': elf(media / 'corpus-supervis')['sha256'],
+               'helper_sha256': elf(media / 'corpus-helper')['sha256'],
+               'guest_script_sha256': expected['guest.sh'], 'limits': LIMITS,
+               'qemu_installation_sha256': QEMU_MANIFEST,
+               'network': False, 'host_shares': False, 'read_only_inputs': True, 'paid_dispatch': False}
+    (target / 'prepared-profile.json').write_bytes(canonical(profile))
+    receipt = {'version': 1, 'kind': 'corpus-preparation-not-execution', 'vm_execution_performed': False,
+               'candidate_execution_performed': False, 'initial_free_bytes': initial_free,
+               'final_free_bytes': final_free, 'source_files': len(source_files),
+               'scenario_count': len(seeds), 'probe_count': len(probes),
+               'compiler': {'version': 'go1.26.7 darwin/arm64',
+                            'sha256': digest(Path('/opt/homebrew/bin/go').read_bytes())},
+               'toolchain_sha256': TOOLCHAIN_SHA256, 'commands': commands,
+               'image_sha256': profile['image_sha256'], 'image_bytes': image.stat().st_size,
+               'profile_sha256': digest(canonical(profile)), 'primary_iso_readback': readback,
+               'execution_approval': 'absent'}
+    (target / 'preparation.json').write_bytes(canonical(receipt))
+    return receipt
+
+
+def main() -> int:
+    require(len(sys.argv) == 4, 'InvalidInput', __doc__)
+    result = build(ROOT, Path(sys.argv[1]).resolve(strict=True), Path(sys.argv[2]).resolve(strict=True),
+                   Path(sys.argv[3]).absolute())
+    print(canonical({key: result[key] for key in ('image_sha256', 'profile_sha256', 'final_free_bytes')}).decode())
+    return 0
+
+
+if __name__ == '__main__':
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        print(canonical({'corpus_preparation': 'failed', 'error': str(exc),
+                         'traceback': traceback.format_exc(),
+                         'vm_execution_performed': False}).decode())
+        raise SystemExit(1)

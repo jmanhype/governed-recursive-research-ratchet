@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-xmg462hx",
+  "bootstrap_commit": "9a62f20660279f7a49cbe3d0478656dae24bf621",
+  "failure": "Generic host identity probe returned nonzero with its stderr discarded",
+  "read_only_diagnostics": {
+    "uid321_access": {"evaluator_expectation_read": false, "evaluator_budget_read": false, "trusted_execution_write": false, "runner_config_write": false, "qemu_write": false},
+    "uid501_access": {"evaluator_expectation_read": false, "evaluator_budget_read": false, "trusted_execution_write": false, "runner_config_write": false, "qemu_write": false},
+    "launcher_shaped_import": "passed through isolated_entry; stopped service then caused expected ConnectionRefusedError"
+  },
+  "vm_executed": false,
+  "candidate_executed": false,
+  "fix": "Dedicated one-at-a-time corpus probe plus captured stderr in any future failure"
+}

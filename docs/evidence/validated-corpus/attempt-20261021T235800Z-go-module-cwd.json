@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-zg2g9o7g",
+  "bootstrap_commit": "de6cc5cbd6a46b2cee5dc8e3e1e9e66d9f235fa7",
+  "guest_started": true,
+  "clean_control": "GRRR-VC-C001",
+  "exact_build_failure": "go: go.mod file not found in current directory or any parent directory; see 'go help modules'",
+  "impact": "Prior defect exits were compile/setup failures, not valid behavioral failures",
+  "candidate_executed": true,
+  "fix": "Run go test from /work/candidate/source where the pinned go.mod resides"
+}

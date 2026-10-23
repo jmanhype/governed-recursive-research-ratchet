@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-6i0tenbf",
+  "bootstrap_commit": "8b623b57a27c197625fc0714bff5d394a17c284a",
+  "failure": "Integration imported trusted_execution.validate_config (v4 schema) for the corpus profile",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "fix": "Use corpus_execution.validate_config while retaining trusted_execution.validate_approval"
+}

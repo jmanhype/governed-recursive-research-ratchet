@@ -1,0 +1,175 @@
+test_acl_bearing_output_ancestor_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_collection_does_not_mutate_protected_fixture (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_duplicate_prior_event_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_effective_root_invocation_is_rejected_before_source_or_output_access (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_exact_inventory_and_correspondence (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_existing_final_output_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_failed_publication_leaves_final_absent_and_diagnostic_temp (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_final_output_symlink_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_group_writable_output_ancestor_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_malformed_event_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_missing_required_evidence_is_explicit_null (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_parent_path_replacement_is_detected_before_staging (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_root_invocation_is_rejected_before_source_or_output_access (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_source_hash_mismatch_is_rejected_before_readback (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_successful_output_is_exclusive_private_and_atomic (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_symlinked_output_ancestor_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_world_writable_parent_is_rejected (unit_accounting_evidence_manifest.AccountingEvidenceManifest) ... ok
+test_acl_bearing_output_ancestor_is_rejected (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_direct_private_tmp_output_is_rejected_for_private_publication (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_effective_root_invocation_is_refused_before_manifest_read (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_existing_request_is_never_overwritten (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_generates_canonical_metadata_only_inventory (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_group_writable_output_ancestor_is_rejected (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_parent_path_replacement_is_detected_before_staging (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_unknown_counts_are_refused_after_hash_pin (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_unknown_decision_is_refused_after_hash_pin (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_unknown_manifest_hash_is_refused_without_output (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_unknown_top_level_schema_is_refused_after_hash_pin (unit_accounting_evidence_request.AccountingEvidenceRequest) ... ok
+test_all_attempts_and_sources_are_preserved (unit_accounting_genesis.Genesis) ... ok
+test_no_migration_or_campaign_stop_inference (unit_accounting_genesis.Genesis) ... ok
+test_unknowns_encumber_both_ceilings_without_fake_upper_bound (unit_accounting_genesis.Genesis) ... ok
+test_conflicting_reservation_not_chosen_as_authority (unit_accounting_reconciliation.Reconciliation) ... ok
+test_duplicate_snapshot_not_double_counted (unit_accounting_reconciliation.Reconciliation) ... ok
+test_duration_conversion_and_nonfinite_rejection (unit_accounting_reconciliation.Reconciliation) ... ok
+test_empty_and_complete_looking_input_stay_blocked (unit_accounting_reconciliation.Reconciliation) ... ok
+test_forged_pass_and_cost_do_not_settle (unit_accounting_reconciliation.Reconciliation) ... ok
+test_invalid_or_unknown_maxima_rejected (unit_accounting_reconciliation.Reconciliation) ... ok
+test_stop_ack_does_not_clear_campaign_stop (unit_accounting_reconciliation.Reconciliation) ... ok
+test_unmapped_legacy_reservation_is_preserved_not_invented (unit_accounting_reconciliation.Reconciliation) ... ok
+ERROR
+test_allowlist_rejects_roles_and_expected_answers (unit_contracts.Contracts) ... ok
+test_cli_exact_grammar (unit_contracts.Contracts) ... ok
+test_identifiers_reject_traversal (unit_contracts.Contracts) ... ok
+test_isolation_inventory_is_exact_not_color_interpreted (unit_contracts.Contracts) ... ok
+test_packet_identity_and_forged_pass_distinct (unit_contracts.Contracts) ... ok
+test_recorded_preflight_failure_preceded_operator_stop (unit_contracts.Contracts) ... ok
+test_registered_limits_and_inventory (unit_contracts.Contracts) ... ok
+test_runtime_binding_is_local_and_restricted (unit_contracts.Contracts) ... ok
+test_short_temporary_socket_path (unit_contracts.Contracts) ... ok
+test_export_and_independent_verifier (unit_durable_evidence.DurableEvidence) ... ok
+test_full_event_schema_keeps_unknown_and_not_run_explicit (unit_durable_evidence.DurableEvidence) ... ok
+test_historical_updates_and_deletes_are_denied (unit_durable_evidence.DurableEvidence) ... ok
+test_idempotency_compare_and_append (unit_durable_evidence.DurableEvidence) ... ok
+test_object_precedes_reference_and_interrupted_transaction_rolls_back (unit_durable_evidence.DurableEvidence) ... ok
+test_snapshot_detects_tampering_truncation_missing_object_and_bad_anchor (unit_durable_evidence.DurableEvidence) ... ok
+test_storage_exhaustion_returns_recovery_required (unit_durable_evidence.DurableEvidence) ... ok
+test_evidence_keys_and_attempts_preserved (unit_installed_reconciliation.InstalledReconciliation) ... ok
+test_pins_and_database_unchanged (unit_installed_reconciliation.InstalledReconciliation) ... ok
+test_unknowns_never_become_finite_upper_bound (unit_installed_reconciliation.InstalledReconciliation) ... ok
+test_incomplete_and_empty_inventory_rejected (unit_offline.OfflineContracts) ... ok
+test_license_label_is_not_clearance (unit_offline.OfflineContracts) ... ok
+test_missing_and_corrupt_toolchain_rejected (unit_offline.OfflineContracts) ... ok
+test_missing_approval_fails_closed (unit_offline.OfflineContracts) ... ok
+test_profile_cannot_change_synthetic_policy (unit_offline.OfflineContracts) ... ok
+test_proposal_requires_inventory_digest (unit_offline.OfflineContracts) ... ok
+test_service_identity_cannot_be_operator (unit_offline.OfflineContracts) ... ok
+test_writable_or_symlink_approval_rejected (unit_offline.OfflineContracts) ... ok
+test_actual_clone_is_independent_and_never_overwrites (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_actual_route_predicate_rejects_route_rows (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_base_iso_check_rejects_absent_primary_namespace (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_configuration_absence_is_not_default_success (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_exact_registered_configuration (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_go_archive_transport_is_verified_and_guest_only (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_guest_distinguishes_boot_snapshot_from_detached_input (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_input_discovery_is_not_boot_device_assumption (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_missing_binding_rejected (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_missing_input_cannot_emit_readiness (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_network_or_share_never_becomes_allowed (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_no_unknown_command_or_qemu_injection (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_numbers_are_not_booleans (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_source_tar_preserves_hidden_paths_case_bytes_and_modes (unit_offline_runtime.OfflineRuntimeContracts) ... ok
+test_admission_fence_is_durable_and_registry_free (unit_safe_stop.SafeStop) ... ok
+test_cancel_failure_and_bad_baseline_are_recovery (unit_safe_stop.SafeStop) ... ok
+test_concurrent_same_key_returns_one_original_receipt (unit_safe_stop.SafeStop) ... ok
+test_crashed_transaction_leaves_no_stop_state_or_event (unit_safe_stop.SafeStop) ... ok
+test_launch_fence_and_distinct_principals (unit_safe_stop.SafeStop) ... ok
+test_status_requires_operation_digest_and_watchdog_identity (unit_safe_stop.SafeStop) ... ok
+test_stop_atomic_idempotency_and_reference (unit_safe_stop.SafeStop) ... ok
+test_active_binding_validates_and_runtime_uses_successor (unit_successor_accounting.SuccessorAccounting) ... ok
+test_checkout_installer_refuses_nonroot_before_effects (unit_successor_accounting.SuccessorAccounting) ... ok
+test_exact_authorization_deterministic_identity_and_unsafe_metadata (unit_successor_accounting.SuccessorAccounting) ... ok
+test_existing_or_partial_output_is_refused_without_reset (unit_successor_accounting.SuccessorAccounting) ... ok
+test_fresh_schema_identity_modes_and_empty_tables (unit_successor_accounting.SuccessorAccounting) ... ok
+test_old_active_bytes_and_metadata_remain_unchanged (unit_successor_accounting.SuccessorAccounting) ... ok
+test_runtime_reservation_and_ceiling_rejection (unit_successor_accounting.SuccessorAccounting) ... ok
+test_candidate_raw_text_remains_data (unit_trusted_host.HostContracts) ... ok
+test_conservative_active_binding_requires_recovery_before_store_path (unit_trusted_host.HostContracts) ... ok
+test_development_record_cannot_authorize_execution (unit_trusted_host.HostContracts) ... ok
+test_fixed_profile_capabilities (unit_trusted_host.HostContracts) ... ok
+test_forged_or_incomplete_supervisor_record (unit_trusted_host.HostContracts) ... ok
+test_guest_null_empty_capture_and_exact_note (unit_trusted_host.HostContracts) ... ok
+test_launcher_inventory_binds_each_host_source (unit_trusted_host.HostContracts) ... ok
+test_metadata_only_no_commands_roles_or_expectations (unit_trusted_host.HostContracts) ... ok
+test_metering_rejects_unknown_missing_and_wrong_binding (unit_trusted_host.HostContracts) ... ok
+test_no_nonroot_record_or_executor_identity (unit_trusted_host.HostContracts) ... ok
+test_absolute_complete_closure (unit_trusted_import_closure.AbsoluteClosure) ... ok
+test_shadow_writable_symlink_and_ambiguous_search_rejected (unit_trusted_import_closure.AbsoluteClosure) ... ok
+test_tokens_and_noncanonical_absolute_names_rejected (unit_trusted_import_closure.AbsoluteClosure) ... ok
+test_real_flattened_imports_ignore_poisoned_neighbors (unit_trusted_import_closure.ImportClosure) ... ok
+test_staged_application_modules_do_not_modify_import_path (unit_trusted_import_closure.ImportClosure) ... ok
+test_ceiling_all_dimensions_poc_carry_forward (unit_trusted_observation.BudgetUnit) ... ok
+test_concurrent_connections_cannot_overspend (unit_trusted_observation.BudgetUnit) ... ok
+test_duplicate_binding_and_stage (unit_trusted_observation.BudgetUnit) ... ok
+test_execution_replay_review_and_overhead_are_additive (unit_trusted_observation.BudgetUnit) ... ok
+test_missing_delayed_metering_keeps_maximum (unit_trusted_observation.BudgetUnit) ... ok
+test_missing_prior_store_never_creates_empty_allowance (unit_trusted_observation.BudgetUnit) ... ok
+test_overrun_halts_and_retains_maximum (unit_trusted_observation.BudgetUnit) ... ok
+test_real_store_exhaustion_does_not_create_reservation (unit_trusted_observation.BudgetUnit) ... ok
+test_receipt_cannot_settle_another_reservation (unit_trusted_observation.BudgetUnit) ... ok
+test_restart_preserves_cross_profile_hold_and_stop (unit_trusted_observation.BudgetUnit) ... ok
+test_second_launcher_lock_is_rejected (unit_trusted_observation.BudgetUnit) ... ok
+test_unknown_maximum_and_currency (unit_trusted_observation.BudgetUnit) ... ok
+test_artifacts_no_traversal_symlinks_executable_or_wrong_hash (unit_trusted_observation.ObservationUnit) ... ok
+test_bounded_hex_rejects_truncated_oversized_executable_text (unit_trusted_observation.ObservationUnit) ... ok
+test_exact_observation_schema_and_forged_expectations (unit_trusted_observation.ObservationUnit) ... ok
+test_legacy_control_receipt_never_proves_trusted_observation (unit_trusted_observation.ObservationUnit) ... ok
+test_wire_duplicate_keys_nan_truncation_unknown_shape (unit_trusted_observation.ObservationUnit) ... ok
+test_bootstrap_hides_original_supervisor_media (unit_trusted_preparation.TrustedPreparation) ... ok
+test_development_proposal_remains_disabled_and_byte_bound (unit_trusted_preparation.TrustedPreparation) ... ok
+test_elf_parser_rejects_host_binary_and_dynamic_guest (unit_trusted_preparation.TrustedPreparation) ... ok
+test_space_reserves_future_writes_before_side_effect (unit_trusted_preparation.TrustedPreparation) ... ok
+test_supervisor_launch_has_no_shell_or_control_descriptors (unit_trusted_preparation.TrustedPreparation) ... ok
+test_nonroot_installer_refuses_before_effects (unit_trusted_provisioning.Provisioning) ... ok
+test_qemu_only_plan_cannot_carry_accounting (unit_trusted_provisioning.Provisioning) ... ok
+test_schema_only_is_not_authority (unit_trusted_provisioning.Provisioning) ... ok
+test_traversal_missing_source_duplicate_and_unknown_rejected (unit_trusted_provisioning.Provisioning) ... ok
+test_bootstrap_is_standalone_and_no_checkout_import_precedes_snapshot (unit_trusted_security.InstallationSecurity) ... ok
+test_homebrew_installation_never_authorized (unit_trusted_security.InstallationSecurity) ... ok
+test_macho_dependency_names_are_measured_not_executed (unit_trusted_security.InstallationSecurity) ... ok
+test_macho_dependency_parser_rejects_truncated_or_fat (unit_trusted_security.InstallationSecurity) ... ok
+test_mutable_executable_ancestors_are_rejected (unit_trusted_security.InstallationSecurity) ... ok
+test_changed_history_identity_fails (unit_trusted_security.PersistentValidation) ... ok
+test_existing_identity_and_stop_are_preserved (unit_trusted_security.PersistentValidation) ... ok
+test_missing_stop_row_is_not_repaired (unit_trusted_security.PersistentValidation) ... ok
+test_replaced_store_inode_fails_even_with_same_bytes (unit_trusted_security.PersistentValidation) ... ok
+test_settled_usage_without_meter_cannot_hide_prior_cost (unit_trusted_security.PersistentValidation) ... ok
+test_control_channel_cannot_dispatch_effects (unit_trusted_security.SocketSecurity) ... ok
+test_idle_data_saturation_cannot_consume_control_capacity (unit_trusted_security.SocketSecurity) ... ok
+test_initial_read_deadline_is_absolute (unit_trusted_security.SocketSecurity) ... ok
+test_unauthorized_peer_rejected_without_payload_or_slots (unit_trusted_security.SocketSecurity) ... ok
+test_bounded_root_record_accepts_installed_manifest_size (unit_trusted_v4_source.PreservedMetadata) ... ok
+test_exact_preserved_member_bytes_and_hashes (unit_trusted_v4_source.PreservedMetadata) ... ok
+test_linked_and_oversize_protected_files_reject (unit_trusted_v4_source.PreservedMetadata) ... ok
+test_preserved_metadata_and_membership_failures (unit_trusted_v4_source.PreservedMetadata) ... ok
+test_absent_approval_and_stopped_accounting_block_dispatch (unit_trusted_v4_source.V4Bindings) ... ok
+test_exact_v4_shape_and_no_v3_or_homebrew_fallback (unit_trusted_v4_source.V4Bindings) ... ok
+test_helper_and_installed_qemu_mismatches_are_rejected (unit_trusted_v4_source.V4Bindings) ... ok
+test_v3_values_are_rejected_everywhere (unit_trusted_v4_source.V4Bindings) ... ok
+
+======================================================================
+ERROR: setUpClass (unit_conservative_genesis.ConservativeGenesis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-bnkf/tests/unit_conservative_genesis.py", line 25, in setUpClass
+    cls.plan = cls.api['build'](ROOT, cls.output)
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-bnkf/scripts/conservative-genesis", line 85, in build
+    check(shutil.disk_usage(root).free >= 15_350_000_000, 'preparation space floor')
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-bnkf/scripts/conservative-genesis", line 34, in check
+    raise RuntimeError(reason)
+RuntimeError: preparation space floor
+
+----------------------------------------------------------------------
+Ran 157 tests in 3.233s
+
+FAILED (errors=1)

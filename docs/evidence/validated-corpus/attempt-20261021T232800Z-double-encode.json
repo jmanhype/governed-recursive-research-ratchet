@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-vubro7hy",
+  "bootstrap_commit": "dc6eb8d16a678cb41cdc278e3952ed868da81306",
+  "guest_started": true,
+  "scenarios_dispatched": 32,
+  "elapsed_seconds": 345,
+  "failure": "Receipt validator called bytes.encode on canonical(value['guest']); canonical already returns bytes",
+  "raw_receipts": "All executor results were durably recorded before validation failure",
+  "candidate_executed": true,
+  "fix": "Pass canonical bytes directly to decode_guest"
+}

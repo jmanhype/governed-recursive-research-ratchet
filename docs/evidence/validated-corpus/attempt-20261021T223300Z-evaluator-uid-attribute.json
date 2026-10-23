@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "runtime": "/private/tmp/grrr-corpus-kf7tz6rb",
+  "bootstrap_commit": "4e90d886f64437616b0b238497de78f1fab2b6aa",
+  "failure": "setUpClass called sys.getuid instead of os.getuid",
+  "vm_executed": false,
+  "candidate_executed": false,
+  "fix": "Use os.getuid after importing os"
+}

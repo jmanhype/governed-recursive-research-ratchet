@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+"""Regenerate only the frozen GRRR-bnkf corpus from the preserved v4 input."""
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+del sys
+import validated_corpus
+
+
+def main() -> int:
+    validated_corpus.build(ROOT)
+    print(validated_corpus.generate_report(ROOT)['freeze_digest'])
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
