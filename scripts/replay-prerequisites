@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+"""Read-only replay checks; not an installed privileged launcher."""
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+# Never import operator-writable checkout code into a root interpreter.
+if os.getuid() == 0 or os.geteuid() == 0:
+    print('{"replay_dispatch":"not-run","execution_authorized":false,"error":"Root checkout execution prohibited"}')
+    raise SystemExit(1)
+sys.path.insert(0, str(ROOT / 'research'))
+from common import Failure, canonical
+from replay_prerequisites import inspect_corpus, protected_preflight, validate_policy
+
+try:
+    if sys.argv[1:] == ['--check-package']:
+        policy = validate_policy((ROOT / 'docs/replay-policy-v1.json').read_bytes())
+        result = {'package': 'validated', 'corpus': inspect_corpus(ROOT / 'corpus'),
+                  'root_installation': 'not-run', 'replay_dispatch': 'not-run',
+                  'execution_authorized': False, 'independent_review': 'required'}
+        print(canonical(result).decode())
+    elif len(sys.argv) == 6 and sys.argv[1] == '--protected-preflight':
+        result = protected_preflight(*map(Path, sys.argv[2:]))
+        print(canonical(result).decode())
+        # Snapshot success is never a green dispatch gate before independent review.
+        raise SystemExit(1)
+    else:
+        raise ValueError('Usage: replay-prerequisites --check-package | --protected-preflight CORPUS VM SOURCE_ARCHIVE POLICY')
+except (Failure, OSError, ValueError, KeyError, RuntimeError, subprocess.SubprocessError) as exc:
+    print(canonical({'root_installation': 'not-run', 'replay_dispatch': 'not-run',
+                     'execution_authorized': False, 'error': exc.record if isinstance(exc, Failure)
+                     else type(exc).__name__}).decode())
+    raise SystemExit(1)

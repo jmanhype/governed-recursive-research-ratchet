@@ -1,0 +1,19 @@
+test_actual_mutable_ancestor_and_symlink_denied (unit_replay_prerequisites.ReplayPrerequisites.test_actual_mutable_ancestor_and_symlink_denied) ... ok
+test_approved_policy_canonical_bytes (unit_replay_prerequisites.ReplayPrerequisites.test_approved_policy_canonical_bytes) ... ok
+test_duplicate_extra_noncanonical_and_boolean_policy_rejected (unit_replay_prerequisites.ReplayPrerequisites.test_duplicate_extra_noncanonical_and_boolean_policy_rejected) ... ok
+test_each_corpus_artifact_tamper_rejected (unit_replay_prerequisites.ReplayPrerequisites.test_each_corpus_artifact_tamper_rejected) ... ok
+test_every_policy_leaf_is_pinned (unit_replay_prerequisites.ReplayPrerequisites.test_every_policy_leaf_is_pinned) ... ok
+test_namespace_fresh_partial_existing_and_dangling_link (unit_replay_prerequisites.ReplayPrerequisites.test_namespace_fresh_partial_existing_and_dangling_link) ... ok
+test_process_inventory_parsing_fail_closed (unit_replay_prerequisites.ReplayPrerequisites.test_process_inventory_parsing_fail_closed) ... ok
+test_protected_preflight_cannot_promote_checkout (unit_replay_prerequisites.ReplayPrerequisites.test_protected_preflight_cannot_promote_checkout) ... ok
+test_real_cli_invalid_and_unprotected_input_fail_closed (unit_replay_prerequisites.ReplayPrerequisites.test_real_cli_invalid_and_unprotected_input_fail_closed) ... ok
+test_real_cli_package_success_without_dispatch (unit_replay_prerequisites.ReplayPrerequisites.test_real_cli_package_success_without_dispatch) ... ok
+test_real_corpus_bytes_success (unit_replay_prerequisites.ReplayPrerequisites.test_real_corpus_bytes_success) ... ok
+test_root_launcher_paths_and_code_pins (unit_replay_prerequisites.ReplayPrerequisites.test_root_launcher_paths_and_code_pins) ... ok
+test_root_launcher_refuses_nonroot_before_effects (unit_replay_prerequisites.ReplayPrerequisites.test_root_launcher_refuses_nonroot_before_effects) ... ok
+test_symlink_corpus_member_rejected (unit_replay_prerequisites.ReplayPrerequisites.test_symlink_corpus_member_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.444s
+
+OK
