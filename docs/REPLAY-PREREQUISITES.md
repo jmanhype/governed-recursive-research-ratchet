@@ -155,7 +155,7 @@ After independent review, but BEFORE any root interpreter launch, run as the
 unprivileged parent from the reviewed checkout:
 
 ```sh
-/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B scripts/replay-runtime-preflight
+/usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B scripts/replay-runtime-preflight
 ```
 
 The exact runtime identity is
@@ -177,7 +177,7 @@ defense in depth, not a replacement for this mandatory prelaunch phase.
 After successful prelaunch audit AND trusted parent installation only:
 
 ```sh
-/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
+/usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
 ```
 
 Do not run this from the checkout. The parent must independently install the
@@ -192,10 +192,26 @@ The root-owned canonical review record must contain exactly `version: 1`,
 `decision: approved-replay-prerequisite-installation`, `launcher_sha256`,
 `python_sha256` (actual direct executable), `code` (exact hard-coded inventory),
 `policy_sha256`, `runtime_identity` (the exact pin above),
-`runtime_prelaunch_verified: true` (independent parent's pre-elevation attestation), and
+`runtime_prelaunch_verified: true` (independent parent's pre-elevation attestation),
+`preexec_boundary: /usr/bin/env -i`,
+`preexec_environment: {"PATH":"/usr/bin:/bin","LC_ALL":"C"}`, and
 `review_reference` (SHA-256 of independent review evidence). No such record is
 manufactured by this package. Missing review/inputs fail before mutation.
 The review pin is separate from the operator's policy approval.
+
+Both commands MUST cross the trusted `/usr/bin/env -i` boundary before starting
+the direct interpreter/native loader. The parent must not launch the interpreter
+first and sanitize later. No inherited `DYLD_*`, `PYTHON*`, credential variables,
+HOME, shell environment, caller-selected executable, runtime path or interpreter
+argument is permitted. Only the literal PATH and LC_ALL assignments above survive.
+Do not invoke either script directly via its shebang; the sanitized explicit
+command is the supported contract. The parent's review record attests to that
+pre-exec boundary; no late Python environment check is substituted for startup
+sanitization. The pinned framework may create `__CF_USER_TEXT_ENCODING` after
+startup; this is not an inherited allowlist entry. The regression poisons that
+outer variable too and proves the inherited value does not survive.
+An equivalent trusted execve allowlist
+requires separate review; this package's approved contract is the literal command.
 
 The preparer creates no account, grants no dispatch authority and launches no
 guest. A partial namespace is retained and blocks retries; only parent-reviewed

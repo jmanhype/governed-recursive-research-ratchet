@@ -142,12 +142,15 @@ def main() -> int:
     review = json.loads(read(REVIEW), object_pairs_hook=unique)
     check(set(review) == {'version', 'decision', 'launcher_sha256', 'python_sha256',
                          'code', 'policy_sha256', 'review_reference', 'runtime_identity',
-                         'runtime_prelaunch_verified'}, 'Review schema differs')
+                         'runtime_prelaunch_verified', 'preexec_boundary',
+                         'preexec_environment'}, 'Review schema differs')
     check(type(review['version']) is int and review['version'] == 1
           and review['decision'] == 'approved-replay-prerequisite-installation'
           and review['launcher_sha256'] == sha(read(SELF))
           and review['python_sha256'] == sha(Path(sys.executable).read_bytes())
           and review['code'] == CODE and review['policy_sha256'] == POLICY
+          and review['preexec_boundary'] == '/usr/bin/env -i'
+          and review['preexec_environment'] == {'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}
           and isinstance(review['review_reference'], str)
           and len(review['review_reference']) == 64
           and all(c in '0123456789abcdef' for c in review['review_reference']), 'Independent review binding differs')

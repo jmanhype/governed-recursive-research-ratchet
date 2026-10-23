@@ -1,0 +1,11 @@
+codesign --verify --strict /usr/bin/env: PASS
+drwxr-xr-x   23 root  wheel     736 Sep  3 05:34 /
+drwxr-xr-x@  11 root  wheel     352 Sep  3 05:34 /usr
+drwxr-xr-x  934 root  wheel   29888 Sep  3 05:34 /usr/bin
+-rwxr-xr-x    1 root  wheel  167712 Sep  3 05:34 /usr/bin/env
+test_parent_preexec_boundary_removes_poisoned_loader_environment (unit_replay_prerequisites.ReplayPrerequisites) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.063s
+
+OK

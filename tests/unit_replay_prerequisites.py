@@ -30,6 +30,25 @@ def root_preparer():
 
 
 class ReplayPrerequisites(unittest.TestCase):
+    def test_parent_preexec_boundary_removes_poisoned_loader_environment(self):
+        poison = {'DYLD_INSERT_LIBRARIES': '/nonexistent/grrr-poison.dylib',
+                  'DYLD_LIBRARY_PATH': '/nonexistent/grrr-native',
+                  'PYTHONPATH': '/nonexistent/grrr-python', 'PYTHONHOME': '/nonexistent/grrr-home',
+                  'GRRR_TEST_CREDENTIAL': 'synthetic-not-a-secret', 'PATH': '/untrusted',
+                  '__CF_USER_TEXT_ENCODING': 'poisoned-parent-value'}
+        result = subprocess.run(['/usr/bin/env', '-i', 'PATH=/usr/bin:/bin', 'LC_ALL=C',
+                                 str(PYTHON), '-I', '-S', '-B',
+                                 str(ROOT / 'tests/replay_environment_probe.py')],
+                                env=poison, capture_output=True, check=True, timeout=10)
+        observed = json.loads(result.stdout)
+        self.assertEqual(observed['python'], str(PYTHON))
+        self.assertEqual(observed['uid'], os.getuid())
+        self.assertTrue(observed['isolated_flags'])
+        self.assertEqual(observed['names'], ['LC_ALL', 'PATH', '__CF_USER_TEXT_ENCODING'])
+        self.assertNotEqual(observed['generated_cf_encoding'], 'poisoned-parent-value')
+        self.assertEqual(observed['allowlist'], {'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'})
+        self.assertEqual(result.stderr, b'')
+
     def test_real_acl_checks_with_and_without_xattrs(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'asset'
