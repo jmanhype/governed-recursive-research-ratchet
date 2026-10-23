@@ -1,17 +1,18 @@
 ---
 id: GRRR-w1lt
 title: "Bug: independent replay lacks approved privileged prerequisites"
-status: in_progress
+status: closed
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T21:28:22Z
-content_hash: "sha256:56464e2e80cd6c352beb96996f90acb1329e3b8b95a7c168908afafe053d5228"
-blocks: [GRRR-z3w9]
+updated_at: 2026-10-23T21:29:29Z
+content_hash: "sha256:ffc7e32fcdbe429172805f3d870fa5bc0b4745139f2dc723d7c6f6f74c29ce36"
 follows: [GRRR-bnkf, GRRR-c875, GRRR-my5n]
+closed_at: 2026-10-23T21:29:29Z
+close_reason: "Accepted: documentation-only rework 1120b16 resolves the stale runtime-status contradiction while preserving the C001 lifecycle-only and downstream not-run boundaries; prior implementation and checksummed live evidence remain intact."
 ---
 
 ## Description
@@ -662,10 +663,11 @@ status: blocked
 - 2026-10-23T21:26:30Z released by speed
 - 2026-10-23T21:28:22Z status: open -> in_progress
 - 2026-10-23T21:28:22Z auto-follows: linked to predecessor GRRR-my5n
+- 2026-10-23T21:29:29Z status: in_progress -> closed
+- 2026-10-23T21:29:29Z dep_removed: no_longer_blocks GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-z3w9]]
 - Follows: [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]]
 
 ## Comments
