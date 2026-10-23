@@ -4,7 +4,7 @@ title: "Bug: independent replay lacks approved privileged prerequisites"
 status: open
 priority: 0
 type: task
-labels: [milestone-1, integration, discovered-by-developer]
+labels: [milestone-1, integration, discovered-by-developer, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
