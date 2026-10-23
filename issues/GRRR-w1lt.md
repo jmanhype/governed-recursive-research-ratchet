@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T20:45:00Z
-content_hash: "sha256:eea666d3df4a55fcba79afb6fb3ef647098d487db9999a5b3faf91437e69a5e0"
+updated_at: 2026-10-23T20:59:01Z
+content_hash: "sha256:fdd822cd6ab8e4eb6b81ce6effc2a2289a06cda09c82c09e4fe050476082c928"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,36 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- PROOF: clean commit e0dfaf33d3b2725a2fad63401d2b717a8365e0a6. Corrects live macOS account-vector rejection; no privileged action or retry by worker.
+- Parent reports d89cec7 failed before runner readiness/VM execution: evaluator_succeeded=false, exit_codes=[1], children_ceased=true, elapsed0.128s. Failed runtime-smoke namespace remains preserved; worker did not mutate it.
+- Read-only live pwd/getgrouplist and /usr/bin/id agree: UID320 groups {12,61,100,320,701}, UID321 groups {12,61,100,321,701}. Exact vectors pinned and recomputed before initgroups/drop and at role entry. No empty supplementary-group claim remains in current contract. Existing printer/sharepoint memberships explicitly disclosed for review; root/wheel, staff/admin, operator501, opposite-role and any other extra/missing membership rejected.
+- Both /usr/bin/python3 and /opt/homebrew/bin/python3: focused unit_replay*.py 32 passed; full unit_*.py 198 passed; no skips/errors/failures. Real macOS group-data regression and nonmember tamper rejection included. pvg verify explicit paths passed (3 Python files, zero issues); diff/staged checks passed; 12 SHA256SUMS verified.
+- Evidence: docs/evidence/replay-prerequisites/runtime-smoke-r3/. Updated contract docs/REPLAY-RUNTIME-SMOKE.md; launcher SHA256 aa48f31bfca3f38c6e4792a685574bb09437fdef9b2f41d38813d7ad189bc698. Future sanitized parent command unchanged.
+
+### proof
+| AC | Evidence | Status |
+|---|---|---|
+| #1 | Original policy and C001-only scope unchanged | New group vector needs independent review |
+| #2 | Exact live account vector computed/pinned; initgroups then UID/GID drop; strict role checks | Revised parent install/drop/access probes not-run |
+| #3 | Protected preflight/runtime/asset checks retained; group checks added | Updated positive preflight not-run |
+| #4 | Failed attempt preserved; no-guest identity regression passed | UNRESOLVED: successful parent VM/service/accounting/stop lifecycle not-run |
+| #5 | No verdict/ReplayReceipt/admission/counter mutation | GRRR-z3w9 separate |
+
+### unresolved not-run gates
+- Renewed independent review, parent archive/update installation/review and sanitized runtime audit; explicit preserved-failure recovery/fresh namespace authorization.
+- Actual root UID/GID drop and access/unchanged-asset probes, offline C001 VM/service/accounting/stop/cessation lifecycle.
+- No root/QEMU/VM, /Library/GRRR mutation, delivery, acceptance or push. Keep in_progress.
+
+### LEARNINGS
+- macOS setuid can repopulate directory-service membership after setgroups([]); the enforceable boundary is the exact reviewed account vector, not empty supplementary groups.
+
+### DISCOVERED_BUG
+- Live account-vector mismatch corrected here; no other finding deferred.
+
 ## nd_contract
 status: in_progress
 
