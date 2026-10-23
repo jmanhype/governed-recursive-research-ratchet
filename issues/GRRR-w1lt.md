@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T19:25:28Z
-content_hash: "sha256:2deed38163301e37e1d0f61b9599c830c3c0c37f185a30f7fe0b53b8d8b6b1b2"
+updated_at: 2026-10-23T19:39:05Z
+content_hash: "sha256:2a5b28536c06761f3f4f0fe0c0a163d557ff0930a6711e6fb09503dba9786703"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,56 @@ status: new
 
 
 ## Notes
+## Independent-review revision — awaiting re-review
+
+PROOF:
+- Clean story/GRRR-w1lt revision c667ae9c18bc87ac97722a17f0c261b06c0c0280.
+- Fixed blocked runtime entrypoint: direct non-symlink CLT python3.9 plus entire pinned runtime/dependency inventory, mandatory unprivileged trusted-parent prelaunch audit, review runtime attestation, root-side repeat before effects.
+- Runtime identity 59073b8282cb4333c7719d4eac417c061c82f534bf11873d26bf2b26f7531526, full inventory and real unprivileged audit evidence in docs/evidence/replay-prerequisites/.
+- Fixed missing destination postconditions: reopen exact file/directory inventory, check UID/GID/mode/type/nlink/ACL/raw bytes and stable opened identity before publishing prepared.json; partial state retained on failure.
+- Required interpreters /usr/bin/python3 and /opt/homebrew/bin/python3, each:
+  PYTHON -B -m unittest discover -s tests -p unit_replay_prerequisites.py -v: 18 passed, 0 failures/errors/skips.
+  PYTHON -B -m unittest discover -s tests -p 'unit_*.py': 184 passed, 0 failures/errors/skips.
+- pvg verify research/replay_runtime.py research/trusted_install.py research/trusted_execution.py scripts/replay-root-prepare scripts/replay-runtime-preflight tests/unit_replay_prerequisites.py docs/REPLAY-PREREQUISITES.md docs/evidence/replay-prerequisites/README.md --format=text: PASSED, 4 files scanned, 0 issues.
+- git diff --cached --check: PASS.
+- /usr/bin/python3 -B -m trace --count --missing --summary --coverdir /tmp/GRRR-w1lt-r2-coverage --module unittest discover -s tests -p unit_replay_prerequisites.py: 18 passed; runtime verifier 96%, prerequisite module 52%, root preparer 38%. No root-positive coverage claim.
+- Future parent PRE-ELEVATION command from reviewed checkout:
+  /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B scripts/replay-runtime-preflight
+- Future parent command ONLY after independent review, successful prelaunch audit, and trusted installation:
+  /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
+- The former /usr/bin/python3 root command is withdrawn. No symlink/ancestor checks weakened.
+
+AC table:
+| AC | Revision proof | Unresolved |
+| 1 | Policy pin unchanged, all leaf mutations denied | Protected install not-run |
+| 2 | Direct protected runtime binding and verified destination postconditions implemented | Independent re-review and root-positive preparation not-run |
+| 3 | Runtime/asset checks plus shared ACL correction and real ACL/xattr tests | Positive full protected preflight not-run |
+| 4 | Private exact postconditions and retained failures; no services started | UID 320/321 access probes and replay lifecycle not-run |
+| 5 | No deliver/accept, no relabeled fixture ledger | GRRR-z3w9 still blocked |
+
+DISCOVERED_BUG:
+  title: ACL plus-marker-only checks miss ACL entries when macOS xattrs display at-sign
+  context: A real destination ACL test failed before the fix. Per coordinator direction, fixed every reachable shared check in this revision: trusted_install.acl_free/immutable and trusted_execution._acl_free/protected_bytes. Actual file and directory ACLs with and without xattrs now reject; ACL-free paths pass.
+  affected_files: research/trusted_install.py, research/trusted_execution.py, scripts/replay-root-prepare, research/replay_runtime.py
+  discovered_during: GRRR-w1lt
+  status: fixed in c667ae9; no privileged execution performed
+
+LEARNINGS:
+- Python cannot retroactively authenticate its loaded stdlib: pre-elevation parent audit is a separate required boundary.
+- Direct CLT python3.9 is regular; convenience python3 entrypoints are symlinks and remain disallowed.
+- Verify destination bytes and metadata before publishing prepared status, not merely after writes.
+- macOS ACL text entries must be checked even if the mode marker displays @.
+- Intermediate full-suite failure enforced the existing no-sys.path-in-research invariant; path validation was moved into the launcher without weakening tests.
+
+## nd_contract
+status: in_progress
+### evidence
+- c667ae9c18bc87ac97722a17f0c261b06c0c0280 and persistent logs.
+- No root/QEMU/VM, /Library/GRRR mutation, push, delivery or acceptance.
+### proof
+- [x] Both independent-review blockers addressed in code and no-guest tests.
+- [ ] Independent re-review, trusted installation, root-positive namespace preparation, UID access probes, service/VM lifecycle and independent ReplayReceipt remain not-run.
+
 ## Implementation package awaiting independent review
 
 PROOF:
