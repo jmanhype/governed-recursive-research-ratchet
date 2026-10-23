@@ -1,15 +1,15 @@
 ---
 id: GRRR-w1lt
 title: "Bug: independent replay lacks approved privileged prerequisites"
-status: blocked
+status: open
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T18:55:39Z
-content_hash: "sha256:89c34d269adb7c07910b26cf1c94a50ae489c1c7437697e677e097a170f0766a"
+updated_at: 2026-10-23T19:15:39Z
+content_hash: "sha256:2e3db04157e095b208b424807ae66f4fa91774ce030fd3ef78f9b5ac0ded6bff"
 blocks: [GRRR-z3w9]
 ---
 
@@ -71,6 +71,33 @@ status: new
 
 
 ## Notes
+## Operator Authorization
+
+APPROVED [2026-10-23T19:15:39Z]: The operator replied exactly: `Approve GRRR-w1lt`.
+
+This approves only the replay prerequisite scope recorded in this issue:
+
+- Corpus: `GRRR-validated-corpus-v2.2-isolated`
+- Freeze digest: `dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529`
+- Source commit: `129e0b3f15a3bd6af949ee47d76f6855c582ab73`
+- Stop after exactly two consecutive independent replay failures.
+- Per replay: 1 vCPU, 1024 MiB memory, 512 MiB disposable workspace, 45 s boot watchdog, 480 s total watchdog, 2 s stop acknowledgement, 5 s termination grace, 2 s kill wait, 1 MiB captured output, 3 MiB wire limit, and 15 GiB host free-space floor.
+- Evaluator UID 320 owns policy, expectations, budget, reservations, and ledger.
+- Runner UID 321 owns only the approved executor.
+- Root owns immutable replay/QEMU/corpus/spec assets and the parent launcher.
+- Denials: no network, no host shares, no paid dispatch, no contract admission, no production mutation, no automatic merge, and no promotion.
+- Independent security/architecture review is still required before root installation or replay dispatch.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator approval recorded from this thread on 2026-10-23T19:15:39Z.
+
+### proof
+- [ ] Reviewed provisioning path still pending.
+- [ ] Root installation and replay dispatch remain blocked until review.
+
 ## Operator Input Required
 
 GRRR-w1lt cannot be implemented safely until the operator approves the replay-specific policy and privileged provisioning scope.
@@ -91,6 +118,7 @@ status: blocked
 ## History
 - 2026-10-23T18:55:10Z dep_added: blocks GRRR-z3w9
 - 2026-10-23T18:55:39Z status: open -> blocked
+- 2026-10-23T19:15:39Z status: blocked -> open
 
 ## Links
 - Parent: [[GRRR-2t3h]]
