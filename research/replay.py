@@ -21,9 +21,10 @@ from typing import Optional
 from common import EVALUATOR, RUNNER, GATES, Failure, call, canonical, digest, fields, identifier, require
 from persistent_budget import PersistentBudget, PROFILES as ACCOUNTING_PROFILES
 from ledger import Ledger, export_snapshot
-from corpus_execution import (CorpusExecutor, PROFILE, IMAGE, SUPERVISOR, HELPER,
-                              PRESERVED_ROOT, RECEIPT, validate_request)
-from corpus_evaluation import validate_receipt
+from corpus_execution import CorpusExecutor, SUPERVISOR, HELPER, validate_request
+import replay_profile
+from replay_profile import PROFILE, IMAGE, RECEIPT, validate_receipt
+from replay_fixtures import CLEAN, SEEDED, REBUILD, INTERRUPTION, seeds as replay_seeds
 from replay_prerequisites import REPLAY_ROOT, POLICY_SHA256, inspect_corpus, validate_policy
 from replay_smoke import require_identity
 from trusted_execution import protected_bytes, root_record
@@ -36,16 +37,32 @@ SPEC_CASE = 'TestParseWikilinks/link with display text'
 CHALLENGE = 'GRRR-VC-D011'
 FINDINGS = ('Verified defect', 'Not reproduced', 'Specification ambiguity',
             'Inconclusive', 'Invalid claim')
-ROOT = REPLAY_ROOT / 'd011-independent-v1'
 INPUTS = Path('/Library/GRRR/replay-inputs')
-BASELINE = 'GRRR-VC-C001'
-SCOPE = {'scope': 'D011-independent-replay-v1', 'challenge': CHALLENGE,
-         'baseline': BASELINE, 'maximum_guest_launches': 4, 'work_seconds': 473,
-         'total_seconds': 480, 'contract_admission_authorized': False}
+BASELINE = CLEAN
+MODES = {'normal': (SEEDED,), 'failed-rebuild': (REBUILD,),
+         'interruption': (INTERRUPTION,), 'two-failures': (SEEDED, CLEAN, CLEAN)}
 
 
-def validate_scope(value: dict) -> dict:
-    require(canonical(value) == canonical(SCOPE), 'GateBlocked', 'Unapproved independent replay scope')
+def scope(mode: str) -> dict:
+    require(mode in MODES, 'GateBlocked', 'Unregistered replay mode')
+    return {'scope': 'D011-independent-replay-v2', 'mode': mode, 'challenge': CHALLENGE,
+            'baseline': BASELINE, 'candidates': list(MODES[mode]), 'profile': PROFILE,
+            'maximum_guest_launches': 2 * len(MODES[mode]), 'work_seconds': 473,
+            'total_seconds': 480, 'interrupt_after_command_seconds': 60,
+            'contract_admission_authorized': False}
+
+
+def runtime(mode: str) -> Path:
+    scope(mode)
+    return REPLAY_ROOT / ('d011-independent-v2-' + mode)
+
+
+SCOPE = scope('normal')
+ROOT = runtime('normal')
+
+
+def validate_scope(value: dict, mode: str = 'normal') -> dict:
+    require(canonical(value) == canonical(scope(mode)), 'GateBlocked', 'Unapproved independent replay scope')
     return value
 
 
@@ -63,38 +80,95 @@ def scope_event(kind: str, **values: object) -> dict:
     return dict(SCOPE, kind=kind.replace('runtime-smoke', 'independent-replay-parent'), **values)
 
 
-def read_plan() -> dict:
-    plan = root_record(ROOT / 'plan.json')
+class ParentProtocol:
+    """Selected only by the reviewed launcher's exact fixed mode grammar."""
+    def __init__(self, mode: str) -> None:
+        self.mode, self.ROOT, self.SCOPE = mode, runtime(mode), scope(mode)
+        self.role_prefix = 'replay-' + mode
+
+    def validate_scope(self, value: dict) -> dict:
+        return validate_scope(value, self.mode)
+
+    def preflight(self) -> None:
+        preflight()
+        replay_profile.validate_inputs()
+
+    def configure(self, config: dict) -> dict:
+        return replay_profile.configure(config)
+
+    def scope_event(self, kind: str, **values: object) -> dict:
+        require(not set(values).intersection(set(self.SCOPE) | {'kind'}),
+                'InvalidInput', 'Parent scope cannot be overridden')
+        require(kind in ('runtime-smoke-parent-lifecycle', 'runtime-smoke-complete'),
+                'InvalidInput', 'Unknown parent event')
+        return dict(self.SCOPE, kind=kind.replace('runtime-smoke', 'independent-replay-parent'), **values)
+
+
+def read_plan(mode: str = 'normal') -> dict:
+    plan = root_record(runtime(mode) / 'plan.json')
     fields(plan, {'run', 'scope', 'policy_sha256'})
     identifier(plan['run'])
-    validate_scope(plan['scope'])
+    validate_scope(plan['scope'], mode)
     require(plan['policy_sha256'] == POLICY_SHA256, 'StaleBinding', 'Policy binding differs')
     return plan
 
 
 class ReplayExecutor(CorpusExecutor):
     """Fresh accepted offline guest per invocation; never reuse the smoke run."""
-    def __init__(self) -> None:
+    def __init__(self, mode: str = 'normal') -> None:
         require_identity(RUNNER)
-        self.plan = read_plan()
-        self.policy = validate_policy(protected_bytes(ROOT / 'policy.json', POLICY_SHA256))
-        super().__init__(ROOT / 'runner')
+        self.mode, self.runtime = mode, runtime(mode)
+        self.interruptions = {}
+        self.plan = read_plan(mode)
+        self.policy = validate_policy(protected_bytes(self.runtime / 'policy.json', POLICY_SHA256))
+        super().__init__(self.runtime / 'runner')
+
+    def validate_inputs(self) -> dict:
+        return replay_profile.validate_inputs()
+
+    def validate_configuration(self, value: dict) -> dict:
+        return replay_profile.validate_config(value)
+
+    def input_image(self) -> Path:
+        return replay_profile.ROOT / 'input.iso'
+
+    def artifact_identity(self) -> dict:
+        return replay_profile.identity()
+
+    def command_watchdog(self, run: str, challenge: str) -> object:
+        if challenge != INTERRUPTION:
+            return None
+        seconds = scope(self.mode)['interrupt_after_command_seconds']
+        def interrupt() -> None:
+            with self.lock:
+                self.interruptions[run] = {'kind': 'fixed-replay-command-interruption', 'bound_seconds': seconds}
+                self.stop(run)
+        timer = threading.Timer(seconds, interrupt)
+        timer.start()
+        return timer
+
+    def finalize_result(self, run: str, result: dict) -> dict:
+        result = super().finalize_result(run, result)
+        with self.lock:
+            if run in self.interruptions:
+                result = dict(result, interruption=self.interruptions[run])
+        return result
 
     def handle(self, uid: int, message: dict) -> dict:
         require(uid == EVALUATOR, 'Unauthorized', 'Authenticated evaluator required')
         if message.get('action') == 'dispatch':
             validate_request(message)
-            require(message['challenge'] in (CHALLENGE, BASELINE)
+            require(message['challenge'] in (BASELINE, *MODES[self.mode])
                     and message['run'].startswith(self.plan['run'] + '-'),
                     'GateBlocked', 'Only fixed replay run and challenges permitted')
             with self.lock:
-                require(self.launches < SCOPE['maximum_guest_launches'],
+                require(self.launches < scope(self.mode)['maximum_guest_launches'],
                         'BudgetExceeded', 'Reviewed guest count exhausted')
         return super().handle(uid, message)
 
     def spawn_guest(self, args: list) -> subprocess.Popen:
         require_identity(RUNNER)
-        require(shutil.disk_usage(ROOT).free >= self.policy['limits']['minimum_host_free_bytes'],
+        require(shutil.disk_usage(self.runtime).free >= self.policy['limits']['minimum_host_free_bytes'],
                 'BudgetExceeded', 'Approved disk floor unavailable')
         return subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT, cwd=self.root / 'scratch',
@@ -102,11 +176,11 @@ class ReplayExecutor(CorpusExecutor):
                                 start_new_session=False)
 
 
-def runner() -> int:
+def runner(mode: str = 'normal') -> int:
     require_identity(RUNNER)
-    executor = ReplayExecutor()
-    data = AuthenticatedServer(ROOT / 'ipc/executor.sock', executor.handle)
-    control = AuthenticatedServer(ROOT / 'ipc/executor-control.sock', executor.handle, control=True)
+    executor = ReplayExecutor(mode)
+    data = AuthenticatedServer(runtime(mode) / 'ipc/executor.sock', executor.handle)
+    control = AuthenticatedServer(runtime(mode) / 'ipc/executor-control.sock', executor.handle, control=True)
     try:
         threading.Event().wait()
     finally:
@@ -212,6 +286,12 @@ def candidate_identity(archive: bytes, seed: dict) -> str:
     expected = {'anchor': 'if len(m) > 4 {', 'challenge': CHALLENGE, 'file': 'wikilinks.go',
                 'kind': 'single-unique-replacement', 'replacement': 'if false {'}
     require(seed == expected, 'StaleBinding', 'Reviewed D011 seed differs')
+    return _source_identity(archive, seed)
+
+
+def _source_identity(archive: bytes, seed: dict) -> str:
+    """Internal byte reconstruction from one of the compiled replay seeds."""
+    require(digest(archive) == SOURCE_ARCHIVE, 'IntegrityFailure', 'Source archive differs')
     files = {}
     with tarfile.open(fileobj=io.BytesIO(archive), mode='r:') as source:
         for member in source.getmembers():
@@ -226,7 +306,7 @@ def candidate_identity(archive: bytes, seed: dict) -> str:
                 require(raw.count(anchor) == 1, 'IntegrityFailure', 'Seed anchor differs')
                 raw = raw.replace(anchor, seed['replacement'].encode(), 1)
             files[member.name] = digest(raw)
-    require(seed['file'] in files, 'IntegrityFailure', 'Seed source absent')
+    require(seed['file'] in files or seed['kind'] == 'clean-control', 'IntegrityFailure', 'Seed source absent')
     return digest(canonical(files))
 
 
@@ -237,11 +317,13 @@ class ReplaySession:
     evaluator cannot race this one, even using an independent SQLite connection.
     Pending attempts after crash are not resumed or given new dispatch keys.
     """
-    def __init__(self) -> None:
+    def __init__(self, mode: str = 'normal') -> None:
         require_identity(EVALUATOR)
         preflight()
-        self.plan = read_plan()
-        self.home = ROOT / 'evaluator'
+        self.mode, self.runtime = mode, runtime(mode)
+        self.started = time.monotonic()
+        self.plan = read_plan(mode)
+        self.home = self.runtime / 'evaluator'
         require(self.home.stat().st_uid == EVALUATOR and self.home.stat().st_mode & 0o077 == 0,
                 'Unauthorized', 'Replay state must be private evaluator storage')
         self.lock = os.open(self.home / 'session.lock', os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
@@ -255,7 +337,7 @@ class ReplaySession:
         self.policy = validate_policy((self.home / 'policy.json').read_bytes())
         self.threshold = self.policy['stop_after_consecutive_independent_replay_failures']
         failure_transition(0, True, self.threshold)
-        self.config = root_record(ROOT / 'runner/config.json')
+        self.config = replay_profile.validate_config(root_record(self.runtime / 'runner/config.json'))
         self.identities = inspect_corpus(INPUTS / 'corpus', protected=True)
         archive = protected_bytes(INPUTS / 'source.tar', SOURCE_ARCHIVE)
         manifest = root_record(INPUTS / 'corpus/manifest.json')
@@ -263,7 +345,7 @@ class ReplaySession:
                                           manifest['artifacts']['protected/seeds.json']))
         seed = next(item for item in seeds if item['challenge'] == CHALLENGE)
         self.specification = maintainer_specification(archive, CHALLENGE)
-        preparation = json.loads(protected_bytes(PRESERVED_ROOT / 'preparation.json', RECEIPT))
+        preparation = json.loads(protected_bytes(replay_profile.ROOT / 'preparation.json', RECEIPT))
         self.toolchain = preparation['primary_iso_readback']['go.tgz']['sha256']
         identifier(self.toolchain, True)
         self.allegation = {'challenge': CHALLENGE, 'source': SOURCE_ARCHIVE,
@@ -271,6 +353,7 @@ class ReplaySession:
                           'evaluator': self.config['host_code'], 'policy': POLICY_SHA256,
                           'seed': digest(canonical(seed))}
         self.reference = digest(canonical(self.allegation))
+        self.source_reconstructions = {item['challenge']: _source_identity(archive, item) for item in replay_seeds()}
         self.ledger.db.execute('CREATE TABLE IF NOT EXISTS replay_state('
                                'run TEXT PRIMARY KEY, failures INTEGER NOT NULL, '
                                'stopped INTEGER NOT NULL, pending TEXT)')
@@ -341,15 +424,18 @@ class ReplaySession:
         observations, runs = [], []
         error, decision, completed = None, 'Inconclusive', False
         try:
-            for challenge in (BASELINE, CHALLENGE):
+            attempt_index = sum(json.loads(row[0]).get('kind') == 'independent-replay-receipt'
+                                for row in self.ledger.db.execute('SELECT body FROM events'))
+            require(attempt_index < len(MODES[self.mode]), 'Stopped', 'Fixed attempt sequence exhausted')
+            for challenge in (BASELINE, MODES[self.mode][attempt_index]):
                 request = {'action': 'dispatch', 'version': 1,
                            'run': self.plan['run'] + '-' + uuid.uuid4().hex[:16],
                            'arm': 'validated-corpus', 'challenge': challenge, 'variant': challenge,
                            'key': uuid.uuid4().hex, 'reservation': reservation, 'epoch': 0, 'probe': None}
                 runs.append(request['run'])
-                remaining = 465 - (time.monotonic() - started)
+                remaining = 465 - (time.monotonic() - self.started)
                 require(remaining > 0, 'Stopped', 'Replay evaluator work bound exhausted')
-                result = call(ROOT / 'ipc/executor.sock', request, timeout=remaining)
+                result = call(self.runtime / 'ipc/executor.sock', request, timeout=remaining)
                 raw = self.ledger.object(canonical(result))
                 self.record({'kind': 'replay-raw-observation', 'request': request, 'objects': [raw]})
                 validate_receipt(result, request, self.config['execution_profile'])
@@ -368,7 +454,7 @@ class ReplaySession:
             decision = finding(candidate, self.specification, baseline)
             # This checks known cessation/ack separately from a successful probe.
             for run in runs:
-                acknowledgement = control_call(ROOT / 'ipc/executor-control.sock',
+                acknowledgement = control_call(self.runtime / 'ipc/executor-control.sock',
                                               {'action': 'stop', 'run': run}, expected_uid=RUNNER, timeout=2)
                 require(acknowledgement.get('acknowledged') is True
                         and acknowledgement.get('fenced') is True,
@@ -388,7 +474,7 @@ class ReplaySession:
             self.budget.halt()  # Unknown usage never releases its reservation.
             for run in runs:
                 try:
-                    control_call(ROOT / 'ipc/executor-control.sock', {'action': 'stop', 'run': run},
+                    control_call(self.runtime / 'ipc/executor-control.sock', {'action': 'stop', 'run': run},
                                  expected_uid=RUNNER, timeout=2)
                 except Exception:
                     self.record({'kind': 'replay-stop-unconfirmed', 'run': run, 'reservation': reservation})
@@ -405,6 +491,8 @@ class ReplaySession:
                    'identities': dict(self.allegation, image=IMAGE, profile=PROFILE,
                                       supervisor=SUPERVISOR, helper=HELPER, toolchain=self.toolchain),
                    'environment_differences': {'fresh_guest_runs': runs,
+                                               'mode': self.mode, 'replay_profile': PROFILE,
+                                               'source_reconstructions': self.source_reconstructions,
                                                'prior_smoke_reused': False},
                    'consecutive_failures': transition['consecutive_failures'], 'stopped': stop}
         hashed = self.ledger.object(canonical(receipt))
@@ -425,13 +513,62 @@ class ReplaySession:
         os.close(self.lock)
 
 
-def evaluator() -> int:
+def validate_mode_results(mode: str, results: list, observations: list) -> None:
+    """Validate actual mode evidence; matching a finding string alone is not proof."""
+    expected = {'normal': ['Verified defect'], 'failed-rebuild': ['Inconclusive'],
+                'interruption': ['Inconclusive'],
+                'two-failures': ['Verified defect', 'Not reproduced', 'Not reproduced']}
+    require(mode in MODES and [item['finding'] for item in results] == expected[mode],
+            'IntegrityFailure', 'Fixed replay findings differ')
+    require(len(observations) == 2 * len(results)
+            and len({request['run'] for request, _ in observations}) == len(observations),
+            'IntegrityFailure', 'Fresh replay observation count differs')
+    for index, (request, result) in enumerate(observations):
+        require(request['challenge'] == (BASELINE if index % 2 == 0 else MODES[mode][index // 2]),
+                'IntegrityFailure', 'Fixed replay fixture sequence differs')
+        if mode != 'interruption' or index == 0:
+            require(result['transport_complete'] is True and result['error'] is None,
+                    'IntegrityFailure', 'Expected complete observation absent')
+    if mode == 'failed-rebuild':
+        require(observations[-1][1]['guest']['candidate_observation']['build_exit'] != 0
+                and results[0]['reservation_state'] == 'settled' and results[0]['error'] is None,
+                'IntegrityFailure', 'Actual failed rebuild absent')
+    elif mode == 'interruption':
+        last = observations[-1][1]
+        require(last['transport_complete'] is False and last['ceased'] is True
+                and last.get('interruption') == {'kind': 'fixed-replay-command-interruption', 'bound_seconds': 60}
+                and (last['error'] or {}).get('code') in ('Stopped', 'Unavailable')
+                and last['seconds'] >= 60 and last['raw_bytes'] > 0
+                and results[0]['reservation_state'] == 'held' and results[0]['stopped'],
+                'IntegrityFailure', 'Bounded interrupted guest and conservative hold absent')
+    elif mode == 'two-failures':
+        require([item['consecutive_failures'] for item in results] == [0, 1, 2]
+                and [item['stopped'] for item in results] == [False, False, True]
+                and all(item['reservation_state'] == 'settled' for item in results),
+                'IntegrityFailure', 'Retained two-failure stop sequence absent')
+    require(all(item['admission'] == 'blocked' and item['promotion'] == 'disabled' for item in results),
+            'IntegrityFailure', 'Fixture execution cannot authorize admission')
+
+
+def evaluator(mode: str = 'normal') -> int:
     require_identity(EVALUATOR)
-    session = ReplaySession()
+    session = ReplaySession(mode)
     try:
-        reserved = session.reserve()
-        result = session.reproduce(session.config['operator_uid'], session.reference, POLICY_SHA256, reserved['id'])
+        results = []
+        for _ in MODES[mode]:
+            reserved = session.reserve()
+            results.append(session.reproduce(session.config['operator_uid'], session.reference, POLICY_SHA256, reserved['id']))
+        observations = []
+        for row in session.ledger.db.execute('SELECT body FROM events ORDER BY seq'):
+            event = json.loads(row[0])
+            if event.get('kind') == 'replay-raw-observation':
+                observations.append((event['request'], json.loads((session.ledger.objects / event['objects'][0]).read_bytes())))
+        validate_mode_results(mode, results, observations)
         session.export()
-        return 0 if result['finding'] == 'Verified defect' else 1
+        return 0
+    except Exception:
+        session.budget.halt()
+        session.export()
+        raise
     finally:
         session.close()

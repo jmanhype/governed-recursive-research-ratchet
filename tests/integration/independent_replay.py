@@ -5,6 +5,8 @@ unit-level changed dictionaries do not satisfy failed-build/interrupt proof.
 """
 import copy
 import json
+import sqlite3
+from types import SimpleNamespace
 from pathlib import Path
 import sys
 import unittest
@@ -12,30 +14,45 @@ import unittest
 if __name__ == '__main__':
     sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'research'))
 
-from common import EVALUATOR, Failure, GATES, canonical
-from corpus_evaluation import validate_receipt
+from common import EVALUATOR, Failure, GATES, canonical, digest, require
+from replay_profile import validate_receipt
 from replay import (CHALLENGE, INPUTS, POLICY_SHA256, SOURCE_ARCHIVE, ReplaySession,
-                    maintainer_specification, observation_outcome, finding)
+                    maintainer_specification, observation_outcome, finding, MODES,
+                    runtime, read_plan, validate_scope, validate_mode_results)
 from replay_smoke import require_identity
-from trusted_execution import protected_bytes
+from trusted_execution import protected_bytes, root_record
 
 
 class IndependentReplay(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         require_identity(EVALUATOR)
-        cls.session = ReplaySession()
-        cls.addClassCleanup(cls.session.close)
-        cls.addClassCleanup(cls.session.export)
-        reservation = cls.session.reserve()
-        cls.receipt = cls.session.reproduce(cls.session.config['operator_uid'], cls.session.reference,
-                                            POLICY_SHA256, reservation['id'])
-        cls.events = [json.loads(row[0]) for row in cls.session.ledger.db.execute('SELECT body FROM events')]
-        cls.observations = []
-        for event in cls.events:
-            if event['kind'] == 'replay-raw-observation':
-                raw = (cls.session.ledger.objects / event['objects'][0]).read_bytes()
-                cls.observations.append((event['request'], json.loads(raw)))
+        # Parent modes execute once, terminate their services, and retain evidence.
+        # Tests consume all four namespaces without creating new allowances/runs.
+        cls.modes = {}
+        for mode in MODES:
+            read_plan(mode)
+            home = runtime(mode) / 'evaluator/replay-ledger'
+            require(home.stat().st_uid == EVALUATOR and home.stat().st_mode & 0o077 == 0,
+                    'Unauthorized', 'Private real evaluator evidence required')
+            with sqlite3.connect((home / 'ledger.sqlite').as_uri() + '?mode=ro', uri=True) as db:
+                events = [json.loads(row[0]) for row in db.execute('SELECT body FROM events ORDER BY seq')]
+            observations, receipts = [], []
+            for event in events:
+                if event['kind'] in ('replay-raw-observation', 'independent-replay-receipt'):
+                    hashed = event['objects'][0]
+                    raw = (home / 'objects' / hashed).read_bytes()
+                    require(digest(raw) == hashed, 'IntegrityFailure', 'Live evidence object differs')
+                    if event['kind'] == 'replay-raw-observation':
+                        observations.append((event['request'], json.loads(raw)))
+                    else:
+                        receipts.append(json.loads(raw))
+            validate_mode_results(mode, receipts, observations)
+            cls.modes[mode] = (receipts, observations)
+        cls.receipt = cls.modes['normal'][0][0]
+        cls.observations = cls.modes['normal'][1]
+        cls.session = SimpleNamespace(config=root_record(runtime('normal') / 'runner/config.json'),
+            specification=maintainer_specification(protected_bytes(INPUTS / 'source.tar', SOURCE_ARCHIVE), CHALLENGE))
 
     def test_valid_seed_real_fresh_vms_and_specification(self) -> None:
         self.assertEqual(self.receipt['finding'], 'Verified defect')
@@ -68,7 +85,7 @@ class IndependentReplay(unittest.TestCase):
 
     def test_stale_candidate_evaluator_binding_rejected(self) -> None:
         with self.assertRaises(Failure):
-            self.session.reproduce(self.session.config['operator_uid'], '0' * 64, POLICY_SHA256, 'unused')
+            validate_scope(dict(read_plan()['scope'], profile='0' * 64))
         request, result = self.observations[1]
         changed = copy.deepcopy(result)
         changed['execution_profile'] = '0' * 64
@@ -86,22 +103,19 @@ class IndependentReplay(unittest.TestCase):
         self.assertEqual(finding(outcome, ambiguous, 'clean'), 'Specification ambiguity')
 
     def test_real_failed_rebuild_evidence_required(self) -> None:
-        failed = [result for _, result in self.observations
+        failed = [result for _, result in self.modes['failed-rebuild'][1]
                   if result['guest']['candidate_observation']['build_exit'] != 0]
         self.assertTrue(failed, 'Mandatory live failed-rebuild execution is absent; parsing is not proof')
 
     def test_real_interrupted_replay_evidence_required(self) -> None:
-        interrupted = [result for _, result in self.observations
-                       if result.get('forced') is True
-                       or (result.get('error') or {}).get('code') == 'Stopped']
+        interrupted = [result for _, result in self.modes['interruption'][1]
+                       if result.get('interruption') ==
+                       {'kind': 'fixed-replay-command-interruption', 'bound_seconds': 60}]
         self.assertTrue(interrupted, 'Mandatory live interrupted replay execution is absent; '
                         'a missing stop acknowledgment alone is not interruption proof')
 
     def test_two_real_failure_receipts_retained_with_stop(self) -> None:
-        receipts = []
-        for event in self.events:
-            if event['kind'] == 'independent-replay-receipt':
-                receipts.append(json.loads((self.session.ledger.objects / event['objects'][0]).read_bytes()))
+        receipts = self.modes['two-failures'][0]
         self.assertTrue(any(item['consecutive_failures'] == 2 and item['stopped'] for item in receipts),
                         'Mandatory two-consecutive live failure sequence absent')
         self.assertGreaterEqual(len(receipts), 3, 'Earlier failures must remain beside a successful fresh receipt')

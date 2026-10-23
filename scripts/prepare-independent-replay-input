@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""Prepare a NEW replay medium without candidate execution or protected writes.
+
+Usage: prepare-independent-replay-input NEW_OUTPUT_DIRECTORY
+Reuses the byte-pinned source, Go toolchain and generic corpus guest binaries.
+The resulting hashes need independent review and explicit protected installation.
+"""
+import importlib.machinery
+import importlib.util
+import io
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tarfile
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+from common import canonical, digest, require
+from corpus_execution import PRESERVED_ROOT, IMAGE, SUPERVISOR, HELPER, LIMITS
+from offline import TOOLCHAIN_SHA256
+from replay_fixtures import FLOOR, VERSION, catalog, seeds, probes
+from trusted_execution import protected_bytes, QEMU_MANIFEST
+from validated_corpus import SOURCE_ARCHIVE, SOURCE_COMMIT, _iso_records
+
+
+def space(path: Path, additional: int = 0) -> int:
+    free = shutil.disk_usage(path).free
+    require(free - additional >= FLOOR, 'BudgetExceeded', 'Replay preparation would cross approved 15 GiB floor')
+    return free
+
+
+def members() -> dict:
+    """Read exact existing primary-ISO bytes; do not mount or run any payload."""
+    raw = protected_bytes(PRESERVED_ROOT / 'input.iso', IMAGE)
+    records = _iso_records(raw)
+    result = {}
+    for name in ('vlt.tar', 'go.tgz', 'source.sum', 'guest.sh', 'corpus-supervis', 'corpus-helper'):
+        require(name in records, 'IntegrityFailure', 'Required corpus ISO member absent: ' + name)
+        offset, size = records[name]
+        result[name] = raw[offset:offset + size]
+    for name, hashed in (('vlt.tar', SOURCE_ARCHIVE), ('go.tgz', TOOLCHAIN_SHA256),
+                         ('corpus-supervis', SUPERVISOR), ('corpus-helper', HELPER)):
+        require(digest(result[name]) == hashed, 'IntegrityFailure', 'Pinned replay input differs: ' + name)
+    return result
+
+
+def build(target: Path) -> dict:
+    require(target.is_absolute() and not target.exists() and target.parent.is_dir()
+            and not str(target).startswith('/Library/'), 'InvalidInput', 'Fresh unprivileged output required')
+    initial = space(target.parent, 250000000)
+    content = members()
+    content['seeds.json'] = canonical(seeds())
+    probe_bytes = io.BytesIO()
+    with tarfile.open(fileobj=probe_bytes, mode='w', format=tarfile.PAX_FORMAT) as archive:
+        for name, raw in sorted(probes().items()):
+            member = tarfile.TarInfo(name + '.go')
+            member.size, member.mode = len(raw), 0o644
+            archive.addfile(member, io.BytesIO(raw))
+    content['probes.tar'] = probe_bytes.getvalue()
+    expected = {name: digest(raw) for name, raw in content.items()}
+    content['input.sum'] = ''.join(value + '  ' + name + '\n'
+                                 for name, value in sorted(expected.items())).encode()
+    expected['input.sum'] = digest(content['input.sum'])
+    space(target.parent, 2 * sum(map(len, content.values())) + 10000000)
+    target.mkdir(mode=0o700)
+    media = target / 'media'
+    media.mkdir(mode=0o700)
+    for name, raw in content.items():
+        with (media / name).open('xb') as output:
+            output.write(raw)
+    image = target / 'input.iso'
+    command = ['/usr/bin/hdiutil', 'makehybrid', '-iso', '-joliet', '-default-volume-name',
+               'GRRR_REPLAY', '-o', str(image), str(media)]
+    subprocess.run(command, check=True, capture_output=True, timeout=300)
+    loader = importlib.machinery.SourceFileLoader('replay_prepare_readback', str(ROOT / 'scripts/prepare-trusted-observation'))
+    module = importlib.util.module_from_spec(importlib.util.spec_from_loader(loader.name, loader))
+    loader.exec_module(module)
+    readback = module.iso_readback(image, expected)
+    profile = {'version': 1, 'profile': VERSION, 'catalog': catalog(),
+               'authorization': 'required', 'dispatch_enabled': False,
+               'source_commit': SOURCE_COMMIT, 'source_archive_sha256': SOURCE_ARCHIVE,
+               'image_sha256': digest(image.read_bytes()), 'supervisor_sha256': SUPERVISOR,
+               'helper_sha256': HELPER, 'guest_script_sha256': expected['guest.sh'],
+               'toolchain_sha256': TOOLCHAIN_SHA256, 'limits': dict(LIMITS, minimum_host_free_bytes=FLOOR),
+               'qemu_installation_sha256': QEMU_MANIFEST, 'network': False,
+               'host_shares': False, 'read_only_inputs': True, 'paid_dispatch': False}
+    (target / 'prepared-profile.json').write_bytes(canonical(profile))
+    receipt = {'version': 1, 'kind': 'independent-replay-preparation-not-execution',
+               'vm_execution_performed': False, 'candidate_execution_performed': False,
+               'initial_free_bytes': initial, 'final_free_bytes': space(target),
+               'commands': [command], 'image_sha256': profile['image_sha256'],
+               'image_bytes': image.stat().st_size, 'profile_sha256': digest(canonical(profile)),
+               'primary_iso_readback': readback, 'execution_approval': 'absent'}
+    (target / 'preparation.json').write_bytes(canonical(receipt))
+    inventory = {name: digest((target / name).read_bytes())
+                 for name in ('input.iso', 'prepared-profile.json', 'preparation.json')}
+    (target / 'SHA256SUMS').write_text(''.join(value + '  ' + name + '\n'
+                                            for name, value in sorted(inventory.items())))
+    return receipt
+
+
+def main() -> int:
+    require(len(sys.argv) == 2, 'InvalidInput', __doc__)
+    result = build(Path(sys.argv[1]).absolute())
+    print(canonical(result).decode())
+    return 0
+
+
+if __name__ == '__main__':
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        print(canonical({'preparation': 'failed', 'error': str(exc),
+                         'vm_execution_performed': False}).decode())
+        raise SystemExit(1)

@@ -262,7 +262,7 @@ def launch(parent: object, review: dict, code: dict, protocol: object = None) ->
         # Only the hash-reviewed parent chooses the fixed protocol module.
         protocol.validate_scope(review['replay'])
         protocol.preflight()
-        runtime, scope, role_prefix, event = protocol.ROOT, protocol.SCOPE, 'replay', protocol.scope_event
+        runtime, scope, role_prefix, event = protocol.ROOT, protocol.SCOPE, protocol.role_prefix, protocol.scope_event
     immutable(LOCK)
     with os.fdopen(os.open(LOCK, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -306,6 +306,8 @@ def launch(parent: object, review: dict, code: dict, protocol: object = None) ->
                   'bootstrap_sha256': digest(parent.read(parent.SELF)),
                   'python_sha256': digest(parent.PYTHON.read_bytes())}
         config['execution_profile'] = configuration_digest(config)
+        if protocol is not None:
+            config = protocol.configure(config)
         approval = {key: config[key] for key in ('version', 'operator_uid', 'profile', 'image',
                     'supervisor', 'helper', 'host_code', 'qemu_installation', 'accounting_binding',
                     'bootstrap_sha256', 'python_sha256', 'execution_profile')}

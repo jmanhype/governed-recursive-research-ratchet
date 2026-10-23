@@ -15,12 +15,18 @@ from trusted_execution import root_record
 
 
 def validate_receipt(value: dict, request: dict, execution_profile: str) -> dict:
+    return _validate_receipt(value, request, execution_profile,
+                             {'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER})
+
+
+def _validate_receipt(value: dict, request: dict, execution_profile: str, identity: dict) -> dict:
+    """Shared parser; public protocol entrypoints supply compiled artifact pins."""
     fields(value, {'version', 'run', 'key', 'reservation', 'guest', 'error', 'transport_complete',
                    'ceased', 'forced', 'seconds', 'raw_sha256', 'raw_bytes', 'raw_base64', 'exit_code',
                    'profile', 'image', 'supervisor', 'helper', 'execution_profile', 'qemu_installation'})
     require(value['version'] == 1 and all(value[key] == request[key] for key in ('run', 'key', 'reservation'))
-            and value['profile'] == PROFILE and value['image'] == IMAGE and value['supervisor'] == SUPERVISOR
-            and value['helper'] == HELPER and value['execution_profile'] == execution_profile
+            and all(value[key] == hashed for key, hashed in identity.items())
+            and value['execution_profile'] == execution_profile
             and value['qemu_installation'] == QEMU_MANIFEST,
             'StaleBinding', 'Corpus receipt binding differs')
     require(all(type(value[key]) is bool for key in ('ceased', 'forced', 'transport_complete'))

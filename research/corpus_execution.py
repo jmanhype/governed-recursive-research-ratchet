@@ -128,6 +128,29 @@ def decode_guest(raw: bytes, run: str, challenge: str) -> dict:
 
 
 class CorpusExecutor:
+    def validate_inputs(self) -> dict:
+        """Protected artifact hook; callers cannot provide expected hashes."""
+        return validate_preserved()
+
+    def validate_configuration(self, value: dict) -> dict:
+        """Fixed corpus default; reviewed subclasses pin their own profile."""
+        return validate_config(value)
+
+    def input_image(self) -> Path:
+        return PRESERVED_ROOT / 'input.iso'
+
+    def artifact_identity(self) -> dict:
+        return {'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER}
+
+    def command_watchdog(self, run: str, challenge: str) -> object:
+        """Default has no scenario-specific interruption; total watchdog remains."""
+        return None
+
+    def finalize_result(self, run: str, result: dict) -> dict:
+        """Validate run binding while retaining the default corpus receipt shape."""
+        require(result['run'] == run, 'StaleBinding', 'Result run differs')
+        return result
+
     def spawn_guest(self, args: list) -> subprocess.Popen:
         """Default corpus process isolation; bounded smoke overrides group ownership."""
         return subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -138,8 +161,8 @@ class CorpusExecutor:
     def __init__(self, root: Path):
         require(os.getuid() == RUNNER, 'Unauthorized', 'Corpus executor requires UID 321')
         self.root = root
-        validate_preserved()
-        self.config = validate_config(root_record(root / 'config.json'))
+        self.validate_inputs()
+        self.config = self.validate_configuration(root_record(root / 'config.json'))
         validate_approval(root_record(root / 'approval.json'), self.config, root_record(root / 'license.json'))
         self.lock = threading.RLock(); self.active = {}; self.fenced = set()
         self.requests = {}; self.results = {}; self.ready = set(); self.halted = False; self.launches = 0
@@ -173,7 +196,7 @@ class CorpusExecutor:
             require(run not in self.active and run not in self.results, 'StaleBinding', 'Run identifier reused')
             require(not self.active, 'BudgetExceeded', 'One active corpus guest maximum')
             self.requests[key] = dict(message)
-        validate_preserved(); validate_config(root_record(self.root / 'config.json'))
+        self.validate_inputs(); self.validate_configuration(root_record(self.root / 'config.json'))
         validate_approval(root_record(self.root / 'approval.json'), self.config, root_record(self.root / 'license.json'))
         require(shutil.disk_usage(self.root).free >= LIMITS['minimum_host_free_bytes'],
                 'BudgetExceeded', 'Host free space below floor')
@@ -193,7 +216,7 @@ class CorpusExecutor:
                 '-kernel', str(assets / 'vmlinuz-virt'), '-initrd', str(assets / 'initramfs-virt'),
                 '-append', 'modules=loop,squashfs,sd-mod,usb-storage console=ttyAMA0',
                 '-cdrom', str(assets / 'alpine-virt-3.22.6-aarch64.iso'),
-                '-drive', f'file={PRESERVED_ROOT}/input.iso,if=none,id=inputs,format=raw,readonly=on',
+                '-drive', f'file={self.input_image()},if=none,id=inputs,format=raw,readonly=on',
                 '-device', 'virtio-blk-device,drive=inputs', '-net', 'none', '-nographic',
                 '-monitor', 'none', '-no-reboot', '-snapshot']
         with self.lock:
@@ -224,6 +247,7 @@ class CorpusExecutor:
             process.stdin.write(command.encode('ascii')+b'\n'); process.stdin.flush()
 
         guest = error = exit_code = None
+        command_timer = None
         try:
             until(b'localhost login:', LIMITS['boot_seconds']); send('root'); until(b'localhost:~#', 10)
             send('stty -echo'); until(b'localhost:~#', 5)
@@ -240,6 +264,7 @@ class CorpusExecutor:
             token = uuid.uuid4().hex
             send("printf '"+token+"-BEGIN\\n'; printf '%s' '"+encoded+
                  "' | base64 -d | sh /inputs/guest.sh; result=$?; printf '"+token+"-EXIT:%s\\n' \"$result\"")
+            command_timer = self.command_watchdog(run, challenge)
             observed = until((token+'-EXIT:').encode(), LIMITS['command_seconds'])
             if b'\n' not in observed.split((token+'-EXIT:').encode(), 1)[1]:
                 observed += until(b'\n', 2)
@@ -255,15 +280,19 @@ class CorpusExecutor:
             self.stop(run); forced = False
             try: process.wait(timeout=5)
             except subprocess.TimeoutExpired: forced = True; process.kill(); process.wait(timeout=2)
-            timer.cancel(); selector.close(); process.stdin.close(); process.stdout.close()
+            timer.cancel()
+            if command_timer is not None:
+                command_timer.cancel()
+            selector.close(); process.stdin.close(); process.stdout.close()
             with self.lock: self.active.pop(run, None); self.ready.discard(run)
         result = {'version': 1, 'run': run, 'key': key, 'reservation': message['reservation'],
                   'guest': guest, 'error': error, 'transport_complete': error is None,
                   'ceased': process.poll() is not None, 'forced': forced,
                   'seconds': time.monotonic()-started, 'raw_sha256': digest(bytes(raw)),
                   'raw_bytes': len(raw), 'raw_base64': base64.b64encode(raw).decode(), 'exit_code': exit_code,
-                  'profile': PROFILE, 'image': IMAGE, 'supervisor': SUPERVISOR, 'helper': HELPER,
+                  **self.artifact_identity(),
                   'execution_profile': self.config['execution_profile'], 'qemu_installation': QEMU_MANIFEST}
+        result = self.finalize_result(run, result)
         with self.lock: self.results[run] = result
         return result
 

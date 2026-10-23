@@ -1,5 +1,10 @@
 # GRRR-z3w9 — partial implementation, NOT delivered or live-approved
 
+**Continuation:** `docs/INDEPENDENT-REPLAY-V2-REVIEW.md` supersedes the v1
+implementation map and single parent-mode candidate below. V1 remains historical
+context. V2 has separate prepared replay artifacts and four fixed mode drafts;
+cumulative registration/recovery and all live proof remain blocked.
+
 Do not install or execute this revision as root. No VM was started, no protected
 installation was changed, and no independent ReplayReceipt was produced by this
 worker. The historical C001 smoke remains consumed and is never replay evidence.

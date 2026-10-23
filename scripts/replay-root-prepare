@@ -18,13 +18,16 @@ LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 CODE = {
     'budget.py': '8fffe1390b4094c6519cc4d37e83774aa6eb5c9402b5e3f2a40f748d320de5ab',
     'ledger.py': '90dc7b0d33cdb2b7eab6854d0a2237939ba2b9f9c75cc06d89e595c0a9285514',
-    'replay_smoke.py': '66d3c55170a5fb70d2bad15c309f1324a9be88de4855f365b9703e7c15645dc7',
-    'replay.py': 'bd60de46037c23b99f17eaaeca105d280c5dac1531758cc62ebb03a738961323',
-    'corpus_evaluation.py': 'a73b125c3fc3020ed448b9b07d637fce74ae468504262b5f839ceabffb8263b0',
+    'replay_smoke.py': '7789fa6c1ef0f9f3411749fb253ee76be513612aa4f2bf5fb7b3827ecc2759cd',
+    'replay.py': 'eacc06132462cab8d96a424fbad7dd135e9c09f67efdceaf558eb43b9c3a4bfb',
+    'corpus_evaluation.py': 'e19c621d17aa1f4c8dd7d6395d8fad8892cf54aa0b4fab850cde6accbbed1fb8',
+    'replay_profile.py': 'fcf17f6a9f674fd7e3d36b009d464610668b9b0b20a2adc893899a6503d5a224',
+    'replay_fixtures.py': 'ff5120e151709f85c31bd013fad55023541a1bab484fca998eb57d712083bab2',
+    'corpus_probes.py': '13f8febff3a1cf8524db222629af3a4b05449c6bbf2e9b788ae437899780163f',
     'persistent_budget.py': 'afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263',
     'replay_runtime.py': 'f6c77cc8e3290ff0706134a1b107a320bf65d25a4fdf7a183dcc4b23d4fe665a',
     'common.py': '33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21',
-    'corpus_execution.py': '9613c1874502f7204ab3546bb4a8d20230f2431bad20583cda4b39b7c1ad84f4',
+    'corpus_execution.py': '46f0c03244af5191da6cc6c9e9d9a24ec36018f4c19c69fd2c662d3834d88fdd',
     'execution.py': '7b8585798e59ab1aa4cb668b48e855c5fcd417f0e2433c54e4da63f98487a86d',
     'trusted_execution.py': 'bfa9dcff3de920c313646dcbeec9706394836ba5ff2a369da1b7d7aa0e4290e4',
     'trusted_install.py': 'b7bc2b7c169c3d9e3d24d159f076d22a6505febbb41d9e11a3d1d2fc3576e32e',
@@ -34,6 +37,10 @@ CODE = {
 }
 POLICY = '355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a'
 PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')
+REPLAY_MODES = ('normal', 'failed-rebuild', 'interruption', 'two-failures')
+REPLAY_ACTIONS = {'--independent-replay-' + mode: mode for mode in REPLAY_MODES}
+REPLAY_ROLES = {'--replay-' + mode + '-' + role: (mode, uid)
+                for mode in REPLAY_MODES for role, uid in (('runner', 321), ('evaluator', 320))}
 
 
 def check(condition: bool, reason: str) -> None:
@@ -139,9 +146,10 @@ def verify_destination(root: Path, expected: dict) -> None:
 
 def main() -> int:
     check(os.getuid() == 0 and os.geteuid() == 0, 'Root required; no effects performed')
-    check(sys.argv[1:] in (['--prepare'], ['--runtime-smoke'], ['--independent-replay']), 'Unregistered parent action')
+    check(len(sys.argv) == 2 and sys.argv[1] in ('--prepare', '--runtime-smoke', *REPLAY_ACTIONS),
+          'Unregistered parent action')
     smoke = sys.argv[1:] == ['--runtime-smoke']
-    replay = sys.argv[1:] == ['--independent-replay']
+    replay = sys.argv[1] in REPLAY_ACTIONS
     check(sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode, 'Isolated root required')
     check(Path(sys.executable) == PYTHON, 'Direct reviewed runtime required')
     validate_location(Path(__file__).absolute())
@@ -154,7 +162,7 @@ def main() -> int:
                          'preexec_environment'} | ({'smoke'} if smoke else {'replay'} if replay else set()),
           'Review schema differs')
     check(type(review['version']) is int and review['version'] == 1
-          and review['decision'] == ('approved-D011-independent-replay' if replay else 'approved-replay-runtime-smoke' if smoke
+          and review['decision'] == ('approved-D011-independent-replay-' + REPLAY_ACTIONS[sys.argv[1]] if replay else 'approved-replay-runtime-smoke' if smoke
                                      else 'approved-replay-prerequisite-installation')
           and review['launcher_sha256'] == sha(read(SELF))
           and review['python_sha256'] == sha(Path(sys.executable).read_bytes())
@@ -178,8 +186,8 @@ def main() -> int:
     if smoke or replay:
         from replay_smoke import launch
         if replay:
-            import replay as protocol
-            return launch(sys.modules[__name__], review, code, protocol)
+            from replay import ParentProtocol
+            return launch(sys.modules[__name__], review, code, ParentProtocol(REPLAY_ACTIONS[sys.argv[1]]))
         return launch(sys.modules[__name__], review, code)
     from replay_prerequisites import protected_preflight, PREPARED_MODE
     protected(LOCK)
@@ -230,7 +238,7 @@ def main() -> int:
 def identity_entry() -> int:
     """Only actual service identities enter the fixed reviewed code closure."""
     roles = {'--smoke-runner': 321, '--smoke-evaluator': 320,
-             '--replay-runner': 321, '--replay-evaluator': 320}
+             **{name: item[1] for name, item in REPLAY_ROLES.items()}}
     check(len(sys.argv) == 2 and sys.argv[1] in roles, 'Unregistered identity role')
     check(os.getuid() == roles[sys.argv[1]] and os.geteuid() == roles[sys.argv[1]], 'Wrong service identity')
     check(os.getgid() == roles[sys.argv[1]] and os.getegid() == roles[sys.argv[1]],
@@ -248,6 +256,8 @@ def identity_entry() -> int:
     validate_service_groups(roles[sys.argv[1]], os.getgroups())
     if sys.argv[1].startswith('--replay-'):
         from replay import runner, evaluator
+        mode = REPLAY_ROLES[sys.argv[1]][0]
+        return runner(mode) if sys.argv[1].endswith('-runner') else evaluator(mode)
     else:
         from replay_smoke import runner, evaluator
     return runner() if sys.argv[1].endswith('-runner') else evaluator()
@@ -255,8 +265,8 @@ def identity_entry() -> int:
 
 if __name__ == '__main__':
     try:
-        raise SystemExit(identity_entry() if sys.argv[1:] in (['--smoke-runner'], ['--smoke-evaluator'],
-                         ['--replay-runner'], ['--replay-evaluator']) else main())
+        raise SystemExit(identity_entry() if len(sys.argv) == 2 and sys.argv[1] in
+                         ('--smoke-runner', '--smoke-evaluator', *REPLAY_ROLES) else main())
     except Exception as exc:
         # No raw protected contents or private traceback escapes.
         print(canonical({'replay_dispatch': 'not-run', 'execution_authorized': False,
