@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-23T22:37:42Z
-content_hash: "sha256:582fb50fbe5895a1e9f319264a27c40d5e3d0ff4b84efdddb8c25c2449d67baa"
+updated_at: 2026-10-23T22:39:16Z
+content_hash: "sha256:63ade260d09f05df50aa995fdc0f031cec5e4db54dc0dd632c8cb80cf86f2c65"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt]
@@ -74,6 +74,25 @@ status: new
 
 
 ## Notes
+## Independent Implementation Re-review
+
+SECURITY_REVIEW: CHANGES_REQUIRED
+
+- Reviewed freeze-fix commit 8820a6ba5ebaa5b503f3242b2f0c006df8a2ba2c without protected effects.
+- Original settle/meter/overhead/halt mutation gap is fixed and focused/full tests pass.
+- New blocking gap: inherited sqlite Connection.blobopen on a stale legacy handle bypasses the SQL authorizer after registration. Reviewer reproduced a valid reservations.maximum BLOB write changing cumulative holds and DB bytes on Python 3.14.
+- Required fix: deny or guard every writable incremental-BLOB path, including stale and partial-registration states; retain writer quiescence for already-open handles. Add byte/inode/hold preservation regressions.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Reviewer reproduced the gap only in temporary fixtures.
+
+### proof
+- [ ] Guarded BLOB access and regressions remain pending.
+- [ ] Protected installation/recovery/replay remain blocked.
+
 # GRRR-43i8 frozen-runtime review correction
 
 Implementation commit: `8820a6ba5ebaa5b503f3242b2f0c006df8a2ba2c`.
