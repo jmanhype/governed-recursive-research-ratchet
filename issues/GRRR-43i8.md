@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-23T22:09:24Z
-content_hash: "sha256:d22328d2b7c8c075af2f6eba2dcbcf1021b57506666b2f0c868e29aafa0a2f48"
+updated_at: 2026-10-23T22:16:52Z
+content_hash: "sha256:5bc91a7b94de80015b1a963fbfd3c017c59fcd47a6914835122bb8b5e05d813e"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt]
@@ -88,3 +88,6 @@ status: new
 - Follows: [[GRRR-w1lt]]
 
 ## Comments
+
+### 2026-10-23T22:16:52Z speed
+BLOCKED: No independent-replay ceilings, privileged registration, or stop recovery authorized in this turn. Current AC2/5 and integration requirements cannot be met by a proposal. Draft docs/REPLAY-ACCOUNTING-RECOVERY-PROPOSAL.md preserves parent-observed identity, conservative semantics and exact decisions needed. No protected effects, no production code changes. Baseline focused tests 7/7 and full no-guest tests 198/198 pass on Python 3.9.6 and 3.12.7; these do not prove proposed migration. Await independent review and explicit operator decisions; not delivered.
