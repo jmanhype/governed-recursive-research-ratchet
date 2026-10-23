@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T19:15:39Z
-content_hash: "sha256:7eb272ca0064d853aa69a5cebc883e52b7b01168cbd2a4c8fead59835bc04fd6"
+updated_at: 2026-10-23T19:25:28Z
+content_hash: "sha256:2deed38163301e37e1d0f61b9599c830c3c0c37f185a30f7fe0b53b8d8b6b1b2"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,53 @@ status: new
 
 
 ## Notes
+## Implementation package awaiting independent review
+
+PROOF:
+- Branch story/GRRR-w1lt; clean commit c1cd13c73224c53f4cc71b87e2fd8b32afe23124.
+- /usr/bin/python3 (3.9.6) and /opt/homebrew/bin/python3 (3.14.3), each:
+  - PYTHON -B -m unittest discover -s tests -p unit_replay_prerequisites.py -v: 14 passed, 0 failures/errors/skips.
+  - PYTHON -B -m unittest discover -s tests -p 'unit_*.py': 180 passed, 0 failures/errors/skips.
+- pvg verify research/replay_prerequisites.py scripts/replay-prerequisites scripts/replay-root-prepare tests/unit_replay_prerequisites.py docs/replay-policy-v1.json docs/REPLAY-PREREQUISITES.md docs/evidence/replay-prerequisites/README.md --format=text: PASSED, 2 files scanned, 0 issues.
+- git diff --cached --check: passed before commit. Extensionless scripts additionally exercised/imported by real subprocess/tests.
+- /usr/bin/python3 -B -m trace --count --missing --summary --coverdir /tmp/GRRR-w1lt-coverage --module unittest discover -s tests -p unit_replay_prerequisites.py: 14 passed, replay_prerequisites.py 52% line coverage, 117 executable lines. No root-positive execution or coverage claim.
+- Durable raw logs and AC table: docs/evidence/replay-prerequisites/.
+- Canonical policy SHA256 355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a.
+- Exact future parent command AFTER independent review and trusted installation:
+  /usr/bin/python3 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
+  Installation/review schema: docs/REPLAY-PREREQUISITES.md. Never run checkout as root.
+
+AC verification:
+| AC | Package proof | Unresolved live gate |
+| 1 | Exact approval policy, limits, UID ownership, denials, all-leaf tamper rejection | Root policy installation not-run |
+| 2 | Executable root-only preparer, reviewed import pins, exclusive namespace, UID ownership, locked preflight | Independent security review and real root provisioning not-run |
+| 3 | Exact corpus/spec/source/VM/QEMU checks, safe paths/ACLs, process/lock/identity/disk checks | Positive protected preflight not-run |
+| 4 | Root-only private records, no credentials/services/VM dispatch; lifecycle design | Replay service/guest dispatch and ReplayReceipt not-run |
+| 5 | No corpus-ledger relabeling; no acceptance; downstream dependency unchanged | GRRR-z3w9 remains blocked |
+
+LEARNINGS:
+- Approved literal 15 GiB is 16106127360 bytes, unlike older corpus 15000000000.
+- Keep byte-validation success distinct from privileged execution authority.
+- Preserve one parent lock descriptor across preflight and all namespace effects.
+- Partial namespaces block retries; no automatic destructive recovery.
+- Worktree vault search failed, root-context retry returned no relevant result; no config changed.
+
+DISCOVERED_BUG:
+- No implementation defect currently known from no-guest tests; root-positive behavior is explicitly unverified.
+- Tooling observations: coverage.py unavailable on both interpreters, so measured with stdlib trace --missing; worktree-local vault query corrected by repository-root query.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Commit c1cd13c73224c53f4cc71b87e2fd8b32afe23124; 14 focused and 180 full no-guest tests passed on each required interpreter.
+- Coordinator directed retaining in_progress for independent review. No story deliver/accept invoked.
+
+### proof
+- [x] Reviewable canonical policy and fail-closed executable namespace preparer committed.
+- [x] Real non-root refusal-before-effects and argument/path/code-pin tests pass.
+- [ ] Independent review, root installation, positive privileged tests and replay dispatch not-run.
+
 ## Operator Authorization
 
 APPROVED [2026-10-23T19:15:39Z]: The operator replied exactly: `Approve GRRR-w1lt`.
