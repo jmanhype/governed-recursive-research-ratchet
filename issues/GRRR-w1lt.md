@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T20:59:01Z
-content_hash: "sha256:fdd822cd6ab8e4eb6b81ce6effc2a2289a06cda09c82c09e4fe050476082c928"
+updated_at: 2026-10-23T21:20:29Z
+content_hash: "sha256:1764ef9d12fbf9cf8c57bdb22be110874455d02be1b50792518093cf245fe403"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,38 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERY REQUESTED)
+
+PROOF:
+- Branch story/GRRR-w1lt; final clean evidence commit 3283c0ee854d7cae2a98d5c2977c00eb0164ce8d, live-copy commit03ff00075ff1c15db7c96c99e255e6e741be9dca; parent executed implementation e0dfaf33d3b2725a2fad63401d2b717a8365e0a6.
+- Report and exact copied artifacts: docs/evidence/replay-prerequisites/runtime-smoke-live/LIVE-REPORT.md and SHA256SUMS. All18 checksums pass. Copied DBs opened mode=ro&immutable=1; integrity_check ok, bytes unchanged. Worker verified budget/meter settlement, ledger hash chain, object/raw hashes, guest identity and lifecycle/recovery binding.
+- Commands `/usr/bin/python3 -B docs/evidence/replay-prerequisites/runtime-smoke-live/verify-copies.py` and `/opt/homebrew/bin/python3 -B docs/evidence/replay-prerequisites/runtime-smoke-live/verify-copies.py`: 2 successful verification runs, 0 failures. Copied budget: halted0, one settled reservation, 0USD, 22823014us; ledger reserved/transport/settled; object444262c5a0457cd27c6b6ef29be3c474426707d62e2eeda458c74376c9e07a16.
+- Parent root integration: 1 successful C001 runtime-lifecycle smoke, 24.019100959s, children_ceased=true, evaluator_succeeded=true, exit_codes[-15,0]. Actual offline VM transport exit0/forcedfalse/errornull/complete/ceased; raw27673bytes SHA adf82b14c9ac434e3883751e2648690b88e0324d1b55459631a4fe3fb4725bbd. Guest UID/GID1000, empty groups/caps, NoNewPrivs1, unchanged supervisor, three identical repetitions exit0. This is NOT an independent ReplayReceipt or defect verdict.
+- Parent reports reviewed recovery archived failed d89cec7 by unchanged-inventory atomic rename; sanitized audit exit0, installed hashes exact, UID access/truncation denials and positive own-storage probes passed, protected hashes unchanged, no service/QEMU remained, repeat smoke refused existing namespace. Worker did not repeat privileged operations; original ownership/access observations are parent-reported, distinct from copy verification.
+- Implementation e0dfaf3 tests: both required Pythons `-B -m unittest discover -s tests -p 'unit_replay*.py'`32 passed and `-B -m unittest discover -s tests -p 'unit_*.py'`198 passed each; zero failures/errors/skips, logs ../runtime-smoke-r3/.
+- Fresh at03ff000: `/usr/bin/python3 -B -m trace --count --missing --summary --coverdir /tmp/grrr-w1lt-delivery-coverage --module unittest discover -s tests -p 'unit_replay*.py'`:32 passed,0failed/errors/skips. Measured no-guest coverage replay_prerequisites62%, replay_runtime96%, replay_smoke31%; root live path not instrumented, no combined/root coverage claimed. Full coverage.log committed.
+- `pvg verify docs/evidence/replay-prerequisites/runtime-smoke-live --format=text`: VERIFY PASSED (1 files scanned,0issues). git diff --check and staged check passed; source code unchanged in evidence commits.
+
+### AC Verification
+| AC # | Requirement / code | Test / live evidence | Status |
+|---|---|---|---|
+| 1 | Canonical docs/replay-policy-v1.json exact corpus/freeze/source, two consecutive independent failures, numeric limits/denials | Recorded operator approval, policy pin and unchanged parent readback; policy mutation tests | PASS |
+| 2 | Reviewed root provisioning and UID-separated runtime; scripts/replay-root-prepare, research/replay_smoke.py | Prior base live preparation plus fresh smoke namespace, parent UID/access/asset probes; root-only code and evaluator policy/expectations/accounting/ledger | PASS |
+| 3 | Protected locked read-only preflight, research/replay_prerequisites.py | Parent successful exact identity/disk/process/lock/runtime preflight before actual dispatch; retained fail-closed tests | PASS |
+| 4 | Parent-mediated offline launcher and preserved evidence | Successful live C001 VM/service lifecycle, guest isolation, budget/ledger read-only verification, ceased children; failed predecessor preserved | PASS |
+| 5 | Downstream acceptance gate and no fixture-ledger relabeling | Live pvg issues show GRRR-z3w9 BlockedBy=[GRRR-w1lt]; no dependency removed; smoke scope denies independent replay/admission throughout | PASS |
+
+LEARNINGS:
+- Exact macOS account vectors, not empty supplementary groups, are enforceable after setuid.
+- Private record consumer mode must match its creator; signal-safe registration precedes deferred stop; observation uncertainty must still attempt KILL.
+- Preserve failed state and provenance separately from successful runs; copy verification does not establish original UID metadata.
+
+### Downstream not-run gates
+- Independent PM acceptance of GRRR-w1lt remains required; worker does not accept/close. GRRR-z3w9 remains blocked until acceptance.
+- GRRR-z3w9 allegation replay/verdict/ReplayReceipt and consecutive-independent-failure sequence not-run; contract admission/promotion/production mutation not-run.
+- Live forced-timeout/KILL fault injection not claimed; harmless real process regressions cover cleanup branches. Used namespace cannot be reused; future fresh runtime needs explicit authorization/recovery.
+- No worker root/QEMU/VM, /Library mutation or push. DISCOVERED_BUG: none unresolved within prerequisite scope.
+
 ## nd_contract
 status: in_progress
 
