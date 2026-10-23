@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T20:15:13Z
-content_hash: "sha256:0a63158c7f4ec656dc69ba5e4b24f93f952a88667a51a8d206d46f6f318e235d"
+updated_at: 2026-10-23T20:36:37Z
+content_hash: "sha256:c4abaa5e8ef2291d8c99529c5078cf51cb6b755b47d721d1f1148e3b46231495"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,37 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- PROOF: clean story commit 6b90f0100d09fa3acc66724127f34ecc12934237, bounded C001 runtime-lifecycle-only package. No delivery/acceptance/push or privileged operation.
+- /usr/bin/python3 and /opt/homebrew/bin/python3: `-B -m unittest discover -s tests -p 'unit_replay*.py'` => 28 passed each; `-B -m unittest discover -s tests -p 'unit_*.py'` => 194 passed each. No skips/errors/failures in final rerun.
+- pvg verify explicit changed code/tests/docs/logs passed: 5 Python files scanned, 0 issues. git diff --check and staged diff check passed; 14 SHA256SUMS entries verified. Final logs/report: docs/evidence/replay-prerequisites/runtime-smoke/.
+- Launcher SHA256 366d5e498c36008186caf736eb243f84c7cde834a10edcd4cf8a7977bfb99b8c. Exact 12-member closure and sanitized prelaunch/root command: docs/REPLAY-RUNTIME-SMOKE.md.
+- Real harmless process-group tests verify TERM cessation and TERM-resistant child/grandchild KILL within 7s; these are not VM-positive evidence. Actual UID refusal/argument/scope/result/hash tests do not substitute for root-positive proof.
+
+### proof
+| AC | Evidence | Status |
+|---|---|---|
+| #1 | Immutable approved policy unchanged; exact C001-only scope, 473s work + 7s cessation | Reviewable; new review pending |
+| #2 | Root-only closure, locked preflight, exact destination verification, UID-separated new subtree | Prior base preparation live-proven by parent; new smoke installation not-run |
+| #3 | Original corpus/spec/source/QEMU/runtime identity and ACL/ancestor checks retained; exact15GiB recheck | No-guest negative proof passed; updated positive preflight pending |
+| #4 | Executable service/VM lifecycle, evaluator-only smoke reserve/settle and append-only evidence | UNRESOLVED: actual parent-mediated offline C001 lifecycle, access/asset probes, stop/watchdog/cessation/accounting not-run |
+| #5 | No verdict, independent ReplayReceipt, admission or failure-counter mutation | GRRR-z3w9 separate; independent replay still not-run |
+
+### unresolved not-run gates
+- Fresh independent security/architecture review of 6b90f01; parent archive/update of installed launcher/package/review and sanitized runtime audit.
+- Root-positive smoke namespace/access probes; actual offline VM lifecycle, reserve/settle/ledger readback, normal/timeout/stop/TERM/KILL cessation within480s. Root SIGKILL/host failure requires manual inspection/recovery.
+- Never rerun --prepare or reset failed smoke state; preserve original installed base evidence. No root/QEMU/VM or /Library/GRRR mutation by worker. Keep in_progress; do not deliver.
+
+### LEARNINGS
+- Parent must own QEMU's process group, not merely the executor service. Concurrent group grace periods preserve inclusive480s. macOS killpg(pid,0) may return EPERM after a group empties; strict kernel ps inventory establishes group absence.
+- Initial pvg bare-pass and transitional code-pin test failures were corrected; final complete dual-interpreter rerun passed. No failed guest attempt occurred.
+
+### DISCOVERED_BUG
+- None deferred: the observed macOS process-group probe behavior was corrected inside this scope.
+
 # Parent-mediated replay prerequisite installation — 3f2658b
 
 ## Provenance and scope
