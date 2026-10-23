@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T19:46:51Z
-content_hash: "sha256:2fea6a92b5fc8ed8af470e433aafad265c396384712ce3522fe8ac28c260563b"
+updated_at: 2026-10-23T20:03:28Z
+content_hash: "sha256:f0a3b0c9e1c5e1f283677d982af3beaec5d85517f4636e58a1c059738f990343"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,46 @@ status: new
 
 
 ## Notes
+## Live preflight signed-UID correction
+
+PROOF:
+- Clean commit 3f2658ba29d6fa6a6177ea83b98f75245e4cb20d on story/GRRR-w1lt.
+- Parent reported installed 6e89e6 sanitized root preflight failed before mutation: Malformed process inventory for -2   345 /usr/sbin/distnoted. Parent reports no independent-replay namespace created; installed old package/inputs remain partial. This worker did not invoke or retry root preflight.
+- check_idle accepts exactly one optional leading sign and decimal UID digits; malformed/nonnumeric fields still fail. UID 320/321 including +320/+321 and QEMU denial unchanged.
+- New regression covers the exact reported negative row, positive signed UID, nonnumeric/sign-only/repeated-sign cases, both protected identities and QEMU under negative UID.
+- Both /usr/bin/python3 and /opt/homebrew/bin/python3:
+  PYTHON -B -m unittest discover -s tests -p unit_replay_prerequisites.py -v: 20 passed, 0 failures/errors/skips.
+  PYTHON -B -m unittest discover -s tests -p 'unit_*.py': 186 passed, 0 failures/errors/skips.
+- pvg verify research/replay_prerequisites.py scripts/replay-root-prepare tests/unit_replay_prerequisites.py docs/REPLAY-PREREQUISITES.md docs/evidence/replay-prerequisites/README.md --format=text: PASSED, 2 files scanned, 0 issues.
+- git diff --cached --check passed.
+- Module pin: 85f7a14d271688d554f1af4e0e539a084fd66fd9bea7920cfdf712dd2d20a237.
+- Launcher SHA256: 2ba4b712044470c7c378cf487b9a10a47ad9ec1c8361c1db7a7deb49dc6aca55.
+- Policy/interpreter/runtime pins and sanitized pre-exec contract unchanged. Parent must update module inventory AND launcher hash after renewed independent review; old root review cannot authorize new bytes.
+- Persistent focused/full logs updated under docs/evidence/replay-prerequisites/. Previous coverage-r2 remains historical; no root-positive inference or new coverage percentage claim.
+
+AC: AC3 process parsing corrected without changing isolation or identity denial; AC1 policy unchanged. AC2/4 successful privileged postconditions and dispatch remain not-run. AC5 downstream dependency remains unchanged.
+
+DISCOVERED_BUG:
+  title: macOS negative numeric process UID rejected as malformed
+  context: Parent live preflight observed UID -2 for distnoted; unsigned-only parsing rejected legitimate process inventory before mutation.
+  affected_files: research/replay_prerequisites.py, scripts/replay-root-prepare
+  discovered_during: GRRR-w1lt
+  status: fixed in 3f2658b; renewed live parent run not-run
+
+LEARNINGS:
+- macOS ps may render service UID values as signed integers; require strict numeric syntax rather than unsigned-only UID parsing.
+- Update source inventory and root launcher approval hash together; never relabel an old reviewed installation.
+- Live parent failure evidence remains distinct from passing no-guest unit regressions.
+
+## nd_contract
+status: in_progress
+### evidence
+- 3f2658ba29d6fa6a6177ea83b98f75245e4cb20d; 20 focused + 186 full passed on each required interpreter.
+- No root/QEMU/VM, /Library/GRRR mutation, push, deliver or acceptance by this worker.
+### proof
+- [x] Signed UID regression and existing protected-identity/QEMU denials pass.
+- [ ] Renewed independent review, parent installation/review update, successful live protected preflight, root namespace creation, UID probes, service/VM lifecycle and independent replay/ReplayReceipt remain not-run for this revision.
+
 ## Native-loader environment security correction
 
 PROOF:
