@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T21:23:31Z
-content_hash: "sha256:71b1935b1b88dd2ddb4e864dc2f1a8b4c41c0e213b17bcc408dd7e85015a06ac"
+content_hash: "sha256:5d9135c53581d4e5aed233968fb54faee82b5e82bb86ffe0a99f1503975e2278"
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
 follows: [GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
 closed_at: 2026-10-21T21:23:30Z
 close_reason: "Accepted: real independent UID-separated safe-stop, durable fence/recovery, and admission gate evidence"
-led_to: [GRRR-bnkf]
+led_to: [GRRR-bnkf, GRRR-w1lt]
 ---
 
 ## Description
@@ -296,7 +296,7 @@ status: in_progress
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-my5n]]
 - Follows: [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]], [[GRRR-0g4n]]
-- Led to: [[GRRR-bnkf]]
+- Led to: [[GRRR-bnkf]], [[GRRR-w1lt]]
 
 ## Comments
 
