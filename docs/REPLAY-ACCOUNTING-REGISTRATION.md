@@ -26,6 +26,13 @@ this document describes the new source, not a protected installation receipt.
   evaluator code deliberately disabling guards or opening its own SQLite handle.
   The installer still requires an idle, exclusively controlled parent window;
   registration during an already executing evaluator transaction is not permitted.
+- Writable incremental `blobopen` access is forbidden unconditionally, including
+  legacy/stale connections and every table/column. It bypasses SQL authorizers
+  and no accounting operation needs it. Only literal `readonly=True` is accepted;
+  native read-only BLOB reads remain available on Python versions supporting them.
+  Python 3.9 explicitly reports that the read-only incremental API is unavailable.
+  This does not revoke a writable handle already opened by older code: all old
+  processes/handles must cease before registration, as required by quiescence.
 - `Budget.reserve`: persisted stopped state is checked before duplicate-key reuse,
   including zero requests. Changed duplicates do not bypass a stop either.
 - `scripts/replay-root-prepare`: source Budget pin refreshed for this behavior.

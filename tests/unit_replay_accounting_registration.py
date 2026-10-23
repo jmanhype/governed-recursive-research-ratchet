@@ -261,6 +261,75 @@ class Registration(unittest.TestCase):
             finally:
                 store.db.close()
 
+    def assert_blob_access_read_only(self, store):
+        before = self.database.read_bytes()
+        inode = self.database.stat().st_ino
+        totals = store.totals(os.getuid())
+        with closing(sqlite3.connect(self.database)) as db:
+            row, maximum = db.execute('SELECT rowid,maximum FROM reservations WHERE id=?',
+                                      (self.hold['id'],)).fetchone()
+            columns = {table: [r[1] for r in db.execute('PRAGMA table_info(' + table + ')')]
+                       for table in ('reservations', 'metering', 'overhead', 'state', 'store_identity')}
+        # Every protected table and column denies before SQLite checks row/type;
+        # even empty tables and non-BLOB columns cannot acquire a writable handle.
+        for table, names in columns.items():
+            for column in names:
+                for readonly in (False, 0, 1, None, 'true'):
+                    with self.subTest(table=table, column=column, readonly=readonly), self.assertRaises(Failure):
+                        store.db.blobopen(table, column, row, readonly=readonly)
+        with self.assertRaises(Failure):
+            store.db.blobopen('reservations', 'maximum', row)
+        with self.assertRaises(Failure):
+            store.db.blobopen('reservations', 'maximum', row, name='unapproved')
+        if hasattr(sqlite3.Connection, 'blobopen'):
+            with store.db.blobopen('reservations', 'maximum', row, readonly=True) as blob:
+                self.assertEqual(blob.read(), maximum)
+                blob.seek(0)
+                with self.assertRaises(sqlite3.OperationalError):
+                    blob.write(b'X')
+                with self.assertRaises(sqlite3.OperationalError):
+                    blob[0] = 88
+        else:
+            # Executed compatibility assertion, not a skipped modern-version test.
+            with self.assertRaises(sqlite3.NotSupportedError):
+                store.db.blobopen('reservations', 'maximum', row, readonly=True)
+        self.assertEqual(self.database.read_bytes(), before)
+        self.assertEqual(self.database.stat().st_ino, inode)
+        self.assertEqual(store.totals(os.getuid()), totals)
+        self.assertEqual(totals['pending'], 1)
+
+    def test_blob_writes_denied_for_all_registered_profiles(self):
+        self.install()
+        with self.persistent_context():
+            for profile in registration.PROFILES:
+                store = persistent_budget.PersistentBudget(profile)
+                try:
+                    self.assert_blob_access_read_only(store)
+                finally:
+                    store.db.close()
+
+    def test_blob_stale_handle_read_only_before_and_after_registration(self):
+        with self.persistent_context():
+            stores = [persistent_budget.PersistentBudget(profile) for profile in registration.LEGACY]
+            try:
+                for store in stores:
+                    self.assert_blob_access_read_only(store)
+                self.install()
+                for store in stores:
+                    self.assert_blob_access_read_only(store)
+            finally:
+                for store in stores:
+                    store.db.close()
+
+    def test_blob_partial_registration_stale_handles_refuse_writes(self):
+        with self.persistent_context():
+            store = persistent_budget.PersistentBudget('offline')
+            try:
+                (self.base / 'registration').mkdir()
+                self.assert_blob_access_read_only(store)
+            finally:
+                store.db.close()
+
     def test_partial_publication_blocks_legacy_and_retry_without_database_writes(self):
         with patch.object(registration.os, 'replace', side_effect=OSError('injected before commit')):
             with self.assertRaisesRegex(OSError, 'injected'):

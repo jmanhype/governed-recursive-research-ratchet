@@ -54,6 +54,20 @@ class RecheckingConnection(sqlite3.Connection):
     def executescript(self, sql: str) -> sqlite3.Cursor:
         return self.cursor().executescript(sql)
 
+    def blobopen(self, table: str, column: str, row: int, *, readonly: bool = False,
+                 name: str = 'main') -> object:
+        """Incremental BLOB writes bypass SQL authorization: never expose them.
+
+        No accounting API needs writable BLOB handles, even on legacy stores.
+        Deny before native lookup on every Python version and for every target.
+        Existing handles from older code require installer writer quiescence.
+        """
+        require(readonly is True, 'Unauthorized', 'Writable accounting BLOB handles are forbidden')
+        native = getattr(super(), 'blobopen', None)
+        if native is None:
+            raise sqlite3.NotSupportedError('Read-only incremental BLOB API unavailable in this Python')
+        return native(table, column, row, readonly=True, name=name)
+
 
 def validate_store(binding: dict, path: Path) -> None:
     registered = type(binding.get('version')) is int and binding['version'] == 2
