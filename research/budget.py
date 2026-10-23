@@ -104,13 +104,13 @@ class Budget:
         with self.lock:
             try:
                 self.db.execute('BEGIN IMMEDIATE')
+                require(self.db.execute('SELECT stopped FROM state').fetchall() == [(0,)],
+                        'Stopped', 'Budget stopped; explicit recovery required')
                 previous = self.db.execute('SELECT id,binding FROM reservations WHERE key=?', (key,)).fetchone()
                 if previous:
                     require(bytes(previous[1]) == body, 'StaleBinding', 'Reservation key changed request')
                     self.db.commit()
                     return {'id': previous[0], 'run': run, 'maximum': maximum, 'dispatch_lease': False}
-                require(self.db.execute('SELECT stopped FROM state').fetchone()[0] == 0,
-                        'Stopped', 'Budget stopped; explicit recovery required')
                 rows = self.db.execute('SELECT stage,maximum,actual FROM reservations').fetchall()
                 for ceiling_stage, ceiling in CEILINGS.items():
                     # Every POC charge also counts against milestone; milestone

@@ -8,16 +8,29 @@ from contextlib import closing
 from budget import Budget, vector, CEILINGS
 from common import EVALUATOR, canonical, digest, fields, identifier, require
 from trusted_install import immutable, record
+import accounting_registration
 
 ACTIVE = Path('/Library/GRRR/accounting-poc2/active.json')
 PROFILES = ('synthetic', 'offline', 'trusted-observation')
+REGISTERED_PROFILES = PROFILES + ('independent-replay',)
 
 
-def validate_store(binding, path):
+def validate_store(binding: dict, path: Path) -> None:
+    registered = type(binding.get('version')) is int and binding['version'] == 2
     fields(binding, {'version', 'campaign', 'store_id', 'directory', 'prior_history_receipt', 'profiles',
-                     'device', 'inode'})
-    require(binding['version'] == 1 and type(binding['version']) is int
-            and binding['profiles'] == list(PROFILES), 'RecoveryRequired', 'Persistent binding schema differs')
+                     'device', 'inode'} | ({'registration_sha256'} if registered else set()))
+    require(type(binding['version']) is int and binding['version'] in (1, 2)
+            and binding['profiles'] == list(REGISTERED_PROFILES if registered else PROFILES),
+            'RecoveryRequired', 'Persistent binding schema differs')
+    if registered:
+        try:
+            require(accounting_registration.verify()['binding'] == binding,
+                    'RecoveryRequired', 'Registered binding differs')
+        except (ValueError, OSError, KeyError, TypeError, sqlite3.Error) as exc:
+            require(False, 'RecoveryRequired', 'Incomplete or changed replay registration: ' + str(exc))
+    else:
+        require(not os.path.lexists(path.parent.parent / 'registration'),
+                'RecoveryRequired', 'Partial replay registration requires independent review')
     for key in ('campaign', 'store_id', 'prior_history_receipt'):
         identifier(binding[key], True)
     require(path == Path(binding['directory']) / 'budget.sqlite', 'RecoveryRequired', 'Store path differs')
@@ -56,8 +69,8 @@ def validate_store(binding, path):
 
 
 class PersistentBudget(Budget):
-    def __init__(self, profile):
-        require(profile in PROFILES, 'InvalidInput', 'Unregistered accounting profile')
+    def __init__(self, profile: str) -> None:
+        require(profile in REGISTERED_PROFILES, 'InvalidInput', 'Unregistered accounting profile')
         binding = record(ACTIVE)
         directory = Path(binding['directory'])
         require(directory.parent == ACTIVE.parent and directory.name == binding['store_id'],
@@ -68,14 +81,19 @@ class PersistentBudget(Budget):
                 'RecoveryRequired', 'Prior store directory unavailable')
         path = directory / 'budget.sqlite'
         validate_store(binding, path)
+        require(profile in binding['profiles'], 'InvalidInput', 'Profile absent from active accounting binding')
         super().__init__(path, existing=True)
         self.profile = profile
         self.store_id = binding['store_id']
         self.binding_hash = digest(canonical(binding))
 
-    def reserve(self, principal, run, maximum, key, stage='poc', binding=None):
+    def reserve(self, principal: int, run: str, maximum: dict, key: str,
+                stage: str = 'poc', binding: str = None) -> dict:
         # The same physical POC/milestone ledger includes all profile charges.
         require(digest(canonical(record(ACTIVE))) == self.binding_hash,
                 'RecoveryRequired', 'Persistent accounting identity changed')
+        if self.profile == 'independent-replay':
+            require(stage == 'poc', 'InvalidInput', 'Independent replay is POC-only; no fresh allowance')
+            validate_store(record(ACTIVE), self.path)
         bound = digest(canonical({'profile': self.profile, 'request_binding': binding}))
         return super().reserve(principal, run, maximum, key, stage, bound)

@@ -16,7 +16,7 @@ REVIEW = INPUTS / 'review.json'
 TARGET = Path('/Library/GRRR/independent-replay')
 LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 CODE = {
-    'budget.py': '8fffe1390b4094c6519cc4d37e83774aa6eb5c9402b5e3f2a40f748d320de5ab',
+    'budget.py': '576b77e2bcc1782ab5cdc8fad80ad7b550e110f2f617280982b93363e0974a23',
     'ledger.py': '90dc7b0d33cdb2b7eab6854d0a2237939ba2b9f9c75cc06d89e595c0a9285514',
     'replay_smoke.py': '2b388ac81f6e4ff5a5cbf48c80ec5c5ac9c9f39931fe77ba3e0fbccc01b7bebb',
     'replay_runtime.py': 'f6c77cc8e3290ff0706134a1b107a320bf65d25a4fdf7a183dcc4b23d4fe665a',
