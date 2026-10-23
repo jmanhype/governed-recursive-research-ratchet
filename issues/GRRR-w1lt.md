@@ -4,11 +4,11 @@ title: "Bug: independent replay lacks approved privileged prerequisites"
 status: closed
 priority: 0
 type: task
-labels: [milestone-1, integration, discovered-by-developer, delivered, accepted]
+labels: [milestone-1, integration, discovered-by-developer, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T21:29:29Z
+updated_at: 2026-10-23T21:29:30Z
 content_hash: "sha256:ffc7e32fcdbe429172805f3d870fa5bc0b4745139f2dc723d7c6f6f74c29ce36"
 follows: [GRRR-bnkf, GRRR-c875, GRRR-my5n]
 closed_at: 2026-10-23T21:29:29Z
