@@ -54,7 +54,8 @@ The namespace preparer implements steps 1–4 below. Service/VM lifecycle steps
 5–7 remain the downstream design, not claimed execution. This is not permission
 to execute checkout code as root.
 
-1. A trusted parent installs an isolated, dependency-pinned launcher and Python
+1. A trusted parent first runs the mandatory unprivileged runtime audit below,
+   before elevation; only then installs an isolated, dependency-pinned launcher and Python
    interpreter under /Library/GRRR/bootstrap after reviewing exact hashes.
    Root entry requires real/effective UID 0, isolated/no-site/no-bytecode flags,
    canonical registered installation location, and root-owned ACL-free,
@@ -84,8 +85,12 @@ to execute checkout code as root.
    read-only. IPC uses authenticated UID checks and separate control channel;
    never grant runner ledger, policy or expectation authority.
 
-4. Copy only enumerated, hash-bound input assets; verify destination hashes,
-   metadata and ACL absence after copying. Never copy environment, operator
+4. Copy only enumerated, hash-bound input assets; reopen and verify every created
+   object against the locally built exact inventory (UID, GID, mode, no links,
+   no ACLs, file bytes). Refuse extra/missing objects. Verify the pending marker
+   with all other objects before renaming it to prepared.json, then recheck the
+   final namespace. Failure retains partial state and never returns success.
+   Never copy environment, operator
    HOME, credentials, raw private logs or protected truth into runner/guest
    inputs. Preserve failed staging outside runner control. Do not automatically
    clean or reset partial state; recovery needs independent review. Successful
@@ -146,14 +151,37 @@ claim independent replay from corpus fixture execution.
 
 ## Exact future parent command and installation contract
 
-After independent review and trusted parent installation only:
+After independent review, but BEFORE any root interpreter launch, run as the
+unprivileged parent from the reviewed checkout:
 
 ```sh
-/usr/bin/python3 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B scripts/replay-runtime-preflight
+```
+
+The exact runtime identity is
+`59073b8282cb4333c7719d4eac417c061c82f534bf11873d26bf2b26f7531526`.
+It pins the direct non-symlink executable, Python3 framework, entire stdlib/native
+module inventory, safe ancestors, modes/ownership/ACL absence and OS build for
+sealed-system dependencies. The two config-3.9-darwin development symlinks are
+recorded exactly but never followed as import or executable paths. Every actual
+runtime entrypoint/import path is non-symlink. Extra zip/venv inputs are denied.
+The full audited inventory is in the evidence directory.
+
+The parent must review this audit code and observed receipt before elevation,
+and record that independent prelaunch check in the root-owned review record.
+Runtime bytes are root-controlled across this boundary; a privileged concurrent
+change invalidates the audit and requires repeating it. Python cannot establish
+trust in its own already-loaded stdlib retroactively. The root-side repeat is
+defense in depth, not a replacement for this mandatory prelaunch phase.
+
+After successful prelaunch audit AND trusted parent installation only:
+
+```sh
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
 ```
 
 Do not run this from the checkout. The parent must independently install the
-script as root-owned 0444 and the exact eight `CODE` members listed in it under
+script as root-owned 0444 and the exact nine `CODE` members listed in it under
 `/Library/GRRR/replay-package` (no extra files). Existing accepted root assets
 are read-only; no corpus installation is overwritten. Parent-reviewed inputs
 under `/Library/GRRR/replay-inputs` are `corpus/` (full frozen corpus), `vm/`
@@ -162,7 +190,9 @@ bytes), and `review.json`. All paths/ancestors must satisfy the protected checks
 
 The root-owned canonical review record must contain exactly `version: 1`,
 `decision: approved-replay-prerequisite-installation`, `launcher_sha256`,
-`python_sha256`, `code` (exact hard-coded inventory), `policy_sha256`, and
+`python_sha256` (actual direct executable), `code` (exact hard-coded inventory),
+`policy_sha256`, `runtime_identity` (the exact pin above),
+`runtime_prelaunch_verified: true` (independent parent's pre-elevation attestation), and
 `review_reference` (SHA-256 of independent review evidence). No such record is
 manufactured by this package. Missing review/inputs fail before mutation.
 The review pin is separate from the operator's policy approval.
@@ -171,3 +201,10 @@ The preparer creates no account, grants no dispatch authority and launches no
 guest. A partial namespace is retained and blocks retries; only parent-reviewed
 recovery may handle it. Private preflight/review/prepared records stay root-only;
 the namespace and preserved inputs remain available for downstream review.
+
+Destination verification tests exercise real user-owned files, UID/GID/mode
+mismatches, modified expected bytes, extra members, symlinks, hardlinks and actual
+macOS ACLs. They do not substitute for mandatory root-positive creation or actual
+UID 320/321 access-denial probes. Those probes remain not-run and required before
+any dispatch. No permission checks were weakened to accommodate the former
+`/usr/bin/python3` Xcode symlink entrypoint; that command is withdrawn.

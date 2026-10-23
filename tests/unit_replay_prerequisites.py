@@ -16,10 +16,99 @@ sys.path.insert(0, str(ROOT / 'research'))
 from common import Failure, canonical
 from replay_prerequisites import (POLICY_SHA256, check_absent, check_idle,
                                   inspect_corpus, protected_preflight, validate_policy)
-from trusted_install import immutable
+from trusted_install import immutable, acl_free
+from trusted_execution import _acl_free
+from replay_runtime import IDENTITY, PYTHON, verify_runtime
+
+
+def root_preparer():
+    loader = importlib.machinery.SourceFileLoader('replay_root_prepare_test', str(ROOT / 'scripts/replay-root-prepare'))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    module = importlib.util.module_from_spec(spec)
+    loader.exec_module(module)
+    return module
 
 
 class ReplayPrerequisites(unittest.TestCase):
+    def test_real_acl_checks_with_and_without_xattrs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'asset'
+            path.write_bytes(b'asset')
+            for target in (Path(directory), path):
+                with self.subTest(path=target):
+                    self.assertTrue(acl_free(target))
+                    self.assertTrue(_acl_free(target))
+                    subprocess.run(['/bin/chmod', '+a', 'everyone allow read', str(target)], check=True)
+                    self.assertFalse(acl_free(target))
+                    self.assertFalse(_acl_free(target))
+                    subprocess.run(['/usr/bin/xattr', '-w', 'com.grrr.test', 'value', str(target)], check=True)
+                    self.assertFalse(acl_free(target))
+                    self.assertFalse(_acl_free(target))
+                    subprocess.run(['/bin/chmod', '-N', str(target)], check=True)
+                    self.assertTrue(acl_free(target))
+                    self.assertTrue(_acl_free(target))
+
+    def test_live_pinned_clt_runtime_readonly(self):
+        result = verify_runtime()
+        self.assertEqual(result['runtime_identity'], IDENTITY)
+        self.assertFalse(PYTHON.is_symlink())
+        self.assertFalse(result['root_launch_authorized'])
+
+    def test_runtime_inventory_and_root_entry_binding(self):
+        module = root_preparer()
+        self.assertEqual(module.PYTHON, PYTHON)
+        inventory = json.loads((ROOT / 'docs/evidence/replay-prerequisites/runtime-identity.json').read_bytes())
+        self.assertEqual(module.sha(canonical(inventory)), IDENTITY)
+        self.assertEqual(inventory['python'], str(PYTHON))
+        self.assertNotEqual(str(PYTHON), '/usr/bin/python3')
+
+    def test_destination_real_reopen_success_and_failures(self):
+        module = root_preparer()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            root.chmod(0o700)
+            target = root / 'private'
+            target.mkdir(mode=0o700)
+            path = target / 'record'
+            path.write_bytes(b'protected record')
+            path.chmod(0o400)
+            expected = {'.': {'kind': 'directory', 'uid': os.getuid(), 'gid': os.getgid(), 'mode': 0o700},
+                        'private': {'kind': 'directory', 'uid': os.getuid(), 'gid': os.getgid(), 'mode': 0o700},
+                        'private/record': {'kind': 'file', 'uid': os.getuid(), 'gid': os.getgid(),
+                                           'mode': 0o400, 'raw': b'protected record'}}
+            module.verify_destination(root, expected)
+            for field, altered in (('uid', os.getuid() + 1), ('gid', os.getgid() + 1),
+                                   ('mode', 0o600), ('raw', b'wrong bytes')):
+                mutated = copy.deepcopy(expected)
+                mutated['private/record'][field] = altered
+                with self.subTest(field=field), self.assertRaises(RuntimeError):
+                    module.verify_destination(root, mutated)
+            extra = root / 'extra'
+            extra.write_bytes(b'extra')
+            with self.assertRaises(RuntimeError):
+                module.verify_destination(root, expected)
+            extra.unlink()
+            path.unlink()
+            path.symlink_to('/etc/passwd')
+            with self.assertRaises(RuntimeError):
+                module.verify_destination(root, expected)
+            path.unlink()
+            path.write_bytes(b'protected record')
+            path.chmod(0o400)
+            outside = root.parent / (root.name + '-hardlink')
+            try:
+                os.link(path, outside)
+                with self.assertRaises(RuntimeError):
+                    module.verify_destination(root, expected)
+            finally:
+                outside.unlink()
+            # Real macOS ACL metadata must be rejected even if POSIX bits match.
+            subprocess.run(['/bin/chmod', '+a', 'everyone allow read', str(path)], check=True)
+            with self.assertRaises(RuntimeError):
+                module.verify_destination(root, expected)
+            subprocess.run(['/bin/chmod', '-N', str(path)], check=True)
+            module.verify_destination(root, expected)
+
     def test_root_launcher_refuses_nonroot_before_effects(self):
         self.assertNotEqual(os.getuid(), 0, 'This suite must never run as root')
         target = Path('/Library/GRRR/independent-replay')

@@ -12,7 +12,7 @@ import time
 import uuid
 from common import EVALUATOR, RUNNER, Failure, canonical, digest, fields, identifier, require, serve, unique_fields
 from execution import ASSETS
-from trusted_install import verify_qemu
+from trusted_install import verify_qemu, acl_free
 from trusted_transport import AuthenticatedServer
 
 PROFILE = 'a37c2ecff8094f1b52a97d214926b5040dd3afb480c63c617ccc78365b4fc205'
@@ -54,12 +54,9 @@ def configuration_digest(config):
 def _acl_free(path: Path) -> bool:
     """Inspect the macOS ACL marker without interpreting file bytes as instructions."""
     try:
-        output = subprocess.run(['/bin/ls', '-lde', str(path)], capture_output=True,
-                                check=True, timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+        return acl_free(path)
     except (OSError, subprocess.SubprocessError) as exc:
         raise Failure('Unauthorized', 'Protected path ACL could not be inspected') from exc
-    fields = output.split(None, 1)
-    return bool(fields) and b'+' not in fields[0]
 
 
 def _safe_ancestors(path: Path) -> None:

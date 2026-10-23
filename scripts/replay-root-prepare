@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9
 """Reviewed root-only namespace preparation; never starts services or a guest."""
 import fcntl
 import hashlib
@@ -16,16 +16,18 @@ REVIEW = INPUTS / 'review.json'
 TARGET = Path('/Library/GRRR/independent-replay')
 LOCK = Path('/Library/GRRR/validated-corpus/v2-launch.lock')
 CODE = {
+    'replay_runtime.py': 'f6c77cc8e3290ff0706134a1b107a320bf65d25a4fdf7a183dcc4b23d4fe665a',
     'common.py': '33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21',
     'corpus_execution.py': 'd5de16e7bf7e63fc337ac95750a98904938c15f341c9c3d96ec7071b87bb18dd',
     'execution.py': '7b8585798e59ab1aa4cb668b48e855c5fcd417f0e2433c54e4da63f98487a86d',
-    'trusted_execution.py': '64eb6539a711a0c668c1d671739d690edac970a445e5e622b279cc5257f70a05',
-    'trusted_install.py': '27d4562d2b4ad9db80a4f191a1cc4a48f7ee5799ba13bf479fa93b4007f17df9',
+    'trusted_execution.py': 'bfa9dcff3de920c313646dcbeec9706394836ba5ff2a369da1b7d7aa0e4290e4',
+    'trusted_install.py': 'b7bc2b7c169c3d9e3d24d159f076d22a6505febbb41d9e11a3d1d2fc3576e32e',
     'trusted_transport.py': '024d34efa5d8e7d482fcdf213e2b807ef013b7870f59fd23258cc9c2ded9419b',
     'validated_corpus.py': 'a62e2f219d696f895d69af4b7a13b32dd7222ed842b2089525f62e547d852476',
     'replay_prerequisites.py': 'bf0035669eb0203777dfab146e376fb6025db36bfc9e1195b3d7591d6e7c64fc',
 }
 POLICY = '355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a'
+PYTHON = Path('/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9')
 
 
 def check(condition: bool, reason: str) -> None:
@@ -65,7 +67,8 @@ def protected(path: Path, directory: bool = False, readonly: bool = True) -> Non
         result = subprocess.run(['/bin/ls', '-lde', str(member)], check=True,
                                 capture_output=True, timeout=2,
                                 env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
-        check(bool(result.split()) and b'+' not in result.split()[0], 'ACL-bearing path')
+        check(bool(result.split()) and b'+' not in result.split()[0]
+              and len(result.splitlines()) == 1, 'ACL-bearing path')
     info = path.lstat()
     check(stat.S_ISDIR(info.st_mode) if directory else stat.S_ISREG(info.st_mode), 'Wrong asset type')
     if not directory:
@@ -92,16 +95,54 @@ def write(path: Path, raw: bytes, owner: int, mode: int) -> None:
         os.fchmod(stream.fileno(), mode)
 
 
+def verify_destination(root: Path, expected: dict) -> None:
+    """Reopen every expected object; reject extras, links, ACLs, metadata/byte drift.
+
+    Expected owners are explicit data, allowing real unprivileged filesystem
+    tests without pretending to have performed UID-320/321 positive probes.
+    Production builds this inventory locally, never from runner input.
+    """
+    def stable(info: os.stat_result) -> tuple:
+        return (info.st_dev, info.st_ino, info.st_mode, info.st_uid, info.st_gid,
+                info.st_nlink, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+    actual = {'.': root, **{str(p.relative_to(root)): p for p in root.rglob('*')}}
+    check(set(actual) == set(expected), 'Destination inventory differs')
+    for name, path in actual.items():
+        spec = expected[name]
+        info = path.lstat()
+        check(not stat.S_ISLNK(info.st_mode) and info.st_uid == spec['uid']
+              and info.st_gid == spec['gid'] and stat.S_IMODE(info.st_mode) == spec['mode'],
+              'Destination metadata differs')
+        listing = subprocess.run(['/bin/ls', '-lde', str(path)], check=True, capture_output=True,
+                                 timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+        check(bool(listing.split()) and b'+' not in listing.split()[0]
+              and len(listing.splitlines()) == 1, 'Destination ACL present')
+        if spec['kind'] == 'directory':
+            check(stat.S_ISDIR(info.st_mode), 'Destination directory type differs')
+        else:
+            check(spec['kind'] == 'file' and stat.S_ISREG(info.st_mode)
+                  and info.st_nlink == 1 and info.st_size == len(spec['raw']), 'Destination file differs')
+            with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), 'rb') as stream:
+                opened = os.fstat(stream.fileno())
+                check(stable(opened) == stable(info), 'Destination changed while opening')
+                check(stream.read(len(spec['raw']) + 1) == spec['raw'], 'Destination bytes differ')
+                check(stable(os.fstat(stream.fileno())) == stable(opened), 'Destination changed while reading')
+            check(stable(path.lstat()) == stable(info), 'Destination path changed during verification')
+
+
 def main() -> int:
     check(os.getuid() == 0 and os.geteuid() == 0, 'Root required; no effects performed')
     check(sys.argv[1:] == ['--prepare'], 'Only --prepare is supported; no dispatch mode')
     check(sys.flags.isolated and sys.flags.no_site and sys.flags.dont_write_bytecode, 'Isolated root required')
+    check(Path(sys.executable) == PYTHON, 'Direct reviewed runtime required')
     validate_location(Path(__file__).absolute())
     protected(SELF)
     protected(Path(sys.executable), readonly=False)
     review = json.loads(read(REVIEW), object_pairs_hook=unique)
     check(set(review) == {'version', 'decision', 'launcher_sha256', 'python_sha256',
-                         'code', 'policy_sha256', 'review_reference'}, 'Review schema differs')
+                         'code', 'policy_sha256', 'review_reference', 'runtime_identity',
+                         'runtime_prelaunch_verified'}, 'Review schema differs')
     check(type(review['version']) is int and review['version'] == 1
           and review['decision'] == 'approved-replay-prerequisite-installation'
           and review['launcher_sha256'] == sha(read(SELF))
@@ -115,6 +156,12 @@ def main() -> int:
     code = {name: read(INSTALL / name, expected) for name, expected in CODE.items()}
     # Only independently reviewed root-owned exact imports may now enter sys.path.
     sys.path.insert(0, str(INSTALL))
+    from replay_runtime import verify_runtime, IDENTITY, RUNTIME, STDLIB
+    check(sys.path == [str(INSTALL), str(RUNTIME / 'lib/python39.zip'),
+                       str(STDLIB), str(STDLIB / 'lib-dynload')], 'Runtime import path differs')
+    check(review['runtime_identity'] == IDENTITY and review['runtime_prelaunch_verified'] is True,
+          'Mandatory trusted-parent runtime prelaunch verification absent')
+    verify_runtime(current=True)
     from replay_prerequisites import protected_preflight
     protected(LOCK)
     with os.fdopen(os.open(LOCK, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as lock:
@@ -125,6 +172,10 @@ def main() -> int:
         os.umask(0o077)
         TARGET.mkdir(mode=0o711)
         TARGET.chmod(0o711)
+        expected = {'.': {'kind': 'directory', 'uid': 0, 'gid': 0, 'mode': 0o711}}
+        def emit(name: str, raw: bytes, owner: int, mode: int) -> None:
+            expected[name] = {'kind': 'file', 'uid': owner, 'gid': owner, 'mode': mode, 'raw': raw}
+            write(TARGET / name, raw, owner, mode)
         for name, owner, mode in (('private', 0, 0o700), ('code', 0, 0o755),
                                   ('evaluator', 320, 0o700), ('runner', 0, 0o755),
                                   ('runner/executor', 321, 0o700)):
@@ -132,21 +183,26 @@ def main() -> int:
             path.mkdir(mode=mode)
             os.chown(path, owner, owner)
             path.chmod(mode)
-        write(TARGET / 'private/preflight.json', canonical(plan), 0, 0o400)
-        write(TARGET / 'private/review.json', canonical(review), 0, 0o400)
+            expected[name] = {'kind': 'directory', 'uid': owner, 'gid': owner, 'mode': mode}
+        emit('private/preflight.json', canonical(plan), 0, 0o400)
+        emit('private/review.json', canonical(review), 0, 0o400)
         for name, raw in code.items():
-            write(TARGET / 'code' / name, raw, 0, 0o444)
-        write(TARGET / 'evaluator/policy.json', read(INPUTS / 'policy.json', POLICY), 320, 0o400)
+            emit('code/' + name, raw, 0, 0o444)
+        emit('evaluator/policy.json', read(INPUTS / 'policy.json', POLICY), 320, 0o400)
         manifest = json.loads(read(INPUTS / 'corpus/manifest.json'), object_pairs_hook=unique)
         truth = read(INPUTS / 'corpus/protected/truth.json', manifest['artifacts']['protected/truth.json'])
-        write(TARGET / 'evaluator/expectations.json', truth, 320, 0o400)
+        emit('evaluator/expectations.json', truth, 320, 0o400)
         for name in ('budget', 'reservations', 'ledger'):
             # Non-dispatchable genesis, not corpus history or a ReplayReceipt.
-            write(TARGET / ('evaluator/' + name + '.json'),
+            emit('evaluator/' + name + '.json',
                   canonical({'version': 1, 'state': 'uninitialized', 'dispatch_enabled': False}), 320, 0o600)
-        write(TARGET / 'private/prepared.json', canonical({'namespace': str(TARGET),
+        emit('private/prepared.pending', canonical({'namespace': str(TARGET),
               'root_installation': 'prepared', 'replay_dispatch': 'not-run',
               'execution_authorized': False, 'verdict_engine': 'not-installed'}), 0, 0o400)
+        verify_destination(TARGET, expected)
+        os.rename(TARGET / 'private/prepared.pending', TARGET / 'private/prepared.json')
+        expected['private/prepared.json'] = expected.pop('private/prepared.pending')
+        verify_destination(TARGET, expected)
     print(canonical({'namespace': str(TARGET), 'replay_dispatch': 'not-run',
                      'execution_authorized': False}).decode())
     return 0
