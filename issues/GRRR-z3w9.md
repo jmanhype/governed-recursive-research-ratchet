@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T21:30:42Z
-content_hash: "sha256:7ee73572d62aa56a04bb757eed7b6d2cc7d35bd923552508877393beff8f90c0"
+updated_at: 2026-10-23T21:52:12Z
+content_hash: "sha256:a18d541e2667176718673bb9105491446f48baf8eed0ff041290ac49014e550e"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt]
 follows: [GRRR-bnkf, GRRR-w1lt]
@@ -157,3 +157,6 @@ DISCOVERED_BUG:
   context: GRRR-z3w9 requires a fresh evaluator-controlled VM replay and an approved numeric consecutive-failure stop policy. The accepted corpus inputs are intact, but no fresh runtime or approval record exists, and the worker cannot create the required UID-separated QEMU environment without violating its explicit privileges.
   affected_files: research/replay.py (proposed); tests/integration/independent_replay.py (proposed); scripts/test-story
   discovered_during: GRRR-z3w9
+
+### 2026-10-23T21:52:12Z speed
+BLOCKED: Partial WIP only. PersistentBudget has no independent-replay profile; parent reports active cumulative store stopped. Fresh allowance is forbidden. Real replay-specific failed-rebuild, interruption and consecutive-failure guest fixtures/modes remain unfinished and require continuation plus independent review. No guest or protected mutation performed. See docs/INDEPENDENT-REPLAY-WIP.md; story will not be delivered.
