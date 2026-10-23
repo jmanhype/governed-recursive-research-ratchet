@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-22T03:35:53Z
-content_hash: "sha256:a7437df613495f69e2170872c930136f26f9442b9ac80df301b78d728f1ff3bc"
+updated_at: 2026-10-23T18:36:37Z
+content_hash: "sha256:a4189a6c8a6afa43c0dd6e6f5e18ac01ddc57d3f4cb783b70407795d04081f50"
 blocks: [GRRR-dbbi, GRRR-z3w9, GRRR-6sso]
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -107,6 +107,29 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+## PM Decision
+ACCEPTED [2026-10-23]: Independent PM evidence review meets the fixture-validation scope.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Worktree HEAD 3f6d8dcfb407438591ad13c9bc14d60886bb0d73 is clean; profile/code commit 2dc3ca8b4598af0a777122b98602729ac858459a and evidence commit 3f6d8dcfb407438591ad13c9bc14d60886bb0d73 resolve exactly.
+- Recomputed corpus freeze digest dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529 and all manifest artifact hashes; current manifest is byte-identical in all four executed batches.
+- Re-verified all four v2.2 snapshots with the ledger verifier, compared each 33-event chain to immutable ledger.sqlite, verified all 9 durable objects per batch, and verified all 8 budget reservations were metered and settled.
+- Confirmed exact challenge order D001-D024 then C001-C008: 24 defects, 8 clean controls, 3 repetitions each, 96 total, all expected=observed, deterministic, verified=false, admission=blocked.
+- Confirmed summary/integration logs report required=8, executed=8, repetitions=24, failures/errors/skips=0 in each batch and Ran 4 tests ... OK.
+- Verified SHA256SUMS 3/3 OK and aggregate references exactly the four successful v2.2 archives; 82 failed setup directories and 3 superseded batch directories remain preserved outside the final denominator.
+- Scope remains preliminary fixture validation only: independent replay, reviewer outcome, admission, selector comparison, and production promotion stay blocked/not-run.
+
+### proof
+- [x] AC #1: 24 defects plus 8 clean controls validated by real isolated executions; variants, source/spec identity, protected truth, critical labels, inputs, observations, and receipts are hash-bound.
+- [x] AC #2: all 10 required defect categories have multiple represented defect scenarios.
+- [x] AC #3: v2.2 is explicitly frozen with public/protected separation; v2.0/v2.1 and transient failures remain preserved, not silently repaired or counted.
+- [x] AC #4: arm order, seeds, three repetitions, exceptions, stopping, feedback, deduplication, cost, denominator, and uncertainty are pre-registered; measurement remains not approved and not started.
+- [x] AC #5: all 32 scenarios have deterministic trusted-observation evidence through the accepted UID-separated isolated path, with durable ledger/budget/snapshot evidence and blocked downstream gates.
+- [x] AC #6: operator-reviewable consolidated report/aggregate/observations expose counts, hashes, receipts, and gaps without protected public leakage; preliminary observations are not credited as verified findings.
+
 ## nd_contract
 status: delivered
 
