@@ -4,7 +4,7 @@ title: "Inspect a frozen representative vlt defect corpus"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, delivered]
+labels: [milestone-1, integration, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
