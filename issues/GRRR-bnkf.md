@@ -8,8 +8,8 @@ labels: [milestone-1, integration, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-23T18:36:37Z
-content_hash: "sha256:df01ac2cf8ec6f88c0a4c7c6094638217b4e29baa15457a5a700b760314c66ac"
+updated_at: 2026-10-23T18:36:38Z
+content_hash: "sha256:60cc69c3773e2460db143d00773fb548d77e10279adbf41c598a1d75fd0cd339"
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 assignee: dev-GRRR-bnkf
@@ -108,6 +108,18 @@ status: new
 
 ## Notes
 DELIVERY_COMMIT_ADDENDUM: implementation commit 4f24b31d5f276996e1885cbad3bee0a256e661c0; completed evidence commit aaecdb20c7a477a6c9073d776f130cef6ea552eb; delivery-proof commit 0995477971f81ae35f07c2e644a8b5f1195b7307. Worktree clean before pvg delivery transition.
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-23.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-23]: Independent PM evidence review meets the fixture-validation scope.
 
