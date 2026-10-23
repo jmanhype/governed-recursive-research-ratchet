@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-23T22:47:39Z
-content_hash: "sha256:c6e82ea87014be200c75e70e2c53c29db95ddf65fbef88b5a0b717244b7d713b"
+updated_at: 2026-10-23T22:48:33Z
+content_hash: "sha256:8df3cb969966c1955913b33c7d98bd985cd7ffafcc58372b82d116797292c126"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt]
@@ -437,3 +437,23 @@ status: in_progress
 
 ### 2026-10-23T22:16:52Z speed
 BLOCKED: No independent-replay ceilings, privileged registration, or stop recovery authorized in this turn. Current AC2/5 and integration requirements cannot be met by a proposal. Draft docs/REPLAY-ACCOUNTING-RECOVERY-PROPOSAL.md preserves parent-observed identity, conservative semantics and exact decisions needed. No protected effects, no production code changes. Baseline focused tests 7/7 and full no-guest tests 198/198 pass on Python 3.9.6 and 3.12.7; these do not prove proposed migration. Await independent review and explicit operator decisions; not delivered.
+
+### 2026-10-23T22:48:33Z speed
+## Parent Blocked-Audit Contract
+
+GRRR-43i8 remains blocked because protected staging and read-only inspect require a separate explicit operator authorization that has not been supplied. This is the third consecutive goal-turn live check with the same gate: reviewed bootstrap commit/hash present, worktree clean, protected bootstrap absent, active binding unchanged, and no privileged runner visible.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Implementation commit 2dbf825e93376c6df5b974e339ea7846a9bc9165; evidence commit cb9f83364523fc7575e1735910b8a525f5598321.
+- Bootstrap source SHA256 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab.
+- /Library/GRRR/bootstrap/register-independent-replay is absent.
+- active.json SHA256 e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95; store/profiles unchanged.
+- No registration, protected mutation, stop release, replay, promotion, admission, or merge occurred.
+
+### proof
+- [x] Independently reviewed registration-only implementation and no-guest tests are complete.
+- [ ] Exact operator approval for protected staging/read-only inspect is missing.
+- [ ] Protected registration/postflight, recovery, and replay remain not-run.
