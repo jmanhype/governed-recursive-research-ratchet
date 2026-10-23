@@ -22,6 +22,13 @@ guest credentials/repetitions and lifecycle/run/recovery binding. Output is in
 the two copy-check logs. SHA256SUMS binds every selected copy and report/check
 artifact (excluding itself). Previous implementation tests remain 32 focused /
 198 full passing on each required Python in `../runtime-smoke-r3/`.
+Fresh no-guest stdlib trace run at 03ff000: 32 passed, 0 failures/errors/skips;
+line coverage replay_prerequisites 62%, replay_runtime 96%, replay_smoke 31%.
+Command: `/usr/bin/python3 -B -m trace --count --missing --summary --coverdir
+/tmp/grrr-w1lt-delivery-coverage --module unittest discover -s tests -p
+'unit_replay*.py'`. Full output is `coverage.log`. This measures unprivileged
+tests only, not the separately parent-executed protected live path; no combined
+or root-positive coverage percentage is fabricated.
 
 ## Observed result
 

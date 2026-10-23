@@ -1,4 +1,5 @@
-0e34410d0f3724256f277782595f1cf8f2e20c864fc3e7c6218eaae57ad32f39  docs/evidence/replay-prerequisites/runtime-smoke-live/LIVE-REPORT.md
+7d6b359ad21e899f52110653ab8aa671a7e74ef2f50085fa606efe16210c5f55  docs/evidence/replay-prerequisites/runtime-smoke-live/LIVE-REPORT.md
+d2bdf9753ea9e7e607b97ba07d272a78328da5a06dd3542f6b9db17d1438a590  docs/evidence/replay-prerequisites/runtime-smoke-live/coverage.log
 48723ce0e027f9851e4fc79d91d2fc3090034cc2edce170fcfae06972c422113  docs/evidence/replay-prerequisites/runtime-smoke-live/evaluator/ledger.sqlite
 444262c5a0457cd27c6b6ef29be3c474426707d62e2eeda458c74376c9e07a16  docs/evidence/replay-prerequisites/runtime-smoke-live/evaluator/objects-444262c5
 f8f76cea92faab2bd29bf30e6642493eb5aa85513e423b51b9fc730e146c29ea  docs/evidence/replay-prerequisites/runtime-smoke-live/evaluator/smoke-budget.sqlite
