@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T19:39:05Z
-content_hash: "sha256:2a5b28536c06761f3f4f0fe0c0a163d557ff0930a6711e6fb09503dba9786703"
+updated_at: 2026-10-23T19:46:51Z
+content_hash: "sha256:2fea6a92b5fc8ed8af470e433aafad265c396384712ce3522fe8ac28c260563b"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf]
@@ -73,6 +73,46 @@ status: new
 
 
 ## Notes
+## Native-loader environment security correction
+
+PROOF:
+- Clean commit 6e89e6b89aebb0d6a08ce61b1898a299158da43a on story/GRRR-w1lt.
+- Both parent commands now use literal /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C before the fixed direct CLT Python interpreter. Root review schema requires exact preexec_boundary and preexec_environment attestation. All previous pins, safe ancestors/ACLs and destination postconditions remain unchanged.
+- Real unprivileged regression: poisoned DYLD_INSERT_LIBRARIES, DYLD_LIBRARY_PATH, PYTHONHOME, PYTHONPATH, synthetic credential, PATH and CF variable are passed to /usr/bin/env. The direct Python child sees only PATH/LC_ALL plus framework-generated CF metadata, never inherited poison; stderr empty, direct interpreter and isolated flags confirmed.
+- /usr/bin/codesign --verify --strict /usr/bin/env passed. Root-owned regular env executable and safe ancestors recorded in docs/evidence/replay-prerequisites/env-boundary.log.
+- Both /usr/bin/python3 and /opt/homebrew/bin/python3:
+  PYTHON -B -m unittest discover -s tests -p unit_replay_prerequisites.py -v: 19 passed, 0 failures/errors/skips.
+  PYTHON -B -m unittest discover -s tests -p 'unit_*.py': 185 passed, 0 failures/errors/skips.
+- pvg verify scripts/replay-root-prepare tests/unit_replay_prerequisites.py tests/replay_environment_probe.py docs/REPLAY-PREREQUISITES.md docs/evidence/replay-prerequisites/README.md --format=text: PASSED, 2 scanned, 0 issues.
+- git diff --cached --check passed.
+- Unprivileged sanitized prelaunch runtime audit rerun successfully; no root launch occurred.
+- Coverage-r2.log remains historical from c667ae9; no new coverage claim for this environment-only revision.
+
+Exact commands after independent review:
+PRE-ELEVATION:
+  /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B scripts/replay-runtime-preflight
+FUTURE ROOT PARENT ONLY, after trusted installation:
+  /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/replay-root-prepare --prepare
+Do not invoke bare interpreter/shebang, inherit DYLD_*/PYTHON*/credentials or select runtime paths from caller input. Late Python sanitization is not the boundary.
+
+AC status: canonical policy unchanged; AC2/3/4 parent launch contract corrected and real no-guest evidence supplied. Independent re-review, installation, positive root preparation, UID denial/access probes and replay remain not-run. AC5 downstream block retained.
+
+LEARNINGS:
+- Native-loader variables must be removed before interpreter startup, not checked afterwards.
+- Pinned macOS framework creates __CF_USER_TEXT_ENCODING after startup. The test also poisons its outer value and confirms replacement; env -i still passes exactly two variables.
+- Environment probe now asserts actual interpreter, non-root UID and isolation flags as well as sanitized variable names.
+
+DISCOVERED_BUG: no additional unresolved defect observed in this revision. Initial child-name assertion exposed generated CF metadata and was corrected without adding an inherited allowlist exception.
+
+## nd_contract
+status: in_progress
+### evidence
+- 6e89e6b89aebb0d6a08ce61b1898a299158da43a and persistent logs.
+- No root/QEMU/VM, protected mutation, push, deliver or accept.
+### proof
+- [x] Sanitized pre-exec parent contract and real poisoned-loader environment regression.
+- [ ] Independent review, trusted installation, root-positive and replay gates not-run.
+
 ## Independent-review revision — awaiting re-review
 
 PROOF:
