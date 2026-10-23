@@ -1,0 +1,1 @@
+{"attempts":1,"challenge":"GRRR-VC-C001","children_ceased":true,"contract_admission_authorized":false,"elapsed_seconds":24.019100959,"evaluator_succeeded":true,"exit_codes":[-15,0],"independent_replay_authorized":false,"kind":"runtime-smoke-parent-lifecycle","scope":"C001-runtime-lifecycle-only","total_seconds":480,"work_seconds":473}

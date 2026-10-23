@@ -1,0 +1,1 @@
+{"policy_sha256":"355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a","run":"0a6454f8671045f183b6d8be7ec4f731","scope":{"attempts":1,"challenge":"GRRR-VC-C001","contract_admission_authorized":false,"independent_replay_authorized":false,"scope":"C001-runtime-lifecycle-only","total_seconds":480,"work_seconds":473}}

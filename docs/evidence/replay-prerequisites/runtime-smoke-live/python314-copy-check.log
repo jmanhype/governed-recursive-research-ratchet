@@ -1,0 +1,2 @@
+PASS: read-only SQLite integrity; settled budget; three-event hash chain; object/raw hashes;
+guest identity/repetitions; lifecycle/run/recovery binding; DB bytes unchanged.
