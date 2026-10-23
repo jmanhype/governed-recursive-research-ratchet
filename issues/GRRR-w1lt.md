@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
 updated_at: 2026-10-23T21:26:31Z
-content_hash: "sha256:287a9fe647fdd68275a33bb78649638b5e2b09d1aae1bf6de864b7b7e8d9572f"
+content_hash: "sha256:6f1e9a875633401275cb3ad7c4ea7825884e8306cc35ec5afbc7c2f29c687a9c"
 blocks: [GRRR-z3w9]
 follows: [GRRR-bnkf, GRRR-c875]
 ---
@@ -640,3 +640,21 @@ status: delivered
 - [x] AC #5: GRRR-z3w9 blocked until PM acceptance; no independent ReplayReceipt relabeling.
 
 Downstream not-run: PM acceptance, independent allegation replay/verdict/ReplayReceipt and admission/promotion. No worker privilege execution/protected mutation/push.
+
+### 2026-10-23T21:26:31Z speed
+## PM Decision
+REJECTED [2026-10-23]:
+EXPECTED: Documentation for changed behavior must remain accurate. GRRR-w1lt's runtime contract must describe the delivered prerequisite/runtime-lifecycle state without claiming or admitting independent replay.
+DELIVERED: docs/evidence/replay-prerequisites/runtime-smoke-live/LIVE-REPORT.md records reviewed e0dfaf3 installation, successful 24.019100959s C001-runtime-lifecycle-only execution, settled evidence, preserved failed attempt, and explicit downstream denials. However docs/REPLAY-RUNTIME-SMOKE.md at delivered commit 3283c0e still says "not installed or run", lists successful review/installation/runtime audit/probes/lifecycle as "Still not-run", and says "AC #4 is unresolved" / "GRRR-w1lt remains in_progress; no delivery".
+GAP: DOCS_STALE: docs/REPLAY-RUNTIME-SMOKE.md contradicts the final live evidence and can misdirect a future operator into treating a consumed one-shot runtime as unexecuted. This fails the documentation-freshness delivery gate even though the copied evidence materially supports the five prerequisite ACs and does not overclaim independent replay.
+FIX: In a new story commit only, reconcile docs/REPLAY-RUNTIME-SMOKE.md with the final state: one e0dfaf3 C001 runtime-lifecycle smoke was installed and completed successfully; preserve the not-independent-replay/not-ReplayReceipt/no-admission/no-promotion boundary; state that the one-shot smoke namespace is consumed and future privileged execution requires fresh parent authorization/recovery; move only genuinely downstream gates (GRRR-z3w9 replay/verdict/ReplayReceipt, contract admission, promotion, and explicitly unrun fault injection) to not-run. Do not rerun root, QEMU, VM, /Library/GRRR mutation, or the consumed smoke. Re-run documentation/static checks and redeliver.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Independently verified story state, branch/commit, 18 SHA256SUMS entries, both copied-artifact verifiers, read-only SQLite integrity/data, static verify, whitespace/static stub checks, downstream blocker, and full live report.
+- Contradiction found between docs/REPLAY-RUNTIME-SMOKE.md:3-7,152-160 and LIVE-REPORT.md:33-52,74-77.
+
+### proof
+- [ ] Documentation gate: final runtime contract must accurately reconcile completed live lifecycle with consumed one-shot authority and downstream denials.
