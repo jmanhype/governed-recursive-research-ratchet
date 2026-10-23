@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T21:26:31Z
-content_hash: "sha256:8832b59e96fefd430c663b36b338b409f87866a1d0442fa71148b65070f6e72b"
+updated_at: 2026-10-23T21:28:21Z
+content_hash: "sha256:7eac1a793d6fb7d669be10023db7c4ee029b7353baa50331f38d060dca239d09"
 blocks: [GRRR-z3w9]
 follows: [GRRR-bnkf, GRRR-c875]
 ---
@@ -72,7 +72,31 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
 
+PROOF: Rejection closure — documentation only. Commit 1120b161583515afa6b755232b969bcb41849bbd changes only docs/REPLAY-RUNTIME-SMOKE.md. It now records reviewed e0dfaf3 installation, successful sanitized preflight/provisioning, 24.019100959s successful C001 lifecycle with evaluator success/ceased children, passed UID/access/repeat probes, settled budget/ledger and preserved failed evidence. Historical commands are explicitly not execution authorization. Prior delivery, stale-doc PM rejection and this rework are stated. Independent replay/ReplayReceipt/verdict/admission/comparison/promotion remain downstream not-run.
+
+### CI/Test Results
+Commands run:
+- `pvg verify docs/REPLAY-RUNTIME-SMOKE.md --format=text`
+- `git diff --check`
+- `git diff --cached --check`
+Summary: static PASS (0 files scanned,0issues; Markdown not scanned), both diff checks PASS. Documentation manually reconciled with immutable LIVE-REPORT.md; implementation/evidence/protected state unchanged. No runtime tests repeated for documentation-only edit; prior dual-Python32focused/198full and live evidence remain unchanged. Coverage unchanged: no-guest prerequisites62%, runtime96%, smoke31%; no new coverage claim.
+
+### Commit
+- Branch: story/GRRR-w1lt
+- SHA: 1120b161583515afa6b755232b969bcb41849bbd
+
+### AC Verification
+| AC # | Rejection closure | Status |
+|---|---|---|
+| 1 | Approved exact policy remains unchanged | PASS |
+| 2 | Doc now correctly records reviewed installed/provisioned runtime | PASS |
+| 3 | Doc now records successful sanitized protected preflight | PASS |
+| 4 | Doc now records successful live C001 lifecycle, probes, accounting, preserved failure | PASS |
+| 5 | Doc retains PM acceptance block and downstream not-run semantics | PASS |
+
+LEARNINGS: rollout completion must update the operational contract, not only append evidence. DISCOVERED_BUG: no implementation finding; stale-doc rejection corrected. No root/QEMU/VM/protected mutation/acceptance/closure/push; none authorized or needed for this rework.
 
 ## nd_contract
 status: rejected
