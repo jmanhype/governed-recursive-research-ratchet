@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
 updated_at: 2026-10-23T21:29:30Z
-content_hash: "sha256:ffc7e32fcdbe429172805f3d870fa5bc0b4745139f2dc723d7c6f6f74c29ce36"
+content_hash: "sha256:1e76d3bca7c459bbf3a55245184d3ff1296b752b4804375714396d754c668395"
 follows: [GRRR-bnkf, GRRR-c875, GRRR-my5n]
 closed_at: 2026-10-23T21:29:29Z
 close_reason: "Accepted: documentation-only rework 1120b16 resolves the stale runtime-status contradiction while preserving the C001 lifecycle-only and downstream not-run boundaries; prior implementation and checksummed live evidence remain intact."
@@ -73,6 +73,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-23.
+
+### proof
+- [x] Story closed after accepted label was applied.
 
 
 ## nd_contract
