@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
-updated_at: 2026-10-23T21:20:55Z
-content_hash: "sha256:021c5ae9d55f19b6659be4bf78913f6284b33046d84579f85f1f231a371b33e4"
+updated_at: 2026-10-23T21:21:28Z
+content_hash: "sha256:fcc400a9f8499b2bd7329f8ac48d79629234fc5ca44d01bd129c56a041c50df9"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-w1lt
 follows: [GRRR-bnkf, GRRR-c875]
@@ -620,3 +620,22 @@ status: blocked
 - Follows: [[GRRR-bnkf]], [[GRRR-c875]]
 
 ## Comments
+
+### 2026-10-23T21:21:28Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- pvg story deliver GRRR-w1lt succeeded on2026-10-23; state in_progress plus delivered label, no acceptance/closure.
+- Clean commit3283c0ee854d7cae2a98d5c2977c00eb0164ce8d; executed implementatione0dfaf33d3b2725a2fad63401d2b717a8365e0a6. Full PROOF/AC table/LEARNINGS in Implementation Evidence notes and docs/evidence/replay-prerequisites/runtime-smoke-live/LIVE-REPORT.md.
+- Both copy checks PASS; all18 hashes PASS; live parent C001 lifecycle24.019100959s successful; both Python focused32/full198 passed; pvg verify PASS; diff checks PASS.
+- Append-only comment reconciles nd/pvg Notes-prepending behavior with verify-delivery's last-contract check. Historical blocked/not-run evidence remains intact.
+
+### proof
+- [x] AC #1: operator-approved exact pinned policy/limits/denials preserved.
+- [x] AC #2: reviewed parent fresh UID-separated provisioning and protected assets proven.
+- [x] AC #3: successful protected preflight before actual dispatch proven by parent.
+- [x] AC #4: parent offline lifecycle plus guest isolation, preserved failures, settled budget/ledger and ceased children proven.
+- [x] AC #5: GRRR-z3w9 blocked until PM acceptance; no independent ReplayReceipt relabeling.
+
+Downstream not-run: PM acceptance, independent allegation replay/verdict/ReplayReceipt and admission/promotion. No worker privilege execution/protected mutation/push.
