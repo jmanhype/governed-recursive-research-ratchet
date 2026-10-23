@@ -1,0 +1,6 @@
+Ran 18 tests in 12.310s
+OK
+  117    52%   replay_prerequisites   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-w1lt/research/replay_prerequisites.py)
+   54    96%   replay_runtime   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-w1lt/research/replay_runtime.py)
+  176    38%   scripts   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-w1lt/scripts/replay-root-prepare)
+  231    99%   unit_replay_prerequisites   (/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-w1lt/tests/unit_replay_prerequisites.py)

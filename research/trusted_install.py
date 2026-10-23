@@ -21,6 +21,14 @@ def absolute_dependencies(root, dependencies, rpaths, members):
                 'IntegrityFailure', 'Absolute dependency absent from immutable closure')
 
 
+def acl_free(path: Path) -> bool:
+    """Reject ACL entries even when macOS xattrs replace the '+' marker with '@'."""
+    output = subprocess.run(['/bin/ls', '-lde', str(path)], capture_output=True,
+                            check=True, timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
+    fields = output.split(None, 1)
+    return bool(fields) and b'+' not in fields[0] and len(output.splitlines()) == 1
+
+
 def immutable(path: Path, *, directory=False):
     require(path.is_absolute() and '..' not in path.parts, 'Unauthorized', 'Absolute normalized path required')
     for ancestor in reversed((path, *path.parents)):
@@ -28,9 +36,7 @@ def immutable(path: Path, *, directory=False):
         require(not stat.S_ISLNK(info.st_mode) and info.st_uid == 0 and info.st_mode & 0o022 == 0,
                 'Unauthorized', 'Mutable executable/configuration ancestor')
         # macOS ACL grants are independent of POSIX mode bits.
-        output = subprocess.run(['/bin/ls', '-lde', str(ancestor)], capture_output=True,
-                                check=True, timeout=2, env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'}).stdout
-        require(b'+' not in output.split(None, 1)[0], 'Unauthorized', 'ACL-bearing protected path')
+        require(acl_free(ancestor), 'Unauthorized', 'ACL-bearing protected path')
     info = path.lstat()
     require(stat.S_ISDIR(info.st_mode) if directory else stat.S_ISREG(info.st_mode),
             'Unauthorized', 'Protected path type differs')
