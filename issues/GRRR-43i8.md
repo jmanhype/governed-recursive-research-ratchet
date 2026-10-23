@@ -9,7 +9,8 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-23T22:09:12Z
-content_hash: "sha256:120a73c152a53f3078f10654939b1c2f5d0b9dd58d6e2ee65f438da0a636ac14"
+content_hash: "sha256:803543996d4610ee952c0cc5c78ecf7e5c11c2fd45f949cb4d535aa40d9facfa"
+blocks: [GRRR-z3w9]
 ---
 
 ## Description
@@ -74,9 +75,10 @@ status: new
 
 
 ## History
-
+- 2026-10-23T22:09:12Z dep_added: blocks GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-z3w9]]
 
 ## Comments
