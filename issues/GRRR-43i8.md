@@ -1,7 +1,7 @@
 ---
 id: GRRR-43i8
 title: "Bug: independent replay accounting profile unavailable"
-status: in_progress
+status: closed
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer, delivered]
@@ -9,10 +9,11 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T13:58:45Z
-content_hash: "sha256:77688ae4bcd32bab7c57ddf73399536431eb58f6dca5afbd0cc1b63d64f3f0f7"
-blocks: [GRRR-z3w9]
+content_hash: "sha256:962d9dbc6a01615daff6061b2d492af5044aa1cd4b053d8ee73ae990ee580019"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
+closed_at: 2026-10-24T13:58:45Z
+close_reason: "Accepted: registration-only install preserved the exact stopped cumulative store and all conservative holds; committed documentation now records the verified protected install while recovery and replay remain separately denied."
 ---
 
 ## Description
@@ -530,10 +531,11 @@ status: in_progress
 - 2026-10-24T13:44:35Z claimed by dev-GRRR-43i8
 - 2026-10-24T13:47:59Z status: in_progress -> in_progress
 - 2026-10-24T13:47:59Z auto-follows: linked to predecessor GRRR-gu87
+- 2026-10-24T13:58:45Z status: in_progress -> closed
+- 2026-10-24T13:58:45Z dep_removed: no_longer_blocks GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-z3w9]]
 - Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
 
 ## Comments
