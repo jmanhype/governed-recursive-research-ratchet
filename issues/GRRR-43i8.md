@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:40:34Z
-content_hash: "sha256:cf3176a4e4807dc22e6e457e94451dbd6938ab1b0fce4d775f013a90cfb64f58"
+updated_at: 2026-10-24T13:40:35Z
+content_hash: "sha256:86256f548e4baf8adf5d06c46ed6abec1ca9bf985b0c45e44b7bbcdee30a53d6"
 blocks: [GRRR-z3w9]
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 ---
@@ -659,3 +659,20 @@ status: delivered
 
 ### proof
 - [x] All six GRRR-43i8 ACs verified.
+
+### 2026-10-24T13:40:35Z speed
+## PM Decision
+REJECTED [2026-10-24]:
+EXPECTED: Documentation changed by this story must describe the delivered behavior. After final protected registration, repository documentation must not continue to claim that registration is not installed or that protected AC2/AC5 are blocked/not-run.
+DELIVERED: The protected evidence is strong and internally consistent: install.json reports registered=true/stopped=true/execution_authorized=false; verify.json and postflight.log prove version-2 profiles, exact receipt/binding hashes, unchanged database hash/inode, stopped=1, cumulative holds, and denied recovery/replay. However, at evidence HEAD cb9f83364523fc7575e1735910b8a525f5598321, docs/REPLAY-ACCOUNTING-REGISTRATION.md still begins "Registration-only implementation — not installed", says no concrete install plan/hash exists, and ends with AC2/5 privileged installation/postflight BLOCKED/not-run. The committed evidence markdown also preserves only the earlier blocked state; no committed non-protected document records the completed protected install or points to its verified external evidence.
+GAP: DOCS_STALE: docs/REPLAY-ACCOUNTING-REGISTRATION.md and the final committed evidence state contradict the authoritative delivered protected-install evidence. This can mislead future replay/recovery work even though the protected artifacts themselves verify.
+FIX: Without mutating /Library/GRRR or changing protected state, add a new evidence commit containing a non-sensitive protected-install record (exact implementation/evidence commits, installer/baseline/review/plan/receipt/binding/database hashes, install/verify/postflight PASS, stopped=1, execution_authorized=false, and recovery/replay/promotion still denied), and update the stale registration-document status/acceptance-boundary text or clearly mark the old text as a historical pre-install snapshot. Then redeliver with the new commit for PM review.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Protected-install artifact cross-verification passed, but repository documentation freshness failed.
+
+### proof
+- [ ] AC #5 documentation-facing reviewability: delivered repository docs contradict the completed protected postflight state.
