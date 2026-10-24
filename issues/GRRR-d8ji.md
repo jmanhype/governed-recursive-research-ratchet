@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T20:36:35Z
-content_hash: "sha256:9cc6ef5d1298611345d03a45691d270da39d5f7336898849dad346d6d1b502ca"
+updated_at: 2026-10-24T20:40:28Z
+content_hash: "sha256:9fa14ecf62c0d853247a2371d3e42f011a4ed5c633a7dd4ef6eeec5c4a0b012d"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8]
@@ -148,3 +148,26 @@ LEARNINGS:
 
 ### 2026-10-24T20:33:42Z speed
 BLOCKED: Final no-guest package verification is not clean: both full suites execute 239 tests with ConservativeGenesis disk-floor setup error and nine class tests unexecuted; Python 3.9 additionally fails term-resistant smoke process-group cessation. Independent exact-byte review and separate commit authorization are pending; live integration 0 executed. WIP and exact hashes/counts retained in docs/evidence/accounting-recovery/REPORT.md; complete raw logs at /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-no-guest/no-guest.txt (SHA256 aa41940ba6288b4a97642188a7b95ed67f32e2e3a26894dd872180034b99015d). No delivery or privileged effects.
+
+### 2026-10-24T20:40:28Z speed
+## Independent Security/Architecture Review
+
+SECURITY_REVIEW: READY_FOR_COMMIT_REVIEW
+
+- Reviewed the current uncommitted package bytes in dev-GRRR-d8ji. No blocking security/architecture defect was found in the stop-only v3 design.
+- Reviewer confirmed the SQL transition preserves original database inode/schema/history/holds; introduces no fresh allowance or reconciliation; binds exact canonical plan/review/operator records; keeps v3 runtime read-only; denies inherited mutators, SQL, writable BLOBs, and stale registered handles; and preserves v2 stopped-only verification.
+- Reviewer independently reran focused recovery and registration suites: 20/20 and 30/30 on both required Pythons. git diff --check passed.
+- This is not delivery acceptance, protected recovery approval, or replay authorization. Full-suite disk-floor errors/unexecuted tests and the Python 3.9 smoke cessation failure still block delivery. Crash-durability coverage is limited to tested publication stages, not exhaustive kill/power-loss/fsync failure.
+- Exact reviewed SHA256 values include accounting_recovery.py 88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a and ACCOUNTING-RECOVERY.md 88635272ae4f4b7d475f5832bcdb56b265cb2d512f97e3ca1faee6f962521e8c; the reviewer report in the thread lists the complete set.
+
+## nd_contract
+status: new
+
+### evidence
+- Independent reviewer performed no edits or privileged operations.
+
+### proof
+- [x] Current package is security-review ready for commit review.
+- [ ] Commit authorization is explicitly withheld by the story and has not yet been supplied.
+- [ ] Full-suite blockers remain.
+- [ ] Protected integration remains separately authorized/not-run.
