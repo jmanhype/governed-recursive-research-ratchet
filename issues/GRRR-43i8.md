@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T12:34:57Z
-content_hash: "sha256:0362919003da193e2c4ab1d8d083d1e6c1f46c1efc73b3fce2685f39f68e7247"
+updated_at: 2026-10-24T12:38:34Z
+content_hash: "sha256:1f50af85965b3a7d80181623888ab61c1dac9eed64145bb7d3c870138e6bfd02"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf]
@@ -507,3 +507,25 @@ status: in_progress
 - [x] Read-only inspect completed and exact stopped baseline captured.
 - [ ] Independent registration plan/review and separate installation authorization remain pending.
 - [ ] Stop recovery and replay remain not-run.
+
+### 2026-10-24T12:38:34Z speed
+## Independent Registration Plan Review
+
+SECURITY_REVIEW: APPROVED_REGISTRATION_PLAN
+
+- Reviewer verified staged installer SHA256 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab, canonical baseline SHA256 a0c0d9770f8cc90c7eaa31f0cb13f672b5be0e84c4030f582f2b0e83c751ee5f, review SHA256 fe0cfdc4d761630801e7c2b5c4266c36e933f0b16ee23d31f34f43871417d8eb, and plan SHA256 24e6fa0d6ae3f9bd4a4cd8dec8dcf1f8d464c2eec0e61224516c91ee2f74341c.
+- Exact installer expectations verified: unchanged ceilings, ordered four profiles, stage=poc, stop_release=false, execution_authorized=false, exclusive_parent=true.
+- Reviewer confirmed staged bootstrap equals implementation commit 2dbf825e source bytes, review/plan bytes are canonical, active remains version 1, and registration directory is absent.
+- Reviewer could not independently reread live DB stopped state because of filesystem permissions; protected parent inspect proved stopped=1 and future installer acquire/baseline must revalidate it plus writer exclusion immediately before any separately authorized installation.
+- Review/plan candidates were renamed to immutable hash-derived filenames only in the user workspace; they have NOT been staged under /Library/GRRR/bootstrap and confer no execution authority.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independent reviewer was read-only and performed no privilege escalation or installation.
+
+### proof
+- [x] Exact registration plan/review independently approved with hashes.
+- [ ] Separate operator authorization and root-owned staging of review/plan remain pending.
+- [ ] Registration installation/postflight, stop recovery, and replay remain not-run.
