@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T20:33:42Z
-content_hash: "sha256:2c9ba200e938984aaf493fd2dd5d9ab089f79f3996ba3f9fca76cc35724e21b1"
+updated_at: 2026-10-24T20:36:31Z
+content_hash: "sha256:5f05767fe5b24660ec48a1c036bb5e1e91072312b15329469b940dfc05637989"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-d8ji
@@ -91,7 +91,44 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (BLOCKED WIP, not delivered)
 
+PROOF:
+- Base HEAD: 6afd643df51aa6a2f046512dfc3fbe7572dd8d67, branch story/GRRR-d8ji. No implementation commit: coordinator explicitly withheld commit authorization pending direct operator approval. No push, root/sudo, protected inspection/mutation, guest, replay, admission or promotion.
+- Exact commands and hashes are in docs/evidence/accounting-recovery/REPORT.md (SHA256 47f7521ee83b96d5435e605212b07aa09ac2e14d2512e6045f09fced49e68026).
+- Complete raw initial/final logs: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-no-guest/no-guest.txt, SHA256 aa41940ba6288b4a97642188a7b95ed67f32e2e3a26894dd872180034b99015d.
+- Both /usr/bin/python3 (3.9.6) and /opt/homebrew/bin/python3 (3.14.3): -m unittest discover -s tests -p unit_replay_accounting_recovery.py -> 20 tests, 0 failures/errors/skips, exit0; registration pattern unit_replay_accounting_registration.py -> 30 tests, 0 failures/errors/skips, exit0.
+- Full command for each: -m unittest discover -s tests -p 'unit_*.py'. Python3.9: 239 executed, 1 failure and 1 class-setup error, exit1. Python3.14: 239 executed, 0 failures and 1 class-setup error, exit1. Nine ConservativeGenesis tests unexecuted per interpreter; zero explicit skips. No warnings in final runs. Not a clean full-suite result.
+- Both interpreters: -m py_compile research/accounting_recovery.py research/accounting_registration.py research/persistent_budget.py tests/unit_replay_accounting_recovery.py -> exit0.
+- pvg verify research/accounting_recovery.py research/accounting_registration.py research/persistent_budget.py tests/unit_replay_accounting_recovery.py docs/ACCOUNTING-RECOVERY.md docs/evidence/accounting-recovery/REPORT.md --format=text -> PASSED, 4 files scanned, 0 issues, exit0. git diff --check -> exit0.
+- Coverage instrumentation: not measured. Live integration: 0 executed. Independent exact-byte security/architecture review: pending coordinator reviewer.
+
+AC verification:
+1. Exact stop-only v3 contract and implementation drafted; independent review pending.
+2. Same-inode/history, three pending holds at exact ceiling, unresolved/null uncertainty tested. All post-recovery runtime writes remain denied.
+3. Append-only canonical intent/result/completion/uncertainty and original ancestry implemented and tested.
+4. Fail-closed authority/baseline/source/receipt/identity/partial/concurrency/runtime-surface checks tested; independent review pending.
+5. No privileged effects. No recovery/replay execution authorized or performed.
+6. BLOCKED by failed full-suite prerequisites and smoke failure; no tests skipped or floors lowered.
+7. PENDING separate operator-authorized parent live success/refusal integration. Package tests do not claim recovery acceptance.
+
+DISCOVERED_BUG:
+  title: Full no-guest verification blocked by conservative-genesis disk prerequisite
+  context: Both full suites fail ConservativeGenesis.setUpClass with RuntimeError preparation space floor; fixed threshold is 15350000000 bytes, measured about 12GiB free. Nine class tests remain unexecuted per interpreter. No cleanup/floor changes authorized.
+  affected_files: scripts/conservative-genesis:85; tests/unit_conservative_genesis.py:25
+  discovered_during: GRRR-d8ji
+
+DISCOVERED_BUG:
+  title: Term-resistant smoke process group cessation fails under Python3.9 full suite
+  context: test_real_term_resistant_group_is_killed_within_deadline fails at tests/unit_replay_smoke.py:153, False != True from cease_groups. Python3.14 full run does not reproduce. No replay/timing/assertion changes made.
+  affected_files: tests/unit_replay_smoke.py; research/replay_smoke.py
+  discovered_during: GRRR-d8ji
+
+LEARNINGS:
+- Stop release is not spendability; unresolved history requires v3 read-only behavior and empty allowed runtime mutation set.
+- Fixed initial sys.path import-closure regression via fixed-file importlib loading, and Python3.14 test SQLite ResourceWarning via explicit closing. Initial failure logs retained, final source hashes are distinguished.
+- Worktree pvg notes search failed because .vault is missing; no unrelated vault repair attempted. Graph only indexed stale downstream worktree, so accounting sources were read directly.
+- Raw logs retained outside package to preserve approximate diff budget without deleting failed evidence.
 
 ## History
 - 2026-10-24T20:19:06Z dep_added: blocked_by GRRR-43i8
