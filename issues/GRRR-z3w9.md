@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-24T16:21:55Z
-content_hash: "sha256:e27320bd02ee56a6caa724e96c96e6003e2abac0417d8a18465ec359cb19ade2"
+updated_at: 2026-10-24T16:24:02Z
+content_hash: "sha256:0ad565ead5840bb816b8a6358d8165afcfe69dc5ee7dfcd4e60e98ad56418c11"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8]
@@ -478,3 +478,35 @@ status: blocked
 ### proof
 - [ ] Authorized cache cleanup pending.
 - [ ] Recovery/replay remain denied.
+
+### 2026-10-24T16:24:02Z speed
+## Authorized Cache Cleanup Result
+
+Operator authorized cleanup of only Codex Sparkle Installation, Chrome Default Cache/Code Cache, pip, Homebrew, and go-build caches. Parent removed contents of exactly those targets and preserved their parent directories.
+
+Measured target bytes before:
+- Codex Sparkle Installation 1,953,968,128
+- Chrome Default Cache 730,193,920
+- Chrome Code Cache 88,477,696
+- pip 207,474,688
+- Homebrew 50,655,136
+- go-build 43,900,928
+
+Immediate cleanup result: free space rose from 11,745,353,728 to 14,629,060,608 bytes, reclaiming 2,883,706,880 bytes. All six target directories were empty immediately afterward. Protected active/prior/receipt hashes were identical before/after; active Codex runtime, replay input, repositories, and GRRR evidence remained present. No recovery, stop release, replay, promotion, admission, production mutation, or push occurred.
+
+Post-cleanup verification still failed the conservative-genesis preparation floor. Free space then measured 13,825,343,488 bytes and continued drifting down to about 13,244,039,168 bytes under host activity. The system-Python unit_conservative_genesis run exited nonzero in setUpClass with RuntimeError: preparation space floor; 0 tests ran. Chrome had recreated only small cache entries, so the larger loss was other host/purgeable activity rather than the authorized target regenerating.
+
+Evidence: outputs/grrr-z3w9-cache-cleanup/ including before.tsv, after.tsv, protected hashes, run.log, post-cleanup test log/exit code, and SHA256SUMS.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Authorized cleanup completed, but capacity still below the 15,350,000,000-byte preparation floor.
+
+### proof
+- [x] Exact authorized regenerable caches removed.
+- [x] Protected records and preserved artifacts verified unchanged/present.
+- [ ] Disk remains below fixed floor.
+- [ ] Recovery implementation/review remains pending.
+- [ ] Replay remains denied/not-run.
