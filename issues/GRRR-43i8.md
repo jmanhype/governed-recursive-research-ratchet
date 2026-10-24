@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:52:30Z
-content_hash: "sha256:20ae634c82b6a74437e5f3d8bfa5c46c16af36876e5a6d78b46b2c54ca74f2e6"
+updated_at: 2026-10-24T13:58:45Z
+content_hash: "sha256:77688ae4bcd32bab7c57ddf73399536431eb58f6dca5afbd0cc1b63d64f3f0f7"
 blocks: [GRRR-z3w9]
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
@@ -74,7 +74,28 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-10-24]: DOCS_STALE rework is closed and the full delivery now meets all six registration-only ACs.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Re-pinned clean story worktree at evidence commit 784f33aac492f10d92a5661bb455be49619b209b; implementation remains exactly 2dbf825e93376c6df5b974e339ea7846a9bc9165 and is an ancestor.
+- No research/scripts/tests files changed after 2dbf825; current source hashes match the implementation commit.
+- The DOCS_STALE fix is committed: current registration documentation says installed/still stopped; completed-install.md records exact protected-install evidence; all earlier blocked/not-run records are explicitly marked historical pre-install evidence.
+- Independently verified both SHA256SUMS manifests (6/6 parent and 6/6 protected-install), canonical baseline a0c0d9770f8cc90c7eaa31f0cb13f672b5be0e84c4030f582f2b0e83c751ee5f, plan 24e6fa0d6ae3f9bd4a4cd8dec8dcf1f8d464c2eec0e61224516c91ee2f74341c, review fe0cfdc4d761630801e7c2b5c4266c36e933f0b16ee23d31f34f43871417d8eb, receipt fb2132f1dce4867d0a28895215ef9d5f9ad1ea947b3a373de5efd7ddad04f397, binding 97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5, unchanged database 2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf, and prior active e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95.
+- Reconstructed the version-2 binding from the prior active bytes plus registration receipt; canonical hash matched. Verified stopped=1, pending=3, 11 reservations, 8 metering rows, 0 overhead, cumulative POC/milestone [0,1108265788,0], unknowns unresolved, spendable null, execution_authorized=false, stop_release=false, recovery/replay denied.
+- Static scan, pvg verify, git diff --check, production type-spec audit, documentation/history checks, and pvg story verify-delivery all passed; verify-delivery was 9/9.
+- No privileged operation, /Library mutation, stop release, recovery, replay, promotion, admission, merge, or push was performed during PM review.
+
+### proof
+- [x] AC #1: exact reviewed baseline/plan and live inventory evidence retained the store, history, unknowns, and holds without reset.
+- [x] AC #2: separately authorized root-owned registration completed atomically while preserving original database bytes/inode and prior binding bytes.
+- [x] AC #3: exact cumulative ceilings and conservative unknown/hold carry-forward remain; no fresh allowance, recast history, installer stop release, or zeroing.
+- [x] AC #4: recovery remains separately authorized/reviewed and not-run; stopped state and promotion/admission boundaries remain disabled.
+- [x] AC #5: read-only inspect, protected verify, and direct postflight evidence prove identity, hashes, ownership/modes, profiles, balances, stopped state, and fail-closed history; docs now accurately commit this evidence.
+- [x] AC #6: actual independent replay remains blocked on the unchanged cumulative store; execution remains unauthorized and no fresh database substitutes for it.
 
 ## nd_contract
 status: delivered
