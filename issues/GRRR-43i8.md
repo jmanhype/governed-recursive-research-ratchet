@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T13:48:00Z
-content_hash: "sha256:f0a66d46cc441a50c6136f7a50e7e80db88861e94da624e9abb6e427cca70271"
+content_hash: "sha256:2f40d30def46ba2e84381b050cc52e31decb9556298d3d41c48f0ff5f3808ddd"
 blocks: [GRRR-z3w9]
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
@@ -74,6 +74,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-24.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence — DOCS_STALE correction
 
 PROOF:
