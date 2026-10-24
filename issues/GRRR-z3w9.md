@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-24T20:16:14Z
-content_hash: "sha256:bf77cc85e3ad2ae274c164ef2f1b065b21620b8eb929a09d78337ab0e0679ee6"
+updated_at: 2026-10-24T20:16:23Z
+content_hash: "sha256:967c783785dfac45ce357e87756c19e5c1e00ac5c8da54e87ec896b8077a8e52"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8]
@@ -539,3 +539,18 @@ status: blocked
 - [ ] Disk remains below 15,350,000,000 bytes.
 - [ ] Recovery implementation/review remains required.
 - [ ] Replay remains separately unauthorized.
+
+### 2026-10-24T20:16:23Z speed
+## Capacity Reset Contract Correction
+
+The previous shell quoting removed the text `RuntimeError: preparation space floor` from the narrative by treating backticks as command substitution. The pvg update otherwise landed. Correct exact result: both required interpreters exited 1 in setUpClass with RuntimeError: preparation space floor, and zero tests ran. Evidence files remain unchanged.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Corrected narrative only; no state or protected effect changed.
+
+### proof
+- [x] Capacity reset evidence remains in outputs/grrr-z3w9-capacity-reset/.
+- [ ] Disk remains below the preparation floor.
