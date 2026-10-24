@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T22:38:40Z
-content_hash: "sha256:ede12f342f0ffe0e01bf4432e13ceacdbb996187ff9265939179bd76d864d440"
+updated_at: 2026-10-24T22:39:53Z
+content_hash: "sha256:29018ba0c4b7248056432df31caa0d0415819cd754e779132e6d5ab8b97d0394"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -327,3 +327,44 @@ status: blocked
 - [x] Disk floor and swap blockers cleared.
 - [ ] Python 3.9 term-resistant process-group cessation failure remains.
 - [ ] Full clean suites and later protected integration remain pending.
+
+### 2026-10-24T22:39:53Z speed
+## Post-Reboot Cessation Fix Result
+
+The reboot cleared capacity/swap. The remaining Python 3.9 cessation failure was then reproduced deterministically as a phase-global uncertainty bug: a transient TERM-phase observation timeout remained sticky even after SIGKILL and later verified absence. The focused implementation now resets uncertainty when entering the KILL phase, accepts success only after fresh valid group-absence evidence, rejects observations completed after the global deadline, and leaves persistent uncertainty/malformed inventory/deadline exhaustion as failures. TERM/KILL allowances and safety assertions were not weakened.
+
+Final focused commit:
+- 65bb7945299851c078f5b48e9083d3aee13a7c4a
+- fix(GRRR-d8ji): verify cessation after transient TERM observation failure
+- Four files changed: replay_smoke.py, unit_replay_cessation.py, replay-root-prepare hash pin, and evidence report.
+
+Final no-guest proof on BOTH /usr/bin/python3 3.9.6 and /opt/homebrew/bin/python3 3.14.3:
+- exact previously failing cessation test: 5/5 repetitions passed;
+- cessation suite: 5/5;
+- replay smoke suite: 12/12;
+- recovery suite: 20/20;
+- registration suite: 30/30;
+- full unit suite: 253/253 each;
+- zero failures, errors, skips, or warnings;
+- compile, explicit-path pvg verify, and diff checks passed.
+
+Exact final source hashes:
+- research/replay_smoke.py 819ab8e37ebaf138eca6b69abee78bf356124809b64ca60c28ecd5b957749612
+- tests/unit_replay_cessation.py d3ee8811a442d02936ee39c4eb16c608c12f4caeba8f163158841f461737bbd2
+- scripts/replay-root-prepare 5908b3134f2cc13bc6c10e046630c0e0bfe8742618acc36a75be855e6b645a8c
+
+Raw final evidence: outputs/grrr-d8ji-no-guest/cessation-final.txt SHA256 b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433. RED evidence preserved in outputs/grrr-d8ji-no-guest/cessation-red.txt. The historical intermittent trigger itself was not reproduced after resume; deterministic injection supplies the tested defect class.
+
+Independent focused review before the hash-only launcher pin update returned SECURITY_REVIEW: READY_FOR_COMMIT_REVIEW. Story/worktree clean, claim released, story remains blocked because separately authorized protected recovery integration is 0 executed and delivery/live acceptance are not claimed.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Capacity, full-suite, and cessation no-guest blockers are cleared; branch clean at 65bb794.
+
+### proof
+- [x] Both full no-guest suites now pass 253/253.
+- [ ] Final exact-byte review must include the launcher hash pin and protected integration package.
+- [ ] Separately authorized live recovery integration remains not-run.
+- [ ] No protected recovery, stop release, replay, promotion, admission, merge, production mutation, or push.
