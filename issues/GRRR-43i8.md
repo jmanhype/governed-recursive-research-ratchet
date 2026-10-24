@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T12:30:25Z
-content_hash: "sha256:699c25c0827ef1b3b28e594f925cd117e6b10947c612452b8fa79e10b142411d"
+updated_at: 2026-10-24T12:34:57Z
+content_hash: "sha256:0362919003da193e2c4ab1d8d083d1e6c1f46c1efc73b3fce2685f39f68e7247"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf]
@@ -482,3 +482,28 @@ status: in_progress
 ### proof
 - [ ] Protected staging and read-only inspect pending.
 - [ ] Registration/installation/recovery/replay remain denied.
+
+### 2026-10-24T12:34:57Z speed
+## Protected Staging and Read-only Inspect Evidence
+
+- Operator authorization was exact and limited to staging plus inspect; no registration/recovery/replay/promotion/merge authority.
+- Preflight confirmed implementation commit 2dbf825e93376c6df5b974e339ea7846a9bc9165 is an ancestor of clean evidence HEAD cb9f83364523fc7575e1735910b8a525f5598321, and both committed and working-tree accounting_registration.py bytes hash to 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab.
+- A first staging attempt failed before publication because the parent script called nonexistent /usr/bin/sync. Its exclusive temporary file was removed, destination remained absent, and active/database state was untouched. Corrected script used /bin/sync.
+- Final stage created /Library/GRRR/bootstrap/register-independent-replay as root:wheel regular file mode 0444, one link, device 16777229, inode 684952620, exact SHA256 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab.
+- Pinned isolated CLT Python 3.9.6 read-only inspect exited 0. Raw canonical result preserved at outputs/grrr-43i8-protected-inspect/inspect.json, SHA256 0ab4ee35d5a8c2790228409624273c4ba0882b976597ef2f58ed6bec1a8e0e11. Canonical baseline SHA256 a0c0d9770f8cc90c7eaa31f0cb13f672b5be0e84c4030f582f2b0e83c751ee5f.
+- Inspect proved database SHA256 2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf, stopped=1, pending=3, metering rows=8, reservation rows=11, overhead rows=0, known encumbered POC/milestone=[0,1108265788,0], historical_unknowns=unresolved, spendable=null.
+- Postflight active.json remained root:wheel 0444 inode 682589456 with SHA256 e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95, version 1, exact beba store, and three legacy profiles. registration/ directory remains absent.
+- No active.json/budget.sqlite mutation, registration install, stop clear, recovery, replay, promotion, admission, or merge occurred.
+- Current free space is about 12.89 GB, below the prior 15 GiB replay floor. This tiny authorized operation completed, but future replay execution must not proceed without safe space remediation and separate authorization.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Evidence directory outputs/grrr-43i8-protected-inspect contains inspect.json, stage-inspect.sh, POSTFLIGHT.txt, baseline.sha256, and SHA256SUMS.
+
+### proof
+- [x] Exact bootstrap staged with verified ownership/mode/hash.
+- [x] Read-only inspect completed and exact stopped baseline captured.
+- [ ] Independent registration plan/review and separate installation authorization remain pending.
+- [ ] Stop recovery and replay remain not-run.
