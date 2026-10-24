@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:58:46Z
-content_hash: "sha256:e3ecefaa974087ac7ceaa050857fc978be569c8fc0973733ef57504d88fb5d41"
+updated_at: 2026-10-24T15:37:44Z
+content_hash: "sha256:d16b9f6927fb91cb9acb0cc87e371f6be3a25ee4e9d552563a91584c9a9a5305"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
 closed_at: 2026-10-24T13:58:45Z
@@ -816,3 +816,20 @@ status: delivered
 - [x] DOCS_STALE corrected; protected registration/postflight success documented with exact immutable references.
 - [x] Six AC dispositions explicitly mapped without claiming recovery or replay execution.
 - [x] Earlier pre-install sections marked historical; private logs/rows excluded from repository.
+
+### 2026-10-24T15:37:44Z speed
+## Operator Merge Authorization
+
+APPROVED [2026-10-24]: merge accepted story GRRR-43i8 into epic/GRRR-2t3h, reactivate the PAIVOT loop, and dispatch GRRR-z3w9.
+
+Denied: stop release, recovery, replay, promotion, admission, production mutation, and push.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Story is closed with accepted label; protected registration evidence is already committed on story branch 784f33aac492f10d92a5661bb455be49619b209b.
+
+### proof
+- [ ] Merge and downstream dispatch are pending parent execution.
+- [x] Denied privileged/runtime actions remain not authorized.
