@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-24T16:24:02Z
-content_hash: "sha256:0ad565ead5840bb816b8a6358d8165afcfe69dc5ee7dfcd4e60e98ad56418c11"
+updated_at: 2026-10-24T20:16:14Z
+content_hash: "sha256:bf77cc85e3ad2ae274c164ef2f1b065b21620b8eb929a09d78337ab0e0679ee6"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8]
@@ -510,3 +510,32 @@ status: blocked
 - [ ] Disk remains below fixed floor.
 - [ ] Recovery implementation/review remains pending.
 - [ ] Replay remains denied/not-run.
+
+### 2026-10-24T20:16:14Z speed
+## Operator-Authorized Capacity Reset Result
+
+The operator authorized quitting Chrome and Spotify, running macOS purge, remeasuring free space, and rerunning the disk-floor test. Spotify exited gracefully. Chrome AppleScript quit returned user-canceled, so the parent used the operator-authorized SIGTERM fallback; both Chrome and Spotify were then absent. macOS purge completed.
+
+Measured state:
+- Before reset: 12,956,143,616 bytes free; swap used 3,748.88 MiB.
+- After Chrome/Spotify exit: 12,740,812,800 bytes free; swap used 3,668.81 MiB.
+- After purge: 12,927,787,008 bytes free; swap used remained 3,668.81 MiB.
+- After tests: 12,927,635,456 bytes free.
+
+Both required interpreters reran tests/unit_conservative_genesis.py. Each exited 1 in setUpClass with ; zero tests ran. The fixed 15,350,000,000-byte preparation floor remains unmet by 2,422,365,544 bytes at the after-purge measurement.
+
+No additional files were deleted. No recovery, stop release, replay, promotion, admission, production mutation, or push occurred.
+
+Evidence: outputs/grrr-z3w9-capacity-reset/ with states.txt, both interpreter logs/exit codes, and SHA256SUMS.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Authorized capacity reset completed but did not clear the floor.
+
+### proof
+- [x] Chrome and Spotify quit; purge run; both interpreter floor tests rerun.
+- [ ] Disk remains below 15,350,000,000 bytes.
+- [ ] Recovery implementation/review remains required.
+- [ ] Replay remains separately unauthorized.
