@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-24T15:39:30Z
-content_hash: "sha256:4bc85b9b01e7ded10ac006d1d4a712ae06b58b395699d01919130e3f45c2d696"
+updated_at: 2026-10-24T15:45:25Z
+content_hash: "sha256:b01b72257f6a1a2e396d3e3a9fd7b04577ce90be3688227ae1fe6879ce32bcd6"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8]
@@ -310,3 +310,6 @@ Partial handoff: verify-delivery returned 1 passed / 8 failed, as expected for a
 
 ### 2026-10-23T22:06:21Z speed
 BLOCKED: V2 replay-only preparation and four fixed-mode source drafts exist, but cumulative independent-replay accounting is unregistered and the existing campaign store is stopped. No protected mutation or live guest execution is authorized for this worker. Independent security review, protected registration/stop-recovery preserving all prior usage and holds, immutable parent installation, and actual UID-separated live proof remain required. See docs/INDEPENDENT-REPLAY-V2-REVIEW.md for exact candidate commands and blockers. This is WIP, not delivery.
+
+### 2026-10-24T15:45:25Z speed
+BLOCKED: Merged accepted epic 6afd643 into replay WIP. Registered v2 accounting remains frozen with no separately approved recovery implementation or execution authorization. Disk below preparation/replay floors; full no-guest suites execute 248 tests but have one class setup error on both interpreters. Focused suites pass 91/91 each. Live read-only integration executes 0 tests with dedicated UID/GID setup error. No privileged action performed. See docs/INDEPENDENT-REPLAY-V3-REVIEW.md and docs/evidence/independent-replay/v3-no-guest/REPORT.md. WIP only; do not deliver.
