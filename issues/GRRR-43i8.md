@@ -4,11 +4,11 @@ title: "Bug: independent replay accounting profile unavailable"
 status: closed
 priority: 0
 type: task
-labels: [milestone-1, integration, discovered-by-developer, delivered]
+labels: [milestone-1, integration, discovered-by-developer, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:58:45Z
+updated_at: 2026-10-24T13:58:46Z
 content_hash: "sha256:962d9dbc6a01615daff6061b2d492af5044aa1cd4b053d8ee73ae990ee580019"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
