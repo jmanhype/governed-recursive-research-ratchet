@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:48:00Z
-content_hash: "sha256:2f40d30def46ba2e84381b050cc52e31decb9556298d3d41c48f0ff5f3808ddd"
+updated_at: 2026-10-24T13:52:30Z
+content_hash: "sha256:20ae634c82b6a74437e5f3d8bfa5c46c16af36876e5a6d78b46b2c54ca74f2e6"
 blocks: [GRRR-z3w9]
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
@@ -741,3 +741,43 @@ status: rejected
 
 ### proof
 - [ ] AC #5 documentation-facing reviewability: delivered repository docs contradict the completed protected postflight state.
+
+### 2026-10-24T13:52:30Z speed
+## Implementation Evidence — DOCS_STALE correction
+
+PROOF:
+- Commit: 784f33aac492f10d92a5661bb455be49619b209b, story/GRRR-43i8; worktree clean. Documentation only; no implementation or protected-state changes.
+- Current repository record: docs/evidence/replay-accounting-registration/completed-install.md. Earlier proposal/test records are explicitly historical; implementation narrative says installed/still stopped.
+- `/usr/bin/python3 /tmp/grrr43-verify-install-evidence.py`: inspection 6/6 and installation 6/6 captured manifest checksums PASS; canonical binding/receipt/baseline and aggregate accounting assertions PASS. Raw private rows/logs not committed.
+- `/usr/bin/python3 -m unittest discover -s tests -p unit_replay_accounting_registration.py`: 30 passed, 0 failures/errors/skips, 1.753s.
+- `/opt/homebrew/bin/python3 -m unittest discover -s tests -p unit_replay_accounting_registration.py`: 30 passed, 0 failures/errors/skips, 1.535s.
+- `git diff --check`, `git diff --cached --check`: PASS. `pvg verify` explicit six changed Markdown paths: PASS, 0 scanned/0 issues (not a substantive content validator).
+- Coverage not remeasured for docs-only correction. Prior implementation full suites 228/228 each; prior Python 3.9 line coverage PersistentBudget 96%, Budget 91%. Full suites not rerun here because implementation unchanged.
+- Parent protected install, verify and read-only postflight PASS: version 2, four profiles, stopped=1, pending=3, known encumbered [0,1108265788,0] in each cumulative scope, unknowns unresolved/spendable null, execution_authorized=false. Exact hashes recorded in completed-install.md.
+
+### AC Verification
+| AC | Evidence/result |
+|---|---|
+| 1 | Reviewed canonical baseline a0c0d9770f8cc90c7eaa31f0cb13f672b5be0e84c4030f582f2b0e83c751ee5f plus parent audit identifies unchanged store/history/unknowns; PASS. |
+| 2 | Completed parent protected registration and receipt verification; original DB and prior-active hashes retained; PASS. |
+| 3 | Unchanged ceilings/holds, POC profile, no fresh allowance or stop release, unknowns unresolved; PASS. |
+| 4 | Separate recovery approval/review guard retained. Recovery/stop release denied/not-run, not claimed executed. |
+| 5 | Parent captured inspect/verify/postflight PASS; exact hashes/identity/metadata recorded; previous unit tamper/partial regressions retained. |
+| 6 | Stopped and execution_authorized=false remain; actual replay, promotion, admission and merge denied/not-run. |
+
+LEARNINGS:
+- Historical pre-install text must be visibly marked once protected registration succeeds.
+- Registration success is not recovery/replay authority; unknowns and holds remain explicit.
+- Publish non-sensitive hash/aggregate proof, not raw private baseline rows; canonical baseline and inspect-file hashes are distinct.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Docs-only correction 784f33aac492f10d92a5661bb455be49619b209b; focused 30/30 both interpreters; captured hashes independently checked.
+- No root/sudo/QEMU/VM, /Library mutation, recovery/replay/promotion/admission/merge/push by this worker.
+
+### proof
+- [x] DOCS_STALE corrected; protected registration/postflight success documented with exact immutable references.
+- [x] Six AC dispositions explicitly mapped without claiming recovery or replay execution.
+- [x] Earlier pre-install sections marked historical; private logs/rows excluded from repository.
