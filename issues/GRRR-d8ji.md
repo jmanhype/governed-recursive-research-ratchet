@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
 updated_at: 2026-10-24T20:47:01Z
-content_hash: "sha256:667a78cf17b63fda4b2379c5193c56e922fa8b0847ed4993fafe7b36d313ae1b"
+content_hash: "sha256:5474c5d6d15dd2874a0f3541fe0e370712a018b810cef31c9a229994b2c6881c"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt]
@@ -201,3 +201,36 @@ status: new
 - [ ] Commit authorization is explicitly withheld by the story and has not yet been supplied.
 - [ ] Full-suite blockers remain.
 - [ ] Protected integration remains separately authorized/not-run.
+
+### 2026-10-24T20:47:01Z speed
+## Authoritative Commit-Only Result
+
+Operator authorization was exact: commit the independently reviewed stop-only recovery WIP package; do not deliver/accept, merge, recover protected state, release stop, replay, promote, admit, mutate production, or push.
+
+Result:
+- Story commit: caf08f31e07138c8d49e29b916cbf6b67d3483a6
+- Subject: feat(GRRR-d8ji): preserve reviewed stop-only recovery WIP
+- Six package files committed: 859 insertions, 11 deletions.
+- Worktree clean. Story branch is not merged into epic/GRRR-2t3h.
+- All seven independently reviewed source/test/contract hashes were verified unchanged after commit.
+- Updated committed evidence REPORT.md records independent SECURITY_REVIEW: READY_FOR_COMMIT_REVIEW and the exact commit authorization; its SHA256 is 47f7521ee83b96d5435e605212b07aa09ac2e14d2512e6045f09fced49e68026.
+- Complete raw no-guest logs remain external at outputs/grrr-d8ji-no-guest/no-guest.txt SHA256 aa41940ba6288b4a97642188a7b95ed67f32e2e3a26894dd872180034b99015d.
+- Protected active/prior/receipt hashes remained unchanged; no privileged effect occurred.
+
+Story remains BLOCKED and not delivered because:
+1. both full suites have ConservativeGenesis disk-floor setup errors and nine unexecuted class tests;
+2. Python 3.9 has a separate term-resistant process-group cessation failure;
+3. separately authorized live recovery integration is 0 executed;
+4. protected recovery/stop release/replay/promotion/admission remain denied.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Commit-only authorization fulfilled; claim released.
+
+### proof
+- [x] Independently reviewed WIP preserved on story/GRRR-d8ji.
+- [ ] AC6 clean full-suite proof remains unmet.
+- [ ] AC7 protected live integration remains not-run.
+- [ ] No delivery, acceptance, merge, recovery, replay, promotion, admission, production mutation, or push.
