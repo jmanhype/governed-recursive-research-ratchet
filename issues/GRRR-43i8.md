@@ -9,9 +9,9 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T13:47:59Z
-content_hash: "sha256:7f8124b42ced591c1f0119d81990eb9313d2e9f78343600a81eeef5f6c3ad6b8"
+content_hash: "sha256:f0a66d46cc441a50c6136f7a50e7e80db88861e94da624e9abb6e427cca70271"
 blocks: [GRRR-z3w9]
-follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n]
+follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
 ---
 
@@ -495,11 +495,13 @@ status: in_progress
 - 2026-10-24T13:44:35Z status: open -> in_progress
 - 2026-10-24T13:44:35Z auto-follows: linked to predecessor GRRR-my5n
 - 2026-10-24T13:44:35Z claimed by dev-GRRR-43i8
+- 2026-10-24T13:47:59Z status: in_progress -> in_progress
+- 2026-10-24T13:47:59Z auto-follows: linked to predecessor GRRR-gu87
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
-- Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]]
+- Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
 
 ## Comments
 
