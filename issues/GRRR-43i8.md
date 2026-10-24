@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T15:37:44Z
-content_hash: "sha256:d16b9f6927fb91cb9acb0cc87e371f6be3a25ee4e9d552563a91584c9a9a5305"
+content_hash: "sha256:7ada7520ab48ce5ce5061918eb8d8b5372e30e5eb596785814e3f216c5d0db71"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
 closed_at: 2026-10-24T13:58:45Z
 close_reason: "Accepted: registration-only install preserved the exact stopped cumulative store and all conservative holds; committed documentation now records the verified protected install while recovery and replay remain separately denied."
+led_to: [GRRR-z3w9]
 ---
 
 ## Description
@@ -549,6 +550,7 @@ status: in_progress
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
+- Led to: [[GRRR-z3w9]]
 
 ## Comments
 
