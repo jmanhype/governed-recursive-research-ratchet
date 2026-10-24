@@ -1,5 +1,9 @@
 # GRRR-43i8 registration-only verification
 
+> Historical pre-install test evidence. The blocked/not-run installation status
+> below is superseded by [completed-install.md](completed-install.md).
+> Recovery/replay authorization is still absent; original measurements remain unchanged.
+
 Status: implementation WIP, BLOCKED for privileged ACs; not delivered.
 Tested source tree: `8f90d35c9008478c4258f07c171442e84de11235`.
 No protected installation/mutation, root/sudo, stop release, guest/VM/QEMU,

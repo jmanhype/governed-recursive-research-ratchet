@@ -1,4 +1,13 @@
-# Registration-only implementation — not installed
+# Registration-only implementation — installed, still stopped
+
+**Current status (2026-10-24): protected registration, verify and read-only
+postflight PASS.** Version 2 registers all four profiles on the unchanged cumulative
+database. Stopped=1; execution remains unauthorized. See the authoritative
+[completed-install summary](evidence/replay-accounting-registration/completed-install.md)
+for exact hashes, retained holds and denied actions. Installation is not recovery
+or replay authorization, and must not be rerun.
+
+## Historical implementation authorization
 
 GRRR-43i8 continues the reviewed proposal at `f16d4628`. The coordinator recorded
 operator approval for implementation/tests only, using the existing cumulative
@@ -7,7 +16,7 @@ this document describes the new source, not a protected installation receipt.
 
 ## Changed interfaces and invariant
 
-- `research/accounting_registration.py`: standalone stdlib-only future bootstrap
+- `research/accounting_registration.py`: standalone stdlib-only registration bootstrap
   with `inspect`, `install PROTECTED_PLAN SHA256 AUTHORIZATION`, and `verify`.
 - `PersistentBudget`: retains legacy three-profile version 1. Version 2 requires
   the exact four-profile registration, complete root-owned receipt and exact old
@@ -114,7 +123,12 @@ permits only the stopped store; an invalid/missing receipt refuses runtime open.
 Uncertain fsync outcomes are failures, not successful receipts. Retry refuses
 existing/partial state. There is no rollback/reset/cleanup/resume implementation.
 
-## Future parent commands — NOT authorized or executed here
+## Historical pre-install parent command templates — do not rerun
+
+This section records the pre-install procedure, not current outstanding work.
+The parent subsequently performed the separately authorized installation and
+verification recorded in the completed-install summary. This documentation-only
+worker did not execute these commands. Reinstallation refuses existing state.
 
 After independent source review and separate permission to stage the exact
 bootstrap, the future parent may inspect, with stdout captured as evidence:
@@ -140,10 +154,9 @@ reviewed immutable plan path/hash, not unchecked current-file substitutions:
   -I -S -B /Library/GRRR/bootstrap/register-independent-replay verify
 ```
 
-No concrete install plan/hash is supplied because live inspection, independent
-implementation review and privileged approval have not occurred. The parent must
-also capture before/after file metadata/ACLs and original DB hash/device/inode,
-compare complete inventories, and prove all reserve attempts still refuse. Do not
+At the time these templates were written, no concrete install plan/hash was
+available. The completed-install summary now records the exact approved plan,
+review, baseline and postflight hashes. Do not
 invoke these commands from a checkout, ordinary agent, or with elevated privileges
 obtained for a different story. There is deliberately no recovery command.
 
@@ -156,6 +169,9 @@ legacy/new profile validation, stopped duplicate/zero/reopen behavior, scope and
 dimension ceilings, tamper/partial/missing receipts, busy locks and failures before
 and after activation. Non-root checkout invocation is directly tested to refuse.
 
-AC2/5 privileged installation/postflight and AC4 recovery remain **BLOCKED,
-not-run**. AC1's exact live row/provenance audit remains for the future parent:
-this worker has not read protected DB rows. Story stays in_progress, not delivered.
+Protected registration and read-only postflight are now PASS, supported by the
+parent's captured evidence rather than mocked units. The database, original
+binding bytes and all uncertain holds were retained. Recovery itself remains
+denied/not-run under a separate authorization/review gate; replay, promotion,
+admission and merge remain denied/not-run. This worker verified the captured
+checksums and non-sensitive summaries, without executing a protected operation.

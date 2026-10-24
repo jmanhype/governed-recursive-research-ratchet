@@ -1,5 +1,11 @@
 # Independent replay accounting: blocked proposal
 
+> **Historical pre-install proposal (2026-10-23).** Status/authorization and
+> not-installed statements below describe that point in time, not current state.
+> Protected registration subsequently passed; see
+> [completed-install evidence](evidence/replay-accounting-registration/completed-install.md).
+> Recovery and replay remain denied/not-run. Original proposal text is preserved.
+
 Story: GRRR-43i8. Status: **draft, not approved, not installed**.
 
 This document confers no registration, recovery, replay, promotion, admission,
