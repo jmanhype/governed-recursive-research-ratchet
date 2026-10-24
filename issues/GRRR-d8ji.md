@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T20:44:56Z
-content_hash: "sha256:fc7cd5f66ef0cbc6f7a20767460835147059044a048895b73bf9e2a9dcc8db78"
+updated_at: 2026-10-24T20:45:32Z
+content_hash: "sha256:171dbc4bccc7614694d06d90b81bec2904ea28ec0a2f6a2cb835c58642c4132a"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt]
@@ -91,6 +91,29 @@ status: new
 
 
 ## Notes
+## Authorized WIP Commit — NOT DELIVERED
+
+- Operator explicitly authorized committing the independently reviewed GRRR-d8ji stop-only recovery WIP to story/GRRR-d8ji. Authorization expressly excludes delivery/acceptance, merge, protected recovery, stop release, replay, promotion, admission, production mutation and push.
+- Independent review: SECURITY_REVIEW: READY_FOR_COMMIT_REVIEW. Reviewer found no blocking security/architecture defect and independently reran recovery 20/20 and registration 30/30 on both required Pythons. This is not execution approval; crash-durability testing is not exhaustive kill/power-loss/fsync proof.
+- Verified all seven reviewed hashes before editing via shasum -a 256 -c /tmp/grrr-d8ji-reviewed.sha256: 7/7 OK. Only docs/evidence/accounting-recovery/REPORT.md was updated to record review/authorization; reviewed source/test/contract bytes and raw logs remain unchanged.
+- Commit: caf08f31e07138c8d49e29b916cbf6b67d3483a6, branch story/GRRR-d8ji. Six intended files, 859 insertions and 11 deletions. Worktree clean after commit. No push.
+- Updated REPORT.md SHA256: 71adb09aec066034c3fdeda7ea540a5c95d6103c972fe0183e77f8df1950404e.
+- git diff --check and git diff --cached --check passed. Explicit-path pvg verify passed: 4 code/test files scanned, 0 issues. No source changes or test reruns in this commit-only turn; existing final test evidence applies to unchanged source hashes.
+- Full-suite blockers remain unchanged: Python3.9 239 executed, 1 smoke-cessation failure and 1 ConservativeGenesis setup error; Python3.14 239 executed, 1 setup error. Nine class tests unexecuted per interpreter; fixed disk floor unchanged. Focused 20 recovery + 30 registration passed per interpreter. Live integration 0 executed. No protected effects.
+
+## nd_contract
+status: new
+
+### evidence
+- Authorized reviewed WIP commit caf08f31e07138c8d49e29b916cbf6b67d3483a6 preserved; exact source hashes and raw evidence recorded in committed REPORT.md.
+- Claim released after evidence update; story remains open, not delivered or accepted.
+
+### proof
+- [x] Commit-only authorization fulfilled without changing reviewed implementation/test/contract bytes.
+- [x] Independent review READY_FOR_COMMIT_REVIEW recorded with limitations.
+- [ ] AC6: Full-suite blockers and unexecuted tests remain.
+- [ ] AC7: Separate protected integration authorization and live proof remain pending.
+
 ## Implementation Evidence (BLOCKED WIP, not delivered)
 
 PROOF:
