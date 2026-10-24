@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T13:31:24Z
-content_hash: "sha256:9e7bb7902e5a9d9039127630bed1c770408a714ab6118ec9d0f149eb8484fa89"
+content_hash: "sha256:1fc331f18fe291d1e70aae775b0deeea310f37e71f1db79031413ddce68f7bec"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875]
@@ -74,6 +74,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-24.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Parent Preflight Revalidation
 
 - Revalidated story worktree at evidence commit cb9f83364523fc7575e1735910b8a525f5598321 and implementation commit 2dbf825e93376c6df5b974e339ea7846a9bc9165; both story and main worktrees are clean.
