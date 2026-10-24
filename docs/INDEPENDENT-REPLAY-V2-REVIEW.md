@@ -1,5 +1,10 @@
 # GRRR-z3w9 v2 continuation — NOT delivered, installed or live-approved
 
+> Historical v2 evidence. The accounting proposal below is superseded by
+> `INDEPENDENT-REPLAY-V3-REVIEW.md`: GRRR-43i8 registration is accepted, but
+> registration v2 freezes every mutation and grants no execution authority.
+> The old free-space measurement is not current.
+
 ## Concrete preparation artifact
 
 Unprivileged command (no guest, candidate build or candidate execution):

@@ -19,7 +19,7 @@ import uuid
 from typing import Optional
 
 from common import EVALUATOR, RUNNER, GATES, Failure, call, canonical, digest, fields, identifier, require
-from persistent_budget import PersistentBudget, PROFILES as ACCOUNTING_PROFILES
+from persistent_budget import PersistentBudget, ACTIVE, REGISTERED_PROFILES
 from ledger import Ledger, export_snapshot
 from corpus_execution import CorpusExecutor, SUPERVISOR, HELPER, validate_request
 import replay_profile
@@ -68,9 +68,16 @@ def validate_scope(value: dict, mode: str = 'normal') -> dict:
 
 def preflight() -> None:
     """Never inherit the lifecycle smoke's deliberately separate allowance."""
-    require('independent-replay' in ACCOUNTING_PROFILES, 'GateBlocked',
-            'Cumulative campaign accounting has no registered independent-replay profile; '
-            'reviewed migration is required, never initialize a fresh replay allowance')
+    binding = root_record(ACTIVE)
+    require('independent-replay' in REGISTERED_PROFILES
+            and 'independent-replay' in binding.get('profiles', []), 'GateBlocked',
+            'Cumulative campaign accounting has no registered independent-replay profile')
+    # Registration v2 freezes ALL mutations, including reserve/settle/stop.
+    # A review scope cannot override that boundary. Recovery requires a separate
+    # reviewed implementation, not a new allowance or an inferred v3 schema.
+    require(type(binding.get('version')) is int and binding['version'] == 1,
+            'GateBlocked', 'Cumulative campaign accounting is registration-only and frozen; '
+            'separately reviewed recovery implementation and authorization required')
 
 
 def scope_event(kind: str, **values: object) -> dict:

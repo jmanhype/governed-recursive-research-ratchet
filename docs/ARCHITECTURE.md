@@ -2,10 +2,11 @@
 
 ## Status and authority
 
-Proposed minimal executable architecture, pending operator approval of this
-document AND its testable acceptance criteria. This document authorizes no
-implementation, experiments, provisioning, paid services, or promotion. No
-runtime, isolation, reproducibility, or performance claim has yet been proven.
+Approved minimal executable architecture, with implementation in progress.
+The trust boundaries below remain authoritative. This document itself grants no
+additional experiment, provisioning, paid-service, replay, promotion, or merge
+authority; exact authority and runtime proof remain bound to reviewed operator
+records, story evidence, and protected receipts.
 
 Inputs: accepted BUSINESS.md and DESIGN.md, operator architecture answers, and
 dispatcher-reported source metadata dated 2026-10-19. Authoritative source:
@@ -21,8 +22,9 @@ preflight verification. The reported Apache-2.0 license blob is
 1. A separate research runner integrates with PAIVOT without changing pvg core.
    Existing governance remains authoritative; a new orchestration platform would
    duplicate it. DESIGN.md's `pvg research ...` commands remain interface
-   concepts, not installed commands. Before implementation approve a separate
-   runner CLI grammar mapping those intentions to supported pvg operations.
+   concepts, not installed commands. The approved implementation surface is the
+   separate `bin/grrr` executable recorded in
+   `docs/IMPLEMENTATION-APPROVAL-2026-10-20.md`; it does not modify pvg core.
 2. Execute untrusted candidates in a dedicated local VM, with evaluator authority
    outside it under a restricted host identity. Worktrees and a second account
    alone cannot enforce this boundary. A container alternative needs separately
@@ -42,17 +44,34 @@ preflight verification. The reported Apache-2.0 license blob is
 
 ## Components, ownership and current existence
 
-| Component | State | Responsibility / forbidden authority |
+| Component | Architecture / implementation state | Responsibility / forbidden authority |
 |---|---|---|
-| pvg / nd / vlt | Existing tools; compatibility unverified | pvg governs workflow and authorizations; nd tracks references; vlt is subject under test. None is presumed to implement research commands |
+| pvg / nd / vlt | Active governance and target stack | pvg governs workflow and authorizations; nd tracks references; vlt is the accepted frozen target/corpus domain. None implements `pvg research` commands |
 | Operator / PM-Acceptor / adversarial reviewer | Existing roles | Human approves exact targets; reviewers inspect independent evidence, cannot substitute for execution isolation |
-| Research runner | Proposed | Schedules bounded arms and translates lifecycle into CLI/report state; cannot certify defects, change policy, or write ledger directly |
-| Selector adapters | Proposed | Random, deterministic risk-based, optional Jev return ranked public challenge IDs; no protected-fixture or verdict authority |
-| Candidate executor | Proposed | Runs pinned vlt variants in disposable offline VM instances; treats all output as untrusted |
-| Trusted evaluator service | Proposed | Owns policy, protected corpus, gate registry, measurements, replay, evidence store and ledger writes; never runs candidate code in its host process |
-| Admission controller | Proposed logical module, operator-gated | Validates exact approval and gate evidence, authorizes protected contract updates; has no main-merge or production capability |
-| Jev broker | Proposed optional adapter | Operator-controlled sanitized requests, authorization and spend receipts; not reachable by candidate |
-| Export / report adapter | Proposed | Read-only verified snapshots to Markdown/plain text/JSON and optional backups; no authority from report text |
+| Research runner | Approved separate `bin/grrr` executable; bounded lifecycle path implemented | Schedules bounded arms and translates lifecycle into CLI/report state; cannot certify defects, change policy, or write ledger directly |
+| Selector adapters | Architecture retained; three-arm comparison not run | Random, deterministic risk-based, optional Jev return ranked public challenge IDs; no protected-fixture or verdict authority |
+| Candidate executor | Isolated vlt corpus/trusted-observation execution proven; fresh independent replay not run | Runs pinned vlt variants in disposable offline VM instances; treats all output as untrusted |
+| Trusted evaluator service | Protected policy/corpus/accounting/replay prerequisites progressively implemented | Owns policy, protected corpus, gate registry, measurements, replay, evidence store and ledger writes; never runs candidate code in its host process |
+| Persistent accounting | Registration-only `independent-replay` profile installed and verified; store remains stopped and execution-unauthorized | Preserves cumulative usage, uncertain holds, history and stop state; cannot create a fresh allowance or release itself |
+| Admission controller | Open operator-gated milestone capability | Validates exact approval and gate evidence, authorizes protected contract updates; has no main-merge or production capability |
+| Jev broker | Optional future adapter; not started | Operator-controlled sanitized requests, authorization and spend receipts; not reachable by candidate |
+| Export / report adapter | Partial projections implemented; accessible-surface capstone remains open | Read-only verified snapshots to Markdown/plain text/JSON and optional backups; no authority from report text |
+
+### Implementation checkpoint
+
+Accepted prerequisite work includes the bounded trusted-path challenge, unsafe
+baseline blocking, forged-observation rejection, evidence recovery, independent
+trusted stop, frozen isolated vlt corpus validation, replay runtime prerequisites,
+and registration-only independent-replay accounting. GRRR-43i8 is accepted but
+its story branch is not merged until separately authorized.
+
+The next open capability is GRRR-z3w9: verify a defect from fresh trusted
+inputs. Selector comparison, contract admission, report-surface parity, and the
+operator end-to-end capstone remain downstream. No actual independent replay,
+Jev-guided run, Harness²-style adaptation, contract admission, promotion, or
+production mutation is claimed. Sean Chatman's Anti-Cheat Scorecard remains an
+optional evaluator-side audit adapter to be evaluated first among his candidate
+tools; it is not a trusted runtime prerequisite.
 
 These are trust/responsibility boundaries, not a requirement for eight services.
 A small runner and restricted evaluator service may house the logical modules.

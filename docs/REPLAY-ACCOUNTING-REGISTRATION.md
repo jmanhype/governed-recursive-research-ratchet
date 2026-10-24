@@ -1,0 +1,177 @@
+# Registration-only implementation — installed, still stopped
+
+**Current status (2026-10-24): protected registration, verify and read-only
+postflight PASS.** Version 2 registers all four profiles on the unchanged cumulative
+database. Stopped=1; execution remains unauthorized. See the authoritative
+[completed-install summary](evidence/replay-accounting-registration/completed-install.md)
+for exact hashes, retained holds and denied actions. Installation is not recovery
+or replay authorization, and must not be rerun.
+
+## Historical implementation authorization
+
+GRRR-43i8 continues the reviewed proposal at `f16d4628`. The coordinator recorded
+operator approval for implementation/tests only, using the existing cumulative
+ceilings. The proposal's earlier statement that no code exists is historical;
+this document describes the new source, not a protected installation receipt.
+
+## Changed interfaces and invariant
+
+- `research/accounting_registration.py`: standalone stdlib-only registration bootstrap
+  with `inspect`, `install PROTECTED_PLAN SHA256 AUTHORIZATION`, and `verify`.
+- `PersistentBudget`: retains legacy three-profile version 1. Version 2 requires
+  the exact four-profile registration, complete root-owned receipt and exact old
+  binding bytes, plus the unchanged stopped physical database. `independent-replay`
+  is POC-only. Unknown/partial registration fails closed. There is no fresh store.
+- Version 2 connections open SQLite `mode=ro` and skip all chmod/schema/INSERT
+  initialization. Every mutation (reserve, meter, settle, overhead, halt), across
+  every profile and inherited base-class call, uses a live mutation guard. Legacy
+  handles recheck binding identity and absence of partial registration before
+  effects. Legacy stopped settlement behavior is unchanged until registration.
+- Persistent connections/cursors refresh their SQLite authorizer before each
+  execute/executemany/executescript entrypoint, rejecting writes, DDL and PRAGMA
+  after registration even on stale handles. Python 3.9 was measured reusing a
+  prepared authorization despite `cached_statements=0`; rearming prevents that
+  bypass. This is trusted-runtime API enforcement, not a sandbox against arbitrary
+  evaluator code deliberately disabling guards or opening its own SQLite handle.
+  The installer still requires an idle, exclusively controlled parent window;
+  registration during an already executing evaluator transaction is not permitted.
+- Writable incremental `blobopen` access is forbidden unconditionally, including
+  legacy/stale connections and every table/column. It bypasses SQL authorizers
+  and no accounting operation needs it. Only literal `readonly=True` is accepted;
+  native read-only BLOB reads remain available on Python versions supporting them.
+  Python 3.9 explicitly reports that the read-only incremental API is unavailable.
+  This does not revoke a writable handle already opened by older code: all old
+  processes/handles must cease before registration, as required by quiescence.
+- `Budget.reserve`: persisted stopped state is checked before duplicate-key reuse,
+  including zero requests. Changed duplicates do not bypass a stop either.
+- `scripts/replay-root-prepare`: source Budget pin refreshed for this behavior.
+  No installed replay closure was changed. Any future protected closure update is
+  a separately reviewed deployment, not permission inherited from GRRR-w1lt.
+
+Cumulative ceilings are unchanged: POC `[5000,21600000000,3600000000]`, milestone
+inclusive `[15000,86400000000,10800000000]` in cents/execution us/review us.
+Settled actuals plus every outstanding maximum remain in the same database; a
+metered but unsettled reservation retains its maximum. Snapshot records exact raw
+BLOB cells, schema, all reservation/meter/overhead rows, integer cumulative sums,
+and pending count. Historical unknowns remain `unresolved`, spendable is `null`.
+The receipt freezes stopped state and exact database bytes. Changing the stop bit
+or any database content invalidates registration verification: recovery needs a
+new independently reviewed contract and explicit authorization, not an installer
+flag. Admission, promotion, paid calls, and execution stay disabled.
+
+## Installation protocol for independent review
+
+The installer runs only from
+`/Library/GRRR/bootstrap/register-independent-replay`, independently staged from
+`research/accounting_registration.py`, root:wheel 0444 with safe root-owned
+ancestors and no ACLs/hardlinks/symlinks. It pins the canonical CLT Python 3.9.6
+executable SHA, isolated/no-site/no-bytecode flags. Its stdlib is the existing
+root-controlled canonical toolchain, not checkout imports. Parent invocation must
+sanitize the environment **before** launching the interpreter, as below.
+
+Fixed lock order is accounting `launch.lock`, then corpus `v2-launch.lock`.
+Both are held exclusively/nonblocking through verification. Process inventory
+must exclude evaluator UID 320, runner UID 321, and QEMU. **Advisory locks cannot
+exclude a privileged actor that ignores them.** The separately approving parent
+must own the operation window and exclude all other privileged launches, direct
+SQLite tools, settlements, and filesystem writers for the entire operation.
+`exclusive_parent=true` records this obligation; it does not prove it. If that
+operational guarantee cannot be made, installation remains blocked.
+
+Read-only `inspect` requires the exact parent-observed active/database hashes and
+device/inodes recorded in the proposal, exact original campaign/store/prior
+receipt, safe ownership/modes/ACLs, integrity, stopped state and complete closed
+file inventory. It refuses journal/WAL/SHM or prior registration output. A changed
+baseline requires re-audit/review, never changing constants to force a match.
+
+The independently reviewed plan has exactly these fields:
+
+| Field | Required value |
+|---|---|
+| version | integer 1 |
+| baseline | complete canonical `inspect` object, unmodified |
+| installer_sha256 | SHA256 of independently staged bootstrap bytes |
+| review_sha256 | SHA256 of independently approved canonical review JSON |
+| ceilings | exact `CEILINGS` object in the source |
+| profiles | synthetic, offline, trusted-observation, independent-replay, in order |
+| stage | poc |
+| stop_release | false |
+| execution_authorized | false |
+| exclusive_parent | true, only after parent establishes exclusion |
+
+Review JSON is root:wheel 0444 at
+`/Library/GRRR/bootstrap/registration-review-<review_sha256>.json`. Its exact fields:
+`decision="approved-registration-only"`, `installer_sha256`,
+`baseline_sha256=SHA256(canonical(baseline))`, `ceilings`, `stage="poc"`,
+`stop_release=false`, `execution_authorized=false`. The plan is likewise canonical
+JSON without a newline, root:wheel 0444 in bootstrap. Review JSON is a protected
+record of an independent decision, not a signature generated by this installer.
+Root-controlled records and exact authorization arguments are required together;
+generating an approval string is not operator approval.
+
+After all preconditions, installer creates `registration/` exclusively and writes
+`prior-active.json`, `receipt.json`, and `next-active.json` exclusively, root:wheel
+0444. It fsyncs files/directory, makes registration directory 0555, rechecks idle
+processes, active bytes and all baseline metadata/database content, and verifies
+staged bytes. Only `os.replace(next-active.json, active.json)` activates version 2.
+Database bytes/inode never change. Old active bytes remain archived exactly.
+After activation it fsyncs both directories and runs full verification.
+
+Before activation, any staging failure leaves a legacy binding plus partial
+registration: runtime refuses it. After activation, a complete valid receipt still
+permits only the stopped store; an invalid/missing receipt refuses runtime open.
+Uncertain fsync outcomes are failures, not successful receipts. Retry refuses
+existing/partial state. There is no rollback/reset/cleanup/resume implementation.
+
+## Historical pre-install parent command templates — do not rerun
+
+This section records the pre-install procedure, not current outstanding work.
+The parent subsequently performed the separately authorized installation and
+verification recorded in the completed-install summary. This documentation-only
+worker did not execute these commands. Reinstallation refuses existing state.
+
+After independent source review and separate permission to stage the exact
+bootstrap, the future parent may inspect, with stdout captured as evidence:
+
+```sh
+/usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C \
+  /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 \
+  -I -S -B /Library/GRRR/bootstrap/register-independent-replay inspect
+```
+
+After a reviewer approves the exact baseline, installer, plan, and operation
+window, and the operator separately approves registration, a **root parent only**
+can invoke the following template. `PLAN_PATH` and `PLAN_SHA256` must be the exact
+reviewed immutable plan path/hash, not unchecked current-file substitutions:
+
+```sh
+/usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C \
+  /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 \
+  -I -S -B /Library/GRRR/bootstrap/register-independent-replay install \
+  "$PLAN_PATH" "$PLAN_SHA256" "REGISTER_STOPPED_INDEPENDENT_REPLAY:$PLAN_SHA256"
+/usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C \
+  /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 \
+  -I -S -B /Library/GRRR/bootstrap/register-independent-replay verify
+```
+
+At the time these templates were written, no concrete install plan/hash was
+available. The completed-install summary now records the exact approved plan,
+review, baseline and postflight hashes. Do not
+invoke these commands from a checkout, ordinary agent, or with elevated privileges
+obtained for a different story. There is deliberately no recovery command.
+
+## Acceptance boundary
+
+No-guest unit tests simulate privileged identity/ownership only in temporary
+fixtures; they test real SQLite contents and atomic filesystem operations but do
+not prove root deployment. Tests cover carry-forward, unsettled metering holds,
+legacy/new profile validation, stopped duplicate/zero/reopen behavior, scope and
+dimension ceilings, tamper/partial/missing receipts, busy locks and failures before
+and after activation. Non-root checkout invocation is directly tested to refuse.
+
+Protected registration and read-only postflight are now PASS, supported by the
+parent's captured evidence rather than mocked units. The database, original
+binding bytes and all uncertain holds were retained. Recovery itself remains
+denied/not-run under a separate authorization/review gate; replay, promotion,
+admission and merge remain denied/not-run. This worker verified the captured
+checksums and non-sensitive summaries, without executing a protected operation.

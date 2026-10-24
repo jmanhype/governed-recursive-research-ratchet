@@ -51,7 +51,8 @@ def vector(value: dict) -> dict:
 
 class Budget:
     """One protected database for POC and milestone; POC is never reset away."""
-    def __init__(self, path: Path, *, existing: bool = False) -> None:
+    def __init__(self, path: Path, *, existing: bool = False, read_only: bool = False,
+                 connection_factory: type = sqlite3.Connection) -> None:
         require(os.getuid() == EVALUATOR, 'Unauthorized', 'Budget requires evaluator identity')
         require(not path.is_symlink() and path.parent.stat().st_uid == EVALUATOR
                 and path.parent.stat().st_mode & 0o077 == 0,
@@ -61,8 +62,13 @@ class Budget:
         self.existing_identity = (path.stat().st_dev, path.stat().st_ino) if existing else None
         self.failed = False
         self.stop_persistence_unknown = False
-        self.db = sqlite3.connect(path.as_uri() + '?mode=rw' if existing else path,
-                                  uri=existing, timeout=5, check_same_thread=False, isolation_level=None)
+        self.read_only = read_only
+        require(not read_only or existing, 'InvalidInput', 'Read-only accounting must already exist')
+        self.db = sqlite3.connect(path.as_uri() + ('?mode=ro' if read_only else '?mode=rw') if existing else path,
+                                  uri=existing, timeout=5, check_same_thread=False, isolation_level=None,
+                                  cached_statements=0, factory=connection_factory)
+        if read_only:
+            return  # No chmod, schema initialization, or ignored INSERT on frozen stores.
         os.chmod(path, 0o600)
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.executescript("""
@@ -78,6 +84,10 @@ class Budget:
           INSERT OR IGNORE INTO state VALUES(1,0);
         """)
 
+    def require_mutable(self) -> None:
+        """Dynamic guard shared by every mutator, including inherited/base-class calls."""
+        require(not self.read_only, 'Stopped', 'Accounting registration is read-only; reviewed recovery required')
+
     def authorized(self, principal: int) -> None:
         """Payload roles cannot satisfy the current process identity requirement."""
         require(principal == EVALUATOR and os.getuid() == EVALUATOR,
@@ -86,6 +96,7 @@ class Budget:
     def halt(self) -> None:
         """A persistent stop bit survives missing receipts or storage errors."""
         with self.lock:
+            self.require_mutable()
             self.db.execute('UPDATE state SET stopped=1 WHERE id=1')
 
     @storage_guard
@@ -93,6 +104,7 @@ class Budget:
                 stage: str = 'poc', binding: str | None = None) -> dict:
         """Reserve all dimensions atomically; changed duplicate keys are rejected."""
         self.authorized(principal)
+        self.require_mutable()
         require(not self.failed, 'Stopped', 'Accounting store failed; recovery required')
         identifier(run)
         identifier(key)
@@ -104,13 +116,13 @@ class Budget:
         with self.lock:
             try:
                 self.db.execute('BEGIN IMMEDIATE')
+                require(self.db.execute('SELECT stopped FROM state').fetchall() == [(0,)],
+                        'Stopped', 'Budget stopped; explicit recovery required')
                 previous = self.db.execute('SELECT id,binding FROM reservations WHERE key=?', (key,)).fetchone()
                 if previous:
                     require(bytes(previous[1]) == body, 'StaleBinding', 'Reservation key changed request')
                     self.db.commit()
                     return {'id': previous[0], 'run': run, 'maximum': maximum, 'dispatch_lease': False}
-                require(self.db.execute('SELECT stopped FROM state').fetchone()[0] == 0,
-                        'Stopped', 'Budget stopped; explicit recovery required')
                 rows = self.db.execute('SELECT stage,maximum,actual FROM reservations').fetchall()
                 for ceiling_stage, ceiling in CEILINGS.items():
                     # Every POC charge also counts against milestone; milestone
@@ -141,6 +153,7 @@ class Budget:
         intentionally absent from the operator/runner request allowlist.
         """
         self.authorized(principal)
+        self.require_mutable()
         identifier(reservation)
         identifier(evidence, True)
         usage = vector(usage)
@@ -162,6 +175,7 @@ class Budget:
     def settle(self, principal: int, reservation: str, actual: dict) -> dict:
         """Only a previously stored trusted meter receipt can release a hold."""
         self.authorized(principal)
+        self.require_mutable()
         identifier(reservation)
         fields(actual, {'reservation', 'receipt'})
         require(actual['reservation'] == reservation, 'StaleBinding', 'Receipt binds another reservation')
@@ -185,6 +199,7 @@ class Budget:
     def disclose_overhead(self, principal: int, category: str, duration_us: int, key: str) -> None:
         """Preparation/selector overhead is disclosed, never netted from execution."""
         self.authorized(principal)
+        self.require_mutable()
         identifier(key)
         require(category in ('preparation', 'selector') and type(duration_us) is int
                 and 0 <= duration_us <= 2**63 - 1, 'InvalidInput', 'Invalid overhead record')
