@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T12:30:25Z
-content_hash: "sha256:61da423f4aa8693c94412b3ddd0b2e1592d2f81f30d7756f0333c5d9a3cf8103"
+content_hash: "sha256:699c25c0827ef1b3b28e594f925cd117e6b10947c612452b8fa79e10b142411d"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf]
@@ -459,3 +459,26 @@ status: blocked
 - [x] Independently reviewed registration-only implementation and no-guest tests are complete.
 - [ ] Exact operator approval for protected staging/read-only inspect is missing.
 - [ ] Protected registration/postflight, recovery, and replay remain not-run.
+
+### 2026-10-24T12:30:25Z speed
+## Operator Authorization — protected staging and inspect only
+
+APPROVED [2026-10-24]: The operator supplied the exact requested authorization for GRRR-43i8 commit 2dbf825e93376c6df5b974e339ea7846a9bc9165 and bootstrap SHA256 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab.
+
+Authorized effects:
+1. Stage that exact bootstrap only at /Library/GRRR/bootstrap/register-independent-replay as root:wheel 0444.
+2. Run read-only inspect using the pinned isolated CLT Python 3.9.6.
+3. Preserve staging/inspection evidence.
+
+Explicit denials: no registration install, no active.json or budget.sqlite change, no stop clearing/recovery, no replay, no promotion, no merge.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Preflight confirmed code ancestry, exact source hash, clean worktree, absent destination, unchanged active binding hash/identity/profiles, and no visible privileged runner.
+- Current free space is below the prior 15 GiB execution floor (about 12.9 GB), but the authorized action is only a tiny bootstrap copy plus read-only inspection; no VM/registration execution is authorized.
+
+### proof
+- [ ] Protected staging and read-only inspect pending.
+- [ ] Registration/installation/recovery/replay remain denied.
