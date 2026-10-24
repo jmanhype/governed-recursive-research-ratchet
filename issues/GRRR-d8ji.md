@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T22:39:53Z
-content_hash: "sha256:a7096791a318ed59e07b8144845de1a30ae93f2c857d54217f63628ae9df291f"
+updated_at: 2026-10-24T22:40:53Z
+content_hash: "sha256:7b0ca90d8e7e2c75d04196ca8824787925a289dddba724e4a4dca39ef22e3ab0"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -369,3 +369,26 @@ status: blocked
 - [ ] Final exact-byte review must include the launcher hash pin and protected integration package.
 - [ ] Separately authorized live recovery integration remains not-run.
 - [ ] No protected recovery, stop release, replay, promotion, admission, merge, production mutation, or push.
+
+### 2026-10-24T22:40:53Z speed
+## Final Exact-Byte Follow-up Review
+
+SECURITY_REVIEW: READY_FOR_PROTECTED_RECOVERY_REVIEW
+
+- Reviewed complete focused diff caf08f3..65bb7945299851c078f5b48e9083d3aee13a7c4a.
+- Launcher change is exactly the replay_smoke.py source-pin update; no thresholds, assertions, deadlines, or gates weakened.
+- Fresh post-KILL process-group absence remains mandatory after TERM uncertainty; late inventories fail closed.
+- Recorded evidence reports 253/253 on both interpreters with zero failures/errors/skips and expressly withholds protected/live authority.
+- Reviewer verified final hashes including replay_smoke.py 819ab8e37ebaf138eca6b69abee78bf356124809b64ca60c28ecd5b957749612, unit_replay_cessation.py d3ee8811a442d02936ee39c4eb16c608c12f4caeba8f163158841f461737bbd2, replay-root-prepare 5908b3134f2cc13bc6c10e046630c0e0bfe8742618acc36a75be855e6b645a8c, and evidence REPORT.md 18b3197c80fc7f1437ccd9e0b48f49c3b0b3cd8959e9ecfeed4a53f3b7f7daca.
+- This authorizes progression to protected-recovery review only, not protected execution, live recovery, replay, admission, or production.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Independent reviewer performed no edits or privileged operations.
+
+### proof
+- [x] Final no-guest implementation and focused fix reviewed.
+- [ ] Protected recovery review/authorization/installation remains pending.
+- [ ] Live integration remains not-run.
