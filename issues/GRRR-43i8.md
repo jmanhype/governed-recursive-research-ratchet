@@ -4,7 +4,7 @@ title: "Bug: independent replay accounting profile unavailable"
 status: in_progress
 priority: 0
 type: task
-labels: [milestone-1, integration, discovered-by-developer]
+labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
