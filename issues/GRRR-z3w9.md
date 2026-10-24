@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-24T15:47:31Z
-content_hash: "sha256:f5b4f8642a7b879e15d458e4dd5bb70954282c26057c240e6c82ac72a7329bbd"
+updated_at: 2026-10-24T16:12:45Z
+content_hash: "sha256:b6c30d8be08227bac514de9b61c9f302137f40f5a98aa8b68f3fe9b308ad9207"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8]
@@ -434,3 +434,28 @@ status: blocked
 - [ ] Recovery implementation/review remains separately required.
 - [ ] Disk capacity must be restored above the fixed floor.
 - [ ] Actual independent replay remains not-run and separately authorized.
+
+### 2026-10-24T16:12:45Z speed
+## Read-only Capacity/Recovery Preflight
+
+Live reinspection measured root free space at 12,924,252,160 bytes, below the 15 GiB replay/preparation floor. Protected accounting remains version 2 with independent-replay registered, stopped, and execution-unauthorized; active binding hash 97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5; no partial next-active artifact exists.
+
+Identified regenerable cache targets, subject to explicit operator cleanup authorization:
+- 1.82 GiB Codex Sparkle installation cache at /Users/speed/Library/Caches/com.openai.codex/org.sparkle-project.Sparkle/Installation (not the active Codex runtime under /Users/speed/.cache/codex-runtimes).
+- 0.76 GiB Chrome cache under /Users/speed/Library/Caches/Google/Chrome/Default; Chrome is currently running, so cleanup should either skip it or use a safe shutdown/app-controlled path.
+- 0.198 GiB pip cache.
+- Smaller regenerable Homebrew/go-build caches.
+Potential non-runtime cleanup excluding active Codex runtimes and protected GRRR evidence is approximately 3.1 GiB, sufficient to clear the reported 15.35 GB preparation threshold if Chrome cache is included or otherwise combined with purgeable/system recovery. No deletion occurred.
+
+Recovery gap remains unchanged: registration deliberately has no recovery command; a separate reviewed recovery design/implementation and exact operator authorization are required before stop release. Actual replay remains denied/not-run.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Read-only disk and cache inventory completed; no protected or cache state mutated.
+
+### proof
+- [ ] Explicit disk-cleanup authorization pending.
+- [ ] Recovery implementation/review pending.
+- [ ] Replay remains separately unauthorized.
