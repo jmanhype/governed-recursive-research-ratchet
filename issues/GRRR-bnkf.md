@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-23T18:36:38Z
-content_hash: "sha256:a408bc926b9bd2379cdb2cb717028bda1f3fcf1102e9135782555b03082f1b0d"
+content_hash: "sha256:ebc1d94da71e510e97708211f805cb755ca45544e9ec672e07cc0922846a5711"
 was_blocked_by: [GRRR-c875]
 follows: [GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 assignee: dev-GRRR-bnkf
 closed_at: 2026-10-23T18:36:37Z
 close_reason: "Accepted: final corpus v2.2 provides independently hash-verified real isolated fixture validation for 24 defects and 8 clean controls across 96 deterministic repetitions, while downstream replay, admission, comparison, and promotion remain explicitly blocked."
-led_to: [GRRR-z3w9, GRRR-w1lt, GRRR-43i8]
+led_to: [GRRR-z3w9, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 ---
 
 ## Description
@@ -584,7 +584,7 @@ status: in_progress
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-c875]]
 - Follows: [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]]
-- Led to: [[GRRR-z3w9]], [[GRRR-w1lt]], [[GRRR-43i8]]
+- Led to: [[GRRR-z3w9]], [[GRRR-w1lt]], [[GRRR-43i8]], [[GRRR-d8ji]]
 
 ## Comments
 

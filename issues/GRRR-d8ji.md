@@ -1,18 +1,19 @@
 ---
 id: GRRR-d8ji
 title: "Bug: registered independent-replay accounting lacks recovery implementation"
-status: blocked
+status: in_progress
 priority: 0
 type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
 updated_at: 2026-10-24T22:30:36Z
-content_hash: "sha256:ac1edbbde4a3c30154fcc5bd777b2bed43adc58f1a868767b7a1f6ead8f36fdd"
+content_hash: "sha256:34bc8075b0be548c9af052e029982390dd16ab13ba8d13151bb161dd359e1f93"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
-follows: [GRRR-43i8, GRRR-w1lt]
+follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
 labels: [blocked]
+assignee: dev-GRRR-d8ji
 ---
 
 ## Description
@@ -167,12 +168,15 @@ LEARNINGS:
 - 2026-10-24T20:45:32Z status: in_progress -> open
 - 2026-10-24T20:45:32Z released by speed
 - 2026-10-24T20:47:01Z status: open -> blocked
+- 2026-10-24T22:30:36Z status: blocked -> in_progress
+- 2026-10-24T22:30:36Z auto-follows: linked to predecessor GRRR-bnkf
+- 2026-10-24T22:30:36Z claimed by dev-GRRR-d8ji
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
 - Blocked by: [[GRRR-43i8]]
-- Follows: [[GRRR-43i8]], [[GRRR-w1lt]]
+- Follows: [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]]
 
 ## Comments
 
