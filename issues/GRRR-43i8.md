@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T12:38:34Z
-content_hash: "sha256:1f50af85965b3a7d80181623888ab61c1dac9eed64145bb7d3c870138e6bfd02"
+updated_at: 2026-10-24T13:27:55Z
+content_hash: "sha256:86ab0395790d210f228b061d16c2a6de612699e7fa3bb117c4e0deab9dcaaf3c"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf]
@@ -529,3 +529,29 @@ status: in_progress
 - [x] Exact registration plan/review independently approved with hashes.
 - [ ] Separate operator authorization and root-owned staging of review/plan remain pending.
 - [ ] Registration installation/postflight, stop recovery, and replay remain not-run.
+
+### 2026-10-24T13:27:55Z speed
+## Operator Authorization — registration-only install
+
+APPROVED [2026-10-24]: The operator supplied exact authorization for registration-only installation using installer SHA256 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab, baseline SHA256 a0c0d9770f8cc90c7eaa31f0cb13f672b5be0e84c4030f582f2b0e83c751ee5f, review SHA256 fe0cfdc4d761630801e7c2b5c4266c36e933f0b16ee23d31f34f43871417d8eb, and plan SHA256 24e6fa0d6ae3f9bd4a4cd8dec8dcf1f8d464c2eec0e61224516c91ee2f74341c.
+
+Authorized effects:
+1. Stage the exact root-owned immutable review and plan under /Library/GRRR/bootstrap.
+2. Run the reviewed installer's registration-only install command.
+3. Run protected verify.
+4. Preserve original budget.sqlite bytes/inode/history and stopped state.
+
+Explicit denials: no stop release or recovery, no replay, no promotion/admission, no merge, no fresh database/allowance.
+
+Preflight revalidated clean story/evidence HEAD cb9f83364523fc7575e1735910b8a525f5598321, exact installer/review/plan/baseline bindings, active version-1 binding hash e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95, absent registration directory and protected plan/review destinations, and no visible privileged runner. Free space is about 12.47 GB; registration is tiny and replay remains separately blocked by the 15 GiB floor.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator authorization and live preflight recorded before protected effects.
+
+### proof
+- [ ] Root-owned review/plan staging pending.
+- [ ] Registration-only install and protected verify pending.
+- [ ] Stop recovery and replay remain denied/not-run.
