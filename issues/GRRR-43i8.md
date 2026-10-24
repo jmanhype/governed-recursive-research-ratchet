@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T13:58:46Z
-content_hash: "sha256:962d9dbc6a01615daff6061b2d492af5044aa1cd4b053d8ee73ae990ee580019"
+content_hash: "sha256:e3ecefaa974087ac7ceaa050857fc978be569c8fc0973733ef57504d88fb5d41"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
 closed_at: 2026-10-24T13:58:45Z
@@ -75,6 +75,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-24.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-24]: DOCS_STALE rework is closed and the full delivery now meets all six registration-only ACs.
 
