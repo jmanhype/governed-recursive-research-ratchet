@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T21:35:19Z
-content_hash: "sha256:7c9191394e80dd5d945361f32dc8b793c0d71b0699946f0559574e4868b1448c"
+updated_at: 2026-10-24T22:30:36Z
+content_hash: "sha256:ac1edbbde4a3c30154fcc5bd777b2bed43adc58f1a868767b7a1f6ead8f36fdd"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt]
@@ -254,3 +254,34 @@ status: blocked
 
 ### proof
 - [ ] Post-reboot free space, swap, disk-floor suite, and Python 3.9 smoke test require remeasurement.
+
+### 2026-10-24T22:30:36Z speed
+## Post-Reboot Verification
+
+The operator completed the authorized reboot. Live boot state was confirmed about 53 minutes after boot.
+
+Capacity recovery:
+- Free space rose from roughly 12.2 GB before reboot to 23,303,909,376 bytes after reboot.
+- Swap usage fell from roughly 3.6 GiB to 0 bytes.
+- Both required interpreters reran the exact ConservativeGenesis suite after reboot:
+  - /usr/bin/python3: 9/9 passed, exit 0.
+  - /opt/homebrew/bin/python3: 9/9 passed, exit 0.
+- The disk/preparation-space blocker is cleared.
+
+Remaining blocker:
+- The exact Python 3.9 test `tests.unit_replay_smoke.RuntimeSmoke.test_real_term_resistant_group_is_killed_within_deadline` still fails in isolation with `False != True` at tests/unit_replay_smoke.py:153.
+- Therefore the prior failure was not merely full-suite ordering or swap pressure.
+- No threshold or assertion was weakened.
+
+Evidence directory: outputs/grrr-reboot-verification/ with both ConservativeGenesis logs/exit codes and the isolated Python 3.9 smoke log/exit code.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Reboot evidence captured; no protected effect.
+
+### proof
+- [x] Disk floor and swap blockers cleared.
+- [ ] Python 3.9 term-resistant process-group cessation failure remains.
+- [ ] Full clean suites and later protected integration remain pending.
