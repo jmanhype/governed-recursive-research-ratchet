@@ -9,12 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T15:37:44Z
-content_hash: "sha256:7ada7520ab48ce5ce5061918eb8d8b5372e30e5eb596785814e3f216c5d0db71"
+content_hash: "sha256:547ead4f794ce3731de4f9aff521e01469d3176572c0d063d8872e4e457b16b3"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
 closed_at: 2026-10-24T13:58:45Z
 close_reason: "Accepted: registration-only install preserved the exact stopped cumulative store and all conservative holds; committed documentation now records the verified protected install while recovery and replay remain separately denied."
 led_to: [GRRR-z3w9]
+blocks: [GRRR-d8ji]
 ---
 
 ## Description
@@ -546,9 +547,11 @@ status: in_progress
 - 2026-10-24T13:47:59Z auto-follows: linked to predecessor GRRR-gu87
 - 2026-10-24T13:58:45Z status: in_progress -> closed
 - 2026-10-24T13:58:45Z dep_removed: no_longer_blocks GRRR-z3w9
+- 2026-10-24T20:19:06Z dep_added: blocks GRRR-d8ji
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-d8ji]]
 - Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
 - Led to: [[GRRR-z3w9]]
 
