@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:31:24Z
-content_hash: "sha256:1fc331f18fe291d1e70aae775b0deeea310f37e71f1db79031413ddce68f7bec"
+updated_at: 2026-10-24T13:31:44Z
+content_hash: "sha256:0b4134287670a529de3b08fdeda8cf5875c913b6edd1d9a9876af064d0cf9399"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875]
@@ -623,3 +623,38 @@ status: delivered
 - [x] AC #4: stopped state and separate recovery boundary preserved.
 - [x] AC #5: protected preflight/postflight verification.
 - [x] AC #6: replay remains blocked on original cumulative store.
+
+### 2026-10-24T13:31:44Z speed
+## Implementation Evidence
+
+Protected registration-only install completed at exact implementation commit 2dbf825e93376c6df5b974e339ea7846a9bc9165 using independently reviewed installer/baseline/review/plan hashes. Exact install and verify outputs plus direct root read-only postflight are preserved under outputs/grrr-43i8-protected-inspect/protected-install/. Original database inode and SHA256 remain unchanged; stopped=1; execution_authorized=false; no recovery/replay/promotion/admission/merge.
+
+### CI/Test Results
+Commands run:
+- Exact protected install command.
+- Exact protected verify command.
+- Direct root read-only metadata/hash/SQLite postflight.
+Summary: all PASS; prior focused 30/30 and full 228/228 suites passed on both required Pythons.
+
+### Commit
+- Branch: story/GRRR-43i8
+- SHA: 2dbf825e93376c6df5b974e339ea7846a9bc9165
+
+### AC Verification
+| AC | Status |
+|---|---|
+| 1 exact reviewed inventory/plan | PASS |
+| 2 root-owned registration preserving original DB | PASS |
+| 3 cumulative ceilings/no reset | PASS |
+| 4 separate recovery, still stopped | PASS |
+| 5 protected preflight/postflight | PASS |
+| 6 replay blocked on cumulative store | PASS |
+
+## nd_contract
+status: delivered
+
+### evidence
+- Install result, verify result, direct postflight, hashes, and receipt recorded.
+
+### proof
+- [x] All six GRRR-43i8 ACs verified.
