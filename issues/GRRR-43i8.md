@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:27:55Z
-content_hash: "sha256:86ab0395790d210f228b061d16c2a6de612699e7fa3bb117c4e0deab9dcaaf3c"
+updated_at: 2026-10-24T13:31:24Z
+content_hash: "sha256:9c7fd45ba2930adc2e12af4fd047b444286ddf807281fa00868980443318fb25"
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf]
@@ -555,3 +555,57 @@ status: in_progress
 - [ ] Root-owned review/plan staging pending.
 - [ ] Registration-only install and protected verify pending.
 - [ ] Stop recovery and replay remain denied/not-run.
+
+### 2026-10-24T13:31:24Z speed
+## Implementation Evidence — protected registration-only install
+
+PROOF:
+- Implementation commit 2dbf825e93376c6df5b974e339ea7846a9bc9165; repository evidence HEAD cb9f83364523fc7575e1735910b8a525f5598321; both worktrees clean before authorized effects.
+- Operator authorized exact installer 74975c0da25303f05a7701008d87a22be7d8e6ed029bdee619f626a0d6ee10ab, baseline a0c0d9770f8cc90c7eaa31f0cb13f672b5be0e84c4030f582f2b0e83c751ee5f, review fe0cfdc4d761630801e7c2b5c4266c36e933f0b16ee23d31f34f43871417d8eb, and plan 24e6fa0d6ae3f9bd4a4cd8dec8dcf1f8d464c2eec0e61224516c91ee2f74341c.
+- Root-owned staged review and plan retained exact hashes and modes 0444. Install command used the pinned isolated CLT Python 3.9.6 and exact REGISTER_STOPPED_INDEPENDENT_REPLAY authorization.
+- Install returned registered=true, stopped=true, execution_authorized=false; binding SHA256 97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5; receipt SHA256 fb2132f1dce4867d0a28895215ef9d5f9ad1ea947b3a373de5efd7ddad04f397.
+- Protected verify exited 0. Active binding is version 2 with ordered profiles synthetic,offline,trusted-observation,independent-replay and registration hash fb2132f1dce4867d0a28895215ef9d5f9ad1ea947b3a373de5efd7ddad04f397.
+- Direct root read-only postflight proved exact inventories; root:wheel 0444 active/prior/receipt/plan/review/installer; evaluator-owned original store directory 0700 and database 0600; original database inode 682589447 unchanged; database SHA256 2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf unchanged; no journal/WAL/SHM; SQLite integrity ok; state 1|1; store identity exact; reservations 11, metering 8, overhead 0.
+- Cumulative known encumbered remains [0,1108265788,0] in both POC and milestone; three pending holds remain; historical_unknowns=unresolved and spendable=null. Prior active version 1 bytes are preserved at registration/prior-active.json with SHA256 e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95.
+- No stop release, recovery, replay, promotion, admission, production mutation, or merge. execution_authorized and stop_release remain false.
+
+### CI/Test Results
+Commands run:
+- Protected install using exact root-only command with plan 24e6fa0d6ae3f9bd4a4cd8dec8dcf1f8d464c2eec0e61224516c91ee2f74341c.
+- Protected verify using exact root-only command.
+- Direct root read-only metadata/hash/SQLite postflight.
+- Prior no-guest verification at implementation: focused 30/30 and full 228/228 on both required Pythons.
+Summary: protected install PASS, protected verify PASS, read-only postflight PASS, no skipped protected gates.
+
+### Commit
+- Branch: story/GRRR-43i8
+- Code SHA: 2dbf825e93376c6df5b974e339ea7846a9bc9165
+- Evidence SHA: cb9f83364523fc7575e1735910b8a525f5598321
+- Protected evidence: outputs/grrr-43i8-protected-inspect/protected-install/
+
+### AC Verification
+| AC | Requirement | Evidence | Status |
+|---|---|---|---|
+| 1 | Independently reviewed exact migration/recovery plan and inventory without mutation | Review-approved proposal, read-only inspect baseline, independent plan review | PASS |
+| 2 | Root-owned exclusive atomic registration preserving bytes/history | Exact reviewed plan/review staged; installer verify and direct postflight | PASS |
+| 3 | Explicit cumulative ceilings; no reset/recast/stop release/zeroing | Receipt and postflight preserve ceilings, unknowns, holds, stopped DB | PASS |
+| 4 | Recovery requires separate authorization/review and leaves promotion disabled | stopped=1; stop_release=false; no recovery command/run | PASS |
+| 5 | Preflight/postflight identity/hash/ownership/profile/balance/stopped/fail-closed proof | Inspect, verify, direct root postflight, prior fault tests | PASS |
+| 6 | Replay blocked on cumulative store; no fresh DB | Same inode/hash DB; execution_authorized=false; GRRR-z3w9 remains blocked | PASS |
+
+LEARNINGS: Registration can safely alter only a root-owned binding while freezing the original evaluator-owned database. Direct protected postflight is necessary because code review and no-guest tests cannot prove installation state.
+DISCOVERED_BUG: none in this protected execution.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Protected install/verify/read-only postflight artifacts and hashes recorded.
+
+### proof
+- [x] AC #1: exact reviewed plan and inventory.
+- [x] AC #2: reviewed root-owned registration.
+- [x] AC #3: cumulative ceilings preserved without reset.
+- [x] AC #4: stopped state and separate recovery boundary preserved.
+- [x] AC #5: protected preflight/postflight verification.
+- [x] AC #6: replay remains blocked on original cumulative store.
