@@ -1,17 +1,16 @@
 ---
 id: GRRR-43i8
 title: "Bug: independent replay accounting profile unavailable"
-status: in_progress
+status: open
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:31:44Z
-content_hash: "sha256:0b4134287670a529de3b08fdeda8cf5875c913b6edd1d9a9876af064d0cf9399"
+updated_at: 2026-10-24T13:40:34Z
+content_hash: "sha256:cf3176a4e4807dc22e6e457e94451dbd6938ab1b0fce4d775f013a90cfb64f58"
 blocks: [GRRR-z3w9]
-assignee: dev-GRRR-43i8
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 ---
 
@@ -443,6 +442,8 @@ status: in_progress
 - 2026-10-24T12:30:25Z auto-follows: linked to predecessor GRRR-bnkf
 - 2026-10-24T13:31:24Z status: in_progress -> in_progress
 - 2026-10-24T13:31:24Z auto-follows: linked to predecessor GRRR-c875
+- 2026-10-24T13:40:34Z status: in_progress -> open
+- 2026-10-24T13:40:34Z released by speed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
