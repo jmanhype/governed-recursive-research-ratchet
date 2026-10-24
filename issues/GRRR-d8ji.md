@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T20:47:01Z
-content_hash: "sha256:5474c5d6d15dd2874a0f3541fe0e370712a018b810cef31c9a229994b2c6881c"
+updated_at: 2026-10-24T21:35:19Z
+content_hash: "sha256:7c9191394e80dd5d945361f32dc8b793c0d71b0699946f0559574e4868b1448c"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt]
@@ -234,3 +234,23 @@ status: blocked
 - [ ] AC6 clean full-suite proof remains unmet.
 - [ ] AC7 protected live integration remains not-run.
 - [ ] No delivery, acceptance, merge, recovery, replay, promotion, admission, production mutation, or push.
+
+### 2026-10-24T21:35:19Z speed
+## Operator-Authorized Host Reboot
+
+The operator explicitly requested a host reboot after the authorized cache cleanup, Chrome/Spotify quit, and macOS purge failed to clear the fixed 15,350,000,000-byte preparation floor. Expected purpose is to release swap/transient memory and process/filesystem pressure without deleting more files or changing thresholds.
+
+Pre-reboot state:
+- epic/GRRR-2t3h clean at 6afd643df51a6a2f046512dfc3fbe7572dd8d67.
+- story/GRRR-d8ji clean at caf08f31e07138c8d49e29b916cbf6b67d3483a6.
+- GRRR-d8ji remains blocked/not delivered; GRRR-z3w9 remains blocked.
+- No protected recovery, stop release, replay, promotion, admission, production mutation, merge, or push is authorized or performed.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Reboot requested after recorded capacity failures.
+
+### proof
+- [ ] Post-reboot free space, swap, disk-floor suite, and Python 3.9 smoke test require remeasurement.
