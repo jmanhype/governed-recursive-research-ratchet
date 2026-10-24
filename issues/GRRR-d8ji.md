@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T22:30:36Z
-content_hash: "sha256:34bc8075b0be548c9af052e029982390dd16ab13ba8d13151bb161dd359e1f93"
+updated_at: 2026-10-24T22:38:39Z
+content_hash: "sha256:870c23b5ab492ee3ec3b70d77ae944f5e00cda8e4ad8b6983de4ca7bcee04706"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -92,6 +92,43 @@ status: new
 
 
 ## Notes
+## Post-reboot focused cessation fix — no-guest gates PASS
+
+PROOF:
+- Authorized focused commit: 65bb7945299851c078f5b48e9083d3aee13a7c4a on story/GRRR-d8ji, parent caf08f31e07138c8d49e29b916cbf6b67d3483a6. Clean worktree. Four files: research/replay_smoke.py (phase-scoped uncertainty and post-inventory deadline check), scripts/replay-root-prepare (one source hash pin), new tests/unit_replay_cessation.py and evidence REPORT.md.
+- Actual historical host-specific trigger remains unproven: exact Python3.9 test passed 5/5 before editing; instrumented real run showed normal TERM/KILL/absence. Deterministic single TERM observation TimeoutExpired reproduced False!=True with the same unchanged real process-group helper. Global uncertainty poisoned a later valid KILL/absence proof; uncertainty now resets only on entering KILL. A second regression proves late inventory cannot claim success beyond deadline. Persistent unknown KILL observation still fails closed. No assertions, TERM5/KILL2/total7s/ps0.2s limits or disk floors changed.
+- RED: /usr/bin/python3 -m unittest discover -s tests -p unit_replay_cessation.py ran5, failed2 before fix. GREEN same command ran5/pass both Pythons.
+- Final commands run on BOTH /usr/bin/python3 (3.9.6) and /opt/homebrew/bin/python3 (3.14.3):
+  - -m unittest tests.unit_replay_smoke.RuntimeSmoke.test_real_term_resistant_group_is_killed_within_deadline, five repetitions per interpreter: all5 pass.
+  - -m unittest discover -s tests -p unit_replay_cessation.py: 5/5 pass.
+  - -m unittest discover -s tests -p unit_replay_smoke.py: 12/12 pass.
+  - -m unittest discover -s tests -p unit_replay_accounting_recovery.py: 20/20 pass.
+  - -m unittest discover -s tests -p unit_replay_accounting_registration.py: 30/30 pass.
+  - -m unittest discover -s tests -p 'unit_*.py': 253/253 pass, all nine ConservativeGenesis tests executed.
+  - -m py_compile research/replay_smoke.py tests/unit_replay_cessation.py scripts/replay-root-prepare: exit0.
+- All final runs: exit0, zero failures/errors/skips/warnings. Coverage instrumentation not measured.
+- pvg verify research/replay_smoke.py tests/unit_replay_cessation.py scripts/replay-root-prepare docs/evidence/accounting-recovery/REPORT.md --format=text: PASS, 2 code/test files scanned, 0 issues. git diff --check and staged diff check PASS.
+- Final raw evidence: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-no-guest/cessation-final.txt SHA256 b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433. Initial diagnostics, RED and stale-pin failures retained beside it; exact hashes in committed docs/evidence/accounting-recovery/REPORT.md.
+- Source hashes: replay_smoke.py 819ab8e37ebaf138eca6b69abee78bf356124809b64ca60c28ecd5b957749612; unit_replay_cessation.py d3ee8811a442d02936ee39c4eb16c608c12f4caeba8f163158841f461737bbd2; replay-root-prepare 5908b3134f2cc13bc6c10e046630c0e0bfe8742618acc36a75be855e6b645a8c.
+- Live integration0 executed. No root/sudo, protected reads/writes, recovery, stop release, guest/replay, promotion, admission, production mutation, merge or push. Earlier independent package review is not claimed as review of this subsequent cessation fix.
+
+LEARNINGS:
+- Observation uncertainty is phase-local: a bad TERM observation requires KILL; fresh verified post-KILL absence can prove cessation, while unknown or late KILL observations cannot.
+- Source hash pins must change with their source; unchanged closure tests correctly caught the stale pin before the final clean run.
+- Keep deterministic failure reproduction distinct from an unproven intermittent host-specific cause.
+
+## nd_contract
+status: new
+
+### evidence
+- Focused fix committed at 65bb7945299851c078f5b48e9083d3aee13a7c4a; no-guest proof clean on both required interpreters. Claim released; no delivery/acceptance.
+
+### proof
+- [x] AC6: Focused/full no-guest suites pass on both Pythons, no unexecuted classes/skips.
+- [x] Deadline exhaustion and persistent uncertain observation remain failures; real KILL/absence success proven.
+- [ ] Independent review of later cessation fix is separate from the earlier package review.
+- [ ] AC7: Separately authorized parent live integration remains pending; no recovery accepted.
+
 ## Authorized WIP Commit — NOT DELIVERED
 
 - Operator explicitly authorized committing the independently reviewed GRRR-d8ji stop-only recovery WIP to story/GRRR-d8ji. Authorization expressly excludes delivery/acceptance, merge, protected recovery, stop release, replay, promotion, admission, production mutation and push.
