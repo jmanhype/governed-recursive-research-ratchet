@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-24T16:12:45Z
-content_hash: "sha256:b6c30d8be08227bac514de9b61c9f302137f40f5a98aa8b68f3fe9b308ad9207"
+updated_at: 2026-10-24T16:21:55Z
+content_hash: "sha256:e27320bd02ee56a6caa724e96c96e6003e2abac0417d8a18465ec359cb19ade2"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8]
@@ -459,3 +459,22 @@ status: blocked
 - [ ] Explicit disk-cleanup authorization pending.
 - [ ] Recovery implementation/review pending.
 - [ ] Replay remains separately unauthorized.
+
+### 2026-10-24T16:21:55Z speed
+## Operator Authorization — regenerable cache cleanup only
+
+APPROVED [2026-10-24]: remove only the Codex Sparkle Installation cache, Chrome Default Cache/Code Cache, pip cache, Homebrew cache, and go-build cache for GRRR-z3w9 capacity recovery.
+
+Preserve all GRRR evidence, protected accounting, replay inputs, active Codex runtimes, repositories, and production data.
+
+Denied: recovery, stop release, replay, promotion, admission, production mutation, and push.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Cleanup has not started; exact target inventory and protected-state hash recorded by parent.
+
+### proof
+- [ ] Authorized cache cleanup pending.
+- [ ] Recovery/replay remain denied.
