@@ -1,17 +1,18 @@
 ---
 id: GRRR-43i8
 title: "Bug: independent replay accounting profile unavailable"
-status: open
+status: in_progress
 priority: 0
 type: task
 labels: [milestone-1, integration, discovered-by-developer, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
-updated_at: 2026-10-24T13:40:35Z
-content_hash: "sha256:07a2822d3eef709f7d8bed7337ab755ef27909d5a4d0c4916c335e6ced04de99"
+updated_at: 2026-10-24T13:44:35Z
+content_hash: "sha256:3b31d2ba77c1c7f4fcc367c2b219ef61fb49c4f62d7a4f0cc087418b679097c2"
 blocks: [GRRR-z3w9]
-follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875]
+follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n]
+assignee: dev-GRRR-43i8
 ---
 
 ## Description
@@ -454,11 +455,14 @@ status: in_progress
 - 2026-10-24T13:31:24Z auto-follows: linked to predecessor GRRR-c875
 - 2026-10-24T13:40:34Z status: in_progress -> open
 - 2026-10-24T13:40:34Z released by speed
+- 2026-10-24T13:44:35Z status: open -> in_progress
+- 2026-10-24T13:44:35Z auto-follows: linked to predecessor GRRR-my5n
+- 2026-10-24T13:44:35Z claimed by dev-GRRR-43i8
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
-- Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]]
+- Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]]
 
 ## Comments
 
