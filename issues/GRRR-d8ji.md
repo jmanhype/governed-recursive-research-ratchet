@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:56:41Z
-content_hash: "sha256:4d93604d797a75d8b2fdd40bdd2179316db466c0e0c24a9be24c2befd068681b"
+updated_at: 2026-10-25T16:58:05Z
+content_hash: "sha256:7f86525d57a46820c56641967ddafc32f92279f7207dd1ff81d3e91c4eb4fb78"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -92,7 +92,27 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-10-25]: Independent full evidence-based re-review of 0fa26e4cf6f0c35b19fb6f1f75259932b00a086e closes both DOCS_STALE blockers and the documentation-freshness gate. Runtime-smoke documents phase-local TERM uncertainty reset only on entering KILL, fresh timely absence, persistent/invalid/deadline failures; architecture accurately distinguishes installed stop-only v3 from workflow approval and preserves unresolved/null uncertainty, history/holds and denied runtime writes. Eight-doc generalized historical scoping and links reviewed.
 
+Reviewed full story/diff and unchanged implementation/authority/ancestry against all seven ACs. Fresh static ladder: no stub markers; public production APIs typed; no new config or cross-cutting bypass. Seven source/test hashes independently match prior exact-byte reviews. Fresh four documentation check runs PASS48/48, zero failures; git diff --check PASS and worktree clean. verify-delivery PASS9/9. Both external manifests rehashed9/9 OK; raw full/focused proof hash b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433 retained and trustworthy: each required interpreter253 full,20 recovery,30 registration passed without skips/errors/warnings. No implementation test rerun needed for unchanged sources. Separately authorized real parent install/verify success, consumed-authority refusal and12/12 UID320 mutation refusals substantiate AC7; no protected operations repeated by PM. Diff overrun explained by bounded independently reviewed cessation prerequisite fix, docs and evidence, not replay wiring. Coverage percentage explicitly not measured.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Independent PM reviewed exact delivery0fa26e4, unchanged source hashes, test raw evidence and protected success/refusal manifests.
+- Fresh docs48/48, delivery9/9 and manifests9/9; both previous documentation contradictions corrected.
+
+### proof
+- [x] AC1: Exact independently reviewed transition/authority/lock/publication/crash contract and source.
+- [x] AC2: Original identity/history/ceilings/three holds and unresolved/null uncertainty preserved.
+- [x] AC3: Canonical immutable ancestry, append-only success/uncertain receipts.
+- [x] AC4: No-guest negative cases and controlled real duplicate/API/SQL/BLOB refusals fail closed.
+- [x] AC5: Separate parent authorization, no developer privileged effects, no downstream authority.
+- [x] AC6: Both required interpreter full/focused raw passing proof verified against unchanged source.
+- [x] AC7: Distinct separately authorized real success/refusal gate recorded; no replay or reconciliation approved.
+- [x] Documentation freshness: both blockers and adjacent historical records reconciled.
 
 ## nd_contract
 status: delivered
