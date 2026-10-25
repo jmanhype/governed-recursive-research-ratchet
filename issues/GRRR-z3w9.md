@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T23:27:54Z
-content_hash: "sha256:2ed8259785d741b6a90fb39896eb9b2119b8ed7dd1acbe90b29668c9aa74b855"
+updated_at: 2026-10-25T23:31:34Z
+content_hash: "sha256:551d5e8ac4690c953ce9f47885de1fc9e7862e1115b20be53d750de5c4f4be79"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87]
@@ -111,6 +111,41 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-25 GRRR-z3w9 bounded re-dispatch — STILL BLOCKED, NOT DELIVERED
+
+Read-only review made no source, test, documentation, commit, push, or protected-state change. No safe story-scoped work can advance an AC under this dispatch's denials: every AC terminates in actual trusted reconstruction, spendable reservation, fresh VM replay, retained live receipt/fault evidence, or PM acceptance.
+
+Checks run at story/GRRR-z3w9 f94f306f94172f6dbf7ca6aa893f93d2e8376ed9:
+- Story and prior notes reread through `pvg nd show GRRR-z3w9`; v4 report/reviews and exact source locations reopened.
+- Worktree clean; `git diff --check` and `git diff --cached --check` exited 0.
+- All 8 entries in v4 `source-SHA256SUMS` and all 10 entries in v4 `SHA256SUMS` reported OK.
+- `git diff --exit-code epic/GRRR-2t3h..HEAD -- research/accounting_registration.py research/accounting_recovery.py research/persistent_budget.py tests/unit_replay_cessation.py` exited 0.
+- Current `/System/Volumes/Data` capacity: 17,181,126,656 bytes available; preparation margin 1,831,126,656 bytes; replay margin 1,074,999,296 bytes. Both fixed floors pass.
+- Full 283-test suites were intentionally not repeated because no file changed and the live story already records 283/283 OK on both required interpreters.
+
+Exact unchanged blockers:
+- `research/replay.py:69-86` refuses v3 as stop-only read-only with unresolved history, `spendable=null`, and all runtime mutations denied; `research/persistent_budget.py:145-155,168-182` enforces read-only accounting and denies non-read SQL. Spendability/reconciliation authority is still absent.
+- `research/replay.py:333-335,389-425` requires evaluator identity, preflight, and a fresh reservation; `research/accounting_recovery.py:82-95` retains `allowed_mutations=[]` and `execution_authorized=false`.
+- `tests/integration/independent_replay.py:26-37` requires the actual evaluator identity and real retained evidence; `scripts/replay-root-prepare:240-258` requires exact UID/GID/groups and immutable installed closure. Identity setup and protected installation are absent/denied.
+- Explicit replay authorization, independent final review/installation, all four fresh live VM modes/receipts, retained failure/two-failure proof, and independent PM acceptance remain absent.
+- Capacity now passes but is only a prerequisite; it cannot satisfy any replay AC.
+
+No replay or integration/live read-only execution, guest/VM/QEMU execution, UID/GID setup, spendability reconciliation, promotion/admission, production mutation, `/Library/GRRR` write, `active.json`/`budget.sqlite` mutation, privileged action, cache cleanup, merge, push, or recursive delegation occurred. Releasing claim; story remains blocked/open and must not be delivered.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Read-only story/evidence/source review at f94f306f94172f6dbf7ca6aa893f93d2e8376ed9; worktree clean; all v4 source/evidence manifest entries OK; both capacity floors pass.
+
+### proof
+- [x] No additional safe no-guest work was identified under this dispatch's hard denials.
+- [ ] AC #1: fresh trusted reconstruction, spendable reservation, and actual VM isolation remain unproven.
+- [ ] AC #2: live specification-confirmed independent reproduction remains unproven.
+- [ ] AC #3: actual complete ReplayReceipt with every mandatory gate remains absent.
+- [ ] AC #4: required real integration success/fault modes remain unexecuted.
+- [ ] AC #5: durable live retained-failure/two-failure-stop sequence remains unproven.
+
 ## V5 capacity-cleared no-guest unit rerun — STILL BLOCKED, NOT DELIVERED
 
 PROOF:
