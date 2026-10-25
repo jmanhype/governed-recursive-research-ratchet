@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
 updated_at: 2026-10-25T16:56:41Z
-content_hash: "sha256:40619295c453c7d50164eeb497034d5aeaa154cef4af89426621d7a39b886179"
+content_hash: "sha256:4d93604d797a75d8b2fdd40bdd2179316db466c0e0c24a9be24c2befd068681b"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -797,3 +797,63 @@ status: rejected
 ### proof
 - [ ] Mandatory documentation-freshness gate: exact current cessation and stop-only accounting behavior documented consistently.
 - [x] AC1-7 substantive implementation/no-guest/live evidence reviewed; no downstream execution authority granted.
+
+### 2026-10-25T16:56:41Z speed
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- /usr/bin/python3 /tmp/grrr-d8ji-doc-rework-check.py
+- /opt/homebrew/bin/python3 /tmp/grrr-d8ji-doc-rework-check.py
+- /usr/bin/python3 /tmp/grrr-d8ji-doc-check.py
+- /opt/homebrew/bin/python3 /tmp/grrr-d8ji-doc-check.py
+- pvg verify docs/ARCHITECTURE.md docs/REPLAY-RUNTIME-SMOKE.md docs/REPLAY-ACCOUNTING-REGISTRATION.md docs/REPLAY-ACCOUNTING-RECOVERY-PROPOSAL.md docs/evidence/replay-accounting-registration/no-guest.md docs/evidence/replay-accounting-registration/completed-install.md docs/evidence/replay-accounting-registration/frozen-runtime.md docs/evidence/replay-accounting-registration/blob-guard.md --format=text
+- git diff --check; git diff --cached --check; git status --short; git rev-parse HEAD
+Summary: rework documentation checks12/12 PASS per interpreter; original documentation/evidence checks12/12 PASS per interpreter; total48 checks,0 failures/skips/warnings; all commands exit0. Checks cover exactly8 Markdown changes, no implementation/tests changes, conflict/fence/local-link validation, precise KILL-phase semantics, precise current architecture row and historical provenance/current recovery pointers. Existing evidence checker also revalidates all9 manifest files and12/12 live refusals. pvg verify PASS0 issues,0 code files scanned (Markdown unsupported; explicit substantive checks supplied). Diff/staged diff PASS; committed worktree clean.
+- No unit suites rerun for docs-only rework. Existing unchanged-source implementation proof remains: Python3.9.6 and3.14.3 each full253/253, recovery20/20, registration30/30, cessation5/5, smoke12/12, exact cessation test5/5 repetitions; zero failures/errors/skips/warnings. Raw evidence at /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-no-guest/cessation-final.txt SHA256 b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433. Exact commands, source hashes and raw protected artifacts remain in prior proof and docs/evidence/accounting-recovery/REPORT.md.
+- Coverage percentage not instrumented/measured; AC coverage7/7, all PM DOCS_STALE targets corrected. No new implementation runtime/live test claim.
+
+### Commit
+- Branch: story/GRRR-d8ji
+- SHA: 0fa26e4cf6f0c35b19fb6f1f75259932b00a086e
+- Parent delivery SHA:734554707374f10c3c17b1e788d6fa2c3678bdd4; unchanged implementation SHA:65bb7945299851c078f5b48e9083d3aee13a7c4a.
+- Eight docs-only files,46 insertions/13 deletions. No root/sudo/protected-state mutation, reconciliation, replay, promotion, admission, production mutation, merge or push. No PM acceptance.
+
+### PM rework verification
+- docs/REPLAY-RUNTIME-SMOKE.md now states uncertainty reset only on entering SIGKILL, fresh valid timely post-KILL absence required, persistent KILL uncertainty/malformed inventory/deadline exhaustion fail closed. No deadlines or implementation changed.
+- docs/ARCHITECTURE.md current table/checkpoint now records stop-only v3 stopped=0, original inode/history/holds, unresolved unknowns/spendable=null/allowed_mutations=[]/execution_authorized=false and every runtime write denied. Also corrects GRRR-43i8 merged checkpoint at6afd643.
+- Related registration narrative/proposal and four registration evidence records clearly label historical stopped-v2/recovery-not-run claims and link current recovery proof, retaining original measurements. No historical logs/scores rewritten.
+
+### AC Verification
+| AC | Evidence / location | Status |
+|---|---|---|
+| 1 | Exact implementation/review/transition unchanged; ACCOUNTING-RECOVERY contract and runtime-smoke semantics reconciled | PASS |
+| 2 | Parent before/after evidence preserves inode682589447/history/ceilings/holds3; architecture matches stopped0, unresolved/null, empty mutations and no execution | PASS |
+| 3 | Canonical intent/receipt/completion and original ancestry remain unchanged; registration records historical with current link | PASS |
+| 4 | Prior recovery20/registration30 cases per Python and duplicate plus12/12 live refusals retained; no protected bytes changed by rework | PASS |
+| 5 | Documentation-only unprivileged rework; separate exact parent authority remains bounded; no replay/production authority | PASS |
+| 6 | Prior both-interpreter full253/253 and focused evidence unchanged, no errors/failures/skips; fresh docs checks48/48 | PASS |
+| 7 | Prior separately authorized stop-only install/verify success and controlled refusals preserved; historical pending statements scoped; downstream gates remain separate | PASS |
+
+LEARNINGS:
+- Initial delivery updated the recovery pair but missed adjacent current-state architecture and runtime-smoke wording; rework searched related registration/proposal/evidence narratives rather than only the PM's two lines.
+- Preserve old checkpoint hashes/state as historical evidence and link current proof instead of rewriting original measurements.
+- TERM observation uncertainty is not globally sticky: only fresh timely valid post-KILL absence can resolve cessation; persistent uncertainty still fails closed.
+- EOF proof must be appended as an nd comment after deliver because older Comments occur after the Notes section; prior proof remains append-only.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Docs rework commit0fa26e4cf6f0c35b19fb6f1f75259932b00a086e;48/48 fresh documentation/evidence checks across both required interpreters; pvg verify/diff checks PASS. Implementation/tests and protected state unchanged.
+
+### proof
+- [x] AC #1: Exact reviewed contract and current cessation semantics documented.
+- [x] AC #2: Original cumulative identity/history/holds/unknowns preserved and current v3 accurately described.
+- [x] AC #3: Canonical recovery ancestry retained; historical registration records scoped.
+- [x] AC #4: Fail-closed unit and controlled live refusal evidence unchanged.
+- [x] AC #5: No unauthorized protected effects or broadened authority.
+- [x] AC #6: Both required interpreter implementation suites green with exact artifacts; docs rework checks pass.
+- [x] AC #7: Separately authorized stop-only live success/refusal gates recorded; no replay authority.
