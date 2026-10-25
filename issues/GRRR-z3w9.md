@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T20:45:35Z
-content_hash: "sha256:8608b7fd16a7aa63bcae18c039470202655e3a56fd28dbeecb9e3fafeaa87043"
+updated_at: 2026-10-25T21:00:44Z
+content_hash: "sha256:9054db530656710645e723e3701163bd180cd4dd4aa29ddfc31adb1da08d0f33"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji]
@@ -651,3 +651,31 @@ status: blocked
 
 ### 2026-10-25T20:45:26Z speed
 BLOCKED: V3 stop-only recovery is accepted but remains read-only with unknown historical usage, spendable=null, allowed_mutations=[] and execution_authorized=false. Reconciliation and replay are prohibited. Source WIP c2c19ae92f4d318d0892bc77272b599043c0019f merges epic 38f33c9 without weakening accounting/cessation tests. Focused no-guest suites 117/117 each; full suites 274 executed/pass with one capacity class setup error each; read-only live suite 0 tests with one UID/GID setup error each. See docs/INDEPENDENT-REPLAY-V4-REVIEW.md and docs/evidence/independent-replay/v4-no-guest/REPORT.md. Not delivered.
+
+### 2026-10-25T21:00:44Z speed
+## Authorized Capacity Preflight and Regenerable Cache Cleanup
+
+Scope honored: read-only capacity preflight and regeneration-safe cache cleanup only. No spendability reconciliation, replay, promotion, admission, production mutation, protected accounting mutation, merge, or push.
+
+Measured results:
+- Before cleanup: 10,748,387,328 bytes available on /System/Volumes/Data.
+- Removed only: Codex Sparkle Installation cache (1.9G), pip cache (259M), Chrome Default Cache (3.7M), and Chrome Default Code Cache (2.2M).
+- Process/open-file preflight found Chrome, brew, go, pip3, and Sparkle updater inactive before cache removal.
+- After cleanup: 12,952,973,312 bytes available.
+- Reclaimed: 2,204,585,984 bytes.
+- Homebrew and go-build caches were already 0B and were left untouched.
+- Exact quarantined cache tree was deleted; no grrr-z3w9 cache quarantine residue remains.
+
+Gate result:
+- Preparation floor 15,350,000,000 bytes: FAIL (shortfall 2,397,026,688 bytes).
+- Replay floor 16,106,127,360 bytes: FAIL (shortfall 3,153,300,048 bytes).
+- Floors were not relaxed. GRRR-z3w9 remains open/blocked and capacity remains a mandatory gate.
+
+Protected hashes after cleanup:
+- /Library/GRRR/accounting/active.json cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+- /Library/GRRR/accounting/budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+- /Library/GRRR/accounting/receipt.json 9f64395bec815a6bb2281d3b5d96d2356819138b1929b0a9881c16483c486dde
+- /Library/GRRR/accounting-poc2/active.json 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+- /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
+
+Repository remained clean at epic 38f33c936b8249a57be81aebd639aa40c2f9de55 and story tip f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
