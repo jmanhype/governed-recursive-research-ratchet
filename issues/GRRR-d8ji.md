@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:58:24Z
-content_hash: "sha256:94b7f3913c69a7112243867c4029d5f954f4f256d7a75413df42756543ece984"
+updated_at: 2026-10-25T20:40:36Z
+content_hash: "sha256:da9bb81edfff72471964d9dbfd74d60c3da3c3f116add493729b334aa8270781"
 blocked_by: [GRRR-43i8]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, accepted]
@@ -914,3 +914,21 @@ status: accepted
 - [x] AC6: Both interpreter full/focused evidence verified for unchanged source.
 - [x] AC7: Separately authorized actual parent success/refusal integration verified.
 - [x] Documentation-freshness gate: both exact blockers and adjacent records corrected.
+
+### 2026-10-25T20:40:36Z speed
+## Operator Merge and Dispatch Authorization
+
+APPROVED [2026-10-25]: merge accepted GRRR-d8ji into epic/GRRR-2t3h, then dispatch GRRR-z3w9.
+
+Denied: spendability reconciliation, replay, promotion, admission, production mutation, and push.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Story is closed/accepted at commit 0fa26e4cf6f0c35b19fb6f1f75259932b00a086e; not yet merged.
+
+### proof
+- [ ] Authorized merge pending.
+- [ ] GRRR-z3w9 dispatch pending.
+- [ ] Denials remain active.
