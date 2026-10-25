@@ -2,7 +2,9 @@
 
 > Historical pre-install correction evidence. The pending-install/re-review state
 > below is superseded by [completed-install.md](completed-install.md).
-> Recovery and replay remain denied/not-run; original test measurements are unchanged.
+> Recovery-not-run statements below are historical; separately authorized stop-only
+> v3 proof is in [the current recovery report](../accounting-recovery/REPORT.md).
+> Reconciliation/replay remain denied; original test measurements are unchanged.
 
 Implementation: `2dbf825e93376c6df5b974e339ea7846a9bc9165`.
 The second review correctly identified that SQLite incremental BLOB writes bypass

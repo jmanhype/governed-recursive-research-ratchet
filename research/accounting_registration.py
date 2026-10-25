@@ -131,7 +131,7 @@ def resource(value: dict) -> dict:
     return value
 
 
-def inventory(path: Path, binding: dict) -> dict:
+def inventory(path: Path, binding: dict, *, expected_stop: int = 1) -> dict:
     """Read-only immutable SQLite snapshot; retain exact raw cells, including unknown holds."""
     before = read(path)
     for suffix in ('-journal', '-wal', '-shm'):
@@ -143,7 +143,9 @@ def inventory(path: Path, binding: dict) -> dict:
         tables = {r[1] for r in schema if r[0] == 'table'}
         check(tables == {'reservations', 'metering', 'overhead', 'state', 'store_identity'}
               and all(r[0] in ('table', 'index') for r in schema), 'unexpected schema')
-        check(db.execute('SELECT * FROM state').fetchall() == [(1, 1)], 'registration requires stopped state')
+        check(type(expected_stop) is int and expected_stop in (0, 1)
+              and db.execute('SELECT * FROM state').fetchall() == [(1, expected_stop)],
+              'registration requires stopped state or exact recovery disposition')
         check(db.execute('SELECT * FROM store_identity').fetchall()
               == [(binding['campaign'], binding['store_id'], binding['prior_history_receipt'])], 'store identity differs')
         rows = db.execute('SELECT id,key,binding,run,stage,maximum,actual,receipt FROM reservations ORDER BY id').fetchall()
@@ -194,7 +196,7 @@ def inventory(path: Path, binding: dict) -> dict:
         def cells(values: list) -> list:
             return [[{'blob_hex': v.hex()} if isinstance(v, bytes) else v for v in row] for row in values]
         snapshot = {'schema': schema, 'reservations': cells(rows), 'metering': cells(meters),
-                    'overhead': cells(overhead), 'stopped': 1, 'pending': pending,
+                    'overhead': cells(overhead), 'stopped': expected_stop, 'pending': pending,
                     'known_encumbered': totals, 'historical_unknowns': 'unresolved',
                     'spendable': None, 'database_sha256': sha(before)}
     check(read(path) == before, 'database changed during snapshot')

@@ -1,11 +1,18 @@
-# Registration-only implementation — installed, still stopped
+# Registration-only implementation — historical v2 checkpoint
 
-**Current status (2026-10-24): protected registration, verify and read-only
+**Historical status (2026-10-24): protected registration, verify and read-only
 postflight PASS.** Version 2 registers all four profiles on the unchanged cumulative
 database. Stopped=1; execution remains unauthorized. See the authoritative
 [completed-install summary](evidence/replay-accounting-registration/completed-install.md)
 for exact hashes, retained holds and denied actions. Installation is not recovery
 or replay authorization, and must not be rerun.
+
+The stopped-v2 state below is historical. Separately authorized GRRR-d8ji
+stop-only v3 recovery and refusal proof subsequently passed; see the current
+[recovery report](evidence/accounting-recovery/REPORT.md). Stopped=0 retains the
+original database/history/holds, unresolved unknowns, spendable=null,
+allowed_mutations=[] and execution_authorized=false; all runtime writes remain
+denied. No reconciliation or replay is authorized by either document.
 
 ## Historical implementation authorization
 

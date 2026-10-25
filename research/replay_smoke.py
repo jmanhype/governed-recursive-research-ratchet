@@ -200,13 +200,16 @@ def present_groups(groups: set, deadline: float) -> set:
                 'RecoveryRequired', 'Malformed cessation process inventory')
         if int(columns[0]) in groups:
             active.add(int(columns[0]))
+    require(time.monotonic() < deadline, 'RecoveryRequired', 'Cessation observation deadline exhausted')
     return active
 
 
 def cease_groups(processes: list, deadline: float) -> bool:
     """Signal all service/guest groups concurrently, never multiply grace periods."""
-    uncertain = False
     for sig, allowance in ((signal.SIGTERM, 5), (signal.SIGKILL, 2)):
+        # A failed TERM observation forces KILL, not permanent uncertainty:
+        # only a fresh successful post-KILL inventory may establish absence.
+        uncertain = False
         for process in processes:
             try:
                 os.killpg(process.pid, sig)
