@@ -74,7 +74,7 @@ class RuntimeSmoke(unittest.TestCase):
         loader = importlib.machinery.SourceFileLoader('smoke_root_contract', str(ROOT / 'scripts/replay-root-prepare'))
         module = importlib.util.module_from_spec(importlib.util.spec_from_loader(loader.name, loader))
         loader.exec_module(module)
-        self.assertEqual(set(module.CODE), {'budget.py', 'persistent_budget.py', 'accounting_registration.py', 'ledger.py', 'replay_smoke.py', 'replay.py', 'corpus_evaluation.py',
+        self.assertEqual(set(module.CODE), {'budget.py', 'persistent_budget.py', 'accounting_registration.py', 'accounting_recovery.py', 'ledger.py', 'replay_smoke.py', 'replay.py', 'corpus_evaluation.py',
                          'replay_runtime.py', 'common.py', 'corpus_execution.py', 'execution.py',
                          'trusted_execution.py', 'trusted_install.py', 'trusted_transport.py',
                          'validated_corpus.py', 'replay_prerequisites.py',

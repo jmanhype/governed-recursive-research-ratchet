@@ -4,7 +4,10 @@
 > not-installed statements below describe that point in time, not current state.
 > Protected registration subsequently passed; see
 > [completed-install evidence](evidence/replay-accounting-registration/completed-install.md).
-> Recovery and replay remain denied/not-run. Original proposal text is preserved.
+> Separately authorized stop-only v3 recovery later passed; see the current
+> [recovery report](evidence/accounting-recovery/REPORT.md). Recovery-denied and
+> not-run statements below are historical; reconciliation/replay remain denied.
+> Original proposal text is preserved.
 
 Story: GRRR-43i8. Status: **draft, not approved, not installed**.
 

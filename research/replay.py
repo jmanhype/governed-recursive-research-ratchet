@@ -72,9 +72,15 @@ def preflight() -> None:
     require('independent-replay' in REGISTERED_PROFILES
             and 'independent-replay' in binding.get('profiles', []), 'GateBlocked',
             'Cumulative campaign accounting has no registered independent-replay profile')
+    # The reviewed v3 successor releases only the stop bit. It deliberately
+    # retains unknown usage, null spendability and an empty mutation allowlist.
+    # Replay needs reserve/settle/stop writes, so stop-only recovery cannot
+    # authorize even input preparation. Do not infer authority from stopped=0.
+    require(not (type(binding.get('version')) is int and binding['version'] == 3),
+            'GateBlocked', 'Cumulative campaign accounting v3 is stop-only read-only; '
+            'historical unknowns unresolved, spendable=null, all runtime mutations denied; '
+            'separately reviewed reconciliation and replay authorization required')
     # Registration v2 freezes ALL mutations, including reserve/settle/stop.
-    # A review scope cannot override that boundary. Recovery requires a separate
-    # reviewed implementation, not a new allowance or an inferred v3 schema.
     require(type(binding.get('version')) is int and binding['version'] == 1,
             'GateBlocked', 'Cumulative campaign accounting is registration-only and frozen; '
             'separately reviewed recovery implementation and authorization required')

@@ -9,6 +9,7 @@ from budget import Budget, vector, CEILINGS
 from common import EVALUATOR, canonical, digest, fields, identifier, require
 from trusted_install import immutable, record
 import accounting_registration
+import accounting_recovery
 
 ACTIVE = Path('/Library/GRRR/accounting-poc2/active.json')
 PROFILES = ('synthetic', 'offline', 'trusted-observation')
@@ -71,19 +72,23 @@ class RecheckingConnection(sqlite3.Connection):
 
 def validate_store(binding: dict, path: Path) -> None:
     registered = type(binding.get('version')) is int and binding['version'] == 2
+    recovered = type(binding.get('version')) is int and binding['version'] == 3
     fields(binding, {'version', 'campaign', 'store_id', 'directory', 'prior_history_receipt', 'profiles',
-                     'device', 'inode'} | ({'registration_sha256'} if registered else set()))
-    require(type(binding['version']) is int and binding['version'] in (1, 2)
-            and binding['profiles'] == list(REGISTERED_PROFILES if registered else PROFILES),
+                     'device', 'inode'} | ({'registration_sha256'} if registered or recovered else set())
+           | ({'recovery_sha256'} if recovered else set()))
+    require(type(binding['version']) is int and binding['version'] in (1, 2, 3)
+            and binding['profiles'] == list(REGISTERED_PROFILES if registered or recovered else PROFILES),
             'RecoveryRequired', 'Persistent binding schema differs')
-    if registered:
+    if registered or recovered:
         try:
-            require(accounting_registration.verify()['binding'] == binding,
+            verifier = accounting_recovery.verify if recovered else accounting_registration.verify
+            require(verifier()['binding'] == binding,
                     'RecoveryRequired', 'Registered binding differs')
         except (ValueError, OSError, KeyError, TypeError, sqlite3.Error) as exc:
             require(False, 'RecoveryRequired', 'Incomplete or changed replay registration: ' + str(exc))
     else:
-        require(not os.path.lexists(path.parent.parent / 'registration'),
+        require(not os.path.lexists(path.parent.parent / 'registration')
+                and not os.path.lexists(path.parent.parent / 'recovery'),
                 'RecoveryRequired', 'Partial replay registration requires independent review')
     for key in ('campaign', 'store_id', 'prior_history_receipt'):
         identifier(binding[key], True)
@@ -137,11 +142,18 @@ class PersistentBudget(Budget):
         validate_store(binding, path)
         require(profile in binding['profiles'], 'InvalidInput', 'Profile absent from active accounting binding')
         self.profile = profile
+        self.recovered_readonly = binding['version'] == 3
         self.store_id = binding['store_id']
         self.binding_hash = digest(canonical(binding))
-        super().__init__(path, existing=True, read_only=binding['version'] == 2,
+        super().__init__(path, existing=True, read_only=binding['version'] in (2, 3),
                          connection_factory=RecheckingConnection)
         self.db.set_authorizer(self.authorize_sql)
+
+    def totals(self, principal: int) -> dict:
+        result = super().totals(principal)
+        if self.recovered_readonly:
+            result.update(historical_unknowns='unresolved', spendable=None)
+        return result
 
     def require_mutable(self) -> None:
         """Recheck publication for every profile and stale handle, before any effect."""
@@ -149,7 +161,8 @@ class PersistentBudget(Budget):
         current = record(ACTIVE)
         require(digest(canonical(current)) == self.binding_hash
                 and type(current['version']) is int and current['version'] == 1
-                and not os.path.lexists(self.path.parent.parent / 'registration'),
+                and not os.path.lexists(self.path.parent.parent / 'registration')
+                and not os.path.lexists(self.path.parent.parent / 'recovery'),
                 'RecoveryRequired', 'Accounting registration changed or partial; mutations frozen')
 
     def authorize_sql(self, action: int, first: str, second: str, database: str, source: str) -> int:

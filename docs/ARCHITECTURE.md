@@ -52,7 +52,7 @@ preflight verification. The reported Apache-2.0 license blob is
 | Selector adapters | Architecture retained; three-arm comparison not run | Random, deterministic risk-based, optional Jev return ranked public challenge IDs; no protected-fixture or verdict authority |
 | Candidate executor | Isolated vlt corpus/trusted-observation execution proven; fresh independent replay not run | Runs pinned vlt variants in disposable offline VM instances; treats all output as untrusted |
 | Trusted evaluator service | Protected policy/corpus/accounting/replay prerequisites progressively implemented | Owns policy, protected corpus, gate registry, measurements, replay, evidence store and ledger writes; never runs candidate code in its host process |
-| Persistent accounting | Registration-only `independent-replay` profile installed and verified; store remains stopped and execution-unauthorized | Preserves cumulative usage, uncertain holds, history and stop state; cannot create a fresh allowance or release itself |
+| Persistent accounting | Protected stop-only v3 installed/verified; stopped=0, historical_unknowns=unresolved, spendable=null, allowed_mutations=[], execution_authorized=false | Original DB inode/history/holds and cumulative ceilings preserved; all runtime writes denied; no new allowance, reconciliation or execution authority |
 | Admission controller | Open operator-gated milestone capability | Validates exact approval and gate evidence, authorizes protected contract updates; has no main-merge or production capability |
 | Jev broker | Optional future adapter; not started | Operator-controlled sanitized requests, authorization and spend receipts; not reachable by candidate |
 | Export / report adapter | Partial projections implemented; accessible-surface capstone remains open | Read-only verified snapshots to Markdown/plain text/JSON and optional backups; no authority from report text |
@@ -62,8 +62,14 @@ preflight verification. The reported Apache-2.0 license blob is
 Accepted prerequisite work includes the bounded trusted-path challenge, unsafe
 baseline blocking, forged-observation rejection, evidence recovery, independent
 trusted stop, frozen isolated vlt corpus validation, replay runtime prerequisites,
-and registration-only independent-replay accounting. GRRR-43i8 is accepted but
-its story branch is not merged until separately authorized.
+and registration-only independent-replay accounting. GRRR-43i8 is accepted and
+merged into this epic at `6afd643`. Subsequently, separately reviewed/authorized
+parent GRRR-d8ji stop-only v3 install/verify and controlled refusal proof passed;
+see [recovery evidence](evidence/accounting-recovery/REPORT.md). The original DB
+inode/history and three pending holds remain intact; historical_unknowns=unresolved,
+spendable=null, allowed_mutations=[], execution_authorized=false. Stopped=0 does
+not grant spendability or replay authority. GRRR-d8ji delivery/PM acceptance and
+any branch merge remain separate workflow gates.
 
 The next open capability is GRRR-z3w9: verify a defect from fresh trusted
 inputs. Selector comparison, contract admission, report-surface parity, and the

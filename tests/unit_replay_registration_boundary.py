@@ -35,6 +35,22 @@ class RegistrationBoundary(unittest.TestCase):
                 self.assertIn('registration-only and frozen', str(caught.exception))
                 inputs.assert_not_called()
 
+    def test_stop_only_recovery_refuses_every_mode_before_inputs_or_mutation(self) -> None:
+        binding = {'version': 3, 'profiles': list(REGISTERED_PROFILES),
+                   'recovery_sha256': 'a' * 64}
+        # The active binding does not itself carry spendability/stop authority;
+        # v3's reviewed contract is read-only even when recovery cleared stop.
+        for mode in MODES:
+            with self.subTest(mode=mode), patch('replay.root_record', return_value=binding), \
+                    patch('replay.replay_profile.validate_inputs') as inputs, \
+                    patch('replay.PersistentBudget') as budget:
+                with self.assertRaises(Failure) as caught:
+                    ParentProtocol(mode).preflight()
+                self.assertEqual(caught.exception.record['code'], 'GateBlocked')
+                self.assertIn('v3 is stop-only read-only', str(caught.exception))
+                inputs.assert_not_called()
+                budget.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
