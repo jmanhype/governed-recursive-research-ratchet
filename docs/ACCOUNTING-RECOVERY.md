@@ -1,10 +1,28 @@
-# Proposed stop-only recovery successor (GRRR-d8ji)
+# Stop-only recovery successor (GRRR-d8ji)
 
-**NOT approved for protected execution.** This package is a proposal pending
-independent exact-byte review, explicit operator authorization and parent live
-integration. It is not registration authorization, replay approval, a dispatch
-lease, launch, admission, promotion, merge or production authority. No protected
-state was inspected or changed in developer tests. No live tests have run.
+**Protected stop-only install/verify and controlled refusal proof completed on
+2026-10-25**, after independent exact-byte review and separate operator
+authorizations. The installed implementation is commit
+`65bb7945299851c078f5b48e9083d3aee13a7c4a`. This is not reconciliation,
+registration authorization, replay approval, a dispatch lease, launch, admission,
+promotion, merge or production authority. Developer tests had no protected effects;
+the separately authorized parent performed the protected integration. This
+document records that completed action, not permission to repeat it. Delivery and
+independent PM acceptance are separate workflow gates.
+
+Current recorded result: v3 active SHA256
+`9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8`,
+recovery receipt SHA256
+`6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587`,
+database SHA256
+`9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3`,
+original DB inode `682589447`, state `1|0` (id=1, stopped=0), reservations=11,
+metering=8, overhead=0, pending=3. Unknowns remain unresolved, spendable=null,
+allowed mutations=[], execution_authorized=false. Duplicate install refused
+(exit1, `partial/unknown registration state`); the UID320 controlled probe refused
+all 12 API/connection/cursor/BLOB mutation surfaces without changing protected
+bytes or inventory. See [evidence report](evidence/accounting-recovery/REPORT.md)
+for exact external raw artifacts, hashes and historical limitations.
 
 ## Conservative state machine
 
@@ -102,9 +120,11 @@ every uncertain outcome; never delete artifacts to reuse an authorization.
 Errors are fail-closed ValueError/OSError/SQLite errors; runtime wraps invalid
 binding/ancestry as RecoveryRequired. No repair, allowance reset or row rewriting.
 
-## Parent command grammar and mandatory live gate (NOT RUN)
+## Parent command grammar and mandatory live gate (completed for stop-only action)
 
-After new exact authorization for staging, install the reviewed recovery and
+For any future action, new exact authorization is required. The reviewed staging
+and command contract used for the completed action is retained below; it is not a
+retry instruction. After exact authorization for staging, install the reviewed recovery and
 registration source files root-owned 0444 under `/Library/GRRR/bootstrap/recovery/`.
 The entire import closure and ancestors must be root controlled and ACL-free.
 Stage separate canonical plan/review/authorization records there, also 0444.
@@ -124,8 +144,10 @@ complete receipt ancestry, unchanged source identities/history/three pending hol
 unresolved/null uncertainty and exact stop disposition; exercise permitted success
 plus stale/duplicate authorization and write refusals in separately authorized
 controlled state. No mocks may substitute. Keep raw command outputs and hashes.
-No actual replay, guest or production mutation belongs to this test. Pending live
-proof means **not fully recovered**, irrespective of no-guest unit results.
+No actual replay, guest or production mutation belongs to this test. Missing live
+proof would mean **not fully recovered**, irrespective of no-guest unit results.
+The stop-only success and separately authorized refusal gates are now recorded;
+no spendability reconciliation or actual replay was performed.
 
 ## Developer verification
 

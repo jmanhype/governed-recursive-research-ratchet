@@ -1,6 +1,93 @@
-# GRRR-d8ji evidence — no-guest PASS; live integration BLOCKED
+# GRRR-d8ji evidence — no-guest PASS; protected stop-only integration PASS
 
-## Post-reboot cessation fix, 2026-10-24 22:35 UTC
+## Current protected result, 2026-10-25
+
+This section supersedes all historical pending/live-blocked statements below.
+Implementation commit `65bb7945299851c078f5b48e9083d3aee13a7c4a` passed final
+exact-byte follow-up review (`READY_FOR_PROTECTED_RECOVERY_REVIEW`), followed by
+independent plan review (`APPROVED_STOP_ONLY_RECOVERY_PLAN`). Separate operator
+authorizations covered staging/review, stop-only install/verify, and controlled
+refusal proof. Neither review alone was execution authority. The parent performed
+the protected actions; this documentation-only delivery does not repeat them.
+
+Exact approved closure and inputs (SHA256):
+
+```text
+88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a accounting_recovery.py
+db2d5965a78443fcd4205f8c73950ab0649876624fadfd79a17de086f3b1a038 accounting_registration.py
+dfc4bfcfd56a2fe8cfbc4416f912829b35e2dced5c31b23f181cbed38f63b73f baseline
+478cbae360092c5b6a9659516be75b0a2c7e9d9741509bfbb8b4d6468f77307e plan
+94f9b8113b2b08595783d16223a2c10cdcde6b79de5c09076de1075de5fbec81 review
+9235640b58b973913e9b14f2ade420085daeed91a1e048ad5b2b09da41079a60 authorization
+```
+
+Protected install and verify each exited 0. Active v3 SHA256 is
+`9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8`;
+recovery receipt SHA256 is
+`6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587`.
+Original DB inode `682589447`, evaluator ownership/mode, store/campaign, ceilings,
+schema and historical accounting were retained. The authorized stopped=1→0
+transition changed DB SHA256 from
+`2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf` to
+`9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3`.
+Integrity is ok; state `1|0` means id=1, stopped=0, not a new allowance.
+Reservations=11, metering=8, overhead=0, pending holds=3; known encumbered remains
+`[0,1108265788,0]` in both cumulative scopes. Historical unknowns remain unresolved,
+spendable=null, allowed mutations=[], execution_authorized=false.
+
+Parent postflight verified immutable registration ancestry and exact preserved v2
+prior-active SHA256
+`97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5`.
+Recovery directory is 0555; exactly intent/prior-active/receipt/complete JSON files
+are root:wheel 0444. No uncertain/next-active artifact remains. Locks/quiescence,
+DB integrity and absence of evaluator/runner/QEMU were reverified by the parent.
+
+Duplicate install with consumed authorization exited 1 with
+`partial/unknown registration state`. A parent-staged, hash-pinned probe ran as
+UID320: 12/12 mutations refused (reserve, meter, settle, disclose_overhead, halt;
+connection and cursor execute/executemany/executescript; writable blobopen).
+API calls returned read-only Failure, SQL returned DatabaseError/not authorized,
+and BLOB returned Writable accounting BLOB handles are forbidden. The probe checked
+hashes/state/counts after every refusal. Duplicate and probe postflights retained
+the same active/DB hashes, inode, inventory and recovery artifacts:
+all_refused=true, protected_state_changed=false, execution_authorized=false.
+These are real controlled live refusals, not mocked unit substitutes. They do not
+claim exhaustive live testing of every crash/tamper case covered by unit tests.
+
+External raw evidence is retained at
+`/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-recovery-staging/`;
+private accounting rows are not copied here. The two manifests
+`protected-recovery-SHA256SUMS` and `refusal-proof-SHA256SUMS` bind:
+
+```text
+56476efca0fd6f379cca965eee5ebd0efe2ae1d0e97bc98f01a8a76c717df974 recovery-install.json
+56476efca0fd6f379cca965eee5ebd0efe2ae1d0e97bc98f01a8a76c717df974 recovery-verify.json
+18ba02d0e4044b2775abd09d6ddc06dd6834948ec6ff9d629a63f67dde5ce928 v3-protected-postflight.log
+ccb69d1cf62fa6ec865b96b43dbf05bddc63ab2948292acbd7879b9ed34474ec duplicate-install-refusal.log
+22202128007a20adf323ab8c6b00917c5e578bed0741142aea0c6ebf3f4baf0b duplicate-install-refusal-summary.log
+6caf3d9be0aacb175aa1cbc4d115f0cc646c61135ef7015970181641191efdb1 v3-refusal-probe.json
+18ba02d0e4044b2775abd09d6ddc06dd6834948ec6ff9d629a63f67dde5ce928 refusal-proof-postflight.log
+```
+
+### Current AC verification (supersedes historical table)
+
+| AC | Evidence/status |
+|---|---|
+| 1 | PASS: exact contract/source, final follow-up and independent plan review; stop-only transition matches reviewed inputs. |
+| 2 | PASS: parent before/after identities/inventory preserve cumulative history/holds/unknowns; only authorized stop/physical hash changed. |
+| 3 | PASS: hash-bound intent/receipt/completion, immutable prior-v2/registration ancestry; partial-outcome unit cases retained. |
+| 4 | PASS: 20 recovery/30 registration unit cases per interpreter plus duplicate refusal and 12/12 live runtime refusals; no protected-state change. Crash coverage remains bounded, not exhaustive power-loss proof. |
+| 5 | PASS: developer tests had zero privileged effects; later parent effects had distinct exact authorizations; no authority inherited from registration. |
+| 6 | PASS: both full suites 253/253 and focused gates below, zero failures/errors/skips/warnings at implementation commit. No code/tests changed in this documentation update. |
+| 7 | PASS for this stop-only live gate: actual install/verify success and separately authorized refusals with parent postflights. PM acceptance remains independent. |
+
+No spendability reconciliation, replay, promotion, admission, production mutation,
+merge or push occurred. GRRR-z3w9 remains gated on its own capacity, identity,
+review, spendability and replay approvals. Stop-only recovery is not spendable
+recovery or permission to execute research. Current delivery authorization permits
+only documentation, story commit/delivery and independent PM review.
+
+## Historical post-reboot cessation fix, 2026-10-24 22:35 UTC
 
 This section supersedes the historical full-suite blockers below. Capacity was
 21GiB free at verification; fixed disk floors and all existing assertions remain
@@ -35,8 +122,8 @@ Both `/usr/bin/python3` 3.9.6 and `/opt/homebrew/bin/python3` 3.14.3:
 All final commands exit0; zero failures/errors/skips/warnings. Coverage not measured.
 `pvg verify research/replay_smoke.py tests/unit_replay_cessation.py scripts/replay-root-prepare --format=text`
 passes (2 code/test files scanned, 0 issues); `git diff --check` passes.
-AC6 no-guest gate now passes; AC7 separate authorized live integration remains
-NOT RUN. The earlier independent recovery-package review does not imply independent
+At that checkpoint AC6 passed; AC7 separate authorized live integration was
+NOT RUN (superseded above). The earlier independent recovery-package review did not imply independent
 review of this later cessation fix or grant protected execution authority.
 
 Raw files remain under `outputs/grrr-d8ji-no-guest/` in the enclosing workspace:
@@ -78,7 +165,7 @@ not attributed to the earlier failing source. Final post-repair hashes below are
 the exact source used for the final runs. Raw logs are external solely to preserve
 the story's approximate diff budget; no failed output was discarded.
 
-## Final measured results
+## Historical pre-reboot measured results (superseded)
 
 | Command suffix | /usr/bin/python3 3.9.6 | /opt/homebrew/bin/python3 3.14.3 |
 |---|---|---|
@@ -100,7 +187,7 @@ No process timing, replay code or assertions were changed to mask this failure.
 reported `VERIFY: PASSED (4 files scanned, 0 issues)`, exit0. `git diff --check`
 exit0. Coverage instrumentation not measured. Live integration: **0 executed**.
 
-## Exact source SHA256
+## Historical reviewed package SHA256 (contract document since updated)
 
 ```text
 88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a research/accounting_recovery.py
@@ -110,7 +197,7 @@ ff52097fa7ba0002ea9df2600afbc388a46a48efa3c8c08718f011f135281d5e tests/unit_repl
 88635272ae4f4b7d475f5832bcdb56b265cb2d512f97e3ca1faee6f962521e8c docs/ACCOUNTING-RECOVERY.md
 ```
 
-## AC status
+## Historical pre-reboot AC status (superseded)
 
 | AC | Evidence/status |
 |---|---|
