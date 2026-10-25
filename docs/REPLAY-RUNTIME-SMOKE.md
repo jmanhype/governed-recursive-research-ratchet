@@ -156,8 +156,13 @@ Parent TERM/INT handlers only record stop intent. Checkpoints occur after child
 registration and during work waits; signals cannot unwind Popen between creation
 and registration. Requests enter the same bounded cleanup; repeated TERM/INT is
 ignored during cleanup. Observation failures or exhausted observation deadlines
-never suppress the KILL phase for tracked groups; uncertain cessation stays false
-even if a later observation finds no processes. An uncatchable root SIGKILL/host failure cannot provide
+never suppress the KILL phase for tracked groups. Entering SIGKILL resets
+TERM-phase observation uncertainty; success still requires fresh, valid post-KILL
+group-absence evidence completed within the global deadline. Persistent KILL-phase
+uncertainty, malformed inventory and deadline exhaustion remain failures. This
+supersedes the earlier phase-global uncertainty behavior; see the
+[cessation fix evidence](evidence/accounting-recovery/REPORT.md).
+An uncatchable root SIGKILL/host failure cannot provide
 cessation proof and requires trusted-parent process inspection/recovery.
 
 The installed private prepared marker is read using its actual root-owned 0400

@@ -1,8 +1,10 @@
 # GRRR-43i8 frozen-runtime review correction
 
 > Historical pre-install correction evidence. Installation/postflight subsequently
-> passed: see [completed-install.md](completed-install.md). Recovery and replay
-> remain denied/not-run. Original review state and measurements below are retained.
+> passed: see [completed-install.md](completed-install.md). Recovery-not-run
+> statements below are historical; separately authorized stop-only v3 proof is in
+> [the current recovery report](../accounting-recovery/REPORT.md).
+> Reconciliation/replay remain denied. Original review state and measurements are retained.
 
 Implementation commit: `8820a6ba5ebaa5b503f3242b2f0c006df8a2ba2c`.
 This supersedes the earlier runtime-freeze claim at `8f90d35`; the independent

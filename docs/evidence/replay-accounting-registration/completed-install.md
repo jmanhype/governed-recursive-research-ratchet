@@ -1,9 +1,15 @@
 # GRRR-43i8 completed protected registration
 
-Current record, reconciled 2026-10-24. **Install PASS; verify PASS; read-only
+Historical registration checkpoint, reconciled 2026-10-24. **Install PASS; verify PASS; read-only
 postflight PASS.** This supersedes pre-install blocked/not-run statements in the
 proposal, implementation narrative and earlier evidence files. It does not erase
 their historical test results or grant further authority.
+
+The stopped-v2 hashes/state and recovery-not-run statements below describe this
+registration checkpoint only. See the later
+[stop-only v3 recovery/refusal report](../accounting-recovery/REPORT.md) for current
+protected state. Reconciliation and replay remain denied; historical measurements
+and registration ancestry are retained unchanged.
 
 The separately authorized parent performed protected operations. This follow-up
 worker only read captured artifacts and updated documentation; no implementation
