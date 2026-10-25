@@ -12,7 +12,7 @@ content_hash: "sha256:b4e9df8d02e057ff188639322ffa8b04e5510134830213fad42488b2f3
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
-labels: [blocked]
+labels: [blocked, delivered]
 assignee: dev-GRRR-d8ji
 ---
 
