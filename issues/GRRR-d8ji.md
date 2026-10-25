@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T14:33:32Z
-content_hash: "sha256:0c3d43df4e45586361e39265f2bacb52bc31e10d8398544c7e44990e6b4ea381"
+updated_at: 2026-10-25T14:43:02Z
+content_hash: "sha256:75eea7ca62f0c5ad561a3bec731f2eec4f48f498c06fb62f3aba873571b5ec68"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -411,3 +411,49 @@ status: blocked
 - [ ] Read-only v2 baseline capture pending.
 - [ ] Candidate plan/review staging and independent review pending.
 - [ ] No runtime transition authorized.
+
+### 2026-10-25T14:43:02Z speed
+## Protected Staging and Independent Recovery-Plan Review
+
+Operator authorization permitted staging and review only. Parent preflight verified clean story worktree HEAD 65bb7945299851c078f5b48e9083d3aee13a7c4a, exact source hashes, v2 protected binding, free space above floor, no QEMU/accounting runner, absent bootstrap/recovery staging path, and absent runtime recovery namespace.
+
+Protected staging completed under /Library/GRRR/bootstrap/recovery:
+- accounting_recovery.py SHA256 88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a
+- accounting_registration.py SHA256 db2d5965a78443fcd4205f8c73950ab0649876624fadfd79a17de086f3b1a038
+- candidate-recovery-plan.json SHA256 478cbae360092c5b6a9659516be75b0a2c7e9d9741509bfbb8b4d6468f77307e
+- candidate-recovery-review.json SHA256 94f9b8113b2b08595783d16223a2c10cdcde6b79de5c09076de1075de5fbec81
+All four are root:wheel regular files mode 0444 with one link. No authorization record is staged.
+
+Exact read-only v2 baseline was captured under launch-lock/idle-process controls:
+- canonical baseline SHA256 dfc4bfcfd56a2fe8cfbc4416f912829b35e2dced5c31b23f181cbed38f63b73f
+- version 2; stopped=1; pending=3; historical_unknowns=unresolved; spendable=null
+- database SHA256 2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf
+- known encumbered POC/milestone [0,1108265788,0]
+Baseline is exactly embedded in the plan; review hash and source closure are bound to it.
+
+Independent security review verdict:
+SECURITY_REVIEW: APPROVED_STOP_ONLY_RECOVERY_PLAN
+
+Reviewer verified exact source/baseline/plan/review hashes, canonical schemas and cross-bindings, unchanged ceilings, empty allowed mutation list, unresolved/null uncertainty, v2 ancestry, protected staging metadata, and absence of runtime recovery/authorization artifacts. Reviewer limitation: protected database values were checked in the captured baseline rather than directly remeasured under unprivileged review; future authorized parent preflight must revalidate. Root parent postflight subsequently did directly revalidate DB hash/integrity/state/count and active/registration/prior hashes.
+
+Boundaries preserved after staging and review:
+- active.json remains v2 SHA256 97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5
+- budget.sqlite remains unchanged SHA256 2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf
+- /Library/GRRR/accounting-poc2/recovery remains absent
+- no stop release, recovery execution, replay, promotion, admission, production mutation, merge, or push occurred
+- authorization for protected execution was not created or consumed
+
+Evidence: outputs/grrr-d8ji-recovery-staging/ with v2-baseline.json, candidate plan/review, protected-staging-postflight.log, and SHA256SUMS.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Protected staging, baseline capture, root postflight, and independent review completed without runtime transition.
+
+### proof
+- [x] Exact reviewed source closure staged.
+- [x] Exact v2 baseline captured and bound.
+- [x] Candidate plan/review independently approved.
+- [ ] Separate exact operator authorization and protected live install/verify remain pending.
+- [ ] GRRR-d8ji remains blocked/not delivered.
