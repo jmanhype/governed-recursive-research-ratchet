@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T23:15:25Z
-content_hash: "sha256:bcfa1981d569a6c7e4d38d9b92a9ac83225f09838770d1bcb41726121733697b"
+updated_at: 2026-10-25T23:19:05Z
+content_hash: "sha256:1eb67968799124f8be27562d5841f9cc2c5a4a5ee114d44528d87ff067b7a5c2"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n]
@@ -111,6 +111,48 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## V5 capacity-cleared no-guest unit rerun — STILL BLOCKED, NOT DELIVERED
+
+PROOF:
+
+- Branch/HEAD: story/GRRR-z3w9 at f94f306f94172f6dbf7ca6aa893f93d2e8376ed9; worktree clean before and after tests.
+- Exact v4 source/evidence checksums were re-verified before tests with `shasum -a 256 -c docs/evidence/independent-replay/v4-no-guest/source-SHA256SUMS` and `shasum -a 256 -c docs/evidence/independent-replay/v4-no-guest/SHA256SUMS`; every listed file reported OK.
+- Capacity was measured with Python `os.statvfs('/System/Volumes/Data')` immediately before every test batch. Both fixed floors were checked each time; neither floor was relaxed.
+  - Initial reading: 16,593,850,368 available bytes; preparation margin 1,243,850,368; replay margin 487,723,008; PASS/PASS.
+  - Before system-Python batch: 16,591,208,448 available bytes; preparation margin 1,241,208,448; replay margin 485,081,088; PASS/PASS.
+  - Before Homebrew-Python batch: 16,588,165,120 available bytes; preparation margin 1,238,165,120; replay margin 482,037,760; PASS/PASS.
+  - Final reading: 16,595,017,728 available bytes; preparation margin 1,245,017,728; replay margin 488,890,368; PASS/PASS.
+- Commands and results (explicit 600-second timeout plus 30-second kill grace):
+  - `/opt/homebrew/bin/timeout --kill-after=30s 600 /usr/bin/python3 -m unittest discover -s tests -p 'unit_*.py'` — Python 3.9.6; `Ran 283 tests in 28.273s`; `OK`; 0 failures, 0 errors, 0 skips; exit 0.
+  - `/opt/homebrew/bin/timeout --kill-after=30s 600 /opt/homebrew/bin/python3 -m unittest discover -s tests -p 'unit_*.py'` — Python 3.14.3; `Ran 283 tests in 27.345s`; `OK`; 0 failures, 0 errors, 0 skips; exit 0.
+- This replaces the prior 274-executed/one-capacity-setup-error result only for the safe unit path: all nine conservative-genesis tests now execute and pass on both required interpreters, for a complete 283/283 run each.
+- Scope preserved: no integration/live read-only suite, replay, guest/VM/QEMU execution, UID/GID setup, spendability reconciliation, protected `/Library/GRRR` write, production mutation, promotion, admission, push, privileged action, or cache cleanup occurred. No source, test, or documentation file was changed.
+- `git status --short --branch` remained clean; `git diff --check` and `git diff --cached --check` exited 0.
+
+Remaining parent gates (all still required before delivery):
+- [ ] Spendability/reconciliation authority remains missing; reviewed v3/v4 accounting is stop-only with `spendable=null`.
+- [ ] Dedicated evaluator/tool identities are absent; UID/GID setup is expressly denied in this dispatch.
+- [ ] Independent exact-byte replay review and immutable installation are not complete.
+- [ ] Explicit replay authorization is absent.
+- [ ] Fresh four-mode live VM/replay proof and retained complete evidence are absent.
+- [ ] Independent PM acceptance is absent.
+
+No AC is satisfied by this no-guest unit rerun. Actual fresh reconstruction, live independent reproduction, complete ReplayReceipt, required real integration failure/success modes, and durable live failure-sequence proof remain unmet.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Complete safe unit suite passed 283/283 with exit 0 on Python 3.9.6 and Python 3.14.3 after both fixed capacity floors passed immediately before each batch.
+- Story tip f94f306f94172f6dbf7ca6aa893f93d2e8376ed9; worktree clean; no prohibited execution or mutation.
+
+### proof
+- [x] Capacity-gated no-guest full unit verification now passes on both required interpreters.
+- [ ] AC #1: fresh trusted reconstruction, spendable reservation, and actual VM isolation remain unproven.
+- [ ] AC #2: live specification-confirmed independent reproduction remains unproven.
+- [ ] AC #3: actual complete ReplayReceipt with every mandatory gate remains absent.
+- [ ] AC #4: required real integration success/fault modes remain unexecuted.
+- [ ] AC #5: durable live retained-failure/two-failure-stop sequence remains unproven.
 
 # V4 no-guest verification — BLOCKED, NOT DELIVERED
 
