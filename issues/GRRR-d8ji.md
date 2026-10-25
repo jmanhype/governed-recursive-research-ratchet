@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T15:17:03Z
-content_hash: "sha256:55c26d007abad0d30173535d0e61ad87dceba9f381501ab6d97664ed239545f8"
+updated_at: 2026-10-25T15:20:16Z
+content_hash: "sha256:04a21e60107c36a1da3f9080e10b050c5fe717ecb0b9e1a7347e89ecc94ac769"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -507,3 +507,38 @@ status: blocked
 - [x] Exact authorization staged.
 - [ ] Install and verify remain pending.
 - [ ] No replay, reconciliation, promotion, admission, production mutation, merge, or push.
+
+### 2026-10-25T15:20:16Z speed
+## Protected Stop-Only Recovery Install and Verify Result
+
+Authorized parent execution completed successfully using the exact staged closure, plan, review, and authorization:
+- source commit 65bb7945299851c078f5b48e9083d3aee13a7c4a
+- accounting_recovery.py 88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a
+- accounting_registration.py db2d5965a78443fcd4205f8c73950ab0649876624fadfd79a17de086f3b1a038
+- baseline dfc4bfcfd56a2fe8cfbc4416f912829b35e2dced5c31b23f181cbed38f63b73f
+- review 94f9b8113b2b08595783d16223a2c10cdcde6b79de5c09076de1075de5fbec81
+- plan 478cbae360092c5b6a9659516be75b0a2c7e9d9741509bfbb8b4d6468f77307e
+- authorization 9235640b58b973913e9b14f2ade420085daeed91a1e048ad5b2b09da41079a60
+
+Protected install exited 0. Protected verify exited 0. Published active binding is version 3, SHA256 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8, with recovery receipt SHA256 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587. Original store/database inode 682589447 and evaluator ownership/mode remain unchanged; SQLite integrity is ok; state is 1|0; reservations=11, metering=8, overhead=0, pending holds=3. Historical unknowns remain unresolved and spendable remains null. Known encumbered remains [0,1108265788,0] in both scopes.
+
+Recovery namespace has exactly root:wheel 0444 intent.json, prior-active.json, receipt.json, and complete.json; directory is 0555. No next-active or uncertain artifact remains. Prior v2 active bytes are preserved with SHA256 97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5. Original registration ancestry remains unchanged.
+
+The database SHA changed exactly as required for the stop transition, from 2347a548429cd8bf07048e15898de1432c960d7a08743e17dc31d39efdb5bbaf to 9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3. Allowed mutations remain empty and execution_authorized remains false. Source code and no-guest regressions enforce the read-only v3 mutation boundary; no protected write/refusal test was attempted.
+
+No reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+Evidence: outputs/grrr-d8ji-recovery-staging/recovery-install.json, recovery-verify.json, v3-protected-postflight.log, and protected-recovery-SHA256SUMS.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Protected live success install and verify completed; all ancestry/invariants verified.
+
+### proof
+- [x] Stop-only v3 transition installed and verified.
+- [x] Original DB inode/history/holds/unknowns preserved.
+- [x] v3 remains read-only by reviewed source contract.
+- [ ] Separately authorized controlled refusal-path live proof remains not-run.
+- [ ] Story remains blocked/not delivered pending that distinct gate and PM review.
