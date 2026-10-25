@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T20:40:36Z
-content_hash: "sha256:da9bb81edfff72471964d9dbfd74d60c3da3c3f116add493729b334aa8270781"
+updated_at: 2026-10-25T20:41:44Z
+content_hash: "sha256:34d3e82bfdad7f154d8c958398df97d195f1e2ebf61b24ac0c3bbc2a41c0ba3b"
 blocked_by: [GRRR-43i8]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, accepted]
@@ -932,3 +932,20 @@ status: accepted
 - [ ] Authorized merge pending.
 - [ ] GRRR-z3w9 dispatch pending.
 - [ ] Denials remain active.
+
+### 2026-10-25T20:41:44Z speed
+## Authoritative Merge Result
+
+Accepted story GRRR-d8ji was merged into epic/GRRR-2t3h at merge commit 38f33c9. The story branch was deleted after the accepted commit 0fa26e4cf6f0c35b19fb6f1f75259932b00a086e was verified as an ancestor of the epic. The retained worktree was removed only after confirming it was clean. No push occurred.
+
+`pvg story merge` could not run because the local-only repository has no origin remote; the orchestrator-approved manual accepted+closed merge fallback was used. Agent handles for GRRR-d8ji were cleared and nd synchronized locally.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Epic HEAD 38f33c9 contains 0fa26e4; story/GRRR-d8ji branch removed.
+
+### proof
+- [x] Accepted story merged.
+- [x] No spendability reconciliation, replay, promotion, admission, production mutation, or push.
