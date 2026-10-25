@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:58:06Z
-content_hash: "sha256:2470211afefb4cdafe3bb4d6aa1753104cc3645b7d8f6fc1c35f22030264195c"
+updated_at: 2026-10-25T16:58:24Z
+content_hash: "sha256:94b7f3913c69a7112243867c4029d5f954f4f256d7a75413df42756543ece984"
 blocked_by: [GRRR-43i8]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, accepted]
@@ -891,3 +891,26 @@ status: delivered
 - [x] AC #5: No unauthorized protected effects or broadened authority.
 - [x] AC #6: Both required interpreter implementation suites green with exact artifacts; docs rework checks pass.
 - [x] AC #7: Separately authorized stop-only live success/refusal gates recorded; no replay authority.
+
+### 2026-10-25T16:58:24Z speed
+## PM Decision — authoritative final contract
+ACCEPTED [2026-10-25]: Independent full re-review of0fa26e4cf6f0c35b19fb6f1f75259932b00a086e verifies all seven ACs and documentation freshness. Both DOCS_STALE blockers are corrected and adjacent historical registration records link the current stop-only v3 evidence. Exact seven implementation/test hashes remain unchanged; raw both-interpreter full253/253 and focused20/20 plus30/30 passing evidence remains trustworthy. Fresh PM documentation checks48/48, delivery9/9, protected evidence manifests9/9 and diff checks passed. Real separately authorized parent success and duplicate/12 runtime refusals reviewed without repeating protected operations. Prior detailed PM notes preserved. Coverage percentage not measured. No replay, spendability reconciliation, merge, promotion, admission or production authority granted.
+
+Transition independently verified: pvg story accept returned OK; nd status closed and accepted label present, delivered/rejected absent. The pre-existing blocked label remains as returned by the transition, not a rejection of this accepted stop-only slice. Epic auto-close checked: five children remain nonclosed, so epic not closed. This EOF comment repairs the known Notes-before-Comments contract placement without raw vault edits.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Exact delivery0fa26e4 reviewed; source hashes unchanged; fresh docs48/48, delivery9/9, manifests9/9.
+- pvg acceptance landed closed/accepted; parent epic retains five nonclosed children.
+
+### proof
+- [x] AC1: Exact independently reviewed stop-only contract/implementation.
+- [x] AC2: Original identity/history/ceilings/holds and unresolved/null preserved.
+- [x] AC3: Canonical immutable complete receipt ancestry and uncertain outcomes.
+- [x] AC4: Fail-closed unit and real controlled duplicate/API/SQL/BLOB refusals.
+- [x] AC5: Separate exact parent authority; no developer privileged effects or downstream authority.
+- [x] AC6: Both interpreter full/focused evidence verified for unchanged source.
+- [x] AC7: Separately authorized actual parent success/refusal integration verified.
+- [x] Documentation-freshness gate: both exact blockers and adjacent records corrected.
