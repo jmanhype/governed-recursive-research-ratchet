@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:56:40Z
-content_hash: "sha256:b4e9df8d02e057ff188639322ffa8b04e5510134830213fad42488b2f30f3ec1"
+updated_at: 2026-10-25T16:56:41Z
+content_hash: "sha256:40619295c453c7d50164eeb497034d5aeaa154cef4af89426621d7a39b886179"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -92,6 +92,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-25.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
 
 
 ## nd_contract
