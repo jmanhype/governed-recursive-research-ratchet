@@ -1,0 +1,19 @@
+.......................................E...........................................................................................................................................................................................................................................
+======================================================================
+ERROR: setUpClass (unit_conservative_genesis.ConservativeGenesis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/tests/unit_conservative_genesis.py", line 25, in setUpClass
+    cls.plan = cls.api['build'](ROOT, cls.output)
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/scripts/conservative-genesis", line 85, in build
+    check(shutil.disk_usage(root).free >= 15_350_000_000, 'preparation space floor')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/scripts/conservative-genesis", line 34, in check
+    raise RuntimeError(reason)
+RuntimeError: preparation space floor
+
+----------------------------------------------------------------------
+Ran 274 tests in 23.909s
+
+FAILED (errors=1)

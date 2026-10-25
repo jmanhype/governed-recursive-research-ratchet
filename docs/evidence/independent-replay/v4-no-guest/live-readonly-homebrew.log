@@ -1,0 +1,24 @@
+setUpClass (__main__.IndependentReplay) ... ERROR
+
+======================================================================
+ERROR: setUpClass (__main__.IndependentReplay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/tests/integration/independent_replay.py", line 29, in setUpClass
+    require_identity(EVALUATOR)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/research/replay_smoke.py", line 42, in require_identity
+    require(os.getuid() == uid and os.geteuid() == uid and os.getgid() == uid
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and os.getegid() == uid,
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+            'Unauthorized', 'Dedicated UID/GID required')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/research/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Dedicated UID/GID required
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
