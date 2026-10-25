@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
 updated_at: 2026-10-25T16:58:06Z
-content_hash: "sha256:77d1af1bd805b612f243ac288f8849999f2e93136ee556dbc3fa0640655de0e5"
+content_hash: "sha256:2470211afefb4cdafe3bb4d6aa1753104cc3645b7d8f6fc1c35f22030264195c"
 blocked_by: [GRRR-43i8]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, accepted]
@@ -93,6 +93,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-25.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-25]: Independent full evidence-based re-review of 0fa26e4cf6f0c35b19fb6f1f75259932b00a086e closes both DOCS_STALE blockers and the documentation-freshness gate. Runtime-smoke documents phase-local TERM uncertainty reset only on entering KILL, fresh timely absence, persistent/invalid/deadline failures; architecture accurately distinguishes installed stop-only v3 from workflow approval and preserves unresolved/null uncertainty, history/holds and denied runtime writes. Eight-doc generalized historical scoping and links reviewed.
 
