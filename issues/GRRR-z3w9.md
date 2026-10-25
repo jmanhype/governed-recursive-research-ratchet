@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T21:00:44Z
-content_hash: "sha256:9054db530656710645e723e3701163bd180cd4dd4aa29ddfc31adb1da08d0f33"
+updated_at: 2026-10-25T21:13:37Z
+content_hash: "sha256:00e23b9411565fb982fde28d3b59ba4c68393435e80ace46ea7c589cb5762855"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji]
@@ -679,3 +679,35 @@ Protected hashes after cleanup:
 - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
 
 Repository remained clean at epic 38f33c936b8249a57be81aebd639aa40c2f9de55 and story tip f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+
+### 2026-10-25T21:13:37Z speed
+## Authorized Safe Capacity Reset — macOS Purge Only
+
+Scope honored: ran macOS `/usr/sbin/purge` through the standard administrator authorization prompt, then remeasured capacity and reran both fixed floors. No additional files were deleted, and no spendability reconciliation, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
+
+Execution details:
+- `/usr/bin/purge` was absent on this host; no state changed from that lookup.
+- Unprivileged `/usr/sbin/purge` was refused with `Operation not permitted`.
+- `sudo -n` found no cached credential; no password was embedded or logged.
+- macOS administrator authorization then ran exactly `/usr/sbin/purge` successfully with exit 0.
+
+Measured result:
+- Before purge: 12,722,626,560 bytes available; swap usage 0 MiB.
+- After purge: 12,726,525,952 bytes available; swap usage 0 MiB.
+- Nominal reclaimed accounting: 3,899,392 bytes.
+- Preparation floor 15,350,000,000 bytes: FAIL; shortfall 2,623,474,048 bytes.
+- Replay floor 16,106,127,360 bytes: FAIL; shortfall 3,379,601,408 bytes.
+
+The floors were not relaxed. GRRR-z3w9 remains open/blocked; capacity remains a mandatory gate.
+
+Post-reset invariants:
+- Epic HEAD unchanged: 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- Story tip unchanged: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Repository clean.
+- No GRRR-z3w9 cache-quarantine residue.
+- Protected accounting hashes unchanged:
+  - /Library/GRRR/accounting/active.json cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+  - /Library/GRRR/accounting/budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+  - /Library/GRRR/accounting/receipt.json 9f64395bec815a6bb2281d3b5d96d2356819138b1929b0a9881c16483c486dde
+  - /Library/GRRR/accounting-poc2/active.json 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+  - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
