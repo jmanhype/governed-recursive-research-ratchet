@@ -1,19 +1,20 @@
 ---
 id: GRRR-d8ji
 title: "Bug: registered independent-replay accounting lacks recovery implementation"
-status: in_progress
+status: closed
 priority: 0
 type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:58:05Z
-content_hash: "sha256:7f86525d57a46820c56641967ddafc32f92279f7207dd1ff81d3e91c4eb4fb78"
+updated_at: 2026-10-25T16:58:06Z
+content_hash: "sha256:77d1af1bd805b612f243ac288f8849999f2e93136ee556dbc3fa0640655de0e5"
 blocked_by: [GRRR-43i8]
-blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, delivered]
 assignee: dev-GRRR-d8ji
+closed_at: 2026-10-25T16:58:05Z
+close_reason: "Accepted: independent full re-review verifies AC1-7, exact-byte no-guest and parent stop-only integration proof, and corrected current/historical documentation. No replay, reconciliation, merge or production authority."
 ---
 
 ## Description
@@ -335,10 +336,11 @@ LEARNINGS:
 - 2026-10-25T16:55:07Z claimed by dev-GRRR-d8ji
 - 2026-10-25T16:56:40Z status: in_progress -> in_progress
 - 2026-10-25T16:56:40Z auto-follows: linked to predecessor GRRR-90te
+- 2026-10-25T16:58:06Z status: in_progress -> closed
+- 2026-10-25T16:58:06Z dep_removed: no_longer_blocks GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-z3w9]]
 - Blocked by: [[GRRR-43i8]]
 - Follows: [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]]
 
