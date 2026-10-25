@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-24T22:40:53Z
-content_hash: "sha256:7b0ca90d8e7e2c75d04196ca8824787925a289dddba724e4a4dca39ef22e3ab0"
+updated_at: 2026-10-25T14:33:32Z
+content_hash: "sha256:0c3d43df4e45586361e39265f2bacb52bc31e10d8398544c7e44990e6b4ea381"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -392,3 +392,22 @@ status: blocked
 - [x] Final no-guest implementation and focused fix reviewed.
 - [ ] Protected recovery review/authorization/installation remains pending.
 - [ ] Live integration remains not-run.
+
+### 2026-10-25T14:33:32Z speed
+## Operator Authorization — protected staging and recovery-plan review only
+
+APPROVED [2026-10-25]: For exact GRRR-d8ji commit 65bb7945299851c078f5b48e9083d3aee13a7c4a, stage the reviewed two-file source closure and candidate plan/review inputs under /Library/GRRR/bootstrap/recovery, capture the exact read-only v2 baseline, and perform independent review.
+
+Explicit denials: do not create /Library/GRRR/accounting-poc2/recovery, change active.json or budget.sqlite, release stop, recover, replay, promote, admit, mutate production, merge, or push.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Live preflight before protected staging.
+
+### proof
+- [ ] Source staging pending.
+- [ ] Read-only v2 baseline capture pending.
+- [ ] Candidate plan/review staging and independent review pending.
+- [ ] No runtime transition authorized.
