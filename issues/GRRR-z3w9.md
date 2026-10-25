@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T22:41:20Z
-content_hash: "sha256:2bd63487716652d438da059867e3d5fb3faed70d1358b0fffab31d9a2dd5b456"
+updated_at: 2026-10-25T22:44:45Z
+content_hash: "sha256:70fd95344973056ab6c9a45e1ef3b08983aab338814946922023b9a18eac2792"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji]
@@ -778,3 +778,58 @@ Decision:
 - The story was not claimed and no developer was spawned because a mandatory capacity gate currently fails and a worker could not run the required suites without risking another partial/blocking run.
 - No source/test changes, protected mutations, privileged actions, spendability reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
 - CoS dispatch was unavailable because its local /hello listener did not connect; no alternative worker was used because dispatch itself was refused by the capacity gate.
+
+### 2026-10-25T22:44:45Z speed
+## Authorized Inactive Regenerable Cache Cleanup — Both Floors Cleared Without Touching Active Codex Updater
+
+Scope honored: cleanup was limited to thirteen exact inactive-application Cache/CachedData/Code Cache directories. The active Codex Sparkle Installation cache and Launcher updater were explicitly left untouched. No GRRR evidence, protected accounting, replay input, repository, or production data was selected for deletion.
+
+Safety preflight:
+- No Windsurf, Antigravity, Exodus, Discord, flowith, Cursor.app, or Kiro.app owner executable was running.
+- `lsof +D` found no open files in any selected cache directory.
+- A first guard stopped only itself by matching its own full command text; it made no filesystem change.
+- The corrected guard inspected executable paths, then moved the exact caches through a validated quarantine and deleted only that quarantine.
+
+Removed cache bytes:
+- Windsurf/Cache: 986,767,360
+- Windsurf/CachedData: 162,029,568
+- Antigravity/Cache: 195,153,920
+- Antigravity/CachedData: 88,133,632
+- Antigravity/Code Cache: 42,893,312
+- Exodus/Partitions/network/Cache: 292,675,584
+- discord/Cache: 259,592,192
+- flowith-os-beta/Cache: 52,314,112
+- flowith-os-beta/Code Cache: 247,668,736
+- Cursor/Cache: 80,052,224
+- Cursor/CachedData: 33,927,168
+- Kiro/Cache: 28,823,552
+- Kiro/CachedData: 63,127,552
+- Total measured removed: 2,533,158,912 bytes.
+
+Capacity:
+- Available before: 14,456,242,176 bytes.
+- Available immediately after: 17,011,331,072 bytes; observed free delta 2,555,088,896 bytes.
+- Stable readings: 17,002,491,904; 17,002,500,096; and 17,001,435,136 bytes.
+- Preparation floor 15,350,000,000: PASS, final margin 1,651,435,136 bytes.
+- Replay floor 16,106,127,360: PASS, final margin 895,307,776 bytes.
+- Floors were not changed.
+
+Preservation postcheck:
+- Epic HEAD unchanged: 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- GRRR-z3w9 story tip unchanged: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Repository clean; story remains open/blocked and unclaimed with no agent handle.
+- Protected accounting hashes unchanged:
+  - /Library/GRRR/accounting/active.json cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+  - /Library/GRRR/accounting/budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+  - /Library/GRRR/accounting/receipt.json 9f64395bec815a6bb2281d3b5d96d2356819138b1929b0a9881c16483c486dde
+  - /Library/GRRR/accounting-poc2/active.json 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+  - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
+- Durable replay inputs retained:
+  - source.tar e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e
+  - policy.json 355e6f7d9dd0a65817cdc1a6421fba6347f5075c40f4a456ed601e753f14a77a
+  - review.json 3342010d46826a65a72206a25ce1b1ef1faa3ff118c7c0b0cd6405ade8c755d9
+  - trusted-observation/v4/input.iso 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6
+- Active Codex Sparkle Installation cache remained present at 1.9G and its updater processes remained active; it was not modified.
+- All selected source cache paths are absent and no cache-quarantine residue remains.
+
+No spendability reconciliation, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
