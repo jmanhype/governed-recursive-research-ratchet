@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T23:31:35Z
-content_hash: "sha256:1d01eabec739f610bc66aa4a72dcdc70b102740b7b9cb84a5a87370ca7c99089"
+updated_at: 2026-10-25T23:33:36Z
+content_hash: "sha256:04b01666af3a5fd74c3fb6ab58b769d399a0274e10ec50da2e4131ec3e26c91c"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87]
@@ -1005,3 +1005,34 @@ Preservation:
 - All selected cache source paths are absent.
 
 No spendability reconciliation, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
+
+### 2026-10-25T23:33:36Z speed
+## Parent Dispatch Verification — Fresh Capacity Preflight Passed
+
+The authorized GRRR-z3w9 dispatch proceeded only after a fresh three-reading capacity preflight passed both fixed floors. CoS `/hello` was unavailable, so one fresh GLM 5.3 developer was used.
+
+Fresh preflight:
+- 17,142,517,760 bytes available.
+- 17,136,783,360 bytes available.
+- 17,131,413,504 bytes available.
+- Final replay-floor margin at preflight: 1,025,286,144 bytes.
+- Immediate post-claim reading: 17,134,346,240 bytes; replay margin 1,028,218,880 bytes.
+
+Worker result:
+- No safe story-scoped implementation work remained under the operator's hard denials.
+- No source, test, documentation, or commit change occurred.
+- Claim was released; story remains open/blocked and must not be delivered.
+- Worker verified 8/8 v4 source manifest entries and 10/10 v4 evidence manifest entries.
+- Full unit suites were not repeated because no file changed and the live story already records 283/283 OK on both required interpreters.
+
+Independent parent verification:
+- Story state: open, labels milestone-1/integration/blocked, no assignee.
+- Final authoritative nd_contract: blocked.
+- Epic HEAD unchanged: 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- Story and worktree HEAD unchanged: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Worktree and epic repository clean.
+- Parent reran both checksum manifests from their correct roots: all 8 source entries and all 10 evidence entries OK.
+- Stable post-dispatch capacity: 17,193,148,416; 17,192,841,216; and 17,192,853,504 bytes. Final replay-floor margin: 1,086,726,144 bytes.
+- Protected accounting and durable replay-input hashes remained unchanged.
+
+No spendability reconciliation, replay or integration/live read-only execution, guest/VM/QEMU execution, UID/GID setup, promotion, admission, protected mutation, production mutation, merge, push, privileged action, or cache cleanup occurred. Remaining gates are unchanged.
