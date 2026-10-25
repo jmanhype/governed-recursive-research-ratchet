@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:47:31Z
-content_hash: "sha256:549c059ee7852d2506e6ab5b05abf9a85be47795e7ee93117d937fabdab2f44e"
+updated_at: 2026-10-25T16:50:16Z
+content_hash: "sha256:433374ab7da9711a37f2576397c34805dd645a8fcee3a3bb4c0c9c77ebf09214"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
@@ -92,6 +92,66 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERED)
+
+PROOF:
+
+### Scope and commits
+- Branch story/GRRR-d8ji; documentation delivery SHA 734554707374f10c3c17b1e788d6fa2c3678bdd4, parent implementation SHA 65bb7945299851c078f5b48e9083d3aee13a7c4a. Clean after commit. Exactly docs/ACCOUNTING-RECOVERY.md and docs/evidence/accounting-recovery/REPORT.md changed: 127 insertions, 18 deletions. No implementation/test/protected-state changes.
+- Operator authorization permits documentation, story commit/delivery and independent PM review only. No merge, push, reconciliation, replay, promotion, admission or production mutation; no root/sudo or protected action in this delivery turn.
+
+### CI/Test Results
+- Fresh command on BOTH /usr/bin/python3 and /opt/homebrew/bin/python3: INTERPRETER /tmp/grrr-d8ji-doc-check.py. Each PASS 12 checks, 0 failures. Checks validate document fences/conflict markers/local link, exact current hashes/boundaries, all nine external manifest files and 12/12 refusal probe inventory. No skips.
+- pvg verify docs/ACCOUNTING-RECOVERY.md docs/evidence/accounting-recovery/REPORT.md --format=text: exit0, VERIFY: PASSED (0 files scanned, 0 issues). Markdown is not scanned by that code verifier; the explicit documentation/evidence checks above supply substantive static validation.
+- git diff --check and git diff --cached --check: exit0. shasum -a 256 -c protected-recovery-SHA256SUMS and shasum -a 256 -c refusal-proof-SHA256SUMS from external recovery-staging evidence directory: all 9 entries OK, 0 mismatches. Implementation/test source hashes independently unchanged.
+- No unit-suite rerun for these two documentation-only changes. Preserved and hash-verified final implementation evidence: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-no-guest/cessation-final.txt SHA256 b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433. At implementation SHA65bb794, both /usr/bin/python3 3.9.6 and /opt/homebrew/bin/python3 3.14.3 ran: -m unittest discover -s tests -p unit_replay_accounting_recovery.py (20/20); -m unittest discover -s tests -p unit_replay_accounting_registration.py (30/30); -m unittest discover -s tests -p 'unit_*.py' (253/253); cessation suite5/5, smoke12/12 and exact cessation case5/5 repetitions each. All final commands exit0, zero failures/errors/skips/warnings; all nine genesis tests executed. Compilation passed. These are recorded implementation results, not fresh reruns at docs commit.
+- Coverage: instrumentation percentage not measured; AC verification 7/7 documented; no fabricated coverage score. Full unit suite had no omissions at implementation verification. Real replay/E2E deliberately not executed or authorized.
+
+### Exact source and protected evidence
+- recovery source88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a; registration source db2d5965a78443fcd4205f8c73950ab0649876624fadfd79a17de086f3b1a038; persistent budget78f0e145d902dbeadbb1693055551dfdf59aee16d1bc2d5fd4bc4c403bcaaf32; recovery test ff52097fa7ba0002ea9df2600afbc388a46a48efa3c8c08718f011f135281d5e.
+- Independent review recorded in story: final exact-byte follow-up READY_FOR_PROTECTED_RECOVERY_REVIEW and APPROVED_STOP_ONLY_RECOVERY_PLAN. Review bound baseline dfc4bfcfd56a2fe8cfbc4416f912829b35e2dced5c31b23f181cbed38f63b73f, plan478cbae360092c5b6a9659516be75b0a2c7e9d9741509bfbb8b4d6468f77307e, review94f9b8113b2b08595783d16223a2c10cdcde6b79de5c09076de1075de5fbec81; separate operator authorization9235640b58b973913e9b14f2ade420085daeed91a1e048ad5b2b09da41079a60.
+- Raw parent evidence directory /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-d8ji-recovery-staging/: recovery-install.json and recovery-verify.json SHA25656476efca0fd6f379cca965eee5ebd0efe2ae1d0e97bc98f01a8a76c717df974; v3-protected-postflight.log18ba02d0e4044b2775abd09d6ddc06dd6834948ec6ff9d629a63f67dde5ce928; duplicate-install-refusal.log ccb69d1cf62fa6ec865b96b43dbf05bddc63ab2948292acbd7879b9ed34474ec; duplicate-install-refusal-summary.log22202128007a20adf323ab8c6b00917c5e578bed0741142aea0c6ebf3f4baf0b; v3-refusal-probe.json6caf3d9be0aacb175aa1cbc4d115f0cc646c61135ef7015970181641191efdb1; refusal-proof-postflight.log18ba02d0e4044b2775abd09d6ddc06dd6834948ec6ff9d629a63f67dde5ce928. Private rows remain external.
+- Parent PINNED_PYTHON -I -S -B /Library/GRRR/bootstrap/recovery/accounting_recovery.py install PLAN REVIEW AUTHORIZATION AUTHORIZATION_SHA256 and verify: recorded success exit0 each, not rerun. Repeating install with consumed authorization: expected exit1 partial/unknown registration state. Controlled UID320 probe: 12/12 API/connection/cursor/BLOB mutations refused, protected_state_changed=false. These are expected denials, not unaddressed failures.
+- Active v3 SHA2569c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8; recovery receipt6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587; DB9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3. Original inode682589447; state1|0; reservations11, metering8, overhead0, pending3; known encumbered [0,1108265788,0] both scopes; historical_unknowns unresolved, spendable null, allowed mutations empty, execution_authorized false. No unknown-zeroing or allowance.
+
+### AC Verification
+| AC | Requirement / location / evidence | Status |
+|---|---|---|
+| 1 | docs/ACCOUNTING-RECOVERY.md exact APIs/schemas/locks/publication/crash contract; research/accounting_recovery.py; independent exact-source/plan review and real stop-only result | PASS |
+| 2 | research/accounting_recovery.py unchanged inventory checks; unit_replay_accounting_recovery.py and parent before/after postflights retain identity/history/ceilings/3 holds/unresolved uncertainty | PASS |
+| 3 | canonical intent/receipt/complete ancestry, immutable v2 prior/registration; focused real-file transition tests and protected receipt/postflight | PASS |
+| 4 | focused recovery20/registration30 cases each Python, inherited/raw SQL/BLOB/stale/tamper/lock guards; duplicate refusal and 12/12 controlled live refusals; no unlimited crash proof claimed | PASS |
+| 5 | no-guest developer package/tests unprivileged; later protected effects separately reviewed, authorized and parent-mediated; no replay/production authority | PASS |
+| 6 | final unchanged implementation full253/253 each required Python and focused gates; exact raw log/hash/commands above; zero errors/failures/skips/warnings | PASS |
+| 7 | distinct authorized parent install/verify success plus duplicate/runtime refusal proof, ancestry/identity/inventory postflights; docs/evidence/accounting-recovery/REPORT.md current section; downstream replay remains independently gated | PASS |
+
+LEARNINGS:
+- Stop release and spendability are different: stopped=0 still means read-only v3, unresolved unknowns and null spendable; never infer execution permission.
+- Label superseded pre-install/full-suite blocks as historical while preserving raw failures and their exact checkpoint provenance.
+- pvg verify reports zero scanned files for Markdown; pair its structural pass with explicit document/evidence hash checks rather than claiming code scanning.
+- Worktree vault notes search still fails due absent worktree .vault; no unrelated repair attempted. Existing relevant context was available from live shared nd story.
+
+DISCOVERED_BUG:
+  title: Worktree vault knowledge search resolves missing local .vault
+  context: pvg notes search 'accounting recovery' exits1 with vlt vault directory not found at dev-GRRR-d8ji/.vault, while pvg nd correctly resolves shared git-common-dir vault. Existing known blocker reproduced; no unrelated vault changes.
+  affected_files: Paivot notes/vlt worktree routing (external toolchain)
+  discovered_during: GRRR-d8ji
+
+## nd_contract
+status: delivered
+
+### evidence
+- Docs commit734554707374f10c3c17b1e788d6fa2c3678bdd4; exact implementation/source evidence unchanged; static checks12/12 each Python and manifest9/9 pass. Implementation full253/253 each; protected stop-only success and refusal proof recorded separately.
+
+### proof
+- [x] AC #1: Reviewed exact conservative transition implemented and documented.
+- [x] AC #2: Original cumulative identity/history/holds/unknowns preserved.
+- [x] AC #3: Canonical append-only recovery ancestry recorded.
+- [x] AC #4: Fail-closed unit and controlled live refusals verified.
+- [x] AC #5: Separate authority boundaries retained; no unauthorized protected effects.
+- [x] AC #6: Both required interpreter suites pass with measured artifacts.
+- [x] AC #7: Separately authorized parent live stop-only success/refusal gates recorded; no replay authority.
+
 ## Post-reboot focused cessation fix — no-guest gates PASS
 
 PROOF:
