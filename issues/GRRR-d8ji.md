@@ -7,11 +7,11 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:55:07Z
-content_hash: "sha256:ee1553eaba28b8c646c9e74ca0d76af43998912ca5efb7aa22a24e33c0b01cd6"
+updated_at: 2026-10-25T16:56:40Z
+content_hash: "sha256:b4e9df8d02e057ff188639322ffa8b04e5510134830213fad42488b2f30f3ec1"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
-follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
+follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, rejected]
 assignee: dev-GRRR-d8ji
 ---
@@ -303,12 +303,14 @@ LEARNINGS:
 - 2026-10-25T16:55:07Z status: open -> in_progress
 - 2026-10-25T16:55:07Z auto-follows: linked to predecessor GRRR-gu87
 - 2026-10-25T16:55:07Z claimed by dev-GRRR-d8ji
+- 2026-10-25T16:56:40Z status: in_progress -> in_progress
+- 2026-10-25T16:56:40Z auto-follows: linked to predecessor GRRR-90te
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
 - Blocked by: [[GRRR-43i8]]
-- Follows: [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
+- Follows: [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]]
 
 ## Comments
 
