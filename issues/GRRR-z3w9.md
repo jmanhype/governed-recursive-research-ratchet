@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T23:21:20Z
-content_hash: "sha256:cca4219d9ca045e7f14d7cc96b54e04481af8327175f46ed221cb08c08576e3a"
+updated_at: 2026-10-25T23:25:12Z
+content_hash: "sha256:f61f87f9d3836db8f6fcef2447ea268fbdebee28ad667204656221da26a3f725"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n]
@@ -922,3 +922,46 @@ Post-dispatch capacity remained above both fixed floors, though the replay-floor
 - No further dispatch or test execution is prudent without a fresh capacity preflight.
 
 No integration/live suite, replay, guest/VM/QEMU execution, UID/GID setup, spendability reconciliation, protected mutation, production mutation, promotion, admission, merge, push, privileged action, or cache cleanup occurred. Remaining gates are unchanged.
+
+### 2026-10-25T23:25:12Z speed
+## Authorized Inactive Cache Cleanup — Replay-Floor Margin Restored
+
+Scope honored: removed only eleven exact regenerable cache directories from inactive Obsidian, Telegram, Buzz, ComfyUI, Pinokio, LobeHub, Cluely, and Factory owners. Active Google Chrome and Zed processes were identified and explicitly excluded. The active Codex Sparkle Installation cache and updater were not touched. No GRRR evidence, protected accounting, replay input, repository, or production data was selected for deletion.
+
+Safety:
+- Selected owner process checks found no active selected-cache owner.
+- `lsof +D` found no open files in any selected directory.
+- Cleanup used exact-path quarantine and deletion; no quarantine residue remains.
+
+Removed cache bytes:
+- Obsidian/Cache: 183,648,256
+- Obsidian/Code Cache: 244,482,048
+- Obsidian/Service Worker/CacheStorage: 69,771,264
+- Telegram postbox media/cache: 191,893,504
+- Buzz/node-tools/cache: 141,905,920
+- ComfyUI/Cache: 108,986,368
+- Pinokio/Cache: 28,852,224
+- LobeHub/Cache: 22,036,480
+- cluely/Cache: 29,237,248
+- cluely/Code Cache: 24,084,480
+- Factory/Cache: 20,307,968
+- Total measured removed: 1,065,205,760 bytes.
+
+Capacity:
+- Before deletion: 16,089,321,472 bytes available, only 28,094,112 bytes above replay floor.
+- Immediately after: 17,156,321,280 bytes; observed free delta 1,066,999,808 bytes.
+- Stable readings: 17,155,502,080; 17,155,512,32; and 17,154,543,616 bytes. (Typographical note: the second stable reading is 17,155,512,320.)
+- Preparation floor 15,350,000,000: PASS; final margin 1,804,543,616 bytes.
+- Replay floor 16,106,127,360: PASS; final margin 1,048,416,256 bytes.
+- Floors were not changed.
+
+Preservation:
+- Epic HEAD unchanged: 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- GRRR-z3w9 tip unchanged: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Repository clean; story remains open/blocked and unclaimed with no agent handle.
+- Active Codex Sparkle Installation remains 1.9G and updater processes remain active but untouched.
+- Protected accounting hashes unchanged.
+- Durable replay input hashes unchanged.
+- All selected cache source paths are absent.
+
+No spendability reconciliation, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
