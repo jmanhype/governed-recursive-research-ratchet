@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T20:41:44Z
-content_hash: "sha256:6e31a21278f15fa5a1f79a1ae8fb9e7b9d7a4861931fb73629ba5493bb229d1f"
+updated_at: 2026-10-25T20:45:26Z
+content_hash: "sha256:a18a890a5696ce26fce161051d5fb1066a4601c28d4b976302bf52aa7a9e9056"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji]
@@ -560,3 +560,6 @@ status: blocked
 ### proof
 - [x] Capacity reset evidence remains in outputs/grrr-z3w9-capacity-reset/.
 - [ ] Disk remains below the preparation floor.
+
+### 2026-10-25T20:45:26Z speed
+BLOCKED: V3 stop-only recovery is accepted but remains read-only with unknown historical usage, spendable=null, allowed_mutations=[] and execution_authorized=false. Reconciliation and replay are prohibited. Source WIP c2c19ae92f4d318d0892bc77272b599043c0019f merges epic 38f33c9 without weakening accounting/cessation tests. Focused no-guest suites 117/117 each; full suites 274 executed/pass with one capacity class setup error each; read-only live suite 0 tests with one UID/GID setup error each. See docs/INDEPENDENT-REPLAY-V4-REVIEW.md and docs/evidence/independent-replay/v4-no-guest/REPORT.md. Not delivered.
