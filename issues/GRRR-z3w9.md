@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T21:25:20Z
-content_hash: "sha256:c0842cdc1637a1e4939f7772550bc76b564dd1a9967d4ba32ad9b8ce2b8136ec"
+updated_at: 2026-10-25T22:41:20Z
+content_hash: "sha256:2bd63487716652d438da059867e3d5fb3faed70d1358b0fffab31d9a2dd5b456"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji]
@@ -751,3 +751,30 @@ Preservation postcheck:
 Durable replay inputs remain present under /Library/GRRR/replay-inputs, including source.tar, policy.json, review.json, corpus inputs, kernel/initramfs, and Alpine ISO. Trusted-observation v4 input.iso remains present with SHA256 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6. The older temporary /private/tmp/grrr-independent-replay-input-v1/input.iso path was found absent during postcheck; this cleanup did not move or delete that path, and durable protected inputs are intact.
 
 No GRRR evidence tree, protected accounting state, replay input, repository, or production data was selected for deletion. No spendability reconciliation, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
+
+### 2026-10-25T22:41:20Z speed
+## Authorized Dispatch Preflight — Fail-Closed, Not Dispatched
+
+Operator authorization covered dispatch of GRRR-z3w9 only while preserving all gates and prohibiting spendability reconciliation, replay, promotion, admission, production mutation, and push.
+
+Live Paivot state:
+- `pvg loop next --json` selected GRRR-z3w9 as the sole developer action.
+- Story was open with no agent handle; epic and story tips remained 38f33c936b8249a57be81aebd639aa40c2f9de55 and f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- The registered dev worktree remained available.
+
+Fail-closed capacity result:
+- Initial preflight: 14,425,878,528 bytes available.
+- Three stable remeasurements: 14,423,990,272; 14,419,730,432; and 14,414,327,808 bytes.
+- Preparation floor 15,350,000,000: FAIL, final shortfall 935,672,192 bytes.
+- Replay floor 16,106,127,360: FAIL, final shortfall 1,691,799,552 bytes.
+- Capacity was not relaxed.
+
+Root-cause observation:
+- The previously cleared Codex Sparkle Installation cache regenerated to 2.0G while its active updater remains in use.
+- Highlight, Slack, Claude, and pip cache paths remained absent.
+- No additional cleanup was performed because this authorization was dispatch-only.
+
+Decision:
+- The story was not claimed and no developer was spawned because a mandatory capacity gate currently fails and a worker could not run the required suites without risking another partial/blocking run.
+- No source/test changes, protected mutations, privileged actions, spendability reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+- CoS dispatch was unavailable because its local /hello listener did not connect; no alternative worker was used because dispatch itself was refused by the capacity gate.
