@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T15:13:27Z
-content_hash: "sha256:03fc652aa8068df6ddf88fd69e97867b79536a9f9371806dd0e98678f1af7bf6"
+updated_at: 2026-10-25T15:17:03Z
+content_hash: "sha256:55c26d007abad0d30173535d0e61ad87dceba9f381501ab6d97664ed239545f8"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -481,3 +481,29 @@ status: blocked
 - [ ] Authorization staging pending.
 - [ ] Install and verify pending.
 - [ ] Denials remain active.
+
+### 2026-10-25T15:17:03Z speed
+## Protected Authorization Staging
+
+A first staging-script attempt failed before any authorization or protected runtime effect because its preflight used malformed nested command substitution for the database path. Revalidation confirmed authorization and runtime recovery namespace were absent and active/database hashes were unchanged. The script was corrected to the exact hardcoded store path.
+
+The exact authorization record was then staged successfully at /Library/GRRR/bootstrap/recovery/candidate-recovery-authorization.json:
+- SHA256 9235640b58b973913e9b14f2ade420085daeed91a1e048ad5b2b09da41079a60
+- root:wheel mode 0444, one link, 602 bytes
+- action release-stop-retain-unknowns-read-only
+- principal operator-via-exclusive-root-parent
+- exclusive_parent=true
+- execution_authorized=false
+
+No runtime recovery namespace was created; active.json and budget.sqlite remained unchanged.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Authorization stage log and preflight evidence retained under outputs/grrr-d8ji-recovery-staging/.
+
+### proof
+- [x] Exact authorization staged.
+- [ ] Install and verify remain pending.
+- [ ] No replay, reconciliation, promotion, admission, production mutation, merge, or push.
