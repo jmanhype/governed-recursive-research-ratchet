@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T23:33:36Z
-content_hash: "sha256:04b01666af3a5fd74c3fb6ab58b769d399a0274e10ec50da2e4131ec3e26c91c"
+updated_at: 2026-10-25T23:48:26Z
+content_hash: "sha256:83360ecc6156b7e2f51accbc3557cdcc96d7022b1ba224bd53695a66f340dba5"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87]
@@ -1036,3 +1036,56 @@ Independent parent verification:
 - Protected accounting and durable replay-input hashes remained unchanged.
 
 No spendability reconciliation, replay or integration/live read-only execution, guest/VM/QEMU execution, UID/GID setup, promotion, admission, protected mutation, production mutation, merge, push, privileged action, or cache cleanup occurred. Remaining gates are unchanged.
+
+### 2026-10-25T23:48:26Z speed
+## Independent Spendability Reconciliation Review — BLOCKED_MISSING_EVIDENCE
+
+Operator scope: spendability reconciliation review only. No reconciliation, replay, promotion, admission, production mutation, protected mutation, merge, or push was authorized or performed.
+
+Independent review:
+- Security-sensitive review was dispatched with fresh context to Astra because CoS `/hello` was unavailable.
+- Exact reviewed story HEAD: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Reviewed all eleven assigned source/docs/test paths, including persistent_budget.py, accounting_recovery.py, accounting_registration.py, replay.py, recovery/registration docs, V4 review, and associated unit-test sources.
+- Read only active.json and recovery/receipt.json among protected artifacts. The evaluator-owned database/store directory was not accessed.
+- Reviewer performed no tests, imports, file edits, tracker updates, sudo, protected database access, or runtime mutations.
+
+Verdict:
+SPENDABILITY_REVIEW: BLOCKED_MISSING_EVIDENCE
+
+Key findings:
+- Current v3 correctly fails closed: runtime opens read-only, reports unresolved/null spendability, requires version 1 before mutations, and replay refuses v3 before input preparation or budget opening. Clearing stopped does not authorize spending.
+- Receipt evidence establishes known encumbrance, not available budget.
+- Parent independently decoded receipt rows and confirmed:
+  - 8 metering rows, actual execution total 208,265,788 us.
+  - 11 reservation rows, all stage=poc, aggregate reservation maxima 3,300,000,000 us.
+  - 3 pending rows with null actual/receipt: 69523b39a51c44739114313c9325028c, b34d8b9d106e42eab3a3e43daac98ddd, d375ce6a2d924646bec71df64e939a5b.
+  - Pending maxima total 900,000,000 us.
+  - Known encumbrance check: 208,265,788 + 900,000,000 = 1,108,265,788 us, matching receipt known_encumbered poc/milestone.
+- Neither reservation counts nor subtracting known encumbrance from ceilings resolves missing history or proves spendability. Empty overhead rows do not prove zero historical overhead.
+- Existing inventory validation must not be repurposed as reconciliation proof: meter evidence is only digest-shaped, issuer/measurement semantics are not authenticated, request bindings may be null, and schema validation is not a complete generic constraint proof.
+- Pending maxima are conservative holds, not actual usage. Reconciliation must not clip overruns, convert nulls to zero, omit pending rows, or treat the eight meters as covering all eleven reservations.
+
+Required before any reconciliation implementation could be accepted:
+- Authenticated fresh baseline and full v3 ancestry verification, including intent/completion records, exact database/schema/row inventory and hashes, campaign/store/prior-history identity, device/inode, ownership/modes/ACLs, and absence of unexplained sidecars.
+- Historical completeness covering unknown history, stop cause, all relevant runs/costs/overhead, and documented unmeasured boundaries.
+- Per-row provenance for reservation/key/run/request binding/profile/stage, original meter bytes and referenced evidence, trusted issuer/toolchain/policy identities, units, measurement window, and cessation evidence. Each pending disposition needs its own evidence; unavailable evidence must retain the full hold and unresolved state.
+- Exact schema/arithmetic rules with canonical JSON, bounded nonnegative integers, unique IDs/keys, no orphan/ambiguous joins, actual/receipt null pairing, actual <= maximum, exact schema fingerprint, and overflow/ceiling refusal. Invalid data must fail, not be repaired or clamped.
+- Scope/replay protection preserving campaign/store/history/stage, charging POC to both POC and milestone, binding each decision to exact baseline/row/evidence hashes, and rejecting stale or duplicate dispositions.
+- Separate approvals for bounded implementation, independent exact-artifact review, staging, and protected reconciliation. Root-owned records are attestations, not signatures.
+
+Safe next slice: evidence-contract/design document only. It must enumerate missing evidence, typed inputs, conservative rules, and adversarial acceptance cases, and continue outputting spendable=null whenever completeness, provenance, or upper bounds remain unresolved. Do not add a reconciler, upgrade v3, relax guards, publish authority, settle/release holds, or access the evaluator-owned store without separate authorization.
+
+Parent side-effect verification:
+- Story remains open/blocked and unclaimed.
+- Epic HEAD unchanged: 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- Story/worktree HEAD unchanged: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Story worktree and epic repository remained clean.
+- All 8 source manifest entries and all 10 evidence manifest entries verified OK.
+- Protected hashes after review remained:
+  - /Library/GRRR/accounting/active.json cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+  - /Library/GRRR/accounting/budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+  - /Library/GRRR/accounting/receipt.json 9f64395bec815a6bb2281d3b5d96d2356819138b1929b0a9881c16483c486dde
+  - /Library/GRRR/accounting-poc2/active.json 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+  - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
+
+No source/test/doc change, commit, delivery, acceptance, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
