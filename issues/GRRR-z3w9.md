@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-25T21:13:37Z
-content_hash: "sha256:00e23b9411565fb982fde28d3b59ba4c68393435e80ace46ea7c589cb5762855"
+updated_at: 2026-10-25T21:25:20Z
+content_hash: "sha256:c0842cdc1637a1e4939f7772550bc76b564dd1a9967d4ba32ad9b8ce2b8136ec"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji]
@@ -711,3 +711,43 @@ Post-reset invariants:
   - /Library/GRRR/accounting/receipt.json 9f64395bec815a6bb2281d3b5d96d2356819138b1929b0a9881c16483c486dde
   - /Library/GRRR/accounting-poc2/active.json 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
   - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
+
+### 2026-10-25T21:25:20Z speed
+## Authorized Additional Regenerable Cache Cleanup — Capacity Gates Cleared
+
+Scope honored: removed only eight exact cache directories owned by inactive Highlight, Slack, and Claude processes. Before removal, process checks found no Highlight/Slack/Claude owner processes and `lsof +D` found no open files in any target. The directories were moved to an exact-path quarantine, validated, deleted, and no cache-quarantine residue remains.
+
+Removed cache bytes:
+- Highlight/Dependencies/Cache: 1,253,216,256
+- Highlight/Cache: 402,812,928
+- Highlight/Code Cache: 103,473,152
+- Slack/Cache: 952,889,344
+- Slack/Service Worker/CacheStorage: 379,871,232
+- Slack/Code Cache: 44,044,288
+- Claude/Cache: 662,380,544
+- Claude/Code Cache: 244,584,448
+- Total cache content measured: 4,043,272,192 bytes.
+
+Capacity:
+- Available before this batch: 12,751,790,080 bytes.
+- Available immediately after deletion: 16,833,687,552 bytes; observed free delta 4,081,897,472 bytes.
+- Final stable remeasurement: 16,810,323,968 bytes.
+- Preparation floor 15,350,000,000: PASS with 1,460,323,968-byte margin.
+- Replay floor 16,106,127,360: PASS with 704,196,608-byte margin.
+- Floors were not changed.
+
+Preservation postcheck:
+- Epic HEAD unchanged: 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- GRRR-z3w9 story tip unchanged: f94f306f94172f6dbf7ca6aa893f93d2e8376ed9.
+- Repository remained clean.
+- Story remains open/blocked because accounting spendability, identity, review/install, and explicit replay authorization gates remain separate.
+- Protected accounting hashes remained unchanged:
+  - /Library/GRRR/accounting/active.json cc45b70fed84bae583959379559e8fc8336a0da3b4bca1750fc20c2848619f1b
+  - /Library/GRRR/accounting/budget.sqlite 9fe4000c0c45b83cc818c29640e561167c34bd663abc26267e2a1b009f878234
+  - /Library/GRRR/accounting/receipt.json 9f64395bec815a6bb2281d3b5d96d2356819138b1929b0a9881c16483c486dde
+  - /Library/GRRR/accounting-poc2/active.json 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+  - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
+
+Durable replay inputs remain present under /Library/GRRR/replay-inputs, including source.tar, policy.json, review.json, corpus inputs, kernel/initramfs, and Alpine ISO. Trusted-observation v4 input.iso remains present with SHA256 57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6. The older temporary /private/tmp/grrr-independent-replay-input-v1/input.iso path was found absent during postcheck; this cleanup did not move or delete that path, and durable protected inputs are intact.
+
+No GRRR evidence tree, protected accounting state, replay input, repository, or production data was selected for deletion. No spendability reconciliation, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
