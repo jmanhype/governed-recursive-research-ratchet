@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T15:20:16Z
-content_hash: "sha256:04a21e60107c36a1da3f9080e10b050c5fe717ecb0b9e1a7347e89ecc94ac769"
+updated_at: 2026-10-25T15:55:37Z
+content_hash: "sha256:d772e093f6905cb639ce90689659ff2dc44e60613f5811f9a03e3f52473c90ac"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -542,3 +542,21 @@ status: blocked
 - [x] v3 remains read-only by reviewed source contract.
 - [ ] Separately authorized controlled refusal-path live proof remains not-run.
 - [ ] Story remains blocked/not delivered pending that distinct gate and PM review.
+
+### 2026-10-25T15:55:37Z speed
+## Operator Authorization — controlled refusal-path proof only
+
+APPROVED [2026-10-25]: attempt duplicate recovery with the already consumed authorization and attempt reviewed v3 reserve, meter, settle, overhead, halt, raw SQL, and writable BLOB mutations. Every attempt is expected to fail without changing active.json or budget.sqlite.
+
+Explicit denials: no spendability reconciliation, replay, promotion, admission, production mutation, merge, or push.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Current published state is v3 stop-only recovery; source and protected hashes require immediate preflight.
+
+### proof
+- [ ] Duplicate install refusal pending.
+- [ ] Runtime mutation refusals pending.
+- [ ] active.json and budget.sqlite byte-preservation checks pending.
