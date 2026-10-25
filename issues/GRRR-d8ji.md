@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
 updated_at: 2026-10-25T16:53:57Z
-content_hash: "sha256:63547a11966a9be63bee7419275d4ba7d4f6ecddc84ecdae4a3273c337743dba"
+content_hash: "sha256:1cd3178bb4fd22b4c6bd48bd1c5d8e47f91e12ecf93d52e4cc9d4e1549710b36"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n]
@@ -750,3 +750,24 @@ status: delivered
 - [x] AC #5: Authority boundaries preserved.
 - [x] AC #6: Both required interpreter suites pass with exact artifacts.
 - [x] AC #7: Separately authorized stop-only success/refusal gates recorded; downstream replay gated.
+
+### 2026-10-25T16:53:57Z speed
+## PM Decision
+REJECTED [2026-10-25]: DOCS_STALE; implementation/live proof is substantively present but mandatory documentation-freshness gate fails.
+
+EXPECTED: Documentation Freshness requires updating documentation describing behavior changed by this story; no documentation scope-out exists.
+DELIVERED: research/replay_smoke.py now resets observation uncertainty on entering SIGKILL and permits fresh timely post-KILL absence to establish success. docs/REPLAY-RUNTIME-SMOKE.md:158-160 still says uncertain cessation stays false even if a later observation finds no processes. docs/ARCHITECTURE.md:55 still describes current persistent accounting as registration-only and stopped, whereas the delivered documented/verified result is stop-only v3 with stopped=0 and runtime writes denied.
+GAP: DOCS_STALE: docs/REPLAY-RUNTIME-SMOKE.md references the superseded phase-global uncertainty behavior but was not updated. DOCS_STALE: docs/ARCHITECTURE.md current-existence table references superseded stopped accounting state but was not updated. Readers receive contradictory current safety/state contracts despite the new recovery document being accurate.
+FIX: Update both documents to the exact phase-local TERM/KILL semantics and bounded deadline failures; reconcile the architecture current-state row/checkpoint with the stop-only v3 result, unresolved history, spendable=null, empty allowed mutations and execution_authorized=false. Explicitly distinguish implemented/story/protected-installed closure state; retain no replay/reconciliation authority. Review related registration/current-state documentation for clear historical scoping or successor links. Redeliver docs-only with static/link/diff evidence; do not repeat protected actions or change implementation merely to resolve this finding.
+
+Evidence reviewed: clean story HEAD 734554707374f10c3c17b1e788d6fa2c3678bdd4, full nine-file diff (1084 insertions/13 deletions; bounded cessation fix and evidence explain overrun), exact four implementation/test source hashes, raw cessation-final log b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433 with both interpreter 253/20/30 passing counts, protected manifests 9/9 OK, actual install/verify records and duplicate/12 mutation refusals. No new test reruns needed for trustworthy unchanged evidence. No protected operations or code edits performed by PM.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Independent PM review found two current documentation contradictions; source and protected evidence hashes verified.
+
+### proof
+- [ ] Mandatory documentation-freshness gate: exact current cessation and stop-only accounting behavior documented consistently.
+- [x] AC1-7 substantive implementation/no-guest/live evidence reviewed; no downstream execution authority granted.
