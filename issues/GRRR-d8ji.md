@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T16:50:17Z
-content_hash: "sha256:1828c47ad97ceb33130a544cdc8dd347d46cc004df3615e0e3f119d1fb0a70fa"
+updated_at: 2026-10-25T16:51:22Z
+content_hash: "sha256:32e500dc7da88e60a6506c995a97f213c3e43441012385608da78206feae39de"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n]
@@ -692,3 +692,60 @@ status: blocked
 - [x] All reviewed v3 API/raw SQL/BLOB mutation attempts refused.
 - [x] Successful protected install/verify and refusal-path proof are now both recorded.
 - [ ] Story delivery/PM acceptance remain separate workflow actions not authorized by this proof-only operator request.
+
+### 2026-10-25T16:51:22Z speed
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- /usr/bin/python3 /tmp/grrr-d8ji-doc-check.py
+- /opt/homebrew/bin/python3 /tmp/grrr-d8ji-doc-check.py
+- pvg verify docs/ACCOUNTING-RECOVERY.md docs/evidence/accounting-recovery/REPORT.md --format=text
+- git diff --check; git diff --cached --check
+- shasum -a 256 -c protected-recovery-SHA256SUMS; shasum -a 256 -c refusal-proof-SHA256SUMS (external recovery-staging directory)
+Summary: documentation checks PASS 12/12 each interpreter, 0 failures; manifests PASS 9/9, 0 mismatches; pvg verify PASS 0 files scanned/0 issues (Markdown unsupported, substantive checks supplied separately); diff checks PASS. No new unit runs for docs-only change; unchanged implementation evidence records 253/253 full,20/20 recovery,30/30 registration each Python, zero failures/errors/skips/warnings. Coverage percentage not measured, AC coverage7/7.
+
+### Commit
+- Branch: story/GRRR-d8ji
+- SHA: 734554707374f10c3c17b1e788d6fa2c3678bdd4
+- Implementation/test evidence SHA: 65bb7945299851c078f5b48e9083d3aee13a7c4a; raw final log b2825f94a76a2d04969b993942c80b7e4b5906d19dddeae848219d25ad4eb433.
+- Only two Markdown files changed; no implementation/test/protected effects. Full detailed proof, source/raw artifact hashes, AC table and limitations are in the appended delivery notes and committed docs/evidence/accounting-recovery/REPORT.md.
+
+### AC Verification
+| AC | Evidence | Status |
+|---|---|---|
+| 1 | Exact reviewed transition contract/source, final follow-up/plan review and authorized stop-only result | PASS |
+| 2 | Original inode682589447/history/ceilings, reservations11/metering8/overhead0/pending3 and unresolved/null state preserved | PASS |
+| 3 | Canonical intent/receipt/completion and original registration/v2 ancestry verified | PASS |
+| 4 | Focused unit cases plus consumed-authority refusal and12/12 UID320 live API/rawSQL/BLOB denials, protected_state_changed=false | PASS |
+| 5 | Developer no-guest effects unprivileged; parent effects separately reviewed and explicitly authorized, no downstream authority | PASS |
+| 6 | Both required interpreter full253/253, recovery20/20, registration30/30 at unchanged implementation source, exact commands/log above | PASS |
+| 7 | Separate live install/verify success and authorized refusal paths with before/after invariants, no reconciliation/replay | PASS |
+
+LEARNINGS:
+- Stop-only v3 is read-only with spendable null; successful recovery is not execution authority.
+- Historical blocked contracts in Comments occur after Notes; final proof must be appended as a comment to retain append-only authoritative EOF contract.
+- Markdown requires explicit checks beyond pvg verify's zero-scanned structural pass.
+
+DISCOVERED_BUG:
+  title: pvg deliver and nd append-notes leave historical Comments contract authoritative
+  context: First verify-delivery passed4/9. pvg nd append-notes inserts under Notes; deliver inserts delivered contract there, before historical Comments containing blocked contracts. Latest global contract remained blocked. No raw vault edits or story rewrite; this comment appends complete proof/contract via nd API.
+  affected_files: external pvg/nd delivery proof routing
+  discovered_during: GRRR-d8ji
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 734554707374f10c3c17b1e788d6fa2c3678bdd4; docs checks12/12 each Python; manifest9/9; static/diff checks pass. Detailed prior appended proof retained. No merge/push/protected operation.
+
+### proof
+- [x] AC #1: Exact reviewed transition contract and implementation.
+- [x] AC #2: Original identity/history/holds/unknowns preserved.
+- [x] AC #3: Canonical append-only ancestry and receipts.
+- [x] AC #4: Fail-closed unit and controlled live refusals.
+- [x] AC #5: Authority boundaries preserved.
+- [x] AC #6: Both required interpreter suites pass with exact artifacts.
+- [x] AC #7: Separately authorized stop-only success/refusal gates recorded; downstream replay gated.
