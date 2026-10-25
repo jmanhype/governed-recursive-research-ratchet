@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T14:43:02Z
-content_hash: "sha256:75eea7ca62f0c5ad561a3bec731f2eec4f48f498c06fb62f3aba873571b5ec68"
+updated_at: 2026-10-25T15:13:27Z
+content_hash: "sha256:03fc652aa8068df6ddf88fd69e97867b79536a9f9371806dd0e98678f1af7bf6"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -457,3 +457,27 @@ status: blocked
 - [x] Candidate plan/review independently approved.
 - [ ] Separate exact operator authorization and protected live install/verify remain pending.
 - [ ] GRRR-d8ji remains blocked/not delivered.
+
+### 2026-10-25T15:13:27Z speed
+## Operator Authorization — protected stop-only recovery install and verify
+
+APPROVED [2026-10-25]: The operator supplied an exact authorization binding GRRR-d8ji commit 65bb7945299851c078f5b48e9083d3aee13a7c4a, recovery source 88cf699236288ba989fcb2b21e5966720faadc13f420c83c0f64e99bade8760a, registration source db2d5965a78443fcd4205f8c73950ab0649876624fadfd79a17de086f3b1a038, baseline dfc4bfcfd56a2fe8cfbc4416f912829b35e2dced5c31b23f181cbed38f63b73f, review 94f9b8113b2b08595783d16223a2c10cdcde6b79de5c09076de1075de5fbec81, and plan 478cbae360092c5b6a9659516be75b0a2c7e9d9741509bfbb8b4d6468f77307e.
+
+Authorized effects:
+1. Stage the exact root-owned authorization record.
+2. Run the reviewed stop-only recovery install.
+3. Run protected verify under exclusive parent writer control.
+4. Preserve original database inode/history/holds/unknowns and keep v3 read-only.
+
+Explicit denials: no spendability reconciliation, replay, promotion, admission, production mutation, merge, or push.
+
+## nd_contract
+status: blocked
+
+### evidence
+- Authorization generated from the exact protected plan/review bytes; parent preflight still required immediately before effects.
+
+### proof
+- [ ] Authorization staging pending.
+- [ ] Install and verify pending.
+- [ ] Denials remain active.
