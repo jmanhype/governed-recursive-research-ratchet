@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
-updated_at: 2026-10-25T15:55:37Z
-content_hash: "sha256:d772e093f6905cb639ce90689659ff2dc44e60613f5811f9a03e3f52473c90ac"
+updated_at: 2026-10-25T16:03:59Z
+content_hash: "sha256:4c5fd4765f043b4c8161ed6cd11cd7b930ad8e3c11e20180d615b9b3ddc8bb91"
 blocked_by: [GRRR-43i8]
 blocks: [GRRR-z3w9]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -560,3 +560,57 @@ status: blocked
 - [ ] Duplicate install refusal pending.
 - [ ] Runtime mutation refusals pending.
 - [ ] active.json and budget.sqlite byte-preservation checks pending.
+
+### 2026-10-25T16:03:59Z speed
+## Controlled Refusal-Path Proof — PASS
+
+Operator authorization covered duplicate recovery and v3 mutation refusal attempts only.
+
+Duplicate recovery with the already consumed authorization exited 1 as required:
+- error: partial/unknown registration state
+- execution_authorized=false
+- active.json remained 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+- budget.sqlite remained 9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3
+- database inode remained 682589447
+- state remained 1|0
+- recovery intent/prior/receipt/complete hashes and inventory remained unchanged
+- no uncertain.json or next-active.json was created
+
+A parent-staged, hash-pinned temporary evaluator probe used the reviewed source closure at commit 65bb794 and ran as UID 320. It attempted 12 mutation surfaces:
+- reserve: refused, Failure, Accounting registration is read-only; reviewed recovery required
+- meter: refused with same read-only Failure
+- settle: refused with same read-only Failure
+- disclose_overhead: refused with same read-only Failure
+- halt: refused with same read-only Failure
+- raw connection execute: refused, DatabaseError/not authorized
+- raw connection executemany: refused, DatabaseError/not authorized
+- raw connection executescript: refused, DatabaseError/not authorized
+- raw cursor execute: refused, DatabaseError/not authorized
+- raw cursor executemany: refused, DatabaseError/not authorized
+- raw cursor executescript: refused, DatabaseError/not authorized
+- writable blobopen: refused, Failure, Writable accounting BLOB handles are forbidden
+
+The probe checked active/database hashes and state/counts after every refusal. Final state remained:
+- active SHA256 9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8
+- database SHA256 9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3
+- database inode 682589447
+- state 1|0; reservations 11; metering 8; overhead 0; pending 3
+- all_refused=true; protected_state_changed=false; execution_authorized=false
+
+A protected root postflight reverified complete v3 ancestry, unchanged registration/prior history, exact recovery artifacts, database integrity, and no evaluator/runner/QEMU process. The temporary probe workspace was removed after evidence capture.
+
+No reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+Evidence: outputs/grrr-d8ji-recovery-staging/duplicate-install-refusal.log, duplicate-install-refusal-summary.log, v3-refusal-probe.json, refusal-proof-postflight.log, and refusal-proof-SHA256SUMS.
+
+## nd_contract
+status: blocked
+
+### evidence
+- All authorized refusal paths passed; protected bytes/inventory remained unchanged.
+
+### proof
+- [x] Duplicate recovery refused.
+- [x] All reviewed v3 API/raw SQL/BLOB mutation attempts refused.
+- [x] Successful protected install/verify and refusal-path proof are now both recorded.
+- [ ] Story delivery/PM acceptance remain separate workflow actions not authorized by this proof-only operator request.
