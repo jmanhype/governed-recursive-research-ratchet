@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T04:51:07Z
-content_hash: "sha256:d87cc4ae483e78e4b2dfef17d7ba98e5ff46bc22c952c350a22490709e00463a"
+updated_at: 2026-10-26T04:56:16Z
+content_hash: "sha256:ff75d3e3019ed2bc242d9aaec3566f5cd24bf9190959ee042dd1ecbf75d36aa6"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1269,3 +1269,32 @@ Post-stabilization:
 - Next authorized action is reboot, followed by fresh capacity/floor measurements.
 
 No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+### 2026-10-26T04:56:16Z speed
+## Post-Reboot Capacity Floor Rerun — Still Fail-Closed
+
+Operator-authorized emergency stabilization completed:
+- Research service PID 74244 had already exited before termination.
+- No uvicorn research-service or FFmpeg process was found after reboot.
+- Google Chrome and ego lite were quit/terminated before reboot.
+- macOS restart occurred at 2026-10-25 23:52:11 local time.
+- Post-reboot uptime was about 4 minutes at measurement time.
+- Post-reboot swap: 0.0 MiB total and 0.0 MiB used.
+
+Stable post-reboot readings:
+1. 10,271,731,712 bytes available.
+2. 10,303,717,376 bytes available.
+3. 10,313,134,080 bytes available.
+Minimum: 10,271,731,712 bytes.
+
+Floor results:
+- Preparation floor 15,350,000,000 bytes: FAIL; minimum shortfall 5,078,268,288 bytes.
+- Replay floor 16,106,127,360 bytes: FAIL; minimum shortfall 5,834,395,648 bytes.
+
+Decision:
+- Both fixed floors still fail.
+- GRRR-z3w9 remains unclaimed and is not dispatched.
+- No cache cleanup, floor relaxation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+- No /Library/GRRR access or mutation occurred.
+
+Reboot recovered substantial capacity and eliminated swap, but an additional stable margin of at least 5.84 GB above the replay floor is still required before dispatch.
