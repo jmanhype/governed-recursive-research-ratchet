@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T01:46:07Z
-content_hash: "sha256:daa671995065e7e05793ac18ac22053d14dedfea13c573250811652d68c714a2"
+updated_at: 2026-10-26T01:49:00Z
+content_hash: "sha256:23c0c921c14b5db9ecd71a191f47e732ce5f14fb5d1ced52bf98f93f3fd21315"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1181,3 +1181,35 @@ Required document-only correction:
 - Add adversarial cases for legitimate null shapes and invalid counterparts.
 
 No protected access, tests, edits, or state mutation occurred during review.
+
+### 2026-10-26T01:49:00Z speed
+## Spendability Evidence-Contract Document — Independently Approved, Story Still Blocked
+
+Operator scope was document-only. The approved artifact is docs/SPENDABILITY-RECONCILIATION-EVIDENCE-CONTRACT.md.
+
+Document commits on story/GRRR-z3w9:
+1. d5a0314f5d5f776bdd53af2f1169fe664be88794 — initial 452-line evidence contract.
+2. 820469226032761ca1335fe58ef674a3219e8d07 — field-level nullability correction, 17 insertions and 2 deletions.
+
+Final document identity:
+- Working-file and committed SHA256: c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37.
+- Git blob: 5dd2df555d2be5d65ba61e48dfba498a45956a66.
+- Exact changed path: docs/SPENDABILITY-RECONCILIATION-EVIDENCE-CONTRACT.md.
+- Worktree clean.
+
+Review sequence:
+- Initial independent review rejected the generic null rule because it conflicted with unresolved `spendability=null` and historically null request bindings.
+- Document-only rework introduced field-specific nullability and adversarial cases 23–28.
+- Fresh independent review returned CONTRACT_REVIEW: APPROVED for commit 820469226032761ca1335fe58ef674a3219e8d07 and verified hash c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37.
+- Reviewer performed no edits, tests, tracker updates, or protected-store access.
+
+Parent verification:
+- Final story HEAD is 820469226032761ca1335fe58ef674a3219e8d07; parent is d5a0314f5d5f776bdd53af2f1169fe664be88794.
+- Epic HEAD remains 38f33c936b8249a57be81aebd639aa40c2f9de55.
+- The rework modifies only the contract document.
+- Corrected null rules require unresolved `spendability=null`, permit only provenance-backed null request bindings, enforce paired actual/receipt nullability, and default all other fields to non-null unless explicitly bounded.
+- Adversarial cases are contiguous 1–28 with no gaps.
+- Story remains open/blocked and is not delivered because the five replay ACs remain unmet.
+- Protected accounting hashes remained unchanged.
+
+The contract grants no operational authority. No reconciliation implementation or execution, spendability write, unknown-zeroing, protected /Library/GRRR access or mutation, replay/live/integration execution, VM/QEMU/UID/GID action, promotion, admission, production mutation, merge, push, cache cleanup, or recursive delegation occurred.
