@@ -9,7 +9,7 @@ created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T03:53:35Z
 content_hash: "sha256:74cb540a054e5cb9c5cd6b76c4761bddcef1adafa7f9a072fae135b2bf2d99fa"
-labels: [milestone-1, integration, spendability-validator, delivered, accepted]
+labels: [milestone-1, integration, spendability-validator, accepted]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
 closed_at: 2026-10-26T03:53:35Z
