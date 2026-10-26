@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T01:49:00Z
-content_hash: "sha256:3b1ae8b2fe7824b8369f0913dc4eb0352d682b6d4642fc6e9280fbfbadf32961"
+updated_at: 2026-10-26T04:13:29Z
+content_hash: "sha256:933797c2865f2e0dd30b2eac5858ef6948c72832217e35091ad77f71d4e1062d"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1215,3 +1215,32 @@ Parent verification:
 - Protected accounting hashes remained unchanged.
 
 The contract grants no operational authority. No reconciliation implementation or execution, spendability write, unknown-zeroing, protected /Library/GRRR access or mutation, replay/live/integration execution, VM/QEMU/UID/GID action, promotion, admission, production mutation, merge, push, cache cleanup, or recursive delegation occurred.
+
+### 2026-10-26T04:13:29Z speed
+## Authorized Dispatch Preflight — Fail-Closed, Not Dispatched
+
+Operator authorization required a fresh capacity preflight before dispatching GRRR-z3w9 and denied /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, and push.
+
+Live pre-state:
+- `pvg loop next --json` selected GRRR-z3w9 as the sole developer action.
+- Story was open, unclaimed, and had no recorded agent handle.
+- Epic HEAD: 36671bc467286404b9dfddcf487fc9358aa2b643.
+- Story/worktree HEAD: 820469226032761ca1335fe58ef674a3219e8d07.
+- Epic and story worktrees were clean.
+
+Fresh capacity readings:
+1. 1,848,680,448 bytes available.
+2. 1,864,523,776 bytes available.
+3. 1,863,589,888 bytes available.
+
+Fixed-floor results:
+- Preparation floor 15,350,000,000 bytes: FAIL; final shortfall 13,486,410,112 bytes.
+- Replay floor 16,106,127,360 bytes: FAIL; final shortfall 14,242,537,472 bytes.
+
+Decision:
+- Minimum reading was far below the replay floor.
+- GRRR-z3w9 was not claimed and no developer was spawned.
+- No capacity cleanup or floor relaxation was performed.
+- Story remains open/blocked and unclaimed.
+
+No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, push, or other protected operation occurred.
