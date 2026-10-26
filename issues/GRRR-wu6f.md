@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:02:29Z
-content_hash: "sha256:c1cda02547d33ef00a4e37f8c07dee1cea0214da0bb1b6e98a2343949dd41d9c"
+updated_at: 2026-10-26T03:03:33Z
+content_hash: "sha256:fd9a2247972d40f1e77a4e2bc9061de893438728220f43fde1175ff8892eb930"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
@@ -88,7 +88,22 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
 
+Commands run:
+- `/usr/bin/python3 -B -m unittest discover -s tests -p 'unit_spendability_evidence.py'` — Ran 28 tests, OK, exit 0.
+- `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit_spendability_evidence.py'` — Ran 28 tests, OK, exit 0.
+- Both required interpreters compiled the two changed files with bytecode confined under `/tmp` — exit 0.
+- `pvg verify research/spendability_evidence.py tests/unit_spendability_evidence.py --include-tests --format=text` — VERIFY: PASSED (2 files scanned, 0 issues).
+- `git diff --check`, `git diff --cached --check`, and range diff check — PASS.
+- Static forbidden API/path scan — PASS; exactly 28 contiguous test-case methods.
+
+Summary:
+Implementation SHA: `2522a8ea95068527bba8db85180c4b38c239a1a0`
+Parent: `820469226032761ca1335fe58ef674a3219e8d07`
+Implementation file SHA256: `50f18fd77137d0a0519527ce631f4fac7012197fa96aefed2947a0293601d5f7`
+Test file SHA256: `baa2923927d8a65cb71b5e7dc28cc8ccd12df9d8354323e2e26c97e159280e21`
+Exactly two files changed, 996 inserted LOC. Both interpreters passed all 28 focused adversarial tests with no skips. The validator is pure/in-memory, returns `spendable=null` for incomplete evidence, retains pending maxima, and exposes no mutation or execution authority. No `/Library/GRRR` access, reconciliation execution, replay, VM/QEMU action, promotion, admission, production mutation, merge, or push occurred.
 
 ## nd_contract
 status: delivered
