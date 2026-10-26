@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:53:35Z
-content_hash: "sha256:db9e898d14e4bd43aa0d60bb6cb8709d976bc12847f9cd24ca61e1b6144ac61b"
+updated_at: 2026-10-26T04:03:02Z
+content_hash: "sha256:c4e3ad6ada354fff031de93f13acdcb88cfdbcdea976502bc0abbe7283d06896"
 labels: [milestone-1, integration, spendability-validator, accepted]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
@@ -499,3 +499,20 @@ status: delivered
 - [x] AC #3: validation remains pure/in-memory with no protected access or external side effect.
 - [x] AC #4: compile, static verify, and diff checks pass.
 - [x] Rework: malformed enum-shaped values return structured fail-closed evidence without TypeError.
+
+### 2026-10-26T04:03:02Z speed
+## Operator Merge Authorization and Contamination Preflight
+
+APPROVED [2026-10-26]: merge accepted GRRR-wu6f into epic/GRRR-2t3h. Denied: /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, and push.
+
+Live preflight:
+- Story is closed/accepted at a1664df3ae43cbfb5aaa2128ebc0a29641c626fd.
+- Epic HEAD 38f33c936b8249a57be81aebd639aa40c2f9de55 is the merge base.
+- Story worktree is clean.
+- A normal full branch merge would introduce 65 files and 4,243 insertions because story/GRRR-wu6f descends through unaccepted GRRR-z3w9 WIP.
+
+Governance decision for this merge:
+- Preserve the accepted commit as the second merge parent.
+- Include only the independently approved spendability evidence contract plus the accepted GRRR-wu6f validator/test paths in the epic tree.
+- Exclude unaccepted GRRR-z3w9 replay implementation/evidence changes from the resulting tree.
+- Verify the resulting diff, focused tests, and ancestry before deleting the story branch.
