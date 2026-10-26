@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T04:56:16Z
-content_hash: "sha256:ff75d3e3019ed2bc242d9aaec3566f5cd24bf9190959ee042dd1ecbf75d36aa6"
+updated_at: 2026-10-26T11:55:12Z
+content_hash: "sha256:362eec46b3235ddfb721375e76da3a063f31af74acf1283e83f59dbfa84de104"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1298,3 +1298,34 @@ Decision:
 - No /Library/GRRR access or mutation occurred.
 
 Reboot recovered substantial capacity and eliminated swap, but an additional stable margin of at least 5.84 GB above the replay floor is still required before dispatch.
+
+### 2026-10-26T11:55:12Z speed
+## Continued Capacity Preflight — Still Fail-Closed
+
+Fresh preflight on 2026-10-26:
+1. 8,336,093,184 bytes available.
+2. 8,190,361,600 bytes available.
+3. 8,158,330,880 bytes available.
+Minimum: 8,158,330,880 bytes.
+
+A follow-up trend then measured:
+1. 7,546,126,336 bytes.
+2. 7,481,712,640 bytes.
+3. 7,451,680,768 bytes.
+Latest single reading: 7,356,882,944 bytes.
+
+Floor result at latest reading:
+- Preparation floor 15,350,000,000: FAIL; shortfall 7,993,117,056 bytes.
+- Replay floor 16,106,127,360: FAIL; shortfall 8,749,244,416 bytes.
+
+Observed pressure sources:
+- ego lite relaunched with many helpers.
+- Swap total 3,072 MiB with about 2,567.69 MiB used.
+- iCloud CloudDocs client.db remained about 2.8 GB and open by macOS bird.
+- Capacity continued falling during read-only observation.
+
+Decision:
+- Both fixed floors fail and capacity is trending downward.
+- GRRR-z3w9 remains unclaimed and undispatched.
+- No cache cleanup, process termination, iCloud mutation, floor relaxation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+- No /Library/GRRR access or mutation occurred.
