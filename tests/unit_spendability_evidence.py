@@ -275,7 +275,53 @@ class SpendabilityEvidenceCases(unittest.TestCase):
         self.assert_case(lambda package: package["reservations"][0]["maximum"].__setitem__("execution_us", True), "row_schema", True)
 
     def test_case_10_unknown_stage_fails_closed(self):
-        self.assert_case(lambda package: package["reservations"][0].__setitem__("stage", "production"), "row_schema", True)
+        def set_stage(value):
+            return lambda package: package["reservations"][0].__setitem__("stage", value)
+
+        def set_disposition(value):
+            def mutate(package):
+                pending = next(row for row in package["reservations"] if row["disposition"] == "pending")
+                pending["disposition"] = value
+            return mutate
+
+        def set_dispatch_outcome(value):
+            def mutate(package):
+                pending = next(row for row in package["reservations"] if row["disposition"] == "pending")
+                pending["pending_evidence"]["dispatch_outcome"] = value
+            return mutate
+
+        def set_overhead_category(value):
+            def mutate(package):
+                package["overhead"].append({
+                    "key": "overhead-invalid-category",
+                    "category": value,
+                    "duration_us": 0,
+                    "observer": "observer-1",
+                    "activity": "category-validation",
+                    "source_sha256": bound_hash("overhead-invalid-category"),
+                })
+            return mutate
+
+        variants = (
+            ("unknown string stage", set_stage("production"), ("reservations", 0, "stage"), "production", "row_schema"),
+            ("unhashable stage", set_stage([]), ("reservations", 0, "stage"), [], "row_schema"),
+            ("wrong-type disposition", set_disposition([]), ("reservations", 8, "disposition"), [], "row_schema"),
+            ("wrong-type pending dispatch outcome", set_dispatch_outcome([]),
+             ("reservations", 8, "pending_evidence", "dispatch_outcome"), [], "pending_evidence"),
+            ("wrong-type overhead category", set_overhead_category([]), ("overhead", 0, "category"), [], "row_schema"),
+        )
+        for label, mutation, observed_path, observed_value, gate in variants:
+            with self.subTest(label):
+                package = valid_package()
+                mutation(package)
+                refresh_baseline(package)
+                result = validate_evidence(package)
+                self.assert_fail_closed(result, gate)
+                self.assertEqual(result.observed_evidence, package)
+                observed = result.observed_evidence
+                for component in observed_path:
+                    observed = observed[component]
+                self.assertEqual(observed, observed_value)
 
     def test_case_11_all_omitted_pending_holds_remain(self):
         self.assert_case(lambda package: package.__setitem__("reservations", [

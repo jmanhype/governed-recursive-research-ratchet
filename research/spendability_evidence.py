@@ -116,6 +116,10 @@ def _boolean(value):
     return type(value) is bool
 
 
+def _enum(value, allowed):
+    return type(value) is str and value in allowed
+
+
 def canonical(value: object) -> str:
     """Return the package's versioned canonical JSON representation."""
     return json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(",", ":"), allow_nan=False)
@@ -282,11 +286,11 @@ def _validate_rows(package, failures):
         if not _exact(row, RESERVATION_FIELDS, failures, "row_schema", label):
             continue
         if (not all(_identifier(row[name]) for name in ("id", "key", "run"))
-                or row["stage"] not in STAGES or _vector(row["maximum"]) is None
+                or not _enum(row["stage"], STAGES) or _vector(row["maximum"]) is None
                 or (row["binding"] is not None and not _hash(row["binding"]))
                 or (row["actual"] is not None and _vector(row["actual"]) is None)
                 or (row["receipt"] is not None and not _hash(row["receipt"]))
-                or row["disposition"] not in STATES or not _hash(row["request_sha256"])):
+                or not _enum(row["disposition"], STATES) or not _hash(row["request_sha256"])):
             _fail(failures, "row_schema", label + " fields differ")
         if not _provenance_valid(row["provenance"]):
             _fail(failures, "provenance", label + " provenance is untrusted")
@@ -294,7 +298,7 @@ def _validate_rows(package, failures):
         if row["disposition"] == "pending":
             if not _exact(pending, PENDING_FIELDS, failures, "pending_evidence", label + " pending evidence"):
                 continue
-            if (pending["dispatch_outcome"] not in OUTCOMES
+            if (not _enum(pending["dispatch_outcome"], OUTCOMES)
                     or not _hash(pending["final_observation_sha256"])
                     or pending["stale_handles_accounted"] is not True
                     or pending["baseline_unchanged"] is not True):
@@ -315,7 +319,7 @@ def _validate_rows(package, failures):
         label = "overhead[" + str(index) + "]"
         if not _exact(row, OVERHEAD_FIELDS, failures, "row_schema", label):
             continue
-        if (not _identifier(row["key"]) or row["category"] not in CATEGORIES
+        if (not _identifier(row["key"]) or not _enum(row["category"], CATEGORIES)
                 or not _integer(row["duration_us"]) or not _identifier(row["observer"])
                 or not _safe_text(row["activity"]) or not _hash(row["source_sha256"])):
             _fail(failures, "row_schema", label + " fields differ")
@@ -454,7 +458,8 @@ def _validate_arithmetic(package, failures):
             source = actual
         else:
             source = maximum
-        scopes = ("poc", "milestone") if row.get("stage") == "poc" else (("milestone",) if row.get("stage") == "milestone" else ())
+        stage = row.get("stage")
+        scopes = ("poc", "milestone") if _enum(stage, ("poc",)) else (("milestone",) if _enum(stage, ("milestone",)) else ())
         for scope in scopes:
             current = calculated.setdefault(scope, _zero_vector())
             updated = _add(current, source)
@@ -479,7 +484,7 @@ def _validate_arithmetic(package, failures):
             if not _mapping(row) or not _integer(row.get("duration_us")):
                 continue
             category = row.get("category")
-            if category not in CATEGORIES:
+            if not _enum(category, CATEGORIES):
                 continue
             mapping = calculated_overhead.setdefault(str(category), _zero_vector())
             updated = _add(mapping, {"money_cents": 0, "execution_us": row["duration_us"], "review_us": 0})
