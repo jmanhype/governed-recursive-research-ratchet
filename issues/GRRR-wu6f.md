@@ -1,16 +1,18 @@
 ---
 id: GRRR-wu6f
 title: "Validate spendability evidence fail-closed"
-status: open
+status: in_progress
 priority: 1
 type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T02:20:46Z
-content_hash: "sha256:8ba6c2693d666928f825f11d445a8a539c957579b20d7a4e97ba4972292ecf95"
+updated_at: 2026-10-26T02:22:25Z
+content_hash: "sha256:f496e1890240274f4e6036c293693e4fabb955bbfd22d9f1114de0c9206b357a"
 labels: [milestone-1, integration, spendability-validator]
 blocks: [GRRR-z3w9]
+assignee: dev-GRRR-wu6f
+follows: [GRRR-d8ji]
 ---
 
 ## Description
@@ -90,9 +92,13 @@ status: new
 
 ## History
 - 2026-10-26T02:20:59Z dep_added: blocks GRRR-z3w9
+- 2026-10-26T02:22:25Z status: open -> in_progress
+- 2026-10-26T02:22:25Z auto-follows: linked to predecessor GRRR-d8ji
+- 2026-10-26T02:22:25Z claimed by dev-GRRR-wu6f
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
+- Follows: [[GRRR-d8ji]]
 
 ## Comments
