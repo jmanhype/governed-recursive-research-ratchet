@@ -7,8 +7,9 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T02:20:26Z
+updated_at: 2026-10-26T02:20:46Z
 content_hash: "sha256:53052a71f6360a9e9ad8dfdb11d159b97b21201f07c5fce7d22b4a2a2bb4ca22"
+labels: [milestone-1, integration, spendability-validator]
 ---
 
 ## Description
