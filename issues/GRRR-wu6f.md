@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T03:15:30Z
-content_hash: "sha256:d01cca853d3c7119ed23bbd7baf8db584033bac103dcad356366d87b82c2e2e3"
+content_hash: "sha256:de8d2c8c54667e3199dd09d0dd15ad80a4bc49205a2c230a917ac07fd720dbb4"
 labels: [milestone-1, integration, spendability-validator, rejected]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8]
@@ -321,3 +321,22 @@ status: delivered
 - [x] All 28 contract adversarial cases map 1:1 and pass.
 - [x] Incomplete evidence remains spendable=null with pending maxima retained.
 - [x] No protected access, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+### 2026-10-26T03:15:30Z speed
+## PM Decision
+REJECTED [2026-10-25]
+EXPECTED: The approved contract says missing, malformed, stale, duplicate, ambiguous, late, unauthenticated, or partial evidence must fail the affected gate, and error output must name the first failed mandatory gate and preserve observed source evidence. The delivered public API is validate_evidence returning ValidationResult for this purpose.
+DELIVERED: At commit 2522a8ea95068527bba8db85180c4b38c239a1a0, research/spendability_evidence.py:284-290 tests row stage and disposition membership directly in frozensets. A JSON-shaped exact-schema reservation with stage set to an unhashable array raises TypeError at row["stage"] not in STAGES before a ValidationResult is returned. The equivalent category membership at lines 318-319 and 481-482 has the same malformed-type hazard. The 28 tests exercise only the hashable unknown string production.
+GAP: Malformed field values can escape the structured fail-closed API instead of producing first_failed_gate, gate_results, retained observed_evidence, pending maxima, and null spendability. This violates the contract malformed-evidence/first-failure requirement and AC coverage for fail-closed validation.
+FIX: Normalize membership checks to safe exact-type predicates or equivalent type-first validation for all enum-like fields. Ensure every JSON-shaped malformed package returns a ValidationResult naming the first failed gate and retaining evidence. Strengthen an existing case, while preserving exactly 28 test methods, with a wrong-type stage or category and assert the structured result rather than an exception.
+## nd_contract
+status: rejected
+
+### evidence
+- Reviewed commit 2522a8ea95068527bba8db85180c4b38c239a1a0 against contract commit 820469226032761ca1335fe58ef674a3219e8d07.
+- Trusted complete recorded both-interpreter 28-test and static proof; no tests rerun.
+- Static exact-diff, hashes, line counts, delivery-proof shape, stub/secret/forbidden-API scans, and boundary review passed; malformed-type API behavior is the rejection gap.
+
+### proof
+- [ ] AC #1: the 28 recorded cases pass, but the validator does not structurally fail closed for malformed enum-shaped field values outside those representative inputs.
+- [ ] AC #2/#3: pending and authority behavior is otherwise retained, but the public validator contract is incomplete for malformed evidence.
