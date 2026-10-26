@@ -7,9 +7,9 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T02:58:59Z
+updated_at: 2026-10-26T02:59:00Z
 content_hash: "sha256:2e551c059301dbd784248d205614196247f7a56443ac1b636bc41dddbef946a5"
-labels: [milestone-1, integration, spendability-validator]
+labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
 follows: [GRRR-d8ji, GRRR-43i8]
