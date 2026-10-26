@@ -7,11 +7,11 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:41:28Z
-content_hash: "sha256:6bef669facc0d724c37a3625bc9b03b34859a94a52c90f32a4dc55365ede8f5e"
+updated_at: 2026-10-26T03:41:29Z
+content_hash: "sha256:29ea6b4639f9c157881f8842c1614b0f91b5a33f192abb0c8cf1d7d910357ca6"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
-follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
+follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
 ---
 
@@ -303,11 +303,13 @@ status: in_progress
 - 2026-10-26T03:34:17Z claimed by dev-GRRR-wu6f
 - 2026-10-26T03:41:11Z status: in_progress -> in_progress
 - 2026-10-26T03:41:11Z auto-follows: linked to predecessor GRRR-bnkf
+- 2026-10-26T03:41:29Z status: in_progress -> in_progress
+- 2026-10-26T03:41:29Z auto-follows: linked to predecessor GRRR-c875
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
-- Follows: [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]]
+- Follows: [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]]
 
 ## Comments
 

@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T21:23:31Z
-content_hash: "sha256:c8a19f12ea4b73855011fc9c8c95b75dd4903f65e4384ddfd60450a39ec180b7"
+content_hash: "sha256:038407ce193d45fd0591c3cad373f5391a0b0938dc2a01e6b1a788ab4d3c9363"
 was_blocked_by: [GRRR-my5n]
 assignee: dev-GRRR-c875
 follows: [GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
 closed_at: 2026-10-21T21:23:30Z
 close_reason: "Accepted: real independent UID-separated safe-stop, durable fence/recovery, and admission gate evidence"
-led_to: [GRRR-bnkf, GRRR-w1lt, GRRR-z3w9, GRRR-43i8, GRRR-d8ji]
+led_to: [GRRR-bnkf, GRRR-w1lt, GRRR-z3w9, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 ---
 
 ## Description
@@ -296,7 +296,7 @@ status: in_progress
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-my5n]]
 - Follows: [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]], [[GRRR-0g4n]]
-- Led to: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-z3w9]], [[GRRR-43i8]], [[GRRR-d8ji]]
+- Led to: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-z3w9]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-wu6f]]
 
 ## Comments
 
