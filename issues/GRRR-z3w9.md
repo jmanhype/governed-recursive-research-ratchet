@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T04:13:29Z
-content_hash: "sha256:933797c2865f2e0dd30b2eac5858ef6948c72832217e35091ad77f71d4e1062d"
+updated_at: 2026-10-26T04:51:07Z
+content_hash: "sha256:d87cc4ae483e78e4b2dfef17d7ba98e5ff46bc22c952c350a22490709e00463a"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1244,3 +1244,28 @@ Decision:
 - Story remains open/blocked and unclaimed.
 
 No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, push, or other protected operation occurred.
+
+### 2026-10-26T04:51:07Z speed
+## Emergency Capacity Stabilization Before Authorized Reboot
+
+Operator authorized stopping local research service PID 74244 and its FFmpeg children, quitting Chrome and ego lite, rebooting, and rerunning both GRRR floors.
+
+Pre-stabilization observations:
+- Available space had fallen to 131,080,192 bytes.
+- Swap was 4,096 MiB total with about 3,689.5 MiB used.
+- Research service PID 74244 had already exited before an authorized kill could be issued.
+- No matching uvicorn research service or FFmpeg process remained.
+- A 2.8+ GB iCloud CloudDocs client.db was actively held by macOS bird; it was not modified or deleted.
+
+Authorized application stabilization:
+- Google Chrome was asked to quit gracefully and remaining Chrome-bundle processes were terminated.
+- ego lite was asked to quit gracefully.
+- Final Chrome/ego/research/FFmpeg process count: 0.
+
+Post-stabilization:
+- Available space: 3,081,035,776 bytes.
+- Swap: 3,072 MiB total, about 1,538.12 MiB used.
+- Capacity improved by roughly 2.95 GB but remains below both GRRR floors.
+- Next authorized action is reboot, followed by fresh capacity/floor measurements.
+
+No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
