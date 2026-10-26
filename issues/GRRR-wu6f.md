@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:34:17Z
-content_hash: "sha256:b1bf01103d3d71312604a61068efefe426f4b7aa3f807998dc9e21fc8b1dc154"
+updated_at: 2026-10-26T03:41:11Z
+content_hash: "sha256:b9861b2570efda3f2218147e85ba511e4184b410c80bc031fe60df57f8b9dd9d"
 labels: [milestone-1, integration, spendability-validator, rejected]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
@@ -89,7 +89,59 @@ status: new
 
 ## Notes
 Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+## Implementation Evidence (DELIVERED — REWORK 1)
 
+PROOF:
+
+### CI/Test Results
+- Commands run at commit `a1664df3ae43cbfb5aaa2128ebc0a29641c626fd`:
+  - `/usr/bin/python3 -B -m unittest discover -s tests -p 'unit_spendability_evidence.py'`
+  - `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit_spendability_evidence.py'`
+- System Python: PASS — Ran 28 tests in 0.072s; OK; 0 failures, 0 errors, 0 skips.
+- Homebrew Python: PASS — Ran 28 tests in 0.052s; OK; 0 failures, 0 errors, 0 skips.
+- Test discovery count: exactly 28 contiguous `test_case_01` through `test_case_28` methods; no method 29 was added.
+
+### Compile/Static/Diff Results
+- Commands run:
+  - `PYTHONPYCACHEPREFIX=/tmp/grrr-wu6f-rework-system /usr/bin/python3 -B -m py_compile research/spendability_evidence.py tests/unit_spendability_evidence.py`
+  - `PYTHONPYCACHEPREFIX=/tmp/grrr-wu6f-rework-homebrew /opt/homebrew/bin/python3 -B -m py_compile research/spendability_evidence.py tests/unit_spendability_evidence.py`
+  - `pvg verify research/spendability_evidence.py tests/unit_spendability_evidence.py --include-tests --format=text`
+  - `git diff --check`
+  - `git diff --cached --check`
+  - `git diff --check HEAD~1..HEAD`
+  - AST authorization scan over exactly the two changed files.
+- Both interpreter compiles: PASS, exit 0; bytecode prefixes confined under `/tmp/grrr-wu6f-rework-system` and `/tmp/grrr-wu6f-rework-homebrew`.
+- `pvg verify`: `VERIFY: PASSED (2 files scanned, 0 issues)`.
+- All diff checks: PASS, exit 0, no whitespace findings.
+- AST authorization scan: `AUTHORIZATION: PASS`; `RAW_ENUM_FINDINGS: 0`; `FORBIDDEN_API_PATH_FINDINGS: 0`.
+- Static import/call/string scan found no file, network, subprocess, SQLite, or `/Library/GRRR` API/path.
+
+### Commit
+- Branch: `story/GRRR-wu6f`
+- Rework commit: `a1664df3ae43cbfb5aaa2128ebc0a29641c626fd`
+- Parent (original rejected implementation): `2522a8ea95068527bba8db85180c4b38c239a1a0`
+- Subject: `fix(GRRR-wu6f): type-check enum evidence values`
+- New commit diff: exactly 2 files, 58 insertions, 7 deletions.
+  - `research/spendability_evidence.py`: 11 insertions, 6 deletions; 629 lines; SHA256 `73c644b90952b9dd449d2fecb98286b5e3b5c02974b25c267e4f5fe6c3efb449`
+  - `tests/unit_spendability_evidence.py`: 47 insertions, 1 deletion; 418 lines; SHA256 `47030e903277ad66fed8056b198e7cba0a6564c330149924d78cd3a819747ba4`
+- Worktree clean after commit.
+
+### AC Verification
+| AC | Requirement | Code Location | Test/Check Location | Status |
+|---|---|---|---|---|
+| 1 | All 28 contract adversarial cases map 1:1 and pass on both required interpreters | Existing validator behavior retained | Exactly 28 methods at `tests/unit_spendability_evidence.py:236-416`; both commands above | PASS |
+| 2 | Incomplete evidence remains unresolved and retains pending maxima | Pending derivation/result preservation unchanged | Existing cases 20, 21, 23, 24; malformed variants also assert 3 maxima and 900,000,000 execution-us total | PASS |
+| 3 | Validation remains pure/in-memory with no protected access, reconciliation execution, staging, production mutation, or external side effect | Only enum predicate and membership uses changed | AST forbidden API/path scan PASS; result still pins `allowed_mutations=()` and `execution_authorized=False` | PASS |
+| 4 | Explicit-path compile/static verify and diff checks pass | Two authorized changed files | Both compile PASS; `pvg verify` PASS; all diff checks PASS | PASS |
+| Rework blocker | Malformed enum-shaped values return structured fail-closed results rather than raising `TypeError` | `_enum` strict-string predicate at `research/spendability_evidence.py:119-120`; reservation stage/disposition at 289/293; pending outcome at 301; overhead category at 322; arithmetic-side category at 484-487 | Case 10 sweeps unknown-string stage, unhashable `[]` stage, wrong-type disposition, wrong-type pending outcome, and wrong-type overhead category with `subTest` at `tests/unit_spendability_evidence.py:277-323` | PASS |
+
+Case 10 asserts each malformed result has `valid=False`, `spendable=None`, the affected first gate (`row_schema` or `pending_evidence`), all 3 pending maxima, the 900,000,000 execution-us pending total, and an `observed_evidence` deep copy equal to the submitted package. The 28 original case mappings remain contiguous and no other case was weakened.
+
+LEARNINGS:
+- Raw `not in frozenset` validation is not safe for JSON-shaped values because unhashable arrays raise before the structured result boundary.
+- A strict-string `_enum(value, allowed)` predicate gives one type-first boundary for every enum-like membership surface.
+- Keeping malformed-type coverage inside case 10 preserves the contract's exact 28-method mapping while making the failure mode visible under `subTest`.
+- The affected gate can legitimately differ: malformed `dispatch_outcome` belongs to `pending_evidence`, while the other four malformed enum fields fail `row_schema`.
 
 ## nd_contract
 status: rejected
