@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T03:15:30Z
-content_hash: "sha256:de8d2c8c54667e3199dd09d0dd15ad80a4bc49205a2c230a917ac07fd720dbb4"
+content_hash: "sha256:8fc8fa2fc018fc677d4a20ffa4cac7fc8588c70143ae22153d5b034c7229c6b2"
 labels: [milestone-1, integration, spendability-validator, rejected]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8]
@@ -88,6 +88,17 @@ status: new
 
 ## Notes
 Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+
+
+## nd_contract
+status: rejected
+
+### evidence
+- PM rejection applied via pvg story reject on 2026-10-25.
+
+### proof
+- [ ] Story requires another developer delivery before it can be accepted.
+
 
 ## Implementation Evidence
 
