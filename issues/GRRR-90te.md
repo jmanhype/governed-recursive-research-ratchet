@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T23:46:10Z
-content_hash: "sha256:f3cb15f2bf8a1189e90838d8ed1494a6d4079f9223fb744e1ccaac3935720f6f"
+content_hash: "sha256:02e7d8696340ee1a9bbd57b8254b762b9755df1c53a8c56e98197619400e68e0"
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
 follows: [GRRR-0g4n]
 closed_at: 2026-10-20T23:46:09Z
 close_reason: "Accepted: independently verified pinned offline baseline, real identity/isolation/cancellation controls, exact local-use license scope, and justified evidence/diff growth; admission remains blocked."
-led_to: [GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-d8ji]
+led_to: [GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-d8ji, GRRR-z3w9]
 ---
 
 ## Description
@@ -403,7 +403,7 @@ status: in_progress
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-0g4n]]
 - Follows: [[GRRR-0g4n]]
-- Led to: [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-d8ji]]
+- Led to: [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-d8ji]], [[GRRR-z3w9]]
 
 ## Comments
 
