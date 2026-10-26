@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T02:22:25Z
-content_hash: "sha256:f496e1890240274f4e6036c293693e4fabb955bbfd22d9f1114de0c9206b357a"
+updated_at: 2026-10-26T02:26:11Z
+content_hash: "sha256:655363bb64b49436e48af90db21bdc2ac1e069024411b609b5f34a80621caccf"
 labels: [milestone-1, integration, spendability-validator]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
@@ -88,7 +88,14 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claim verified: dev-GRRR-wu6f; implementation started from 820469226032761ca1335fe58ef674a3219e8d07.
+
+### proof
+- [ ] Pending focused implementation and verification
 
 ## History
 - 2026-10-26T02:20:59Z dep_added: blocks GRRR-z3w9
