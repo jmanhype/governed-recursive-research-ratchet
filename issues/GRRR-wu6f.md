@@ -1,18 +1,19 @@
 ---
 id: GRRR-wu6f
 title: "Validate spendability evidence fail-closed"
-status: in_progress
+status: closed
 priority: 1
 type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:53:34Z
-content_hash: "sha256:286abbb2aabfb1d62782dfd2b3fe9e6f84db37924decfa38cbf941276329f288"
+updated_at: 2026-10-26T03:53:35Z
+content_hash: "sha256:74cb540a054e5cb9c5cd6b76c4761bddcef1adafa7f9a072fae135b2bf2d99fa"
 labels: [milestone-1, integration, spendability-validator, delivered]
-blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
+closed_at: 2026-10-26T03:53:35Z
+close_reason: "Accepted: strict type-first enum validation closes the malformed-value fail-closed gap while preserving all 28 cases and boundaries"
 ---
 
 ## Description
@@ -332,10 +333,11 @@ status: in_progress
 - 2026-10-26T03:41:11Z auto-follows: linked to predecessor GRRR-bnkf
 - 2026-10-26T03:41:29Z status: in_progress -> in_progress
 - 2026-10-26T03:41:29Z auto-follows: linked to predecessor GRRR-c875
+- 2026-10-26T03:53:35Z status: in_progress -> closed
+- 2026-10-26T03:53:35Z dep_removed: no_longer_blocks GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-z3w9]]
 - Follows: [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]]
 
 ## Comments
