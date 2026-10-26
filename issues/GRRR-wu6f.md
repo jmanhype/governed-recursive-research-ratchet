@@ -8,11 +8,11 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T02:58:59Z
-content_hash: "sha256:5c7ce9a22af4f3ff1f21e5e112fe14e9fe414a16aa9900fe50bcf627015499fe"
+content_hash: "sha256:2e551c059301dbd784248d205614196247f7a56443ac1b636bc41dddbef946a5"
 labels: [milestone-1, integration, spendability-validator]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
-follows: [GRRR-d8ji]
+follows: [GRRR-d8ji, GRRR-43i8]
 ---
 
 ## Description
@@ -172,10 +172,12 @@ status: in_progress
 - 2026-10-26T02:22:25Z status: open -> in_progress
 - 2026-10-26T02:22:25Z auto-follows: linked to predecessor GRRR-d8ji
 - 2026-10-26T02:22:25Z claimed by dev-GRRR-wu6f
+- 2026-10-26T02:58:59Z status: in_progress -> in_progress
+- 2026-10-26T02:58:59Z auto-follows: linked to predecessor GRRR-43i8
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-z3w9]]
-- Follows: [[GRRR-d8ji]]
+- Follows: [[GRRR-d8ji]], [[GRRR-43i8]]
 
 ## Comments
