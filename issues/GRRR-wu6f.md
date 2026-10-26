@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:41:11Z
-content_hash: "sha256:fe0ba4a878a3b6f4704ddd33526439533d1d27d3703292cdedbead852e05e00a"
+updated_at: 2026-10-26T03:41:12Z
+content_hash: "sha256:c952cf13047aa604a88ec567d3e015ece8bc26c9c25506d109c168051122792d"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -89,6 +89,18 @@ status: new
 
 ## Notes
 Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-10-25.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence (DELIVERED — REWORK 1)
 
 PROOF:
