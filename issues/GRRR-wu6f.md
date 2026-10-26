@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:41:29Z
-content_hash: "sha256:29ea6b4639f9c157881f8842c1614b0f91b5a33f192abb0c8cf1d7d910357ca6"
+updated_at: 2026-10-26T03:42:56Z
+content_hash: "sha256:3809266a3d33eb120599d956ec2567ea58eaa75ee6d5ff3a0e4a41b40af15fcb"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
@@ -441,3 +441,20 @@ status: rejected
 ### proof
 - [ ] AC #1: the 28 recorded cases pass, but the validator does not structurally fail closed for malformed enum-shaped field values outside those representative inputs.
 - [ ] AC #2/#3: pending and authority behavior is otherwise retained, but the public validator contract is incomplete for malformed evidence.
+
+### 2026-10-26T03:42:56Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Rework commit `a1664df3ae43cbfb5aaa2128ebc0a29641c626fd` on `story/GRRR-wu6f`; parent `2522a8ea95068527bba8db85180c4b38c239a1a0`.
+- Both required focused commands ran 28 tests with 0 failures, 0 errors, and 0 skips.
+- Both compile commands, `pvg verify ... --include-tests`, all diff checks, and AST authorization scan passed.
+- Full rework evidence, hashes, and AC proof are in the appended Implementation Evidence note.
+
+### proof
+- [x] AC #1: exactly 28 contiguous cases pass on both interpreters.
+- [x] AC #2: unresolved spendability remains null and pending maxima are retained.
+- [x] AC #3: validation remains pure/in-memory with no protected access or external side effect.
+- [x] AC #4: compile, static verify, and diff checks pass.
+- [x] Rework: malformed enum-shaped values return structured fail-closed evidence without TypeError.
