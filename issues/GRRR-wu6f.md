@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:03:33Z
-content_hash: "sha256:fd9a2247972d40f1e77a4e2bc9061de893438728220f43fde1175ff8892eb930"
+updated_at: 2026-10-26T03:03:45Z
+content_hash: "sha256:230f282385f237c15f6406f2d17256a8625ceb130cd2ecdb292164778396aa0a"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
@@ -88,6 +88,8 @@ status: new
 
 
 ## Notes
+Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+
 ## Implementation Evidence
 
 Commands run:
