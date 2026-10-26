@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T12:06:11Z
-content_hash: "sha256:6978cab30b9d6a84e34bb191a8818c1e96cb9240e07a090295d5797fff55b443"
+updated_at: 2026-10-26T12:26:31Z
+content_hash: "sha256:8ec7734355f8b01c5ee24171fd5937fe3138640d88663f68d1bf0140ed643db1"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1356,5 +1356,36 @@ Blocked-audit result:
 - No authorized action remains that can safely clear both floors without new operator action addressing ego auto-launch, Chrome relaunch, and iCloud CloudDocs activity.
 - The capacity gate is not relaxed.
 - GRRR-z3w9 remains open/blocked, unclaimed, and undispatched.
+
+No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+### 2026-10-26T12:26:31Z speed
+## Authorized Host Stabilization and Fresh Capacity Preflight — PASS
+
+Operator authorized the external-state recovery sequence after the prior capacity block.
+
+Stabilization performed:
+- Stopped relaunched Google Chrome and ego lite application processes.
+- Stopped restarted local research service and viral-bench backfill process tree.
+- Paused macOS CloudDocs bird process in place with SIGSTOP after launchd demand restarted it; CloudDocs data and database were not deleted.
+- Marked com.apple.bird disabled for the GUI domain as a reversible pause; exact later recovery path is launchctl enable gui/501/com.apple.bird followed by operator-approved resume/restart.
+- Removed only verified closed regenerable caches: UV cache, npm download cache, opencode cache, inactive Chrome/ego/Kiro/flowith/Lark caches, Citro/ego update/browser caches, ZCode/Typeless closed update payloads, Hugging Face cache, unused Rust toolchains, and small closed system/tool caches.
+- Preserved active Codex runtimes, GRRR evidence, protected accounting, replay inputs, repositories, production data, user documents, and CloudDocs content.
+
+Fresh stable capacity readings:
+1. 18,174,144,512 bytes.
+2. 18,174,242,816 bytes.
+3. 18,181,448,544 bytes.
+Minimum: 18,174,144,512 bytes.
+
+Floor results:
+- Preparation floor 15,350,000,000: PASS; minimum margin 2,824,144,512 bytes.
+- Replay floor 16,106,127,360: PASS; minimum margin 2,068,017,152 bytes.
+
+Current stabilized state:
+- Google Chrome and ego lite stopped.
+- Research/backfill processes stopped.
+- CloudDocs bird remains paused (state T).
+- Swap remains allocated but stable for this preflight.
 
 No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
