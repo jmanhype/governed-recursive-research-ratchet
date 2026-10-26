@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T02:59:00Z
-content_hash: "sha256:6d6682c7d722fc08577a2fbfcdab08fbb49d1d7d2eb49ca7f44768f111d39ac3"
+updated_at: 2026-10-26T03:02:29Z
+content_hash: "sha256:c1cda02547d33ef00a4e37f8c07dee1cea0214da0bb1b6e98a2343949dd41d9c"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
@@ -193,3 +193,71 @@ status: in_progress
 - Follows: [[GRRR-d8ji]], [[GRRR-43i8]]
 
 ## Comments
+
+### 2026-10-26T03:02:29Z speed
+## Implementation Evidence (DELIVERED — authoritative parent verification)
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `/usr/bin/python3 -B -m unittest discover -s tests -p 'unit_spendability_evidence.py'`
+- `/opt/homebrew/bin/python3 -B -m unittest discover -s tests -p 'unit_spendability_evidence.py'`
+- `PYTHONPYCACHEPREFIX=/tmp/grrr-wu6f-parent-system /usr/bin/python3 -m py_compile research/spendability_evidence.py tests/unit_spendability_evidence.py`
+- `PYTHONPYCACHEPREFIX=/tmp/grrr-wu6f-parent-homebrew /opt/homebrew/bin/python3 -m py_compile research/spendability_evidence.py tests/unit_spendability_evidence.py`
+- `pvg verify research/spendability_evidence.py tests/unit_spendability_evidence.py --include-tests --format=text`
+- `git diff --check`
+- `git diff --cached --check`
+- `git diff --check 820469226032761ca1335fe58ef674a3219e8d07..story/GRRR-wu6f`
+- Static scan for `/Library/GRRR`, subprocess, socket, urllib, requests, SQLite, or file-open operations in the two changed files.
+
+Summary:
+- System Python focused test: PASS; Ran 28 tests in 0.056s; 0 failures, 0 errors, 0 skipped; exit 0.
+- Homebrew Python focused test: PASS; Ran 28 tests in 0.042s; 0 failures, 0 errors, 0 skipped; exit 0.
+- Both compile commands: PASS, exit 0; bytecode confined under `/tmp`.
+- Explicit-path pvg verify: `VERIFY: PASSED (2 files scanned, 0 issues)`.
+- All diff checks: PASS.
+- Forbidden API/path scan: PASS, no matches.
+- Exactly 28 discoverable `test_case_` methods map 1:1 through contract cases 1–28.
+- Worktree clean; no full suite, replay, VM/QEMU, protected access, reconciliation execution, production mutation, merge, or push occurred.
+
+### Commit
+- Branch: `story/GRRR-wu6f`
+- SHA: `2522a8ea95068527bba8db85180c4b38c239a1a0`
+- Parent: `820469226032761ca1335fe58ef674a3219e8d07`
+- Subject: `feat(GRRR-wu6f): validate spendability evidence fail-closed`
+- Exact changed paths:
+  - `research/spendability_evidence.py` — 624 lines, SHA256 `50f18fd77137d0a0519527ce631f4fac7012197fa96aefed2947a0293601d5f7`
+  - `tests/unit_spendability_evidence.py` — 372 lines, SHA256 `baa2923927d8a65cb71b5e7dc28cc8ccd12df9d8354323e2e26c97e159280e21`
+- Total diff: 996 inserted LOC across exactly two files, within the ~1000-LOC budget.
+
+### AC Verification
+| AC | Requirement | Evidence | Status |
+|---|---|---|---|
+| 1 | Implement pure fail-closed validator for approved contract | `research/spendability_evidence.py`; no file/network/subprocess/SQLite/protected-path API | PASS |
+| 2 | Implement all 28 adversarial cases as focused tests | Exactly 28 `test_case_N` methods, contiguous 1–28; both interpreters 28/28 PASS | PASS |
+| 3 | Current-like incomplete evidence remains null and retains pending holds | Case 21 and validator result preserve `spendable=null`, three pending maxima, and 900,000,000 execution-us total | PASS |
+| 4 | Canonical/join/provenance/arithmetic/scope/stale rules fail closed | Cases 1–28 and validator gate order | PASS |
+| 5 | No reconciliation/replay/protected/production authority or execution | Static scan PASS; result pins `allowed_mutations=()` and `execution_authorized=False`; no prohibited action run | PASS |
+| 6 | Both required interpreters and static checks pass | Commands and summaries above | PASS |
+
+### Coverage
+- Contract adversarial-case mapping: 28/28 (100%).
+- Statement/branch coverage percentage not measured; no coverage claim is made.
+- Full suite intentionally not run because this authorized slice is focused unit validation only and current capacity is below the separate full-suite floors.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit `2522a8ea95068527bba8db85180c4b38c239a1a0` adds exactly the two bounded validator/test files.
+- Both required interpreters independently reran the focused suite: 28/28 OK, exit 0, no skips.
+- Compile, explicit-path pvg verify, diff checks, forbidden-API scan, and clean-worktree checks pass.
+
+### proof
+- [x] AC #1: pure in-memory fail-closed validator implemented.
+- [x] AC #2: all 28 adversarial cases map 1:1 and pass on both interpreters.
+- [x] AC #3: incomplete current-like evidence returns `spendable=null` and retains pending maxima.
+- [x] AC #4: canonical, ancestry, provenance, joins, arithmetic, scope, pending, and stale rules fail closed.
+- [x] AC #5: no protected access, reconciliation, replay, promotion, admission, production mutation, merge, or push.
+- [x] AC #6: focused both-interpreter and static verification pass.
