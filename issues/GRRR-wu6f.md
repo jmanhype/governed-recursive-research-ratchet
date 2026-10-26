@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T03:53:35Z
-content_hash: "sha256:74cb540a054e5cb9c5cd6b76c4761bddcef1adafa7f9a072fae135b2bf2d99fa"
+content_hash: "sha256:db9e898d14e4bd43aa0d60bb6cb8709d976bc12847f9cd24ca61e1b6144ac61b"
 labels: [milestone-1, integration, spendability-validator, accepted]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
@@ -90,6 +90,18 @@ status: new
 
 ## Notes
 Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-10-25.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-10-25]: Full re-review of rework commit a1664df3ae43cbfb5aaa2128ebc0a29641c626fd closes the prior malformed-enum rejection.
 
