@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T01:38:15Z
-content_hash: "sha256:a0569c862477fc4825943a7da4b3382807ee267a75a775a03db4096791ce3996"
+updated_at: 2026-10-26T01:43:09Z
+content_hash: "sha256:25e1d48b81d37f864b1ddf8e7ed70044884711c46d9f5ae761f29da53bb709f7"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te]
@@ -1130,3 +1130,21 @@ Parent side-effect verification:
   - /Library/GRRR/accounting-poc2/recovery/receipt.json 6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587
 
 No source/test/doc change, commit, delivery, acceptance, replay, promotion, admission, protected mutation, production mutation, merge, or push occurred.
+
+### 2026-10-26T01:43:09Z speed
+## Independent Evidence-Contract Review — REJECTED
+
+Reviewer inspected commit d5a0314f5d5f776bdd53af2f1169fe664be88794 and document SHA256 97c910a1fbdda1eea6a726d231dd7e21e6ffb86769b33aee5120e7b06424be1b.
+
+Verdict: CONTRACT_REVIEW: REJECTED.
+
+Blocking issue: the generic null rule says null is permitted only for paired pending reservation actual/receipt, conflicting with mandatory unresolved `spendable=null` and historically null request bindings.
+
+Required document-only correction:
+- Use field-specific nullability.
+- Require null spendability whenever any mandatory gate is unresolved.
+- Permit historical null request bindings only with the specified provenance proof.
+- Enforce paired actual/receipt nullability specifically.
+- Add adversarial cases for legitimate null shapes and invalid counterparts.
+
+No protected access, tests, edits, or state mutation occurred during review.
