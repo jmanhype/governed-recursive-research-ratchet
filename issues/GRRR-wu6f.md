@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:42:56Z
-content_hash: "sha256:3809266a3d33eb120599d956ec2567ea58eaa75ee6d5ff3a0e4a41b40af15fcb"
+updated_at: 2026-10-26T03:53:34Z
+content_hash: "sha256:286abbb2aabfb1d62782dfd2b3fe9e6f84db37924decfa38cbf941276329f288"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
@@ -89,6 +89,33 @@ status: new
 
 ## Notes
 Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+## PM Decision
+ACCEPTED [2026-10-25]: Full re-review of rework commit a1664df3ae43cbfb5aaa2128ebc0a29641c626fd closes the prior malformed-enum rejection.
+
+Reviewed evidence:
+- Exact parent/commit ancestry: rejected 2522a8ea95068527bba8db85180c4b38c239a1a0 -> rework a1664df3ae43cbfb5aaa2128ebc0a29641c626fd; story base remains 820469226032761ca1335fe58ef674a3219e8d07.
+- Exact rework diff is bounded to research/spendability_evidence.py (11 insertions/6 deletions) and tests/unit_spendability_evidence.py (47 insertions/1 deletion); hashes match 73c644b90952b9dd449d2fecb98286b5e3b5c02974b25c267e4f5fe6c3efb449 and 47030e903277ad66fed8056b198e7cba0a6564c330149924d78cd3a819747ba4.
+- research/spendability_evidence.py:119-120 now type-checks enum values before membership; all enum-like row/arithmetic surfaces at 289, 293, 301, 322, 461-462, and 486-487 use it. No raw untrusted enum membership remains.
+- tests/unit_spendability_evidence.py:277-324 now covers unknown stage, unhashable stage, wrong-type disposition, wrong-type pending dispatch outcome, and wrong-type overhead category. Each subTest asserts the affected first gate, null spendability, retained pending maxima and 900,000,000 execution-us total, no authority, and preserved observed evidence.
+- Exactly 28 contiguous test methods remain (test_case_01 through test_case_28); no skip, expected-failure, or test-weakening marker was found.
+- PM reran delivery proof (9/9), explicit-path pvg verify (2 files, 0 issues), rework diff whitespace check, hash/line-count checks, stub/secret/forbidden-I/O/protected-path scans, and raw-enum scan: all PASS.
+- Trusted complete recorded focused evidence and parent behavioral confirmation rather than rerunning tests: both interpreters each ran exactly 28 tests with OK and zero failures/errors/skips.
+- Diff budget note: final story-to-base addition is 1,047 lines across two files, a small explained increase above the nominal 1000 caused by the required malformed-type safety rework; not a gross or unexplained overrun.
+- Boundary preserved: review-only; no /Library/GRRR access or mutation, reconciliation/replay/promotion/admission/production action, merge, or push.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed rework commit a1664df3ae43cbfb5aaa2128ebc0a29641c626fd and the full evidence-based PM ladder.
+
+### proof
+- [x] AC #1: exactly 28 contiguous cases are preserved and recorded as passing on both required interpreters.
+- [x] AC #2: unresolved spendability remains null and all pending maxima are retained.
+- [x] AC #3: validation remains pure/in-memory with no protected access, external side effect, or authority grant.
+- [x] AC #4: compile/static/diff evidence is complete; delivery proof passes 9/9.
+- [x] Rework: malformed enum-shaped values now return structured ValidationResult output instead of raising TypeError.
+
 ## nd_contract
 status: delivered
 
