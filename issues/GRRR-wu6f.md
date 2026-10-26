@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:03:45Z
-content_hash: "sha256:230f282385f237c15f6406f2d17256a8625ceb130cd2ecdb292164778396aa0a"
+updated_at: 2026-10-26T03:04:13Z
+content_hash: "sha256:75e6026701e7cdfd3348c53dfeed0271efe3e30f7294caefbb828836381898dd"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
@@ -278,3 +278,24 @@ status: delivered
 - [x] AC #4: canonical, ancestry, provenance, joins, arithmetic, scope, pending, and stale rules fail closed.
 - [x] AC #5: no protected access, reconciliation, replay, promotion, admission, production mutation, merge, or push.
 - [x] AC #6: focused both-interpreter and static verification pass.
+
+### 2026-10-26T03:04:13Z speed
+## Parent Dispatch Verification
+
+Operator scope was one bounded spendability evidence-validator implementation story from approved contract commit 820469226032761ca1335fe58ef674a3219e8d07. The created story is GRRR-wu6f, parent GRRR-2t3h, blocking GRRR-z3w9.
+
+Parent independently verified:
+- Story branch base and contract commit: 820469226032761ca1335fe58ef674a3219e8d07.
+- Implementation commit: 2522a8ea95068527bba8db85180c4b38c239a1a0.
+- Exact changed paths: research/spendability_evidence.py and tests/unit_spendability_evidence.py.
+- Total diff: 996 inserted LOC across two files.
+- Implementation SHA256: 50f18fd77137d0a0519527ce631f4fac7012197fa96aefed2947a0293601d5f7.
+- Test SHA256: baa2923927d8a65cb71b5e7dc28cc8ccd12df9d8354323e2e26c97e159280e21.
+- Exactly 28 contiguous test_case methods map to contract cases 1–28.
+- System Python focused suite: 28/28 OK, exit 0.
+- Homebrew Python focused suite: 28/28 OK, exit 0.
+- Both compile checks, explicit-path pvg verify, diff checks, and forbidden API/path scan passed.
+- Delivery verification passes 9/9.
+- Worktree clean.
+
+The story is delivered and awaits independent PM review. No /Library/GRRR access or mutation, reconciliation decision/execution, unknown-zeroing, replay/live/integration execution, VM/QEMU/UID-GID action, promotion, admission, production mutation, full-suite execution, cache cleanup, merge, or push occurred.
