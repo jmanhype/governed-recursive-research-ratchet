@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:41:12Z
-content_hash: "sha256:c952cf13047aa604a88ec567d3e015ece8bc26c9c25506d109c168051122792d"
+updated_at: 2026-10-26T03:41:28Z
+content_hash: "sha256:6bef669facc0d724c37a3625bc9b03b34859a94a52c90f32a4dc55365ede8f5e"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf]
@@ -89,7 +89,25 @@ status: new
 
 ## Notes
 Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0
+## nd_contract
+status: delivered
 
+### evidence
+- Rework commit `a1664df3ae43cbfb5aaa2128ebc0a29641c626fd` on `story/GRRR-wu6f`; parent `2522a8ea95068527bba8db85180c4b38c239a1a0`.
+- System Python focused command: Ran 28 tests, OK, 0 failures/errors/skips.
+- Homebrew Python focused command: Ran 28 tests, OK, 0 failures/errors/skips.
+- Both `py_compile` commands: exit 0 with bytecode under `/tmp/grrr-wu6f-rework-*`.
+- `pvg verify ... --include-tests`: `VERIFY: PASSED (2 files scanned, 0 issues)`.
+- `git diff --check`, `git diff --cached --check`, and `git diff --check HEAD~1..HEAD`: PASS.
+- AST authorization scan: PASS; 0 raw enum findings; 0 forbidden API/path findings.
+- Implementation SHA256 `73c644b90952b9dd449d2fecb98286b5e3b5c02974b25c267e4f5fe6c3efb449`; test SHA256 `47030e903277ad66fed8056b198e7cba0a6564c330149924d78cd3a819747ba4`.
+
+### proof
+- [x] AC #1: exactly 28 contiguous cases pass 28/28 on both required interpreters.
+- [x] AC #2: unresolved spendability remains null and pending maxima are retained.
+- [x] AC #3: validation remains pure/in-memory with no protected access or external side effect.
+- [x] AC #4: compile, explicit-path `pvg verify`, and all required diff checks pass.
+- [x] Rework: malformed enum values return structured fail-closed evidence with affected first gate, preserved observed evidence, null spendability, and retained pending maxima.
 
 ## nd_contract
 status: delivered
