@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-26T11:55:12Z
-content_hash: "sha256:362eec46b3235ddfb721375e76da3a063f31af74acf1283e83f59dbfa84de104"
+updated_at: 2026-10-26T12:06:11Z
+content_hash: "sha256:6978cab30b9d6a84e34bb191a8818c1e96cb9240e07a090295d5797fff55b443"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n]
@@ -1329,3 +1329,32 @@ Decision:
 - GRRR-z3w9 remains unclaimed and undispatched.
 - No cache cleanup, process termination, iCloud mutation, floor relaxation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
 - No /Library/GRRR access or mutation occurred.
+
+### 2026-10-26T12:06:11Z speed
+## Recurring Capacity Blocker — Goal Blocked Audit
+
+The authoritative next action remains GRRR-z3w9, but the same capacity blocker has persisted across consecutive post-stabilization goal turns.
+
+Fresh stable readings:
+1. 7,674,941,440 bytes available.
+2. 7,674,089,472 bytes available.
+3. 7,673,716,736 bytes available.
+Minimum: 7,673,716,736 bytes.
+
+Floor results:
+- Preparation floor 15,350,000,000: FAIL; shortfall 7,676,283,264 bytes.
+- Replay floor 16,106,127,360: FAIL; shortfall 8,432,410,624 bytes.
+
+Recurring pressure sources:
+- ego lite relaunched: 21 matching processes.
+- Google Chrome relaunched: 32 matching processes.
+- Swap total 3,072 MiB with about 1,871.69 MiB used.
+- iCloud CloudDocs client.db is about 2.8 GB and actively held by macOS bird.
+
+Blocked-audit result:
+- The same insufficient-stable-capacity condition has repeated across the post-reboot/previously stabilized goal turns.
+- No authorized action remains that can safely clear both floors without new operator action addressing ego auto-launch, Chrome relaunch, and iCloud CloudDocs activity.
+- The capacity gate is not relaxed.
+- GRRR-z3w9 remains open/blocked, unclaimed, and undispatched.
+
+No /Library/GRRR access or mutation, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
