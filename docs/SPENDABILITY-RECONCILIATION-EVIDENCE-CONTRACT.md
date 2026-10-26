@@ -243,8 +243,17 @@ creating receipts:
   overflow.
 - Identifiers use the approved bounded identifier grammar. Empty strings,
   traversal, control characters, executable content, and unknown formats fail.
-- `null` is permitted only where this contract explicitly pairs it: a pending
-  reservation has null `actual` and null `receipt`. One-sided null is invalid.
+- `spendability` is required to be JSON `null` whenever any mandatory evidence,
+  completeness, or provenance gate is unresolved; it may be non-null only after
+  every such gate passes.
+- A historical reservation request `binding` may be null only when separate
+  provenance evidence proves the authorization/request boundary. Without that
+  evidence, the binding remains unknown and forces `spendable=null`.
+- Reservation `actual` and `receipt` are a paired-present/paired-null field
+  set: both must be present for a settled row or both null for a pending row;
+  one-sided null is invalid.
+- All other fields are non-null unless this contract explicitly defines a
+  bounded null semantic for that field.
 - Unknown actions, stages, currencies, categories, versions, states, labels,
   and statuses fail closed. Implementations must not default, coerce, repair,
   or normalize them.
@@ -403,6 +412,12 @@ A future implementation review must include at least these fail-closed cases:
 | 20 | Known encumbrance below ceiling with any unresolved gate | `spendable=null` |
 | 21 | Exactly reproduces 1,108,265,788 execution-us from incomplete evidence | `spendable=null`; arithmetic is not completeness |
 | 22 | All gates pass but no exact dispatch authorization is presented | Accounting projection only; no execution |
+| 23 | Every otherwise accepted source shape retains one unresolved mandatory evidence, completeness, or provenance gate | Legitimate unresolved-gate decision; `spendable=null` |
+| 24 | Pending row has both `actual=null` and `receipt=null`, with authenticated pending evidence and the full maximum retained | Legitimate paired-null pending row; hold remains at full maximum |
+| 25 | Null historical request binding is supported by separate provenance proving the authorization/request boundary | Legitimate provenance-backed null binding; all other gates still apply |
+| 26 | Null historical request binding lacks that separate provenance | Invalid null binding; remains unknown and forces `spendable=null` |
+| 27 | Settled row has exactly one of `actual` or `receipt` null | Invalid one-sided null; refuse |
+| 28 | Non-null `spendability` is returned while any mandatory evidence, completeness, or provenance gate is unresolved | Invalid non-null decision; must return `spendable=null` |
 
 Tests must exercise both accepted source shapes and every failure above without
 writing protected state. Mocks may exercise parsing only; they cannot establish
