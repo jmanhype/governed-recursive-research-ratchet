@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
-updated_at: 2026-10-26T03:04:13Z
-content_hash: "sha256:75e6026701e7cdfd3348c53dfeed0271efe3e30f7294caefbb828836381898dd"
+updated_at: 2026-10-26T03:07:53Z
+content_hash: "sha256:fd504c896a5de54b6672f6459b57d9917a1e0c965ea08b9dec97d1633ff2ca21"
 labels: [milestone-1, integration, spendability-validator, delivered]
 blocks: [GRRR-z3w9]
 assignee: dev-GRRR-wu6f
@@ -299,3 +299,24 @@ Parent independently verified:
 - Worktree clean.
 
 The story is delivered and awaits independent PM review. No /Library/GRRR access or mutation, reconciliation decision/execution, unknown-zeroing, replay/live/integration execution, VM/QEMU/UID-GID action, promotion, admission, production mutation, full-suite execution, cache cleanup, merge, or push occurred.
+
+### 2026-10-26T03:07:53Z speed
+## Delivery Contract EOF Correction
+
+The delivered implementation remains commit 2522a8ea95068527bba8db85180c4b38c239a1a0. The prior parent dispatch note was informational and was not intended to replace developer proof.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Implementation SHA: 2522a8ea95068527bba8db85180c4b38c239a1a0.
+- Implementation SHA256: 50f18fd77137d0a0519527ce631f4fac7012197fa96aefed2947a0293601d5f7.
+- Test SHA256: baa2923927d8a65cb71b5e7dc28cc8ccd12df9d8354323e2e26c97e159280e21.
+- Both interpreters: 28/28 focused tests passed with zero failures, errors, or skips.
+- Compile, explicit-path pvg verify, diff checks, and forbidden API/path scan passed.
+
+### proof
+- [x] Pure fail-closed evidence validator implemented.
+- [x] All 28 contract adversarial cases map 1:1 and pass.
+- [x] Incomplete evidence remains spendable=null with pending maxima retained.
+- [x] No protected access, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
