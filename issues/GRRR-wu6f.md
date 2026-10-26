@@ -8,8 +8,9 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T02:20:46Z
-content_hash: "sha256:53052a71f6360a9e9ad8dfdb11d159b97b21201f07c5fce7d22b4a2a2bb4ca22"
+content_hash: "sha256:8ba6c2693d666928f825f11d445a8a539c957579b20d7a4e97ba4972292ecf95"
 labels: [milestone-1, integration, spendability-validator]
+blocks: [GRRR-z3w9]
 ---
 
 ## Description
@@ -88,9 +89,10 @@ status: new
 
 
 ## History
-
+- 2026-10-26T02:20:59Z dep_added: blocks GRRR-z3w9
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-z3w9]]
 
 ## Comments
