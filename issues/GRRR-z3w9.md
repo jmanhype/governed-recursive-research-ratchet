@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-27T02:20:49Z
-content_hash: "sha256:c240866f7077c9b53f666ac5ccd7323d9c431f805a817c789628d77c1edf18be"
+content_hash: "sha256:aeeea9614d314cca0d9591ab236b9c05cce4febfe40c1028e70eb0643899ddda"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -1588,3 +1588,6 @@ No /Library/GRRR access or mutation, reconciliation, replay, promotion, admissio
 
 ### 2026-10-27T02:20:49Z speed
 loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
+
+### 2026-10-27T02:20:49Z speed
+loop: story branch already merged into epic/GRRR-2t3h (8204692) by a prior session; routed to PM review against the epic branch instead of re-dispatching a developer. PM: review the LANDED code on epic/GRRR-2t3h, then accept or reject.
