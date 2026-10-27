@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T04:16:56Z
-content_hash: "sha256:6b74e2aeee44e9c9ef1f39a5b1146940cc9fb27c8238fac13d7af385d070aa2c"
+updated_at: 2026-10-27T04:36:44Z
+content_hash: "sha256:9850de9693e17e35ac931ce6659eb60b3c28ab173bdbba6f5ad3dc8ebabf0eac"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -111,6 +111,74 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-26 Operator-Authorized Stage D — Locked Extended Schema Capture Approved, Story Still Blocked
+
+Operator scope was exactly: capture the extended SQLite schema and locked quiescence evidence using the approved Stage C schemas, with independent review; no spendability write, reconciliation, replay, admission, merge, or push.
+
+### First capture and review
+- First capture artifact and reviewer request are preserved under `docs/evidence/spendability/stage-d/rejected-r1/`.
+- First fresh independent review returned `STAGE_D_CAPTURE_REVIEW: REJECTED`.
+- Findings: active/lock observations were not fully descriptor/lock-bound; policy and parent-code expected identities were asserted rather than independently measured; postcapture verification was not bound to the exact retained capture hash or observation time.
+- Rejection artifact: `docs/evidence/spendability/stage-d/REVIEW-1-REJECTED.md`, SHA256 `edbccf1239aa854f2e294e722aa8eb2020244b271fec5e687112a1884975a40f`.
+
+### Corrected second capture
+- Capture program: `docs/evidence/spendability/stage-d/CAPTURE.py`, SHA256 `2312a453e9e3c807d023456606da36303a97fab27c9fc9da243ff14774f1d4ee`.
+- Root executed a byte-identical root-owned read-only copy.
+- Capture artifact: `docs/evidence/spendability/stage-d/CAPTURE.json`, SHA256 `d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8`.
+- Capture window: `2026-10-27T04:30:49.201645Z` through `2026-10-27T04:30:49.260082Z`.
+- Lock acquired `2026-10-27T04:30:49.201887Z`; released `2026-10-27T04:30:49.260069Z`.
+- The exclusive launch lock was held across active/database reads, SQLite schema introspection, process inventory, final observations, and sidecar enumeration.
+- Active binding SHA256 `9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8`.
+- Database SHA256 `9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3`.
+- Launch-lock SHA256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+- Captured exact SQLite `sqlite_master`, table_info, index_list, per-index xinfo, foreign keys, integrity, journal mode, encoding, user_version, and application_id.
+- No UID 320/321 or QEMU process was present; database sidecars were absent.
+- Parent-code, interpreter, and policy identities were measured from distinct observed bytes and independently pinned expected bytes.
+- No protected write occurred.
+
+### Validation
+- Stage C focused tests on Python 3.9.6: 46/46 OK.
+- Stage C focused tests on Python 3.14.3: 46/46 OK.
+- Both interpreters map the exact PRAGMA inventory and validate the quiescence schema.
+- Validation remains `spendable=null`, writer-exclusion proof unresolved, allowed mutations empty, and execution unauthorized.
+- Validation artifact: `docs/evidence/spendability/stage-d/VALIDATION.json`, SHA256 `cf2d77eb7b19dd2ce917a8a1557b7e62472abe81cc93f149fba825ac3fcc9e56`.
+
+### Postcapture immutability proof
+- Verifier: `docs/evidence/spendability/stage-d/POSTCAPTURE-VERIFY.py`, SHA256 `a48d4233235699d680200dedd894943135ca3e2c264a5e8512fbcca5093132e2`.
+- Result: `docs/evidence/spendability/stage-d/POSTCAPTURE-VERIFY.json`, SHA256 `78eb1f69a30d161f3c2d8c67fbbf40e579cc3de5f53b6bb0f8e8fc395888574a`.
+- The verifier binds exact retained capture SHA256 `d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8`, records observation time `2026-10-27T04:32:57.578197Z`, and reports matching expected/observed active, lock, and database hashes plus device/inode identities.
+- `all_immutable=true`.
+
+### Independent review
+- Fresh narrow rework verdict: `STAGE_D_NARROW_REWORK_REVIEW: APPROVED`.
+- Approval artifact: `docs/evidence/spendability/stage-d/REREVIEW-APPROVED.md`, SHA256 `ea9b109f1e156647c687db0e14550b48bdf03611debaa269063cd2eefa64fddf`.
+- Approved package: `docs/evidence/spendability/stage-d/PACKAGE.json`, SHA256 `c2627683bd1be9f63032d5c9f332aa3ee0c8327420afeda9a59562c5b3f4cb0e`; 18 artifacts hash-verified.
+- Approval covers only the locked read-only capture and schema evidence. It grants no spendability, reconciliation, replay, admission, promotion, merge, or push authority.
+
+### Boundary and commit state
+- `/Library/GRRR` was accessed only for the operator-authorized locked read.
+- No spendability write, reconciliation, replay, VM/QEMU execution, promotion, admission, production mutation, merge, or push occurred.
+- Stage D evidence is intentionally uncommitted because this authorization did not explicitly authorize a commit.
+- Story branch HEAD remains `37a550cc4998ed71f8b6b7c29cccf332d85c65b8`.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Approved Stage D artifacts are retained under `docs/evidence/spendability/stage-d/`.
+- First rejected attempt is preserved under `rejected-r1/`.
+
+### proof
+- [x] Extended SQLite schema captured under the exclusive launch lock.
+- [x] Locked quiescence evidence captured with stable database identity and no sensitive processes.
+- [x] Exact postcapture identity verification and independent narrow review passed.
+- [x] Stage D grants no spendability or operational authority.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
 ## 2026-10-26 Stage D Claim\n\n- Operator authorized extended SQLite schema and locked quiescence protected-read capture using the Stage C-approved schemas, with independent review.\n- Explicit denials: spendability write, reconciliation, replay, admission, merge, and push.\n
 
 ## 2026-10-26 Operator-Authorized Stage C Rework — Implementation Schema Approved, Story Still Blocked
