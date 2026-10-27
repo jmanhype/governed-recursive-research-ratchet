@@ -1,0 +1,2355 @@
+{
+  "assembly_valid": true,
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "created_at": "2026-10-27T05:10:00Z",
+    "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "stage_d_capture_sha256": "d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8",
+    "stage_d_independent_review": "STAGE_D_NARROW_REWORK_REVIEW: APPROVED",
+    "stage_d_postcapture_sha256": "78eb1f69a30d161f3c2d8c67fbbf40e579cc3de5f53b6bb0f8e8fc395888574a"
+  },
+  "evidence_valid": false,
+  "gate_inventory": {
+    "historical_completeness": {
+      "evidence": [
+        "active",
+        "database_snapshot",
+        "recovery_complete",
+        "recovery_intent",
+        "recovery_prior_active",
+        "recovery_receipt",
+        "registration_prior_active",
+        "registration_receipt"
+      ],
+      "status": "unresolved"
+    },
+    "independent_review": {
+      "evidence": [],
+      "status": "unresolved"
+    },
+    "operator_decision": {
+      "evidence": [],
+      "status": "unresolved"
+    },
+    "overhead_completeness": {
+      "evidence": [
+        "execution",
+        "other",
+        "preparation",
+        "review",
+        "selection"
+      ],
+      "status": "unresolved"
+    },
+    "pending_evidence": {
+      "evidence": [
+        "69523b39a51c44739114313c9325028c",
+        "b34d8b9d106e42eab3a3e43daac98ddd",
+        "d375ce6a2d924646bec71df64e939a5b"
+      ],
+      "status": "unresolved"
+    },
+    "provenance": {
+      "evidence": [
+        "1bf9d516461040c0baef70648c074d61",
+        "5b7851814d764da1a3b3830abc9853ce",
+        "69523b39a51c44739114313c9325028c",
+        "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+        "b34d8b9d106e42eab3a3e43daac98ddd",
+        "b954f6890a1e43e3b13f24298fa7ca33",
+        "b95be730d6a5408886071d29848bbd05",
+        "d375ce6a2d924646bec71df64e939a5b",
+        "d3c965a29ab547c999e66bf0b60eca9f",
+        "e38c33051ff64b4eab106e65a200fe06",
+        "eb045d10d73b48ef9d570a1cf870f6eb"
+      ],
+      "status": "unresolved"
+    },
+    "quiescence": {
+      "evidence": [
+        "d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8"
+      ],
+      "reason": "locked capture validated; independently proven writer exclusion remains unresolved",
+      "status": "unresolved"
+    },
+    "schema_compatibility": {
+      "evidence": [
+        "219e684bfee51459852674c3e7ad6e58030051b20ccc6e9fb7a91d14b34910b0",
+        "f7c49d7ad12f7e669031d4a340f6ec70860ca3c2779445f0d87b39d1e8ef409d"
+      ],
+      "status": "pass"
+    },
+    "spendability_decision": {
+      "evidence": [],
+      "status": "unresolved"
+    }
+  },
+  "historical_completeness": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "lineage": [
+      {
+        "artifact": "active",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "active-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "database_snapshot",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "database_snapshot-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "recovery_complete",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "recovery_complete-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "recovery_intent",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "recovery_intent-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "recovery_prior_active",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "recovery_prior_active-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "recovery_receipt",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "recovery_receipt-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "registration_prior_active",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "registration_prior_active-record-unavailable"
+        ]
+      },
+      {
+        "artifact": "registration_receipt",
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "registration_receipt-record-unavailable"
+        ]
+      }
+    ],
+    "missing_history": [
+      "issuer-authentication",
+      "request-boundaries",
+      "measurement-windows",
+      "overlap-intervals",
+      "paid-service",
+      "manual-adjustments",
+      "stop-and-recovery-lineage",
+      "lost-or-never-created-records"
+    ],
+    "operation_coverage": [
+      {
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "dispatch-cancel-failure-stop-replay-history"
+        ]
+      }
+    ],
+    "overhead": {
+      "execution": {
+        "actor": "unresolved",
+        "boundary": "registration-through-current-database-snapshot",
+        "source_sha256": "c03da79b5e7d6b217341cd714a75280695513aa8f01aa1ecdf4e84d50e377083",
+        "status": "unresolved",
+        "upper_bound_us": null
+      },
+      "other": {
+        "actor": "unresolved",
+        "boundary": "registration-through-current-database-snapshot",
+        "source_sha256": "f8002e9823f8908bba63307a9b1ae1fa87a48d6339cd852513a4f8d38490656d",
+        "status": "unresolved",
+        "upper_bound_us": null
+      },
+      "preparation": {
+        "actor": "unresolved",
+        "boundary": "registration-through-current-database-snapshot",
+        "source_sha256": "fc45dd7f977795b2d055f53e9b44b1b2058e362b29a47b0dbab86c1a8ca01e90",
+        "status": "unresolved",
+        "upper_bound_us": null
+      },
+      "review": {
+        "actor": "unresolved",
+        "boundary": "registration-through-current-database-snapshot",
+        "source_sha256": "e55be13e37ef82e82194a32ca54aa3d781987513c5fe3773a8d4fd71f57dd0e1",
+        "status": "unresolved",
+        "upper_bound_us": null
+      },
+      "selection": {
+        "actor": "unresolved",
+        "boundary": "registration-through-current-database-snapshot",
+        "source_sha256": "835f866d204eb5312e0b2d54cd8546f06a59743756a39399b49bca62fa8c87f6",
+        "status": "unresolved",
+        "upper_bound_us": null
+      }
+    },
+    "record_type": "historical-completeness-v1",
+    "reservation_coverage": [
+      {
+        "record_sha256": null,
+        "reservation_id": "1bf9d516461040c0baef70648c074d61",
+        "status": "unresolved",
+        "unexplained": [
+          "1bf9d516461040c0baef70648c074d61-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "5b7851814d764da1a3b3830abc9853ce",
+        "status": "unresolved",
+        "unexplained": [
+          "5b7851814d764da1a3b3830abc9853ce-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "69523b39a51c44739114313c9325028c",
+        "status": "unresolved",
+        "unexplained": [
+          "69523b39a51c44739114313c9325028c-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+        "status": "unresolved",
+        "unexplained": [
+          "7ecc4c7e17f742dc9ec2a8c6dada50f2-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "b34d8b9d106e42eab3a3e43daac98ddd",
+        "status": "unresolved",
+        "unexplained": [
+          "b34d8b9d106e42eab3a3e43daac98ddd-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "b954f6890a1e43e3b13f24298fa7ca33",
+        "status": "unresolved",
+        "unexplained": [
+          "b954f6890a1e43e3b13f24298fa7ca33-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "b95be730d6a5408886071d29848bbd05",
+        "status": "unresolved",
+        "unexplained": [
+          "b95be730d6a5408886071d29848bbd05-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "d375ce6a2d924646bec71df64e939a5b",
+        "status": "unresolved",
+        "unexplained": [
+          "d375ce6a2d924646bec71df64e939a5b-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "d3c965a29ab547c999e66bf0b60eca9f",
+        "status": "unresolved",
+        "unexplained": [
+          "d3c965a29ab547c999e66bf0b60eca9f-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "e38c33051ff64b4eab106e65a200fe06",
+        "status": "unresolved",
+        "unexplained": [
+          "e38c33051ff64b4eab106e65a200fe06-request-and-disposition-unavailable"
+        ]
+      },
+      {
+        "record_sha256": null,
+        "reservation_id": "eb045d10d73b48ef9d570a1cf870f6eb",
+        "status": "unresolved",
+        "unexplained": [
+          "eb045d10d73b48ef9d570a1cf870f6eb-request-and-disposition-unavailable"
+        ]
+      }
+    ],
+    "review": {
+      "review_sha256": null,
+      "status": "unresolved"
+    },
+    "schema_version": 1,
+    "side_store_coverage": [
+      {
+        "record_sha256": null,
+        "status": "unresolved",
+        "unexplained": [
+          "side-ledger-export-adjustment-refund-replay-inventory"
+        ]
+      }
+    ],
+    "status": "unresolved",
+    "unbounded_unknown": true
+  },
+  "outcome": {
+    "allowed_mutations": [],
+    "execution_authorized": false,
+    "first_failed_gate": "quiescence",
+    "spendable": null,
+    "valid": false
+  },
+  "pending_dispositions": [
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "baseline_after_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "baseline_before_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "cessation": {
+        "evidence_sha256": "6bd5f171098a1ed7ae15292d9e8c08af49ab00dade5c3b1e372e5a2c8618a31b",
+        "method": "not-required",
+        "observed": false,
+        "required": false
+      },
+      "dispatch": {
+        "evidence_sha256": null,
+        "status": "unknown"
+      },
+      "evaluator_state": {
+        "evidence_sha256": null,
+        "state": "active_or_unknown"
+      },
+      "final_observation_sha256": null,
+      "idempotency_key": null,
+      "maximum": {
+        "currency": "USD",
+        "execution_us": 300000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "missing_evidence": [
+        "dispatch-outcome",
+        "final-observation",
+        "cessation",
+        "evaluator-stop-state",
+        "stale-handle-accounting"
+      ],
+      "operation_id": null,
+      "record_type": "pending-disposition-v1",
+      "request_id": null,
+      "reservation_id": "69523b39a51c44739114313c9325028c",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "schema_version": 1,
+      "stale_handles_accounted": false,
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "baseline_after_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "baseline_before_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "cessation": {
+        "evidence_sha256": "fddc61da3fb57050ee3b1852cf78ae9674549be3157222c2886659539765aedd",
+        "method": "not-required",
+        "observed": false,
+        "required": false
+      },
+      "dispatch": {
+        "evidence_sha256": null,
+        "status": "unknown"
+      },
+      "evaluator_state": {
+        "evidence_sha256": null,
+        "state": "active_or_unknown"
+      },
+      "final_observation_sha256": null,
+      "idempotency_key": null,
+      "maximum": {
+        "currency": "USD",
+        "execution_us": 300000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "missing_evidence": [
+        "dispatch-outcome",
+        "final-observation",
+        "cessation",
+        "evaluator-stop-state",
+        "stale-handle-accounting"
+      ],
+      "operation_id": null,
+      "record_type": "pending-disposition-v1",
+      "request_id": null,
+      "reservation_id": "b34d8b9d106e42eab3a3e43daac98ddd",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "schema_version": 1,
+      "stale_handles_accounted": false,
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "baseline_after_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "baseline_before_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "cessation": {
+        "evidence_sha256": "2f00d123af9bf214f4bb6c1e2d372cf838e3a2e738086a612a6d0c65f25ad206",
+        "method": "not-required",
+        "observed": false,
+        "required": false
+      },
+      "dispatch": {
+        "evidence_sha256": null,
+        "status": "unknown"
+      },
+      "evaluator_state": {
+        "evidence_sha256": null,
+        "state": "active_or_unknown"
+      },
+      "final_observation_sha256": null,
+      "idempotency_key": null,
+      "maximum": {
+        "currency": "USD",
+        "execution_us": 300000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "missing_evidence": [
+        "dispatch-outcome",
+        "final-observation",
+        "cessation",
+        "evaluator-stop-state",
+        "stale-handle-accounting"
+      ],
+      "operation_id": null,
+      "record_type": "pending-disposition-v1",
+      "request_id": null,
+      "reservation_id": "d375ce6a2d924646bec71df64e939a5b",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "schema_version": 1,
+      "stale_handles_accounted": false,
+      "status": "unresolved"
+    }
+  ],
+  "postcapture_immutable": {
+    "all_immutable": true,
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "capture_completed_at": "2026-10-27T04:30:49.260082Z",
+    "capture_path": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/docs/evidence/spendability/stage-d/CAPTURE.json",
+    "capture_sha256": "d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8",
+    "checks": {
+      "active": true,
+      "database": true,
+      "lock": true
+    },
+    "chronology_after_capture": true,
+    "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "expected": {
+      "active": {
+        "device": 16777229,
+        "gid": 0,
+        "inode": 685895848,
+        "mode": 292,
+        "nlink": 1,
+        "sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+        "uid": 0
+      },
+      "database": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 320,
+        "inode": 682589447,
+        "mode": 384,
+        "nlink": 1,
+        "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+        "size": 53248,
+        "uid": 320
+      },
+      "lock": {
+        "device": 16777229,
+        "gid": 0,
+        "inode": 682589455,
+        "mode": 292,
+        "nlink": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "uid": 0
+      }
+    },
+    "kind": "GRRR-z3w9 Stage D postcapture immutable identity verification",
+    "observed": {
+      "active": {
+        "device": 16777229,
+        "gid": 0,
+        "inode": 685895848,
+        "mode": 292,
+        "nlink": 1,
+        "sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+        "size": 657,
+        "uid": 0
+      },
+      "database": {
+        "device": 16777229,
+        "gid": 320,
+        "inode": 682589447,
+        "mode": 384,
+        "nlink": 1,
+        "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+        "size": 53248,
+        "uid": 320
+      },
+      "lock": {
+        "device": 16777229,
+        "gid": 0,
+        "inode": 682589455,
+        "mode": 292,
+        "nlink": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0,
+        "uid": 0
+      }
+    },
+    "observed_at": "2026-10-27T04:32:57.578197Z",
+    "schema_version": 1
+  },
+  "provenance": [
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "1bf9d516461040c0baef70648c074d61",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "e55f8e3b44604e509fb005d76d0d7e9f",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "5b7851814d764da1a3b3830abc9853ce",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "283eab529e1c491583775cbe1a8f1c89",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "69523b39a51c44739114313c9325028c",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "191051406bbb469392dfdf9cee76a5e1",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "93135d89fa334ec09d87b655db72c5b7",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "b34d8b9d106e42eab3a3e43daac98ddd",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "e67562e071f34ffb8f76c4f1c22d36fa",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "b954f6890a1e43e3b13f24298fa7ca33",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "d6cdf6f3f93a4fc6ab154020c8cc221d",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "b95be730d6a5408886071d29848bbd05",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "2e1a9c4468794c128d80a568e26752da",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "d375ce6a2d924646bec71df64e939a5b",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "a7da36feadcb442cb76bb1e0e08ce1a1",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "d3c965a29ab547c999e66bf0b60eca9f",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "20849b384ed641ca9f8e5c6f880d96dd",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "e38c33051ff64b4eab106e65a200fe06",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "3848e1bb84214727b5647e4085b0257a",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    },
+    {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "issuer": {
+        "authenticated": false,
+        "code_sha256": null,
+        "policy_sha256": null,
+        "principal_id": null,
+        "runtime_profile_sha256": null,
+        "status": "missing",
+        "toolchain_sha256": null
+      },
+      "measurement": {
+        "clock": null,
+        "ended_at": null,
+        "started_at": null,
+        "status": "missing",
+        "window_sha256": null
+      },
+      "meter": {
+        "meter_id": null,
+        "status": "missing",
+        "usage_sha256": null
+      },
+      "record_type": "reservation-provenance-v1",
+      "request": {
+        "binding_authorized": false,
+        "canonical_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "reservation_id": "eb045d10d73b48ef9d570a1cf870f6eb",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "run": "60fa3361bf5640be8b251e6a1eab93bd",
+      "schema_version": 1,
+      "source": {
+        "path": null,
+        "projection_sha256": null,
+        "raw_sha256": null,
+        "status": "missing"
+      },
+      "stage": "poc",
+      "status": "unresolved"
+    }
+  ],
+  "quiescence": {
+    "record": {
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+      "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "lock": {
+        "acl": "no-acl",
+        "acquired_at": "2026-10-27T04:30:49.201887Z",
+        "all_approved_mutators_covered": true,
+        "approved_protocol_sha256": "e4a06e7e2a39e7dd6c55592e83f83b78ee4f892ac53d988fb6f18b5a0923db6e",
+        "exclusive": true,
+        "identity_before": {
+          "acl": "no-acl",
+          "device": 16777229,
+          "gid": 0,
+          "inode": 682589455,
+          "mode": 292,
+          "nlink": 1,
+          "uid": 0
+        },
+        "identity_opened": {
+          "acl": "no-acl",
+          "device": 16777229,
+          "gid": 0,
+          "inode": 682589455,
+          "mode": 292,
+          "nlink": 1,
+          "uid": 0
+        },
+        "identity_released": {
+          "acl": "no-acl",
+          "device": 16777229,
+          "gid": 0,
+          "inode": 682589455,
+          "mode": 292,
+          "nlink": 1,
+          "uid": 0
+        },
+        "mutator_coverage_sha256": "61c077f8c4e19b06f99d7d4c35a585c4bcb0f5d1e26aeb3816bbcc4b04cf9dc1",
+        "path": "/Library/GRRR/accounting-poc2/launch.lock",
+        "protocol_version": "accounting-poc2-exclusive-v1",
+        "released_at": "2026-10-27T04:30:49.260069Z"
+      },
+      "observations": {
+        "after": {
+          "acl": "no-acl",
+          "device": 16777229,
+          "gid": 320,
+          "inode": 682589447,
+          "mode": 384,
+          "nlink": 1,
+          "observed_at": "2026-10-27T04:30:49.259895Z",
+          "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+          "size": 53248,
+          "uid": 320
+        },
+        "before": {
+          "acl": "no-acl",
+          "device": 16777229,
+          "gid": 320,
+          "inode": 682589447,
+          "mode": 384,
+          "nlink": 1,
+          "observed_at": "2026-10-27T04:30:49.207094Z",
+          "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+          "size": 53248,
+          "uid": 320
+        },
+        "locked": {
+          "acl": "no-acl",
+          "device": 16777229,
+          "gid": 320,
+          "inode": 682589447,
+          "mode": 384,
+          "nlink": 1,
+          "observed_at": "2026-10-27T04:30:49.215826Z",
+          "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+          "size": 53248,
+          "uid": 320
+        }
+      },
+      "process_inventory": {
+        "inventory_sha256": "b98c4efc26da8a5e12125c1562fa260dcc8438196c3991eeea4123f0124dc872",
+        "qemu_count": 0,
+        "uid_320_count": 0,
+        "uid_321_count": 0
+      },
+      "record_type": "writer-exclusion-v1",
+      "review": {
+        "review_sha256": null,
+        "status": "unresolved"
+      },
+      "schema_version": 1,
+      "sidecars": [],
+      "toolchain": {
+        "interpreter": {
+          "expected_sha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26",
+          "observed_sha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26"
+        },
+        "parent_code": {
+          "expected_sha256": "2312a453e9e3c807d023456606da36303a97fab27c9fc9da243ff14774f1d4ee",
+          "observed_sha256": "2312a453e9e3c807d023456606da36303a97fab27c9fc9da243ff14774f1d4ee"
+        },
+        "policy": {
+          "expected_sha256": "c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37",
+          "observed_sha256": "c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37"
+        }
+      }
+    },
+    "validation": {
+      "allowed_mutations": [],
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "execution_authorized": false,
+      "proof_status": "unresolved-requires-independent-protected-capture-review",
+      "review_status": "unresolved",
+      "schema_valid": true,
+      "spendable": null,
+      "valid": false,
+      "writer_exclusion_observed": false,
+      "writer_exclusion_proven": null,
+      "writer_exclusion_recorded": true
+    }
+  },
+  "raw_rows": {
+    "metering": {
+      "columns": [
+        "id",
+        "reservation",
+        "body"
+      ],
+      "rows": [
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2264333564333336333061633134666432373132303464303330393137303966353836643565393439303138353338386634393663613331353064373736396363222c227265736572766174696f6e223a226533386333333035316666363462346561623130366536356132303066653036222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353431393630332c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc",
+              "reservation": "e38c33051ff64b4eab106e65a200fe06",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 25419603,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "a9376b669ca739736aecc2e531da1a9e80a85cbf262ac1bee7e62c98477fad41"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "e38c33051ff64b4eab106e65a200fe06"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2237326133386131363865306238346139353930653039363430386166643439343136636263313235653364316236306632623732323232303939386432626435222c227265736572766174696f6e223a223765636334633765313766373432646339656332613863366461646135306632222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353539383139312c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5",
+              "reservation": "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 25598191,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "af8db9dd7b41f7efefa7a97ea3f4e52d7edeb0ffd2f8cc646f600ddae30120c0"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "7ecc4c7e17f742dc9ec2a8c6dada50f2"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2235653734336166356432393263616332336336626463343931666639613431323861326361303864623863653238623936396665656466633234646363383366222c227265736572766174696f6e223a226239353466363839306131653433653362313366323432393866613763613333222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32363437353730352c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f",
+              "reservation": "b954f6890a1e43e3b13f24298fa7ca33",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 26475705,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "6dad7dc959412a33ff57d118af9396a409e0d4f0094def83136fccd31bdef6c1"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "b954f6890a1e43e3b13f24298fa7ca33"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2232336635373930336135666361366339653535306139383633323933383835313861616133626463626638393839336638313633633034633132373034393366222c227265736572766174696f6e223a226239356265373330643661353430383838363037316432393834386262643035222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353735333730332c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f",
+              "reservation": "b95be730d6a5408886071d29848bbd05",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 25753703,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "f63ace9c97777f1838cb5c8c64531f34514f20741f789cb059277da72b3c4dda"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "b95be730d6a5408886071d29848bbd05"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2230396362313533336336323935353266623964623235326261613932643132356562613562663231383431636163613164343433346264633139323663643936222c227265736572766174696f6e223a226562303435643130643733623438656639643537306131636638373066366562222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32373332363238352c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96",
+              "reservation": "eb045d10d73b48ef9d570a1cf870f6eb",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 27326285,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "266c23dc2848508717b8a80e10fecefd19b57ae62ffdf03e91c0e9f7d225507a"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "eb045d10d73b48ef9d570a1cf870f6eb"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2263336264663865363562313137613130396237643564656239373937316362613333666435653738313930326330633730366636623861333363613462643737222c227265736572766174696f6e223a223562373835313831346437363464613161336233383330616263393835336365222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32363131353833382c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77",
+              "reservation": "5b7851814d764da1a3b3830abc9853ce",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 26115838,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "a2a346ff1ce6e9afcfc1a5665a71338f46a3bcf555ad2a3f4236ed690b03805f"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "5b7851814d764da1a3b3830abc9853ce"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2237303762386263356266656632366535383962363539633566613362393031623731643661343735346563656562613133393533333935316630393763616264222c227265736572766174696f6e223a226433633936356132396162353437633939396536366266306236306563613966222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32363034303532392c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd",
+              "reservation": "d3c965a29ab547c999e66bf0b60eca9f",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 26040529,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "a90855be6d190b08403107812cf15835d024fd1ff74487da7b0084d43b4528fe"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "d3c965a29ab547c999e66bf0b60eca9f"
+          }
+        },
+        {
+          "body": {
+            "blob_hex": "7b2265766964656e6365223a2236653834353737616232343438363235643432323338336230636333326139336136333765623830633065623361656531663263653930396435316635656364222c227265736572766174696f6e223a223162663964353136343631303430633062616566373036343863303734643631222c227573616765223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353533353933342c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d7d",
+            "byte_count": 209,
+            "decoded": {
+              "evidence": "6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd",
+              "reservation": "1bf9d516461040c0baef70648c074d61",
+              "usage": {
+                "currency": "USD",
+                "execution_us": 25535934,
+                "money_cents": 0,
+                "review_us": 0
+              }
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "26780e3f00de3d5ac79abde2d339f634627e7e8ae7d3784a96ab55f5b78473a3"
+          },
+          "reservation": {
+            "kind": "str",
+            "value": "1bf9d516461040c0baef70648c074d61"
+          }
+        }
+      ]
+    },
+    "overhead": {
+      "columns": [
+        "key",
+        "category",
+        "duration_us"
+      ],
+      "rows": []
+    },
+    "reservations": {
+      "columns": [
+        "id",
+        "key",
+        "binding",
+        "run",
+        "stage",
+        "maximum",
+        "actual",
+        "receipt"
+      ],
+      "rows": [
+        {
+          "actual": {
+            "kind": "NoneType",
+            "value": null
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2231333136306336366235376537613832613031333661623231356234373936396236613165613063383730336164353966316235323231636130393934333463222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223139313035313430366262623436393339326466646639636565373661356531222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "13160c66b57e7a82a0136ab215b47969b6a1ea0c8703ad59f1b5221ca099434c",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "191051406bbb469392dfdf9cee76a5e1",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "69523b39a51c44739114313c9325028c"
+          },
+          "key": {
+            "kind": "str",
+            "value": "faf81bd346c94056a2ba6c64f6b7c852"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "NoneType",
+            "value": null
+          },
+          "run": {
+            "kind": "str",
+            "value": "191051406bbb469392dfdf9cee76a5e1"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353431393630332c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 25419603,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2234623336313665333762333435666464343835396461626361633131653165636666643533633831383335643061396663323331376661383236613130356135222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223338343865316262383432313437323762353634376534303835623032353761222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "4b3616e37b345fdd4859dabcac11e1ecffd53c81835d0a9fc2317fa826a105a5",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "3848e1bb84214727b5647e4085b0257a",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "e38c33051ff64b4eab106e65a200fe06"
+          },
+          "key": {
+            "kind": "str",
+            "value": "2f9294107d1d4580b992a6e20b25531c"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "a9376b669ca739736aecc2e531da1a9e80a85cbf262ac1bee7e62c98477fad41"
+          },
+          "run": {
+            "kind": "str",
+            "value": "3848e1bb84214727b5647e4085b0257a"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353539383139312c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 25598191,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2263363836616633633164623133616264333666343065343537376134623462633436386136666363393236363033356134313337393564333531626338323930222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223933313335643839666133333465633039643837623635356462373263356237222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "c686af3c1db13abd36f40e4577a4b4bc468a6fcc9266035a413795d351bc8290",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "93135d89fa334ec09d87b655db72c5b7",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "7ecc4c7e17f742dc9ec2a8c6dada50f2"
+          },
+          "key": {
+            "kind": "str",
+            "value": "2d6b5f2e1dba4e8bbe33cb6b0eb4cebf"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "af8db9dd7b41f7efefa7a97ea3f4e52d7edeb0ffd2f8cc646f600ddae30120c0"
+          },
+          "run": {
+            "kind": "str",
+            "value": "93135d89fa334ec09d87b655db72c5b7"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32363437353730352c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 26475705,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2231636535333331356236623263333638393163323864613032326535346533646131646435666437313038373761366338653461636434373134663064376334222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a226436636466366633663933613466633661623135343032306338636332323164222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "1ce53315b6b2c36891c28da022e54e3da1dd5fd710877a6c8e4acd4714f0d7c4",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "d6cdf6f3f93a4fc6ab154020c8cc221d",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "b954f6890a1e43e3b13f24298fa7ca33"
+          },
+          "key": {
+            "kind": "str",
+            "value": "201f8bd2be294ecf83e381f764e0991f"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "6dad7dc959412a33ff57d118af9396a409e0d4f0094def83136fccd31bdef6c1"
+          },
+          "run": {
+            "kind": "str",
+            "value": "d6cdf6f3f93a4fc6ab154020c8cc221d"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353735333730332c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 25753703,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2266666364613232646635353562643530386538643333343836616531313439313036316639333964343431623866316638646361396134623435666661393362222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223265316139633434363837393463313238643830613536386532363735326461222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "ffcda22df555bd508e8d33486ae11491061f939d441b8f1f8dca9a4b45ffa93b",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "2e1a9c4468794c128d80a568e26752da",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "b95be730d6a5408886071d29848bbd05"
+          },
+          "key": {
+            "kind": "str",
+            "value": "dc0cbfe71068423986dff37d3ac36f8a"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "f63ace9c97777f1838cb5c8c64531f34514f20741f789cb059277da72b3c4dda"
+          },
+          "run": {
+            "kind": "str",
+            "value": "2e1a9c4468794c128d80a568e26752da"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32373332363238352c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 27326285,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2231623333323663343964363439313937366431663033336638353966346436363537373731663262303063366639366366373962373932346238653865326533222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223630666133333631626635363430626538623235316536613165616239336264222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "1b3326c49d6491976d1f033f859f4d6657771f2b00c6f96cf79b7924b8e8e2e3",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "60fa3361bf5640be8b251e6a1eab93bd",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "eb045d10d73b48ef9d570a1cf870f6eb"
+          },
+          "key": {
+            "kind": "str",
+            "value": "ee84c5a560df4fcfb1a3af860a3e301b"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "266c23dc2848508717b8a80e10fecefd19b57ae62ffdf03e91c0e9f7d225507a"
+          },
+          "run": {
+            "kind": "str",
+            "value": "60fa3361bf5640be8b251e6a1eab93bd"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32363131353833382c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 26115838,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2236363262646465383861653630613164323834343665376435643566303632616537396539323766346665386531376632356636653132643933383438343063222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223238336561623532396531633439313538333737356362653161386631633839222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "662bdde88ae60a1d28446e7d5d5f062ae79e927f4fe8e17f25f6e12d9384840c",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "283eab529e1c491583775cbe1a8f1c89",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "5b7851814d764da1a3b3830abc9853ce"
+          },
+          "key": {
+            "kind": "str",
+            "value": "15acbed7af334d6ea5383ee75d638d77"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "a2a346ff1ce6e9afcfc1a5665a71338f46a3bcf555ad2a3f4236ed690b03805f"
+          },
+          "run": {
+            "kind": "str",
+            "value": "283eab529e1c491583775cbe1a8f1c89"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32363034303532392c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 26040529,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2230353436623933333635386362336161303937643965333433633734336663306236383936643033623663396161633933363765396433316238376362343161222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a223230383439623338346564363431636139663865356336663838306439366464222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "0546b933658cb3aa097d9e343c743fc0b6896d03b6c9aac9367e9d31b87cb41a",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "20849b384ed641ca9f8e5c6f880d96dd",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "d3c965a29ab547c999e66bf0b60eca9f"
+          },
+          "key": {
+            "kind": "str",
+            "value": "91a882efe5a74d9b8bd68e3ab1c09dd2"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "a90855be6d190b08403107812cf15835d024fd1ff74487da7b0084d43b4528fe"
+          },
+          "run": {
+            "kind": "str",
+            "value": "20849b384ed641ca9f8e5c6f880d96dd"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "kind": "NoneType",
+            "value": null
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2236633861383332336239663432303033306437366662343661653064643539333836613565343030356165373137306631323631653466303230343937373134222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a226536373536326530373166333466666238663736633466316332326433366661222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "6c8a8323b9f420030d76fb46ae0dd59386a5e4005ae7170f1261e4f020497714",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "e67562e071f34ffb8f76c4f1c22d36fa",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "b34d8b9d106e42eab3a3e43daac98ddd"
+          },
+          "key": {
+            "kind": "str",
+            "value": "556533e5f0e9490d88679338ed210213"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "NoneType",
+            "value": null
+          },
+          "run": {
+            "kind": "str",
+            "value": "e67562e071f34ffb8f76c4f1c22d36fa"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a32353533353933342c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 72,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 25535934,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2266343331356133333961663763633639313534633466303138626363316362396266626235383062663632393236623464376133323361356364333138663432222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a226535356638653362343436303465353039666230303564373664306437653966222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "f4315a339af7cc69154c4f018bcc1cb9bfbb580bf62926b4d7a323a5cd318f42",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "e55f8e3b44604e509fb005d76d0d7e9f",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "1bf9d516461040c0baef70648c074d61"
+          },
+          "key": {
+            "kind": "str",
+            "value": "d40e587aa86d42218b8f8791de1bcfe8"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "str",
+            "value": "26780e3f00de3d5ac79abde2d339f634627e7e8ae7d3784a96ab55f5b78473a3"
+          },
+          "run": {
+            "kind": "str",
+            "value": "e55f8e3b44604e509fb005d76d0d7e9f"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        },
+        {
+          "actual": {
+            "kind": "NoneType",
+            "value": null
+          },
+          "binding": {
+            "blob_hex": "7b2262696e64696e67223a2238656535393362633165303038616431353139353035396365343064316261373939373464336665306663626537633332363461303165653132313233373135222c226d6178696d756d223a7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d2c2272756e223a226137646133366665616463623434326362373662623165306530386365316131222c227374616765223a22706f63227d",
+            "byte_count": 217,
+            "decoded": {
+              "binding": "8ee593bc1e008ad15195059ce40d1ba79974d3fe0fcbe7c3264a01ee12123715",
+              "maximum": {
+                "currency": "USD",
+                "execution_us": 300000000,
+                "money_cents": 0,
+                "review_us": 0
+              },
+              "run": "a7da36feadcb442cb76bb1e0e08ce1a1",
+              "stage": "poc"
+            },
+            "kind": "blob"
+          },
+          "id": {
+            "kind": "str",
+            "value": "d375ce6a2d924646bec71df64e939a5b"
+          },
+          "key": {
+            "kind": "str",
+            "value": "761cb90c9d87452ea4ca1e6d014d1e9e"
+          },
+          "maximum": {
+            "blob_hex": "7b2263757272656e6379223a22555344222c22657865637574696f6e5f7573223a3330303030303030302c226d6f6e65795f63656e7473223a302c227265766965775f7573223a307d",
+            "byte_count": 73,
+            "decoded": {
+              "currency": "USD",
+              "execution_us": 300000000,
+              "money_cents": 0,
+              "review_us": 0
+            },
+            "kind": "blob"
+          },
+          "receipt": {
+            "kind": "NoneType",
+            "value": null
+          },
+          "run": {
+            "kind": "str",
+            "value": "a7da36feadcb442cb76bb1e0e08ce1a1"
+          },
+          "stage": {
+            "kind": "str",
+            "value": "poc"
+          }
+        }
+      ]
+    },
+    "state": {
+      "columns": [
+        "id",
+        "stopped"
+      ],
+      "rows": [
+        {
+          "id": {
+            "kind": "int",
+            "value": 1
+          },
+          "stopped": {
+            "kind": "int",
+            "value": 0
+          }
+        }
+      ]
+    },
+    "store_identity": {
+      "columns": [
+        "campaign",
+        "store_id",
+        "prior_history_receipt"
+      ],
+      "rows": [
+        {
+          "campaign": {
+            "kind": "str",
+            "value": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9"
+          },
+          "prior_history_receipt": {
+            "kind": "str",
+            "value": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde"
+          },
+          "store_id": {
+            "kind": "str",
+            "value": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6"
+          }
+        }
+      ]
+    }
+  },
+  "record_type": "spendability-evidence-bundle-v2",
+  "schema_compatibility": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "independent_review": "unresolved",
+    "mapped_contract_schema_sha256": "f7c49d7ad12f7e669031d4a340f6ec70860ca3c2779445f0d87b39d1e8ef409d",
+    "mapping": {
+      "metering": {
+        "ddl_sha256": "492856acf5c18ba9e0b30584fa80dbd3ae6f2e8c26fcf96dd3e9831e1ede73a7",
+        "kind": "table",
+        "table": "metering"
+      },
+      "metering_id_unique": {
+        "index": "sqlite_autoindex_metering_1",
+        "kind": "index_constraint",
+        "origin": "pk",
+        "table": "metering"
+      },
+      "metering_reservation_unique": {
+        "index": "sqlite_autoindex_metering_2",
+        "kind": "index_constraint",
+        "origin": "u",
+        "table": "metering"
+      },
+      "overhead": {
+        "ddl_sha256": "1acd5d506212004f65d71fc5669e06ff3a2cc9384f3f61052686b51632957936",
+        "kind": "table",
+        "table": "overhead"
+      },
+      "overhead_key_unique": {
+        "index": "sqlite_autoindex_overhead_1",
+        "kind": "index_constraint",
+        "origin": "pk",
+        "table": "overhead"
+      },
+      "reservation_id_unique": {
+        "index": "sqlite_autoindex_reservations_1",
+        "kind": "index_constraint",
+        "origin": "pk",
+        "table": "reservations"
+      },
+      "reservation_key_unique": {
+        "index": "sqlite_autoindex_reservations_2",
+        "kind": "index_constraint",
+        "origin": "u",
+        "table": "reservations"
+      },
+      "reservations": {
+        "ddl_sha256": "d6ab3df54e8f35bc1b6331494f92fb9ccf751a2e7699a8d996ceab74dcfa9098",
+        "kind": "table",
+        "table": "reservations"
+      },
+      "state": {
+        "ddl_sha256": "9f6c06564996cc11d5a0ac890e969ee40a647df05d4e9ae13f16f8477ab4a2dc",
+        "kind": "table",
+        "table": "state"
+      },
+      "state_id_unique": {
+        "kind": "table_constraint",
+        "origin": "ddl-check",
+        "table": "state"
+      },
+      "store_identity": {
+        "ddl_sha256": "9599ad5751026d5de6c40f06af7c2c8a75b684f45ef87845c7c4f26063fe344d",
+        "kind": "table",
+        "table": "store_identity"
+      }
+    },
+    "raw_inventory_ordering": "sqlite_master,type,name; tables,lexical; indexes,PRAGMA seq; xinfo,key-then-auxiliary",
+    "raw_schema_sha256": "219e684bfee51459852674c3e7ad6e58030051b20ccc6e9fb7a91d14b34910b0",
+    "record_type": "schema-compatibility-v2",
+    "schema_version": 1,
+    "semantic_objects": [
+      "metering",
+      "metering_id_unique",
+      "metering_reservation_unique",
+      "overhead",
+      "overhead_key_unique",
+      "reservation_id_unique",
+      "reservation_key_unique",
+      "reservations",
+      "state",
+      "state_id_unique",
+      "store_identity"
+    ],
+    "status": "mapped"
+  },
+  "schema_version": 2
+}

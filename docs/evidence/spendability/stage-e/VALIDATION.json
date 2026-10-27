@@ -1,0 +1,33 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "bundle_sha256": "52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467",
+  "interpreters": {
+    "/opt/homebrew/bin/python3": {
+      "allowed_mutations": [],
+      "assembly_valid": true,
+      "evidence_valid": false,
+      "execution_authorized": false,
+      "first_failed_gate": "quiescence",
+      "spendable": null
+    },
+    "/usr/bin/python3": {
+      "allowed_mutations": [],
+      "assembly_valid": true,
+      "evidence_valid": false,
+      "execution_authorized": false,
+      "first_failed_gate": "quiescence",
+      "spendable": null
+    }
+  },
+  "kind": "GRRR-z3w9 Stage E fail-closed evidence-bundle validation",
+  "schema_version": 1
+}

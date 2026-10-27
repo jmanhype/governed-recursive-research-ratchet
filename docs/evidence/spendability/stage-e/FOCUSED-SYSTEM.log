@@ -1,0 +1,21 @@
+test_bundle_binds_exact_retained_stage_a_and_stage_d_bytes (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_bundle_has_no_operational_authority (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_bundle_revalidates_by_exact_regeneration (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_completeness_remains_unbounded_and_unresolved (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_eleven_unresolved_provenance_sidecars_are_present (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_forged_stage_a_bytes_are_rejected (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_gate_inventory_and_outcome_fail_closed (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_modified_capture_cannot_be_authenticated_by_updated_bundle_basis (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_modified_postcapture_cannot_be_authenticated_by_updated_bundle_basis (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_non_null_spendability_cannot_be_injected (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_raw_stage_a_row_multiset_is_preserved (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_stage_d_schema_and_quiescence_are_embedded_and_valid (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_tampered_bundle_is_rejected (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_three_pending_holds_retain_full_maxima (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_unbound_postcapture_is_rejected (unit_spendability_bundle.SpendabilityBundle) ... ok
+test_unbound_stage_d_capture_is_rejected (unit_spendability_bundle.SpendabilityBundle) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.063s
+
+OK
