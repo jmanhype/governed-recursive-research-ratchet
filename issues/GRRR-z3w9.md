@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T00:45:42Z
-content_hash: "sha256:b96aabd90254c2f38c73c42352437ffc0f39d51b48488f5f1f135cf0704ca5db"
+updated_at: 2026-10-27T01:57:50Z
+content_hash: "sha256:606acf840003e8031ca79b814443caa62005e8b650e34400864d6bfb39662987"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -111,6 +111,61 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-26 Operator-Authorized Stage A — Completed Read-Only Baseline Review, Story Still Blocked
+
+Operator scope was exactly: commit tested integration, capture protected read-only accounting baseline, build spendability evidence package, and obtain independent review; with no spendability write, reconciliation, replay, promotion, admission, merge, or push.
+
+### Tested integration commit
+- Story branch `story/GRRR-z3w9` commit `c80f77ae8f39c13b59b4571c7948f19c4528c6a6`.
+- Integrated accepted epic `36671bc467286404b9dfddcf487fc9358aa2b643` while preserving story replay WIP.
+- Added validator artifacts:
+  - `research/spendability_evidence.py` SHA256 `73c644b90952b9dd449d2fecb98286b5e3b5c02974b25c267e4f5fe6c3efb449`
+  - `tests/unit_spendability_evidence.py` SHA256 `d98a0ae809eb6d8fa6c5071b8cb536c613355fa891319c63d6a1eb68292a5130`
+- Focused validator tests on Python 3.9.6 and 3.14.3: 28/28 OK each.
+- Full no-guest suites before commit: 311/311 OK on both interpreters.
+- `pvg verify` and both diff checks passed before commit.
+
+### Protected read-only capture
+- Capture program: `docs/evidence/spendability/stage-a/CAPTURE.py`, SHA256 `b54fbf5dcafa87cf5853fe1555718661a40f53e51ea348ac84d0fc2d1bff777b`.
+- Baseline: `docs/evidence/spendability/stage-a/BASELINE.json`, SHA256 `7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a`.
+- Root parent used read-only no-follow file opens, pre-open/open/post-read identity checks, SQLite `mode=ro&immutable=1`, and `PRAGMA query_only=ON`.
+- Database SHA256 before/during/after: `9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3`.
+- Captured 11 reservations, 8 meter rows, 0 overhead rows, 3 pending holds, state stopped=0, and matching store identity.
+- Known execution-us encumbrance: 208,265,788 settled meter usage + 900,000,000 pending maxima = 1,108,265,788 in both POC and milestone scope.
+- Unknown upper bound remains explicitly `unresolved-unbounded`; no unknown was converted to zero.
+- Baseline admissibility remains unresolved because exact schema compatibility, writer exclusion/quiescence, provenance, pending dispositions, historical completeness, and operator authorization are not proven.
+- Post-review parent verification confirmed every captured protected source and database identity remained immutable; all 10 source/database comparisons passed.
+
+### Evidence package and independent review
+- Package manifest: `docs/evidence/spendability/stage-a/PACKAGE.json`, SHA256 `bb79e0242ea914d75b3e0ab9b44248c6e4eca8435214a1d970a55bef2a99a391`; 12 artifacts verified.
+- Initial independent review returned `STAGE_A_REVIEW: REJECTED_BASELINE_CAPTURE` and is retained in `REVIEW-1-REJECTED.md`.
+- Rework removed circular manifest binding, represented unresolved bounds as unresolved/null, retained raw schema/rows/ancestry, marked unsupported gates unresolved, and enforced pre-open/open/post-read identity agreement.
+- Fresh independent review returned `STAGE_A_REVIEW: APPROVED_BASELINE_CAPTURE`; retained in `REVIEW-2-APPROVED.md`, SHA256 `8aad1aba3360d96efc1fa83cf018c49fc5df523527b9bdb67c1f406933e304f1`.
+- Both interpreter validations remain `valid=false`, `spendable=null`, no allowed mutations, and no execution authority. First failed gate is `schema_fingerprint`; quiescence and other mandatory gates remain unresolved.
+- Review approval covers only the bounded baseline capture, not spendability or operational authority.
+
+### Protected-boundary result
+- No spendability write, reconciliation, stop/hold change, replay, VM/QEMU execution, promotion, admission, production mutation, merge, or push occurred.
+- Stage A evidence is currently uncommitted beyond the separately authorized integration commit because the operator did not authorize an evidence commit.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage A artifact directory: `docs/evidence/spendability/stage-a/`.
+- Approved review artifact and hashes recorded above.
+- Protected store postcheck: all captured identities unchanged.
+
+### proof
+- [x] Stage A tested integration commit completed.
+- [x] Protected read-only baseline captured and independently reviewed.
+- [x] Evidence package fails closed with `spendable=null`; no authority is inferred.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
 ## 2026-10-26 Safe Story Integration Preflight — In Progress, Not Delivered
 
 - Integrated accepted epic GRRR-wu6f additions into the claimed GRRR-z3w9 worktree while preserving this story's independent-replay WIP files.
