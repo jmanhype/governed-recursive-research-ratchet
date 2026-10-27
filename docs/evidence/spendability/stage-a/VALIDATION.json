@@ -1,0 +1,347 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "interpreters": {
+    "/opt/homebrew/bin/python3": {
+      "allowed_mutations": [],
+      "execution_authorized": false,
+      "first_failed_gate": "schema_fingerprint",
+      "gate_results": [
+        {
+          "details": [],
+          "gate": "package_schema",
+          "passed": true
+        },
+        {
+          "details": [],
+          "gate": "canonical_json",
+          "passed": true
+        },
+        {
+          "details": [],
+          "gate": "baseline_ancestry",
+          "passed": true
+        },
+        {
+          "details": [],
+          "gate": "store_integrity",
+          "passed": true
+        },
+        {
+          "details": [
+            "invalid schema fingerprint"
+          ],
+          "gate": "schema_fingerprint",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "toolchain_observer",
+          "passed": true
+        },
+        {
+          "details": [
+            "capture was not stable"
+          ],
+          "gate": "quiescence",
+          "passed": false
+        },
+        {
+          "details": [
+            "review is missing or not approved"
+          ],
+          "gate": "independent_review",
+          "passed": false
+        },
+        {
+          "details": [
+            "operator decision is missing or unbound"
+          ],
+          "gate": "operator_decision",
+          "passed": false
+        },
+        {
+          "details": [
+            "historical completeness is unresolved",
+            "recovery or interrupted-operation lineage is incomplete"
+          ],
+          "gate": "historical_completeness",
+          "passed": false
+        },
+        {
+          "details": [
+            "counts or checksums match but row multiset differs"
+          ],
+          "gate": "baseline_rows",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "row_schema",
+          "passed": true
+        },
+        {
+          "details": [
+            "meter body or digest differs: 1bf9d516461040c0baef70648c074d61",
+            "meter body or digest differs: 5b7851814d764da1a3b3830abc9853ce",
+            "meter body or digest differs: 7ecc4c7e17f742dc9ec2a8c6dada50f2",
+            "meter body or digest differs: b954f6890a1e43e3b13f24298fa7ca33",
+            "meter body or digest differs: b95be730d6a5408886071d29848bbd05",
+            "meter body or digest differs: d3c965a29ab547c999e66bf0b60eca9f",
+            "meter body or digest differs: e38c33051ff64b4eab106e65a200fe06",
+            "meter body or digest differs: eb045d10d73b48ef9d570a1cf870f6eb"
+          ],
+          "gate": "row_joins",
+          "passed": false
+        },
+        {
+          "details": [
+            "reservation[0] provenance is untrusted",
+            "reservation[1] provenance is untrusted",
+            "reservation[2] provenance is untrusted",
+            "reservation[3] provenance is untrusted",
+            "reservation[4] provenance is untrusted",
+            "reservation[5] provenance is untrusted",
+            "reservation[6] provenance is untrusted",
+            "reservation[7] provenance is untrusted",
+            "reservation[8] provenance is untrusted",
+            "reservation[9] provenance is untrusted",
+            "reservation[10] provenance is untrusted",
+            "meter[0] provenance is untrusted",
+            "meter[1] provenance is untrusted",
+            "meter[2] provenance is untrusted",
+            "meter[3] provenance is untrusted",
+            "meter[4] provenance is untrusted",
+            "meter[5] provenance is untrusted",
+            "meter[6] provenance is untrusted",
+            "meter[7] provenance is untrusted"
+          ],
+          "gate": "provenance",
+          "passed": false
+        },
+        {
+          "details": [
+            "reservation[2] pending evidence is incomplete",
+            "reservation[4] pending evidence is incomplete",
+            "reservation[7] pending evidence is incomplete"
+          ],
+          "gate": "pending_evidence",
+          "passed": false
+        },
+        {
+          "details": [
+            "empty overhead is not proven complete"
+          ],
+          "gate": "overhead_completeness",
+          "passed": false
+        },
+        {
+          "details": [
+            "scope mapping or resource vector differs"
+          ],
+          "gate": "arithmetic",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "scope_arithmetic",
+          "passed": true
+        },
+        {
+          "details": [
+            "attempt is stale, reused, unbound, or no longer fresh"
+          ],
+          "gate": "reconciliation_record",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "spendability_decision",
+          "passed": true
+        }
+      ],
+      "pending_maximum_totals": {
+        "execution_us": 900000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "spendable": null,
+      "valid": false
+    },
+    "/usr/bin/python3": {
+      "allowed_mutations": [],
+      "execution_authorized": false,
+      "first_failed_gate": "schema_fingerprint",
+      "gate_results": [
+        {
+          "details": [],
+          "gate": "package_schema",
+          "passed": true
+        },
+        {
+          "details": [],
+          "gate": "canonical_json",
+          "passed": true
+        },
+        {
+          "details": [],
+          "gate": "baseline_ancestry",
+          "passed": true
+        },
+        {
+          "details": [],
+          "gate": "store_integrity",
+          "passed": true
+        },
+        {
+          "details": [
+            "invalid schema fingerprint"
+          ],
+          "gate": "schema_fingerprint",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "toolchain_observer",
+          "passed": true
+        },
+        {
+          "details": [
+            "capture was not stable"
+          ],
+          "gate": "quiescence",
+          "passed": false
+        },
+        {
+          "details": [
+            "review is missing or not approved"
+          ],
+          "gate": "independent_review",
+          "passed": false
+        },
+        {
+          "details": [
+            "operator decision is missing or unbound"
+          ],
+          "gate": "operator_decision",
+          "passed": false
+        },
+        {
+          "details": [
+            "historical completeness is unresolved",
+            "recovery or interrupted-operation lineage is incomplete"
+          ],
+          "gate": "historical_completeness",
+          "passed": false
+        },
+        {
+          "details": [
+            "counts or checksums match but row multiset differs"
+          ],
+          "gate": "baseline_rows",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "row_schema",
+          "passed": true
+        },
+        {
+          "details": [
+            "meter body or digest differs: 1bf9d516461040c0baef70648c074d61",
+            "meter body or digest differs: 5b7851814d764da1a3b3830abc9853ce",
+            "meter body or digest differs: 7ecc4c7e17f742dc9ec2a8c6dada50f2",
+            "meter body or digest differs: b954f6890a1e43e3b13f24298fa7ca33",
+            "meter body or digest differs: b95be730d6a5408886071d29848bbd05",
+            "meter body or digest differs: d3c965a29ab547c999e66bf0b60eca9f",
+            "meter body or digest differs: e38c33051ff64b4eab106e65a200fe06",
+            "meter body or digest differs: eb045d10d73b48ef9d570a1cf870f6eb"
+          ],
+          "gate": "row_joins",
+          "passed": false
+        },
+        {
+          "details": [
+            "reservation[0] provenance is untrusted",
+            "reservation[1] provenance is untrusted",
+            "reservation[2] provenance is untrusted",
+            "reservation[3] provenance is untrusted",
+            "reservation[4] provenance is untrusted",
+            "reservation[5] provenance is untrusted",
+            "reservation[6] provenance is untrusted",
+            "reservation[7] provenance is untrusted",
+            "reservation[8] provenance is untrusted",
+            "reservation[9] provenance is untrusted",
+            "reservation[10] provenance is untrusted",
+            "meter[0] provenance is untrusted",
+            "meter[1] provenance is untrusted",
+            "meter[2] provenance is untrusted",
+            "meter[3] provenance is untrusted",
+            "meter[4] provenance is untrusted",
+            "meter[5] provenance is untrusted",
+            "meter[6] provenance is untrusted",
+            "meter[7] provenance is untrusted"
+          ],
+          "gate": "provenance",
+          "passed": false
+        },
+        {
+          "details": [
+            "reservation[2] pending evidence is incomplete",
+            "reservation[4] pending evidence is incomplete",
+            "reservation[7] pending evidence is incomplete"
+          ],
+          "gate": "pending_evidence",
+          "passed": false
+        },
+        {
+          "details": [
+            "empty overhead is not proven complete"
+          ],
+          "gate": "overhead_completeness",
+          "passed": false
+        },
+        {
+          "details": [
+            "scope mapping or resource vector differs"
+          ],
+          "gate": "arithmetic",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "scope_arithmetic",
+          "passed": true
+        },
+        {
+          "details": [
+            "attempt is stale, reused, unbound, or no longer fresh"
+          ],
+          "gate": "reconciliation_record",
+          "passed": false
+        },
+        {
+          "details": [],
+          "gate": "spendability_decision",
+          "passed": true
+        }
+      ],
+      "pending_maximum_totals": {
+        "execution_us": 900000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "spendable": null,
+      "valid": false
+    }
+  },
+  "kind": "GRRR-z3w9 Stage A fail-closed spendability validation after reviewer rework",
+  "schema_version": 1
+}

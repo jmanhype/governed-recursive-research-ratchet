@@ -1,0 +1,33 @@
+test_case_01_missing_active_artifact_fails_baseline (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_02_changed_database_identity_fails_integrity (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_03_unexpected_schema_object_refuses_before_rows (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_04_duplicate_reservation_id_is_ambiguous (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_05_orphan_meter_is_not_adopted (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_06_null_actual_with_receipt_is_invalid (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_07_usage_over_maximum_is_not_clipped (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_08_duplicate_meter_json_key_is_rejected (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_09_boolean_integer_is_rejected (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_10_unknown_stage_fails_closed (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_11_all_omitted_pending_holds_remain (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_12_pending_null_changed_to_zero_refused (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_13_poc_omitted_from_milestone_scope (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_14_valid_digest_unauthenticated_issuer_fails (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_15_null_binding_without_authorization_proof (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_16_empty_overhead_is_not_historical_zero (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_17_partial_recovery_lineage_requires_recovery (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_18_reused_reconciliation_attempt_is_stale (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_19_same_count_different_row_multiset_refused (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_20_low_encumbrance_does_not_clear_unresolved_gate (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_21_current_arithmetic_reproduction_is_not_completeness (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_22_all_gates_pass_without_dispatch_authorization (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_23_one_unresolved_gate_forces_null (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_24_authenticated_paired_null_retains_maximum (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_25_provenance_backed_null_binding_is_valid (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_26_unproven_null_binding_remains_unknown (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_27_settled_one_sided_null_refused (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+test_case_28_non_null_spendability_with_unresolved_gate_invalid (unit_spendability_evidence.SpendabilityEvidenceCases) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.067s
+
+OK

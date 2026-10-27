@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "kind": "GRRR-z3w9-stage-b-spendability-evidence-gap-remediation",
+  "basis": {
+    "baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "active_binding_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "evidence_contract_sha256": "c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37",
+    "stage_a_review": "APPROVED_BASELINE_CAPTURE"
+  },
+  "observed_state": {
+    "reservation_count": 11,
+    "settled_meter_count": 8,
+    "pending_count": 3,
+    "overhead_row_count": 0,
+    "stopped": 0,
+    "settled_execution_us": 208265788,
+    "pending_maximum_execution_us": 900000000,
+    "known_encumbered_execution_us": 1108265788,
+    "scopes": [
+      "poc",
+      "milestone"
+    ],
+    "unknown_upper_bound": "unresolved-unbounded"
+  },
+  "pending_reservation_ids": [
+    "69523b39a51c44739114313c9325028c",
+    "b34d8b9d106e42eab3a3e43daac98ddd",
+    "d375ce6a2d924646bec71df64e939a5b"
+  ],
+  "overhead_categories": [
+    "preparation",
+    "selection",
+    "execution",
+    "review",
+    "other"
+  ],
+  "required_gates": [
+    {
+      "gate": "schema_fingerprint",
+      "remediation": "Capture exact raw DDL, columns, constraints, indexes, and application metadata; produce raw and separately mapped contract fingerprints.",
+      "required_evidence": [
+        "canonical sqlite_master inventory",
+        "table_info for every table",
+        "index_list and index_xinfo for every table",
+        "foreign-key and constraint inventory",
+        "one-to-one semantic constraint map"
+      ],
+      "acceptance": "No extra or missing object; every semantic object maps to one raw constraint; both digests are retained.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "quiescence",
+      "remediation": "Acquire the approved exclusive writer lock and prove database identity stability before, during, and after capture.",
+      "required_evidence": [
+        "lock identity and protocol",
+        "proof all approved mutators use the lock",
+        "locked-window before/during/after hashes",
+        "absence of journal, WAL, SHM, temporary, and sidecar files",
+        "UID/GID process inventory"
+      ],
+      "acceptance": "Exclusive writer exclusion and stable database identity are independently reviewed.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "independent_review",
+      "remediation": "Review this plan, future adapter, quiescence contract, provenance schemas, dispositions, completeness map, arithmetic, and exact implementation diff.",
+      "required_evidence": [
+        "fresh reviewer identity and scope",
+        "exact artifact hashes",
+        "binary approval or rejection",
+        "required corrections"
+      ],
+      "acceptance": "A fresh independent reviewer approves the exact evidence contract and implementation without granting authority.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "operator_decision",
+      "remediation": "Obtain a separate action-specific decision bound to the exact baseline, evidence bundle, review, code, and policy hashes.",
+      "required_evidence": [
+        "operator identity",
+        "named bounded action",
+        "artifact hash bindings",
+        "validity window"
+      ],
+      "acceptance": "The decision is authenticated, action-specific, fresh, and bound to every exact artifact hash.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "historical_completeness",
+      "remediation": "Map registration, recovery, current store, every reservation/run, stop, failure, side store, cost domain, and missing-history boundary.",
+      "required_evidence": [
+        "active ancestry chain",
+        "reservation and run mappings",
+        "dispatch/cancel/failure/stop/replay operations",
+        "side ledger and manual adjustment inventory",
+        "lost or never-created record disposition"
+      ],
+      "acceptance": "Every source maps to lineage or is explicitly unexplained; absence is not treated as zero.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "baseline_rows",
+      "remediation": "Preserve every raw cell, BLOB byte, null, type, ordering rule, and separately digest the canonical row multiset.",
+      "required_evidence": [
+        "raw row bytes",
+        "raw row multiset digest",
+        "canonical projection digest",
+        "cell type and null inventory"
+      ],
+      "acceptance": "Projection never replaces raw rows and both row identities are independently verified.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "row_joins",
+      "remediation": "Prove unique reservation, meter, receipt, request, overhead, state, and store joins without adopting ambiguous candidates.",
+      "required_evidence": [
+        "exact request bytes",
+        "meter body bytes and digest",
+        "receipt-to-meter linkage",
+        "unique join graph"
+      ],
+      "acceptance": "Every meter joins one reservation and every settled receipt matches one authenticated meter.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "provenance",
+      "remediation": "Authenticate issuer, code, policy, request boundary, measurement window, and raw evidence object for every row.",
+      "required_evidence": [
+        "issuer identity",
+        "issuer code and toolchain hashes",
+        "request authorization",
+        "measurement boundaries",
+        "source object raw digest"
+      ],
+      "acceptance": "All 11 reservations and 8 meters have unambiguous authenticated provenance.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "pending_evidence",
+      "remediation": "Classify each pending hold as live, expired, cancelled, failed/not-dispatched, or unresolved with full operation and cessation evidence.",
+      "required_evidence": [
+        "request and idempotency identity",
+        "operation outcome",
+        "final observation or non-observation proof",
+        "cessation proof where dispatched",
+        "stale-handle and baseline checks"
+      ],
+      "acceptance": "All three pending IDs have explicit dispositions; unresolved retains the full maximum.",
+      "failure_result": "unresolved-full-hold"
+    },
+    {
+      "gate": "overhead_completeness",
+      "remediation": "Affirmatively cover preparation, selection, execution, review, and other cost domains with source records and interval boundaries.",
+      "required_evidence": [
+        "domain actor and boundary",
+        "source record inventory",
+        "interval overlap map",
+        "units and clocks",
+        "proven upper bound or unresolved status"
+      ],
+      "acceptance": "No empty table is interpreted as historical zero without affirmative domain coverage.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "arithmetic",
+      "remediation": "Reproduce row-level known encumbrance with bounded integers, overflow checks, scope expansion, overhead disclosure, and unresolved unknown bounds.",
+      "required_evidence": [
+        "row contribution list",
+        "scope mapping",
+        "overflow checks",
+        "overhead totals",
+        "null/unresolved unknown upper bounds"
+      ],
+      "acceptance": "Known execution-us reproduces 1108265788 in both scopes without converting unknowns to zero.",
+      "failure_result": "unresolved"
+    },
+    {
+      "gate": "reconciliation_record",
+      "remediation": "Create a one-time record bound to baseline, rows, schema, policy, toolchain, review, authorization, and validity window.",
+      "required_evidence": [
+        "exclusive attempt identity",
+        "all exact hash bindings",
+        "prior-use state",
+        "authorization binding",
+        "freshness proof"
+      ],
+      "acceptance": "No stale, reused, unbound, or ambiguous reconciliation attempt can produce a non-null result.",
+      "failure_result": "unresolved"
+    }
+  ],
+  "lineage_artifacts": [
+    "registration_prior_active",
+    "registration_receipt",
+    "recovery_prior_active",
+    "recovery_intent",
+    "recovery_receipt",
+    "recovery_complete",
+    "active",
+    "database_snapshot"
+  ],
+  "implementation_sequence": [
+    "unit-test this machine-readable plan",
+    "implement schema compatibility adapter",
+    "design locked quiescence capture",
+    "define provenance sidecars",
+    "define pending dispositions",
+    "define historical completeness map",
+    "independent design review",
+    "stop before protected read"
+  ],
+  "authority": {
+    "protected_access": false,
+    "write": false,
+    "reconcile": false,
+    "replay": false,
+    "promotion": false,
+    "admission": false,
+    "merge": false,
+    "push": false
+  },
+  "required_outcome": {
+    "valid": false,
+    "spendable": null,
+    "allowed_mutations": [],
+    "execution_authorized": false,
+    "first_failed_gate": "schema_fingerprint"
+  }
+}

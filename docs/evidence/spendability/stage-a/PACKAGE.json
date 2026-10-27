@@ -1,0 +1,67 @@
+{
+  "artifacts": {
+    "BASELINE-R1-REJECTED.json": {
+      "bytes": 76151,
+      "sha256": "5ca677f33490b02c301c8ea00e0856b42e227174488b35bf7f05aad1d2fe99a8"
+    },
+    "BASELINE.json": {
+      "bytes": 180885,
+      "sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a"
+    },
+    "CAPTURE-R1-REJECTED.py": {
+      "bytes": 18314,
+      "sha256": "788b4fa9b04adf2f198181c72b0a220db20ed8b4c01c2200d498cc4a11817f53"
+    },
+    "CAPTURE.py": {
+      "bytes": 19800,
+      "sha256": "b54fbf5dcafa87cf5853fe1555718661a40f53e51ea348ac84d0fc2d1bff777b"
+    },
+    "FOCUSED-HOMEBREW.log": {
+      "bytes": 4725,
+      "sha256": "1652f643b0bbed3683dac18c6018d14ce7f11079895ae452e7937517fba05096"
+    },
+    "FOCUSED-SYSTEM.log": {
+      "bytes": 3280,
+      "sha256": "aa2d6010f0b6b0e700c14fc0570162c36124cceb1b817cf8093ba0c52952cbed"
+    },
+    "FULL-UNIT-HOMEBREW.log": {
+      "bytes": 47846,
+      "sha256": "bfcb43df3dd444d491cb0ddfd13ded014a5afff80aeb1e89ee252e6bd38533bf"
+    },
+    "FULL-UNIT-SYSTEM.log": {
+      "bytes": 32245,
+      "sha256": "3396f2e45e270b440f9711e61bcc0b6b803cac1deb9a80502117e435359be515"
+    },
+    "REVIEW-1-REJECTED.md": {
+      "bytes": 1196,
+      "sha256": "d93745c14dd83ddf600641690a0a9ae472d73657b09f55e8e3cd95f1c516d48b"
+    },
+    "REVIEW-2-APPROVED.md": {
+      "bytes": 1301,
+      "sha256": "8aad1aba3360d96efc1fa83cf018c49fc5df523527b9bdb67c1f406933e304f1"
+    },
+    "REVIEW-REQUEST.md": {
+      "bytes": 2548,
+      "sha256": "80d371451f726282e3aa6cd531914c027794e7b669a88abf99db3e9f02c36adb"
+    },
+    "VALIDATION.json": {
+      "bytes": 10313,
+      "sha256": "27347dcd1b6fcf41ddb074e2a71294b51dfabca97fc8096377077e3a0eb49e49"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "contract": "docs/SPENDABILITY-RECONCILIATION-EVIDENCE-CONTRACT.md",
+  "decision_requested": "review-only; evidence completeness and fail-closed behavior only",
+  "kind": "GRRR-z3w9 Stage A independent review package after review-1 rework",
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "story_commit": "c80f77ae8f39c13b59b4571c7948f19c4528c6a6"
+}
