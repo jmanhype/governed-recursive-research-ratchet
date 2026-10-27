@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T01:57:50Z
-content_hash: "sha256:606acf840003e8031ca79b814443caa62005e8b650e34400864d6bfb39662987"
+updated_at: 2026-10-27T02:20:13Z
+content_hash: "sha256:9f0562692b4b4df1013b44ed893fe7b923c90fa75b4eca8620ef3b0aacbf384d"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -111,6 +111,76 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-26 Operator-Authorized Stage B — Approved Evidence-Gap Design, Story Still Blocked
+
+Operator scope was exactly: commit approved Stage A evidence; implement a no-protected-access evidence-gap remediation design for schema compatibility, quiescence, provenance, pending dispositions, and historical completeness; and obtain independent review. No `/Library/GRRR` access or mutation, spendability write, reconciliation, replay, promotion, admission, production mutation, merge, or push was authorized or performed.
+
+### Committed artifacts
+- Story branch: `story/GRRR-z3w9`.
+- Stage A/evidence-gap design commit: `8eae0554bcf16e6a3f1248545eb76615be16aaa9`.
+- Worktree is clean after commit.
+- Stage A package SHA256: `bb79e0242ea914d75b3e0ab9b44248c6e4eca8435214a1d970a55bef2a99a391`.
+- Stage B package SHA256: `698a4b3e24b1ad3311ad7cf456914d2051c466976407da4287adc7c22e0aec6e`.
+- Design document: `docs/SPENDABILITY-EVIDENCE-GAP-REMEDIATION.md`.
+- Machine-readable plan: `docs/evidence/spendability/stage-b/GAP-PLAN.json`.
+- Plan tests: `tests/unit_spendability_gap_plan.py`.
+
+### Implemented design
+The plan covers all 12 Stage A failed gates:
+- schema_fingerprint
+- quiescence
+- independent_review
+- operator_decision
+- historical_completeness
+- baseline_rows
+- row_joins
+- provenance
+- pending_evidence
+- overhead_completeness
+- arithmetic
+- reconciliation_record
+
+The design requires:
+- exact raw SQLite DDL, constraints, indexes, columns, BLOBs, nulls, and separate compatibility projections;
+- actual writer exclusion under the approved lock protocol, not process names or stable hashes alone;
+- authenticated issuer/request/toolchain/policy/measurement provenance for all 11 reservations and 8 meters;
+- explicit disposition for pending IDs `69523b39a51c44739114313c9325028c`, `b34d8b9d106e42eab3a3e43daac98ddd`, and `d375ce6a2d924646bec71df64e939a5b`;
+- unresolved pending holds to retain their full maxima;
+- historical lineage, side-store, overlap, stop/recovery, paid-service, overhead, and missing-record coverage without unknown-to-zero conversion;
+- continued outcome `valid=false`, `spendable=null`, no allowed mutations, and no execution authority.
+
+### Validation
+- Focused plan tests on Python 3.9.6: 6/6 OK.
+- Focused plan tests on Python 3.14.3: 6/6 OK.
+- Full no-guest suite on Python 3.9.6: 317/317 OK.
+- Full no-guest suite on Python 3.14.3: 317/317 OK.
+- `pvg verify` selected Stage B files: PASS.
+- `git diff --check` and `git diff --cached --check`: PASS.
+
+### Independent review
+- Fresh reviewer verdict: `STAGE_B_DESIGN_REVIEW: APPROVED`.
+- Review artifact: `docs/evidence/spendability/stage-b/REVIEW-APPROVED.md`.
+- Reviewer independently ran the focused plan test and observed 6/6 passing.
+- Reviewer performed no edit or protected operation.
+- Approval does not establish historical completeness, implementation readiness, spendability, or operational authority.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage B commit `8eae0554bcf16e6a3f1248545eb76615be16aaa9`; clean story worktree.
+- Full/focused test logs and package manifest committed under `docs/evidence/spendability/stage-b/`.
+
+### proof
+- [x] Stage A approved evidence committed.
+- [x] Evidence-gap remediation design implemented and independently approved.
+- [x] Stage B grants no protected access or operational authority.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
 ## 2026-10-26 Operator-Authorized Stage A — Completed Read-Only Baseline Review, Story Still Blocked
 
 Operator scope was exactly: commit tested integration, capture protected read-only accounting baseline, build spendability evidence package, and obtain independent review; with no spendability write, reconciliation, replay, promotion, admission, merge, or push.
