@@ -1,0 +1,50 @@
+{
+  "artifacts": {
+    "CAPTURE.json": {
+      "bytes": 15053,
+      "sha256": "a0013cb0eb2cc7b93b9afff2da159c4305a7c3b280abdc5b1e5bab155b721636"
+    },
+    "CAPTURE.py": {
+      "bytes": 12636,
+      "sha256": "48ad59777965a838a397bfb7019a4ca93c97eeee320eb839b3860e979e435f89"
+    },
+    "FOCUSED-HOMEBREW.log": {
+      "bytes": 7455,
+      "sha256": "dbbdcfd4bdb4135664c8f3214d6ec39112a103cebd074e7cc5ba835b90ef6310"
+    },
+    "FOCUSED-SYSTEM.log": {
+      "bytes": 5136,
+      "sha256": "85e0ac0d87eb2fd9d4b91bcca82dc35f81aa5251f295d7d25cdcd822d59cb01b"
+    },
+    "POSTCAPTURE-VERIFY.json": {
+      "bytes": 544,
+      "sha256": "900606a9bf166575bfabe019e2f4471ed08a2df9e1d32cd61963433738d2d496"
+    },
+    "POSTCAPTURE-VERIFY.py": {
+      "bytes": 1452,
+      "sha256": "2eb43303dfa59c3055283a90dca085c6b84f5684a15ac0a38e7d308ad9e68f5a"
+    },
+    "REVIEW-REQUEST.md": {
+      "bytes": 3407,
+      "sha256": "1cfc30dc2d3632841fa8258541652d8b854d98151fe5f30aaa4d81323e11edbc"
+    },
+    "VALIDATION.json": {
+      "bytes": 2377,
+      "sha256": "44b64a2ba4cc31ec2b5c4c50c4da45d925e8b1385ed22ce48b5b9f1640fabdb8"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "kind": "GRRR-z3w9 Stage D locked protected-read capture review package",
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "story_branch_base_commit": "37a550cc4998ed71f8b6b7c29cccf332d85c65b8"
+}

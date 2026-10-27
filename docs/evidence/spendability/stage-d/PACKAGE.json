@@ -1,0 +1,91 @@
+{
+  "artifacts": {
+    "CAPTURE.json": {
+      "bytes": 15575,
+      "sha256": "d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8"
+    },
+    "CAPTURE.py": {
+      "bytes": 16815,
+      "sha256": "2312a453e9e3c807d023456606da36303a97fab27c9fc9da243ff14774f1d4ee"
+    },
+    "FOCUSED-HOMEBREW.log": {
+      "bytes": 7455,
+      "sha256": "bbe6891148a2123b70d22e37e71ba18485fa4b0cce8321f21e0a468d8871d1f2"
+    },
+    "FOCUSED-SYSTEM.log": {
+      "bytes": 5136,
+      "sha256": "f0a45c31fdb5bf3116f932961178989ae646d0713ca0038f853537277b2bcaa2"
+    },
+    "POSTCAPTURE-VERIFY.json": {
+      "bytes": 2431,
+      "sha256": "78eb1f69a30d161f3c2d8c67fbbf40e579cc3de5f53b6bb0f8e8fc395888574a"
+    },
+    "POSTCAPTURE-VERIFY.py": {
+      "bytes": 4040,
+      "sha256": "a48d4233235699d680200dedd894943135ca3e2c264a5e8512fbcca5093132e2"
+    },
+    "REREVIEW-APPROVED.md": {
+      "bytes": 1208,
+      "sha256": "ea9b109f1e156647c687db0e14550b48bdf03611debaa269063cd2eefa64fddf"
+    },
+    "REREVIEW-REQUEST.md": {
+      "bytes": 2945,
+      "sha256": "334e48026162eac29bed7465ef33e98ec930a6567eefc3f5e1d950e554385239"
+    },
+    "REVIEW-1-REJECTED.md": {
+      "bytes": 1208,
+      "sha256": "edbccf1239aa854f2e294e722aa8eb2020244b271fec5e687112a1884975a40f"
+    },
+    "VALIDATION.json": {
+      "bytes": 2487,
+      "sha256": "cf2d77eb7b19dd2ce917a8a1557b7e62472abe81cc93f149fba825ac3fcc9e56"
+    },
+    "rejected-r1/CAPTURE.json": {
+      "bytes": 15053,
+      "sha256": "a0013cb0eb2cc7b93b9afff2da159c4305a7c3b280abdc5b1e5bab155b721636"
+    },
+    "rejected-r1/CAPTURE.py": {
+      "bytes": 12636,
+      "sha256": "48ad59777965a838a397bfb7019a4ca93c97eeee320eb839b3860e979e435f89"
+    },
+    "rejected-r1/FOCUSED-HOMEBREW.log": {
+      "bytes": 7455,
+      "sha256": "dbbdcfd4bdb4135664c8f3214d6ec39112a103cebd074e7cc5ba835b90ef6310"
+    },
+    "rejected-r1/FOCUSED-SYSTEM.log": {
+      "bytes": 5136,
+      "sha256": "85e0ac0d87eb2fd9d4b91bcca82dc35f81aa5251f295d7d25cdcd822d59cb01b"
+    },
+    "rejected-r1/POSTCAPTURE-VERIFY.json": {
+      "bytes": 544,
+      "sha256": "900606a9bf166575bfabe019e2f4471ed08a2df9e1d32cd61963433738d2d496"
+    },
+    "rejected-r1/POSTCAPTURE-VERIFY.py": {
+      "bytes": 1452,
+      "sha256": "2eb43303dfa59c3055283a90dca085c6b84f5684a15ac0a38e7d308ad9e68f5a"
+    },
+    "rejected-r1/REVIEW-REQUEST.md": {
+      "bytes": 3407,
+      "sha256": "1cfc30dc2d3632841fa8258541652d8b854d98151fe5f30aaa4d81323e11edbc"
+    },
+    "rejected-r1/VALIDATION.json": {
+      "bytes": 2377,
+      "sha256": "44b64a2ba4cc31ec2b5c4c50c4da45d925e8b1385ed22ce48b5b9f1640fabdb8"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "independent_review": "STAGE_D_NARROW_REWORK_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage D approved locked protected-read capture package",
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "story_branch_base_commit": "37a550cc4998ed71f8b6b7c29cccf332d85c65b8"
+}
