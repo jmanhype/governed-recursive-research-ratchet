@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T05:19:27Z
-content_hash: "sha256:db4c0d81a047c3944f3993248a6e881dcc49b6aca15daaf1fba422b5a3c5c6cc"
+updated_at: 2026-10-27T05:36:14Z
+content_hash: "sha256:572f5d29032dfac212ac1cfc94775ab8190a716ad0b9a3ce36774f57c275f318"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -110,6 +110,49 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-27 Operator-Authorized Stage E Commit — Completed
+
+Operator scope was exactly: commit the independently approved Stage E assembler, tests, generated bundle, review evidence, and package to story/GRRR-z3w9. Explicit denials remained: protected accounting access or mutation, spendability write, reconciliation, replay, admission, promotion, merge, and push.
+
+### Commit
+- Branch: story/GRRR-z3w9.
+- Commit: 81e9785ccb20bea38a84aec70869b67f26d2d6cb.
+- Parent: d431807ce24e6c7decf57d22ffe478309da98743.
+- Worktree is clean after commit.
+
+### Committed identities
+- Assembler: research/spendability_bundle.py, SHA256 08ef91d035ac5e82305f59152299a4222ef27bd88d86b1ec74c2a873ed92a914.
+- Script: scripts/assemble-spendability-bundle, SHA256 266cbea21ba3233ff050e4ebd5fc25d4c6d33dd14def371e16974112a55509f2.
+- Tests: tests/unit_spendability_bundle.py, SHA256 6c29a994462175be8263eb43ab38491ae34bd50df0a059a34e2a3bab257a918f.
+- Bundle: docs/evidence/spendability/stage-e/BUNDLE.json, SHA256 52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467.
+- Approved package: docs/evidence/spendability/stage-e/PACKAGE.json, SHA256 36b9bfb4ae2f3d2245c4d60624e0c06548caf528578ab2ce888dfef4b2d0cc09.
+- Review approval: docs/evidence/spendability/stage-e/REREVIEW-APPROVED.md, SHA256 dc5123c57e73ba690e4b5b8ca9ec140d3d5f8079be963e6c80cfc87ef93155e3.
+
+### Commit verification
+- All 14 approved Stage E package artifacts were hash-verified before and after commit.
+- Deterministic bundle regeneration was byte-identical before and after commit.
+- Focused post-commit tests on Python 3.9.6: 16/16 OK.
+- Focused post-commit tests on Python 3.14.3: 16/16 OK.
+- pvg verify selected assembler/script/tests: PASS.
+- git diff --check: PASS.
+- No protected access, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage E implementation and review evidence are committed at 81e9785ccb20bea38a84aec70869b67f26d2d6cb.
+- Story branch worktree is clean.
+
+### proof
+- [x] Independently approved Stage E implementation and evidence committed.
+- [x] Fail-closed bundle outcome remains spendable=null with no authority.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
 ## 2026-10-27 Operator-Authorized Stage E — Approved Fail-Closed Bundle Assembler, Story Still Blocked
 
 Operator authorization was interpreted as the proposed Stage E: commit approved Stage D evidence and implement a version-2 fail-closed evidence-bundle assembler with tests and independent review. Explicit denials included protected accounting access, spendability write, reconciliation, replay, admission, merge, and push.
