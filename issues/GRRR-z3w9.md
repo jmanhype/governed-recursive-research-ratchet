@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T05:10:02Z
-content_hash: "sha256:964875575ca4726166c312595cb246c28472b8624da5edfbd1ad724231331be8"
+updated_at: 2026-10-27T05:19:27Z
+content_hash: "sha256:c2f287550490c23b31f2f9f966b0a3da0626702152256c7820c04deb67e21fdd"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -111,6 +111,68 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-27 Operator-Authorized Stage E — Approved Fail-Closed Bundle Assembler, Story Still Blocked
+
+Operator authorization was interpreted as the proposed Stage E: commit approved Stage D evidence and implement a version-2 fail-closed evidence-bundle assembler with tests and independent review. Explicit denials included protected accounting access, spendability write, reconciliation, replay, admission, merge, and push.
+
+### Stage D evidence commit
+- Commit: d431807ce24e6c7decf57d22ffe478309da98743.
+- All 18 Stage D package artifacts were independently hash-verified before commit.
+- Approved Stage D package SHA256: c2627683bd1be9f63032d5c9f332aa3ee0c8327420afeda9a59562c5b3f4cb0e.
+
+### Stage E implementation
+- Assembler: research/spendability_bundle.py, SHA256 08ef91d035ac5e82305f59152299a4222ef27bd88d86b1ec74c2a873ed92a914.
+- Script: scripts/assemble-spendability-bundle, SHA256 266cbea21ba3233ff050e4ebd5fc25d4c6d33dd14def371e16974112a55509f2.
+- Tests: tests/unit_spendability_bundle.py, SHA256 6c29a994462175be8263eb43ab38491ae34bd50df0a059a34e2a3bab257a918f.
+- Generated bundle: docs/evidence/spendability/stage-e/BUNDLE.json, SHA256 52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467, 77,567 bytes.
+- The bundle binds exact Stage A baseline bytes, exact approved Stage D capture bytes, exact postcapture bytes, database identity, and the approved Stage D review.
+- It preserves all five raw Stage A tables: 11 reservations, 8 meter rows, empty overhead, one state row, and one store-identity row.
+- It embeds the mapped Stage D schema and locked quiescence record.
+- It creates 11 unresolved provenance sidecars, 3 unresolved pending dispositions with full 300,000,000 execution-us holds, and one unresolved historical-completeness map.
+- All five overhead domains retain unbounded unknowns.
+- Outcome remains structurally assembled but evidence-invalid, first failed gate quiescence, spendable=null, no allowed mutations, and no execution authority.
+
+### Review sequence
+- First fresh reviewer returned STAGE_E_BUNDLE_REVIEW: REJECTED because validate_evidence_bundle trusted Stage D/postcapture expected hashes from the untrusted bundle basis.
+- Correction pinned approved Stage D capture digest d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8 and postcapture digest 78eb1f69a30d161f3c2d8c67fbbf40e579cc3de5f53b6bb0f8e8fc395888574a inside the assembler/script trust boundary.
+- Added regressions that append a newline to either input, update the bundle basis hash, and require rejection.
+- Fresh narrow reviewer returned STAGE_E_NARROW_REWORK_REVIEW: APPROVED.
+- Approval artifact: docs/evidence/spendability/stage-e/REREVIEW-APPROVED.md, SHA256 dc5123c57e73ba690e4b5b8ca9ec140d3d5f8079be963e6c80cfc87ef93155e3.
+- Approved Stage E package: docs/evidence/spendability/stage-e/PACKAGE.json, SHA256 36b9bfb4ae2f3d2245c4d60624e0c06548caf528578ab2ce888dfef4b2d0cc09; 14 artifacts hash-verified.
+
+### Validation
+- Focused Stage E tests on Python 3.9.6: 16/16 OK.
+- Focused Stage E tests on Python 3.14.3: 16/16 OK.
+- Full no-guest suite on Python 3.9.6: 379/379 OK.
+- Full no-guest suite on Python 3.14.3: 379/379 OK.
+- pvg verify selected assembler/script/tests: PASS.
+- git diff --check: PASS.
+- Bundle regeneration is byte-identical.
+
+### Boundary and safety
+- No successful protected accounting access occurred during Stage E implementation.
+- One tracker-note shell quoting mistake attempted command substitution for a protected path and immediately failed with permission denied; no protected bytes were opened, read, modified, or exported. The mistake and correction are recorded above.
+- No spendability write, reconciliation, replay, VM/QEMU execution, promotion, admission, production mutation, merge, or push occurred.
+- Safe regenerable cache/temp cleanup removed only inactive user/system caches and closed temporary ffmpeg/VBL files; a manifest is retained at docs/evidence/spendability/stage-e/CAPACITY-CLEANUP.json.
+- Stage E implementation/evidence is intentionally uncommitted because the authorization explicitly named only the Stage D evidence commit. A separate Stage E commit requires operator authorization.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage D committed at d431807ce24e6c7decf57d22ffe478309da98743.
+- Stage E approved implementation and artifacts are retained under docs/evidence/spendability/stage-e/.
+
+### proof
+- [x] Stage D evidence committed.
+- [x] Stage E assembler implemented, tested, and independently approved.
+- [x] Bundle remains fail-closed with spendable=null and no authority.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
 ## 2026-10-27 Stage E Claim Note Correction
 
 - The initial Stage E claim note was passed through a shell double-quoted string containing Markdown backticks around the protected path.
