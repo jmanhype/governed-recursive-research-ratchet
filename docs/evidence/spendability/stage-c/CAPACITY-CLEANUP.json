@@ -1,0 +1,120 @@
+{
+  "manifest": "/private/tmp/grrr-capacity-cleanup-manifest-20261026.jsonl",
+  "roots": {
+    "/Users/speed/.cache/opencode": {
+      "removed_bytes": 0,
+      "removed_files": 0,
+      "skipped_examples": [
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/is-docker",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/is-inside-container",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/rimraf",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/node-which",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/pacote",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/semver",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/installed-package-contents",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/node-gyp",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/arborist",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/cssesc",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/.bin/nopt",
+        "/Users/speed/.cache/opencode/packages/opencode-antigravity-auth@latest/node_modules/rimraf/node_modules/.bin/glob"
+      ],
+      "skipped_files": 52,
+      "status": "root_retained_open_or_nonempty"
+    },
+    "/Users/speed/Library/Caches/@zcodedesktop-updater": {
+      "status": "absent"
+    },
+    "/Users/speed/Library/Caches/Citro Labs": {
+      "removed_bytes": 163112930,
+      "removed_files": 2406,
+      "skipped_examples": [],
+      "skipped_files": 0,
+      "status": "root_removed"
+    },
+    "/Users/speed/Library/Caches/Homebrew": {
+      "removed_bytes": 0,
+      "removed_files": 0,
+      "skipped_examples": [
+        "/Users/speed/Library/Caches/Homebrew/ntm--1.37.2.tar.gz",
+        "/Users/speed/Library/Caches/Homebrew/libevent_bottle_manifest--2.1.13_1",
+        "/Users/speed/Library/Caches/Homebrew/openssl@4_bottle_manifest--4.1.0",
+        "/Users/speed/Library/Caches/Homebrew/jemalloc_bottle_manifest--5.4.0",
+        "/Users/speed/Library/Caches/Homebrew/openssl@4--4.1.0",
+        "/Users/speed/Library/Caches/Homebrew/jemalloc--5.4.0",
+        "/Users/speed/Library/Caches/Homebrew/ca-certificates_bottle_manifest--2026-10-20",
+        "/Users/speed/Library/Caches/Homebrew/ca-certificates--2026-10-20",
+        "/Users/speed/Library/Caches/Homebrew/utf8proc_bottle_manifest--2.12.0",
+        "/Users/speed/Library/Caches/Homebrew/utf8proc--2.12.0",
+        "/Users/speed/Library/Caches/Homebrew/tmux--3.8",
+        "/Users/speed/Library/Caches/Homebrew/tmux_bottle_manifest--3.8"
+      ],
+      "skipped_files": 13,
+      "status": "root_retained_open_or_nonempty"
+    },
+    "/Users/speed/Library/Caches/com.spotify.client": {
+      "status": "absent"
+    },
+    "/Users/speed/Library/Caches/dev.zcode.app.ShipIt": {
+      "removed_bytes": 0,
+      "removed_files": 0,
+      "skipped_examples": [
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Electron Framework.framework/Versions/Current",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Electron Framework.framework/Electron Framework",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Electron Framework.framework/Resources",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Electron Framework.framework/Libraries",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Electron Framework.framework/Helpers",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/ReactiveObjC.framework/Resources",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/ReactiveObjC.framework/ReactiveObjC",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Squirrel.framework/Versions/Current",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Squirrel.framework/Resources",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Squirrel.framework/Squirrel",
+        "/Users/speed/Library/Caches/dev.zcode.app.ShipIt/update.HebsRCz/ZCode.app/Contents/Frameworks/Mantle.framework/Versions/Current"
+      ],
+      "skipped_files": 14,
+      "status": "root_retained_open_or_nonempty"
+    },
+    "/Users/speed/Library/Caches/ffmpeg-static-nodejs": {
+      "status": "absent"
+    },
+    "/Users/speed/Library/Caches/jsm": {
+      "status": "absent"
+    },
+    "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt": {
+      "removed_bytes": 0,
+      "removed_files": 0,
+      "skipped_examples": [
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Electron Framework.framework/Versions/Current",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Electron Framework.framework/Electron Framework",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Electron Framework.framework/Resources",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Electron Framework.framework/Libraries",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Electron Framework.framework/Helpers",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/ReactiveObjC.framework/Resources",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/ReactiveObjC.framework/ReactiveObjC",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Squirrel.framework/Versions/Current",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Squirrel.framework/Resources",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Squirrel.framework/Squirrel",
+        "/Users/speed/Library/Caches/now.typeless.desktop.ShipIt/update.2UJVNIS/Typeless.app/Contents/Frameworks/Mantle.framework/Versions/Current"
+      ],
+      "skipped_files": 14,
+      "status": "root_retained_open_or_nonempty"
+    },
+    "/Users/speed/Library/Caches/pip": {
+      "status": "absent"
+    },
+    "/Users/speed/Library/Caches/typeless-updater": {
+      "status": "absent"
+    },
+    "/Users/speed/Library/Developer/Xcode/DerivedData": {
+      "status": "absent"
+    },
+    "/private/tmp/vbl-videos": {
+      "removed_bytes": 674807695,
+      "removed_files": 164,
+      "skipped_examples": [],
+      "skipped_files": 0,
+      "status": "root_removed"
+    }
+  }
+}
