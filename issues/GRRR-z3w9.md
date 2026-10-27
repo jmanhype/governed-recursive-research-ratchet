@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T00:39:10Z
-content_hash: "sha256:0e43d26b0ec50f5c0feca98bbf667c69047639791b19da3d6223a31871d6e27b"
+updated_at: 2026-10-27T00:45:42Z
+content_hash: "sha256:b96aabd90254c2f38c73c42352437ffc0f39d51b48488f5f1f135cf0704ca5db"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -111,6 +111,42 @@ status: new
 COMMIT: 6079af6 (story/GRRR-z3w9), v2 partial WIP, clean worktree; exact tested source hashes checked against source-SHA256SUMS after commit. Full suites 225/225 on both Pythons; focused suites 59/59 both; mandatory live gate 0 run and 1 UID/GID setup error. No delivery, acceptance, push, protected mutation or live proof. Review map: docs/INDEPENDENT-REPLAY-V2-REVIEW.md. Prepared ISO remains /private/tmp/grrr-independent-replay-input-v1/input.iso, SHA256 977783b9bae0b76e7288afbf31e9018b86a7345072b5729257f8392d45e256cf. Independent review/accounting recovery/live proof still blocked; releasing claim for parent triage.
 WIP COMMIT: 3869e0ff223bae5d4ae75080f33d4b6ba33efacc on story/GRRR-z3w9. Merge parents preserve 6079af6 replay WIP and 6afd643 accepted epic. Worktree clean. All seven source-SHA256SUMS entries verified after commit. Focused 91/91 both interpreters; full 248 executed, one setup error each; live 0 executed, one UID/GID setup error each. No delivery, acceptance, push, protected mutation, replay or authorization claimed. Exact future command inventory is unapproved and requires recovery implementation plus independent review. Releasing claim under BLOCKED protocol.
 FINAL BLOCKED HANDOFF: source merge/WIP c2c19ae92f4d318d0892bc77272b599043c0019f; evidence commit f94f306f94172f6dbf7ca6aa893f93d2e8376ed9. Clean story worktree; claim released. Evidence and source SHA256SUMS independently verified after commit; diff checks pass. Story remains open with blocked label, not delivered or accepted. No push, privileged effects, reconciliation or replay.
+## 2026-10-26 Safe Story Integration Preflight — In Progress, Not Delivered
+
+- Integrated accepted epic GRRR-wu6f additions into the claimed GRRR-z3w9 worktree while preserving this story's independent-replay WIP files.
+- Merge resolution retained GRRR-z3w9 replay implementation/evidence and added only:
+  - research/spendability_evidence.py
+  - tests/unit_spendability_evidence.py
+- Corrected the new validator test to use the repository's established test discovery import path.
+- No commit, protected access, reconciliation, replay dispatch, VM/QEMU execution, promotion, admission, production mutation, merge to epic, or push occurred.
+- Validation results:
+  - Spendability evidence validator, system Python 3.9.6: 28/28 OK.
+  - Spendability evidence validator, Homebrew Python 3.14.3: 28/28 OK.
+  - Full no-guest unit suite, system Python: 311/311 OK.
+  - Full no-guest unit suite, Homebrew Python: 311/311 OK.
+  - pvg verify selected implementation/test paths: PASS.
+  - git diff --check and git diff --cached --check: PASS.
+  - replay-prerequisites --check-package under both interpreters: package validated; corpus/source/spec identities verified; execution explicitly unauthorized.
+  - replay-runtime-preflight: pinned CLT runtime identity verified; root launch remains unauthorized.
+  - scripts/test-story independent-replay: expected fail-closed live-gate result, 0 executed / 1 setup error because operator is not dedicated evaluator UID/GID; exit 1.
+- Current story worktree is intentionally a clean-content merge-in-progress awaiting explicit commit authorization.
+- Remaining authority gates: reviewed spendability evidence package from protected baseline, reconciliation/recovery candidate review and protected installation, exact replay root-package review/install, separately authorized four-mode live replay, independent review/PM acceptance, and later admission/capstone stories.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Live test logs: /private/tmp/grrr-z3w9-integrated-system-unit.log and /private/tmp/grrr-z3w9-integrated-homebrew-unit.log.
+- Live package/runtime/live-gate logs were printed in the parent execution turn; live gate remains fail-closed.
+- Worktree HEAD before merge: 820469226032761ca1335fe58ef674a3219e8d07; epic integration source: 36671bc467286404b9dfddcf487fc9358aa2b643.
+
+### proof
+- [ ] AC #1: fresh trusted reconstruction and spendable reservation remain unproven; capacity/package/runtime prerequisites now pass.
+- [ ] AC #2: specification-confirmed live reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real integration modes remain unexecuted under dedicated identities.
+- [ ] AC #5: retained two-consecutive-failure live sequence remains unproven.
+
 ## 2026-10-26 Capacity Recovery and Authoritative Claim
 
 - Chief-of-staff safe capacity recovery stayed outside /Library/GRRR and made no protected accounting, replay, promotion, admission, production, merge, or push change.
