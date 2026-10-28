@@ -1,7 +1,7 @@
 ---
 id: GRRR-z3w9
 title: "Verify a defect from fresh trusted inputs"
-status: in_progress
+status: open
 priority: 1
 type: task
 labels: [milestone-1, integration, blocked]
@@ -9,11 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-28T18:54:18Z
-content_hash: "sha256:29543b884623dc3e45481cb15d66956881f02f8cdcf6ec3ed14a7145ec622cf2"
+content_hash: "sha256:59a1971fd2fa3b575deb980263a53243f4502866b74e2791382bfc23c17db015"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
-assignee: dev-GRRR-z3w9
 ---
 
 ## Description
@@ -1208,6 +1207,8 @@ status: new
 - 2026-10-28T18:46:34Z released by speed
 - 2026-10-28T18:52:08Z status: open -> in_progress
 - 2026-10-28T18:52:08Z claimed by dev-GRRR-z3w9
+- 2026-10-28T18:54:18Z status: in_progress -> open
+- 2026-10-28T18:54:18Z released by speed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
