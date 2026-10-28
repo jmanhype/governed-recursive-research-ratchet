@@ -1,0 +1,152 @@
+{
+  "future_requirements": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "distinct_receipts_required": [
+      "installer_sha256",
+      "review_sha256",
+      "authorization_sha256",
+      "budget_amendment_sha256",
+      "operator_per_run_approval_sha256"
+    ],
+    "installed_binding": {
+      "design_only": false,
+      "profiles": [
+        "independent-replay"
+      ],
+      "store_identity": "actual-device-inode-required",
+      "version": 4
+    },
+    "per_request_limits": {
+      "aggregate_execution_ceiling_us": 1920000000,
+      "mode_guest_launches": {
+        "failed-rebuild": 2,
+        "interruption": 2,
+        "normal": 2,
+        "two-failures": 6
+      },
+      "modes": [
+        "normal",
+        "failed-rebuild",
+        "interruption",
+        "two-failures"
+      ],
+      "session_maximum": {
+        "currency": "USD",
+        "execution_us": 480000000,
+        "money_cents": 0,
+        "review_us": 0
+      }
+    },
+    "protected_verification_required_before_authority": [
+      "exact installer bytes",
+      "independent runtime review",
+      "operator budget amendment",
+      "protected v4 installation and store identity",
+      "fresh per-run operator approval",
+      "dedicated evaluator/runner identities",
+      "mandatory live replay gates"
+    ],
+    "record_type": "replay-successor-future-input-contract-v1",
+    "schema_version": 1
+  },
+  "observation": {
+    "active_binding_version": 3,
+    "authorization_sha256": null,
+    "budget_amendment_sha256": null,
+    "execution_requested": false,
+    "installed": false,
+    "installer_sha256": null,
+    "operator_per_run_approval_sha256": null,
+    "record_type": "replay-successor-runtime-observation-v1",
+    "review_sha256": null,
+    "schema_version": 1,
+    "source": "repository-hypothetical",
+    "store_device": null,
+    "store_inode": null
+  },
+  "status": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "basis": {
+      "contract_binding_sha256": "0ea108613a742dbeda2eec5fa4a1d2994fb9c21d4e865c9114da0991d44f2c7a",
+      "contract_receipt_sha256": "4d2051326a7c6edc749c0c7ef5763115dbb82ea1d0807e6ffb5ee68a57127bc2",
+      "predecessor_holds_preserved": 3,
+      "runtime_observation": "repository-hypothetical-uninstalled"
+    },
+    "gates": {
+      "independent_runtime_review": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "installed_store_identity": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "mandatory_live_replay": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "operator_budget_amendment": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "per_run_operator_approval": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "predecessor_history_and_holds": {
+        "evidence": [
+          "retained-stage-a-records"
+        ],
+        "status": "pass"
+      },
+      "protected_v4_installation": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "replay_execution": {
+        "evidence": [
+          "design-only-input-cannot-authorize-effects"
+        ],
+        "status": "blocked"
+      },
+      "stage_n_candidate_contract": {
+        "evidence": [
+          "4d2051326a7c6edc749c0c7ef5763115dbb82ea1d0807e6ffb5ee68a57127bc2",
+          "0ea108613a742dbeda2eec5fa4a1d2994fb9c21d4e865c9114da0991d44f2c7a"
+        ],
+        "status": "pass"
+      }
+    },
+    "implementation_status": "design-only-pending-independent-review",
+    "outcome": {
+      "adapter_valid": true,
+      "allowed_mutations": [],
+      "design_only": true,
+      "execution_authorized": false,
+      "failure_mode": "refuse-before-effects",
+      "protected_access": false,
+      "replay_possible": false,
+      "spendable": null
+    },
+    "record_type": "replay-successor-runtime-adapter-status-v1",
+    "schema_version": 1
+  }
+}
