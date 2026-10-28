@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "GRRR-z3w9 Stage G local evidence-search validation",
+  "created_at": "2026-10-28T00:45:00Z",
+  "input_validation": {
+    "stage_f_request_sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919",
+    "stage_f_package_sha256": "388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23",
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "trusted_readback_sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8",
+    "trusted_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09",
+    "trusted_snapshot_sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+  },
+  "checks": {
+    "stage_f_exact_package_binding": "PASS",
+    "trusted_ledger_hash_chain_30_events": "PASS",
+    "snapshot_projection_and_snapshot_id": "PASS",
+    "object_store_hashes_and_raw_observation_digests": "PASS",
+    "reservation_request_to_stage_a_run_and_maximum": "PASS",
+    "settled_meter_receipt_to_actual_and_observation": "PASS",
+    "pending_rows_have_no_observation_or_meter": "PASS",
+    "lineage_absence_not_promoted_to_unavailable": "PASS",
+    "partial_history_not_promoted_to_complete": "PASS"
+  },
+  "candidate_inventory": {
+    "total_stage_f_items": 30,
+    "validated_complete_candidate_items": 8,
+    "partial_candidate_items": 7,
+    "negative_search_not_established": 15,
+    "final_classifications_made": 0
+  },
+  "search_evidence_boundary": {
+    "generator_consumes_search_receipts": false,
+    "manual_discovery_observations_are_exhaustive_proof": false,
+    "negative_results_are_established": false
+  },
+  "test_results": {
+    "homebrew_python_3_14": "13/13 passed",
+    "miniconda_python_3_12": "13/13 passed",
+    "system_python_3_9": "not-run-xcode-license-not-accepted",
+    "deterministic_generation_across_two_interpreters": "byte-identical",
+    "latest_full_no_guest_suite": "407 tests on each interpreter; one process-table timing failure on each under host load",
+    "isolated_replay_smoke_retry": "12/12 passed on each interpreter",
+    "full_suite_gate": "not accepted-host-process-table-pressure"
+  },
+  "outcome": {
+    "classification_complete": false,
+    "spendable": null,
+    "valid": false,
+    "execution_authorized": false,
+    "allowed_mutations": []
+  },
+  "authority": {
+    "protected_access": false,
+    "write": false,
+    "reconcile": false,
+    "replay": false,
+    "promotion": false,
+    "admission": false,
+    "merge": false,
+    "push": false
+  }
+}

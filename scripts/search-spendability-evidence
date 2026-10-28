@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+"""Generate the GRRR-z3w9 Stage G local evidence-search record."""
+
+import json
+from pathlib import Path
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "research"))
+
+from spendability_search import (  # noqa: E402
+    build_external_evidence_search,
+    validate_external_evidence_search,
+)
+
+
+REQUEST = ROOT / "docs/evidence/spendability/stage-f/REQUEST.json"
+PACKAGE = ROOT / "docs/evidence/spendability/stage-f/PACKAGE.json"
+BASELINE = ROOT / "docs/evidence/spendability/stage-a/BASELINE.json"
+EXPORT = ROOT / "docs/evidence/trusted-observation/v4-run-9d3df87"
+
+
+def main() -> int:
+    if sys.argv[1:]:
+        raise SystemExit("no arguments accepted")
+    request_raw = REQUEST.read_bytes()
+    package_raw = PACKAGE.read_bytes()
+    baseline_raw = BASELINE.read_bytes()
+    record = build_external_evidence_search(
+        request_raw, package_raw, baseline_raw, EXPORT)
+    validate_external_evidence_search(
+        record, request_raw, package_raw, baseline_raw, EXPORT)
+    print(json.dumps(record, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
