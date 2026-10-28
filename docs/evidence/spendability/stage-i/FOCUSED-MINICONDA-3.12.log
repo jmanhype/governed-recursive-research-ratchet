@@ -1,0 +1,18 @@
+test_actual_process_identities_do_not_fabricate_request_bindings (unit_spendability_provenance.SpendabilityProvenance.test_actual_process_identities_do_not_fabricate_request_bindings) ... ok
+test_all_eight_candidates_remain_unclassified_and_unready (unit_spendability_provenance.SpendabilityProvenance.test_all_eight_candidates_remain_unclassified_and_unready) ... ok
+test_authorization_references_are_candidates_not_protected_bytes (unit_spendability_provenance.SpendabilityProvenance.test_authorization_references_are_candidates_not_protected_bytes) ... ok
+test_batch_execution_boundary_is_bound (unit_spendability_provenance.SpendabilityProvenance.test_batch_execution_boundary_is_bound) ... ok
+test_binds_exact_stage_h_and_session_inputs (unit_spendability_provenance.SpendabilityProvenance.test_binds_exact_stage_h_and_session_inputs) ... ok
+test_classification_and_authority_injection_are_rejected (unit_spendability_provenance.SpendabilityProvenance.test_classification_and_authority_injection_are_rejected) ... ok
+test_extract_records_are_reproduced_from_pinned_source_archive (unit_spendability_provenance.SpendabilityProvenance.test_extract_records_are_reproduced_from_pinned_source_archive) ... ok
+test_git_custody_binds_source_and_export_commits (unit_spendability_provenance.SpendabilityProvenance.test_git_custody_binds_source_and_export_commits) ... ok
+test_modified_session_extract_is_rejected (unit_spendability_provenance.SpendabilityProvenance.test_modified_session_extract_is_rejected) ... ok
+test_plan_binds_all_twenty_six_source_code_hashes (unit_spendability_provenance.SpendabilityProvenance.test_plan_binds_all_twenty_six_source_code_hashes) ... ok
+test_record_remains_fail_closed_and_powerless (unit_spendability_provenance.SpendabilityProvenance.test_record_remains_fail_closed_and_powerless) ... ok
+test_record_revalidates_by_exact_regeneration (unit_spendability_provenance.SpendabilityProvenance.test_record_revalidates_by_exact_regeneration) ... ok
+test_session_extract_redacts_credentials_and_kept_custody (unit_spendability_provenance.SpendabilityProvenance.test_session_extract_redacts_credentials_and_kept_custody) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.713s
+
+OK

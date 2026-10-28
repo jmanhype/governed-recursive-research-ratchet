@@ -1,0 +1,72 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "approval_sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b",
+    "execution_profile_sha256": "b5400cdf040725cbe3b661d1d69f26a276123775bb63074b49fd7420befe61a7",
+    "export_commit": "141823fe7e19e43fd3d2bfcc0fe4be8303e42642",
+    "license_review_sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d",
+    "session_extract_sha256": "b7166485d0b92636dec39dc399d6e39b1fa0fd486962051ccb88a9b7570c480b",
+    "session_source_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+    "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+    "stage_h_package_sha256": "12c4d2ff2a042588af5b9570d1eff68dd84475a87131bef83841cdca0a37d478",
+    "stage_h_readiness_sha256": "d4aefba5c2f391f130b0319be3723b368cdbe4d21b13650a2d2acfbdb23341cf",
+    "trusted_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09",
+    "trusted_plan_sha256": "8fb63bae1fe0795bc6e1f5a903980abd717fff3064e888ee45f8cf5b1f9d9bda",
+    "trusted_readback_sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8",
+    "trusted_snapshot_sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+  },
+  "checks": {
+    "all_26_plan_code_hashes_against_source_commit": "PASS",
+    "approval_reference_hashes": "PASS",
+    "approval_validation_output": "PASS",
+    "credential_redaction_boundary": "PASS",
+    "eight_candidates_remain_unclassified_and_unready": "PASS",
+    "exact_batch_execution_start_end_and_duration": "PASS",
+    "export_commit_identity_and_parent": "PASS",
+    "export_member_hashes_at_export_and_current": "PASS",
+    "full_nonprotected_source_archive_hash": "PASS",
+    "numeric_process_uid_mapping_remains_unresolved": "PASS",
+    "observed_evaluator_and_runner_process_names": "PASS",
+    "preservation_readback_reference": "PASS",
+    "redacted_source_records_type_checked": "PASS",
+    "selected_records_reproduced_from_source_archive": "PASS",
+    "source_commit_identity": "PASS",
+    "stage_h_exact_package_binding": "PASS",
+    "zero_final_classifications_and_zero_authority": "PASS"
+  },
+  "created_at": "2026-10-28T06:00:00Z",
+  "kind": "GRRR-z3w9 Stage I provenance-enrichment validation",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "schema_version": 1,
+  "summary": {
+    "authorization_reference_candidates": 1,
+    "batch_execution_boundary_candidates": 1,
+    "candidate_record_sets": 8,
+    "common_toolchain_profile_candidates": 1,
+    "custody_chain_candidates": 1,
+    "final_classifications_made": 0,
+    "response_ready_record_sets": 0
+  },
+  "test_results": {
+    "deterministic_generation": "byte-identical",
+    "full_suite": "not-run-existing-host-pressure-gate",
+    "homebrew_python_3_14": "13/13 passed",
+    "miniconda_python_3_12": "13/13 passed"
+  }
+}

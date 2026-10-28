@@ -1,0 +1,416 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "boundaries": [
+    {
+      "completed_at": "2026-10-21T19:55:44.451Z",
+      "duration_ms": 4162,
+      "item_type": "CommandExecution",
+      "line_number": 11469,
+      "started_at": "2026-10-21T19:55:40.289Z"
+    },
+    {
+      "completed_at": "2026-10-21T19:55:49.023Z",
+      "duration_ms": 20,
+      "item_type": "CommandExecution",
+      "line_number": 11478,
+      "started_at": "2026-10-21T19:55:49.003Z"
+    },
+    {
+      "completed_at": "2026-10-21T19:59:50.777Z",
+      "duration_ms": 0,
+      "item_type": "CommandExecution",
+      "line_number": 11509,
+      "started_at": "2026-10-21T19:59:50.777Z"
+    },
+    {
+      "completed_at": "2026-10-21T19:59:54.106Z",
+      "duration_ms": 240253,
+      "item_type": "CommandExecution",
+      "line_number": 11512,
+      "started_at": "2026-10-21T19:55:53.853Z"
+    },
+    {
+      "completed_at": "2026-10-21T20:04:56.928Z",
+      "duration_ms": 4736,
+      "item_type": "CommandExecution",
+      "line_number": 11620,
+      "started_at": "2026-10-21T20:04:52.192Z"
+    },
+    {
+      "completed_at": "2026-10-21T20:10:21.385Z",
+      "duration_ms": 159029,
+      "item_type": "CommandExecution",
+      "line_number": 11651,
+      "started_at": "2026-10-21T20:07:42.356Z"
+    }
+  ],
+  "outcome": {
+    "candidate_only": true,
+    "final_classification": null,
+    "spendable": null
+  },
+  "record_type": "grrr-stage-i-redacted-session-evidence-extract-v1",
+  "records": [
+    {
+      "line_number": 11459,
+      "payload": {
+        "arguments": "{\"cmd\":\"sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/authorize-v4-bootstrap-fix1.py\",\"workdir\":\"/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4\",\"yield_time_ms\":1000,\"max_output_tokens\":4000,\"tty\":true}",
+        "call_id": "call_825c6309e99c4ace9d57ba26",
+        "id": "call_825c6309e99c4ace9d57ba26",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2"
+        },
+        "name": "exec_command",
+        "status": "completed",
+        "type": "function_call"
+      },
+      "record_type": "response_item",
+      "timestamp": "2026-10-21T19:55:40.088Z"
+    },
+    {
+      "line_number": 11469,
+      "payload": {
+        "completed_at_ms": 1792612544451,
+        "item": {
+          "aggregated_output": "\r\n{\r\n  \"approval_sha256\": \"fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b\",\r\n  \"compiler_sha256\": \"e670dfa79b080bad7f7d6b1d7131145c8c49068096650ebf0ac6292f098db60d\",\r\n  \"execution_profile\": \"b5400cdf040725cbe3b661d1d69f26a276123775bb63074b49fd7420befe61a7\",\r\n  \"guest_execution_started\": false,\r\n  \"license_review_sha256\": \"ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d\"\r\n}\r\n",
+          "command": [
+            "/bin/zsh",
+            "-lc",
+            "sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/authorize-v4-bootstrap-fix1.py"
+          ],
+          "cwd": "file:///Users/speed/Documents/Codex/2026-10-19/3e4m-b-4",
+          "duration": {
+            "nanos": 161847583,
+            "secs": 4
+          },
+          "exit_code": 0,
+          "id": "call_825c6309e99c4ace9d57ba26",
+          "parsed_cmd": [
+            {
+              "cmd": "sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/authorize-v4-bootstrap-fix1.py",
+              "type": "unknown"
+            }
+          ],
+          "process_id": "12940",
+          "source": "unified_exec_startup",
+          "status": "completed",
+          "type": "CommandExecution"
+        },
+        "started_at_ms": 1792612540289,
+        "thread_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+        "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2",
+        "type": "item_completed"
+      },
+      "record_type": "event_msg",
+      "timestamp": "2026-10-21T19:55:44.452Z"
+    },
+    {
+      "line_number": 11474,
+      "payload": {
+        "arguments": "{\"cmd\":\"python3 -I -B - <<'PY'\\nimport sys,json\\nsys.path.insert(0,'/private/tmp/grrr-v4-source-9d3df87/research')\\nfrom trusted_execution import validate_approval\\na=json.load(open('/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json'))\\nr=json.load(open('/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json'))\\nc=json.load(open('/private/tmp/grrr-v4-dryrun-9d3df87.json'))['config']\\nvalidate_approval(a,c,r)\\nprint('approval_validation=pass')\\nPY\\nps aux | grep -E 'qemu-system-aarch64|trusted_execution.py|trusted_observation.py' | grep -v grep && exit 1 || true\",\"workdir\":\"/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4\",\"yield_time_ms\":10000,\"max_output_tokens\":2000}",
+        "call_id": "call_bc1f9685cefa48bca78e40f9",
+        "id": "call_bc1f9685cefa48bca78e40f9",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2"
+        },
+        "name": "exec_command",
+        "status": "completed",
+        "type": "function_call"
+      },
+      "record_type": "response_item",
+      "timestamp": "2026-10-21T19:55:48.836Z"
+    },
+    {
+      "line_number": 11478,
+      "payload": {
+        "completed_at_ms": 1792612549023,
+        "item": {
+          "aggregated_output": "approval_validation=pass\n",
+          "command": [
+            "/bin/zsh",
+            "-lc",
+            "python3 -I -B - <<'PY'\nimport sys,json\nsys.path.insert(0,'/private/tmp/grrr-v4-source-9d3df87/research')\nfrom trusted_execution import validate_approval\na=json.load(open('/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json'))\nr=json.load(open('/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json'))\nc=json.load(open('/private/tmp/grrr-v4-dryrun-9d3df87.json'))['config']\nvalidate_approval(a,c,r)\nprint('approval_validation=pass')\nPY\nps aux | grep -E 'qemu-system-aarch64|trusted_execution.py|trusted_observation.py' | grep -v grep && exit 1 || true"
+          ],
+          "cwd": "file:///Users/speed/Documents/Codex/2026-10-19/3e4m-b-4",
+          "duration": {
+            "nanos": 20072083,
+            "secs": 0
+          },
+          "exit_code": 0,
+          "id": "call_bc1f9685cefa48bca78e40f9",
+          "parsed_cmd": [
+            {
+              "cmd": "python3 -I -B - <<'PY'\nimport sys,json\nsys.path.insert(0,'/private/tmp/grrr-v4-source-9d3df87/research')\nfrom trusted_execution import validate_approval\na=json.load(open('/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json'))\nr=json.load(open('/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json'))\nc=json.load(open('/private/tmp/grrr-v4-dryrun-9d3df87.json'))['config']\nvalidate_approval(a,c,r)\nprint('approval_validation=pass')\nPY\nps aux | grep -E 'qemu-system-aarch64|trusted_execution.py|trusted_observation.py' | grep -v grep && exit 1 || true",
+              "type": "unknown"
+            }
+          ],
+          "process_id": "95072",
+          "source": "unified_exec_startup",
+          "status": "completed",
+          "type": "CommandExecution"
+        },
+        "started_at_ms": 1792612549003,
+        "thread_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+        "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2",
+        "type": "item_completed"
+      },
+      "record_type": "event_msg",
+      "timestamp": "2026-10-21T19:55:49.024Z"
+    },
+    {
+      "line_number": 11483,
+      "payload": {
+        "arguments": "{\"cmd\":\"sudo -S -p '' /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/trusted-root-bootstrap-grrr-poc2-9d3df87 /private/tmp/grrr-v4-source-9d3df87 /Library/GRRR/bootstrap/grrr-poc2-host-binding-9d3df87.json /Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json /Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json /Library/GRRR/qemu/installation.json /private/tmp/grrr-v4-vm-56697da /private/tmp/grrr-v4-prepared-56697da\",\"workdir\":\"/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4\",\"yield_time_ms\":1000,\"max_output_tokens\":12000,\"tty\":true}",
+        "call_id": "call_0fd8bd7346e94777810d990a",
+        "id": "call_0fd8bd7346e94777810d990a",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2"
+        },
+        "name": "exec_command",
+        "status": "completed",
+        "type": "function_call"
+      },
+      "record_type": "response_item",
+      "timestamp": "2026-10-21T19:55:53.655Z"
+    },
+    {
+      "line_number": 11493,
+      "payload": {
+        "call_id": "call_91d8e1bc3cb946a89ca628eb",
+        "id": "fco_01a16009-5bf9-7e62-8fd5-275d217712e4",
+        "internal_chat_message_metadata_passthrough": {
+          "create_time": 1792612588.537836,
+          "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2"
+        },
+        "output": "Chunk ID: c49c8f\nWall time: 30.0025 seconds\nProcess running with session ID 29010\nOriginal token count: 14\nOutput:\n\r\nPRIVATE_RUNTIME=/private/tmp/grrr-trusted-rk5jwjmv\r\n",
+        "type": "function_call_output"
+      },
+      "record_type": "response_item",
+      "timestamp": "2026-10-21T19:56:28.537Z"
+    },
+    {
+      "line_number": 11505,
+      "payload": {
+        "arguments": "{\"cmd\":\"runtime=/private/tmp/grrr-trusted-rk5jwjmv\\nprintf '%s\\\\n' '--- process ---'\\nps aux | grep -E 'qemu-system-aarch64|trusted_execution.py|trusted_observation.py' | grep -v grep || true\\nprintf '%s\\\\n' '--- runtime files ---'\\nfind \\\"$runtime\\\" -maxdepth 2 -type f -print 2>/dev/null | sort\\nprintf '%s\\\\n' '--- integration log tail ---'\\ntail -80 \\\"$runtime/integration.log\\\" 2>/dev/null || true\\nprintf '%s\\\\n' '--- service log tail ---'\\ntail -80 \\\"$runtime/service.log\\\" 2>/dev/null || true\",\"workdir\":\"/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4\",\"yield_time_ms\":10000,\"max_output_tokens\":12000}",
+        "call_id": "call_e7dda6dfce2d4b2e827308ea",
+        "id": "call_e7dda6dfce2d4b2e827308ea",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2"
+        },
+        "name": "exec_command",
+        "status": "completed",
+        "type": "function_call"
+      },
+      "record_type": "response_item",
+      "timestamp": "2026-10-21T19:59:50.644Z"
+    },
+    {
+      "line_number": 11509,
+      "payload": {
+        "completed_at_ms": 1792612790777,
+        "item": {
+          "aggregated_output": "--- process ---\n_grrr_runner     49309  30.0  0.7 489884352 236128   ??  Ss    2:56PM   0:26.34 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -I -S -B /private/tmp/grrr-trusted-rk5jwjmv/code/isolated_entry.py trusted_execution.py /private/tmp/grrr-trusted-rk5jwjmv/runner\n_grrr_evaluator  49343   0.0  0.1 488758592  24880 s001  S+    2:56PM   0:00.79 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -I -S -B /private/tmp/grrr-trusted-rk5jwjmv/code/isolated_entry.py trusted_observation.py /private/tmp/grrr-trusted-rk5jwjmv\n--- runtime files ---\n--- integration log tail ---\n--- service log tail ---\n",
+          "command": [
+            "/bin/zsh",
+            "-lc",
+            "runtime=/private/tmp/grrr-trusted-rk5jwjmv\nprintf '%s\\n' '--- process ---'\nps aux | grep -E 'qemu-system-aarch64|trusted_execution.py|trusted_observation.py' | grep -v grep || true\nprintf '%s\\n' '--- runtime files ---'\nfind \"$runtime\" -maxdepth 2 -type f -print 2>/dev/null | sort\nprintf '%s\\n' '--- integration log tail ---'\ntail -80 \"$runtime/integration.log\" 2>/dev/null || true\nprintf '%s\\n' '--- service log tail ---'\ntail -80 \"$runtime/service.log\" 2>/dev/null || true"
+          ],
+          "cwd": "file:///Users/speed/Documents/Codex/2026-10-19/3e4m-b-4",
+          "duration": {
+            "nanos": 9125,
+            "secs": 0
+          },
+          "exit_code": 0,
+          "id": "call_e7dda6dfce2d4b2e827308ea",
+          "parsed_cmd": [
+            {
+              "cmd": "runtime=/private/tmp/grrr-trusted-rk5jwjmv\nprintf '%s\\n' '--- process ---'\nps aux | grep -E 'qemu-system-aarch64|trusted_execution.py|trusted_observation.py' | grep -v grep || true\nprintf '%s\\n' '--- runtime files ---'\nfind \"$runtime\" -maxdepth 2 -type f -print 2>/dev/null | sort\nprintf '%s\\n' '--- integration log tail ---'\ntail -80 \"$runtime/integration.log\" 2>/dev/null || true\nprintf '%s\\n' '--- service log tail ---'\ntail -80 \"$runtime/service.log\" 2>/dev/null || true",
+              "type": "unknown"
+            }
+          ],
+          "process_id": "30580",
+          "source": "unified_exec_startup",
+          "status": "completed",
+          "type": "CommandExecution"
+        },
+        "started_at_ms": 1792612790777,
+        "thread_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+        "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2",
+        "type": "item_completed"
+      },
+      "record_type": "event_msg",
+      "timestamp": "2026-10-21T19:59:50.777Z"
+    },
+    {
+      "line_number": 11512,
+      "payload": {
+        "completed_at_ms": 1792612794106,
+        "item": {
+          "aggregated_output": "\r\nPRIVATE_RUNTIME=/private/tmp/grrr-trusted-rk5jwjmv\r\nRETAINED_PRIVATE_RUNTIME=/private/tmp/grrr-trusted-rk5jwjmv\r\n",
+          "command": [
+            "/bin/zsh",
+            "-lc",
+            "sudo -S -p '' /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/trusted-root-bootstrap-grrr-poc2-9d3df87 /private/tmp/grrr-v4-source-9d3df87 /Library/GRRR/bootstrap/grrr-poc2-host-binding-9d3df87.json /Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json /Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json /Library/GRRR/qemu/installation.json /private/tmp/grrr-v4-vm-56697da /private/tmp/grrr-v4-prepared-56697da"
+          ],
+          "cwd": "file:///Users/speed/Documents/Codex/2026-10-19/3e4m-b-4",
+          "duration": {
+            "nanos": 250353416,
+            "secs": 240
+          },
+          "exit_code": 0,
+          "id": "call_0fd8bd7346e94777810d990a",
+          "parsed_cmd": [
+            {
+              "cmd": "sudo -S -p '' /usr/bin/env -i PATH=/usr/bin:/bin LC_ALL=C /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -I -S -B /Library/GRRR/bootstrap/trusted-root-bootstrap-grrr-poc2-9d3df87 /private/tmp/grrr-v4-source-9d3df87 /Library/GRRR/bootstrap/grrr-poc2-host-binding-9d3df87.json /Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json /Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json /Library/GRRR/qemu/installation.json /private/tmp/grrr-v4-vm-56697da /private/tmp/grrr-v4-prepared-56697da",
+              "type": "unknown"
+            }
+          ],
+          "process_id": "29010",
+          "source": "unified_exec_startup",
+          "status": "completed",
+          "type": "CommandExecution"
+        },
+        "started_at_ms": 1792612553853,
+        "thread_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+        "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2",
+        "type": "item_completed"
+      },
+      "record_type": "event_msg",
+      "timestamp": "2026-10-21T19:59:54.106Z"
+    },
+    {
+      "line_number": 11620,
+      "payload": {
+        "completed_at_ms": 1792613096928,
+        "item": {
+          "aggregated_output": "\r\n{\r\n  \"admission\": \"blocked\",\r\n  \"evidence_hashes\": {\r\n    \"evaluator/ledger.sqlite\": \"11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09\",\r\n    \"evaluator/snapshot.json\": \"745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513\",\r\n    \"evaluator/summary.json\": \"f7739b64b2383b5e6dfd371c7a4c6c1e62d55bbdfa794668827f15d42a8c42d4\",\r\n    \"host-probes.json\": \"4c0b2e3be03abe079c5ea11d33a6e11b9f5e9b949e508b1fd7d25e0f23a8e689\",\r\n    \"integration.log\": \"63fd9f571b809eb24ca3a8ec5e9800e923af30a9ad669da319a1ca40ee5f5688\"\r\n  },\r\n  \"free_bytes\": 18717392896,\r\n  \"host_probe_uids\": [\r\n    321,\r\n    501\r\n  ],\r\n  \"mandatory_suite\": {\r\n    \"admission\": \"blocked\",\r\n    \"errors\": 0,\r\n    \"executed\": 10,\r\n    \"failures\": 0,\r\n    \"mandatory_guest_gate\": \"executed\",\r\n    \"required\": 10,\r\n    \"skipped\": 0,\r\n    \"verified\": false\r\n  },\r\n  \"predecessor_state\": [\r\n    1,\r\n    0,\r\n    259,\r\n    110\r\n  ],\r\n  \"processes_remaining\": false,\r\n  \"snapshot_events\": 30,\r\n  \"snapshot_id\": \"a070c21845becd209d3ed84591d4d8c95db8604783cc76a997b829cc901760f6\",\r\n  \"snapshot_objects\": 8,\r\n  \"successor_db\": {\r\n    \"counts\": [\r\n      11,\r\n      8,\r\n      0\r\n    ],\r\n    \"integrity\": \"ok\",\r\n    \"stages\": [\r\n      [\r\n        \"poc\",\r\n        11,\r\n        3\r\n      ]\r\n    ],\r\n    \"state\": [\r\n      1,\r\n      1\r\n    ],\r\n    \"usage\": [\r\n      0,\r\n      208265788,\r\n      0\r\n    ]\r\n  },\r\n  \"verified\": false\r\n}\r\n",
+          "command": [
+            "/bin/zsh",
+            "-lc",
+            "sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/verify-v4-run.py"
+          ],
+          "cwd": "file:///Users/speed/Documents/Codex/2026-10-19/3e4m-b-4",
+          "duration": {
+            "nanos": 735854875,
+            "secs": 4
+          },
+          "exit_code": 0,
+          "id": "call_f7519ea455e04ecfaf4035df",
+          "parsed_cmd": [
+            {
+              "cmd": "sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/verify-v4-run.py",
+              "type": "unknown"
+            }
+          ],
+          "process_id": "88162",
+          "source": "unified_exec_startup",
+          "status": "completed",
+          "type": "CommandExecution"
+        },
+        "started_at_ms": 1792613092192,
+        "thread_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+        "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2",
+        "type": "item_completed"
+      },
+      "record_type": "event_msg",
+      "timestamp": "2026-10-21T20:04:56.929Z"
+    },
+    {
+      "line_number": 11641,
+      "payload": {
+        "arguments": "{\"cmd\":\"sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/preserve-v4-run-evidence.py\",\"workdir\":\"/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4\",\"yield_time_ms\":1000,\"max_output_tokens\":4000,\"tty\":true}",
+        "call_id": "call_39ac30b7c4d14675a496efb2",
+        "id": "call_39ac30b7c4d14675a496efb2",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2"
+        },
+        "name": "exec_command",
+        "status": "completed",
+        "type": "function_call"
+      },
+      "record_type": "response_item",
+      "timestamp": "2026-10-21T20:07:42.159Z"
+    },
+    {
+      "line_number": 11651,
+      "payload": {
+        "completed_at_ms": 1792613421385,
+        "item": {
+          "aggregated_output": "\r\n{\r\n  \"admission\": \"blocked\",\r\n  \"destination\": \"/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-gu87/docs/evidence/trusted-observation/v4-run-9d3df87\",\r\n  \"files\": 17,\r\n  \"readback_sha256\": \"2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8\",\r\n  \"summary\": {\r\n    \"admission\": \"blocked\",\r\n    \"errors\": 0,\r\n    \"executed\": 10,\r\n    \"failures\": 0,\r\n    \"mandatory_guest_gate\": \"executed\",\r\n    \"required\": 10,\r\n    \"skipped\": 0,\r\n    \"verified\": false\r\n  },\r\n  \"verified\": false\r\n}\r\n",
+          "command": [
+            "/bin/zsh",
+            "-lc",
+            "sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/preserve-v4-run-evidence.py"
+          ],
+          "cwd": "file:///Users/speed/Documents/Codex/2026-10-19/3e4m-b-4",
+          "duration": {
+            "nanos": 27470959,
+            "secs": 159
+          },
+          "exit_code": 0,
+          "id": "call_39ac30b7c4d14675a496efb2",
+          "parsed_cmd": [
+            {
+              "cmd": "sudo -S -p '' /usr/bin/python3 -I -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.tmp-sr_pm/preserve-v4-run-evidence.py",
+              "type": "unknown"
+            }
+          ],
+          "process_id": "20457",
+          "source": "unified_exec_startup",
+          "status": "completed",
+          "type": "CommandExecution"
+        },
+        "started_at_ms": 1792613262356,
+        "thread_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+        "turn_id": "01a15fce-7336-7871-ad23-34941a7244d2",
+        "type": "item_completed"
+      },
+      "record_type": "event_msg",
+      "timestamp": "2026-10-21T20:10:21.385Z"
+    }
+  ],
+  "redactions": [
+    {
+      "line_number": 11465,
+      "reason": "credential-bearing sudo stdin request omitted"
+    },
+    {
+      "line_number": 11489,
+      "reason": "credential-bearing sudo stdin request omitted"
+    },
+    {
+      "line_number": 11647,
+      "reason": "credential-bearing sudo stdin request omitted"
+    }
+  ],
+  "schema_version": 1,
+  "security": {
+    "credential_values copied": false,
+    "full_session_bytes_published": false,
+    "note": "Only exact selected authorization, execution, process, readback, and preservation records are retained. Password-bearing stdin records are intentionally absent.",
+    "unrelated private records copied": false
+  },
+  "source": {
+    "bytes": 26819042,
+    "custodian": "operator Codex session archive",
+    "path": "/Users/speed/.codex/sessions/2026/10/20/rollout-2026-10-20T06-57-58-01a156c2-7319-7bc3-a65c-b516699997ee_01a1592c-ec38-7e22-af4c-1b1997276e76.jsonl",
+    "retrieval_method": "read-only exact JSONL line extraction",
+    "retrieved_at": "2026-10-28T06:00:00Z",
+    "session_meta": {
+      "agent_path": null,
+      "session_id": "01a156c2-7319-7bc3-a65c-b516699997ee",
+      "source_record": "session_meta",
+      "started_at": null
+    },
+    "sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e"
+  }
+}

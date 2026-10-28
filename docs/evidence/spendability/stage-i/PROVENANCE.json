@@ -1,0 +1,476 @@
+{
+  "artifacts": {
+    "session_extract": {
+      "bytes": 23088,
+      "path": "docs/evidence/spendability/stage-i/SESSION-EXTRACT.json",
+      "sha256": "b7166485d0b92636dec39dc399d6e39b1fa0fd486962051ccb88a9b7570c480b"
+    },
+    "trusted_plan": {
+      "bytes": 21873,
+      "path": "docs/evidence/trusted-observation/v4-run-9d3df87/plan.json",
+      "sha256": "8fb63bae1fe0795bc6e1f5a903980abd717fff3064e888ee45f8cf5b1f9d9bda"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "approval_sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b",
+    "execution_profile_sha256": "b5400cdf040725cbe3b661d1d69f26a276123775bb63074b49fd7420befe61a7",
+    "export_commit": "141823fe7e19e43fd3d2bfcc0fe4be8303e42642",
+    "license_review_sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d",
+    "session_extract_sha256": "b7166485d0b92636dec39dc399d6e39b1fa0fd486962051ccb88a9b7570c480b",
+    "session_source_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+    "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+    "stage_h_package_sha256": "12c4d2ff2a042588af5b9570d1eff68dd84475a87131bef83841cdca0a37d478",
+    "stage_h_readiness_sha256": "d4aefba5c2f391f130b0319be3723b368cdbe4d21b13650a2d2acfbdb23341cf",
+    "trusted_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09",
+    "trusted_plan_sha256": "8fb63bae1fe0795bc6e1f5a903980abd717fff3064e888ee45f8cf5b1f9d9bda",
+    "trusted_readback_sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8",
+    "trusted_snapshot_sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+  },
+  "created_at": "2026-10-28T06:00:00Z",
+  "execution_boundary": {
+    "completed_at": "2026-10-21T19:59:54.106Z",
+    "duration_ms": 240253,
+    "private_runtime": "/private/tmp/grrr-trusted-rk5jwjmv",
+    "source": "redacted operator session archive line 11512",
+    "started_at": "2026-10-21T19:55:53.853Z"
+  },
+  "git_custody": {
+    "export_commit": {
+      "author": "jmanhype <straughterguthrie@gmail.com>",
+      "author_time": "2026-10-21T15:10:29-05:00",
+      "commit": "141823fe7e19e43fd3d2bfcc0fe4be8303e42642",
+      "commit_time": "2026-10-21T15:10:29-05:00",
+      "committer": "jmanhype <straughterguthrie@gmail.com>",
+      "parents": [
+        "9d3df8770f82a860f128a71d76528ff922911199"
+      ],
+      "subject": "evidence(GRRR-gu87): preserve v4 trusted observation run"
+    },
+    "source_commit": {
+      "author": "jmanhype <straughterguthrie@gmail.com>",
+      "author_time": "2026-10-21T14:50:09-05:00",
+      "commit": "9d3df8770f82a860f128a71d76528ff922911199",
+      "commit_time": "2026-10-21T14:50:09-05:00",
+      "committer": "jmanhype <straughterguthrie@gmail.com>",
+      "parents": [
+        "56697da4d8ab61f64b852a5437f924ba249eb308"
+      ],
+      "subject": "harden(GRRR-gu87): require wheel-owned trusted bootstrap"
+    }
+  },
+  "items": [
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-1bf9d516461040c0baef70648c074d61",
+      "reservation_id": "1bf9d516461040c0baef70648c074d61",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-5b7851814d764da1a3b3830abc9853ce",
+      "reservation_id": "5b7851814d764da1a3b3830abc9853ce",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "reservation_id": "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-b954f6890a1e43e3b13f24298fa7ca33",
+      "reservation_id": "b954f6890a1e43e3b13f24298fa7ca33",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-b95be730d6a5408886071d29848bbd05",
+      "reservation_id": "b95be730d6a5408886071d29848bbd05",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-d3c965a29ab547c999e66bf0b60eca9f",
+      "reservation_id": "d3c965a29ab547c999e66bf0b60eca9f",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-e38c33051ff64b4eab106e65a200fe06",
+      "reservation_id": "e38c33051ff64b4eab106e65a200fe06",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    },
+    {
+      "classification": null,
+      "common_evidence": {
+        "authorization": {
+          "evidence": "corrected execution-approval and license-review hashes plus validation output in operator session archive",
+          "remaining": "exact protected approval/review artifact bytes and independent custody review",
+          "status": "candidate-reference-found"
+        },
+        "custody": {
+          "evidence": "source commit, export commit, current bytes, redacted session archive, and preservation readback",
+          "remaining": "independent response-custody classification",
+          "status": "validated-common-candidate"
+        },
+        "final_classification": {
+          "evidence": "no independent final classifier",
+          "status": "missing"
+        },
+        "issuer_code_toolchain_profile": {
+          "evidence": "pinned source commit, 26 plan code hashes, runtime profile, helper, supervisor, image, Python, and QEMU identities",
+          "status": "validated-common-candidate"
+        },
+        "measurement_boundary": {
+          "evidence": "batch UTC start/end and 240253 ms duration",
+          "remaining": "per-reservation UTC start/end, clock, and window digest",
+          "status": "partial-common-candidate"
+        },
+        "operation_boundary": {
+          "evidence": "exact root launcher command, private runtime path, batch start/end, and completion status",
+          "remaining": "per-reservation operation IDs and request boundaries",
+          "status": "partial-common-candidate"
+        },
+        "principal_and_issuer_identity": {
+          "evidence": "observed _grrr_evaluator and _grrr_runner process names in session archive",
+          "remaining": "numeric process UID mapping and per-request authenticated principal/issuer binding",
+          "status": "partial-common-candidate"
+        }
+      },
+      "request_item_id": "PROV-eb045d10d73b48ef9d570a1cf870f6eb",
+      "reservation_id": "eb045d10d73b48ef9d570a1cf870f6eb",
+      "reservation_specific_missing": [
+        "authenticated principal and issuer binding",
+        "approved request authorization bytes",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification"
+      ],
+      "response_readiness": "candidate-record-set-not-response-ready"
+    }
+  ],
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "record_type": "spendability-provenance-enrichment-v1",
+  "schema_version": 1,
+  "summary": {
+    "authorization_reference_candidates": 1,
+    "batch_execution_boundary_candidates": 1,
+    "candidate_record_sets": 8,
+    "common_toolchain_profile_candidates": 1,
+    "custody_chain_candidates": 1,
+    "final_classifications_made": 0,
+    "response_ready_record_sets": 0
+  }
+}
