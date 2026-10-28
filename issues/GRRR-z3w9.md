@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T03:44:14Z
-content_hash: "sha256:77ff6911fb6ffbad4ea30bb698292599ca4bf27c1936b41f461ab18c44fc3a0f"
+updated_at: 2026-10-28T04:22:27Z
+content_hash: "sha256:8529771c7003c5bbb3d4bfd8fe5f4727a563256fd105cb89c9c6468364bc0338"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2105,6 +2105,101 @@ status: in_progress
 - [x] Stage F package committed without post-review mutation.
 - [x] Capacity and full no-guest suite blockers cleared for this stage.
 - [ ] External evidence response supplied and independently classified.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T04:22:27Z speed
+## 2026-10-28 Stage G Non-Protected Search/Validation — Independently Approved WIP, Uncommitted
+
+Operator scope was Stage G external evidence search and validation only. The slice searched non-protected repository, git-object, operator-session, memory/attachment, project-output, and top-level temporary GRRR locations. It did not access or mutate `/Library/GRRR`; did not reconcile, write spendability, replay, admit, promote, mutate production, merge, or push.
+
+### High-value source found and validated
+
+Repository-retained trusted-observation export:
+- `docs/evidence/trusted-observation/v4-run-9d3df87/READBACK.json`
+  SHA256 `2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8`.
+- `evaluator/ledger.sqlite`
+  SHA256 `11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09`.
+- `evaluator/snapshot.json`
+  SHA256 `745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513`.
+- Snapshot ID `a070c21845becd209d3ed84591d4d8c95db8604783cc76a997b829cc901760f6`.
+
+Validated:
+
+- all 30 ledger events and the hash chain;
+- snapshot projection and snapshot identity;
+- object bytes and raw observation digests;
+- all 11 reservation request events;
+- Stage A run/maxima joins;
+- eight settled meter receipt → actual usage → observation-object joins;
+- three pending reservations remain meter- and observation-less.
+
+### Candidate index outcome
+
+Across all 30 Stage F request items:
+
+- 8 validated complete candidate items: original request event, trusted observation object, and exact meter-body join.
+- 7 partial candidate items: three pending provenance records, three pending dispositions, and one partial operation-history source.
+- 15 negative-search items are explicitly **not established**. Manual discovery did not find original records, but the generator consumes no exhaustive search receipts, so no final `unavailable`, `lost`, or `never-created` classification is made.
+- Final classifications made: 0.
+
+### Independent review sequence
+
+1. First reviewer returned `STAGE_G_SEARCH_REVIEW: REJECTED`.
+   - Blocker: hardcoded negative-search outcomes lacked reviewable search receipts.
+2. Correction demoted manual negative observations to `search-completeness-not-established`, made clear the generator consumes no search receipts, and updated index, validation, handoff, and tests.
+3. Fresh narrow reviewer returned `STAGE_G_SEARCH_NARROW_REWORK_REVIEW: APPROVED`.
+   - Reviewer independently ran focused Stage G tests on both available interpreters: 13/13 each.
+   - Approval is limited to the correction and does not establish completeness, spendability, operational authority, or full-suite acceptance.
+
+### Tests and environment gates
+
+- Stage G focused tests:
+  - Homebrew Python 3.14.3: 13/13 passed.
+  - Miniconda Python 3.12.7: 13/13 passed.
+- Generator output was byte-identical across those interpreters.
+- System Python 3.9 was not run because Xcode 27.1 reports its license has not been accepted. No license action was taken.
+- Latest full no-guest suite ran 407 tests on each interpreter and had one existing process-table timing failure on each under host load.
+- Isolated replay-smoke retry passed 12/12 on each interpreter.
+- Full-suite gate remains unresolved and is not represented as acceptance.
+
+### WIP identities
+
+- Base Stage F commit: `5ea8afca67fb980f69ed3a97a19c0b2a356c5a8b`.
+- Module: `research/spendability_search.py`, SHA256 `99e12225a660573cac060bdbadb6ac435d82b8bbf36a5c62dcef4142a17252e3`.
+- Generator: `scripts/search-spendability-evidence`, SHA256 `799fefeb821fe3ae7a2a7342b63fb290a7c392878595de19cd83c1651c486518`.
+- Tests: `tests/unit_spendability_search.py`, SHA256 `8710be30838004fd0ee942aa5e43e8dc85366200b86179bd267eee69ad3e44c3`.
+- Candidate index: `docs/evidence/spendability/stage-g/CANDIDATE-INDEX.json`, SHA256 `31466b133af19110cd80323ff4499642307bd2c74bff055079ec13738203c7bc`.
+- WIP package: `docs/evidence/spendability/stage-g/PACKAGE.json`, SHA256 `d00b35c07f2b482f3441a767d179c5e163a27f0f2db4ff8544c727a7da44f4ca`.
+- The package contains 14 exact-hash members and preserves all authority flags as false.
+
+### Current state
+
+- Stage G WIP files remain uncommitted because this authorization said “begin” and did not authorize a commit.
+- Story claim is released after this handoff.
+- Next operator choices are, in order:
+  1. authorize committing the independently reviewed Stage G WIP package;
+  2. separately authorize an exact read-only protected ancestry-byte search under `/Library/GRRR` if current protected copies are acceptable evidence sources;
+  3. or require a separately reviewed exhaustive search-evidence package before any negative classification.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Non-protected Stage G search/validation WIP is present and independently narrow-approved.
+- Trusted export validation and candidate index artifacts are on disk.
+- Full suite remains unresolved due the disclosed existing process-table failures; no success is claimed.
+
+### proof
+- [x] Stage G non-protected evidence search/validation WIP generated.
+- [x] Eight settled-reservation candidate record sets validated.
+- [x] Negative search claims corrected to `search-completeness-not-established`.
+- [x] Narrow independent review approved the correction.
+- [ ] Stage G WIP commit authorized and performed.
+- [ ] Final external evidence response classifications independently reviewed.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
