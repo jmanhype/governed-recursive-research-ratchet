@@ -1,0 +1,866 @@
+{
+  "artifacts": {
+    "account_mapping": {
+      "bytes": 311,
+      "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+      "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+    },
+    "session_search": {
+      "bytes": 5569,
+      "path": "docs/evidence/spendability/stage-k/SESSION-SEARCH.json",
+      "sha256": "84b6f0ebfb76d2adcd359274a167d2b77becd76cda6b3f265ce1845197c182cc"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "execution_approval_sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b",
+    "license_review_sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d",
+    "session_search_sha256": "84b6f0ebfb76d2adcd359274a167d2b77becd76cda6b3f265ce1845197c182cc",
+    "session_source_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+    "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+    "stage_i_package_sha256": "6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac",
+    "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+    "stage_j_validation_sha256": "5f14d7647148f305125391104e092fdbc4e789bdd2ed9d6dff0ae26beed89b96"
+  },
+  "common_evidence": {
+    "account_mapping": {
+      "artifact": {
+        "bytes": 311,
+        "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+        "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+      },
+      "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+      "evaluator": {
+        "gid": 320,
+        "name": "_grrr_evaluator",
+        "uid": 320
+      },
+      "runner": {
+        "gid": 321,
+        "name": "_grrr_runner",
+        "uid": 321
+      },
+      "status": "validated-common"
+    },
+    "issuer_ledger_identity": {
+      "database_owner_gid": 320,
+      "database_owner_uid": 320,
+      "per_request_authenticated_principal": "missing",
+      "principal_uid": 320,
+      "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+      "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+      "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+      "status": "validated-common"
+    }
+  },
+  "created_at": "2026-10-28T13:20:00Z",
+  "items": [
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "26780e3f00de3d5ac79abde2d339f634627e7e8ae7d3784a96ab55f5b78473a3",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 38824,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd",
+          "sha256": "6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd"
+        },
+        "request_event": {
+          "event_seq": 25,
+          "event_sha256": "c1cb27b0c52c213289eb3cf5519f006c9fc519a32bff0741bb2fcc0119a0834e",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 25,
+          "event_sha256": "c1cb27b0c52c213289eb3cf5519f006c9fc519a32bff0741bb2fcc0119a0834e",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "d40e587aa86d42218b8f8791de1bcfe8",
+        "run_id": "e55f8e3b44604e509fb005d76d0d7e9f",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-1bf9d516461040c0baef70648c074d61",
+      "request_key": "d40e587aa86d42218b8f8791de1bcfe8",
+      "reservation_id": "1bf9d516461040c0baef70648c074d61",
+      "response_readiness": "not-ready",
+      "run_id": "e55f8e3b44604e509fb005d76d0d7e9f",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 18.424131250000016,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "a2a346ff1ce6e9afcfc1a5665a71338f46a3bcf555ad2a3f4236ed690b03805f",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 39584,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77",
+          "sha256": "c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77"
+        },
+        "request_event": {
+          "event_seq": 18,
+          "event_sha256": "578e6edc2cc23a6c25408e74ce4633a6e58c34674dc1cc2a7bfb0742baf831c5",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 18,
+          "event_sha256": "578e6edc2cc23a6c25408e74ce4633a6e58c34674dc1cc2a7bfb0742baf831c5",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "15acbed7af334d6ea5383ee75d638d77",
+        "run_id": "283eab529e1c491583775cbe1a8f1c89",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-5b7851814d764da1a3b3830abc9853ce",
+      "request_key": "15acbed7af334d6ea5383ee75d638d77",
+      "reservation_id": "5b7851814d764da1a3b3830abc9853ce",
+      "response_readiness": "not-ready",
+      "run_id": "283eab529e1c491583775cbe1a8f1c89",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 18.908253333000005,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "af8db9dd7b41f7efefa7a97ea3f4e52d7edeb0ffd2f8cc646f600ddae30120c0",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 39010,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5",
+          "sha256": "72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5"
+        },
+        "request_event": {
+          "event_seq": 6,
+          "event_sha256": "5fcd1613e09e170ead6720988bb696b97400c395bf77c623afed87b5bada9c9c",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 6,
+          "event_sha256": "5fcd1613e09e170ead6720988bb696b97400c395bf77c623afed87b5bada9c9c",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "2d6b5f2e1dba4e8bbe33cb6b0eb4cebf",
+        "run_id": "93135d89fa334ec09d87b655db72c5b7",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "request_key": "2d6b5f2e1dba4e8bbe33cb6b0eb4cebf",
+      "reservation_id": "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "response_readiness": "not-ready",
+      "run_id": "93135d89fa334ec09d87b655db72c5b7",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 18.318509749999997,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "6dad7dc959412a33ff57d118af9396a409e0d4f0094def83136fccd31bdef6c1",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 38962,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f",
+          "sha256": "5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f"
+        },
+        "request_event": {
+          "event_seq": 9,
+          "event_sha256": "92d0c913d0b118697ba5c069e0dd1d62fdba24cf272a906e7ad5e102f84427d8",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 9,
+          "event_sha256": "92d0c913d0b118697ba5c069e0dd1d62fdba24cf272a906e7ad5e102f84427d8",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "201f8bd2be294ecf83e381f764e0991f",
+        "run_id": "d6cdf6f3f93a4fc6ab154020c8cc221d",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-b954f6890a1e43e3b13f24298fa7ca33",
+      "request_key": "201f8bd2be294ecf83e381f764e0991f",
+      "reservation_id": "b954f6890a1e43e3b13f24298fa7ca33",
+      "response_readiness": "not-ready",
+      "run_id": "d6cdf6f3f93a4fc6ab154020c8cc221d",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 19.030225375,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "f63ace9c97777f1838cb5c8c64531f34514f20741f789cb059277da72b3c4dda",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 38835,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f",
+          "sha256": "23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f"
+        },
+        "request_event": {
+          "event_seq": 12,
+          "event_sha256": "129d0547a3fed58be1ef7efee7745b0fcc933cae7dbb91300ce13b7338dddf99",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 12,
+          "event_sha256": "129d0547a3fed58be1ef7efee7745b0fcc933cae7dbb91300ce13b7338dddf99",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "dc0cbfe71068423986dff37d3ac36f8a",
+        "run_id": "2e1a9c4468794c128d80a568e26752da",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-b95be730d6a5408886071d29848bbd05",
+      "request_key": "dc0cbfe71068423986dff37d3ac36f8a",
+      "reservation_id": "b95be730d6a5408886071d29848bbd05",
+      "response_readiness": "not-ready",
+      "run_id": "2e1a9c4468794c128d80a568e26752da",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 18.632467667,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "a90855be6d190b08403107812cf15835d024fd1ff74487da7b0084d43b4528fe",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 39604,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd",
+          "sha256": "707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd"
+        },
+        "request_event": {
+          "event_seq": 21,
+          "event_sha256": "1a4da96db1f87ff78ac42b241795851b86786932e16e17344eacf781b1d108ca",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 21,
+          "event_sha256": "1a4da96db1f87ff78ac42b241795851b86786932e16e17344eacf781b1d108ca",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "91a882efe5a74d9b8bd68e3ab1c09dd2",
+        "run_id": "20849b384ed641ca9f8e5c6f880d96dd",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-d3c965a29ab547c999e66bf0b60eca9f",
+      "request_key": "91a882efe5a74d9b8bd68e3ab1c09dd2",
+      "reservation_id": "d3c965a29ab547c999e66bf0b60eca9f",
+      "response_readiness": "not-ready",
+      "run_id": "20849b384ed641ca9f8e5c6f880d96dd",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 18.714398167000013,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "a9376b669ca739736aecc2e531da1a9e80a85cbf262ac1bee7e62c98477fad41",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 38821,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc",
+          "sha256": "d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc"
+        },
+        "request_event": {
+          "event_seq": 3,
+          "event_sha256": "1b4cfdd20d4f95d29150653f8745cfff0e70004a00b7ed47180183f08e28b146",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 3,
+          "event_sha256": "1b4cfdd20d4f95d29150653f8745cfff0e70004a00b7ed47180183f08e28b146",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "2f9294107d1d4580b992a6e20b25531c",
+        "run_id": "3848e1bb84214727b5647e4085b0257a",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-e38c33051ff64b4eab106e65a200fe06",
+      "request_key": "2f9294107d1d4580b992a6e20b25531c",
+      "reservation_id": "e38c33051ff64b4eab106e65a200fe06",
+      "response_readiness": "not-ready",
+      "run_id": "3848e1bb84214727b5647e4085b0257a",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 18.257188125,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    },
+    {
+      "classification": null,
+      "custody_chain": {
+        "meter_receipt_sha256": "266c23dc2848508717b8a80e10fecefd19b57ae62ffdf03e91c0e9f7d225507a",
+        "missing": [
+          "artifact creation timestamp",
+          "independent reservation-specific custody classification"
+        ],
+        "observation": {
+          "bytes": 1669885,
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96",
+          "sha256": "09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96"
+        },
+        "request_event": {
+          "event_seq": 15,
+          "event_sha256": "81540cbe1dfc4580a97d9ec7ea076c5e937a756d9deb43b4abbb1645c7877157",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+        "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+        "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+        "status": "partial-validated-chain"
+      },
+      "issuer_ledger_identity": {
+        "status": "validated-common",
+        "value": {
+          "database_owner_gid": 320,
+          "database_owner_uid": 320,
+          "per_request_authenticated_principal": "missing",
+          "principal_uid": 320,
+          "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+          "source_common_sha256": "33edaf942a89f5eb0b1481e3ca5f430d7229e2b87758894cf29f95217e479a21",
+          "source_ledger_sha256": "380a73950fe488cbe8f95da77add2ee0cc678c95b337db7ffd578dec0ba1efc9",
+          "status": "validated-common"
+        }
+      },
+      "numeric_process_uid_mapping": {
+        "status": "validated-common",
+        "value": {
+          "artifact": {
+            "bytes": 311,
+            "path": "docs/evidence/replay-prerequisites/runtime-smoke-r3/account-groups.log",
+            "sha256": "eca7677d9ce4ad2a8fb27b26a8278784b5c01d3bcd4fe23fe53165ade2b894dc"
+          },
+          "commit": "e0dfaf33d3b2725a2fad63401d2b717a8365e0a6",
+          "evaluator": {
+            "gid": 320,
+            "name": "_grrr_evaluator",
+            "uid": 320
+          },
+          "runner": {
+            "gid": 321,
+            "name": "_grrr_runner",
+            "uid": 321
+          },
+          "status": "validated-common"
+        }
+      },
+      "operation_boundary": {
+        "missing": [
+          "explicit dispatch operation ID",
+          "reservation-specific request start/end boundary"
+        ],
+        "request_event": {
+          "event_seq": 15,
+          "event_sha256": "81540cbe1dfc4580a97d9ec7ea076c5e937a756d9deb43b4abbb1645c7877157",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        "request_key": "ee84c5a560df4fcfb1a3af860a3e301b",
+        "run_id": "60fa3361bf5640be8b251e6a1eab93bd",
+        "status": "partial"
+      },
+      "per_request_authenticated_principal": {
+        "reason": "ledger event body has no authenticated principal receipt",
+        "status": "missing"
+      },
+      "request_item_id": "PROV-eb045d10d73b48ef9d570a1cf870f6eb",
+      "request_key": "ee84c5a560df4fcfb1a3af860a3e301b",
+      "reservation_id": "eb045d10d73b48ef9d570a1cf870f6eb",
+      "response_readiness": "not-ready",
+      "run_id": "60fa3361bf5640be8b251e6a1eab93bd",
+      "timing": {
+        "common_readback_completed_at": "2026-10-21T20:00:54.106Z",
+        "common_readback_started_at": "2026-10-21T20:00:39.190Z",
+        "duration_seconds": 20.227666334000006,
+        "missing": [
+          "reservation-specific UTC start",
+          "reservation-specific UTC end",
+          "measurement clock identity",
+          "measurement window digest"
+        ],
+        "status": "partial"
+      }
+    }
+  ],
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "record_type": "spendability-per-record-evidence-matrix-v1",
+  "schema_version": 1,
+  "session_readback": {
+    "all_sixteen_candidate_ids_present": true,
+    "completed_at": "2026-10-21T20:00:54.106Z",
+    "line_sha256": "9ab13249897f4508a2410ba4eabbf29becaab434e7fba8cc3ab551f25650ae60",
+    "source_line": 11533,
+    "started_at": "2026-10-21T20:00:39.190Z"
+  },
+  "summary": {
+    "candidate_record_sets": 8,
+    "common_readback_boundaries": 1,
+    "custody_chains": 8,
+    "duration_values": 8,
+    "explicit_dispatch_operation_ids": 0,
+    "final_classifications_made": 0,
+    "issuer_ledger_identity_validated": true,
+    "numeric_process_uid_mapping_validated": true,
+    "per_request_authenticated_principal_records": 0,
+    "reservation_specific_utc_intervals": 0,
+    "response_ready_record_sets": 0
+  }
+}

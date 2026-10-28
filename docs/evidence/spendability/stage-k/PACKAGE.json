@@ -1,0 +1,102 @@
+{
+  "artifacts": {
+    "docs/evidence/spendability/stage-k/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 2575,
+      "sha256": "b8d44bfe5111f293d9830fa230ffaf8bdf6c73a4cfed9f4f537452aa99ea1d4e"
+    },
+    "docs/evidence/spendability/stage-k/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 2575,
+      "sha256": "310eeacb393fdfefbdf6958873397f16218bac56746cd785eca724894e4b69d3"
+    },
+    "docs/evidence/spendability/stage-k/HANDOFF.md": {
+      "bytes": 2726,
+      "sha256": "a9059acf3ab559c55f32ab7fb7f52ffc0ec219791f6db2f45df0d935f58aed3d"
+    },
+    "docs/evidence/spendability/stage-k/NARROW-REWORK-APPROVED.md": {
+      "bytes": 817,
+      "sha256": "737f51e1501ac929a712d06bd9b40c8ff2c1aa28a05007980e6e1129d5ab7655"
+    },
+    "docs/evidence/spendability/stage-k/PER-RECORD-MATRIX.json": {
+      "bytes": 35426,
+      "sha256": "d71139015cd3b27683503984947ba692800e407aecd6f45d1ccf6e3c18ecd4d1"
+    },
+    "docs/evidence/spendability/stage-k/REVIEW-APPROVED.md": {
+      "bytes": 913,
+      "sha256": "1d89bf99df9fd36a0059d6f082390c0c16985818a620b8c19c0e84976eaca2ce"
+    },
+    "docs/evidence/spendability/stage-k/REVIEW-REQUEST.md": {
+      "bytes": 2987,
+      "sha256": "fb7e9f159a8c4c43c19df6982c5d469c47587d15a9731541a94cb8c1df8a64a7"
+    },
+    "docs/evidence/spendability/stage-k/SESSION-SEARCH.json": {
+      "bytes": 5569,
+      "sha256": "84b6f0ebfb76d2adcd359274a167d2b77becd76cda6b3f265ce1845197c182cc"
+    },
+    "docs/evidence/spendability/stage-k/VALIDATION.json": {
+      "bytes": 2799,
+      "sha256": "492b6c56d728fb0dd5335adc7e863d75c6ae1a690bb4433f66322fe426286d9a"
+    },
+    "research/spendability_per_record.py": {
+      "bytes": 18793,
+      "sha256": "4b96c4765469d6c4c3dfb7c5e448b3ebdb24a53149d6a4f8a9d136b1b73cefce"
+    },
+    "scripts/build-spendability-per-record-matrix": {
+      "bytes": 684,
+      "sha256": "ae0678a63185df65b1b563e11fe2e85df01f0c589a4e5703b79aa4856b677d9f"
+    },
+    "tests/unit_spendability_per_record.py": {
+      "bytes": 8218,
+      "sha256": "f718e98b71a86a06eb3074828d9383aedd48e21e3755e516a12706d00a6df265"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+  "created_at": "2026-10-28T13:20:00Z",
+  "evidence_scope": {
+    "explicit_dispatch_operation_ids": 0,
+    "final_classifications_made": 0,
+    "full_original_session_archive_hashed": true,
+    "issuer_ledger_identity_validated": true,
+    "numeric_process_uid_mapping_validated": true,
+    "per_request_authenticated_principal_records": 0,
+    "protected_paths_accessed": [],
+    "raw_private_session_lines_published": false,
+    "reservation_specific_utc_intervals": 0
+  },
+  "independent_review": "STAGE_K_PER_RECORD_NARROW_REWORK_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage K per-record evidence WIP package",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "per_record_inventory": {
+    "candidate_record_sets": 8,
+    "common_readback_boundaries": 1,
+    "custody_chains": 8,
+    "duration_values": 8,
+    "explicit_dispatch_operation_ids": 0,
+    "final_classifications_made": 0,
+    "issuer_ledger_identity_validated": true,
+    "numeric_process_uid_mapping_validated": true,
+    "per_request_authenticated_principal_records": 0,
+    "reservation_specific_utc_intervals": 0,
+    "response_ready_record_sets": 0
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "session_source_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+  "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e"
+}
