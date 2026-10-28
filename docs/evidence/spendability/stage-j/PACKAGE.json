@@ -1,0 +1,98 @@
+{
+  "artifacts": {
+    "docs/evidence/spendability/stage-j/CAPTURE.json": {
+      "bytes": 2992,
+      "sha256": "717fc91765a4fd3c544e052ba74b00a149bb4a2f6babf2093efd118ef96a27a4"
+    },
+    "docs/evidence/spendability/stage-j/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 2095,
+      "sha256": "605c4eb9523298c5d3926e0d725e5e70614462e8ec8cdda0803697f712910085"
+    },
+    "docs/evidence/spendability/stage-j/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 2095,
+      "sha256": "857a0c66ea201eaef1c264fdb1a0c8fa50d790eeca53b736289215ddaa7e87ec"
+    },
+    "docs/evidence/spendability/stage-j/HANDOFF.md": {
+      "bytes": 2406,
+      "sha256": "4aa103c68cd8716cf86b8378454d152bc5095700612e7bc8478ef5fe054b27db"
+    },
+    "docs/evidence/spendability/stage-j/REVIEW-APPROVED.md": {
+      "bytes": 948,
+      "sha256": "6b16c1be588432142c740fe7314f0887e703041a63af6798ce5ecc7539d6af76"
+    },
+    "docs/evidence/spendability/stage-j/REVIEW-REQUEST.md": {
+      "bytes": 3187,
+      "sha256": "5612d56e813e860a5784f776cdab076dc90b5a468f81e92f9e2932ba9206049d"
+    },
+    "docs/evidence/spendability/stage-j/VALIDATION.json": {
+      "bytes": 7469,
+      "sha256": "5f14d7647148f305125391104e092fdbc4e789bdd2ed9d6dff0ae26beed89b96"
+    },
+    "docs/evidence/spendability/stage-j/artifacts/execution-approval-9d3df87-fix1.json": {
+      "bytes": 1074,
+      "sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b"
+    },
+    "docs/evidence/spendability/stage-j/artifacts/license-review-9d3df87-fix1.json": {
+      "bytes": 390,
+      "sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d"
+    },
+    "research/spendability_authorization.py": {
+      "bytes": 14306,
+      "sha256": "b88d3040f0c6d81711009cc946ca45544d04727433754ec8b27f9596b960e425"
+    },
+    "scripts/validate-spendability-authorization": {
+      "bytes": 714,
+      "sha256": "c40f8152e1fba51ab81d9f59c6a5a282d44b872ca48c5a50c83d34e70849cd40"
+    },
+    "tests/unit_spendability_authorization.py": {
+      "bytes": 7248,
+      "sha256": "3f490ce0db820dcb2e1cb038da284a8eaba6d801ce84ed161908709fed1329e5"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "authorization_inventory": {
+    "candidate_record_sets": 8,
+    "common_authorization_binding_valid": true,
+    "final_classifications_made": 0,
+    "response_ready_record_sets": 0
+  },
+  "base_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+  "created_at": "2026-10-28T12:30:00Z",
+  "evidence_scope": {
+    "common_authorization_binding_valid": true,
+    "exact_durable_copies_retained": true,
+    "final_classifications_made": 0,
+    "operator_authorized_protected_read": true,
+    "per_request_principal_boundary_still_required": true,
+    "protected_paths_mutated": [],
+    "protected_paths_read": [
+      "/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json",
+      "/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json"
+    ],
+    "retained_validation_requires_protected_access": false
+  },
+  "independent_review": "STAGE_J_AUTHORIZATION_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage J retained-authorization WIP package",
+  "outcome": {
+    "allowed_mutations": [],
+    "authorization_common_binding_valid": true,
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+  "stage_i_package_sha256": "6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac"
+}

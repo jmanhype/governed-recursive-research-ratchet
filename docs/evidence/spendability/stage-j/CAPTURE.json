@@ -1,0 +1,83 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": true,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+    "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+    "stage_i_package_sha256": "6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac",
+    "trusted_plan_sha256": "8fb63bae1fe0795bc6e1f5a903980abd717fff3064e888ee45f8cf5b1f9d9bda"
+  },
+  "created_at": "2026-10-28T12:15:00Z",
+  "outcome": {
+    "allowed_mutations": [],
+    "authorization_common_binding_valid": true,
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "protected_sources": {
+    "execution_approval": {
+      "acl_observation": "-r--r--r--@ 1 root  wheel  - 1074 Oct 21 14:55 /Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json\n\tcom.apple.provenance\t  11",
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682594806,
+      "mode": "0o444",
+      "nlink": 1,
+      "path": "/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json",
+      "regular": true,
+      "sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b",
+      "size": 1074,
+      "symlink": false,
+      "uid": 0
+    },
+    "license_review": {
+      "acl_observation": "-r--r--r--@ 1 root  wheel  - 390 Oct 21 14:55 /Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json\n\tcom.apple.provenance\t 11",
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682594805,
+      "mode": "0o444",
+      "nlink": 1,
+      "path": "/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json",
+      "regular": true,
+      "sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d",
+      "size": 390,
+      "symlink": false,
+      "uid": 0
+    }
+  },
+  "record_type": "spendability-protected-authorization-capture-v1",
+  "retained_copies": {
+    "execution_approval": "docs/evidence/spendability/stage-j/artifacts/execution-approval-9d3df87-fix1.json",
+    "license_review": "docs/evidence/spendability/stage-j/artifacts/license-review-9d3df87-fix1.json"
+  },
+  "schema_version": 1,
+  "scope": {
+    "exact_durable_copies_retained": true,
+    "final_classification_made": false,
+    "per_request_principal_boundary_still_required": true,
+    "protected_paths_mutated": [],
+    "protected_paths_read": [
+      "/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json",
+      "/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json"
+    ]
+  },
+  "validation": {
+    "credential_screen": "PASS",
+    "pinned_source_validator": "PASS",
+    "protected_mutation": "NONE",
+    "stage_i_approval_hash_match": "PASS",
+    "stage_i_license_review_hash_match": "PASS",
+    "validate_approval": "PASS",
+    "validate_config": "PASS"
+  }
+}

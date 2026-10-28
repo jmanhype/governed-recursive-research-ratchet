@@ -1,0 +1,181 @@
+{
+  "artifacts": {
+    "capture": {
+      "path": "docs/evidence/spendability/stage-j/CAPTURE.json",
+      "sha256": "717fc91765a4fd3c544e052ba74b00a149bb4a2f6babf2093efd118ef96a27a4"
+    },
+    "execution_approval": {
+      "bytes": 1074,
+      "path": "docs/evidence/spendability/stage-j/artifacts/execution-approval-9d3df87-fix1.json",
+      "sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b"
+    },
+    "license_review": {
+      "bytes": 390,
+      "path": "docs/evidence/spendability/stage-j/artifacts/license-review-9d3df87-fix1.json",
+      "sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "authorization_reference_sha256": "724b2aa8a522ede6f0917c2e6f253ee18ecfa267cdd7ab4f3f5847a3d23d4399",
+    "execution_approval_sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b",
+    "license_review_sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d",
+    "source_commit": "9d3df8770f82a860f128a71d76528ff922911199",
+    "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+    "stage_i_package_sha256": "6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac",
+    "stage_i_provenance_sha256": "b809e83b7da101b2a0aab4143d575d1e23f7b661608608e2a978e22aecd5b279",
+    "stage_j_capture_sha256": "717fc91765a4fd3c544e052ba74b00a149bb4a2f6babf2093efd118ef96a27a4",
+    "trusted_plan_sha256": "8fb63bae1fe0795bc6e1f5a903980abd717fff3064e888ee45f8cf5b1f9d9bda"
+  },
+  "capture_scope": {
+    "exact_durable_copies_retained": true,
+    "final_classification_made": false,
+    "per_request_principal_boundary_still_required": true,
+    "protected_paths_mutated": [],
+    "protected_paths_read": [
+      "/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json",
+      "/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json"
+    ]
+  },
+  "created_at": "2026-10-28T12:30:00Z",
+  "items": [
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-1bf9d516461040c0baef70648c074d61",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-5b7851814d764da1a3b3830abc9853ce",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-b954f6890a1e43e3b13f24298fa7ca33",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-b95be730d6a5408886071d29848bbd05",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-d3c965a29ab547c999e66bf0b60eca9f",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-e38c33051ff64b4eab106e65a200fe06",
+      "response_readiness": "not-ready"
+    },
+    {
+      "classification": null,
+      "common_authorization_binding": "validated",
+      "remaining_gaps": [
+        "per-request authenticated principal and issuer binding",
+        "numeric process UID mapping",
+        "reservation-specific dispatch operation identity and boundary",
+        "reservation-specific UTC measurement start/end, clock, and window digest",
+        "reservation-specific custody classification",
+        "independent final classifier decision"
+      ],
+      "request_item_id": "PROV-eb045d10d73b48ef9d570a1cf870f6eb",
+      "response_readiness": "not-ready"
+    }
+  ],
+  "outcome": {
+    "allowed_mutations": [],
+    "authorization_common_binding_valid": true,
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "record_type": "spendability-authorization-evidence-validation-v1",
+  "schema_version": 1,
+  "summary": {
+    "candidate_record_sets": 8,
+    "common_authorization_binding_valid": true,
+    "final_classifications_made": 0,
+    "response_ready_record_sets": 0
+  }
+}
