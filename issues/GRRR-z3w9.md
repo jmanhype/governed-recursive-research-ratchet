@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T05:24:04Z
-content_hash: "sha256:0fd9969650e2cdd27a0647646b1a9e749e56e0b1bf18e0c6bbfad6addacb1abc"
+updated_at: 2026-10-28T17:03:54Z
+content_hash: "sha256:0654f42071e5c0856c9640d9540958a90501ac40c34bd193a4e002c47b5f34a8"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2512,3 +2512,67 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T17:03:54Z speed
+## 2026-10-28 Operator-Authorized Stage I Commit — Completed
+
+Operator authorized finishing Stage I and beginning Stage J.
+
+### Stage I commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d`.
+- Parent: `2c8fddf2a480a5eca8ac0dd577e3e7658c3c8e0f`.
+- Subject: `evidence(GRRR-z3w9): enrich spendability provenance`.
+- Worktree is clean after commit.
+- The commit contains exactly 12 paths: three implementation/test files and nine Stage I package/evidence files.
+- Independently approved Stage I package SHA256 remains:
+  `6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac`.
+
+### Verification
+
+- All 11 package members and byte sizes matched the package manifest.
+- Focused Stage I tests before commit:
+  - Homebrew Python 3.14.3: 13/13 passed.
+  - Miniconda Python 3.12.7: 13/13 passed.
+- Deterministic provenance generation also hashed and reproduced the full non-protected source archive.
+- Post-commit deterministic regeneration and source-archive validation matched the committed provenance record.
+- Post-commit package verification passed.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+
+Stage I remains readiness-only: eight candidate record sets, zero response-ready records, zero final classifications, `spendable=null`, and no authority. No protected-path access occurred while committing Stage I.
+
+## Stage J Authorization and Scope
+
+Operator approval was interpreted as authorization to begin Stage J, the next identified evidence gate: exact read-only retrieval and validation of the protected corrected execution-approval and license-review artifacts already referenced by Stage I.
+
+Stage J may:
+
+- read only the two exact protected correction artifacts under `/Library/GRRR/bootstrap`;
+- record ownership/mode/ACL/device/inode, byte count, and SHA-256;
+- validate their exact bytes against the Stage I references;
+- validate them against the pinned trusted-execution source and plan;
+- retain exact durable copies only if they contain no credential or unrelated private material;
+- record any residual per-reservation gaps.
+
+Stage J must not:
+
+- mutate `/Library/GRRR`;
+- reconcile or write spendability;
+- replay, promote, admit, merge, or push;
+- treat common approval as a per-request principal/boundary substitute;
+- convert any candidate to final `supplied` classification.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage I package committed at `9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d`.
+- Stage J scope opened for exact read-only protected approval/review evidence.
+
+### proof
+- [ ] Exact protected approval/review bytes read and hashed.
+- [ ] Exact bytes validated against Stage I and pinned source.
+- [ ] Custody/publication safety reviewed.
+- [ ] All residual per-reservation gaps retained.
