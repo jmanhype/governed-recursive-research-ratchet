@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T17:52:08Z
-content_hash: "sha256:c6a308dbed4a68f4957605d4f9e3d109b34bc05c1c696fd00b7adda03cee55f9"
+updated_at: 2026-10-28T18:02:43Z
+content_hash: "sha256:3c00dd156f78821b9a92b091d17bab3e64a18456a6075ae8a9fe3ff984933ae0"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2681,6 +2681,128 @@ status: in_progress
 - [x] All eight candidates remain unclassified and non-ready.
 - [ ] Stage J WIP commit authorized and performed.
 - [ ] Reservation-specific principal, operation, timing, custody, and classifier evidence obtained.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T18:02:43Z speed
+## 2026-10-28 Stage K Per-Record Evidence — Independently Approved WIP, Uncommitted
+
+Operator authorization was “begin stage k.” Stage K searched only repository-retained and original operator-session evidence for the remaining per-reservation fields. It did not access `/Library/GRRR`, reconcile, write spendability, replay, admit, promote, mutate production, merge, or push.
+
+### Numeric identity and issuer evidence validated
+
+Reviewed repository evidence establishes:
+
+- `_grrr_evaluator` = UID/GID 320.
+- `_grrr_runner` = UID/GID 321.
+
+The pinned source defines evaluator UID 320 and runner UID 321, the ledger rejects every non-evaluator journal principal, and the Stage A database owner is UID/GID 320. The common ledger issuer identity is therefore UID 320.
+
+This does not create per-request authenticated-principal receipts.
+
+### Original session evidence
+
+The original operator root-session archive SHA-256 remains:
+
+`a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e`
+
+A complete readback record at line 11533 contains all 16 reservation/run identifiers:
+
+- started `2026-10-21T20:00:39.190Z`;
+- completed `2026-10-21T20:00:54.106Z`;
+- line SHA-256 `9ab13249897f4508a2410ba4eabbf29becaab434e7fba8cc3ab551f25650ae60`.
+
+This is a common retrieval/readback boundary only, not a per-reservation measurement interval.
+
+### Per-record matrix
+
+All eight records preserve:
+
+- reservation ID;
+- run ID;
+- request key;
+- request event sequence/hash;
+- observation object hash;
+- meter receipt hash;
+- measured duration;
+- source/export/Stage I/Stage J custody chain.
+
+Still missing per reservation:
+
+- authenticated principal receipt;
+- explicit dispatch operation ID;
+- request start/end boundary;
+- UTC measurement start/end;
+- measurement clock identity and window digest;
+- artifact creation timestamp;
+- independent reservation-specific custody classification;
+- final independent classifier decision.
+
+Summary:
+
+- 8 candidate record sets;
+- numeric UID mapping validated;
+- common ledger issuer identity validated;
+- 0 per-request authenticated-principal records;
+- 0 explicit dispatch operation IDs;
+- 0 reservation-specific UTC intervals;
+- 8 duration values;
+- 1 common readback boundary;
+- 8 custody chains;
+- 0 response-ready records;
+- 0 final classifications.
+
+### Independent review
+
+Initial reviewer returned `STAGE_K_PER_RECORD_REVIEW: APPROVED` with one nonblocking test gap: the regenerated matrix was not compared to the saved artifact. A saved-artifact equality test and pinned matrix hash were added.
+
+Fresh narrow reviewer returned:
+
+`STAGE_K_PER_RECORD_NARROW_REWORK_REVIEW: APPROVED`
+
+Reviewer independently ran 14/14 focused tests on both interpreters and confirmed the matrix and all fail-closed gaps remained unchanged.
+
+### Verification
+
+- Stage K focused tests:
+  - Homebrew Python 3.14.3: 14/14 passed.
+  - Miniconda Python 3.12.7: 14/14 passed.
+- Deterministic matrix generation matched the saved matrix.
+- Full original session archive hash and identifier counts were reproduced.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+
+### WIP package
+
+- Package: `docs/evidence/spendability/stage-k/PACKAGE.json`.
+- SHA256 `9bea19bfa163b47b909356f7efe274a8536851e54f1b136c1f882425bdeaf8f2`.
+- Twelve exact-hash members.
+- All authority flags remain false.
+- Outcome remains response-ready false, spendability null, no allowed mutations, and no execution authority.
+
+### State
+
+Stage K remains uncommitted because the operator authorized beginning it, not committing it. Stage J also remains uncommitted. Story claim is released after this handoff.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage K session search, per-record matrix, validation, tests, approvals, and package are present as WIP.
+- The matrix reproducibly validates common identities while retaining all per-request gaps.
+
+### proof
+- [x] Original session archive hashed and exact identifier counts reproduced.
+- [x] Numeric evaluator/runner mapping validated.
+- [x] Common ledger issuer UID validated.
+- [x] Eight request/observation/meter custody chains preserved.
+- [x] Missing principal receipts, operation IDs, UTC intervals, creation timestamps, custody classifications, and final classifications retained explicitly.
+- [x] Zero final classifications and zero authority granted.
+- [ ] Stage K WIP commit authorized and performed.
+- [ ] Original per-request dispatcher/evaluator records located.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
