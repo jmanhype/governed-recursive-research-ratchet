@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T19:19:36Z
-content_hash: "sha256:93d6b47a4508a1b78d6ed1f1bfd7eccd6185dc8238ba4d4af088fd20cfc980d9"
+updated_at: 2026-10-28T19:49:02Z
+content_hash: "sha256:220fec4693a02a97153d6ba2d7543c47400dda88a04be7fea57a13423e21f743"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3088,6 +3088,65 @@ status: in_progress
 - [x] Four downstream stories inventoried and dependency-ordered.
 - [ ] All-five preflight package commit authorized and performed.
 - [ ] Accounting reconciliation/replay authorization gate resolved.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T19:49:02Z speed
+## 2026-10-28 Stage N Replay-Successor Authority Contract — Narrow Review Approved, Uncommitted WIP
+
+Operator authorization was “Authorized begin.” Stage N remained design-only and did not access or mutate `/Library/GRRR`, implement/install a runtime store, reconcile spendability, execute replay, admit, promote, mutate production, merge, or push.
+
+### Result
+
+- Added a candidate v4 replay-successor authority contract, summary emitter, full contract emitter, and 28 focused tests.
+- The sole decision is `candidate-fresh-replay-successor-poc`; installer/review/operator authorization identities remain null, and device/inode identities remain `required-at-install`.
+- Predecessor history remains unresolved, spendability remains null, all original ceilings remain encumbered, and all three exact unresolved 300,000,000-us holds remain unreleased.
+- The proposed four-mode successor requires explicit operator-approved incremental amendment before any charge: 480,000,000 us/session, 1,920,000,000 us aggregate, zero static money/review, and at most 12 guest launches.
+- Only `independent-replay` mutations are represented. Every authority flag remains false, per-run approval remains mandatory, admission remains blocked, and promotion/merge/push remain disabled.
+- Install failure is refuse-no-retry with partial evidence preserved; rollback is new-successor-namespace-only, baseline-verified, and cannot reset the predecessor.
+
+### Review sequence
+
+Initial independent review returned `STAGE_N_SUCCESSOR_CONTRACT_REVIEW: REJECTED` because one hold ID had a one-character error (`...4a3...` instead of `...3a3...`).
+
+Correction uses the exact retained Stage A ID `b34d8b9d106e42eab3a3e43daac98ddd`, hashes the Stage A baseline, derives all pending IDs from null actual/receipt rows, and regenerates every affected artifact. A pre-existing Stage C fixture SQLite connection leak was also closed without changing collected data.
+
+Fresh narrow reviewer returned `STAGE_N_NARROW_REWORK_REVIEW: APPROVED`, independently reproducing both 28/28 focused suites, exact Stage A derivation, deterministic contract bytes, corrected hashes, and isolation of the one-ID correction.
+
+### Verification
+
+- Stage N focused: 28/28 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Full no-guest unit suites: 512/512 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Stage C focused under `-W error::ResourceWarning`: 46/46.
+- Deterministic Stage N contract emission: byte-identical.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+- Approved Stage N package SHA-256: `e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48`.
+
+### State
+
+Stage M and corrected Stage N packages remain uncommitted WIP because this authorization did not explicitly authorize a source/evidence commit. Live replay ACs remain unmet and separately gated by runtime adapter implementation/review, exact protected installation, budget amendment/reconciliation decision, dedicated identities, replay authorization, real four-mode execution, and independent PM acceptance.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Approved Stage N package is present at `docs/evidence/replay-authority/stage-n/PACKAGE.json` with SHA-256 `e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48`.
+- Initial rejection, exact correction, and narrow approval are retained in the same package.
+
+### proof
+- [x] Design-only v4 replay-successor authority contract is independently narrow-approved.
+- [x] Predecessor unresolved history and all three exact holds are preserved.
+- [x] Proposed successor budget requires explicit incremental amendment.
+- [x] All authority remains false and rollback/refusal remain fail-closed.
+- [ ] Stage M/N/all-five WIP commit authorized and performed.
+- [ ] Runtime adapter implemented and independently reviewed.
+- [ ] Exact installer/review/authorization bytes approved.
+- [ ] Protected v4 installation authorized, executed, and verified.
+- [ ] Budget amendment/reconciliation gate explicitly authorized.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
