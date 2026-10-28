@@ -1,0 +1,91 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "original_session_archive_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+    "stage_k_commit": "3cfaeb7e5b54c884ad794c5c1b7b72cc6dd63a6a",
+    "stage_k_matrix_sha256": "d71139015cd3b27683503984947ba692800e407aecd6f45d1ccf6e3c18ecd4d1",
+    "stage_k_package_sha256": "9bea19bfa163b47b909356f7efe274a8536851e54f1b136c1f882425bdeaf8f2",
+    "trusted_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09"
+  },
+  "checks": {
+    "all_11_request_event_bytes_scanned": "PASS",
+    "all_22_reservation_and_run_ids_covered": "PASS",
+    "creation_timestamp_targets_explicitly_scanned": "PASS",
+    "eight_meter_body_bytes_scanned": "PASS",
+    "eight_observation_object_bytes_scanned": "PASS",
+    "full_original_session_archive_line_scan": "PASS",
+    "later_analysis_not_treated_as_original_evidence": "PASS",
+    "line_11533_and_11534_hash_binding": "PASS",
+    "only_matching_archive_lines_11533_and_11534": "PASS",
+    "operator_tool_boundary_not_reservation_timing": "PASS",
+    "serialized_tool_output_target_scan": "PASS",
+    "stage_k_exact_package_and_matrix_binding": "PASS",
+    "target_fields_absent_in_exact_retained_records": "PASS",
+    "three_generic_operation_fields_classified_pending_unknown": "PASS",
+    "whole_archive_absence_not_claimed": "PASS",
+    "zero_final_classifications": "PASS"
+  },
+  "created_at": "2026-10-28T18:15:00Z",
+  "kind": "GRRR-z3w9 Stage L per-request evidence-search validation",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "search_valid_for_declared_boundary": true,
+    "spendable": null,
+    "valid": false,
+    "whole_archive_absence_established": false
+  },
+  "request_event_search": {
+    "all_events_scanned": 11,
+    "exact_target_fields_found": 0,
+    "pending_events_scanned": 3,
+    "settled_events_scanned": 8
+  },
+  "schema_version": 1,
+  "summary": {
+    "authenticated_principal_records_found": 0,
+    "candidate_record_sets": 8,
+    "clock_records_found": 0,
+    "duration_values": 8,
+    "ended_at_records_found": 0,
+    "final_classifications_made": 0,
+    "generic_operation_fields_found": 3,
+    "generic_operation_values": [
+      "unknown",
+      "unknown",
+      "unknown"
+    ],
+    "issuer_records_found": 0,
+    "operation_boundary_records_found": 0,
+    "operation_id_records_found": 0,
+    "response_ready_record_sets": 0,
+    "started_at_records_found": 0,
+    "window_digest_records_found": 0
+  },
+  "test_results": {
+    "deterministic_generation": "byte-identical",
+    "full_suite": "not-run-existing-host-pressure-gate",
+    "homebrew_python_3_14": "15/15 passed",
+    "miniconda_python_3_12": "15/15 passed"
+  },
+  "trusted_record_search": {
+    "exact_target_fields_found": 0,
+    "meter_bodies_scanned": 8,
+    "observation_objects_scanned": 8,
+    "records": 8,
+    "request_events_scanned": 11
+  }
+}

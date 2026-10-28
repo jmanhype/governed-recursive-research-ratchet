@@ -1,0 +1,103 @@
+{
+  "artifacts": {
+    "docs/evidence/spendability/stage-l/FINAL-REVIEW-APPROVED.md": {
+      "bytes": 1094,
+      "sha256": "cc2175fa5198e09fee0831e57cdb23f30ad844e38482bb11c7ba8d59291217d1"
+    },
+    "docs/evidence/spendability/stage-l/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 2741,
+      "sha256": "48bdcd471f45e316ac19a7b156a1b7d78c3f51f512fc6608edd7838c5d2b1628"
+    },
+    "docs/evidence/spendability/stage-l/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 2741,
+      "sha256": "0ed4526e58bd90bf945a740712ecace03631589b9bff9503e94df71a61fc4445"
+    },
+    "docs/evidence/spendability/stage-l/HANDOFF.md": {
+      "bytes": 3129,
+      "sha256": "959e8820523b7800a8662a6ae9678a7e3929249278c3e4d8398db479820ebdbe"
+    },
+    "docs/evidence/spendability/stage-l/REQUEST-SEARCH.json": {
+      "bytes": 23893,
+      "sha256": "5c13a5b140e8894894fa899e880ea83ec714d9984a030ee54eade57314fb29cf"
+    },
+    "docs/evidence/spendability/stage-l/REVIEW-REQUEST.md": {
+      "bytes": 3411,
+      "sha256": "826cf1cb8cfa9e7cc6e04c94f7cdf67a11b06c85053786aae89bc0dfc26ae6b1"
+    },
+    "docs/evidence/spendability/stage-l/VALIDATION.json": {
+      "bytes": 3362,
+      "sha256": "7b0ba56c4d27fc580c46a0253776db2cc8f9e4b44044c3af4c3cd9b0222c486c"
+    },
+    "research/spendability_request_search.py": {
+      "bytes": 21008,
+      "sha256": "81ac6a4782ddba467185089f378c51ecbed876d0f2b84971a22162447d690908"
+    },
+    "scripts/search-spendability-request-evidence": {
+      "bytes": 677,
+      "sha256": "5bd46bae84e610a1b1396a24b5e602eaa3d69adfe1323e1224683fea3bd798bc"
+    },
+    "tests/unit_spendability_request_search.py": {
+      "bytes": 9324,
+      "sha256": "ee0156e7ab3cb98a7abf2de9bbc52caa6335f5b5ae60f49fcebd36384e071933"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "3cfaeb7e5b54c884ad794c5c1b7b72cc6dd63a6a",
+  "created_at": "2026-10-28T18:15:00Z",
+  "evidence_scope": {
+    "all_11_request_events_scanned": true,
+    "all_22_candidate_ids_covered": true,
+    "creation_timestamp_targets_scanned": true,
+    "final_negative_classifications_made": 0,
+    "full_pinned_original_archive_line_scan": true,
+    "later_analysis_treated_as_original_evidence": false,
+    "protected_paths_accessed": [],
+    "raw_private_records_published": false,
+    "serialized_target_fields_scanned": true
+  },
+  "independent_review": "STAGE_L_FINAL_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage L per-request search WIP package",
+  "original_session_archive_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "search_valid_for_declared_boundary": true,
+    "spendable": null,
+    "valid": false,
+    "whole_archive_absence_established": false
+  },
+  "schema_version": 1,
+  "search_inventory": {
+    "authenticated_principal_records_found": 0,
+    "candidate_record_sets": 8,
+    "clock_records_found": 0,
+    "duration_values": 8,
+    "ended_at_records_found": 0,
+    "final_classifications_made": 0,
+    "generic_operation_fields_found": 3,
+    "generic_operation_values": [
+      "unknown",
+      "unknown",
+      "unknown"
+    ],
+    "issuer_records_found": 0,
+    "operation_boundary_records_found": 0,
+    "operation_id_records_found": 0,
+    "response_ready_record_sets": 0,
+    "started_at_records_found": 0,
+    "window_digest_records_found": 0
+  },
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "stage_k_package_sha256": "9bea19bfa163b47b909356f7efe274a8536851e54f1b136c1f882425bdeaf8f2"
+}

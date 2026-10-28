@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""Generate the GRRR-z3w9 Stage L per-request evidence search."""
+
+import json
+from pathlib import Path
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "research"))
+
+from spendability_request_search import (  # noqa: E402
+    build_request_search,
+    validate_request_search,
+)
+
+
+def main() -> int:
+    if sys.argv[1:]:
+        raise SystemExit("no arguments accepted")
+    record = build_request_search(ROOT)
+    validate_request_search(record, ROOT)
+    print(json.dumps(record, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
