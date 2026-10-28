@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-10-28T03:37:11Z
-content_hash: "sha256:3449bb4c03c34b5bbd191a1afaede082a0fb3d14af3f53b9f77975da1e5aa447"
+content_hash: "sha256:b0bec178bc673a81d10ba68ab027ab72dd2b9353dc129428b37323347faf479e"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2032,6 +2032,76 @@ status: in_progress
 - [x] Stage F external evidence request generated from the approved Stage E bundle.
 - [x] Stage F request independently reviewed and approved within its evidence-only scope.
 - [ ] Stage F package committed to `story/GRRR-z3w9` — awaiting separate authorization.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T03:37:11Z speed
+## 2026-10-28 Stage F Completed — Approved Evidence Request Committed; External Evidence Still Required
+
+Operator authorization was interpreted as “finish Stage F” after confirming fresh capacity. The exact independently approved Stage F package was committed without altering reviewed bytes. No protected `/Library/GRRR` access or mutation, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push occurred.
+
+### Fresh capacity gate
+
+Stable available-space readings:
+
+1. 88,018,804,736 bytes.
+2. 88,017,747,968 bytes.
+3. 88,017,698,816 bytes.
+
+Minimum: 88,017,698,816 bytes.
+
+- Preparation floor 15,350,000,000 bytes: PASS; margin 72,667,698,816 bytes.
+- Replay floor 16,106,127,360 bytes: PASS; margin 71,911,571,456 bytes.
+
+The committed `CAPACITY-PREFLIGHT.json` remains the historical record from package generation/review, when focused no-VM tests were allowed but the full suite was not. This later parent preflight and the full-suite runs below supersede only the operational capacity blocker; they do not alter the approved package.
+
+### Full no-guest suite — now passed
+
+- `/usr/bin/python3 -I -B -m unittest discover -s tests -p 'unit_*.py' -v`: **394 tests, OK**.
+- `/opt/homebrew/bin/python3 -I -B -m unittest discover -s tests -p 'unit_*.py' -v`: **394 tests, OK**.
+- No VM, corpus, QEMU, replay, or protected operation was launched.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `5ea8afca67fb980f69ed3a97a19c0b2a356c5a8b`.
+- Parent: `81e9785ccb20bea38a84aec70869b67f26d2d6cb`.
+- Subject: `feat(GRRR-z3w9): request external spendability evidence`.
+- Worktree is clean after commit.
+- Commit contains exactly 11 paths: three implementation/test files and eight Stage F evidence/package files.
+- Approved package SHA256 remains:
+  `388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23`.
+
+### Final verification
+
+- Deterministic regeneration remained byte-identical to `REQUEST.json`.
+- All 10 package members and sizes matched the approved manifest.
+- Request inventory remained exactly 30 unique items.
+- `spendable=null`, `valid=false`, `execution_authorized=false`, no allowed mutations, and all authority flags remained false.
+- `pvg verify ... --include-tests`: PASS.
+- `git diff --cached --check` and `git diff --check`: PASS.
+
+### Handoff and claim
+
+Stage F is complete as an evidence-request package. It does not supply the requested external history and does not make the accounting store spendable. The next blocking input is an operator-owned external evidence response conforming to `docs/evidence/spendability/stage-f/HANDOFF.md`; absence claims require exact search boundaries. The story claim is released because no further developer action can progress until that evidence is supplied and separately reviewed.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently approved Stage F request package committed at `5ea8afca67fb980f69ed3a97a19c0b2a356c5a8b`.
+- Full no-guest unit suites passed 394/394 on both required interpreters after capacity recovered.
+- Story worktree is clean; claim released awaiting external evidence.
+
+### proof
+- [x] Stage F request generated from approved Stage E inputs.
+- [x] Stage F request independently approved.
+- [x] Stage F package committed without post-review mutation.
+- [x] Capacity and full no-guest suite blockers cleared for this stage.
+- [ ] External evidence response supplied and independently classified.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
