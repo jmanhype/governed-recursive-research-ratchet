@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T18:02:44Z
-content_hash: "sha256:4c9691d11016bfdd098fecdeeb4be6d3b431f40ca973b5fdd3520c6deebf8ff3"
+updated_at: 2026-10-28T18:18:19Z
+content_hash: "sha256:6a7a6d68be2457c6ec8ec66375f2033a8bf5443ebe204599957c7826ba4f70fc"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2803,6 +2803,74 @@ status: in_progress
 - [x] Missing principal receipts, operation IDs, UTC intervals, creation timestamps, custody classifications, and final classifications retained explicitly.
 - [x] Zero final classifications and zero authority granted.
 - [ ] Stage K WIP commit authorized and performed.
+- [ ] Original per-request dispatcher/evaluator records located.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T18:18:19Z speed
+## 2026-10-28 Operator-Authorized Stage J and K Commits — Completed
+
+Operator authorized committing the independently reviewed Stage J and Stage K WIP packages in order.
+
+### Stage J commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `d780c7d90655d75ef76d6e352417394258caef84`.
+- Parent: `9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d`.
+- Subject: `evidence(GRRR-z3w9): bind trusted execution authorization`.
+- Worktree contained only Stage K WIP after the commit.
+- Independently approved Stage J package SHA-256 remains:
+  `7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e`.
+- The commit contains exactly 13 paths: three implementation/test files and ten Stage J evidence/package files.
+- Post-commit retained-authorization validation was deterministic and required no protected access.
+
+Before commit, Stage J focused tests passed 12/12 on both Homebrew Python 3.14.3 and Miniconda Python 3.12.7. A staged whitespace warning reported one trailing blank line in a reviewed source file; exact reviewed bytes were preserved rather than mutated after review.
+
+### Stage K commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `3cfaeb7e5b54c884ad794c5c1b7b72cc6dd63a6a`.
+- Parent: `d780c7d90655d75ef76d6e352417394258caef84`.
+- Subject: `evidence(GRRR-z3w9): map per-record spendability gaps`.
+- Worktree is clean after the commit.
+- Independently approved Stage K package SHA-256 remains:
+  `9bea19bfa163b47b909356f7efe274a8536851e54f1b136c1f882425bdeaf8f2`.
+- The commit contains exactly 13 paths: three implementation/test files and ten Stage K evidence/package files.
+- After Stage J commit and before Stage K commit, Stage K deterministic generation matched the saved matrix and reproduced the full original session archive hash.
+- Stage K focused tests passed 14/14 on both interpreters.
+- Post-commit Stage K deterministic/full-archive validation matched the saved matrix.
+
+### Preserved result
+
+- Eight candidate record sets.
+- Common authorization binding validated.
+- Numeric evaluator/runner mapping validated.
+- Common ledger issuer UID 320 validated.
+- Eight request/observation/meter custody chains preserved.
+- Zero per-request authenticated principal records.
+- Zero explicit dispatch operation IDs.
+- Zero reservation-specific UTC intervals.
+- Zero response-ready record sets.
+- Zero final classifications.
+- `spendable=null`; no allowed mutations or execution authority.
+
+No protected-path access occurred during the commits. No spendability write, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred. The story remains open/blocked and is not delivered or accepted.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently reviewed Stage J package committed at `d780c7d90655d75ef76d6e352417394258caef84`.
+- Independently reviewed Stage K package committed at `3cfaeb7e5b54c884ad794c5c1b7b72cc6dd63a6a`.
+- Story worktree is clean.
+
+### proof
+- [x] Stage J retained authorization package committed.
+- [x] Stage K per-record evidence matrix committed.
+- [x] Both post-commit deterministic validations passed.
 - [ ] Original per-request dispatcher/evaluator records located.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
