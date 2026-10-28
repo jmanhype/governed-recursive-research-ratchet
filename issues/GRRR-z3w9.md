@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T18:52:08Z
-content_hash: "sha256:0d50937474e403ef8d1c93a7d7277cb87b2343c406cc03cb5cd7010a6400289f"
+updated_at: 2026-10-28T18:54:18Z
+content_hash: "sha256:29543b884623dc3e45481cb15d66956881f02f8cdcf6ec3ed14a7145ec622cf2"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2968,3 +2968,42 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T18:54:18Z speed
+## 2026-10-28 Stage L Per-Request Search — Final Review Approved, Uncommitted
+
+Operator explicitly approved the final independent review after two prior Stage L rejections.
+
+### Final review
+
+Fresh reviewer returned:
+
+`STAGE_L_FINAL_REVIEW: APPROVED`
+
+The reviewer verified all listed artifact identities, including corrected `REQUEST-SEARCH.json` SHA-256 `5c13a5b140e8894894fa899e880ea83ec714d9984a030ee54eade57314fb29cf`. Exact regeneration confirmed the full pinned archive scan, only matching lines 11533/11534, all 22 identifiers, all 11 request events, eight observations, eight meter bodies, serialized target scan, explicit creation timestamp targets, and the pending-unknown operation distinction. Focused tests passed 15/15 on both interpreters.
+
+### WIP package
+
+- Package: `docs/evidence/spendability/stage-l/PACKAGE.json`.
+- SHA256 `56bc2c82accb6530f1a479ad0b23408077a173e2ee7e2f9fcc41bc1e0099df53`.
+- Ten exact-hash members.
+- All authority flags remain false.
+- Outcome remains declared-boundary search valid, response-ready false, spendability null, no allowed mutations, and no execution authority.
+
+Stage L remains uncommitted because commit authorization was not provided. Story claim is released after this handoff.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage L declared-boundary search is finally independently approved and packaged as WIP.
+
+### proof
+- [x] Full pinned original archive scanned.
+- [x] All 22 reservation/run identifiers covered.
+- [x] All 11 request events scanned.
+- [x] Serialized target fields and creation timestamps scanned.
+- [x] Eight candidates remain unclassified and response-not-ready.
+- [x] Final independent review approved.
+- [ ] Stage L WIP commit authorized and performed.
+- [ ] Current story replay ACs remain unmet.
