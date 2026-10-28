@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T04:37:54Z
-content_hash: "sha256:b2787d50daf49f51282719f991b3c1e6b1e08d23798c1df13aded8cda29cea99"
+updated_at: 2026-10-28T04:48:07Z
+content_hash: "sha256:68a764fba22145ec132aef9b721f17c90bcfda742abbecfe77a5a2dd88984929"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2344,6 +2344,62 @@ status: in_progress
 - [x] Zero final classifications or authority granted.
 - [x] Independent response-readiness review approved.
 - [ ] Stage H WIP commit authorized and performed.
+- [ ] Issuer/authorization/timing/custody evidence located and independently classified.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T04:48:07Z speed
+## 2026-10-28 Operator-Authorized Stage H Commit — Completed
+
+Operator authorized committing the independently reviewed Stage H response-readiness WIP package to `story/GRRR-z3w9`, with explicit denials of reconciliation, replay, promotion, admission, merge, and push.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `2c8fddf2a480a5eca8ac0dd577e3e7658c3c8e0f`.
+- Parent: `a43e7413c3383d74578931620d212465441b1f3d`.
+- Subject: `feat(GRRR-z3w9): map spendability response readiness`.
+- Worktree is clean after commit.
+- The commit contains exactly 11 paths: three implementation/test files and eight Stage H package/evidence files.
+- Independently approved Stage H package SHA256 remains:
+  `12c4d2ff2a042588af5b9570d1eff68dd84475a87131bef83841cdca0a37d478`.
+
+### Verification
+
+- All 10 Stage H package members and byte sizes matched the manifest before commit.
+- Focused Stage H tests before commit:
+  - Homebrew Python 3.14.3: 11/11 passed.
+  - Miniconda Python 3.12.7: 11/11 passed.
+- Deterministic response-readiness regeneration was byte-identical across both interpreters.
+- Post-commit matrix regeneration matched the committed matrix.
+- Post-commit package member verification passed.
+- `pvg verify --include-tests`: PASS.
+- Post-commit `git diff --check`: PASS.
+
+A pre-commit staged-diff check reported one trailing blank line in the reviewed `HANDOFF.md`. The exact reviewed artifact bytes were preserved rather than mutated after review; the post-commit working-tree diff check passed.
+
+### Preserved state
+
+- Stage H remains readiness-only: eight candidate record sets, zero response-ready records, 22 not-ready items, and zero final classifications.
+- `spendable=null`; no mutations or execution are allowed.
+- Story remains open/blocked and is not delivered or accepted.
+- The unresolved full-suite host-pressure/process-table gate remains disclosed and is not claimed as acceptance.
+- No protected `/Library/GRRR` access, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently approved Stage H response-readiness package committed at `2c8fddf2a480a5eca8ac0dd577e3e7658c3c8e0f`.
+- Story branch worktree is clean.
+
+### proof
+- [x] Stage H response-readiness matrix generated and independently approved.
+- [x] Stage H package committed without post-review semantic mutation.
+- [x] Zero final classifications and zero response-ready records preserved.
 - [ ] Issuer/authorization/timing/custody evidence located and independently classified.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
