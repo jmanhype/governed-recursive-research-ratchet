@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T04:22:28Z
-content_hash: "sha256:6e9bc7528b8f6ef5f38877a22ef5302734d1fa347bde768d642d540ed31899ce"
+updated_at: 2026-10-28T04:32:28Z
+content_hash: "sha256:0242617d169faef8df87e78a43d9ca34be76b15f45204818b1fea925eec74d72"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2206,3 +2206,29 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T04:32:28Z speed
+## 2026-10-28 Operator-Authorized Stage G Commit — Completed
+
+Operator authorized committing the independently reviewed Stage G WIP package to `story/GRRR-z3w9`.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `a43e7413c3383d74578931620d212465441b1f3d`.
+- Parent: `5ea8afca67fb980f69ed3a97a19c0b2a356c5a8b`.
+- Subject: `feat(GRRR-z3w9): validate external evidence candidates`.
+- Worktree is clean after commit.
+- The commit contains exactly 15 paths: three implementation/test files and 12 Stage G package/evidence files.
+- Approved Stage G package SHA256 remains `d00b35c07f2b482f3441a767d179c5e163a27f0f2db4ff8544c727a7da44f4ca`.
+
+### Pre/post commit verification
+
+- All 14 package members and sizes matched the package manifest.
+- Deterministic candidate-index regeneration was byte-identical across Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Focused Stage G tests before commit: 13/13 passed on both interpreters.
+- Post-commit deterministic regeneration matched the committed candidate index.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+
+The unresolved full-suite process-table gate remains disclosed in the package and is not acceptance. No protected access, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push occurred.
