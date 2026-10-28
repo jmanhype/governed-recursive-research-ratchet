@@ -1,0 +1,107 @@
+{
+  "artifacts": {
+    "docs/evidence/replay-authority/stage-n/CONTRACT.json": {
+      "bytes": 5957,
+      "sha256": "20a79ab0121454e43c98328641a3c8fd0b84efa7298a52a158a728efe5bce135"
+    },
+    "docs/evidence/replay-authority/stage-n/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 4839,
+      "sha256": "f9ed80c32923ba9e1faaeb4461ba5823dda364bc33e436d13902c1344a9719d0"
+    },
+    "docs/evidence/replay-authority/stage-n/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 4839,
+      "sha256": "ec7add9cf6aba06677aa36e4963b7418431440c434b946963b93b0cc6c2dbde3"
+    },
+    "docs/evidence/replay-authority/stage-n/FULL-HOMEBREW-3.14.log": {
+      "bytes": 613,
+      "sha256": "89836a1bf59068efbac2c67cddadef73e2c365ee90161bdbd000154061070924"
+    },
+    "docs/evidence/replay-authority/stage-n/FULL-MINICONDA-3.12.log": {
+      "bytes": 613,
+      "sha256": "d56d5881cb378d848f0b174802b99cadcc203c30da4d31f18a2d285cc08d5c31"
+    },
+    "docs/evidence/replay-authority/stage-n/NARROW-REVIEW-REQUEST.md": {
+      "bytes": 2626,
+      "sha256": "49c628d6bf8dfb4c909ff86b56878f447d6dbecc6def9573fa0486cd13000252"
+    },
+    "docs/evidence/replay-authority/stage-n/REPORT.md": {
+      "bytes": 3825,
+      "sha256": "95054ddac3083b6109842d2bad72e0637bd7bb282b4b8ff9485954b30c6be9e1"
+    },
+    "docs/evidence/replay-authority/stage-n/REVIEW-APPROVED.md": {
+      "bytes": 1294,
+      "sha256": "d7f864c75dd9850c2a843b4de98a87eb15598139a94d23b7e7816bfde15beece"
+    },
+    "docs/evidence/replay-authority/stage-n/REVIEW-REJECTED.md": {
+      "bytes": 1096,
+      "sha256": "5d59468f456e8f69f290f96e948c80c3a733ffe2b0dcde431be937c06a7b8ee5"
+    },
+    "docs/evidence/replay-authority/stage-n/REVIEW-REQUEST.md": {
+      "bytes": 4044,
+      "sha256": "bda1259b8ba404963b0f3bd7a6c4f74d10854e45ebb504b628c50e1de0954845"
+    },
+    "docs/evidence/replay-authority/stage-n/SUMMARY.json": {
+      "bytes": 1385,
+      "sha256": "ed2790014f2610f90c2957024ba90191f42c85a89d4724a302941519e5a575e7"
+    },
+    "research/replay_successor_contract.py": {
+      "bytes": 17993,
+      "sha256": "30a78a0733fb826cf02f83dddf54696dc0dd3fd456d189f77e96fed72714382f"
+    },
+    "scripts/emit-replay-successor-contract": {
+      "bytes": 912,
+      "sha256": "c6eebfc5e7e5feaa8029a6bfc46901e7a01c1996fa06f0f1a59226fd575f71cf"
+    },
+    "scripts/show-replay-successor-contract": {
+      "bytes": 583,
+      "sha256": "068fccdc9e313ebd9f211a6d0c4276be9c93a70d96a5d811972103cdcbfce7f1"
+    },
+    "tests/unit_replay_successor_contract.py": {
+      "bytes": 16722,
+      "sha256": "9def6292e95387dc9cacfe4c18e26e8b041da260866869a895d708ea79808b20"
+    },
+    "tests/unit_spendability_stage_c.py": {
+      "bytes": 32674,
+      "sha256": "061018f5ea6de0805fb886153446ea12778fab43a8412913b87f79bc3e062c15"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d",
+  "basis": {
+    "predecessor_active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "predecessor_database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "stage_l_package_sha256": "56bc2c82accb6530f1a479ad0b23408077a173e2ee7e2f9fcc41bc1e0099df53",
+    "stage_m_package_sha256": "c65aedd7f7a2f861ef5593ba9705981ca42508bf6f3f12a4f23787381d12df0b"
+  },
+  "created_at": "2026-10-28T20:45:00Z",
+  "independent_review": "STAGE_N_NARROW_REWORK_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage N replay-successor authority contract WIP package",
+  "operator_authorization": "Authorized begin",
+  "outcome": {
+    "allowed_mutations": [],
+    "candidate_contract_valid": true,
+    "design_only": true,
+    "execution_authorized": false,
+    "predecessor_history_resolved": false,
+    "predecessor_unresolved_holds": 3,
+    "protected_paths_accessed": [],
+    "spendable": null
+  },
+  "review_sequence": {
+    "initial": "STAGE_N_SUCCESSOR_CONTRACT_REVIEW: REJECTED",
+    "narrow": "STAGE_N_NARROW_REWORK_REVIEW: APPROVED",
+    "rework": "correct exact Stage A hold ID and add retained-baseline derivation"
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself"
+}

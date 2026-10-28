@@ -1,0 +1,50 @@
+{
+  "aggregate_session_execution_ceiling_us": 1920000000,
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "binding_version": 4,
+  "ceiling_basis": "operator-approved-incremental-amendment-required-before-any-charge",
+  "decision": "candidate-fresh-replay-successor-poc",
+  "implementation_status": "design-only",
+  "maximum_guest_launches": 12,
+  "modes": [
+    "normal",
+    "failed-rebuild",
+    "interruption",
+    "two-failures"
+  ],
+  "predecessor_history": {
+    "all_original_ceilings_encumbered": true,
+    "evidence_boundary": "retained-original-records-only",
+    "final_classifications_made": 0,
+    "response_ready": false,
+    "spendable": null,
+    "status": "unresolved",
+    "whole_archive_absence_established": false
+  },
+  "predecessor_unresolved_holds": 3,
+  "profile": "independent-replay",
+  "proposed_ceiling": {
+    "currency": "USD",
+    "execution_us": 1920000000,
+    "money_cents": 0,
+    "review_us": 0
+  },
+  "receipt_sha256": "4d2051326a7c6edc749c0c7ef5763115dbb82ea1d0807e6ffb5ee68a57127bc2",
+  "relationship": "fresh-successor-not-reconciliation",
+  "schema_version": 1,
+  "session_maximum": {
+    "currency": "USD",
+    "execution_us": 480000000,
+    "money_cents": 0,
+    "review_us": 0
+  }
+}

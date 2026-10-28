@@ -1,0 +1,57 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "audited_active_binding_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "persistent_budget_py_sha256": "78f0e145d902dbeadbb1693055551dfdf59aee16d1bc2d5fd4bc4c403bcaaf32",
+    "replay_py_sha256": "1ed263671fe487e27f4189d435d17af19d49e46fb6a8b6065a6f5b4e8324105f",
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "story_head": "c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d"
+  },
+  "checks": {
+    "actual_persistent_store_profile_contracts": "PASS",
+    "actual_replay_preflight_contract": "PASS",
+    "committed_stage_a_v3_baseline_binding": "PASS",
+    "five_binding_variants_classified": "PASS",
+    "no_gate_relaxation_or_protected_mutation": "PASS",
+    "no_replay_capable_variant": "PASS",
+    "v1_four_profile_preflight_pass_store_fail": "PASS",
+    "v1_three_profile_store_pass_preflight_fail": "PASS",
+    "v2_v3_schema_pass_preflight_fail_read_only": "PASS"
+  },
+  "created_at": "2026-10-28T20:00:00Z",
+  "finding": {
+    "classification": "inconsistent-authority-state-machine",
+    "detail": "Replay preflight requires v1 plus independent-replay, but the persistent-store v1 contract permits only the legacy three profiles; v2/v3 include independent-replay but are frozen/read-only.",
+    "required_next_step": "Design and independently review a new binding authority contract; do not relax preflight or mutate the existing v3 store."
+  },
+  "kind": "GRRR-z3w9 Stage M replay-authority audit validation",
+  "outcome": {
+    "allowed_mutations": [],
+    "execution_authorized": false,
+    "protected_access": false,
+    "replay_possible": false,
+    "spendable": null
+  },
+  "schema_version": 1,
+  "summary": {
+    "preflight_pass_variants": 1,
+    "replay_capable_variants": 0,
+    "store_schema_pass_variants": 4,
+    "variants_audited": 5,
+    "writable_store_variants": 1
+  },
+  "test_results": {
+    "deterministic_generation": "byte-identical",
+    "homebrew_python_3_14": "12/12 passed",
+    "miniconda_python_3_12": "12/12 passed"
+  }
+}

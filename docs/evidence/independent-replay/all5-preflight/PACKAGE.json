@@ -1,0 +1,88 @@
+{
+  "artifacts": {
+    "docs/evidence/independent-replay/all5-preflight/REPORT.md": {
+      "bytes": 3341,
+      "sha256": "4e064bfc3f3a8cfa967fcb9138938cab8515d1723b387d6677e9150ed9c55410"
+    },
+    "docs/evidence/independent-replay/all5-preflight/REVIEW-APPROVED.md": {
+      "bytes": 863,
+      "sha256": "7cc47f09d3a34a6dfecd0257908c3fe7d1ebc4f34be0a5e72d7515e3c00e7080"
+    },
+    "docs/evidence/independent-replay/all5-preflight/focused-clt39.log": {
+      "bytes": 2132,
+      "sha256": "6cad7fc48723bf2df2b1d75984b1b8fee6fec181fdd9de3e5c5bd432e08bbcde"
+    },
+    "docs/evidence/independent-replay/all5-preflight/focused-homebrew314.log": {
+      "bytes": 3065,
+      "sha256": "ed5b60aee478e4ab78ab7a7907dd06631b673bc418e9697b5286c27d8cd43c82"
+    },
+    "docs/evidence/independent-replay/all5-preflight/full-clt39.log": {
+      "bytes": 50307,
+      "sha256": "c30f9374bc90241c9699ebfc6a9a382bdd4f2571a45e7511275bae6d2fdf730a"
+    },
+    "docs/evidence/independent-replay/all5-preflight/full-homebrew314.log": {
+      "bytes": 74281,
+      "sha256": "072d3fdde1b9dfb5733de6fbdfabf2ab79b55c093e7e2363afa09ea259162088"
+    },
+    "docs/evidence/independent-replay/all5-preflight/live-gate-clt39.log": {
+      "bytes": 1091,
+      "sha256": "e62a9847a37cc5da35427bb7fcfc9714fb5963d6a469866de190e8e718692a7e"
+    },
+    "docs/evidence/independent-replay/all5-preflight/package-preflight.json": {
+      "bytes": 434,
+      "sha256": "6e482a5b1a876784a0c7259dff85a31e7ebc732584abb8b05ad893b68eecce00"
+    },
+    "docs/evidence/independent-replay/all5-preflight/runtime-preflight.json": {
+      "bytes": 230,
+      "sha256": "b4eac4d54b8f0d6d67eebd85e88791c013fc219627b56a9c586774feb0561a5a"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d",
+  "blockers": {
+    "accounting_authority": "active v3 read-only binding; reconciliation/replay authorization separately required",
+    "downstream_dependencies": "GRRR-dbbi/GRRR-34ve/GRRR-fmvp/GRRR-6sso remain structurally blocked",
+    "live_identity": "dedicated UID 320/321 execution path required"
+  },
+  "created_at": "2026-10-28T19:30:00Z",
+  "independent_review": "ALL_FIVE_KICKOFF_NARROW_REVIEW: APPROVED",
+  "kind": "GRRR all-five milestone kickoff preflight package",
+  "operator_authorization": "Begin all 5",
+  "outcome": {
+    "all_five_kickoff_safe": "dependency_order_preserved",
+    "allowed_mutations": [],
+    "current_story_advanced": true,
+    "downstream_story_started": false,
+    "execution_authorized": false,
+    "live_replay_executed": false,
+    "spendable": null
+  },
+  "results": {
+    "focused_replay_prerequisites_clt39": "20/20 passed",
+    "focused_replay_prerequisites_homebrew314": "20/20 passed",
+    "full_no_guest_clt39": "472/472 passed",
+    "full_no_guest_homebrew314": "472/472 passed",
+    "mandatory_live_gate": "FAIL_CLOSED_DEDICATED_UID_GID_REQUIRED",
+    "package_preflight": "PASS",
+    "replay_dispatch": "not-run",
+    "runtime_preflight": "PASS"
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "story_inventory": {
+    "GRRR-34ve": "queued_blocked_by_GRRR-z3w9",
+    "GRRR-6sso": "queued_capstone_blocked_by_all_predecessors",
+    "GRRR-dbbi": "queued_blocked_by_GRRR-z3w9",
+    "GRRR-fmvp": "queued_blocked_by_GRRR-dbbi_and_GRRR-34ve",
+    "GRRR-z3w9": "in_progress_current"
+  }
+}

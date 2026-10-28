@@ -1,0 +1,17 @@
+test_actual_preflight_accepts_only_hypothetical_v1_four_profiles (unit_replay_authority_audit.ReplayAuthorityAudit.test_actual_preflight_accepts_only_hypothetical_v1_four_profiles) ... ok
+test_audit_uses_live_source_profile_contracts (unit_replay_authority_audit.ReplayAuthorityAudit.test_audit_uses_live_source_profile_contracts) ... ok
+test_audited_active_binding_is_committed_v3 (unit_replay_authority_audit.ReplayAuthorityAudit.test_audited_active_binding_is_committed_v3) ... ok
+test_classification_and_authority_injection_are_rejected (unit_replay_authority_audit.ReplayAuthorityAudit.test_classification_and_authority_injection_are_rejected) ... ok
+test_finding_demands_new_contract_not_gate_relaxation (unit_replay_authority_audit.ReplayAuthorityAudit.test_finding_demands_new_contract_not_gate_relaxation) ... ok
+test_no_variant_can_both_pass_preflight_and_open_writable_replay (unit_replay_authority_audit.ReplayAuthorityAudit.test_no_variant_can_both_pass_preflight_and_open_writable_replay) ... ok
+test_record_remains_fail_closed_and_powerless (unit_replay_authority_audit.ReplayAuthorityAudit.test_record_remains_fail_closed_and_powerless) ... ok
+test_record_revalidates_by_exact_regeneration (unit_replay_authority_audit.ReplayAuthorityAudit.test_record_revalidates_by_exact_regeneration) ... ok
+test_saved_audit_matches_exact_regeneration_and_hash (unit_replay_authority_audit.ReplayAuthorityAudit.test_saved_audit_matches_exact_regeneration_and_hash) ... ok
+test_tampered_v1_profile_does_not_become_replay_capable (unit_replay_authority_audit.ReplayAuthorityAudit.test_tampered_v1_profile_does_not_become_replay_capable) ... ok
+test_the_two_partial_successes_fail_for_opposite_reasons (unit_replay_authority_audit.ReplayAuthorityAudit.test_the_two_partial_successes_fail_for_opposite_reasons) ... ok
+test_v2_and_v3_are_schema_valid_but_frozen (unit_replay_authority_audit.ReplayAuthorityAudit.test_v2_and_v3_are_schema_valid_but_frozen) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.004s
+
+OK

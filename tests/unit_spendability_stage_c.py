@@ -1,6 +1,7 @@
 """Stage C adapter and sidecar-schema tests; no protected path is opened."""
 
 from copy import deepcopy
+from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -37,30 +38,30 @@ def review_unresolved():
 
 def raw_schema_fixture() -> dict:
     baseline = json.loads(STAGE_A.read_bytes())
-    connection = sqlite3.connect(':memory:')
-    for ddl in EXPECTED_DDL.values():
-        connection.execute(ddl)
+    with closing(sqlite3.connect(':memory:')) as connection:
+        for ddl in EXPECTED_DDL.values():
+            connection.execute(ddl)
 
-    def dict_rows(cursor):
-        names = [description[0] for description in cursor.description]
-        return [dict(zip(names, row)) for row in cursor.fetchall()]
+        def dict_rows(cursor):
+            names = [description[0] for description in cursor.description]
+            return [dict(zip(names, row)) for row in cursor.fetchall()]
 
-    master = [{'type': row['type'], 'name': row['name'], 'table': row['tbl_name'], 'sql': row['sql']}
-              for row in dict_rows(connection.execute(
-                  "SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name"))]
-    tables = tuple(sorted(EXPECTED_DDL))
-    table_info = {table: dict_rows(connection.execute('PRAGMA table_info(' + table + ')'))
-                  for table in tables}
-    index_list = {table: dict_rows(connection.execute('PRAGMA index_list(' + table + ')'))
-                  for table in tables}
-    index_xinfo = {}
-    for table in tables:
-        index_xinfo[table] = {}
-        for item in index_list[table]:
-            index_xinfo[table][item['name']] = dict_rows(
-                connection.execute('PRAGMA index_xinfo("' + item['name'] + '")'))
-    foreign_keys = {table: dict_rows(connection.execute('PRAGMA foreign_key_list(' + table + ')'))
-                    for table in tables}
+        master = [{'type': row['type'], 'name': row['name'], 'table': row['tbl_name'], 'sql': row['sql']}
+                  for row in dict_rows(connection.execute(
+                      "SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name"))]
+        tables = tuple(sorted(EXPECTED_DDL))
+        table_info = {table: dict_rows(connection.execute('PRAGMA table_info(' + table + ')'))
+                      for table in tables}
+        index_list = {table: dict_rows(connection.execute('PRAGMA index_list(' + table + ')'))
+                      for table in tables}
+        index_xinfo = {}
+        for table in tables:
+            index_xinfo[table] = {}
+            for item in index_list[table]:
+                index_xinfo[table][item['name']] = dict_rows(
+                    connection.execute('PRAGMA index_xinfo("' + item['name'] + '")'))
+        foreign_keys = {table: dict_rows(connection.execute('PRAGMA foreign_key_list(' + table + ')'))
+                        for table in tables}
     before = baseline['database']['before']
     database = {name: before[name] for name in (
         'sha256', 'device', 'inode', 'mode', 'uid', 'gid', 'nlink', 'size', 'acl')}
