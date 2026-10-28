@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T17:03:55Z
-content_hash: "sha256:3ef1ff0e728ac4bf0a415654a244068f0e3e5f43d28bbd9cfa0e5e83274fced5"
+updated_at: 2026-10-28T17:11:59Z
+content_hash: "sha256:ffc8cae95e699d6bc6bd0bd608ff0ce5a6a88b82c8fcd3a13d32eb062a5a1218"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2579,3 +2579,106 @@ status: in_progress
 - [ ] Exact bytes validated against Stage I and pinned source.
 - [ ] Custody/publication safety reviewed.
 - [ ] All residual per-reservation gaps retained.
+
+### 2026-10-28T17:11:59Z speed
+## 2026-10-28 Stage J Retained Authorization Evidence — Independently Approved WIP, Uncommitted
+
+Operator authorization covered finishing Stage I and beginning Stage J. Stage J performed the previously identified exact read-only protected authorization-evidence gate.
+
+### Protected reads and identities
+
+Only these two exact protected paths were read:
+
+1. `/Library/GRRR/bootstrap/grrr-poc2-execution-approval-9d3df87-fix1.json`
+2. `/Library/GRRR/bootstrap/grrr-poc2-license-review-9d3df87-fix1.json`
+
+Both are root:wheel regular non-symlink files with mode `0444`, one link, and no ACL.
+
+- Execution approval: 1,074 bytes,
+  SHA256 `fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b`.
+- License review: 390 bytes,
+  SHA256 `ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d`.
+
+The pinned trusted-execution source at `9d3df8770f82a860f128a71d76528ff922911199` validated:
+
+- trusted plan configuration;
+- execution approval decision and profile/code bindings;
+- license-review decision and compiler/toolchain identities;
+- canonical approval-to-review hash;
+- shared authorization reference.
+
+Credential screening found no password, token, API key, secret, credential, or bearer marker. Exact durable copies are retained under `docs/evidence/spendability/stage-j/artifacts/`.
+
+### Reproducible retained validation
+
+- Capture SHA-256:
+  `717fc91765a4fd3c544e052ba74b00a149bb4a2f6babf2093efd118ef96a27a4`
+- Validation SHA-256:
+  `5f14d7647148f305125391104e092fdbc4e789bdd2ed9d6dff0ae26beed89b96`
+- Retained-evidence validation requires no further protected access.
+- Deterministic generation passed on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+
+### Result
+
+All eight Stage I candidate record sets now have a validated common authorization binding, but all remain non-ready and unclassified. Six per-request gaps remain:
+
+1. authenticated principal and issuer binding;
+2. numeric process UID mapping;
+3. reservation-specific dispatch operation identity and boundary;
+4. reservation-specific UTC measurement start/end, clock, and window digest;
+5. reservation-specific custody classification;
+6. independent final classifier decision.
+
+No record is classified `supplied`; spendability remains null.
+
+### Independent review
+
+Fresh reviewer returned:
+
+`STAGE_J_AUTHORIZATION_REVIEW: APPROVED`
+
+Reviewer independently observed 12/12 focused tests on both interpreters, reproduced the validation hash, verified all listed artifact identities, and confirmed zero classifications and no operational authority.
+
+### Tests
+
+- Stage J focused tests:
+  - Homebrew Python 3.14.3: 12/12 passed.
+  - Miniconda Python 3.12.7: 12/12 passed.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+
+### WIP package
+
+- Package: `docs/evidence/spendability/stage-j/PACKAGE.json`.
+- SHA256 `7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e`.
+- Twelve exact-hash members.
+- The package grants no protected-access or operational authority; it only records the already authorized completed read-only capture.
+- Stage J remains uncommitted because the operator authorized beginning Stage J, not committing it.
+
+### Boundaries
+
+- Protected paths read: exactly the two listed authorization artifacts.
+- Protected mutations: none.
+- No spendability write, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage J exact authorization capture, retained copies, reproducible validator, tests, review approval, and package are present as WIP.
+- Independent retained-evidence review approved the package scope.
+
+### proof
+- [x] Exact protected approval/review bytes read and hashed.
+- [x] Exact bytes validated by pinned source.
+- [x] Exact durable credential-free copies retained.
+- [x] Retained-evidence validation reproduces without protected access.
+- [x] Common authorization binding validated for all eight candidates.
+- [x] All eight candidates remain unclassified and non-ready.
+- [ ] Stage J WIP commit authorized and performed.
+- [ ] Reservation-specific principal, operation, timing, custody, and classifier evidence obtained.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
