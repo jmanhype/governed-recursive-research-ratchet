@@ -1,0 +1,874 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "created_at": "2026-10-28T00:15:00Z",
+    "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "stage_e_bundle_sha256": "52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467",
+    "stage_e_independent_review": "STAGE_E_NARROW_REWORK_REVIEW: APPROVED",
+    "stage_e_package_sha256": "36b9bfb4ae2f3d2245c4d60624e0c06548caf528578ab2ce888dfef4b2d0cc09"
+  },
+  "outcome": {
+    "allowed_mutations": [],
+    "execution_authorized": false,
+    "spendable": null,
+    "valid": false
+  },
+  "request_kind": "spendability-evidence-request-v1",
+  "request_summary": {
+    "coverage_items": 2,
+    "global_history_items": 1,
+    "lineage_items": 8,
+    "overhead_items": 5,
+    "pending_items": 3,
+    "provenance_items": 11,
+    "spendability_after_response": null,
+    "total_items": 30
+  },
+  "requested_evidence": [
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-1bf9d516461040c0baef70648c074d61",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "1bf9d516461040c0baef70648c074d61"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-5b7851814d764da1a3b3830abc9853ce",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "5b7851814d764da1a3b3830abc9853ce"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-69523b39a51c44739114313c9325028c",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "definitive non-dispatch or operation-completion proof",
+        "pending disposition and stale-handle evidence"
+      ],
+      "subject": "69523b39a51c44739114313c9325028c"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "7ecc4c7e17f742dc9ec2a8c6dada50f2"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-b34d8b9d106e42eab3a3e43daac98ddd",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "definitive non-dispatch or operation-completion proof",
+        "pending disposition and stale-handle evidence"
+      ],
+      "subject": "b34d8b9d106e42eab3a3e43daac98ddd"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-b954f6890a1e43e3b13f24298fa7ca33",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "b954f6890a1e43e3b13f24298fa7ca33"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-b95be730d6a5408886071d29848bbd05",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "b95be730d6a5408886071d29848bbd05"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-d375ce6a2d924646bec71df64e939a5b",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "definitive non-dispatch or operation-completion proof",
+        "pending disposition and stale-handle evidence"
+      ],
+      "subject": "d375ce6a2d924646bec71df64e939a5b"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-d3c965a29ab547c999e66bf0b60eca9f",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "d3c965a29ab547c999e66bf0b60eca9f"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-e38c33051ff64b4eab106e65a200fe06",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "e38c33051ff64b4eab106e65a200fe06"
+    },
+    {
+      "acceptable_sources": [
+        "original evaluator request records",
+        "authenticated scheduler or dispatcher records",
+        "original issuer or service receipts",
+        "read-only copies retained by the evaluator",
+        "independently reviewed backup or archive"
+      ],
+      "id": "PROV-eb045d10d73b48ef9d570a1cf870f6eb",
+      "kind": "reservation-provenance",
+      "rejection_conditions": [
+        "claimant-authored replacement log",
+        "digest-shaped value without original bytes",
+        "redaction that removes identity, boundary, or authorization",
+        "duplicate candidate with conflicting semantics",
+        "source cannot explain how and when it was created"
+      ],
+      "required_evidence": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "original meter-body bytes and digest",
+        "receipt-to-meter and actual-usage join proof"
+      ],
+      "subject": "eb045d10d73b48ef9d570a1cf870f6eb"
+    },
+    {
+      "acceptable_sources": [
+        "original dispatcher operation log",
+        "evaluator stop or halt record",
+        "original process-group cessation record",
+        "reviewed durable run archive"
+      ],
+      "id": "PEND-69523b39a51c44739114313c9325028c",
+      "kind": "pending-disposition",
+      "rejection_conditions": [
+        "elapsed time treated as disposition",
+        "missing final observation treated as non-dispatch",
+        "stop bit or exit code without cessation proof",
+        "recreated log without original provenance"
+      ],
+      "required_evidence": [
+        "request and idempotency identities",
+        "operation ID and dispatch outcome",
+        "final observation or explicit non-observation proof",
+        "cessation proof if dispatch occurred",
+        "evaluator stop/halt state and evidence",
+        "pre/post database hashes",
+        "stale-handle accounting"
+      ],
+      "subject": "69523b39a51c44739114313c9325028c"
+    },
+    {
+      "acceptable_sources": [
+        "original dispatcher operation log",
+        "evaluator stop or halt record",
+        "original process-group cessation record",
+        "reviewed durable run archive"
+      ],
+      "id": "PEND-b34d8b9d106e42eab3a3e43daac98ddd",
+      "kind": "pending-disposition",
+      "rejection_conditions": [
+        "elapsed time treated as disposition",
+        "missing final observation treated as non-dispatch",
+        "stop bit or exit code without cessation proof",
+        "recreated log without original provenance"
+      ],
+      "required_evidence": [
+        "request and idempotency identities",
+        "operation ID and dispatch outcome",
+        "final observation or explicit non-observation proof",
+        "cessation proof if dispatch occurred",
+        "evaluator stop/halt state and evidence",
+        "pre/post database hashes",
+        "stale-handle accounting"
+      ],
+      "subject": "b34d8b9d106e42eab3a3e43daac98ddd"
+    },
+    {
+      "acceptable_sources": [
+        "original dispatcher operation log",
+        "evaluator stop or halt record",
+        "original process-group cessation record",
+        "reviewed durable run archive"
+      ],
+      "id": "PEND-d375ce6a2d924646bec71df64e939a5b",
+      "kind": "pending-disposition",
+      "rejection_conditions": [
+        "elapsed time treated as disposition",
+        "missing final observation treated as non-dispatch",
+        "stop bit or exit code without cessation proof",
+        "recreated log without original provenance"
+      ],
+      "required_evidence": [
+        "request and idempotency identities",
+        "operation ID and dispatch outcome",
+        "final observation or explicit non-observation proof",
+        "cessation proof if dispatch occurred",
+        "evaluator stop/halt state and evidence",
+        "pre/post database hashes",
+        "stale-handle accounting"
+      ],
+      "subject": "d375ce6a2d924646bec71df64e939a5b"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-active",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "active"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-database_snapshot",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "database_snapshot"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-recovery_complete",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "recovery_complete"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-recovery_intent",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "recovery_intent"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-recovery_prior_active",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "recovery_prior_active"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-recovery_receipt",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "recovery_receipt"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-registration_prior_active",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "registration_prior_active"
+    },
+    {
+      "acceptable_sources": [
+        "protected ancestry artifact",
+        "independently reviewed installation record",
+        "reviewed recovery archive",
+        "reviewed registration archive"
+      ],
+      "id": "LINEAGE-registration_receipt",
+      "kind": "historical-lineage",
+      "rejection_conditions": [
+        "root ownership treated as authentication",
+        "partial artifact without transition lineage",
+        "postcondition hash absent",
+        "artifact replacement without recovery record"
+      ],
+      "required_evidence": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition"
+      ],
+      "subject": "registration_receipt"
+    },
+    {
+      "acceptable_sources": [
+        "original dispatcher log",
+        "evaluator event ledger",
+        "reviewed run archive",
+        "reviewed backup inventory"
+      ],
+      "id": "OPERATIONS-1",
+      "kind": "operation-history",
+      "rejection_conditions": [
+        "empty list without affirmative search boundary",
+        "duplicate snapshot counted as duplicate operation",
+        "run ID treated as reservation ID",
+        "effect inferred solely from exit code"
+      ],
+      "required_evidence": [
+        "complete operation inventory and unique identifiers",
+        "reservation/run/request joins",
+        "start/end boundaries and overlap map",
+        "outcome, cancellation, failure, stop, and replay state",
+        "trusted receipts for each effect"
+      ],
+      "subject": "dispatch-cancel-failure-stop-replay-history"
+    },
+    {
+      "acceptable_sources": [
+        "reviewed accounting exports",
+        "operator-owned archive",
+        "independently retained evaluator receipts",
+        "reviewed backup catalog"
+      ],
+      "id": "SIDE-STORES-1",
+      "kind": "side-store-history",
+      "rejection_conditions": [
+        "absence inferred only from current database",
+        "unexplained sidecar or duplicate ledger",
+        "manual adjustment without authorization",
+        "out-of-band effect without receipt"
+      ],
+      "required_evidence": [
+        "complete side-store and export inventory",
+        "manual adjustment and refund approvals",
+        "replay or duplicate-effect records",
+        "campaign/store lineage and joins",
+        "cost or disposition receipt for each effect"
+      ],
+      "subject": "side-ledger-export-adjustment-refund-replay-inventory"
+    },
+    {
+      "acceptable_sources": [
+        "reviewed preparation or selection records",
+        "reviewed execution and replay logs",
+        "review-session records",
+        "reviewed system telemetry"
+      ],
+      "id": "OVERHEAD-EXECUTION",
+      "kind": "overhead-domain",
+      "rejection_conditions": [
+        "empty overhead table treated as zero",
+        "unknown cost treated as zero upper bound",
+        "overlapping intervals summed twice",
+        "review cost substituted for execution cost"
+      ],
+      "required_evidence": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain"
+      ],
+      "subject": "execution"
+    },
+    {
+      "acceptable_sources": [
+        "reviewed preparation or selection records",
+        "reviewed execution and replay logs",
+        "review-session records",
+        "reviewed system telemetry"
+      ],
+      "id": "OVERHEAD-OTHER",
+      "kind": "overhead-domain",
+      "rejection_conditions": [
+        "empty overhead table treated as zero",
+        "unknown cost treated as zero upper bound",
+        "overlapping intervals summed twice",
+        "review cost substituted for execution cost"
+      ],
+      "required_evidence": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain"
+      ],
+      "subject": "other"
+    },
+    {
+      "acceptable_sources": [
+        "reviewed preparation or selection records",
+        "reviewed execution and replay logs",
+        "review-session records",
+        "reviewed system telemetry"
+      ],
+      "id": "OVERHEAD-PREPARATION",
+      "kind": "overhead-domain",
+      "rejection_conditions": [
+        "empty overhead table treated as zero",
+        "unknown cost treated as zero upper bound",
+        "overlapping intervals summed twice",
+        "review cost substituted for execution cost"
+      ],
+      "required_evidence": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain"
+      ],
+      "subject": "preparation"
+    },
+    {
+      "acceptable_sources": [
+        "reviewed preparation or selection records",
+        "reviewed execution and replay logs",
+        "review-session records",
+        "reviewed system telemetry"
+      ],
+      "id": "OVERHEAD-REVIEW",
+      "kind": "overhead-domain",
+      "rejection_conditions": [
+        "empty overhead table treated as zero",
+        "unknown cost treated as zero upper bound",
+        "overlapping intervals summed twice",
+        "review cost substituted for execution cost"
+      ],
+      "required_evidence": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain"
+      ],
+      "subject": "review"
+    },
+    {
+      "acceptable_sources": [
+        "reviewed preparation or selection records",
+        "reviewed execution and replay logs",
+        "review-session records",
+        "reviewed system telemetry"
+      ],
+      "id": "OVERHEAD-SELECTION",
+      "kind": "overhead-domain",
+      "rejection_conditions": [
+        "empty overhead table treated as zero",
+        "unknown cost treated as zero upper bound",
+        "overlapping intervals summed twice",
+        "review cost substituted for execution cost"
+      ],
+      "required_evidence": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain"
+      ],
+      "subject": "selection"
+    },
+    {
+      "acceptable_sources": [
+        "operator-owned historical archive",
+        "reviewed registration and recovery records",
+        "reviewed evaluator export",
+        "reviewed accounting custodian record"
+      ],
+      "id": "GLOBAL-HISTORY-1",
+      "kind": "global-historical-completeness",
+      "rejection_conditions": [
+        "known encumbrance treated as complete history",
+        "null or missing value converted to zero",
+        "current schema validity treated as historical completeness",
+        "review approval treated as authentication",
+        "absence inferred without a search boundary"
+      ],
+      "required_evidence": [
+        "complete campaign, store, profile, stage, and ceiling lineage",
+        "historical stop cause and observation record",
+        "paid-service decisions, proofs, and receipts",
+        "lost, truncated, never-created, and unauthenticated record inventory",
+        "complete recovery and interrupted-operation lineage",
+        "explicit boundary proving absence where no record exists"
+      ],
+      "subject": "registration-through-current-database-snapshot"
+    }
+  ],
+  "response_contract": {
+    "prohibited": [
+      "credentials or API tokens",
+      "unrelated private logs",
+      "proprietary source not needed to prove the item",
+      "raw private holdout fixtures",
+      "claimant-authored replacements",
+      "fabricated or inferred receipts",
+      "authority language granting reconciliation or replay"
+    ],
+    "required": [
+      "one response record per request item ID",
+      "classification: supplied, unavailable, lost, or never-created",
+      "raw artifact bytes or durable exact copy",
+      "SHA-256 and byte count for every artifact",
+      "source system, custodian, created_at, retrieved_at, and method",
+      "chain of custody and redaction justification",
+      "explicit search boundary for every unavailable claim"
+    ],
+    "validation_rule": "External records are evidence only; only the trusted evaluator and separately authorized review can classify spendability."
+  },
+  "schema_version": 1,
+  "status": "open",
+  "submission_guidance": {
+    "format": "canonical JSON index plus immutable artifact files",
+    "index_fields": [
+      "request_item_id",
+      "classification",
+      "artifact_sha256",
+      "byte_count",
+      "source",
+      "custodian",
+      "created_at",
+      "retrieved_at",
+      "method",
+      "chain_of_custody",
+      "redaction"
+    ],
+    "operator_review_required": true,
+    "partial_response_allowed": true,
+    "unavailable_item_requirement": "document exact repositories, time ranges, systems, custodians, and searches checked"
+  }
+}
