@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T18:31:49Z
-content_hash: "sha256:a966bc125b6812544eb13509100d149b078f0768abbe306b621a3f57e5688775"
+updated_at: 2026-10-28T18:46:34Z
+content_hash: "sha256:4e1054acb38de9e2a087450928d7272e61caba73f0f258923b59cd8f95ce9fe3"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2875,6 +2875,90 @@ status: in_progress
 - [x] Stage K per-record evidence matrix committed.
 - [x] Both post-commit deterministic validations passed.
 - [ ] Original per-request dispatcher/evaluator records located.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T18:46:34Z speed
+## 2026-10-28 Stage L Per-Request Search — Corrected WIP, Final Review Pending
+
+Operator authorization was “begin stage l.” Stage L performed a non-protected declared-boundary search for original per-request principal, issuer, operation, timing, clock, window, and creation-timestamp records. It did not access `/Library/GRRR`, reconcile, write spendability, replay, admit, promote, mutate production, merge, or push.
+
+### Implemented search
+
+- Bound exact Stage K package and matrix.
+- Hashed the pinned original operator root-session archive.
+- Scanned every line of that archive for all 22 reservation/run identifiers.
+- Proved lines 11533 and 11534 are the only candidate-ID-bearing lines.
+- Covered all 22 reservation/run identifiers.
+- Scanned exact JSON fields and target fields serialized inside string-valued tool output.
+- Independently scanned all 11 trusted request-event bodies, including the three pending requests.
+- Scanned all eight observation-object bodies and all eight meter bodies.
+- Added explicit `created_at` and `artifact_creation_timestamp` target checks.
+- Preserved all eight duration values without fabricating reservation intervals.
+- Did not treat later analysis sessions as original evidence.
+- Did not claim final unavailable/lost/never-created status.
+
+### Search result
+
+Inside the declared retained-original-record boundary:
+
+- authenticated principal fields: 0;
+- issuer fields: 0;
+- operation IDs: 0;
+- settled operation/request boundaries: 0;
+- `started_at`: 0;
+- `ended_at`: 0;
+- clock fields: 0;
+- window digests: 0;
+- creation timestamps: 0.
+
+The full serialized archive scan found three generic `operation` fields, all with value `unknown`; they are pending gate-error fields, not settled dispatch operation IDs or boundaries.
+
+All eight settled candidates remain unclassified and response-not-ready.
+
+### Review sequence
+
+1. Initial review rejected three real coverage defects:
+   - only eight of eleven request events were target-scanned;
+   - original archive used predetermined lines rather than full search and did not scan serialized output;
+   - artifact creation timestamp was not an explicit target.
+2. Correction implemented all three findings.
+3. Narrow re-review confirmed all implementation corrections and tests passed, but rejected only a stale `REQUEST-SEARCH.json` hash in `REVIEW-REQUEST.md`.
+4. The stale identity was corrected to:
+   `5c13a5b140e8894894fa899e880ea83ec714d9984a030ee54eade57314fb29cf`.
+
+Per Astra escalation discipline, no third Astra review was spawned automatically after two rejections of this brief. Final Stage L review is pending operator instruction.
+
+### Verification
+
+- Deterministic full-archive/request search:
+  - Homebrew Python 3.14.3: PASS.
+  - Miniconda Python 3.12.7: PASS.
+- Focused Stage L tests: 15/15 passed on both interpreters.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+
+Stage L remains uncommitted and is not independently approved in its corrected final identity. Story claim is released after this handoff.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage L request-search implementation, generated search, validation, tests, handoff, and corrected review request are present as uncommitted WIP.
+- All substantive rework findings are corrected; final review is pending.
+
+### proof
+- [x] Every line of the pinned original archive scanned.
+- [x] All 22 candidate IDs covered.
+- [x] All 11 request events target-scanned.
+- [x] Serialized tool-output target fields scanned.
+- [x] Creation timestamps explicitly targeted.
+- [x] Eight candidates remain unclassified and response-not-ready.
+- [ ] Corrected Stage L WIP independently approved.
+- [ ] Stage L WIP commit authorized and performed.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
