@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T19:09:23Z
-content_hash: "sha256:fe3cf697000e686943a72f587b6fcb2dcd478e12b75b5cf6458f7f330b79a9b7"
+updated_at: 2026-10-28T19:17:26Z
+content_hash: "sha256:cad10e9bbc5e9da35f84b48a7b7157c22f4aec6afe85e3b4173828ab78575343"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3036,3 +3036,56 @@ Operator authorization to begin all five remaining milestone stories was interpr
 - `git diff --check`: PASS.
 
 No protected access, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push occurred.
+
+### 2026-10-28T19:17:26Z speed
+## 2026-10-28 All-Five Kickoff — Current Story Advanced, Downstream Dependencies Preserved
+
+Operator authorization was “Begin all 5.” Work began in mandatory dependency order with `GRRR-z3w9`; the four downstream stories were inventoried and queued, not falsely claimed.
+
+### Current story
+
+- Stage L committed at `c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d`.
+- Unprivileged replay runtime preflight passed with canonical CLT Python 3.9.6 and runtime identity `59073b8282cb4333c7719d4eac417c061c82f534bf11873d26bf2b26f7531526`.
+- Replay package preflight validated the pinned corpus/source/specification.
+- Focused replay prerequisites: 20/20 on CLT 3.9 and Homebrew 3.14.
+- Full no-guest suites: 472/472 on CLT 3.9 and Homebrew 3.14.
+- Mandatory live replay gate correctly failed closed at `Dedicated UID/GID required`; 0 live tests and 0 replay dispatches.
+- Current protected blocker remains the v3 read-only cumulative accounting binding and separately required reconciliation/replay authorization.
+
+### All-five package
+
+- Package: `docs/evidence/independent-replay/all5-preflight/PACKAGE.json`.
+- SHA256 `4ceeccf4c5d94b31204187f22f0215754d3b8e1ef639437b7a8d686b1313018e`.
+- Nine exact-hash members.
+- Independent narrow review returned `ALL_FIVE_KICKOFF_NARROW_REVIEW: APPROVED`.
+
+The package remains uncommitted because the operator did not explicitly authorize committing this new all-five preflight package.
+
+### Dependency state
+
+1. `GRRR-z3w9` — current, advanced, live replay still blocked.
+2. `GRRR-dbbi` — queued, blocked by `GRRR-z3w9`.
+3. `GRRR-34ve` — queued, blocked by `GRRR-z3w9`.
+4. `GRRR-fmvp` — queued, blocked by `GRRR-dbbi` and `GRRR-34ve`.
+5. `GRRR-6sso` — final capstone, blocked by all predecessors.
+
+No protected accounting mutation, replay, promotion, admission, production mutation, merge, or push occurred. Story claim is released after this handoff.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Approved all-five kickoff preflight package is present as uncommitted WIP.
+- Full no-guest suites now pass on both interpreters.
+
+### proof
+- [x] Current story no-guest preflight advanced.
+- [x] Mandatory live replay identity gate retained as fail-closed.
+- [x] Four downstream stories inventoried and dependency-ordered.
+- [ ] All-five preflight package commit authorized and performed.
+- [ ] Accounting reconciliation/replay authorization gate resolved.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
