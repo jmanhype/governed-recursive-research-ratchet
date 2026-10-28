@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T22:00:34Z
-content_hash: "sha256:e3d9aa698ab7692f810279c93dcd3f93751fc4e0c7cccaafaa2071b8333e7e85"
+updated_at: 2026-10-28T22:01:04Z
+content_hash: "sha256:0f7e30ec6a3b2b2a9dabeeecfdfdaa3cead65e05a4ff265c98e0b1d6b2b65a1b"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3250,3 +3250,27 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T22:01:04Z speed
+## 2026-10-28 Operator-Authorized Stage O Commit — Completed
+
+Operator approval covered committing the independently approved Stage O runtime-adapter WIP and beginning Stage P exact v4 installer/authorization contract design with independent review. No protected access, reconciliation, replay, promotion, admission, production mutation, merge, or push was authorized.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `2051e7dd5378db6ed4c2057dd50aa3287bfe3525`.
+- Parent: `369276b7fb9f59946df4c00a700d26d76ebead04`.
+- Subject: `feat(GRRR-z3w9): design fail-closed v4 runtime adapter`.
+- Worktree is clean after commit.
+- No push occurred.
+
+### Verification before commit
+
+- Stage O package: 11/11 members PASS; package SHA-256 `283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b`.
+- Focused Stage O tests: 22/22 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Deterministic emitter matched retained `ADAPTER.json`.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+
+Stage P repository-only design now begins under the operator’s explicit denials.
