@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T22:01:04Z
-content_hash: "sha256:0f7e30ec6a3b2b2a9dabeeecfdfdaa3cead65e05a4ff265c98e0b1d6b2b65a1b"
+updated_at: 2026-10-28T22:46:31Z
+content_hash: "sha256:b592c3357ba9ea43f2bbaceb097b3d78dc71e9d6513b55f28c0b254bd715cd39"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3274,3 +3274,65 @@ Operator approval covered committing the independently approved Stage O runtime-
 - `git diff --check`: PASS.
 
 Stage P repository-only design now begins under the operator’s explicit denials.
+
+### 2026-10-28T22:46:31Z speed
+## 2026-10-28 Stage P Future v4 Installer/Authorization Contract — Narrow Review Approved, Uncommitted WIP
+
+Operator approval covered committing Stage O, then beginning Stage P exact v4 installer/authorization contract design and independent review. Stage P did not access or mutate `/Library/GRRR`, build or execute an installer, stage protected records, amend a budget, reconcile, execute replay, admit, promote, mutate production, merge, or push.
+
+### Implementation
+
+- Added `research/replay_successor_installer_contract.py`, `scripts/show-replay-successor-installer-contract`, and `tests/unit_replay_successor_installer_contract.py`.
+- The contract is design-only and performs no filesystem, SQLite, process, VM, credential, network, or protected-path access.
+- It binds exact Stage N/Stage O package identities, predecessor active/database/recovery identities, and story HEAD `2051e7dd5378db6ed4c2057dd50aa3287bfe3525`.
+- It names eight exact future source roles and protected artifact paths: installer entrypoint, v4 store schema, Stage N contract, Stage O runtime adapter, protected preflight, atomic publisher, postflight verifier, and failure preservation.
+- All future source, plan, review, and authorization hashes remain null/unissued.
+- Future install must be exclusive-parent, one-shot, predecessor-read-only, sibling-target-only, refuse-no-retry with evidence preservation, new-store-only rollback, and fully postflight-verified.
+- Operator authorization remains external and exact-hash bound. A structurally valid future authorization shape authenticates nothing and grants no installation authority in this design.
+- Installer authorization cannot amend budget, reconcile, dispatch replay, execute work, admit, promote, merge, or push; a separate budget amendment remains mandatory before any charge.
+
+### Review sequence
+
+Initial review returned `STAGE_P_INSTALLER_CONTRACT_REVIEW: REJECTED` because `schema_version=True` and `schema_version=1.0` passed equality checks. Correction makes both contract and issued-authorization validators integer-strict and adds boolean/float regressions.
+
+Fresh narrow reviewer returned:
+
+`STAGE_P_NARROW_REWORK_REVIEW: APPROVED`
+
+Reviewer independently reproduced both 27/27 focused suites, unchanged deterministic contract bytes, corrected hashes, isolation of the typing fix from the initially reviewed source/tests, and no unrelated semantic change.
+
+### Verification
+
+- Stage P focused tests: 27/27 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Full no-guest unit suites: 561/561 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Deterministic contract emission: byte-identical; retained contract SHA-256 `0c4f800bb4b1efd7f831094123e4afd082fa1d18eb8f32bf3a1c8b1649ec8267`.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+- Approved Stage P package SHA-256: `ba7e8a45486a21ff399027821d3b0bd1d21c6577730597f900f3c21fb192c0b1`.
+- Package member verification: 13/13 PASS.
+
+### State
+
+Stage P remains uncommitted because this authorization did not explicitly authorize committing the new WIP. Claim is released after this handoff. Future installer implementation, exact source/plan/review/operator bytes, protected staging/installation/postflight, budget amendment, dedicated identities, replay authorization, live four-mode replay, PM acceptance, merge, and push remain separate gates.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently approved Stage P package is present at `docs/evidence/replay-authority/stage-p/PACKAGE.json` with SHA-256 `ba7e8a45486a21ff399027821d3b0bd1d21c6577730597f900f3c21fb192c0b1`.
+- Base source commit is `2051e7dd5378db6ed4c2057dd50aa3287bfe3525`.
+
+### proof
+- [x] Design-only future v4 installer/authorization contract implemented and independently narrow-approved.
+- [x] Exact committed basis, source-role paths, safety behavior, and authorization separation are pinned.
+- [x] All future source/plan/review/authorization identities remain unissued.
+- [x] All authority remains false; separate budget amendment remains mandatory.
+- [ ] Stage P WIP commit authorized and performed.
+- [ ] Future installer implementation built and independently reviewed.
+- [ ] Exact installer/plan/review/operator bytes issued.
+- [ ] Protected staging/installation/postflight separately authorized.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
