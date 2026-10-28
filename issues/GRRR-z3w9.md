@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T04:32:29Z
-content_hash: "sha256:0377ec45f9dc7d626cb0ab8acb482414501495a7abd05356ebd50819ac44208a"
+updated_at: 2026-10-28T04:37:53Z
+content_hash: "sha256:c47b02528b789d100fa40930466dd9cfcffe9d0f5ae7746403dd110f704ca46d"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2262,3 +2262,90 @@ status: in_progress
 - [ ] Stage H response-readiness matrix generated and validated.
 - [ ] All 30 Stage F item IDs represented exactly once.
 - [ ] Zero final classifications or authority granted.
+
+### 2026-10-28T04:37:53Z speed
+## 2026-10-28 Stage H Response-Readiness WIP — Independently Approved, Uncommitted
+
+Operator scope was “begin Stage H” after authorizing the Stage G commit. Because no protected ancestry access was explicitly authorized, Stage H was limited to repository-retained candidate response-readiness and gap validation.
+
+### Generated result
+
+- Base Stage G commit: `a43e7413c3383d74578931620d212465441b1f3d`.
+- Matrix: `docs/evidence/spendability/stage-h/RESPONSE-READINESS.json`
+  SHA256 `d4aefba5c2f391f130b0319be3723b368cdbe4d21b13650a2d2acfbdb23341cf`.
+- All 30 Stage F request items are represented exactly once.
+- Eight settled-reservation candidate record sets are recognized.
+- **Zero candidate sets are response-ready.**
+- Twenty-two items remain not-ready.
+- Zero final classifications were made.
+
+### Blocking gaps retained for the eight candidates
+
+Even where request, observation, meter-body, receipt, and usage joins are present, final `supplied` classification remains blocked by missing or partial:
+
+- authenticated principal and issuer identity;
+- issuer code/toolchain/policy/runtime-profile identity;
+- approved request authorization;
+- dispatch operation identity and request boundary;
+- UTC measurement start/end, clock, and window digest;
+- artifact creation/retrieval timestamps;
+- source-system custodian and chain of custody;
+- retrieval method and independent custody review;
+- independent final classification.
+
+### Verification
+
+- Stage H focused tests:
+  - Homebrew Python 3.14.3: 11/11 passed.
+  - Miniconda Python 3.12.7: 11/11 passed.
+- Deterministic matrix regeneration was byte-identical across both interpreters.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+- Full suite was not rerun for Stage H because the existing host-pressure/process-table gate remains unresolved.
+
+### Independent review
+
+Fresh reviewer returned:
+
+`STAGE_H_READINESS_REVIEW: APPROVED`
+
+Reviewer independently ran 11/11 focused tests on both interpreters, regenerated the exact matrix hash, verified all 30 item mappings, confirmed zero response-ready candidates and zero final classifications, and verified tamper/authority rejection tests.
+
+### WIP package
+
+- Package: `docs/evidence/spendability/stage-h/PACKAGE.json`.
+- SHA256 `12c4d2ff2a042588af5b9570d1eff68dd84475a87131bef83841cdca0a37d478`.
+- Ten exact-hash members.
+- All authority flags remain false.
+- Outcome remains `response_ready=false`, `spendable=null`, no allowed mutations, and no execution authority.
+
+### State and next gates
+
+- Stage H WIP remains uncommitted because the operator authorized only the Stage G commit.
+- Story claim is released after this reviewed handoff.
+- Next actions require separate authorization:
+  1. commit the independently approved Stage H WIP package;
+  2. search for issuer/authorization/timing/custody records for the eight candidates;
+  3. separately authorize exact read-only protected ancestry-byte search or exhaustive external search receipts.
+- No protected `/Library/GRRR` access, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage H response-readiness matrix, validation, tests, handoff, approval, and package are present as uncommitted WIP.
+- Independent review approved response-readiness scope only.
+
+### proof
+- [x] Stage H candidate response-readiness matrix generated.
+- [x] All 30 request items represented once.
+- [x] Eight candidate record sets remain non-ready with explicit mandatory gaps.
+- [x] Zero final classifications or authority granted.
+- [x] Independent response-readiness review approved.
+- [ ] Stage H WIP commit authorized and performed.
+- [ ] Issuer/authorization/timing/custody evidence located and independently classified.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
