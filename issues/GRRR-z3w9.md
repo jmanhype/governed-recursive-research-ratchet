@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-27T23:57:27Z
-content_hash: "sha256:531be425faba0aaf8c386f2644d77cf0f42a6a0d0a3a007a4c9e332967b8b8ae"
+updated_at: 2026-10-28T00:13:59Z
+content_hash: "sha256:19f1bdb96b6532adfaefe9582e43f4d4d0b93ca68b9b05cce9f7467d35ac0967"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -1962,3 +1962,77 @@ loop: story branch already merged into epic/GRRR-2t3h (8204692) by a prior sessi
 
 ### 2026-10-27T02:21:22Z speed
 EXPECTED: The five live independent-replay ACs remain unmet. DELIVERED: Stage A read-only baseline and Stage B approved gap-remediation design only. GAP: No fresh trusted replay, specification-confirmed reproduction, complete ReplayReceipt, four real replay modes, or retained two-failure sequence. FIX: Keep this story open/blocked at the next separately authorized evidence/implementation gate; recovery must not misclassify the partially integrated branch as delivery.
+
+### 2026-10-28T00:13:59Z speed
+## 2026-10-28 Stage F External Evidence Request — Independently Approved, Uncommitted
+
+Operator scope was interpreted as begin Stage F only: generate the precise external evidence request from the approved fail-closed Stage E bundle, verify it, obtain independent review, and preserve all authority denials. No protected `/Library/GRRR` access or mutation, spendability write, reconciliation, replay, admission, promotion, production mutation, merge, or push was authorized or performed.
+
+### Base state and implementation
+
+- Story branch/base commit: `story/GRRR-z3w9` at `81e9785ccb20bea38a84aec70869b67f26d2d6cb`.
+- Stage E bundle SHA256: `52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467`.
+- Stage E package SHA256: `36b9bfb4ae2f3d2245c4d60624e0c06548caf528578ab2ce888dfef4b2d0cc09`.
+- Request module: `research/spendability_request.py`, SHA256 `1860c7d8ea1ecba909b75ab98634bea1341a63f7a0064ebc51fbd8bf46253f90`.
+- Generator: `scripts/generate-spendability-evidence-request`, SHA256 `7cb49ca0cebae14bc1bcfc0cedfc00a3634bcd90e9af372f9f0c28c09b0bee9c`.
+- Tests: `tests/unit_spendability_request.py`, SHA256 `8425d246514187bc2ccf282ffc2af7e985f4a7d4dc753926b809bc26f72e1d5f`.
+- Generated request: `docs/evidence/spendability/stage-f/REQUEST.json`, SHA256 `6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919`, 34,817 bytes.
+- Operator handoff: `docs/evidence/spendability/stage-f/HANDOFF.md`, SHA256 `aa1f42efac5209df38fa761a6b42f406abfc99ad7bf87b45307ab5a16fa3c771`.
+- Approved package: `docs/evidence/spendability/stage-f/PACKAGE.json`, SHA256 `388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23`.
+
+### Request coverage and fail-closed outcome
+
+- Exactly 30 unique mandatory evidence items:
+  - 11 reservation provenance;
+  - 3 pending dispositions;
+  - 8 historical lineage;
+  - 1 operation-history coverage;
+  - 1 side-store-history coverage;
+  - 5 overhead domains;
+  - 1 global historical-completeness item.
+- Response classifications are restricted to `supplied`, `unavailable`, `lost`, or `never-created`.
+- Supplied records require original bytes, hashes, custody, timestamps, source/custodian, and redaction justification.
+- Absence classifications require an exact documented search boundary.
+- Outcome remains `spendable=null`, `valid=false`, `execution_authorized=false`, no allowed mutations, and all eight authority flags false.
+
+### Parent verification after review
+
+- Deterministic regeneration from pinned approved Stage D/E inputs was byte-identical.
+- Focused tests on `/usr/bin/python3`: 15/15 passed.
+- Focused tests on `/opt/homebrew/bin/python3`: 15/15 passed.
+- `pvg verify research/spendability_request.py scripts/generate-spendability-evidence-request`: PASS.
+- `git diff --check`: PASS.
+- All 10 Stage F package member sizes and SHA256 hashes matched `PACKAGE.json`.
+- Package/request inventory and fail-closed authority were independently parsed and validated.
+
+### Independent review
+
+- Fresh independent reviewer returned `STAGE_F_REQUEST_REVIEW: APPROVED`.
+- Reviewer independently ran focused tests: 15/15 passed.
+- Reviewer verified Stage E identities and the six Stage F artifacts listed for review, confirmed the complete unique 30-item inventory, source/rejection rules, custody requirements, and fail-closed validation.
+- Review scope limitation: non-listed package artifacts were not independently reopened; package-verification execution was inspected in code.
+- Approval covers the evidence request only. It does not establish historical completeness, spendability, reconciliation authority, or replay authority.
+
+### Capacity and remaining state
+
+- Recorded Stage F minimum available space was 9,687,166,976 bytes, below both the 15,350,000,000-byte preparation floor and 16,106,127,360-byte replay floor. Full suite, VM/corpus, and replay operations were not attempted.
+- A later read-only check remained below both floors. This Stage F work used only focused no-VM tests.
+- Stage F files remain uncommitted in the story worktree because no separate Stage F commit authorization has been provided.
+- Story claim remains in progress; the five original live replay ACs remain unmet and blocked.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage F request implementation, generated request, handoff, focused-test logs, capacity preflight, review request/approval, and 10-artifact package are present under `research/`, `scripts/`, `tests/`, and `docs/evidence/spendability/stage-f/`.
+- Parent verification confirmed deterministic regeneration, 15/15 tests on both interpreters, package member identities, unique 30-item coverage, and fail-closed authority.
+
+### proof
+- [x] Stage F external evidence request generated from the approved Stage E bundle.
+- [x] Stage F request independently reviewed and approved within its evidence-only scope.
+- [ ] Stage F package committed to `story/GRRR-z3w9` — awaiting separate authorization.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
