@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T19:52:26Z
-content_hash: "sha256:a671e8a2fb2c0ce6ac48ded1f50b29b4024788ab51446f8c4e3227955939a3f9"
+updated_at: 2026-10-28T19:52:50Z
+content_hash: "sha256:7822ec4153f5686dbe63ac159eda56c18d751df4a4d8b7f148b3fdecc075642a"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3156,3 +3156,32 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T19:52:50Z speed
+## 2026-10-28 Operator-Authorized Stage M/N/All-Five Commit — Completed
+
+Operator authorized committing the independently approved Stage M, Stage N, and all-five preflight WIP, then beginning Stage O design-only v4 runtime adapter implementation and independent review. No protected access, reconciliation, replay, promotion, admission, production mutation, merge, or push was authorized.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `369276b7fb9f59946df4c00a700d26d76ebead04`.
+- Parent: `c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d`.
+- Subject: `wip(GRRR-z3w9): preserve approved replay authority evidence`.
+- Worktree is clean after commit.
+- No push occurred.
+
+### Pre-commit package verification
+
+- All-five preflight package: 9/9 member hashes PASS; package SHA-256 `4ceeccf4c5d94b31204187f22f0215754d3b8e1ef639437b7a8d686b1313018e`.
+- Stage M authority audit package: 10/10 member hashes PASS; package SHA-256 `c65aedd7f7a2f861ef5593ba9705981ca42508bf6f3f12a4f23787381d12df0b`.
+- Stage N successor-contract package: 16/16 member hashes PASS; package SHA-256 `e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48`.
+
+### Pre-commit focused verification
+
+- Stage M authority audit: 12/12 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Stage N successor contract: 28/28 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+
+Stage O design-only implementation now begins under the explicit denials in the operator authorization.
