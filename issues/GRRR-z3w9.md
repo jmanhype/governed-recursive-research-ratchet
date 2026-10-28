@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T19:52:50Z
-content_hash: "sha256:7822ec4153f5686dbe63ac159eda56c18d751df4a4d8b7f148b3fdecc075642a"
+updated_at: 2026-10-28T20:00:42Z
+content_hash: "sha256:50af4fdda9dbbdbd809709c2c91c417980407db7791e5f9a2155cd041e9d2250"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3185,3 +3185,64 @@ Operator authorized committing the independently approved Stage M, Stage N, and 
 - `git diff --check`: PASS.
 
 Stage O design-only implementation now begins under the explicit denials in the operator authorization.
+
+### 2026-10-28T20:00:42Z speed
+## 2026-10-28 Stage O Design-Only v4 Runtime Adapter — Independently Approved, Uncommitted WIP
+
+Operator authorization was to begin Stage O after committing the approved Stage M/N/all-five WIP. Stage O did not access or mutate `/Library/GRRR`, install a runtime store, amend a budget, reconcile, execute replay, admit, promote, mutate production, merge, or push.
+
+### Implementation
+
+- Added `research/replay_successor_runtime.py`, `scripts/show-replay-successor-runtime`, and `tests/unit_replay_successor_runtime.py`.
+- The adapter is pure and repository-retained: no filesystem, SQLite, process, VM, credential, network, or protected-path access occurs in its functions.
+- It binds the exact Stage N candidate receipt and binding by canonical digest.
+- Its sole accepted observation is explicitly repository-hypothetical, predecessor-v3, uninstalled, unauthorized, and non-executing.
+- Claims of installation, review, authorization, store identity, budget amendment, per-run approval, or execution are rejected before status generation.
+- The status matrix distinguishes pass, not-run, and blocked; it has no aggregate operational success.
+- Outcome remains design-only with no allowed mutations, spendability null, replay impossible, execution unauthorized, and every authority flag false.
+- A structurally valid future request must bind exact Stage N identities, exact mode/session limits, and five distinct future receipts, but still cannot authorize execution.
+
+### Independent review
+
+Fresh reviewer returned:
+
+`STAGE_O_RUNTIME_ADAPTER_REVIEW: APPROVED`
+
+Reviewer independently verified all eight requested artifact hashes, Stage N basis, both focused suites, deterministic emitter bytes, and unchanged replay/accounting gates.
+
+### Verification
+
+- Stage O focused tests: 22/22 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Full no-guest unit suites: 534/534 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Deterministic adapter emission: byte-identical.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+- Stage O package SHA-256: `283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b`.
+- Package member verification: 11/11 PASS.
+
+### State
+
+Stage O remains uncommitted because the authorization did not explicitly authorize committing this new WIP. Story claim is released after this handoff. Exact installer bytes, operator budget amendment, protected v4 installation, actual store identity, dedicated identities, per-run approvals, real four-mode replay, PM acceptance, merge, and push remain separate gates.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently approved Stage O package is present at `docs/evidence/replay-authority/stage-o/PACKAGE.json` with SHA-256 `283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b`.
+- Base source commit is `369276b7fb9f59946df4c00a700d26d76ebead04`.
+
+### proof
+- [x] Design-only v4 runtime adapter implemented and independently approved.
+- [x] Adapter performs no protected or operational access.
+- [x] Exact Stage N contract binding and fail-closed future request shape are tested.
+- [x] All authority remains false.
+- [ ] Stage O WIP commit authorized and performed.
+- [ ] Exact installer/review/authorization bytes produced and reviewed.
+- [ ] Operator budget amendment authorized.
+- [ ] Protected v4 installation authorized, executed, and verified.
+- [ ] Dedicated identities and real four-mode replay authorized.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
