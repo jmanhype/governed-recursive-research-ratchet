@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-10-28T05:04:50Z
-content_hash: "sha256:803caf7c98ed383f3cfd0813f8ba6500c64595d84b8882596a76fda562295fee"
+updated_at: 2026-10-28T05:24:04Z
+content_hash: "sha256:d861dffa1cdefa2486595b71a1c73ecd492c7b240a6a4dd69fdb777fa0331c87"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -2404,6 +2404,108 @@ status: in_progress
 - [x] Stage H package committed without post-review semantic mutation.
 - [x] Zero final classifications and zero response-ready records preserved.
 - [ ] Issuer/authorization/timing/custody evidence located and independently classified.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-10-28T05:24:04Z speed
+## 2026-10-28 Stage I Provenance Enrichment — Independently Approved WIP, Uncommitted
+
+Operator scope was interpreted as continue from Stage H using non-protected evidence only. Stage I searched repository/Git custody and the operator Codex session archive for issuer, authorization, timing, and custody evidence for the eight Stage H candidate record sets. It did not access or mutate `/Library/GRRR`; did not reconcile, write spendability, replay, admit, promote, mutate production, merge, or push.
+
+### Evidence found and validated
+
+- Pinned source commit: `9d3df8770f82a860f128a71d76528ff922911199`.
+- Evidence export commit: `141823fe7e19e43fd3d2bfcc0fe4be8303e42642`, with exact source parentage.
+- All 26 trusted-plan implementation/test code hashes verified against the source commit.
+- Current key export bytes match the export commit.
+- Non-protected source session archive SHA-256:
+  `a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e`.
+- Redacted session extract SHA-256:
+  `b7166485d0b92636dec39dc399d6e39b1fa0fd486962051ccb88a9b7570c480b`.
+- Full source archive hash and all 12 selected records are reproduced by the validator.
+- Corrected execution approval reference:
+  `fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b`.
+- License-review reference:
+  `ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d`.
+- Execution profile:
+  `b5400cdf040725cbe3b661d1d69f26a276123775bb63074b49fd7420befe61a7`.
+- Observed process names: `_grrr_evaluator` and `_grrr_runner`.
+- Numeric UID mapping remains explicitly unresolved.
+- Exact batch launcher boundary:
+  - started `2026-10-21T19:55:53.853Z`;
+  - completed `2026-10-21T19:59:54.106Z`;
+  - duration `240253` ms;
+  - private runtime `/private/tmp/grrr-trusted-rk5jwjmv`.
+- Preservation readback reference:
+  `2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8`.
+
+### Credential boundary
+
+Only selected authorization, validation, launcher, process, readback, and preservation records are copied. The three password-bearing stdin records are type-checked at source but omitted from publication. No credential value, API key, bearer token, unrelated private record, or full session archive is published.
+
+### Still blocking final supplied classification
+
+For each reservation:
+
+- per-request authenticated principal and issuer binding;
+- numeric process UID mapping;
+- exact protected approval/review artifact bytes and independent custody review;
+- reservation-specific dispatch operation identity and boundary;
+- reservation-specific UTC measurement start/end, clock, and window digest;
+- reservation-specific custody classification;
+- independent final classifier decision.
+
+All eight record sets remain unclassified and non-ready.
+
+### Independent review sequence
+
+1. Initial reviewer returned `STAGE_I_PROVENANCE_REVIEW: REJECTED` for:
+   - unsupported numeric UID claims;
+   - source-archive validation being only a declared reference check.
+2. Correction downgraded process identity to observed names with numeric mapping unresolved and made the generator hash the full source archive and reproduce every selected record.
+3. Fresh narrow reviewer returned `STAGE_I_PROVENANCE_NARROW_REWORK_REVIEW: APPROVED`.
+4. Reviewer noted only a documentation count mismatch; `HANDOFF.md` was corrected from 12/12 to the actual 13/13.
+
+### Verification
+
+- Stage I focused tests:
+  - Homebrew Python 3.14.3: 13/13 passed.
+  - Miniconda Python 3.12.7: 13/13 passed.
+- Deterministic provenance generation was byte-identical across both interpreters.
+- `pvg verify --include-tests`: PASS.
+- `git diff --check`: PASS.
+- Full suite remains not run under the existing host-pressure/process-table gate.
+
+### WIP package
+
+- Package: `docs/evidence/spendability/stage-i/PACKAGE.json`.
+- SHA-256 `6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac`.
+- Eleven exact-hash members.
+- All authority flags remain false.
+- Outcome remains response-ready false, spendability null, no allowed mutations, and no execution authority.
+
+### State
+
+Stage I remains uncommitted because no Stage I commit authorization was provided. Story claim is released after this handoff. The next operator gate is either committing this independently reviewed Stage I WIP package or separately authorizing exact protected approval/review-byte retrieval.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage I provenance-enrichment implementation, redacted extract, generated record, validation, tests, handoff, review request/approval, and package are present as WIP.
+- Independent narrow review approved the corrected provenance implementation.
+
+### proof
+- [x] Full non-protected source archive hashed and selected records reproduced.
+- [x] Credential-bearing records omitted and type-checked without publication.
+- [x] Common toolchain/profile, approval references, process names, batch boundary, and custody candidates validated.
+- [x] Numeric UID mapping and all reservation-specific final classification prerequisites remain unresolved.
+- [x] Zero final classifications and zero authority granted.
+- [ ] Stage I WIP commit authorized and performed.
+- [ ] Exact protected approval/review bytes obtained under separate authorization.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
