@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:13:45Z
-content_hash: "sha256:11e741330fb7d4896ec02587a6d606997201cba4e08ee830c74d8b08377dd299"
+content_hash: "sha256:dc1c34d3c06489b9984753b9fd01bba8afc77a2a96a10e806a222bd0027caa25"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
@@ -171,3 +171,6 @@ status: in_progress
 - [ ] Stop/concurrency serialization
 - [ ] Crash recovery proof
 - [ ] Reversal semantics
+
+### 2026-11-03T17:13:45Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
