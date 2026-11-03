@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T13:16:39Z
-content_hash: "sha256:b3e78650a77cd92bd27f7467cfcca473fc24f2248ff9e325fe464c594725ea32"
+content_hash: "sha256:aa4148a5f2791600d09c742a47513211da6ecb8f5b39080a983bc5da0d85ebad"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3436,3 +3436,8 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-11-03T13:16:39Z speed
+## 2026-11-03 Operator-Authorized Stage Q Containment Rework — Started
+
+Operator explicitly authorized containment-only rework and fresh independent review under a revised brief. Required behavior: lexical canonicalization/validation before any filesystem metadata call; reject `..`, absolute escapes, symlinked sandbox roots/ancestors, and every `/Library/GRRR` path without stat/lstat; add syscall-guard tests proving zero protected metadata access. No protected access/mutation, installer staging/execution, budget amendment, reconciliation, replay, admission, promotion, production mutation, merge, or push is authorized.
