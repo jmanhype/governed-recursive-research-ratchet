@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T19:10:05Z
-content_hash: "sha256:f25525c3d43596b552523f5302d63e69e205f1edab023cfc9a4280d9c8e8a591"
+updated_at: 2026-11-03T19:12:56Z
+content_hash: "sha256:8da072f199f3bdc2c6d4e887de0818c3b2cfabcfb0684a072ab4eb2c0ac5551c"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -299,3 +299,19 @@ Reviewer matched the four implementation/evidence hashes, reran offline focused 
 - redirect handler installation, request attempts, redirect rejections, and absent follow-ups are externally asserted after sanitized failure.
 
 Review scope excludes selector measurement and capstone success. Parent reran focused 29/29 both interpreters and full no-guest 749/749 both interpreters. The evidence map now records the approval and parent log hashes. Implementation remains uncommitted; no secret use, network, protected access, measurement, replay, admission, promotion, production mutation, merge, or push.
+
+### 2026-11-03T19:12:56Z speed
+## 2026-11-03 Operator-Authorized Commit — Governed Jev Boundary
+
+Operator approved continuing/getting Jev working. The independently hardened boundary WIP was committed only to story/GRRR-6sso:
+
+- Commit: 1052a1b0aa0930136f940c60894fd0d4c38ec6b6
+- Parent: b08754ef4623a00b1f3839b343491c4b8a6c4f0c
+- Subject: feat(GRRR-6sso): harden governed Jev selector boundary
+- Exact committed hashes:
+  - research/jev_adapter.py 3294ab0acbd965bfd72e07d88b79510402da45b4e0f5bd81c23f0f7d0f772a84
+  - research/selector_comparison.py 8514ff7015011a1bf81b0f10f92142c584bef3a572df81d7402c7455f27d2db8
+  - tests/unit_selector_comparison.py 3c04376207b447ef0f3f5c18f50ff753f56f842f986a30e26fad36faceba1d36
+  - docs/evidence/milestone-packet/REWORK-GRRR-6sso.md f754aac7a483642397c4e1795ea975f15a19f6bcffc97f6214f4c75438c7268c
+
+Worktree clean after commit. No merge or push. Real selector measurement has not started and remains a separately recorded authorization/cost boundary.
