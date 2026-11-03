@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T21:07:03Z
-content_hash: "sha256:9ac06ce470c9328ddae95143e5ecf959a7d31a4b477de6ee455aee25bb6af4cd"
+updated_at: 2026-11-03T21:08:00Z
+content_hash: "sha256:1d8f8a845158dd211cd16973ce9aca6efa13aa141a6b21d0e579aa5a19d949dd"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 assignee: dev-GRRR-6sso
@@ -446,3 +446,13 @@ Claim released after the second rejected three-arm design review. The story work
 ## 2026-11-03 Operator-Authorized Hash/Bootstrap Rework — Started
 
 Live state confirmed the two review findings: proposed truth hash differs from the artifact/manifest by one nibble, and bootstrap sampling does not pin RNG lifetime/API/order. Story reclaimed for design-only rework. No execution, network, secret use, protected access, replay, admission, promotion, production mutation, commit, merge, or push.
+
+### 2026-11-03T21:08:00Z speed
+## 2026-11-03 Protected-Truth Hash and Exact Bootstrap Rework — Ready for Narrow Review
+
+Operator authorized continuation. Live recheck found the design WIP still uncommitted, contrary to any stale narration claiming otherwise. The two exact findings were then fixed:
+- proposed protected-truth SHA-256 now equals both corpus/protected/truth.json bytes and manifest.artifacts['protected/truth.json']: 7cf9f99f5836c4e3e147df2866d54480a706f2665a732fbf61bd1a0d0b4c52ea; focused test compares both artifact and manifest.
+- bootstrap now pins one random.Random(20261103) initialized once before iteration 0, outer iterations 0..9999, fixed arm order deterministic-lexical/random/jev-guided, exactly three rng.choice calls per arm, repetition input order 1/2/3, arithmetic mean statistic, and nearest-rank percentiles.
+
+Current hashes: plan 97ec4b8ccc34b3fc4da4fcfbef33b49bbb3f4f1c445cfecdb752715ddf034be1; validator ca31b3cf53e70d038da6ed7a835f0ad07dcc2b3de68bf9b1e18a0c825fea8809; tests f2ae917ef806d8ccabf98adaf8c4634c425b812f11f3198934e7bbf69879893b; design doc de82208f2b4e55544dc25b43e91fe9156cee348b3fa82ba812078fc92ea3ad7b.
+Focused tests passed 12/12 on both interpreters; pvg verify/gates PASS; existing evaluation-plan unchanged; no execution/network/secret/protected access/replay/admission/promotion/production mutation/merge/push.
