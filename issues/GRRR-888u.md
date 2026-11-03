@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-03T23:42:48Z
-content_hash: "sha256:44727ac1be59368199d8cd531af84bf720533b485d4417678680fc4f43d0cf44"
+updated_at: 2026-11-03T23:49:02Z
+content_hash: "sha256:96cf954aba14d22e0aed82996fcd148cc433ab2c790f1fb9516f723db055d052"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0]
 ---
@@ -145,3 +145,8 @@ All other measured counts, output hashes, controls, and advisory-only recommenda
 ## 2026-11-03 Anti-Cheat Evaluation Review Rework
 
 Independent review rejected two evidence gaps. Corrected full scan warning count from 5487 to 5486 plus one informational row; pattern counts now total warnings exactly. Added auditable reproduction_commands for clone/checkout, target identity, all-pattern tests, binary build, full scan, five-file subset construction/scan, seeded fixture/scan, absent input, empty input, and rerun. Updated hashes and retained control exit codes. Advisory-only recommendation unchanged.
+
+### 2026-11-03T23:49:02Z speed
+## 2026-11-03 Anti-Cheat Evaluation Narrow Re-review — APPROVED
+
+Fresh reviewer verdict: ANTI_CHEAT_EVAL_REREVIEW: APPROVED. Reviewer verified current evidence hashes 2bcaa7cdaacc6b8d642846c498fcf1e93655948afa2cd1a8463fcbc36359bd12, 1105fbfeb68a407cf6ec465190d5ec2226f06a00786f7fbc8f23c68348d504c8, and 643ee210dd0abfa925abe6cb454d939cb5102738d3e9d46ca9688a357eef1fa0; confirmed missing exit-code/output fields; corroborated 53 pattern-test packages, binary identity, subset rerun validity, full count arithmetic, and unchanged advisory-only conclusion. No mutation or operational authority.
