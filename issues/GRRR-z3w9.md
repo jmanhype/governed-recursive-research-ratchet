@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T16:47:45Z
-content_hash: "sha256:13d272561b5ce26908fe9655ac5b91dfffda9654b192aee1aad96b551a599298"
+updated_at: 2026-11-03T16:53:04Z
+content_hash: "sha256:e5ecc2943ebb74b1e76f1466c5362314ce897835320d8163f1d06bdf4f49d1d3"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -4064,3 +4064,64 @@ Runner process (UID 321) starts via parent launch and crashes in ~2 seconds with
 - Predecessor v3 store untouched and permanently stopped
 - No contract admission, no promotion
 - All authority flags remain false except budget_amendment (explicitly authorized)
+
+### 2026-11-03T16:53:04Z speed
+## 2026-11-03 🎯 FIRST INDEPENDENTLY VERIFIED DEFECT — D011 REPLAY SUCCESS
+
+### RESULT
+The independent replay of GRRR-VC-D011 completed successfully with finding:
+**"Verified defect"** (verified=true)
+
+### ReplayReceipt Summary
+- Challenge: GRRR-VC-D011 (wikilink display text defect)
+- Finding: Verified defect
+- Mode: normal
+- Elapsed: 47.7 seconds
+- Budget: 45.3 seconds execution, $0.00 cost
+- Reservation: settled
+- Fresh guest runs: 2 (baseline C901 + candidate D901)
+- All 9 mandatory gates: PASS (except human_approval and reviewer_outcome, correctly not-run)
+- Promotion: disabled (correctly gated)
+- Admission: blocked (correctly gated)
+
+### Gate Results
+| Gate | Status | Evidence |
+|---|---|---|
+| baseline_correctness | PASS | 27aeade4... |
+| budget_state | PASS | 5653ca63... |
+| evidence_integrity_currency | PASS | f266ba59... |
+| independent_replay | PASS | e8c6e570... |
+| isolation | PASS | both observations |
+| protected_asset_integrity | PASS | both observations |
+| source_environment_identity | PASS | a157ff2b... |
+| specification_traceability | PASS | 1ea63197... |
+| trusted_observation | PASS | both observations |
+| action_specific_human_approval | NOT-RUN | separate gate |
+| reviewer_outcome | NOT-RUN | separate gate |
+
+### Evidence Export
+- Export directory: export-ca47bda9f47645b1910cba1449bcddfe
+- Snapshot SHA-256: ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689
+- Manifest SHA-256: 055fecc6b9578b07fd2b424df6d505f8c55e3f08ef539fd8fa2ea11d63f210a2
+- 9 hash-chained events, 6 evidence objects
+- Trusted anchor: 34dc2753bc0be33753a3312b48f9530ff3e00019757254529310e053fd0e905e
+
+### What was fixed to reach this
+1. IPC umask bug (mkdir + chmod)
+2. v4 store ownership (root → _grrr_evaluator)
+3. validate_store version check (added v4)
+4. Active binding hash-based identifiers
+5. Store directory renamed to hash
+6. store_identity table updated
+7. Manual reservation removed (evaluator creates own)
+8. require_mutable version + registration bypass for v4
+9. Disk space recovered above 15 GiB floor
+
+### Significance
+This is the FIRST independently verified defect in the GRRR project. The complete trust chain works:
+Operator → Authorization → Protected staging → Isolated VM execution → Independent evaluator → Specification verification → Verified defect → Hash-chained evidence export
+
+### Next gates
+- Reviewer outcome (independent review of the replay evidence)
+- Action-specific human approval (operator reviews and approves contract admission)
+- Counterexample-to-Contract admission (make D011 a permanent regression test)
