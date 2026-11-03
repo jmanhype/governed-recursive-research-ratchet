@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T19:13:27Z
-content_hash: "sha256:b2e058ec17834c228ae75de5fbb4ca103961a3c2a69c5fc8d6b52fa41c118f19"
+updated_at: 2026-11-03T19:31:58Z
+content_hash: "sha256:c7a2d4ce280271e2f9a933d2e831f42cadfa5289593a08e46cc04c295ec32176"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -320,3 +320,16 @@ Worktree clean after commit. No merge or push. Real selector measurement has not
 ## 2026-11-03 Real Selector Measurement Runner — Repository-Only Dispatch
 
 Operator approved getting Jev working. The hardened boundary is committed at 1052a1b. A fresh GLM agent is now implementing a fail-closed one-shot measurement runner using injected transport only. It must require a separate exact authorization record and real-run opt-in, cap calls at 32, forbid retries, preserve partial JSONL evidence, sum token usage without fabricating monetary cost, and reject credential/semantic leakage. This dispatch does not start measurement or access the real secret/network.
+
+### 2026-11-03T19:31:58Z speed
+## 2026-11-03 Measurement Runner Review — REJECTED; Rework Dispatched
+
+Fresh bounded Astra review verdict: MEASUREMENT_RUNNER_REVIEW: REJECTED.
+
+Findings:
+1. High: default CLI transport is wired to CallRecorder(None), so real/default execution would call None rather than reviewed HTTP transport.
+2. High: authorization/output handling accepts symlinked ancestors and lacks lexical /Library/GRRR rejection before filesystem access.
+3. High: final-report failure after calls falsely emits pre-call refusal saying no adapter call was made.
+4. Medium: authorization accepts float 32.0/8.0 rather than exact non-boolean integers.
+
+Reviewer verified supplied hashes and 8/8 offline tests, but probes established all four issues. No real credential/network/protected access or edits. Fresh GLM agent developer_grrr_6sso_runner_rework_v2 is fixing exactly these findings. Real measurement remains not-started.
