@@ -1,0 +1,168 @@
+{
+  "schema_version": 2,
+  "plan_id": "GRRR-jev-three-arm-v2-proposed",
+  "state": "proposed",
+  "approval": {
+    "state": "not-approved",
+    "measurement_started": false,
+    "execution_authorized": false
+  },
+  "corpus": {
+    "version": "GRRR-validated-corpus-v2.2-isolated",
+    "freeze_digest": "dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529",
+    "public_projection": "corpus/public/challenges.json",
+    "protected_truth": "corpus/protected/truth.json",
+    "protected_truth_sha256": "7cf9f99f5836c4e3e147df2866d54480a706f2665a732fbf61bd1a0d0b4c52ea"
+  },
+  "prior_evidence": {
+    "classification": "exploratory-capability-run",
+    "run_id": "6cf35082f34a4149b67293c7b53d9740",
+    "events_sha256": "44cefd57b7ac65c811e2860a2bf37dfc54c41bb0ba9bed6ef93d475dca316d98",
+    "confirmatory_reuse": false,
+    "exclusion_reason": "Run occurred before this confirmatory plan and cannot satisfy pre-registration or repetition requirements."
+  },
+  "arms": {
+    "deterministic-lexical": {
+      "kind": "local",
+      "selection": "sort local challenge IDs lexically and select the first eight",
+      "selected_budget_per_repetition": 8,
+      "repetition_numbers": [
+        1,
+        2,
+        3
+      ],
+      "expected_identical_repetitions": true
+    },
+    "random": {
+      "kind": "local",
+      "selection": "Python stdlib random.Random(seed).shuffle over the canonical manifest challenge_ids order, followed by the first eight IDs",
+      "canonical_catalog_order": "manifest challenge_ids: D001 through D024, then C001 through C008",
+      "prng": "Python stdlib random.Random Mersenne Twister",
+      "required_interpreters": [
+        "Python 3.9.6",
+        "Python 3.14.3"
+      ],
+      "selected_budget_per_repetition": 8,
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "jev-guided": {
+      "kind": "external-probabilistic-recommendation",
+      "service": "TypeSafe Jev SystemOne API",
+      "requested_model": "jev-latest",
+      "required_response_model": "jev-1.14.0",
+      "outbound_state": [
+        "deterministic-opaque-challenge-ref",
+        "allowlisted-public-category"
+      ],
+      "ranking": "descending expected_defect_weight, then descending raw score, then ascending opaque challenge_ref",
+      "scoring_calls_per_repetition": 32,
+      "selected_budget_per_repetition": 8,
+      "repetition_count": 3,
+      "fresh_repetition_requirement": true
+    }
+  },
+  "budget": {
+    "equal_selected_challenge_budget_per_arm_per_repetition": 8,
+    "confirmatory_jev_scoring_calls": 96,
+    "retries_allowed": 0,
+    "observed_exploratory_calls": 32,
+    "cumulative_call_ceiling_including_exploratory": 128,
+    "observed_exploratory_input_tokens": 12548,
+    "observed_exploratory_output_tokens": 736,
+    "projected_confirmatory_input_tokens_from_pilot": 37644,
+    "projected_confirmatory_output_tokens_from_pilot": 2208,
+    "projected_cumulative_input_tokens": 50192,
+    "projected_cumulative_output_tokens": 2944,
+    "hard_input_token_ceiling_per_jev_repetition": 18000,
+    "hard_output_token_ceiling_per_jev_repetition": 1000,
+    "hard_cumulative_input_token_ceiling": 60000,
+    "hard_cumulative_output_token_ceiling": 4000,
+    "usd": null,
+    "usd_status": "unknown-until-independent-receipt"
+  },
+  "metrics": {
+    "evaluation_scope": "selector-quality-only",
+    "primary": "mean selected true defect labels per repetition from 0 through 8",
+    "secondary": [
+      "mean selected critical defect labels per repetition",
+      "mean selected clean-negative labels per repetition",
+      "unique true defect labels selected across three repetitions"
+    ],
+    "truth_source": "frozen protected corpus truth evaluated locally by the trusted evaluator",
+    "deduplication": "count each protected truth challenge ID at most once within the unique-defect secondary metric; repeated selection adds no denominator credit",
+    "not_claims": [
+      "software optimization",
+      "verified defect",
+      "independent replay",
+      "contract admission",
+      "promotion"
+    ]
+  },
+  "uncertainty": {
+    "method": "percentile-bootstrap",
+    "confidence_level": 0.95,
+    "resamples": 10000,
+    "seed": 20261103,
+    "unit": "three arm repetitions",
+    "random_number_generator": "Python stdlib random.Random Mersenne Twister",
+    "procedure": "initialize rng=random.Random(20261103) exactly once; for iteration 0 through 9999 inclusive, for each arm in fixed order deterministic-lexical, random, jev-guided, append [rng.choice(primary_values) for _ in range(3)] and compute its arithmetic mean",
+    "rng_lifetime": "one Python stdlib random.Random instance initialized before iteration 0 and reused for every arm and resample",
+    "sampling_api": "random.Random.choice called three times per arm per bootstrap iteration",
+    "repetition_value_order": "primary values remain ordered by repetition 1,2,3 before resampling",
+    "loop_nesting": "outer bootstrap iteration, then fixed arm order, then three inner choice calls",
+    "statistic": "arithmetic mean of each resampled arm vector",
+    "percentile_method": "nearest-rank: lower index ceil(0.025*10000)-1 and upper index ceil(0.975*10000)-1 on each sorted bootstrap vector",
+    "interpretation": "descriptive small-sample uncertainty only, not calibrated evidence of general superiority"
+  },
+  "decision_rule": {
+    "default": "retain-deterministic-lexical-baseline",
+    "jev_wins": {
+      "minimum_mean_margin_over_both_baselines": 1.0,
+      "bootstrap_lower_bound_requirement": "exceed the higher baseline arithmetic mean"
+    },
+    "otherwise": "inconclusive",
+    "permitted_claims": "report measured descriptive selection quality only; no causal, general, or superiority claim outside this rule"
+  },
+  "privacy": {
+    "outbound_allowlist": [
+      "challenge_ref",
+      "category"
+    ],
+    "prohibited_outbound": [
+      "local D/C challenge IDs",
+      "kind",
+      "variant",
+      "public_fixture",
+      "protected truth",
+      "holdout membership",
+      "source code",
+      "raw logs",
+      "credentials"
+    ],
+    "credential_echo": "fail-closed",
+    "successful_response_scan": "every JSON string key and value must be checked against the actual credential before return or persistence"
+  },
+  "failure": {
+    "outcome": "comparison-incomplete",
+    "conditions": [
+      "any Jev repetition incomplete",
+      "call, retry, or selection ceiling breached",
+      "usage mismatch",
+      "token ceiling breached",
+      "credential or semantic leakage",
+      "event/report hash mismatch",
+      "plan hash drift",
+      "missing mandatory evidence"
+    ],
+    "automatic_rerun": false,
+    "next_action": "operator-review-required; do not automatically rerun"
+  },
+  "review": {
+    "independent_design_review_required_before_approval": true,
+    "execution_requires_separate_operator_authorization": true
+  }
+}
