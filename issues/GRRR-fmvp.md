@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T17:30:13Z
-content_hash: "sha256:de979d900935e495c039244d128905506a953911c9c29c3bc44f29f5e0f85ccd"
+updated_at: 2026-11-03T17:30:56Z
+content_hash: "sha256:5f6f271668256e51089c8d4a7c040ba4b618904bc6f1d1b6970ab7eafd91fe32"
 blocks: [GRRR-6sso]
 was_blocked_by: [GRRR-dbbi, GRRR-34ve]
 assignee: dev-GRRR-fmvp
@@ -144,3 +144,28 @@ status: new
 
 ### 2026-11-03T17:30:13Z speed
 Started: building operator review surfaces (CLI + report generator) using real D011 replay evidence.
+
+### 2026-11-03T17:30:56Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Review report generator: research/review_report.py
+- CLI: scripts/grrr-review (text/markdown/json formats)
+- 6/6 tests pass: tests/unit_review_report.py
+- Reports generate from real D011 replay evidence
+- Decision summary → technical verification → full audit ordering
+- Approved vocabulary enforced
+- No color-only indicators
+- Historical snapshot labeled as not-fresh-replay
+
+### proof
+- [x] AC #1 partial: CLI exposes review intention; start/status/decide/stop/recover deferred
+- [x] AC #2: Plain text, Markdown, JSON read one snapshot; agree on all fields
+- [x] AC #3: Exact vocabulary used (Verified defect, Completed, Ready for review)
+- [x] AC #4: Markdown orders decision summary → technical → audit
+- [x] AC #5 partial: Recommendation shown; Approve not default
+- [x] AC #7: Plain text, no color, screen-reader compatible
+- [x] AC #8 partial: Reports show elapsed and cost
+- [ ] AC #6: Stop/recovery interface (deferred)
+- [ ] AC #9: nd integration (deferred)
