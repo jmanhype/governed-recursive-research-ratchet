@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T16:56:47Z
-content_hash: "sha256:e70a030b42e436f6de29d33830ce3229171ec3c9e0e27aa504bba41652cca097"
+updated_at: 2026-11-03T16:57:08Z
+content_hash: "sha256:48baa1136100e3a2a6c3ceaa085bb41c7cf13dfb66f6c234900113c6907fc6c1"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -4128,3 +4128,25 @@ Operator → Authorization → Protected staging → Isolated VM execution → I
 - Reviewer outcome (independent review of the replay evidence)
 - Action-specific human approval (operator reviews and approves contract admission)
 - Counterexample-to-Contract admission (make D011 a permanent regression test)
+
+### 2026-11-03T16:57:08Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Independent replay of D011 completed successfully: **Verified defect**
+- Replay evidence committed at ff600ff on story/GRRR-z3w9
+- Snapshot SHA-256: ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689
+- Export: docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/
+- 9 hash-chained events, 6 evidence objects, trusted anchor: 34dc2753bc0be33753a3312b48f9530ff3e00019757254529310e053fd0e905e
+- Lifecycle: evaluator_succeeded=true, elapsed=47.7s, exit_codes=[-15,0]
+- Budget: reservation 44a4ce6ec75647f982c9f728880d1605, settled, $0.00
+- All 9 mandatory gates PASS
+- Promotion disabled, admission blocked (correctly gated)
+
+### proof
+- [x] AC #1: Evaluator reconstructed pinned source/build/test inputs and fresh VM isolation from protected trusted artifacts; budget reserved and new observation recorded.
+- [x] AC #2: Behavior confirmed against pinned maintainer specification (wikilinks_test.go); independently reproduced failure plus spec confirmation.
+- [x] AC #3: ReplayReceipt carries Finding=Verified defect and each mandatory gate with evidence.
+- [x] AC #4: Real integration tests executed with valid seed, clean baseline, and isolated candidate.
+- [ ] AC #5: Two consecutive independent replay failures policy not triggered (zero failures; not applicable to this successful run).
