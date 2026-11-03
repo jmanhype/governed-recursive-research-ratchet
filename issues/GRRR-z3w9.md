@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T14:11:08Z
-content_hash: "sha256:90d6e37323d4bf30f92d4b875dcfb1162c80444b567f34158c28154c93c9bb9b"
+updated_at: 2026-11-03T14:17:37Z
+content_hash: "sha256:3351dadb6d37fb3ff4b07a976ac31dcd433c1c9567784464692a3ccebb1c0394"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3659,3 +3659,69 @@ status: in_progress
 ## 2026-11-03 Operator-Authorized Revised Stage R Absent-Leaf Rework — Started
 
 Operator authorized a revised, differently scoped Stage R rework and fresh independent review. Required behavior: accept a genuinely absent final leaf when `exists=False`; reject every existing final symlink including dangling symlinks; retain sandbox-root-as-file rejection; add true absent-leaf regressions; refresh exact source/package hashes; and preserve all reviewed Stage R semantics. No `/Library/GRRR` access or mutation, protected staging/installation, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push is authorized.
+
+### 2026-11-03T14:17:37Z speed
+## 2026-11-03 Revised Stage R Absent-Leaf Rework — Fresh Review Approved, Uncommitted WIP
+
+Operator authorized a revised absent-leaf preflight rework and fresh differently scoped independent review. No `/Library/GRRR` access or mutation, protected staging/installation, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+### Correction
+
+- A genuinely absent final leaf now succeeds only when `exists=False`.
+- Every existing final symlink remains rejected, including dangling symlinks.
+- Intermediate absence rejects.
+- Sandbox-root-as-file and sandbox-root-as-absent reject.
+- True absent file/directory, existing symlink, dangling symlink, and root regressions were added.
+- All reviewed Stage N/O, exact SQLite, uncertainty, publication, and checkout semantics remain intact.
+
+### Independent review
+
+Fresh differently scoped reviewer returned:
+
+`STAGE_R_ABSENT_LEAF_REVIEW: APPROVED`
+
+Reviewer independently reproduced:
+- 16/16 focused tests on Python 3.14.3 and 3.12.7;
+- deterministic `SOURCE-BUNDLE.json` regeneration;
+- all requested artifact/log hashes;
+- canonical role identity `b6354127a7552b628506c25dc7eee27c8ecb371f56bf565a63dd247b31445084`;
+- true absent leaf behavior;
+- existing/dangling symlink rejection;
+- intermediate/root failure behavior;
+- preserved Stage R package semantics;
+- no protected access or mutation.
+
+### Verification
+
+- Stage R focused: 16/16 on Homebrew 3.14.3 and Miniconda 3.12.7.
+- Full no-guest suites: 614/614 on Homebrew 3.14.3 and Miniconda 3.12.7.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+- Generated source bundle SHA-256: `31cb9b8ee538ac22553927fe5f8006c47461073578f9d025f3ddb892ed3ca84c`.
+- Final Stage R WIP package SHA-256: `c1b70a4fc1279e48c25a6004d93bc6b6055981524c1f5acd0ff9885fe28a5a9c`.
+- Final package member verification: 24/24 PASS.
+
+### State
+
+Stage R remains `prepared-not-issued` and uncommitted because this authorization did not include a source/evidence commit. Story claim is released after this handoff. Protected issuance, staging, operator authorization, installation, postflight, budget amendment, reconciliation, replay, PM acceptance, merge, and push remain separate gates.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently approved Stage R WIP package is present at `docs/evidence/replay-authority/stage-r/PACKAGE.json` with SHA-256 `c1b70a4fc1279e48c25a6004d93bc6b6055981524c1f5acd0ff9885fe28a5a9c`.
+- Base source commit remains `23fdac5fcdc9bcef5147314a8f3c8bcb6d458d3f`.
+
+### proof
+- [x] Genuine absent final leaves are accepted only when `exists=False`.
+- [x] Existing and dangling final symlinks reject.
+- [x] Intermediate absence and invalid root declarations reject.
+- [x] Exact eight-role prepared source package independently approved.
+- [x] Package remains prepared-not-issued with all authority false.
+- [ ] Stage R WIP commit authorized and performed.
+- [ ] Protected source issuance and staging remain separate.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
