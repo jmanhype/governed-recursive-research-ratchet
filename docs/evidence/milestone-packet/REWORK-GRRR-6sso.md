@@ -115,6 +115,65 @@ Python and
 `4192976628b4bf6a5cfeb2b22044f4d8792ff54c179f455a84af5edb5cb8ae9c` for
 Homebrew Python.
 
+### Repository-only measurement runner
+
+`scripts/run-jev-selector-measurement`,
+`research/jev_measurement_runner.py`,
+`tests/unit_jev_measurement_runner.py`, and
+`docs/evidence/jev-selector-measurement/EVIDENCE-TEMPLATE.md` add a future
+real-run boundary only. The exact authorization record and
+`GRRR_JEV_REAL_SELECTOR_MEASUREMENT=1` are both required before adapter
+availability is probed. The one-shot runner caps calls at 32, emits sanitized
+append-only before/after JSONL records, preserves partial evidence on failure,
+sums only observed token usage, leaves USD null without an independent receipt,
+and omits the selector result when incomplete. Implementation and
+injected-transport tests do not start a measurement.
+
+### Measurement-runner review rework
+
+Only the four independent `MEASUREMENT_RUNNER_REVIEW` findings were changed:
+
+1. **Default CLI transport:** `CallRecorder` now receives
+   `jev_adapter._http_post_json` when no test transport is supplied. The offline
+   CLI/default-transport test patches the adapter opener boundary, proves 32
+   sanitized before/after records are retained around the adapter calls, and
+   never constructs a real network opener or uses a real secret.
+2. **Path containment:** authorization and output paths are converted lexically
+   and fail closed on `..` and every `/Library/GRRR` path before target
+   filesystem syscalls. Existing ancestors are traversed with `O_NOFOLLOW`
+   `dir_fd` operations and inode checks; evidence leaves are opened exclusively
+   relative to the held safe directory. Regressions cover protected/traversal
+   syscall guards, symlinked authorization/output ancestors and leaves, and a
+   replaced evidence leaf while the held descriptor remains authoritative.
+3. **Post-call evidence uncertainty:** final-report failure after one or more
+   attempted calls raises a distinct post-call evidence error and emits
+   `INCOMPLETE/UNKNOWN`, preserves the partial event log, reports the attempted
+   count, and prohibits automatic rerun. It never claims that no adapter call
+   was made.
+4. **Exact numeric authorization:** `schema_version`, `max_calls`, and
+   `selected_budget` use exact integer type checks before availability probing;
+   equal-valued floats and booleans are rejected.
+
+### Remaining double-slash containment rework
+
+Only the reviewer's remaining containment finding was changed. A supplied
+string beginning with `//` is rejected before lexical normalization, so
+`PosixPath`'s preserved implementation-defined `//` anchor cannot bypass the
+protected-root comparison. Focused regressions exercise both authorization and
+output forms of `//Library/GRRR/...` through their public entry points and
+refuse `open`, `mkdir`, `stat`, `lstat`, and `readlink` calls before rejection.
+
+Current implementation/test hashes:
+
+- `research/jev_measurement_runner.py`:
+  `2d5f4c497614440c235b98f30ac66c61310e8821f9153320cacc2c4d788f01c3`
+- `tests/unit_jev_measurement_runner.py`:
+  `168098631dc8db8113efe7139552994bb5af1d0a73e2d368cb78b46c696e2b3b`
+- `scripts/run-jev-selector-measurement`:
+  `836b6de962442070b4acb66233d6845480c34f10a0456ac85153c45b68a274d9`
+- `docs/evidence/jev-selector-measurement/EVIDENCE-TEMPLATE.md`:
+  `467b1459f868e9db78d48cf58dbc7ec05e670451080081d7f5418309f1d54d70`
+
 ## AC-by-AC evidence map
 
 | AC | Existing evidence and result | Capstone status / exact missing artifact |
@@ -138,6 +197,39 @@ Homebrew Python.
 - `pvg verify research/jev_adapter.py research/selector_comparison.py tests/unit_selector_comparison.py --include-tests --format=text` — `VERIFY: PASSED (3 files scanned, 0 issues)`.
 - `pvg gates research/jev_adapter.py research/selector_comparison.py tests/unit_selector_comparison.py --format text` — `GATES: PASS (2 warn, 0 skipped)`; warnings are `_load_frozen_projection` CCN 15>15 and the focused test file's 544 non-blank lines.
 - `git diff --check` — exit 0.
+- Runner rework focused tests:
+  `GRRR_JEV_DISABLE=1 /usr/bin/python3 -m unittest -v tests.unit_jev_measurement_runner`
+  and the same command under `/opt/homebrew/bin/python3` — **16/16 passed
+  each after the double-leading-slash rework**. The double-slash regression
+  covers both `//` and `///`, invokes public authorization loading and public
+  measurement execution, and refuses target Path/abspath normalization or a
+  target filesystem syscall before rejection. Focused selector tests under
+  both interpreters previously remained **29/29 passed each**; this rework did
+  not touch selector code or tests. The latest completed final full no-guest
+  discovery after the
+  last runner hardening reached **763/764 on each interpreter**, with one
+  unrelated intermittent `unit_replay_smoke` process-cessation failure on each
+  interpreter. An operator-directed wrap-up interrupted the requested rerun
+  before it completed; the incomplete system rerun log is retained, while the
+  Homebrew rerun had not started and has no log. Neither is represented as
+  passing evidence.
+- `pvg verify research/jev_measurement_runner.py tests/unit_jev_measurement_runner.py --include-tests --format=text`
+  — `VERIFY: PASSED (2 files scanned, 0 issues)`.
+- `pvg gates research/jev_measurement_runner.py tests/unit_jev_measurement_runner.py --format text`
+  — `GATES: PASS (4 warn, 0 skipped)`; warnings are function/file size only.
+  Final no-guest log SHA-256 values are
+  `30be7e49075ab58cb7923657c83cdece669cb27a9f6a6411bc5777a57a31b906`
+  (system Python) and
+  `c61663f17613c58c0a643d494c63cda894d008b976b462b592edae3085f1d9c1`
+  (Homebrew Python). Latest focused runner logs are
+  `4d2e486959951f02cd59b38f9cc21fb298d3afffa4276928f25f3368a5fe8566`
+  (system Python) and
+  `a466c0a072fe0b5db914b8cd394ec308aab811105306ba502aade744939f7bae`
+  (Homebrew Python);
+  focused selector logs are
+  `dc84698498c5f1b3afa82893c96afeb33fdba98250980fee7cbd4cba05975eef`
+  and
+  `4fd988cc9091c42325c1d7e7e8247afd83822109a0dbfede525491313940b553`.
 
 The mandated codebase-memory MCP project-list call was unavailable (`list_projects is not available to the model`), so structural discovery used direct source and exact-path searches; no completeness claim is based on the graph.
 
