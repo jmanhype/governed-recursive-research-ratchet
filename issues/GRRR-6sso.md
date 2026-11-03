@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T17:40:32Z
-content_hash: "sha256:f5cab77bf393016105391d61fc735e0dc5eb2802abbc3f1198d4b6cad50572f7"
+updated_at: 2026-11-03T18:05:30Z
+content_hash: "sha256:da6b8316a291a7c4d3d82887a1c0110cdaf0f2dc75aa0b2c978afced249740ed"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -217,3 +217,20 @@ EXPECTED: Delivered capstone must include implementation evidence, commands/test
 - Explicit content gaps: full-corpus proof, stop/recovery proof, full adversarial proof, accessibility walkthrough, and complete three-arm Jev comparison.
 - Story requeued and claimed for repository-only rework. Recorded agent handle: developer_grrr_6sso_rework_v1.
 - Boundaries: no protected access, secret use by worker, network, replay, admission, promotion, production mutation, commit, merge, or push during developer rework.
+
+### 2026-11-03T18:05:30Z speed
+## 2026-11-03 Repository-Only Rework — BLOCKED, No Delivery
+
+Developer agent developer_grrr_6sso_rework_v1 completed repository-only rework at story worktree base b08754e without commit.
+
+Artifacts and hashes:
+- research/jev_adapter.py 5a6534d64e1da21c3da67cc79f710ccecdc85b5176fa17de20d8b1ccd14b7e57
+- research/selector_comparison.py 385101b672198764971de846c81715ca8ab6e600b99cae45cddd6cc84018a4c0
+- tests/unit_selector_comparison.py 80fa4391eac6f6bc3e9a22525e8767c649851130cc8d235b9920ad49b23218e5
+- docs/evidence/milestone-packet/REWORK-GRRR-6sso.md eac05ad64d5aeb67b2228a7e19293413062254cc5e0f5547dc2913f20163a873
+
+Boundary: opaque Jev references + allowlisted category only; semantic D/C IDs, kind, variant, fixture text, source, protected truth, and raw logs excluded. Strict HTTPS/response/usage checks and sanitized errors. No worker network, secret read, protected access, measurement start, replay, admission, promotion, production mutation, commit, merge, or push.
+
+Parent independently reran focused suite 24/24 on system and Homebrew Python; pvg verify PASS; pvg gates PASS; git diff check PASS; evaluation-plan remains unchanged/not-approved. Worker no-guest suites excluding capacity-dependent conservative-genesis passed 735/735; full suite was honestly capacity-blocked at the unchanged 15.35 GiB floor.
+
+Capstone remains BLOCKED, not delivered: AC1 full journey, AC2 full-system corpus, AC3 authorized real selector measurement/Jev, AC4 full stop/recovery/race journey, AC5 full adversarial matrix, AC6 accessibility walkthrough, and AC7 full immutable packet remain unmet. Independent Jev-boundary security review is pending.
