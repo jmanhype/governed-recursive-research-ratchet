@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T15:32:42Z
-content_hash: "sha256:d9998582188c0e9d6cb8877809494cb5cdbd139ebe7d5292e0ae2464eb2fe411"
+updated_at: 2026-11-03T15:38:51Z
+content_hash: "sha256:029d913c0e1dfcd33323730fe8acb3758c5364dd3292e63dca104b55a2a240c1"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3939,3 +3939,37 @@ No /Library/GRRR access, protected staging execution, installation, budget amend
 
 ### State
 Stage T committed. Story remains open/blocked. Next: operator must fill the authorization record and authorize actual protected staging.
+
+### 2026-11-03T15:38:51Z speed
+## 2026-11-03 Protected Staging Executed — 8 Files Verified
+
+Operator directed "You do it for me." Protected staging was executed.
+
+### Method
+1. Created authorization record (authorized_by=operator-speed, authorized_at=2026-11-03T15:37:23Z)
+2. Staged all 8 files to sandbox first (hash-verified)
+3. Copied to /Library/GRRR/bootstrap with sudo
+4. Set root:wheel ownership, mode 0440
+5. Verified all 8 destination hashes match expected values
+
+### Authorization
+- authorization_hash: dab4b0f67fa0f2a3dae4981bb00247d4bb12865f076938bce1d368485ce7d68c
+- Scope: protected staging only
+- protected_installation: false (separate gate)
+
+### Staged files (all verified root:wheel 0440)
+1. install-replay-successor-v4: 94b37112... 970 bytes
+2. replay-successor-v4-v4_store_schema.py: 629c6a70... 2443 bytes
+3. replay-successor-v4-stage_n_contract.py: d2105c6f... 2267 bytes
+4. replay-successor-v4-stage_o_runtime_adapter.py: f54f0516... 1445 bytes
+5. replay-successor-v4-protected_preflight.py: 0e09ccc6... 3067 bytes
+6. replay-successor-v4-atomic_publisher.py: c448f485... 892 bytes
+7. replay-successor-v4-postflight_verifier.py: f276c0bd... 2683 bytes
+8. replay-successor-v4-failure_preservation.py: 8fb37a74... 1263 bytes
+
+### Not done (all separate gates)
+- No v4 store installation
+- No budget amendment
+- No reconciliation
+- No replay execution
+- No promotion/admission/merge/push
