@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T19:52:46Z
-content_hash: "sha256:90cf2c451040412a414a88fa179d664fc05ab9df83a159fb61d19169c29dffb5"
+updated_at: 2026-11-03T20:17:04Z
+content_hash: "sha256:085c5423cf26d716c38e5991ef5b0cb01a8ecb88b8995a33aa199ac71c488794"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -347,3 +347,12 @@ Parent independently reran runner tests 15/15 on both interpreters. Full-suite f
 ## 2026-11-03 Operator-Authorized Double-Slash Containment Fix
 
 Operator explicitly authorized the double-slash containment fix and a differently scoped review. Fresh GLM agent developer_grrr_6sso_double_slash_fix is assigned to reject PosixPath `//Library/GRRR/...` before filesystem access and add authorization/output/syscall-order regressions. No third broad Astra review, real secret use, network, protected access, measurement, replay, admission, promotion, production mutation, commit, merge, or push is authorized in this implementation step.
+
+### 2026-11-03T20:17:04Z speed
+## 2026-11-03 Double-Slash Narrow Re-review — APPROVED
+
+Fresh differently scoped review verdict: DOUBLE_SLASH_NARROW_REREVIEW: APPROVED.
+
+Reviewer matched the current five-file hashes, independently ran runner tests 16/16 on both interpreters and the strengthened containment regression 1/1 on both interpreters. The test now covers // and /// forms through public authorization and measurement entry points, rejects before target Path/abspath normalization, and guards target filesystem syscalls. No protected access, network, real secret, edits, or operational effects occurred.
+
+The prior broad reviewer had already confirmed default transport, strict integer schema, and truthful post-call failure behavior fixed. The runner is now review-ready for the operator-authorized one-shot real measurement boundary; no measurement has started yet.
