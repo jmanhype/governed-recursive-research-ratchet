@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T15:19:20Z
-content_hash: "sha256:d6e0dcf591ee3dad381da496f36bf165500584460e6cd5b6eef771207734026f"
+content_hash: "sha256:9b38b7c664090630d8c9a07e54a63b1cf8c686817165ae5aa554af310face7b1"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3864,3 +3864,15 @@ No /Library/GRRR access, protected staging/installation, budget amendment, recon
 
 ### State
 Stage S committed. Story remains open/blocked. Next: Stage T (protected staging / operator authorization) requires explicit operator authorization crossing into /Library/GRRR.
+
+### 2026-11-03T15:19:20Z speed
+## 2026-11-03 Stage T Started — Operator-Authorized "Begin stage 2"
+
+Stage T is defined as: exact parent-mediated protected-staging command preparation and operator-authorization record format, repository-only.
+
+### Scope
+- Create the exact parent staging script that a root parent would execute
+- Define the operator authorization record format (authorization_hash, authorized_by, authorized_at)
+- Define the protected staging verification checklist
+- Obtain independent review
+- No /Library/GRRR access or mutation, no protected staging execution, no budget amendment, no reconciliation, no replay, no promotion, no admission, no merge, no push
