@@ -1,18 +1,17 @@
 ---
 id: GRRR-6sso
 title: "E2e: Operator completes a governed vlt research ratchet"
-status: in_progress
+status: open
 priority: 1
 type: task
 labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T20:23:19Z
-content_hash: "sha256:5eec5bd1923d4d1806f41c3d11bd2d83188b143b4160b6678310e728b85f53f0"
+updated_at: 2026-11-03T20:23:37Z
+content_hash: "sha256:40688defd35155c2c045455755c6daf657d10f1f4f343a497f03d86d4f995481"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
-assignee: dev-GRRR-6sso
 ---
 
 ## Description
@@ -178,6 +177,8 @@ status: delivered
 - 2026-11-03T17:40:01Z status: open -> in_progress
 - 2026-11-03T17:40:01Z auto-follows: linked to predecessor GRRR-d8ji
 - 2026-11-03T17:40:01Z claimed by dev-GRRR-6sso
+- 2026-11-03T20:23:37Z status: in_progress -> open
+- 2026-11-03T20:23:37Z released by speed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
