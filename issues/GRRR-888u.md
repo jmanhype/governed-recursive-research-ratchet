@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-03T23:27:56Z
-content_hash: "sha256:5d92c6f367b49c7719177f8e34f7be65bbdb0e108bd22ffd8029b9d13b3220ca"
+updated_at: 2026-11-03T23:30:02Z
+content_hash: "sha256:65e496788ab7fd6572aa6ced831327f2a6d0399ffb2a53ba42436e682c23f4ca"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0]
 ---
@@ -116,3 +116,17 @@ status: new
 ## 2026-11-03 Anti-Cheat Scorecard Evaluation Started
 
 Story claimed and stacked from accepted GRRR-gge0 commit cf3eb55422ba18898541318c138cd82543419d12. Pinned external source is seanchatmangpt/anti-cheat-scorecard v26.8.29 commit 5271351d079f79634de2f8b91970b80daf9bcb86. Scope is research/advisory evaluation only; no runtime integration, trusted-gate authority, protected access, network scan, credential use, replay, admission, promotion, production mutation, merge, or push.
+
+### 2026-11-03T23:30:02Z speed
+## 2026-11-03 Anti-Cheat Scorecard Evaluation WIP — Complete, Review Pending
+
+Pinned source: seanchatmangpt/anti-cheat-scorecard v26.8.29 commit 5271351d079f79634de2f8b91970b80daf9bcb86, Apache-2.0. Built binary SHA d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e. All 53 pattern-related packages passed; log SHA bbfe64ec1c98b9f55da6243b896415d2c621815481d0cf7cffeb1106dcd7ec0a.
+
+Clean GRRR-gge0 target at cf3eb55422ba18898541318c138cd82543419d12: full scan exited 0 in 79.67s, output SHA f56ee077318bea77d1678e5666b5a06904ff5651477f9a8a9f630d923e1f418f, score 1/10, 5487 warnings, dominated by 4599 false lockfile-checksum-mismatch findings. Five-file subset exited 0 in 0.15s, score 7/10, two warnings. Seeded control detected five textual-cheat patterns. Absent input exited 0 without output; empty input exited 0 with perfect 10/10; subset rerun was semantically stable after timestamp removal but raw hashes changed.
+
+Current evidence files:
+- docs/evidence/anti-cheat-scorecard/evaluation.json 387770a18b120695c749bf6593f220af38b119c97a54c44fb1ecf0909626f74b
+- docs/evidence/anti-cheat-scorecard/EVALUATION.md 6b93c9a66fe92331609c9588ac85f5dfe9dc43d522478d4fd85b37589f39715eb
+- docs/evidence/anti-cheat-scorecard/ARTIFACTS.md 2a5262792af02554e9c65e082a4a924041322e4ecf35a4c53f7dbcbdbf1ec5a5
+
+Recommendation: advisory only, not a trusted/mandatory gate. pvg verify/gates and diff checks passed; JSON parsed; local-path/credential scan clean. No commit, external repo mutation, network scan, secret use, protected access, replay, admission, promotion, production mutation, merge, or push.
