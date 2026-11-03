@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T21:44:50Z
-content_hash: "sha256:d3e7b37000ee99673e607affb5f45377483e6f32a9f52fef6a14709fb87d9e0f"
+updated_at: 2026-11-03T21:50:28Z
+content_hash: "sha256:517354ca8c9cce3d11dab1e837d7be911ea12d809852cd5c619565625cdc7f2a"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 ---
@@ -507,3 +507,15 @@ The reviewed prepare-only preflight WIP and operator-owned request are preserved
 ## 2026-11-03 Operator Authorized Preflight Commit
 
 Operator explicitly approved crossing the foundation gate. The independently reviewed prepare-only preflight was committed to story/GRRR-6sso after focused 9/9 tests on both interpreters, pvg verify/gates, and diff checks. No merge/push. Execution follows under exact 3-repetition/96-call/no-retry/token-ceiling authorization.
+
+### 2026-11-03T21:50:28Z speed
+## 2026-11-03 Confirmatory Three-Arm Execution Complete — Independent Review Pending
+
+Operator explicitly approved crossing the foundation gate. After reviewed preflight commit bdee48184d513f5cb0015f04b8f3882ae3375c85, parent executed exactly three fresh Jev repetitions and did not rerun any completed repetition:
+1. Run 9f7ea255e61d4f2aa6596967ef698adf: 32/32, 0 retries, events 9955289f633ccff58b3077a8d2c11263cdb063f3b18aa82e16b9b0e8a08f658a, report 79aeba001d375b39806d9f73ff211a9573062fdb26792d9d489cf933c48dd628, 12548/736 tokens.
+2. Run 76aaf8542fce4465b082524432f6a1ca: 32/32, 0 retries, events 0ed940ebd206be84aa99e65f03e2f11992a4468efeb070e294ccbe25efaac989, report f09f56cdddc0f183e7701eef7ec438ee0d30acc4bdc4beea1a0b3ea9ab7a2b84, 12548/736 tokens.
+3. Run e3938b63cf634cdda8e0f00fe416ab31: 32/32, 0 retries, events 2cc3a88d131fd5a790cb1aed7e8bffc8cb6a8fcf90cf7f73fe13f9e1a42d8cf4, report 0121a7caafecbe543e698e67ba729bf38726f43bdcfd7cc63d7245634c7dce1c, 12548/736 tokens.
+
+Totals: 96 confirmatory calls, zero retries, 37644/2208 confirmatory tokens; including excluded pilot, 128 calls and 50192/2944 cumulative tokens exactly at planned projection and below hard ceilings.
+
+Local frozen-truth analysis report docs/evidence/jev-selector-measurement/three-arm-result-20261103T214701Z/report.json SHA b7bb2ec8717e8921e16f9a3e312f6ad46839a125634dc6e3d144499cc841fefb: deterministic [0,0,0] mean 0; random [6,6,6] mean 6; Jev [5,6,4] mean 5; pre-registered outcome inconclusive-jev-did-not-win, measured leading arm random. Analyzer/tests passed 6/6 both interpreters. Parent evidence validation and leakage scan passed. No additional external call, rerun, replay, admission, promotion, production mutation, merge, or push.
