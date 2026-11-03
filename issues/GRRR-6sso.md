@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T18:29:18Z
-content_hash: "sha256:d55390b94cff698ecaa5b4d003e2529cbd529e0d7ee087a10a239a8dd72e621e"
+updated_at: 2026-11-03T18:45:46Z
+content_hash: "sha256:9e73ffa38ef8475743789d0ea3cd38cd907013cfbfa198a411d88671758ee8d9"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -267,3 +267,10 @@ Third one-fix WIP added canonical manifest freeze verification and forged-manife
 Fresh independent Astra re-review verdict: JEV_BOUNDARY_REREVIEW: REJECTED. It confirmed the prior redirect, manifest/public binding, and transport-sanitization findings fixed, but found a new credential-echo leak: arbitrary response `model` text is returned and copied into selector output, so a provider echo of the Authorization credential could escape. Reviewer also flagged that assertions inside a fake opener/build callback can be swallowed by the broad HTTP exception handler.
 
 This is the second failed broad Jev-boundary Astra review. Per orchestrator policy, no third Astra spawn will be made. Work is held at uncommitted story/GRRR-6sso WIP; no commit, network, secret use, protected access, measurement, replay, admission, promotion, production mutation, merge, or push. Required next fix before any further review/use: reject credential-bearing successful-response text with a sanitized error, add provider-echo regression, and make opener-handler assertions externally observable. Capstone ACs remain blocked; no delivery is made.
+
+### 2026-11-03T18:45:46Z speed
+## 2026-11-03 Operator-Authorized Credential-Echo Fix — Dispatched
+
+Operator authorized the next implementation fix. Live preflight confirmed story WIP hashes, base b08754e, and free space 26,390,663,168 bytes (both capacity floors PASS). CoS /hello is unavailable, so fresh GLM agent developer_grrr_6sso_jev_rework_v4 is assigned.
+
+Scope: reject successful-response credential echo with sanitized failure; add fake-key provider-echo regression; make redirect handler-installation assertions externally observable; update evidence map. Denials remain: secret read, network, /Library/GRRR, measurement start, replay, admission, promotion, production mutation, commit, merge, push.
