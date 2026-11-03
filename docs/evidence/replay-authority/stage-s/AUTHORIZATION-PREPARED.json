@@ -1,0 +1,110 @@
+{
+  "action": "install-fresh-v4-replay-successor-poc",
+  "authority": {
+    "admission": false,
+    "budget_amendment": false,
+    "merge": false,
+    "production_mutation": false,
+    "promotion": false,
+    "protected_installation": false,
+    "protected_staging": false,
+    "push": false,
+    "reconciliation": false,
+    "replay_execution": false
+  },
+  "basis": {
+    "base_commit": "b43f1fa483c8a281246f425d6c5b66606d867bff",
+    "stage_r_package_sha256": "c1b70a4fc1279e48c25a6004d93bc6b6055981524c1f5acd0ff9885fe28a5a9c",
+    "stage_r_review_sha256": "e84d5abc30aea4d1e7885f5ebe8df3217d7c35d206b0fa3c5d5b95b986f1cf61",
+    "stage_r_source_bundle_sha256": "b6354127a7552b628506c25dc7eee27c8ecb371f56bf565a63dd247b31445084"
+  },
+  "denied_authorities": [
+    "admission",
+    "budget_amendment",
+    "merge",
+    "production_mutation",
+    "promotion",
+    "push",
+    "reconciliation",
+    "replay_execution"
+  ],
+  "installation_target": "/Library/GRRR/accounting-poc2/unissued-independent-replay-v4",
+  "operator_authorization_requirement": {
+    "authorization_hash": null,
+    "authorization_type": "explicit-human-approval",
+    "authorized_at": null,
+    "authorized_by": null,
+    "record_immutable_after": true,
+    "required_before": "protected-staging"
+  },
+  "predecessor_binding": {
+    "active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "predecessor_mutation": "forbidden",
+    "recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587"
+  },
+  "prepared_at": "2026-11-03T15:00:00Z",
+  "principal": "operator-via-exclusive-root-parent",
+  "record_type": "replay-successor-v4-authorization-prepared-v1",
+  "schema_version": 1,
+  "staging_plan": [
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-atomic_publisher.py",
+      "role": "atomic-publisher",
+      "source_sha256": "c448f4853e6bb9467c6994b64b3f04dfd9ee9c6d0718de69529eb24218e5a719",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-failure_preservation.py",
+      "role": "failure-preservation",
+      "source_sha256": "8fb37a74e96c7fab7f96fed74ad1aea187fc306716ebb024a1cd0059ca9ded47",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/install-replay-successor-v4",
+      "role": "installer-entrypoint",
+      "source_sha256": "94b37112fc3b3146078b6edd0cf80d5e845f1cc83543344d79400d144d453dbc",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-postflight_verifier.py",
+      "role": "postflight-verifier",
+      "source_sha256": "f276c0bd84a4fe43d5661672600734120af1332c45c372fc6881a2913491ca46",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-protected_preflight.py",
+      "role": "protected-preflight",
+      "source_sha256": "0e09ccc6f995e24ab983489755df6a14028c154a99b84811b95d6ea95bf0946f",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-stage_n_contract.py",
+      "role": "stage-n-contract",
+      "source_sha256": "d2105c6fbab6edd42ad9724e6ff2313d2531c11af14625bfb0cf8a81b9646fb5",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-stage_o_runtime_adapter.py",
+      "role": "stage-o-runtime-adapter",
+      "source_sha256": "f54f051684dd9be4ccf635d3029cb1f099ddb227e8d763efad2c8bf24e3478c4",
+      "verification": "sha256"
+    },
+    {
+      "operation": "copy-verify",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-v4_store_schema.py",
+      "role": "v4-store-schema",
+      "source_sha256": "629c6a70936fb94ea4b4a89b4dc3c94095aa2586194c077e4c06258b2c7ce644",
+      "verification": "sha256"
+    }
+  ],
+  "staging_plan_sha256": "c0e83034e6b61b29bdd946b10fb60d19f5af7d89a9f941232f441c20cb9cdd55",
+  "status": "prepared-not-authorized"
+}
