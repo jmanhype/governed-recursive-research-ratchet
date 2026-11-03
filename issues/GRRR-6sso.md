@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T20:17:04Z
-content_hash: "sha256:085c5423cf26d716c38e5991ef5b0cb01a8ecb88b8995a33aa199ac71c488794"
+updated_at: 2026-11-03T20:19:40Z
+content_hash: "sha256:be4595f517dd0b8a199cc3f8fe7c4bd71cd3f564609566e84d48a628ac3ec389"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -356,3 +356,23 @@ Fresh differently scoped review verdict: DOUBLE_SLASH_NARROW_REREVIEW: APPROVED.
 Reviewer matched the current five-file hashes, independently ran runner tests 16/16 on both interpreters and the strengthened containment regression 1/1 on both interpreters. The test now covers // and /// forms through public authorization and measurement entry points, rejects before target Path/abspath normalization, and guards target filesystem syscalls. No protected access, network, real secret, edits, or operational effects occurred.
 
 The prior broad reviewer had already confirmed default transport, strict integer schema, and truthful post-call failure behavior fixed. The runner is now review-ready for the operator-authorized one-shot real measurement boundary; no measurement has started yet.
+
+### 2026-11-03T20:19:40Z speed
+## 2026-11-03 Operator-Authorized Real Jev Run — COMPLETE / Capability Evidence Only
+
+After the reviewed runner commit 4b4ae825fe4708d72ce14eb3bf80f03bc53e9910, the parent executed the explicitly authorized one-shot run using the operator-owned mode-0600 secret. No worker received the credential.
+
+- Run directory: docs/evidence/jev-selector-measurement/run-20261103T201719Z/
+- Run ID: 6cf35082f34a4149b67293c7b53d9740
+- Exit: 0; status/adapter outcome complete
+- Calls: 32 attempted, 32 returned, 0 retries
+- Events: 64 sequential rows, 32 unique opaque refs, all transport-returned
+- Usage: 12548 input tokens, 736 output tokens, complete observation
+- Model: jev-1.14.0
+- Selected budget: 8 probabilistic recommendations
+- USD: null / unknown pending independent receipt
+- events SHA: 44cefd57b7ac65c811e2860a2bf37dfc54c41bb0ba9bed6ef93d475dca316d98
+- report SHA: 59a9a21282ae2f4b8fa213f43d0fa1d652bee07d0aad2bf6bfc45535fb436c0f
+- RUN-RECORD SHA: 48301e10480102885690d63f176b389e3c6ef73ede99cca6f24a3100a75e57df
+
+Parent validated event sequence, call counts, unique references, usage, and targeted leakage boundaries. Events contain no credential, Authorization header, semantic local ID/label, or protected path. corpus/evaluation-plan.json remains not-approved/measurement_started=false, so this is an action-authorized capability run, not completion of pre-registered three-arm AC3 and not a superiority/defect claim. No rerun, replay, admission, promotion, production mutation, merge, or push.
