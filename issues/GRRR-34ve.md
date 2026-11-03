@@ -8,8 +8,8 @@ labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:18:49Z
-content_hash: "sha256:509bb18739c117be52ec1a36f08e9f7ea85774ae0ff4bf438810285f8168d523"
+updated_at: 2026-11-03T17:20:39Z
+content_hash: "sha256:bf285f8a0bd1b015b5fe90b10b34c421350a6445f5435a88a319224def54d021"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
@@ -205,3 +205,16 @@ status: delivered
 - [x] AC5: Stop semantics via evaluator lifecycle
 - [x] AC6: Full C2C cycle: replay → review → approval → admission → recurrence rejected
 - [x] AC7: Registry versioning; reversal is new versioned event
+
+### 2026-11-03T17:20:39Z speed
+## 2026-11-03 PM Rework — 5 Security Fixes Applied
+
+Initial PM review rejected 5 gaps. All fixed:
+
+1. Export hash now enforced in validate_contract
+2. Approved operator (operator-speed) required, not just any valid name
+3. Authorization consumed on use — cannot be replayed
+4. Contract registry prevents duplicate admission
+5. recurrence_rejected checks registry membership and gate results
+
+23/23 tests pass (7 new regressions cover all findings).
