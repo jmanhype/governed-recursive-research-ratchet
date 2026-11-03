@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T20:22:43Z
-content_hash: "sha256:2374d5b9d3da0e958e199c117d06769fdb6565547b0f0de219a9eacf47e86b43"
+updated_at: 2026-11-03T20:23:19Z
+content_hash: "sha256:5eec5bd1923d4d1806f41c3d11bd2d83188b143b4160b6678310e728b85f53f0"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -383,3 +383,12 @@ Parent validated event sequence, call counts, unique references, usage, and targ
 Fresh read-only reviewer verdict: JEV_RUN_EVIDENCE_REVIEW: APPROVED.
 
 Reviewer independently matched events/report/RUN-RECORD hashes; verified complete status, 32/32 calls, zero retries, 64 sequential events, 32 unique refs, exact 12,548 input and 736 output token totals, model jev-1.14.0, eight recommendations, and unknown USD. It confirmed event/report leakage boundaries and that corpus evaluation-plan remains not-approved, so no pre-registered three-arm completion or superiority claim is made.
+
+### 2026-11-03T20:23:19Z speed
+## 2026-11-03 Jev Runner and Evidence Commits
+
+- Runner implementation commit: 4b4ae825fe4708d72ce14eb3bf80f03bc53e9910
+- Real-run evidence commit: aef59b583afbef3eba0793bc081bf96858326ddb
+- Story worktree is clean after the evidence commit.
+- The independently reviewed real run completed 32/32 calls with zero retries and is preserved under docs/evidence/jev-selector-measurement/run-20261103T201719Z/.
+- No merge or push. The capstone remains in progress because the action-authorized capability run is not the pre-registered three-arm AC3 evaluation.
