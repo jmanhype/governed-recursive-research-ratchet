@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T21:26:22Z
-content_hash: "sha256:80f5470497344319b97b308ed852db5c413e57ef651a298c697172b410abb2f3"
+updated_at: 2026-11-03T21:32:27Z
+content_hash: "sha256:7360c17225cfd42dcb22aa02a6ab04d580c045f1029fe30eb8adf1c78cab96bd"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 assignee: dev-GRRR-6sso
@@ -473,3 +473,8 @@ After commit 9e107609db76022ed6d8e138cbbece2e41d634ee, a fresh GLM agent is prep
 ## 2026-11-03 Execution Preflight WIP — Repository-Only
 
 A prepare-only preflight was implemented after the assigned worker stalled without edits. It validates exact approved plan bytes, design approval record, excluded pilot evidence, protected truth/manifest binding, and all call/token arithmetic; emits a sanitized authorization request only with explicit --prepare-only/--output; refuses default invocation and protected/double-slash outputs; and contains no secret/network/Jev adapter boundary. Focused tests passed 8/8 on both interpreters; pvg verify/gates PASS; diff check PASS. No execution, network, secret read/probe, protected access, replay, admission, promotion, production mutation, commit, merge, or push.
+
+### 2026-11-03T21:32:27Z speed
+## 2026-11-03 Execution Preflight Rework — Ready for Re-review
+
+Reviewer rejected output-boundary handling. Rework now rejects lexical traversal before normalization, requires an absolute real-directory ancestor path, traverses ancestors with O_NOFOLLOW dir_fd operations and inode checks, and writes the request relative to the held parent descriptor. Added regressions for lexical dot-dot and non-immediate symlinked ancestors. The pilot semantic test now bypasses only the pinned report hash wrapper while preserving modified semantic JSON, so count/usage checks execute. Focused tests passed 9/9 on both interpreters; pvg verify PASS; gates PASS with one non-failing complexity warning; diff check PASS. Still no execution/network/secret/protected access.
