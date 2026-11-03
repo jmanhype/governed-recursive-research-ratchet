@@ -1,16 +1,18 @@
 ---
 id: GRRR-6sso
 title: "E2e: Operator completes a governed vlt research ratchet"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-10-20T03:26:28Z
-content_hash: "sha256:2548b9ff6431094b4f8f4461341ae58332d30648ad0872ddc0d2e3d41d7a54dd"
+updated_at: 2026-11-03T17:32:11Z
+content_hash: "sha256:92eda7393570553bf7189790e8e01d4bf8b749b96e7944ed30c1fd748c7897b4"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
+assignee: dev-GRRR-6sso
+follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 ---
 
 ## Description
@@ -137,9 +139,22 @@ status: new
 - 2026-11-03T17:17:56Z dep_removed: was_blocked_by GRRR-dbbi
 - 2026-11-03T17:24:03Z dep_removed: was_blocked_by GRRR-34ve
 - 2026-11-03T17:31:36Z dep_removed: was_blocked_by GRRR-fmvp
+- 2026-11-03T17:32:11Z status: open -> in_progress
+- 2026-11-03T17:32:11Z auto-follows: linked to predecessor GRRR-0g4n
+- 2026-11-03T17:32:11Z auto-follows: linked to predecessor GRRR-90te
+- 2026-11-03T17:32:11Z auto-follows: linked to predecessor GRRR-gu87
+- 2026-11-03T17:32:11Z auto-follows: linked to predecessor GRRR-my5n
+- 2026-11-03T17:32:11Z auto-follows: linked to predecessor GRRR-c875
+- 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-bnkf
+- 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-z3w9
+- 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-dbbi
+- 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-34ve
+- 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-fmvp
+- 2026-11-03T17:32:12Z claimed by dev-GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
+- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
 
 ## Comments

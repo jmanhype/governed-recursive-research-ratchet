@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:15:24Z
-content_hash: "sha256:0ac1de7dabbb9d0f85d7306072f399cd57d31cc00d6fa4b556a7a819e41ce1ed"
+content_hash: "sha256:671b00da44a30efbd0042f53d02f9c41959e4f5c4f6f9c4fe798e62be5133f59"
 was_blocked_by: [GRRR-90te]
 follows: [GRRR-90te, GRRR-0g4n]
 assignee: dev-GRRR-gu87
 closed_at: 2026-10-21T20:15:24Z
 close_reason: "Accepted: real 10/10 trusted-observation controls with durable evidence and preserved fail-closed boundaries"
-led_to: [GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-43i8, GRRR-d8ji, GRRR-z3w9]
+led_to: [GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-43i8, GRRR-d8ji, GRRR-z3w9, GRRR-6sso]
 ---
 
 ## Description
@@ -1175,7 +1175,7 @@ AWAITING_PARENT_IDENTITY_RUN
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-90te]]
 - Follows: [[GRRR-90te]], [[GRRR-0g4n]]
-- Led to: [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-z3w9]]
+- Led to: [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-z3w9]], [[GRRR-6sso]]
 
 ## Comments
 

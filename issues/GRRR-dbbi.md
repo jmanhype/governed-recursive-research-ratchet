@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:17:56Z
-content_hash: "sha256:f8607853194cce50e75206765b37ed3e9781d13382e61379247270de43af2f35"
+content_hash: "sha256:7b904889eab767a027f3f8f22bd1be2034ba976b4cfcc615ba5a102d52361708"
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
 follows: [GRRR-bnkf, GRRR-z3w9]
 closed_at: 2026-11-03T17:17:56Z
 close_reason: "PM acceptance: honest partial delivery. Deterministic and random baselines working. Jev correctly marked unavailable. No fabricated results. 12/12 tests independently verified."
-led_to: [GRRR-34ve, GRRR-fmvp]
+led_to: [GRRR-34ve, GRRR-fmvp, GRRR-6sso]
 ---
 
 ## Description
@@ -151,7 +151,7 @@ status: accepted
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-bnkf]], [[GRRR-z3w9]]
 - Follows: [[GRRR-bnkf]], [[GRRR-z3w9]]
-- Led to: [[GRRR-34ve]], [[GRRR-fmvp]]
+- Led to: [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-6sso]]
 
 ## Comments
 

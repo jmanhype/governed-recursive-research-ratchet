@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:03:24Z
-content_hash: "sha256:e490715a74ee79ef7f1c0c5d4cd01b01a2cdfb3a87ff04ba91f2219987278594"
+content_hash: "sha256:25e72c9f947088c85b8c70b9e612d4ea7e5b10bcfb26090decd1160f7455c0ec"
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
 assignee: dev-GRRR-z3w9
 closed_at: 2026-11-03T16:58:43Z
 close_reason: "PM acceptance: All 5 ACs pass. First independently verified defect in GRRR.\n\nAC1: Pinned source reconstructions, two fresh guest runs, settled reservation.\nAC2: Clean baseline C901 passed 3/3; defect candidate D901 failed 3/3; maintainer spec confirmed.\nAC3: finding=Verified defect, verified=true, all 9 mandatory gates PASS with evidence.\nAC4: Real execution; reviewer independently recomputed all 9 event-chain digests, 6 object hashes, snapshot identity, final-anchor consistency.\nAC5: Zero consecutive failures; stop threshold not exercised (successful run).\n\nStage T staging/installation evidence verified. Promotion disabled, admission blocked (correctly gated)."
-led_to: [GRRR-34ve, GRRR-dbbi, GRRR-fmvp]
+led_to: [GRRR-34ve, GRRR-dbbi, GRRR-fmvp, GRRR-6sso]
 ---
 
 ## Description
@@ -1294,7 +1294,7 @@ status: new
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-wu6f]]
 - Follows: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-c875]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]], [[GRRR-0g4n]], [[GRRR-wu6f]]
-- Led to: [[GRRR-34ve]], [[GRRR-dbbi]], [[GRRR-fmvp]]
+- Led to: [[GRRR-34ve]], [[GRRR-dbbi]], [[GRRR-fmvp]], [[GRRR-6sso]]
 
 ## Comments
 
