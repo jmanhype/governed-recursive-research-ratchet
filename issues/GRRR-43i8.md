@@ -9,12 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T22:09:12Z
 created_by: speed
 updated_at: 2026-10-24T15:37:44Z
-content_hash: "sha256:665c207af142a8112f3ceafcd9c7acebdabca9e318eadcd5374e9c9785a99865"
+content_hash: "sha256:35f09c9d25f8cd67b32cd84e1c2b50d79d99f1a51ad7f6387d5d2f7659f23234"
 follows: [GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87]
 assignee: dev-GRRR-43i8
 closed_at: 2026-10-24T13:58:45Z
 close_reason: "Accepted: registration-only install preserved the exact stopped cumulative store and all conservative holds; committed documentation now records the verified protected install while recovery and replay remain separately denied."
-led_to: [GRRR-z3w9, GRRR-d8ji, GRRR-wu6f]
+led_to: [GRRR-z3w9, GRRR-d8ji, GRRR-wu6f, GRRR-6sso]
 blocks: [GRRR-d8ji]
 ---
 
@@ -553,7 +553,7 @@ status: in_progress
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-d8ji]]
 - Follows: [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]]
-- Led to: [[GRRR-z3w9]], [[GRRR-d8ji]], [[GRRR-wu6f]]
+- Led to: [[GRRR-z3w9]], [[GRRR-d8ji]], [[GRRR-wu6f]], [[GRRR-6sso]]
 
 ## Comments
 
