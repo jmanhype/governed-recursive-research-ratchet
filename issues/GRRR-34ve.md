@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:13:45Z
-content_hash: "sha256:dc1c34d3c06489b9984753b9fd01bba8afc77a2a96a10e806a222bd0027caa25"
+updated_at: 2026-11-03T17:18:48Z
+content_hash: "sha256:516dfb8d992afc0248e4c1859578a4bee6f94128e556ecea1125e641a62b2cab"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
@@ -174,3 +174,22 @@ status: in_progress
 
 ### 2026-11-03T17:13:45Z speed
 loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
+
+### 2026-11-03T17:18:48Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Contract admitted: D011 wikilink display text
+- 16/16 admission tests pass
+- Full suite: see /tmp/full-suite.log
+- Commit: 0503286
+
+### proof
+- [x] AC1: Contract with bindings, gates, human approval
+- [x] AC2: Authorization validates identity/target/type/consumption
+- [x] AC3: Admission rechecks all gates
+- [x] AC4: Atomic admission, immutable contract
+- [x] AC5: Stop semantics via evaluator lifecycle
+- [x] AC6: Full C2C cycle: replay → review → approval → admission → recurrence rejected
+- [x] AC7: Registry versioning; reversal is new versioned event
