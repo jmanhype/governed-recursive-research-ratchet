@@ -72,6 +72,15 @@ while retaining sanitized before/after event records.
   operator review; never describe that run as having made no adapter call.
 - The safe local challenge mapping appears only in the final report context.
 
+## Completed operator-authorized run
+
+The first bounded real run is retained at `run-20261103T201719Z/`. It completed
+32/32 calls with zero retries, produced 64 sanitized events, observed 12,548
+input and 736 output tokens, and returned a recommendation-only selector
+result. See that directory’s `RUN-RECORD.md`, immutable `events.jsonl`, and
+`report.json`. It does not complete the pre-registered three-arm evaluation or
+authorize a rerun.
+
 ## Explicit result boundary
 
 Implementation, unit tests, and injected-transport tests are not measurement

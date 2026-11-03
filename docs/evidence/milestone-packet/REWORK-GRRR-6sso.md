@@ -129,6 +129,36 @@ sums only observed token usage, leaves USD null without an independent receipt,
 and omits the selector result when incomplete. Implementation and
 injected-transport tests do not start a measurement.
 
+### Operator-authorized one-shot external run
+
+After the runner passed focused tests and differently scoped containment
+review, the operator explicitly authorized use of the already-saved Jev key for
+the bounded one-shot selector run. The parent alone invoked the reviewed runner
+at commit `4b4ae825fe4708d72ce14eb3bf80f03bc53e9910`; no worker received the
+credential.
+
+Evidence: `docs/evidence/jev-selector-measurement/run-20261103T201719Z/`.
+
+- Run ID: `6cf35082f34a4149b67293c7b53d9740`
+- Status and adapter outcome: `complete`
+- Calls: 32 attempted, 32 returned, 0 retries
+- Event rows: 64, with sequential integrity and 32 unique opaque references
+- Usage: 12,548 input tokens and 736 output tokens, fully observed
+- Model: `jev-1.14.0`
+- USD: remains null pending an independent receipt
+- `events.jsonl` SHA-256:
+  `44cefd57b7ac65c811e2860a2bf37dfc54c41bb0ba9bed6ef93d475dca316d98`
+- `report.json` SHA-256:
+  `59a9a21282ae2f4b8fa213f43d0fa1d652bee07d0aad2bf6bfc45535fb436c0f`
+
+The event log contains no credential, Authorization header, semantic local ID,
+defect/clean label, or protected path. The final report intentionally contains
+the local challenge mapping and probabilistic recommendations only.
+`corpus/evaluation-plan.json` was not modified and still records
+`approval.state=not-approved` and `measurement_started=false`. This
+action-authorized capability run does not complete the pre-registered
+three-arm AC #3 evaluation and no superiority claim is made.
+
 ### Measurement-runner review rework
 
 Only the four independent `MEASUREMENT_RUNNER_REVIEW` findings were changed:
@@ -159,9 +189,10 @@ Only the four independent `MEASUREMENT_RUNNER_REVIEW` findings were changed:
 Only the reviewer's remaining containment finding was changed. A supplied
 string beginning with `//` is rejected before lexical normalization, so
 `PosixPath`'s preserved implementation-defined `//` anchor cannot bypass the
-protected-root comparison. Focused regressions exercise both authorization and
-output forms of `//Library/GRRR/...` through their public entry points and
-refuse `open`, `mkdir`, `stat`, `lstat`, and `readlink` calls before rejection.
+protected-root comparison. Focused regressions exercise authorization and
+output forms of both `//Library/GRRR/...` and `///Library/GRRR/...` through
+public entry points, reject target Path/abspath normalization, and refuse
+target `open`, `mkdir`, `stat`, `lstat`, and `readlink` calls before rejection.
 
 Current implementation/test hashes:
 
@@ -172,7 +203,7 @@ Current implementation/test hashes:
 - `scripts/run-jev-selector-measurement`:
   `836b6de962442070b4acb66233d6845480c34f10a0456ac85153c45b68a274d9`
 - `docs/evidence/jev-selector-measurement/EVIDENCE-TEMPLATE.md`:
-  `467b1459f868e9db78d48cf58dbc7ec05e670451080081d7f5418309f1d54d70`
+  `e86e4b405638c2a7cb9e9cd7e3e738ee249e6efd655217c5fcfc15e527ce3c27`
 
 ## AC-by-AC evidence map
 
