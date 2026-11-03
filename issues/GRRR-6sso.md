@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T18:07:00Z
-content_hash: "sha256:70000373efd067149e616e23a84c11cb9d619202fc4295a90bb9d1f8d6be44c2"
+updated_at: 2026-11-03T18:21:21Z
+content_hash: "sha256:6d4a5ad79396d9afa7252969cf3c92d72b1f0413223c8008bb506e62633d3454"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -248,3 +248,10 @@ Findings:
 Reviewer independently matched all four WIP hashes and reran focused 24/24 offline. Probes used fake credentials/injected data and no network. No protected access or mutations.
 
 Parent measured free space 26,786,766,848 bytes: both the 15.35GB and 16.106GB floors now pass. Fresh GLM rework agent developer_grrr_6sso_jev_rework_v2 is assigned to fix only the three findings with regressions; no measurement/capstone authority granted.
+
+### 2026-11-03T18:21:21Z speed
+## 2026-11-03 Parent Rework Audit — Residual Manifest Binding Finding
+
+Parent independently reran the second WIP: focused 27/27 on both interpreters, full no-guest 747/747 on both interpreters, pvg verify PASS, gates PASS with two non-failing warnings, and evaluation-plan unchanged.
+
+Parent found the catalog fix still incomplete: `_load_frozen_projection` compares the manifest's literal freeze string to the pinned constant but does not verify canonical SHA-256 over manifest fields excluding `freeze_digest`. A mutated manifest with rebound public hash and retained pinned literal can still pass declaratively. Fresh agent developer_grrr_6sso_jev_rework_v3 is assigned this one fix plus adversarial manifest-forgery regressions. Redirect and transport-sanitization fixes otherwise look focused.
