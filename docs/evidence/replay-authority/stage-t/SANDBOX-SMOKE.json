@@ -1,0 +1,63 @@
+{
+  "outcome": "staged-not-installed",
+  "protected": false,
+  "staged_files": [
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 892,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-atomic_publisher.py",
+      "role": "atomic-publisher",
+      "sha256": "c448f4853e6bb9467c6994b64b3f04dfd9ee9c6d0718de69529eb24218e5a719"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 1263,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-failure_preservation.py",
+      "role": "failure-preservation",
+      "sha256": "8fb37a74e96c7fab7f96fed74ad1aea187fc306716ebb024a1cd0059ca9ded47"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 970,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/install-replay-successor-v4",
+      "role": "installer-entrypoint",
+      "sha256": "94b37112fc3b3146078b6edd0cf80d5e845f1cc83543344d79400d144d453dbc"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 2683,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-postflight_verifier.py",
+      "role": "postflight-verifier",
+      "sha256": "f276c0bd84a4fe43d5661672600734120af1332c45c372fc6881a2913491ca46"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 3067,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-protected_preflight.py",
+      "role": "protected-preflight",
+      "sha256": "0e09ccc6f995e24ab983489755df6a14028c154a99b84811b95d6ea95bf0946f"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 2267,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-stage_n_contract.py",
+      "role": "stage-n-contract",
+      "sha256": "d2105c6fbab6edd42ad9724e6ff2313d2531c11af14625bfb0cf8a81b9646fb5"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 1445,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-stage_o_runtime_adapter.py",
+      "role": "stage-o-runtime-adapter",
+      "sha256": "f54f051684dd9be4ccf635d3029cb1f099ddb227e8d763efad2c8bf24e3478c4"
+    },
+    {
+      "authorization_sha256": "6f5bd76b442c1f372ec1a9df94f25c4cdfd2a06c419aca38a1797e386b2549bb",
+      "bytes": 2443,
+      "destination": "/private/tmp/grrr-st-t2.HmutwP/bootstrap/replay-successor-v4-v4_store_schema.py",
+      "role": "v4-store-schema",
+      "sha256": "629c6a70936fb94ea4b4a89b4dc3c94095aa2586194c077e4c06258b2c7ce644"
+    }
+  ],
+  "staging_root": "/private/tmp/grrr-st-t2.HmutwP/bootstrap"
+}

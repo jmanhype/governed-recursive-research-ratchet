@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "docs/evidence/spendability/stage-f/CAPACITY-PREFLIGHT.json": {
+      "bytes": 597,
+      "sha256": "8a0b0ed0e37ae31735165a7330703b80823942758b024772e14ea131f90d0b50"
+    },
+    "docs/evidence/spendability/stage-f/FOCUSED-HOMEBREW.log": {
+      "bytes": 2412,
+      "sha256": "a3cc3ef112e70344df1c4ee1fadb7183dcdf94632b05bf70b806a5fc2769b196"
+    },
+    "docs/evidence/spendability/stage-f/FOCUSED-SYSTEM.log": {
+      "bytes": 1728,
+      "sha256": "a918548141cf24b1efbe7061d2335bd6db62387a376ab2fbd290bce476af7d74"
+    },
+    "docs/evidence/spendability/stage-f/HANDOFF.md": {
+      "bytes": 4509,
+      "sha256": "aa1f42efac5209df38fa761a6b42f406abfc99ad7bf87b45307ab5a16fa3c771"
+    },
+    "docs/evidence/spendability/stage-f/REQUEST.json": {
+      "bytes": 34817,
+      "sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919"
+    },
+    "docs/evidence/spendability/stage-f/REVIEW-APPROVED.md": {
+      "bytes": 1193,
+      "sha256": "45d75da7332d768bdca8fd635973f001dad8e565bd19da423ed3b0b7fd8e3822"
+    },
+    "docs/evidence/spendability/stage-f/REVIEW-REQUEST.md": {
+      "bytes": 3524,
+      "sha256": "9a7b5d3607bc962f3653375aae29fd5c37e025394a841b6c7bf11f844023bcbb"
+    },
+    "research/spendability_request.py": {
+      "bytes": 18343,
+      "sha256": "1860c7d8ea1ecba909b75ab98634bea1341a63f7a0064ebc51fbd8bf46253f90"
+    },
+    "scripts/generate-spendability-evidence-request": {
+      "bytes": 3753,
+      "sha256": "7cb49ca0cebae14bc1bcfc0cedfc00a3634bcd90e9af372f9f0c28c09b0bee9c"
+    },
+    "tests/unit_spendability_request.py": {
+      "bytes": 9805,
+      "sha256": "8425d246514187bc2ccf282ffc2af7e985f4a7d4dc753926b809bc26f72e1d5f"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "81e9785ccb20bea38a84aec70869b67f26d2d6cb",
+  "independent_review": "STAGE_F_REQUEST_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage F approved external evidence-request package",
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "stage_e_bundle_sha256": "52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467",
+  "stage_e_package_sha256": "36b9bfb4ae2f3d2245c4d60624e0c06548caf528578ab2ce888dfef4b2d0cc09"
+}

@@ -1,0 +1,115 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "stage_p_package_sha256": "ba7e8a45486a21ff399027821d3b0bd1d21c6577730597f900f3c21fb192c0b1",
+    "stage_q_package_sha256": "d953651c0bd635a1e80295376665fd2331b86ac9b5f25f726b945bcf9e41fb3e",
+    "story_head": "23fdac5fcdc9bcef5147314a8f3c8bcb6d458d3f"
+  },
+  "decision": "prepared-not-issued",
+  "gates": {
+    "independent_source_review": {
+      "evidence": [],
+      "status": "not-run"
+    },
+    "operator_issuance": {
+      "evidence": [],
+      "status": "not-run"
+    },
+    "protected_staging": {
+      "evidence": [],
+      "status": "not-run"
+    },
+    "sandbox_functional_checks": {
+      "evidence": [
+        "e9aac58ccf0d0ad0f2e483cb0335d4eadaa1ffebefc929df17a1adb19f08b759"
+      ],
+      "status": "pass"
+    },
+    "source_role_closure": {
+      "evidence": [
+        "b6354127a7552b628506c25dc7eee27c8ecb371f56bf565a63dd247b31445084"
+      ],
+      "status": "pass"
+    }
+  },
+  "issuance_status": "prepared-not-issued",
+  "outcome": {
+    "allowed_mutations": [],
+    "installation_ready": false,
+    "issued": false,
+    "prepared": true,
+    "protected_access_performed": false,
+    "spendable": null
+  },
+  "prepared_at": "2026-11-03T14:00:00Z",
+  "record_type": "replay-successor-v4-source-issuance-prepared-v1",
+  "schema_version": 1,
+  "source_bundle_sha256": "b6354127a7552b628506c25dc7eee27c8ecb371f56bf565a63dd247b31445084",
+  "sources": [
+    {
+      "bytes": 970,
+      "file": "install-replay-successor-v4",
+      "protected_destination": "/Library/GRRR/bootstrap/install-replay-successor-v4",
+      "role": "installer-entrypoint",
+      "sha256": "94b37112fc3b3146078b6edd0cf80d5e845f1cc83543344d79400d144d453dbc"
+    },
+    {
+      "bytes": 2443,
+      "file": "replay-successor-v4-v4_store_schema.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-v4_store_schema.py",
+      "role": "v4-store-schema",
+      "sha256": "629c6a70936fb94ea4b4a89b4dc3c94095aa2586194c077e4c06258b2c7ce644"
+    },
+    {
+      "bytes": 2267,
+      "file": "replay-successor-v4-stage_n_contract.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-stage_n_contract.py",
+      "role": "stage-n-contract",
+      "sha256": "d2105c6fbab6edd42ad9724e6ff2313d2531c11af14625bfb0cf8a81b9646fb5"
+    },
+    {
+      "bytes": 1445,
+      "file": "replay-successor-v4-stage_o_runtime_adapter.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-stage_o_runtime_adapter.py",
+      "role": "stage-o-runtime-adapter",
+      "sha256": "f54f051684dd9be4ccf635d3029cb1f099ddb227e8d763efad2c8bf24e3478c4"
+    },
+    {
+      "bytes": 3067,
+      "file": "replay-successor-v4-protected_preflight.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-protected_preflight.py",
+      "role": "protected-preflight",
+      "sha256": "0e09ccc6f995e24ab983489755df6a14028c154a99b84811b95d6ea95bf0946f"
+    },
+    {
+      "bytes": 892,
+      "file": "replay-successor-v4-atomic_publisher.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-atomic_publisher.py",
+      "role": "atomic-publisher",
+      "sha256": "c448f4853e6bb9467c6994b64b3f04dfd9ee9c6d0718de69529eb24218e5a719"
+    },
+    {
+      "bytes": 2683,
+      "file": "replay-successor-v4-postflight_verifier.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-postflight_verifier.py",
+      "role": "postflight-verifier",
+      "sha256": "f276c0bd84a4fe43d5661672600734120af1332c45c372fc6881a2913491ca46"
+    },
+    {
+      "bytes": 1263,
+      "file": "replay-successor-v4-failure_preservation.py",
+      "protected_destination": "/Library/GRRR/bootstrap/replay-successor-v4-failure_preservation.py",
+      "role": "failure-preservation",
+      "sha256": "8fb37a74e96c7fab7f96fed74ad1aea187fc306716ebb024a1cd0059ca9ded47"
+    }
+  ]
+}

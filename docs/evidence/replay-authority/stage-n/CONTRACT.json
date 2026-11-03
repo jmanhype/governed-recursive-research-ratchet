@@ -1,0 +1,178 @@
+{
+  "binding": {
+    "allowed_mutation_profiles": [
+      "independent-replay"
+    ],
+    "budget_amendment_required": true,
+    "campaign": "GRRR-REPLAY-SUCCESSOR-POC-2",
+    "design_only": true,
+    "device_identity": "required-at-install",
+    "directory": "/Library/GRRR/accounting-poc2/unissued-independent-replay-v4",
+    "execution_authorized": false,
+    "inode_identity": "required-at-install",
+    "predecessor_binding_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "predecessor_store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+    "prior_history_receipt": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+    "profiles": [
+      "independent-replay"
+    ],
+    "store_id": "unissued-independent-replay-v4",
+    "successor_sha256": "4d2051326a7c6edc749c0c7ef5763115dbb82ea1d0807e6ffb5ee68a57127bc2",
+    "version": 4
+  },
+  "receipt": {
+    "decision": "candidate-fresh-replay-successor-poc",
+    "guards": {
+      "admission": "blocked",
+      "authority": {
+        "admission": false,
+        "merge": false,
+        "promotion": false,
+        "protected_access": false,
+        "push": false,
+        "reconcile": false,
+        "replay": false,
+        "write": false
+      },
+      "automatic_merge": false,
+      "per_run_operator_approval_required": true,
+      "predecessor_mutations": [],
+      "promotion": "disabled",
+      "push": false,
+      "reconciliation_claim": false,
+      "replay_execution_authorized": false
+    },
+    "history": {
+      "all_original_ceilings_encumbered": true,
+      "evidence_boundary": "retained-original-records-only",
+      "final_classifications_made": 0,
+      "response_ready": false,
+      "spendable": null,
+      "status": "unresolved",
+      "whole_archive_absence_established": false
+    },
+    "holds": {
+      "count": 3,
+      "maximum": {
+        "currency": "USD",
+        "execution_us": 300000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "release": false,
+      "reservation_ids": [
+        "69523b39a51c44739114313c9325028c",
+        "b34d8b9d106e42eab3a3e43daac98ddd",
+        "d375ce6a2d924646bec71df64e939a5b"
+      ],
+      "status": "unresolved"
+    },
+    "installation": {
+      "authorization_sha256": null,
+      "design_only": true,
+      "exclusive_parent": true,
+      "failure_mode": "refuse-no-retry-preserve-partial-evidence",
+      "install_once": true,
+      "installer_sha256": null,
+      "operator_authorization_status": "required",
+      "predecessor_read_only": true,
+      "predecessor_rollback": false,
+      "review_sha256": null,
+      "review_status": "required",
+      "rollback_requires_verified_baseline": true,
+      "rollback_scope": "new-successor-namespace-only"
+    },
+    "kind": "replay-successor-authority",
+    "predecessor": {
+      "active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+      "stage_a_package_sha256": "bb79e0242ea914d75b3e0ab9b44248c6e4eca8435214a1d970a55bef2a99a391",
+      "stage_l_package_sha256": "56bc2c82accb6530f1a479ad0b23408077a173e2ee7e2f9fcc41bc1e0099df53",
+      "stage_m_package_sha256": "c65aedd7f7a2f861ef5593ba9705981ca42508bf6f3f12a4f23787381d12df0b"
+    },
+    "scope": {
+      "aggregate_session_execution_ceiling_us": 1920000000,
+      "failure_stop_policy": "two-consecutive-independent-replay-failures-requires-operator-approval",
+      "maximum_guest_launches": 12,
+      "modes": [
+        "normal",
+        "failed-rebuild",
+        "interruption",
+        "two-failures"
+      ],
+      "profile": "independent-replay",
+      "session_count": 4,
+      "session_maximum": {
+        "currency": "USD",
+        "execution_us": 480000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "stage": "poc"
+    },
+    "successor": {
+      "campaign": "GRRR-REPLAY-SUCCESSOR-POC-2",
+      "ceiling_basis": "operator-approved-incremental-amendment-required-before-any-charge",
+      "proposed_ceiling": {
+        "currency": "USD",
+        "execution_us": 1920000000,
+        "money_cents": 0,
+        "review_us": 0
+      },
+      "relationship": "fresh-successor-not-reconciliation",
+      "store_id": "unissued-independent-replay-v4"
+    },
+    "version": 1
+  },
+  "summary": {
+    "aggregate_session_execution_ceiling_us": 1920000000,
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "binding_version": 4,
+    "ceiling_basis": "operator-approved-incremental-amendment-required-before-any-charge",
+    "decision": "candidate-fresh-replay-successor-poc",
+    "implementation_status": "design-only",
+    "maximum_guest_launches": 12,
+    "modes": [
+      "normal",
+      "failed-rebuild",
+      "interruption",
+      "two-failures"
+    ],
+    "predecessor_history": {
+      "all_original_ceilings_encumbered": true,
+      "evidence_boundary": "retained-original-records-only",
+      "final_classifications_made": 0,
+      "response_ready": false,
+      "spendable": null,
+      "status": "unresolved",
+      "whole_archive_absence_established": false
+    },
+    "predecessor_unresolved_holds": 3,
+    "profile": "independent-replay",
+    "proposed_ceiling": {
+      "currency": "USD",
+      "execution_us": 1920000000,
+      "money_cents": 0,
+      "review_us": 0
+    },
+    "receipt_sha256": "4d2051326a7c6edc749c0c7ef5763115dbb82ea1d0807e6ffb5ee68a57127bc2",
+    "relationship": "fresh-successor-not-reconciliation",
+    "schema_version": 1,
+    "session_maximum": {
+      "currency": "USD",
+      "execution_us": 480000000,
+      "money_cents": 0,
+      "review_us": 0
+    }
+  }
+}

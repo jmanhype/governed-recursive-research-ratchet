@@ -1,0 +1,11 @@
+system-compileall-exit=0
+system-py_compile-exit=0
+homebrew-compileall-exit=0
+homebrew-py_compile-exit=0
+diff-check-exit=0
+cached-diff-check-exit=0
+accepted-accounting-tests-diff-exit=0
+c2c19ae92f4d318d0892bc77272b599043c0019f 3869e0ff223bae5d4ae75080f33d4b6ba33efacc 38f33c936b8249a57be81aebd639aa40c2f9de55
+uid=501(speed) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),98(_lpadmin),701(com.apple.sharepoint.group.1),33(_appstore),100(_lpoperator),204(_developer),250(_analyticsusers),395(com.apple.access_ftp),398(com.apple.access_screensharing),399(com.apple.access_ssh),400(com.apple.access_remote_ae)
+Filesystem   1024-blocks      Used Available Capacity  iused     ifree %iused  Mounted on
+/dev/disk3s1   971350180 921500312  10526452    99% 17082037 105264520   14%   /System/Volumes/Data

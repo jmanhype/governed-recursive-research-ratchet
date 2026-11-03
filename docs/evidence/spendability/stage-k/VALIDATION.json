@@ -1,0 +1,68 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "execution_approval_sha256": "fdb11c2c30b2c385f132f4607ba2a198b42b9e0840e3c0bcee3035fb4191ca7b",
+    "license_review_sha256": "ad9570ca20676363eb4b3dff23715b058322a0ecffe10e7e3b404db5863d896d",
+    "session_search_sha256": "84b6f0ebfb76d2adcd359274a167d2b77becd76cda6b3f265ce1845197c182cc",
+    "session_source_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+    "stage_i_commit": "9b58eae0ba62d0d384a4743ea069bf3dde6c9f6d",
+    "stage_i_package_sha256": "6e9493300b7a338d7c19155af169b65c96b3728852aeb1e949c15d9f5fe920ac",
+    "stage_j_package_sha256": "7a2251decd3073aaa268e2dabdeb16f4d9d8f9283536760c38ad4d6b5ab1c53e",
+    "stage_j_validation_sha256": "5f14d7647148f305125391104e092fdbc4e789bdd2ed9d6dff0ae26beed89b96"
+  },
+  "checks": {
+    "all_16_reservation_and_run_ids_found": "PASS",
+    "eight_duration_values_without_fabricated_intervals": "PASS",
+    "eight_request_observation_meter_custody_chains": "PASS",
+    "full_original_session_archive_hash": "PASS",
+    "line_11533_hash_and_common_readback_boundary": "PASS",
+    "pinned_ledger_evaluator_only_enforcement": "PASS",
+    "pinned_source_identity_constants": "PASS",
+    "reviewed_numeric_identity_mapping": "PASS",
+    "stage_a_database_owner_uid_320": "PASS",
+    "stage_j_exact_package_and_validation_binding": "PASS",
+    "zero_explicit_dispatch_operation_ids_retained_missing": "PASS",
+    "zero_final_classifications": "PASS",
+    "zero_per_request_authenticated_principal_records_retained_missing": "PASS",
+    "zero_reservation_specific_utc_intervals_retained_missing": "PASS"
+  },
+  "created_at": "2026-10-28T13:20:00Z",
+  "kind": "GRRR-z3w9 Stage K per-record evidence validation",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "schema_version": 1,
+  "summary": {
+    "candidate_record_sets": 8,
+    "common_readback_boundaries": 1,
+    "custody_chains": 8,
+    "duration_values": 8,
+    "explicit_dispatch_operation_ids": 0,
+    "final_classifications_made": 0,
+    "issuer_ledger_identity_validated": true,
+    "numeric_process_uid_mapping_validated": true,
+    "per_request_authenticated_principal_records": 0,
+    "reservation_specific_utc_intervals": 0,
+    "response_ready_record_sets": 0
+  },
+  "test_results": {
+    "deterministic_generation": "byte-identical",
+    "full_suite": "not-run-existing-host-pressure-gate",
+    "homebrew_python_3_14": "14/14 passed",
+    "miniconda_python_3_12": "14/14 passed"
+  }
+}

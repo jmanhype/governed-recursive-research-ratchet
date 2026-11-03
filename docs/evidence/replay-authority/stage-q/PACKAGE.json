@@ -1,0 +1,142 @@
+{
+  "artifacts": {
+    "docs/evidence/replay-authority/stage-q/CONTAINMENT-ALIAS-NARROW-REVIEW-REQUEST.md": {
+      "bytes": 2909,
+      "sha256": "c798fd0baec68828129749eb6e5a6616018ea9f86d4e72c58a4245273c25b0ec"
+    },
+    "docs/evidence/replay-authority/stage-q/CONTAINMENT-ALIAS-REVIEW-APPROVED.md": {
+      "bytes": 1241,
+      "sha256": "86e96c2a32f5970315ffae4f90395808978e97f73ee017ac64cc7d9e239e3036"
+    },
+    "docs/evidence/replay-authority/stage-q/CONTAINMENT-ALIAS-REVIEW-REJECTED.md": {
+      "bytes": 785,
+      "sha256": "4a28638e83ce60e895c1af18436a591bf8e1c4dee191ddbd523a48bdcf3a3898"
+    },
+    "docs/evidence/replay-authority/stage-q/CONTAINMENT-ALIAS-REWORK-REPORT.md": {
+      "bytes": 2070,
+      "sha256": "a51d871cd6b304873bb0d8883c7181094abc5cf589e8283b7c3e1ec9ec6be1f1"
+    },
+    "docs/evidence/replay-authority/stage-q/CONTAINMENT-REWORK-REPORT.md": {
+      "bytes": 3044,
+      "sha256": "ba52a3f49ef66279164f50dd47af93d4f3f537f1d9d6b72a730d7a5ee74a5e44"
+    },
+    "docs/evidence/replay-authority/stage-q/CONTAINMENT-REWORK-REVIEW-REQUEST.md": {
+      "bytes": 3528,
+      "sha256": "c46cee36e4852dfeee382e5c9648ebc03bda85bf3b4850930bec24fbe8e71f4e"
+    },
+    "docs/evidence/replay-authority/stage-q/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 6277,
+      "sha256": "4f541a542f4a64b4489c4f86226083daeb194077ec3ddd452dde81bad284c58d"
+    },
+    "docs/evidence/replay-authority/stage-q/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 6277,
+      "sha256": "d0edeba481a62f4b6412abfce3982079713ac40dddbf8942c82dd0f1f1e18c66"
+    },
+    "docs/evidence/replay-authority/stage-q/FULL-HOMEBREW-3.14.log": {
+      "bytes": 699,
+      "sha256": "554a736a7dfe4210866b653dd94813b62c483aff2ec7b991a441c8ea5f816660"
+    },
+    "docs/evidence/replay-authority/stage-q/FULL-MINICONDA-3.12.log": {
+      "bytes": 699,
+      "sha256": "6f9fef275ca2ed0b77f909ca9cca454dab7f45a7a6b8c33977bfa4a0a31e80cf"
+    },
+    "docs/evidence/replay-authority/stage-q/NARROW-REVIEW-REJECTED.md": {
+      "bytes": 1453,
+      "sha256": "5244a0b6a16edb6771403a5406bfc4db93386e57eef8198375091ccc68e8b7d6"
+    },
+    "docs/evidence/replay-authority/stage-q/NARROW-REVIEW-REQUEST.md": {
+      "bytes": 2506,
+      "sha256": "f9c4ea2d4be16c9ff811b89da57c7710b1e12a39b3cad18baaeac9c22c7877f3"
+    },
+    "docs/evidence/replay-authority/stage-q/REPORT.md": {
+      "bytes": 5662,
+      "sha256": "9ca1c203194c5fd46029293b77685473cb48474377685bcf1890613b8a00eb16"
+    },
+    "docs/evidence/replay-authority/stage-q/REVIEW-REJECTED.md": {
+      "bytes": 1180,
+      "sha256": "06f3d6d15d060e84275cdef18aafb261fca04a892977e9c2fc3e9154baaf1472"
+    },
+    "docs/evidence/replay-authority/stage-q/REVIEW-REQUEST.md": {
+      "bytes": 4851,
+      "sha256": "cd73fd29fd0381e441379e63a13aaac3f803989438e46da71bc1c43e618822f5"
+    },
+    "docs/evidence/spendability/stage-l/RETAINED-SESSION-SEARCH.json": {
+      "bytes": 4537,
+      "sha256": "e568f36d965aa425971744573b562f005c3f1279ba73fef7610bc495224faaa3"
+    },
+    "research/replay_successor_installer.py": {
+      "bytes": 30408,
+      "sha256": "c1b846576f38a9344ed92f74f4bfdff3be34c6ed0a45bed57e0b76194cb334c6"
+    },
+    "research/spendability_per_record.py": {
+      "bytes": 19304,
+      "sha256": "6ba7d803d54df752ca65390cd57890c064df8810253e7df3bc4e58eb284a1985"
+    },
+    "research/spendability_provenance.py": {
+      "bytes": 19200,
+      "sha256": "9595d8ad932a4b26579a5c48ac77632b210e488ac82722a31a000a02e3695cce"
+    },
+    "research/spendability_request_search.py": {
+      "bytes": 21968,
+      "sha256": "f1110d740feec51ec22e32a889202187097c930b1fd5dcdda6e65ee4172e5f33"
+    },
+    "scripts/install-replay-successor-v4": {
+      "bytes": 1162,
+      "sha256": "7ee2728f99408b2f83b6626fe61c187d91d3b6d04b386e026e68fdc7abcaaaa3"
+    },
+    "tests/unit_replay_successor_installer.py": {
+      "bytes": 27115,
+      "sha256": "26699b0839e2a7ebd0c6d20eb6aefb9d8c9ce4f26067af5ef8ae0958fadb138c"
+    },
+    "tests/unit_spendability_per_record.py": {
+      "bytes": 8508,
+      "sha256": "38de0010620261f8452c925ff36d063f5e5c48f34872bd1f20a1973d68bb41dd"
+    },
+    "tests/unit_spendability_provenance.py": {
+      "bytes": 8800,
+      "sha256": "01db40fc3934d6d73c6bca0104307cd6a80d42ab8aa777074bf6be40779116e6"
+    },
+    "tests/unit_spendability_request_search.py": {
+      "bytes": 9661,
+      "sha256": "212e6e04178fddbf84d5d229f07c5161a8b84485fff536c4b4f8cd4a13e863ec"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "5c130a02958042975c8522f71e134f19627c999d",
+  "created_at": "2026-11-03T00:00:00Z",
+  "independent_review": "STAGE_Q_CONTAINMENT_ALIAS_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage Q sandbox installer core and durable evidence WIP package",
+  "operator_authorization": "Stage Q containment rework and fresh revised-brief independent review",
+  "outcome": {
+    "containment_lexical_before_metadata": true,
+    "durability_repair_valid": true,
+    "installer_core_sandbox_valid": true,
+    "live_installation_authorized": false,
+    "protected_paths_accessed": [],
+    "sandbox_store_stopped": true
+  },
+  "review_sequence": {
+    "alias_retry": "STAGE_Q_CONTAINMENT_ALIAS_REVIEW: APPROVED",
+    "first_rework": "STAGE_Q_NARROW_REWORK_REVIEW: REJECTED",
+    "initial": "STAGE_Q_INSTALLER_CORE_REVIEW: REJECTED",
+    "revised_containment": "STAGE_Q_CONTAINMENT_REWORK_REVIEW: REJECTED"
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "test_summary": {
+    "focused_homebrew_3_14": "37/37 passed",
+    "focused_miniconda_3_12": "37/37 passed",
+    "full_homebrew_3_14": "598/598 passed",
+    "full_miniconda_3_12": "598/598 passed",
+    "protected_metadata_syscalls": "zero in guarded lexical probes"
+  }
+}

@@ -1,0 +1,19 @@
+test_all_eight_reservations_and_runs_are_covered (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_all_eight_reservations_and_runs_are_covered) ... ok
+test_binds_exact_stage_j_and_session_inputs (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_binds_exact_stage_j_and_session_inputs) ... ok
+test_classification_and_authority_injection_are_rejected (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_classification_and_authority_injection_are_rejected) ... ok
+test_common_readback_boundary_is_bound_to_hashed_source_line (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_common_readback_boundary_is_bound_to_hashed_source_line) ... ok
+test_durations_are_retained_without_fabricating_intervals (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_durations_are_retained_without_fabricating_intervals) ... ok
+test_each_record_preserves_request_event_object_and_meter_chain (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_each_record_preserves_request_event_object_and_meter_chain) ... ok
+test_issuer_ledger_identity_is_common_not_per_request_authentication (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_issuer_ledger_identity_is_common_not_per_request_authentication) ... ok
+test_missing_principal_operation_and_interval_counts_are_explicit (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_missing_principal_operation_and_interval_counts_are_explicit) ... ok
+test_numeric_identity_mapping_is_validated_from_reviewed_evidence (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_numeric_identity_mapping_is_validated_from_reviewed_evidence) ... ok
+test_record_remains_fail_closed_and_powerless (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_record_remains_fail_closed_and_powerless) ... ok
+test_record_revalidates_by_exact_regeneration (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_record_revalidates_by_exact_regeneration) ... ok
+test_saved_matrix_matches_exact_regeneration (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_saved_matrix_matches_exact_regeneration) ... ok
+test_session_search_and_source_hashes_are_pinned (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_session_search_and_source_hashes_are_pinned) ... ok
+test_session_search_reproduces_from_full_source_archive (unit_spendability_per_record.SpendabilityPerRecordMatrix.test_session_search_reproduces_from_full_source_archive) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.868s
+
+OK

@@ -1,0 +1,76 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "interpreters": {
+    "/opt/homebrew/bin/python3": {
+      "capture_gate": "PASS_LOCKED_READ_ONLY_EXTENDED_SCHEMA",
+      "mutation_performed": false,
+      "quiescence": {
+        "allowed_mutations": [],
+        "execution_authorized": false,
+        "review_status": "unresolved",
+        "schema_valid": true,
+        "spendable": null,
+        "writer_exclusion_observed": false,
+        "writer_exclusion_proven": null,
+        "writer_exclusion_recorded": true
+      },
+      "raw_schema": {
+        "authority": {
+          "admission": false,
+          "merge": false,
+          "promotion": false,
+          "protected_access": false,
+          "push": false,
+          "reconcile": false,
+          "replay": false,
+          "write": false
+        },
+        "independent_review": "unresolved",
+        "mapped_contract_schema_sha256": "f7c49d7ad12f7e669031d4a340f6ec70860ca3c2779445f0d87b39d1e8ef409d",
+        "raw_schema_sha256": "219e684bfee51459852674c3e7ad6e58030051b20ccc6e9fb7a91d14b34910b0",
+        "status": "mapped"
+      }
+    },
+    "/usr/bin/python3": {
+      "capture_gate": "PASS_LOCKED_READ_ONLY_EXTENDED_SCHEMA",
+      "mutation_performed": false,
+      "quiescence": {
+        "allowed_mutations": [],
+        "execution_authorized": false,
+        "review_status": "unresolved",
+        "schema_valid": true,
+        "spendable": null,
+        "writer_exclusion_observed": false,
+        "writer_exclusion_proven": null,
+        "writer_exclusion_recorded": true
+      },
+      "raw_schema": {
+        "authority": {
+          "admission": false,
+          "merge": false,
+          "promotion": false,
+          "protected_access": false,
+          "push": false,
+          "reconcile": false,
+          "replay": false,
+          "write": false
+        },
+        "independent_review": "unresolved",
+        "mapped_contract_schema_sha256": "f7c49d7ad12f7e669031d4a340f6ec70860ca3c2779445f0d87b39d1e8ef409d",
+        "raw_schema_sha256": "219e684bfee51459852674c3e7ad6e58030051b20ccc6e9fb7a91d14b34910b0",
+        "status": "mapped"
+      }
+    }
+  },
+  "kind": "GRRR-z3w9 Stage D approved-schema validation",
+  "schema_version": 1
+}

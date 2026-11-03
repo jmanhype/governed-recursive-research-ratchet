@@ -1,0 +1,86 @@
+{
+  "artifacts": {
+    "docs/evidence/replay-authority/stage-m/AUDIT.json": {
+      "bytes": 8498,
+      "sha256": "39869d025fae2ad97c4368e5ceaeff073afe5f8ef32cbdb941f9d06f727a87aa"
+    },
+    "docs/evidence/replay-authority/stage-m/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 2059,
+      "sha256": "2ed0e620ef0681519ab4428a28f5fb03ba26a58d1f0c52c070fcd45293afefdd"
+    },
+    "docs/evidence/replay-authority/stage-m/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 2059,
+      "sha256": "5f6f306f3cd0162ae02627c83b690bc09b1c176c82614cdc2b28c016c16b6129"
+    },
+    "docs/evidence/replay-authority/stage-m/REPORT.md": {
+      "bytes": 2703,
+      "sha256": "dd4c13eee9e11c829a33670c7da03d068ef6f06e44a69af7a57f0bc47d9b85cc"
+    },
+    "docs/evidence/replay-authority/stage-m/REVIEW-APPROVED.md": {
+      "bytes": 887,
+      "sha256": "46f466d086f60af19397d07ced37a250a0828e596fc9de02f8f9b46f1b3eb30b"
+    },
+    "docs/evidence/replay-authority/stage-m/REVIEW-REQUEST.md": {
+      "bytes": 2700,
+      "sha256": "8aa8ab39e92465a21560ed08bd156153132c99dd877fea3778641d8cba8a73db"
+    },
+    "docs/evidence/replay-authority/stage-m/VALIDATION.json": {
+      "bytes": 2261,
+      "sha256": "4b25cde2ed502f3027c14a8087acd3f24ef3b30f8a8874188c7bf55fe4d847d5"
+    },
+    "research/replay_authority_audit.py": {
+      "bytes": 10213,
+      "sha256": "7d2f9db7ac9e2f47307b8fcb5d2b9ab7ba47b7bdcd7cccad6c70684e7c8648d2"
+    },
+    "scripts/audit-replay-authority-state": {
+      "bytes": 671,
+      "sha256": "fdd6930e3f559e98b4363bb5cc7aab1193ee63abd55ad20c333d1e0a40455770"
+    },
+    "tests/unit_replay_authority_audit.py": {
+      "bytes": 7670,
+      "sha256": "befbe1f2dc3484921c3af8c58bf4b7ead6ae5e62fc5c62c4f595ded68608602c"
+    }
+  },
+  "audit_summary": {
+    "preflight_pass_variants": 1,
+    "replay_capable_variants": 0,
+    "store_schema_pass_variants": 4,
+    "variants_audited": 5,
+    "writable_store_variants": 1
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d",
+  "created_at": "2026-10-28T20:00:00Z",
+  "evidence_scope": {
+    "gate_relaxation_proposed": false,
+    "new_binding_contract_implemented": false,
+    "protected_paths_accessed": [],
+    "replay_possible": false,
+    "source_and_committed_stage_a_only": true
+  },
+  "finding": {
+    "classification": "inconsistent-authority-state-machine",
+    "detail": "Replay preflight requires v1 plus independent-replay, but the persistent-store v1 contract permits only the legacy three profiles; v2/v3 include independent-replay but are frozen/read-only.",
+    "required_next_step": "Design and independently review a new binding authority contract; do not relax preflight or mutate the existing v3 store."
+  },
+  "independent_review": "STAGE_M_AUTHORITY_AUDIT_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage M replay-authority audit WIP package",
+  "outcome": {
+    "allowed_mutations": [],
+    "execution_authorized": false,
+    "protected_access": false,
+    "replay_possible": false,
+    "spendable": null
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself"
+}

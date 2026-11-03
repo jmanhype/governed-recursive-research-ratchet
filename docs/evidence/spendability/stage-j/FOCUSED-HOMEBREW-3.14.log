@@ -1,0 +1,17 @@
+test_all_eight_candidates_receive_common_binding_only (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_all_eight_candidates_receive_common_binding_only) ... ok
+test_authority_injection_is_rejected (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_authority_injection_is_rejected) ... ok
+test_binds_exact_stage_i_and_stage_j_inputs (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_binds_exact_stage_i_and_stage_j_inputs) ... ok
+test_capture_records_exact_read_only_protected_sources (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_capture_records_exact_read_only_protected_sources) ... ok
+test_classification_injection_is_rejected (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_classification_injection_is_rejected) ... ok
+test_common_approval_binding_is_valid_against_plan (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_common_approval_binding_is_valid_against_plan) ... ok
+test_modified_capture_is_rejected (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_modified_capture_is_rejected) ... ok
+test_per_request_gaps_remain_explicit (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_per_request_gaps_remain_explicit) ... ok
+test_record_remains_fail_closed_and_powerless (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_record_remains_fail_closed_and_powerless) ... ok
+test_record_revalidates_by_exact_regeneration (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_record_revalidates_by_exact_regeneration) ... ok
+test_response_ready_injection_is_rejected (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_response_ready_injection_is_rejected) ... ok
+test_retained_authorization_records_contain_no_credentials (unit_spendability_authorization.SpendabilityAuthorizationEvidence.test_retained_authorization_records_contain_no_credentials) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.006s
+
+OK

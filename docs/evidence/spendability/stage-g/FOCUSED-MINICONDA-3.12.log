@@ -1,0 +1,18 @@
+test_authority_injection_is_rejected_by_regeneration (unit_spendability_search.SpendabilityEvidenceSearch.test_authority_injection_is_rejected_by_regeneration) ... ok
+test_binds_exact_approved_inputs (unit_spendability_search.SpendabilityEvidenceSearch.test_binds_exact_approved_inputs) ... ok
+test_coverage_domains_do_not_become_complete_history (unit_spendability_search.SpendabilityEvidenceSearch.test_coverage_domains_do_not_become_complete_history) ... ok
+test_eight_settled_reservations_have_complete_candidate_joins (unit_spendability_search.SpendabilityEvidenceSearch.test_eight_settled_reservations_have_complete_candidate_joins) ... ok
+test_lineage_absence_is_not_converted_into_unavailable (unit_spendability_search.SpendabilityEvidenceSearch.test_lineage_absence_is_not_converted_into_unavailable) ... ok
+test_modified_baseline_is_rejected (unit_spendability_search.SpendabilityEvidenceSearch.test_modified_baseline_is_rejected) ... ok
+test_modified_package_is_rejected (unit_spendability_search.SpendabilityEvidenceSearch.test_modified_package_is_rejected) ... ok
+test_modified_request_is_rejected (unit_spendability_search.SpendabilityEvidenceSearch.test_modified_request_is_rejected) ... ok
+test_modified_trusted_ledger_is_rejected (unit_spendability_search.SpendabilityEvidenceSearch.test_modified_trusted_ledger_is_rejected) ... ok
+test_record_remains_fail_closed_and_powerless (unit_spendability_search.SpendabilityEvidenceSearch.test_record_remains_fail_closed_and_powerless) ... ok
+test_record_revalidates_by_exact_regeneration (unit_spendability_search.SpendabilityEvidenceSearch.test_record_revalidates_by_exact_regeneration) ... ok
+test_search_inventory_covers_all_thirty_items_once (unit_spendability_search.SpendabilityEvidenceSearch.test_search_inventory_covers_all_thirty_items_once) ... ok
+test_three_pending_reservations_remain_partial (unit_spendability_search.SpendabilityEvidenceSearch.test_three_pending_reservations_remain_partial) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.224s
+
+OK

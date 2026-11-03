@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""Generate the GRRR-z3w9 Stage I provenance-enrichment record."""
+
+import json
+from pathlib import Path
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "research"))
+
+from spendability_provenance import (  # noqa: E402
+    build_provenance_record,
+    validate_provenance_record,
+)
+
+
+def main() -> int:
+    if sys.argv[1:]:
+        raise SystemExit("no arguments accepted")
+    record = build_provenance_record(ROOT)
+    validate_provenance_record(record, ROOT)
+    print(json.dumps(record, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,673 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "stage_f_independent_review": "STAGE_F_REQUEST_REVIEW: APPROVED",
+    "stage_f_package_sha256": "388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23",
+    "stage_f_request_sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919",
+    "trusted_export_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09",
+    "trusted_export_readback_sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8",
+    "trusted_export_snapshot_id": "a070c21845becd209d3ed84591d4d8c95db8604783cc76a997b829cc901760f6",
+    "trusted_export_snapshot_sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+  },
+  "created_at": "2026-10-28T00:45:00Z",
+  "discovery_observations": {
+    "exclusions": [
+      "credentials and API tokens were not searched or copied",
+      "unrelated private log content was not printed or retained",
+      "/Library/GRRR was not accessed in this Stage G slice",
+      "no remote or network archive was queried",
+      "agent/session records are discovery leads only and are not evaluator receipts",
+      "negative results are not established by this generator",
+      "manual observations are not treated as exhaustive search boundaries"
+    ],
+    "generator_consumes_search_receipts": false,
+    "protected_paths_accessed_by_generator": [],
+    "record_kind": "manual-discovery-observations-not-exhaustive-search-proof",
+    "roots": [
+      {
+        "evidence_status": "manual-observation-not-consumed-by-generator",
+        "kind": "repository-working-tree",
+        "method": "exact reservation-id and exact SHA-256 byte scan",
+        "path": "docs/research/scripts/tests"
+      },
+      {
+        "evidence_status": "manual-observation-not-consumed-by-generator",
+        "kind": "git-object-database",
+        "method": "hash each blob no larger than 2 MiB",
+        "path": ".git/objects"
+      },
+      {
+        "evidence_status": "manual-observation-not-consumed-by-generator",
+        "kind": "operator-session-archive",
+        "method": "exact reservation-id and target-lineage-hash scan",
+        "path": "/Users/speed/.codex/sessions/2026/10"
+      },
+      {
+        "evidence_status": "manual-observation-not-consumed-by-generator",
+        "kind": "operator-memory-and-attachments",
+        "method": "exact reservation-id and target-lineage-hash scan",
+        "path": "/Users/speed/.codex/memories and /Users/speed/.codex/attachments"
+      },
+      {
+        "evidence_status": "manual-observation-not-consumed-by-generator",
+        "kind": "project-output-archive",
+        "method": "exact-id, exact-hash, and named GRRR artifact inventory",
+        "path": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4"
+      },
+      {
+        "evidence_status": "manual-observation-not-consumed-by-generator",
+        "kind": "top-level-temporary-grrr-artifacts",
+        "method": "top-level exact GRRR filename and target-hash scan only",
+        "path": "/private/tmp"
+      }
+    ],
+    "schema_version": 1
+  },
+  "items": [
+    {
+      "artifacts": [
+        {
+          "event_seq": 25,
+          "event_sha256": "c1cb27b0c52c213289eb3cf5519f006c9fc519a32bff0741bb2fcc0119a0834e",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd",
+          "role": "trusted-observation-object",
+          "sha256": "6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd"
+        },
+        {
+          "meter_receipt_sha256": "26780e3f00de3d5ac79abde2d339f634627e7e8ae7d3784a96ab55f5b78473a3",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-1bf9d516461040c0baef70648c074d61",
+      "search_status": "validated-original-record-candidate",
+      "subject": "1bf9d516461040c0baef70648c074d61"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 18,
+          "event_sha256": "578e6edc2cc23a6c25408e74ce4633a6e58c34674dc1cc2a7bfb0742baf831c5",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77",
+          "role": "trusted-observation-object",
+          "sha256": "c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77"
+        },
+        {
+          "meter_receipt_sha256": "a2a346ff1ce6e9afcfc1a5665a71338f46a3bcf555ad2a3f4236ed690b03805f",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-5b7851814d764da1a3b3830abc9853ce",
+      "search_status": "validated-original-record-candidate",
+      "subject": "5b7851814d764da1a3b3830abc9853ce"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 1,
+          "event_sha256": "00412d02bef0fa0689bea7b5d506cb7e93c36469f0e260247997d03c6e72d944",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "candidate_completeness": "request-only",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-69523b39a51c44739114313c9325028c",
+      "search_status": "partial-pending-record-candidate",
+      "subject": "69523b39a51c44739114313c9325028c",
+      "unresolved": [
+        "definitive dispatch or non-dispatch disposition",
+        "cessation and stale-handle proof",
+        "pre/post database identity for this operation"
+      ]
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 6,
+          "event_sha256": "5fcd1613e09e170ead6720988bb696b97400c395bf77c623afed87b5bada9c9c",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5",
+          "role": "trusted-observation-object",
+          "sha256": "72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5"
+        },
+        {
+          "meter_receipt_sha256": "af8db9dd7b41f7efefa7a97ea3f4e52d7edeb0ffd2f8cc646f600ddae30120c0",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "search_status": "validated-original-record-candidate",
+      "subject": "7ecc4c7e17f742dc9ec2a8c6dada50f2"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 24,
+          "event_sha256": "535be45a2eaf8aaedcc59d997b3e9cd8d1a6c6aab2070d2f130260b61b7e551b",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "candidate_completeness": "request-only",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-b34d8b9d106e42eab3a3e43daac98ddd",
+      "search_status": "partial-pending-record-candidate",
+      "subject": "b34d8b9d106e42eab3a3e43daac98ddd",
+      "unresolved": [
+        "definitive dispatch or non-dispatch disposition",
+        "cessation and stale-handle proof",
+        "pre/post database identity for this operation"
+      ]
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 9,
+          "event_sha256": "92d0c913d0b118697ba5c069e0dd1d62fdba24cf272a906e7ad5e102f84427d8",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f",
+          "role": "trusted-observation-object",
+          "sha256": "5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f"
+        },
+        {
+          "meter_receipt_sha256": "6dad7dc959412a33ff57d118af9396a409e0d4f0094def83136fccd31bdef6c1",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-b954f6890a1e43e3b13f24298fa7ca33",
+      "search_status": "validated-original-record-candidate",
+      "subject": "b954f6890a1e43e3b13f24298fa7ca33"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 12,
+          "event_sha256": "129d0547a3fed58be1ef7efee7745b0fcc933cae7dbb91300ce13b7338dddf99",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f",
+          "role": "trusted-observation-object",
+          "sha256": "23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f"
+        },
+        {
+          "meter_receipt_sha256": "f63ace9c97777f1838cb5c8c64531f34514f20741f789cb059277da72b3c4dda",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-b95be730d6a5408886071d29848bbd05",
+      "search_status": "validated-original-record-candidate",
+      "subject": "b95be730d6a5408886071d29848bbd05"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 28,
+          "event_sha256": "52a9bbe06fb528ef12cf7eec11f8fc0914c9dc74c6f5f43947d0633485d677c6",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "candidate_completeness": "request-only",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-d375ce6a2d924646bec71df64e939a5b",
+      "search_status": "partial-pending-record-candidate",
+      "subject": "d375ce6a2d924646bec71df64e939a5b",
+      "unresolved": [
+        "definitive dispatch or non-dispatch disposition",
+        "cessation and stale-handle proof",
+        "pre/post database identity for this operation"
+      ]
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 21,
+          "event_sha256": "1a4da96db1f87ff78ac42b241795851b86786932e16e17344eacf781b1d108ca",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd",
+          "role": "trusted-observation-object",
+          "sha256": "707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd"
+        },
+        {
+          "meter_receipt_sha256": "a90855be6d190b08403107812cf15835d024fd1ff74487da7b0084d43b4528fe",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-d3c965a29ab547c999e66bf0b60eca9f",
+      "search_status": "validated-original-record-candidate",
+      "subject": "d3c965a29ab547c999e66bf0b60eca9f"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 3,
+          "event_sha256": "1b4cfdd20d4f95d29150653f8745cfff0e70004a00b7ed47180183f08e28b146",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc",
+          "role": "trusted-observation-object",
+          "sha256": "d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc"
+        },
+        {
+          "meter_receipt_sha256": "a9376b669ca739736aecc2e531da1a9e80a85cbf262ac1bee7e62c98477fad41",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-e38c33051ff64b4eab106e65a200fe06",
+      "search_status": "validated-original-record-candidate",
+      "subject": "e38c33051ff64b4eab106e65a200fe06"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 15,
+          "event_sha256": "81540cbe1dfc4580a97d9ec7ea076c5e937a756d9deb43b4abbb1645c7877157",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96",
+          "role": "trusted-observation-object",
+          "sha256": "09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96"
+        },
+        {
+          "meter_receipt_sha256": "266c23dc2848508717b8a80e10fecefd19b57ae62ffdf03e91c0e9f7d225507a",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "candidate_completeness": "request-observation-and-meter-join",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-eb045d10d73b48ef9d570a1cf870f6eb",
+      "search_status": "validated-original-record-candidate",
+      "subject": "eb045d10d73b48ef9d570a1cf870f6eb"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 1,
+          "event_sha256": "00412d02bef0fa0689bea7b5d506cb7e93c36469f0e260247997d03c6e72d944",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "candidate_completeness": "request-and-gate-only",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "pending-disposition",
+      "request_item_id": "PEND-69523b39a51c44739114313c9325028c",
+      "search_status": "partial-pending-record-candidate",
+      "subject": "69523b39a51c44739114313c9325028c",
+      "unresolved": [
+        "final observation or explicit non-observation",
+        "cessation proof",
+        "stale-handle accounting",
+        "pre/post database identity"
+      ]
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 24,
+          "event_sha256": "535be45a2eaf8aaedcc59d997b3e9cd8d1a6c6aab2070d2f130260b61b7e551b",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "candidate_completeness": "request-and-gate-only",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "pending-disposition",
+      "request_item_id": "PEND-b34d8b9d106e42eab3a3e43daac98ddd",
+      "search_status": "partial-pending-record-candidate",
+      "subject": "b34d8b9d106e42eab3a3e43daac98ddd",
+      "unresolved": [
+        "final observation or explicit non-observation",
+        "cessation proof",
+        "stale-handle accounting",
+        "pre/post database identity"
+      ]
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 28,
+          "event_sha256": "52a9bbe06fb528ef12cf7eec11f8fc0914c9dc74c6f5f43947d0633485d677c6",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "candidate_completeness": "request-and-gate-only",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "pending-disposition",
+      "request_item_id": "PEND-d375ce6a2d924646bec71df64e939a5b",
+      "search_status": "partial-pending-record-candidate",
+      "subject": "d375ce6a2d924646bec71df64e939a5b",
+      "unresolved": [
+        "final observation or explicit non-observation",
+        "cessation proof",
+        "stale-handle accounting",
+        "pre/post database identity"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/active.json",
+      "expected_bytes": 657,
+      "expected_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-active",
+      "search_status": "search-completeness-not-established",
+      "subject": "active",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6/budget.sqlite",
+      "expected_bytes": 53248,
+      "expected_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-database_snapshot",
+      "search_status": "search-completeness-not-established",
+      "subject": "database_snapshot",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/recovery/complete.json",
+      "expected_bytes": 228,
+      "expected_sha256": "a0eeb4c7fc87b787ed33d188dd96c510691780f55a06537313644b1688008fdb",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_complete",
+      "search_status": "search-completeness-not-established",
+      "subject": "recovery_complete",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/recovery/intent.json",
+      "expected_bytes": 53907,
+      "expected_sha256": "2037b20196c337158a84922ea7fc9124ff8dd27cb80e37feddb44ae78fad5b2a",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_intent",
+      "search_status": "search-completeness-not-established",
+      "subject": "recovery_intent",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/recovery/prior-active.json",
+      "expected_bytes": 572,
+      "expected_sha256": "97ad3cd38a90a71d412afccad5ed49fc73af73e5413edcc4e07a1e0d23f451c5",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_prior_active",
+      "search_status": "search-completeness-not-established",
+      "subject": "recovery_prior_active",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/recovery/receipt.json",
+      "expected_bytes": 15939,
+      "expected_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_receipt",
+      "search_status": "search-completeness-not-established",
+      "subject": "recovery_receipt",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/registration/prior-active.json",
+      "expected_bytes": 462,
+      "expected_sha256": "e5629ee930fc909b38bcdf8c6cdbd673233651b1b507d73a2230f4ce1e304c95",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-registration_prior_active",
+      "search_status": "search-completeness-not-established",
+      "subject": "registration_prior_active",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "classification": null,
+      "declared_path": "/Library/GRRR/accounting-poc2/registration/receipt.json",
+      "expected_bytes": 17178,
+      "expected_sha256": "fb2132f1dce4867d0a28895215ef9d5f9ad1ea947b3a373de5efd7ddad04f397",
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-registration_receipt",
+      "search_status": "search-completeness-not-established",
+      "subject": "registration_receipt",
+      "unresolved": [
+        "exact artifact bytes and custody"
+      ]
+    },
+    {
+      "candidate_completeness": "11-reservations-8-observations-30-events",
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "operation-history",
+      "request_item_id": "OPERATIONS-1",
+      "search_status": "partial-evaluator-export-only",
+      "subject": "dispatch-cancel-failure-stop-replay-history",
+      "unresolved": [
+        "complete campaign operation and overlap history"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "side-store-history",
+      "request_item_id": "SIDE-STORES-1",
+      "search_status": "search-completeness-not-established",
+      "subject": "side-ledger-export-adjustment-refund-replay-inventory",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-EXECUTION",
+      "search_status": "search-completeness-not-established",
+      "subject": "execution",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-OTHER",
+      "search_status": "search-completeness-not-established",
+      "subject": "other",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-PREPARATION",
+      "search_status": "search-completeness-not-established",
+      "subject": "preparation",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-REVIEW",
+      "search_status": "search-completeness-not-established",
+      "subject": "review",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-SELECTION",
+      "search_status": "search-completeness-not-established",
+      "subject": "selection",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    },
+    {
+      "classification": null,
+      "independent_review_required": true,
+      "kind": "global-historical-completeness",
+      "request_item_id": "GLOBAL-HISTORY-1",
+      "search_status": "search-completeness-not-established",
+      "subject": "registration-through-current-database-snapshot",
+      "unresolved": [
+        "original-domain record and complete absence boundary"
+      ]
+    }
+  ],
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "spendable": null,
+    "valid": false
+  },
+  "record_type": "spendability-external-evidence-search-v1",
+  "schema_version": 1,
+  "summary": {
+    "final_classifications_made": 0,
+    "negative_search_not_established": 15,
+    "partial_candidate_items": 7,
+    "total_items": 30,
+    "validated_complete_candidate_items": 8
+  },
+  "validated_sources": {
+    "stage_a_baseline": {
+      "bytes": 180885,
+      "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+      "sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a"
+    },
+    "trusted_observation_export": {
+      "event_count": 30,
+      "ledger": {
+        "bytes": 28672,
+        "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+        "sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09"
+      },
+      "observation_object_count": 8,
+      "readback": {
+        "bytes": 2655,
+        "path": "docs/evidence/trusted-observation/v4-run-9d3df87/READBACK.json",
+        "sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8"
+      },
+      "reservation_count": 11,
+      "snapshot": {
+        "bytes": 3903718,
+        "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/snapshot.json",
+        "sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+      }
+    }
+  }
+}

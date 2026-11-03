@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""Assemble the GRRR-z3w9 Stage E evidence bundle from retained artifacts."""
+
+from hashlib import sha256
+import json
+from pathlib import Path
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+
+from spendability_bundle import (  # noqa: E402
+    APPROVED_STAGE_D_CAPTURE_SHA256, APPROVED_STAGE_D_POSTCAPTURE_SHA256,
+    assemble_evidence_bundle, validate_evidence_bundle,
+)
+
+
+STAGE_A = ROOT / 'docs/evidence/spendability/stage-a/BASELINE.json'
+STAGE_D_DIRECTORY = ROOT / 'docs/evidence/spendability/stage-d'
+STAGE_D_CAPTURE = STAGE_D_DIRECTORY / 'CAPTURE.json'
+STAGE_D_POSTCAPTURE = STAGE_D_DIRECTORY / 'POSTCAPTURE-VERIFY.json'
+STAGE_D_PACKAGE = STAGE_D_DIRECTORY / 'PACKAGE.json'
+STAGE_D_PACKAGE_SHA256 = 'c2627683bd1be9f63032d5c9f332aa3ee0c8327420afeda9a59562c5b3f4cb0e'
+CREATED_AT = '2026-10-27T05:10:00Z'
+
+
+def digest(raw: bytes) -> str:
+    return sha256(raw).hexdigest()
+
+
+def safe_member(name: str) -> Path:
+    path = Path(name)
+    if path.is_absolute() or '..' in path.parts:
+        raise SystemExit('unsafe package member: ' + name)
+    result = STAGE_D_DIRECTORY / path
+    if result.parent != STAGE_D_DIRECTORY and STAGE_D_DIRECTORY not in result.parents:
+        raise SystemExit('package member escapes Stage D directory: ' + name)
+    return result
+
+
+def verify_stage_d_package() -> None:
+    package_raw = STAGE_D_PACKAGE.read_bytes()
+    if digest(package_raw) != STAGE_D_PACKAGE_SHA256:
+        raise SystemExit('Stage D package hash differs')
+    package = json.loads(package_raw)
+    if package.get('independent_review') != 'STAGE_D_NARROW_REWORK_REVIEW: APPROVED':
+        raise SystemExit('Stage D independent review is not approved')
+    artifacts = package.get('artifacts')
+    if not isinstance(artifacts, dict) or not artifacts:
+        raise SystemExit('Stage D package artifact inventory differs')
+    for name, expected in artifacts.items():
+        path = safe_member(name)
+        raw = path.read_bytes()
+        if digest(raw) != expected.get('sha256') or len(raw) != expected.get('bytes'):
+            raise SystemExit('Stage D package artifact differs: ' + name)
+
+
+def main() -> int:
+    if sys.argv[1:]:
+        raise SystemExit('no arguments accepted')
+    verify_stage_d_package()
+    stage_a_raw = STAGE_A.read_bytes()
+    stage_d_raw = STAGE_D_CAPTURE.read_bytes()
+    postcapture_raw = STAGE_D_POSTCAPTURE.read_bytes()
+    if digest(stage_d_raw) != APPROVED_STAGE_D_CAPTURE_SHA256:
+        raise SystemExit('Stage D capture bytes differ')
+    if digest(postcapture_raw) != APPROVED_STAGE_D_POSTCAPTURE_SHA256:
+        raise SystemExit('Stage D postcapture bytes differ')
+    bundle = assemble_evidence_bundle(
+        stage_a_raw, stage_d_raw, postcapture_raw,
+        stage_d_capture_sha256=APPROVED_STAGE_D_CAPTURE_SHA256,
+        stage_d_postcapture_sha256=APPROVED_STAGE_D_POSTCAPTURE_SHA256,
+        created_at=CREATED_AT,
+    )
+    validation = validate_evidence_bundle(
+        bundle, stage_a_raw, stage_d_raw, postcapture_raw)
+    if validation['spendable'] is not None or validation['execution_authorized']:
+        raise SystemExit('fail-closed bundle outcome differs')
+    print(json.dumps(bundle, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

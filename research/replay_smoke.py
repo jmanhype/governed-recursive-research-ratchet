@@ -255,28 +255,35 @@ class DeferredStop:
         return process
 
 
-def launch(parent: object, review: dict, code: dict) -> int:
+def launch(parent: object, review: dict, code: dict, protocol: object = None) -> int:
     """Root-only, one-shot parent lifecycle; no automatic retry or namespace reset."""
     require(os.getuid() == 0 and os.geteuid() == 0, 'Unauthorized', 'Root parent required')
-    validate_scope(review['smoke'])
+    if protocol is None:
+        runtime, scope, role_prefix, event = SMOKE, SCOPE, 'smoke', scope_event
+        validate_scope(review['smoke'])
+    else:
+        # Only the hash-reviewed parent chooses the fixed protocol module.
+        protocol.validate_scope(review['replay'])
+        protocol.preflight()
+        runtime, scope, role_prefix, event = protocol.ROOT, protocol.SCOPE, protocol.role_prefix, protocol.scope_event
     immutable(LOCK)
     with os.fdopen(os.open(LOCK, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         protected_preflight(parent.INPUTS / 'corpus', parent.INPUTS / 'vm',
                             parent.INPUTS / 'source.tar', parent.INPUTS / 'policy.json',
                             lock.fileno(), installed=True)
-        check_absent(SMOKE)
+        check_absent(runtime)
         os.umask(0o077)
-        SMOKE.mkdir(mode=0o711)
-        SMOKE.chmod(0o711)
+        runtime.mkdir(mode=0o711)
+        runtime.chmod(0o711)
         expected = {'.': {'kind': 'directory', 'uid': 0, 'gid': 0, 'mode': 0o711}}
         def emit(name: str, raw: bytes, owner: int = 0, mode: int = 0o444) -> None:
-            parent.write(SMOKE / name, raw, owner, mode)
+            parent.write(runtime / name, raw, owner, mode)
             expected[name] = {'kind': 'file', 'uid': owner, 'gid': owner, 'mode': mode, 'raw': raw}
         for name, owner, mode in (('private', 0, 0o700), ('ipc', 0, 0o1777),
                                  ('runner', 0, 0o755), ('runner/assets', 0, 0o755),
                                  ('runner/scratch', RUNNER, 0o700), ('evaluator', EVALUATOR, 0o700)):
-            path = SMOKE / name
+            path = runtime / name
             path.mkdir(mode=mode)
             os.chown(path, owner, owner)
             path.chmod(mode)
@@ -284,7 +291,7 @@ def launch(parent: object, review: dict, code: dict) -> int:
         policy = parent.read(parent.INPUTS / 'policy.json', POLICY_SHA256)
         emit('policy.json', policy)
         emit('evaluator/policy.json', policy, EVALUATOR, 0o400)
-        plan = {'run': uuid.uuid4().hex, 'scope': SCOPE, 'policy_sha256': POLICY_SHA256}
+        plan = {'run': uuid.uuid4().hex, 'scope': scope, 'policy_sha256': POLICY_SHA256}
         emit('plan.json', canonical(plan))
         emit('private/review.json', canonical(review), mode=0o400)
         for name, hashed in ASSETS.items():
@@ -302,6 +309,8 @@ def launch(parent: object, review: dict, code: dict) -> int:
                   'bootstrap_sha256': digest(parent.read(parent.SELF)),
                   'python_sha256': digest(parent.PYTHON.read_bytes())}
         config['execution_profile'] = configuration_digest(config)
+        if protocol is not None:
+            config = protocol.configure(config)
         approval = {key: config[key] for key in ('version', 'operator_uid', 'profile', 'image',
                     'supervisor', 'helper', 'host_code', 'qemu_installation', 'accounting_binding',
                     'bootstrap_sha256', 'python_sha256', 'execution_profile')}
@@ -312,7 +321,7 @@ def launch(parent: object, review: dict, code: dict) -> int:
         emit('runner/approval.json', canonical(approval))
         emit('runner/license.json', canonical(license_review))
         emit('runner/qemu-installation.json', parent.read(Path('/Library/GRRR/qemu/installation.json')))
-        parent.verify_destination(SMOKE, expected)
+        parent.verify_destination(runtime, expected)
         processes, logs = [], []
         started = time.monotonic()
         success = False
@@ -324,10 +333,10 @@ def launch(parent: object, review: dict, code: dict) -> int:
                 os.setgid(uid)
                 os.setuid(uid)
                 os.umask(0o077)
-            log = (SMOKE / ('private/' + role + '.log')).open('xb')
+            log = (runtime / ('private/' + role + '.log')).open('xb')
             logs.append(log)
             process = stop.spawn(processes, [str(parent.PYTHON), '-I', '-S', '-B', str(parent.SELF),
-                                        '--smoke-' + role], cwd=SMOKE,
+                                        '--' + role_prefix + '-' + role], cwd=runtime,
                                        env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C'},
                                        stdout=log, stderr=subprocess.STDOUT,
                                        preexec_fn=identity, start_new_session=True)
@@ -339,12 +348,12 @@ def launch(parent: object, review: dict, code: dict) -> int:
             ready_deadline = min(started + 473, time.monotonic() + 15)
             while time.monotonic() < ready_deadline and service.poll() is None:
                 stop.checkpoint()
-                if all((SMOKE / ('ipc/' + name)).is_socket()
+                if all((runtime / ('ipc/' + name)).is_socket()
                        for name in ('executor.sock', 'executor-control.sock')):
                     break
                 time.sleep(0.02)
             require(service.poll() is None
-                    and (SMOKE / 'ipc/executor-control.sock').is_socket(),
+                    and (runtime / 'ipc/executor-control.sock').is_socket(),
                     'Unavailable', 'Smoke service failed to become ready')
             evaluator_process = start('evaluator', EVALUATOR)
             while evaluator_process.poll() is None and time.monotonic() < started + 473:
@@ -364,11 +373,11 @@ def launch(parent: object, review: dict, code: dict) -> int:
                 log.flush()
                 os.fsync(log.fileno())
                 log.close()
-            parent.write(SMOKE / 'private/lifecycle.json',
-                         canonical(scope_event('runtime-smoke-parent-lifecycle', children_ceased=ceased,
+            parent.write(runtime / 'private/lifecycle.json',
+                         canonical(event('runtime-smoke-parent-lifecycle', children_ceased=ceased,
                                                elapsed_seconds=elapsed, evaluator_succeeded=success,
                                                exit_codes=[p.poll() for p in processes])), 0, 0o400)
         require(ceased and elapsed <= 480 and success,
                 'RecoveryRequired', 'Runtime lifecycle incomplete; preserve state, never retry')
-        print(canonical(scope_event('runtime-smoke-complete', children_ceased=True)).decode())
+        print(canonical(event('runtime-smoke-complete', children_ceased=True)).decode())
         return 0

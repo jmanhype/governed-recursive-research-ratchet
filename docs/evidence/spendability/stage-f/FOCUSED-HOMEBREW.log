@@ -1,0 +1,20 @@
+test_authority_cannot_be_injected (unit_spendability_request.SpendabilityEvidenceRequest.test_authority_cannot_be_injected) ... ok
+test_lineage_and_overhead_domains_are_complete (unit_spendability_request.SpendabilityEvidenceRequest.test_lineage_and_overhead_domains_are_complete) ... ok
+test_missing_item_is_rejected (unit_spendability_request.SpendabilityEvidenceRequest.test_missing_item_is_rejected) ... ok
+test_modified_stage_e_bundle_is_rejected (unit_spendability_request.SpendabilityEvidenceRequest.test_modified_stage_e_bundle_is_rejected) ... ok
+test_modified_stage_e_package_is_rejected (unit_spendability_request.SpendabilityEvidenceRequest.test_modified_stage_e_package_is_rejected) ... ok
+test_non_null_spendability_cannot_be_injected (unit_spendability_request.SpendabilityEvidenceRequest.test_non_null_spendability_cannot_be_injected) ... ok
+test_operation_side_store_and_global_history_are_explicit (unit_spendability_request.SpendabilityEvidenceRequest.test_operation_side_store_and_global_history_are_explicit) ... ok
+test_pending_requests_cover_three_full_holds (unit_spendability_request.SpendabilityEvidenceRequest.test_pending_requests_cover_three_full_holds) ... ok
+test_provenance_requests_cover_all_eleven_reservations (unit_spendability_request.SpendabilityEvidenceRequest.test_provenance_requests_cover_all_eleven_reservations) ... ok
+test_request_binds_exact_approved_stage_e_artifacts (unit_spendability_request.SpendabilityEvidenceRequest.test_request_binds_exact_approved_stage_e_artifacts) ... ok
+test_request_contains_exact_item_inventory (unit_spendability_request.SpendabilityEvidenceRequest.test_request_contains_exact_item_inventory) ... ok
+test_request_remains_fail_closed_and_powerless (unit_spendability_request.SpendabilityEvidenceRequest.test_request_remains_fail_closed_and_powerless) ... ok
+test_request_revalidates_by_exact_regeneration (unit_spendability_request.SpendabilityEvidenceRequest.test_request_revalidates_by_exact_regeneration) ... ok
+test_response_contract_requires_provenance_and_forbids_secrets (unit_spendability_request.SpendabilityEvidenceRequest.test_response_contract_requires_provenance_and_forbids_secrets) ... ok
+test_tampered_request_is_rejected (unit_spendability_request.SpendabilityEvidenceRequest.test_tampered_request_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.075s
+
+OK

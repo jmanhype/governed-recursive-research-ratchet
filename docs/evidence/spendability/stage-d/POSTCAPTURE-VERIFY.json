@@ -1,0 +1,89 @@
+{
+  "all_immutable": true,
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "capture_completed_at": "2026-10-27T04:30:49.260082Z",
+  "capture_path": "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/docs/evidence/spendability/stage-d/CAPTURE.json",
+  "capture_sha256": "d22bec465786840fc85a139ebe3781f68bd1663bde51649ac96d34e03e340de8",
+  "checks": {
+    "active": true,
+    "database": true,
+    "lock": true
+  },
+  "chronology_after_capture": true,
+  "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+  "expected": {
+    "active": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 685895848,
+      "mode": 292,
+      "nlink": 1,
+      "sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "uid": 0
+    },
+    "database": {
+      "acl": "no-acl",
+      "device": 16777229,
+      "gid": 320,
+      "inode": 682589447,
+      "mode": 384,
+      "nlink": 1,
+      "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "size": 53248,
+      "uid": 320
+    },
+    "lock": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uid": 0
+    }
+  },
+  "kind": "GRRR-z3w9 Stage D postcapture immutable identity verification",
+  "observed": {
+    "active": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 685895848,
+      "mode": 292,
+      "nlink": 1,
+      "sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "size": 657,
+      "uid": 0
+    },
+    "database": {
+      "device": 16777229,
+      "gid": 320,
+      "inode": 682589447,
+      "mode": 384,
+      "nlink": 1,
+      "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "size": 53248,
+      "uid": 320
+    },
+    "lock": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "uid": 0
+    }
+  },
+  "observed_at": "2026-10-27T04:32:57.578197Z",
+  "schema_version": 1
+}

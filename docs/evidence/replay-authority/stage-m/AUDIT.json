@@ -1,0 +1,249 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "audited_active_binding_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "persistent_budget_py_sha256": "78f0e145d902dbeadbb1693055551dfdf59aee16d1bc2d5fd4bc4c403bcaaf32",
+    "replay_py_sha256": "1ed263671fe487e27f4189d435d17af19d49e46fb6a8b6065a6f5b4e8324105f",
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "story_head": "c6fcc8bb611eab2c2f02b14999cdfe45cf44b02d"
+  },
+  "created_at": "2026-10-28T20:00:00Z",
+  "finding": {
+    "classification": "inconsistent-authority-state-machine",
+    "detail": "Replay preflight requires v1 plus independent-replay, but the persistent-store v1 contract permits only the legacy three profiles; v2/v3 include independent-replay but are frozen/read-only.",
+    "required_next_step": "Design and independently review a new binding authority contract; do not relax preflight or mutate the existing v3 store."
+  },
+  "outcome": {
+    "allowed_mutations": [],
+    "execution_authorized": false,
+    "protected_access": false,
+    "replay_possible": false,
+    "spendable": null
+  },
+  "record_type": "replay-authority-state-audit-v1",
+  "schema_version": 1,
+  "source_contracts": {
+    "legacy_profiles": [
+      "synthetic",
+      "offline",
+      "trusted-observation"
+    ],
+    "preflight_rejected_versions": [
+      2,
+      3
+    ],
+    "preflight_required_profile": "independent-replay",
+    "preflight_required_version": 1,
+    "registered_profiles": [
+      "synthetic",
+      "offline",
+      "trusted-observation",
+      "independent-replay"
+    ],
+    "store_read_only_versions": [
+      2,
+      3
+    ],
+    "store_writable_profile_contract": [
+      "synthetic",
+      "offline",
+      "trusted-observation"
+    ],
+    "store_writable_version": 1
+  },
+  "summary": {
+    "preflight_pass_variants": 1,
+    "replay_capable_variants": 0,
+    "store_schema_pass_variants": 4,
+    "variants_audited": 5,
+    "writable_store_variants": 1
+  },
+  "variants": [
+    {
+      "binding": {
+        "campaign": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9",
+        "device": 16777229,
+        "directory": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "inode": 682589447,
+        "prior_history_receipt": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+        "profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+        "registration_sha256": "fb2132f1dce4867d0a28895215ef9d5f9ad1ea947b3a373de5efd7ddad04f397",
+        "store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "version": 3
+      },
+      "independent_replay_possible": false,
+      "name": "audited-active-v3",
+      "persistent_store_schema": {
+        "expected_profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "mutations": "denied",
+        "read_only": true,
+        "result": "pass"
+      },
+      "preflight": {
+        "code": "GateBlocked",
+        "reason": "v3 stop-only read-only binding",
+        "result": "fail"
+      }
+    },
+    {
+      "binding": {
+        "campaign": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9",
+        "device": 16777229,
+        "directory": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "inode": 682589447,
+        "prior_history_receipt": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+        "profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation"
+        ],
+        "store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "version": 1
+      },
+      "independent_replay_possible": false,
+      "name": "legal-legacy-v1-three-profiles",
+      "persistent_store_schema": {
+        "expected_profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation"
+        ],
+        "mutations": "allowed-after-all-other-budget_checks",
+        "read_only": false,
+        "result": "pass"
+      },
+      "preflight": {
+        "code": "GateBlocked",
+        "reason": "independent-replay profile absent",
+        "result": "fail"
+      }
+    },
+    {
+      "binding": {
+        "campaign": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9",
+        "device": 16777229,
+        "directory": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "inode": 682589447,
+        "prior_history_receipt": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+        "profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "version": 1
+      },
+      "independent_replay_possible": false,
+      "name": "preflight-valid-hypothetical-v1-four-profiles",
+      "persistent_store_schema": {
+        "code": "RecoveryRequired",
+        "expected_profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation"
+        ],
+        "mutations": "denied",
+        "read_only": null,
+        "reason": "binding profiles differ from version contract",
+        "result": "fail"
+      },
+      "preflight": {
+        "result": "pass"
+      }
+    },
+    {
+      "binding": {
+        "campaign": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9",
+        "device": 16777229,
+        "directory": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "inode": 682589447,
+        "prior_history_receipt": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+        "profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "registration_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "version": 2
+      },
+      "independent_replay_possible": false,
+      "name": "registered-frozen-v2-four-profiles",
+      "persistent_store_schema": {
+        "expected_profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "mutations": "denied",
+        "read_only": true,
+        "result": "pass"
+      },
+      "preflight": {
+        "code": "GateBlocked",
+        "reason": "registration/frozen binding is not writable v1",
+        "result": "fail"
+      }
+    },
+    {
+      "binding": {
+        "campaign": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9",
+        "device": 16777229,
+        "directory": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "inode": 682589447,
+        "prior_history_receipt": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+        "profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "recovery_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "registration_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+        "version": 3
+      },
+      "independent_replay_possible": false,
+      "name": "recovered-readonly-v3-four-profiles",
+      "persistent_store_schema": {
+        "expected_profiles": [
+          "synthetic",
+          "offline",
+          "trusted-observation",
+          "independent-replay"
+        ],
+        "mutations": "denied",
+        "read_only": true,
+        "result": "pass"
+      },
+      "preflight": {
+        "code": "GateBlocked",
+        "reason": "v3 stop-only read-only binding",
+        "result": "fail"
+      }
+    }
+  ]
+}

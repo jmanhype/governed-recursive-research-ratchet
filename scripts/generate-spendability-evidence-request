@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""Generate the GRRR-z3w9 Stage F external evidence request."""
+
+from hashlib import sha256
+import json
+from pathlib import Path
+from typing import Optional
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'research'))
+
+from spendability_request import (  # noqa: E402
+    APPROVED_STAGE_E_BUNDLE_SHA256, APPROVED_STAGE_E_PACKAGE_SHA256,
+    build_evidence_request, validate_evidence_request,
+)
+
+
+STAGE_A = ROOT / 'docs/evidence/spendability/stage-a/BASELINE.json'
+STAGE_D_DIRECTORY = ROOT / 'docs/evidence/spendability/stage-d'
+STAGE_D_CAPTURE = STAGE_D_DIRECTORY / 'CAPTURE.json'
+STAGE_D_POSTCAPTURE = STAGE_D_DIRECTORY / 'POSTCAPTURE-VERIFY.json'
+STAGE_D_PACKAGE = STAGE_D_DIRECTORY / 'PACKAGE.json'
+STAGE_E_DIRECTORY = ROOT / 'docs/evidence/spendability/stage-e'
+STAGE_E_BUNDLE = STAGE_E_DIRECTORY / 'BUNDLE.json'
+STAGE_E_PACKAGE = STAGE_E_DIRECTORY / 'PACKAGE.json'
+STAGE_D_PACKAGE_SHA256 = 'c2627683bd1be9f63032d5c9f332aa3ee0c8327420afeda9a59562c5b3f4cb0e'
+CREATED_AT = '2026-10-28T00:15:00Z'
+
+
+def digest(raw: bytes) -> str:
+    return sha256(raw).hexdigest()
+
+
+def safe_path(name: str, base: Path) -> Path:
+    path = Path(name)
+    if path.is_absolute() or '..' in path.parts:
+        raise SystemExit('unsafe package member: ' + name)
+    result = base / path
+    if base != result and base not in result.parents:
+        raise SystemExit('package member escapes package directory: ' + name)
+    return result
+
+
+def verify_package(path: Path, expected_hash: str, base: Path,
+                   expected_review: Optional[str] = None) -> None:
+    raw = path.read_bytes()
+    if digest(raw) != expected_hash:
+        raise SystemExit('package hash differs: ' + str(path))
+    package = json.loads(raw)
+    if expected_review is not None and package.get('independent_review') != expected_review:
+        raise SystemExit('package independent review differs: ' + str(path))
+    artifacts = package.get('artifacts')
+    if not isinstance(artifacts, dict) or not artifacts:
+        raise SystemExit('package artifact inventory differs: ' + str(path))
+    for name, expected in artifacts.items():
+        artifact = safe_path(name, base)
+        artifact_raw = artifact.read_bytes()
+        if digest(artifact_raw) != expected.get('sha256') or len(artifact_raw) != expected.get('bytes'):
+            raise SystemExit('package artifact differs: ' + name)
+
+
+def main() -> int:
+    if sys.argv[1:]:
+        raise SystemExit('no arguments accepted')
+    verify_package(STAGE_D_PACKAGE, STAGE_D_PACKAGE_SHA256,
+                   STAGE_D_DIRECTORY,
+                   'STAGE_D_NARROW_REWORK_REVIEW: APPROVED')
+    verify_package(STAGE_E_PACKAGE, APPROVED_STAGE_E_PACKAGE_SHA256,
+                   ROOT,
+                   'STAGE_E_NARROW_REWORK_REVIEW: APPROVED')
+    stage_a_raw = STAGE_A.read_bytes()
+    stage_d_raw = STAGE_D_CAPTURE.read_bytes()
+    postcapture_raw = STAGE_D_POSTCAPTURE.read_bytes()
+    bundle_raw = STAGE_E_BUNDLE.read_bytes()
+    package_raw = STAGE_E_PACKAGE.read_bytes()
+    if digest(bundle_raw) != APPROVED_STAGE_E_BUNDLE_SHA256:
+        raise SystemExit('Stage E bundle bytes differ')
+    request = build_evidence_request(
+        stage_a_raw, stage_d_raw, postcapture_raw, bundle_raw, package_raw,
+        created_at=CREATED_AT)
+    result = validate_evidence_request(
+        request, stage_a_raw, stage_d_raw, postcapture_raw,
+        bundle_raw, package_raw)
+    if result['spendable'] is not None or result['execution_authorized']:
+        raise SystemExit('fail-closed request outcome differs')
+    print(json.dumps(request, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -1,0 +1,71 @@
+{
+  "artifacts": [
+    {
+      "bytes": 4391,
+      "path": "docs/evidence/replay-authority/stage-s/AUTHORIZATION-PREPARED.json",
+      "sha256": "1d27da0d718ac7713f54bc73d4b87d5bcd1ea57f3eb55de1e74b0e2c933a75c9"
+    },
+    {
+      "bytes": 6819,
+      "path": "docs/evidence/replay-authority/stage-s/FOCUSED-HOMEBREW-3.14.log",
+      "sha256": "2880634bcf4ae3ff169343beb10ca7ef0854c0f7dcaa3e655e8de887b11aeb31"
+    },
+    {
+      "bytes": 6819,
+      "path": "docs/evidence/replay-authority/stage-s/FOCUSED-MINICONDA-3.12.log",
+      "sha256": "69cb0870f315d61cefd25b0dde46c3c415b1e7229ec4ec3623193b2534e32164"
+    },
+    {
+      "bytes": 757,
+      "path": "docs/evidence/replay-authority/stage-s/FULL-HOMEBREW-3.14.log",
+      "sha256": "6934654182af5be867813e21d644b0b7e77ea97414c99ce31161b604cde75027"
+    },
+    {
+      "bytes": 757,
+      "path": "docs/evidence/replay-authority/stage-s/FULL-MINICONDA-3.12.log",
+      "sha256": "1612d87c7e4b732950278e9c129bb1525c5b7e65d0bd265964880fdf170de14d"
+    },
+    {
+      "bytes": 3958,
+      "path": "docs/evidence/replay-authority/stage-s/REPORT.md",
+      "sha256": "0359f0c8aa1758c2e2539ec7dcc4e2674664b5373cb0c4bb206a1617ac5509bd"
+    },
+    {
+      "bytes": 3200,
+      "path": "docs/evidence/replay-authority/stage-s/REVIEW-REQUEST.md",
+      "sha256": "e9f6a022aa67ac8ba730b300211889b3b2a0ec17c930f6498f325ba682fcb8f7"
+    },
+    {
+      "bytes": 16012,
+      "path": "research/replay_successor_authorization.py",
+      "sha256": "64eaae965b20de911063d4d217ea44c6230a7a8b21193a8e47ddb0143130a44b"
+    },
+    {
+      "bytes": 514,
+      "path": "scripts/prepare-replay-successor-v4-authorization",
+      "sha256": "e3ffbddbd6bb04b9b8a0fb4796d7973477688f2a38a8538f5e2385b19642becd"
+    },
+    {
+      "bytes": 11870,
+      "path": "tests/unit_replay_successor_authorization.py",
+      "sha256": "f06133ee6c179a56673380054d330dd1af6e1e15050d8a5a78e95e449b3fd6aa"
+    }
+  ],
+  "base_commit": "b43f1fa483c8a281246f425d6c5b66606d867bff",
+  "decision": "prepared-not-authorized",
+  "denied": [
+    "protected_access",
+    "protected_staging",
+    "installation",
+    "budget_amendment",
+    "reconciliation",
+    "replay_execution",
+    "admission",
+    "promotion",
+    "production_mutation",
+    "merge",
+    "push"
+  ],
+  "record_type": "replay-successor-v4-authorization-preparation-package-v1",
+  "schema_version": 1
+}

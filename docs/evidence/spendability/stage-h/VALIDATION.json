@@ -1,0 +1,55 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "stage_f_package_sha256": "388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23",
+    "stage_f_request_sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919",
+    "stage_g_candidate_index_sha256": "31466b133af19110cd80323ff4499642307bd2c74bff055079ec13738203c7bc",
+    "stage_g_independent_review": "STAGE_G_SEARCH_NARROW_REWORK_REVIEW: APPROVED",
+    "stage_g_package_sha256": "d00b35c07f2b482f3441a767d179c5e163a27f0f2db4ff8544c727a7da44f4ca",
+    "trusted_export_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09",
+    "trusted_export_readback_sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8",
+    "trusted_export_snapshot_sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+  },
+  "checks": {
+    "all_30_items_mapped_once": "PASS",
+    "eight_candidate_record_sets_detected": "PASS",
+    "exact_stage_f_and_stage_g_input_binding": "PASS",
+    "response_contract_gap_mapping": "PASS",
+    "stage_g_candidate_index_regeneration": "PASS",
+    "zero_final_classifications": "PASS"
+  },
+  "created_at": "2026-10-28T01:15:00Z",
+  "kind": "GRRR-z3w9 Stage H response-readiness validation",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "schema_version": 1,
+  "summary": {
+    "candidate_record_sets": 8,
+    "candidate_record_sets_response_ready": 0,
+    "final_classifications_made": 0,
+    "not_ready_items": 22,
+    "total_items": 30
+  },
+  "test_results": {
+    "deterministic_generation": "byte-identical",
+    "full_suite": "not-run-existing-host-pressure-gate",
+    "homebrew_python_3_14": "11/11 passed",
+    "miniconda_python_3_12": "11/11 passed"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "manifest": "/private/tmp/grrr-stage-e-safe-cleanup.jsonl",
+  "roots": {
+    "/Users/speed/.cache/codebase-memory-mcp": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/GeoServices": {
+      "removed_bytes": 0,
+      "removed_files": 0,
+      "skipped_files": 42,
+      "status": "root-retained"
+    },
+    "/Users/speed/Library/Caches/Google": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/PassKit": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/beads": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/bun": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.AMPLibraryAgent": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.AppleMediaServices": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.VisualIntelligenceCore": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.appstoreagent": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.ctcategories.service": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.helpd": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.iTunes": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.parsecd": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.passd": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.python": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.apple.tipsd": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/com.microsoft.autoupdate.fba": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/cursor-compile-cache": {
+      "status": "refused-or-absent"
+    },
+    "/Users/speed/Library/Caches/io.tailscale.ipn.macsys": {
+      "status": "refused-or-absent"
+    },
+    "/private/tmp/static-ffmpeg-test.dwGeK3": {
+      "removed_bytes": 398188858,
+      "removed_files": 231,
+      "skipped_files": 0,
+      "status": "root-removed"
+    },
+    "/private/tmp/vbl-videos": {
+      "removed_bytes": 155686748,
+      "removed_files": 139,
+      "skipped_files": 0,
+      "status": "root-removed"
+    }
+  }
+}

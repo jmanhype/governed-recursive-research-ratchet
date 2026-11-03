@@ -1,0 +1,38 @@
+...........F............................................................F...........F......
+======================================================================
+FAIL: test_reviewed_import_inventory_matches_checkout (unit_independent_replay.IndependentReplayContracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/tests/unit_independent_replay.py", line 145, in test_reviewed_import_inventory_matches_checkout
+    self.assertEqual(digest((ROOT / 'research' / name).read_bytes()), hashed, name)
+AssertionError: 'ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af' != 'afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263'
+- ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af
++ afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263
+ : persistent_budget.py
+
+======================================================================
+FAIL: test_root_launcher_paths_and_code_pins (unit_replay_prerequisites.ReplayPrerequisites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/tests/unit_replay_prerequisites.py", line 156, in test_root_launcher_paths_and_code_pins
+    self.assertEqual(module.sha((ROOT / 'research' / name).read_bytes()), expected)
+AssertionError: 'ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af' != 'afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263'
+- ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af
++ afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263
+
+
+======================================================================
+FAIL: test_installed_closure_is_exact_and_bytes_match (unit_replay_smoke.RuntimeSmoke)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-z3w9/tests/unit_replay_smoke.py", line 83, in test_installed_closure_is_exact_and_bytes_match
+    self.assertEqual(module.sha((ROOT / 'research' / name).read_bytes()), hashed)
+AssertionError: 'ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af' != 'afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263'
+- ef038d60706f8f103387a6f41c28695da605f541666fa231abaa99e2af9255af
++ afca7b03b38e5087062582a289001bf8bd04aa77d99fe980553a68c3fb222263
+
+
+----------------------------------------------------------------------
+Ran 91 tests in 17.600s
+
+FAILED (failures=3)

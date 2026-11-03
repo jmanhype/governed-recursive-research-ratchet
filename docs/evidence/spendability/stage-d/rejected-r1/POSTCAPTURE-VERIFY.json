@@ -1,0 +1,23 @@
+{
+  "all_immutable": true,
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "checks": {
+    "active": true,
+    "active_inode": true,
+    "database": true,
+    "database_inode": true,
+    "lock": true,
+    "lock_inode": true
+  },
+  "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+  "kind": "GRRR-z3w9 Stage D postcapture immutable identity verification",
+  "schema_version": 1
+}

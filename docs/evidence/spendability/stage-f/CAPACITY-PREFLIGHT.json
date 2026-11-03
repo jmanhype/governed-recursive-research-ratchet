@@ -1,0 +1,24 @@
+{
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "available_bytes_readings": [
+    9687166976,
+    9687166976,
+    9687166976
+  ],
+  "focused_tests_allowed": "yes-no-vm-or-corpus-launch",
+  "full_suite_decision": "not-run-capacity-floor-fail",
+  "kind": "GRRR-z3w9 Stage F capacity preflight",
+  "minimum_available_bytes": 9687166976,
+  "preparation_floor_bytes": 15350000000,
+  "replay_floor_bytes": 16106127360,
+  "schema_version": 1
+}

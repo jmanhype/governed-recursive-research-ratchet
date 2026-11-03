@@ -3,10 +3,13 @@
 from copy import deepcopy
 from hashlib import sha256
 import json
+from pathlib import Path
+import sys
 import unittest
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'research'))
 
-from research.spendability_evidence import validate_evidence
+from spendability_evidence import validate_evidence
 
 
 def canonical(value):

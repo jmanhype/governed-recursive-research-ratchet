@@ -1,0 +1,40 @@
+test_authorization_binds_stage_s (unit_replay_successor_staging.ReplaySuccessorStaging.test_authorization_binds_stage_s) ... ok
+test_authorization_digest_is_deterministic (unit_replay_successor_staging.ReplaySuccessorStaging.test_authorization_digest_is_deterministic) ... ok
+test_authorization_scope_covers_all_eight_roles (unit_replay_successor_staging.ReplaySuccessorStaging.test_authorization_scope_covers_all_eight_roles) ... ok
+test_authorization_staging_only_not_installation (unit_replay_successor_staging.ReplaySuccessorStaging.test_authorization_staging_only_not_installation) ... ok
+test_empty_authority_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_empty_authority_rejects) ... ok
+test_empty_operator_name_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_empty_operator_name_rejects) ... ok
+test_extra_scope_field_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_extra_scope_field_rejects) ... ok
+test_installation_true_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_installation_true_rejects) ... ok
+test_invalid_timestamp_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_invalid_timestamp_rejects) ... ok
+test_missing_authority_flag_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_missing_authority_flag_rejects) ... ok
+test_no_symlink_ancestor_accepts (unit_replay_successor_staging.ReplaySuccessorStaging.test_no_symlink_ancestor_accepts) ... ok
+test_null_authorization_hash_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_null_authorization_hash_rejects) ... ok
+test_outcome_all_zero_auth_digest_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_all_zero_auth_digest_rejects) ... ok
+test_outcome_boolean_bytes_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_boolean_bytes_rejects) ... ok
+test_outcome_duplicate_role_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_duplicate_role_rejects) ... ok
+test_outcome_installed_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_installed_rejects) ... ok
+test_outcome_missing_file_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_missing_file_rejects) ... ok
+test_outcome_wrong_hash_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_wrong_hash_rejects) ... ok
+test_outcome_wrong_root_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outcome_wrong_root_rejects) ... ok
+test_outside_destination_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_outside_destination_rejects) ... ok
+test_records_json_serializable (unit_replay_successor_staging.ReplaySuccessorStaging.test_records_json_serializable) ... ok
+test_relative_path_symlink_check_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_relative_path_symlink_check_rejects) ... ok
+test_staging_false_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_staging_false_rejects) ... ok
+test_staging_outcome_binds_authorization (unit_replay_successor_staging.ReplaySuccessorStaging.test_staging_outcome_binds_authorization) ... ok
+test_staging_outcome_valid (unit_replay_successor_staging.ReplaySuccessorStaging.test_staging_outcome_valid) ... ok
+test_subdirectory_destination_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_subdirectory_destination_rejects) ... ok
+test_symlink_ancestor_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_symlink_ancestor_rejects) ... ok
+test_template_has_null_authorization (unit_replay_successor_staging.ReplaySuccessorStaging.test_template_has_null_authorization) ... ok
+test_traversal_destination_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_traversal_destination_rejects) ... ok
+test_unnormalized_destination_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_unnormalized_destination_rejects) ... ok
+test_valid_authorization_passes (unit_replay_successor_staging.ReplaySuccessorStaging.test_valid_authorization_passes) ... ok
+test_wrong_base_commit_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_wrong_base_commit_rejects) ... ok
+test_wrong_stage_s_hash_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_wrong_stage_s_hash_rejects) ... ok
+test_wrong_staging_root_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_wrong_staging_root_rejects) ... ok
+test_zero_authorization_hash_rejects (unit_replay_successor_staging.ReplaySuccessorStaging.test_zero_authorization_hash_rejects) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.003s
+
+OK

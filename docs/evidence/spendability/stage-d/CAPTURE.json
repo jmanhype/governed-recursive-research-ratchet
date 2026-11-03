@@ -1,0 +1,615 @@
+{
+  "active": {
+    "campaign": "9ea9cd9b2669bc0d3fe119d722224907e1bbb06a4ca28f860c8044e2491092a9",
+    "descriptor_identity": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 685895848,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "device": 16777229,
+    "directory": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+    "final_descriptor_identity": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 685895848,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "inode": 682589447,
+    "observed_while_locked": true,
+    "prior_history_receipt": "9f64395bec815a6bb2281d3b5d96d2356899138b1929b0a9881c16483c486dde",
+    "profiles": [
+      "synthetic",
+      "offline",
+      "trusted-observation",
+      "independent-replay"
+    ],
+    "recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+    "registration_sha256": "fb2132f1dce4867d0a28895215ef9d5f9ad1ea947b3a373de5efd7ddad04f397",
+    "sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "store_id": "901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6",
+    "version": 3
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "capture_gate": "PASS_LOCKED_READ_ONLY_EXTENDED_SCHEMA",
+  "capture_kind": "GRRR-z3w9-stage-d-locked-extended-schema-and-quiescence",
+  "completed_at": "2026-10-27T04:30:49.260082Z",
+  "database_path": "/Library/GRRR/accounting-poc2/901acaff42b5a42f667b1c435beba9a9ae8312539cc36eb023c45584fd2e06d6/budget.sqlite",
+  "lock_file": {
+    "bytes_read_from_descriptor": true,
+    "descriptor_opened": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "descriptor_released": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "path": "/Library/GRRR/accounting-poc2/launch.lock",
+    "path_before": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "path_locked": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "path_released": {
+      "device": 16777229,
+      "gid": 0,
+      "inode": 682589455,
+      "mode": 292,
+      "nlink": 1,
+      "uid": 0
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "mutation_performed": false,
+  "quiescence": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "lock": {
+      "acl": "no-acl",
+      "acquired_at": "2026-10-27T04:30:49.201887Z",
+      "all_approved_mutators_covered": true,
+      "approved_protocol_sha256": "e4a06e7e2a39e7dd6c55592e83f83b78ee4f892ac53d988fb6f18b5a0923db6e",
+      "exclusive": true,
+      "identity_before": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 0,
+        "inode": 682589455,
+        "mode": 292,
+        "nlink": 1,
+        "uid": 0
+      },
+      "identity_opened": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 0,
+        "inode": 682589455,
+        "mode": 292,
+        "nlink": 1,
+        "uid": 0
+      },
+      "identity_released": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 0,
+        "inode": 682589455,
+        "mode": 292,
+        "nlink": 1,
+        "uid": 0
+      },
+      "mutator_coverage_sha256": "61c077f8c4e19b06f99d7d4c35a585c4bcb0f5d1e26aeb3816bbcc4b04cf9dc1",
+      "path": "/Library/GRRR/accounting-poc2/launch.lock",
+      "protocol_version": "accounting-poc2-exclusive-v1",
+      "released_at": "2026-10-27T04:30:49.260069Z"
+    },
+    "observations": {
+      "after": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 320,
+        "inode": 682589447,
+        "mode": 384,
+        "nlink": 1,
+        "observed_at": "2026-10-27T04:30:49.259895Z",
+        "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+        "size": 53248,
+        "uid": 320
+      },
+      "before": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 320,
+        "inode": 682589447,
+        "mode": 384,
+        "nlink": 1,
+        "observed_at": "2026-10-27T04:30:49.207094Z",
+        "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+        "size": 53248,
+        "uid": 320
+      },
+      "locked": {
+        "acl": "no-acl",
+        "device": 16777229,
+        "gid": 320,
+        "inode": 682589447,
+        "mode": 384,
+        "nlink": 1,
+        "observed_at": "2026-10-27T04:30:49.215826Z",
+        "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+        "size": 53248,
+        "uid": 320
+      }
+    },
+    "process_inventory": {
+      "inventory_sha256": "b98c4efc26da8a5e12125c1562fa260dcc8438196c3991eeea4123f0124dc872",
+      "qemu_count": 0,
+      "uid_320_count": 0,
+      "uid_321_count": 0
+    },
+    "record_type": "writer-exclusion-v1",
+    "review": {
+      "review_sha256": null,
+      "status": "unresolved"
+    },
+    "schema_version": 1,
+    "sidecars": [],
+    "toolchain": {
+      "interpreter": {
+        "expected_sha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26",
+        "observed_sha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26"
+      },
+      "parent_code": {
+        "expected_sha256": "2312a453e9e3c807d023456606da36303a97fab27c9fc9da243ff14774f1d4ee",
+        "observed_sha256": "2312a453e9e3c807d023456606da36303a97fab27c9fc9da243ff14774f1d4ee"
+      },
+      "policy": {
+        "expected_sha256": "c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37",
+        "observed_sha256": "c179b6c9640a5d848f70bb9b7e6ac3833223a6c55ddf9bfa0b2dbe68a6c82b37"
+      }
+    }
+  },
+  "raw_schema": {
+    "application_metadata": {
+      "application_id": 0,
+      "encoding": "UTF-8",
+      "journal_mode": "delete",
+      "user_version": 0
+    },
+    "database": {
+      "acl": "no-acl",
+      "device": 16777229,
+      "gid": 320,
+      "inode": 682589447,
+      "mode": 384,
+      "nlink": 1,
+      "sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "size": 53248,
+      "uid": 320
+    },
+    "foreign_keys": {
+      "metering": [],
+      "overhead": [],
+      "reservations": [],
+      "state": [],
+      "store_identity": []
+    },
+    "index_list": {
+      "metering": [
+        {
+          "name": "sqlite_autoindex_metering_2",
+          "origin": "u",
+          "partial": 0,
+          "seq": 0,
+          "unique": 1
+        },
+        {
+          "name": "sqlite_autoindex_metering_1",
+          "origin": "pk",
+          "partial": 0,
+          "seq": 1,
+          "unique": 1
+        }
+      ],
+      "overhead": [
+        {
+          "name": "sqlite_autoindex_overhead_1",
+          "origin": "pk",
+          "partial": 0,
+          "seq": 0,
+          "unique": 1
+        }
+      ],
+      "reservations": [
+        {
+          "name": "sqlite_autoindex_reservations_2",
+          "origin": "u",
+          "partial": 0,
+          "seq": 0,
+          "unique": 1
+        },
+        {
+          "name": "sqlite_autoindex_reservations_1",
+          "origin": "pk",
+          "partial": 0,
+          "seq": 1,
+          "unique": 1
+        }
+      ],
+      "state": [],
+      "store_identity": []
+    },
+    "index_xinfo": {
+      "metering": {
+        "sqlite_autoindex_metering_1": [
+          {
+            "cid": 0,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 1,
+            "name": "id",
+            "seqno": 0
+          },
+          {
+            "cid": -1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 0,
+            "name": null,
+            "seqno": 1
+          }
+        ],
+        "sqlite_autoindex_metering_2": [
+          {
+            "cid": 1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 1,
+            "name": "reservation",
+            "seqno": 0
+          },
+          {
+            "cid": -1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 0,
+            "name": null,
+            "seqno": 1
+          }
+        ]
+      },
+      "overhead": {
+        "sqlite_autoindex_overhead_1": [
+          {
+            "cid": 0,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 1,
+            "name": "key",
+            "seqno": 0
+          },
+          {
+            "cid": -1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 0,
+            "name": null,
+            "seqno": 1
+          }
+        ]
+      },
+      "reservations": {
+        "sqlite_autoindex_reservations_1": [
+          {
+            "cid": 0,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 1,
+            "name": "id",
+            "seqno": 0
+          },
+          {
+            "cid": -1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 0,
+            "name": null,
+            "seqno": 1
+          }
+        ],
+        "sqlite_autoindex_reservations_2": [
+          {
+            "cid": 1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 1,
+            "name": "key",
+            "seqno": 0
+          },
+          {
+            "cid": -1,
+            "coll": "BINARY",
+            "desc": 0,
+            "key": 0,
+            "name": null,
+            "seqno": 1
+          }
+        ]
+      },
+      "state": {},
+      "store_identity": {}
+    },
+    "schema_version": 1,
+    "sqlite_master": [
+      {
+        "name": "sqlite_autoindex_metering_1",
+        "sql": null,
+        "table": "metering",
+        "type": "index"
+      },
+      {
+        "name": "sqlite_autoindex_metering_2",
+        "sql": null,
+        "table": "metering",
+        "type": "index"
+      },
+      {
+        "name": "sqlite_autoindex_overhead_1",
+        "sql": null,
+        "table": "overhead",
+        "type": "index"
+      },
+      {
+        "name": "sqlite_autoindex_reservations_1",
+        "sql": null,
+        "table": "reservations",
+        "type": "index"
+      },
+      {
+        "name": "sqlite_autoindex_reservations_2",
+        "sql": null,
+        "table": "reservations",
+        "type": "index"
+      },
+      {
+        "name": "metering",
+        "sql": "CREATE TABLE metering(\n            id TEXT PRIMARY KEY, reservation TEXT UNIQUE NOT NULL, body BLOB NOT NULL)",
+        "table": "metering",
+        "type": "table"
+      },
+      {
+        "name": "overhead",
+        "sql": "CREATE TABLE overhead(\n            key TEXT PRIMARY KEY, category TEXT NOT NULL, duration_us INTEGER NOT NULL)",
+        "table": "overhead",
+        "type": "table"
+      },
+      {
+        "name": "reservations",
+        "sql": "CREATE TABLE reservations(\n            id TEXT PRIMARY KEY, key TEXT UNIQUE NOT NULL, binding BLOB NOT NULL,\n            run TEXT NOT NULL, stage TEXT NOT NULL, maximum BLOB NOT NULL,\n            actual BLOB, receipt TEXT)",
+        "table": "reservations",
+        "type": "table"
+      },
+      {
+        "name": "state",
+        "sql": "CREATE TABLE state(id INTEGER PRIMARY KEY CHECK(id=1), stopped INTEGER NOT NULL)",
+        "table": "state",
+        "type": "table"
+      },
+      {
+        "name": "store_identity",
+        "sql": "CREATE TABLE store_identity(\n            campaign TEXT NOT NULL, store_id TEXT NOT NULL, prior_history_receipt TEXT NOT NULL)",
+        "table": "store_identity",
+        "type": "table"
+      }
+    ],
+    "table_info": {
+      "metering": [
+        {
+          "cid": 0,
+          "dflt_value": null,
+          "name": "id",
+          "notnull": 0,
+          "pk": 1,
+          "type": "TEXT"
+        },
+        {
+          "cid": 1,
+          "dflt_value": null,
+          "name": "reservation",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 2,
+          "dflt_value": null,
+          "name": "body",
+          "notnull": 1,
+          "pk": 0,
+          "type": "BLOB"
+        }
+      ],
+      "overhead": [
+        {
+          "cid": 0,
+          "dflt_value": null,
+          "name": "key",
+          "notnull": 0,
+          "pk": 1,
+          "type": "TEXT"
+        },
+        {
+          "cid": 1,
+          "dflt_value": null,
+          "name": "category",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 2,
+          "dflt_value": null,
+          "name": "duration_us",
+          "notnull": 1,
+          "pk": 0,
+          "type": "INTEGER"
+        }
+      ],
+      "reservations": [
+        {
+          "cid": 0,
+          "dflt_value": null,
+          "name": "id",
+          "notnull": 0,
+          "pk": 1,
+          "type": "TEXT"
+        },
+        {
+          "cid": 1,
+          "dflt_value": null,
+          "name": "key",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 2,
+          "dflt_value": null,
+          "name": "binding",
+          "notnull": 1,
+          "pk": 0,
+          "type": "BLOB"
+        },
+        {
+          "cid": 3,
+          "dflt_value": null,
+          "name": "run",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 4,
+          "dflt_value": null,
+          "name": "stage",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 5,
+          "dflt_value": null,
+          "name": "maximum",
+          "notnull": 1,
+          "pk": 0,
+          "type": "BLOB"
+        },
+        {
+          "cid": 6,
+          "dflt_value": null,
+          "name": "actual",
+          "notnull": 0,
+          "pk": 0,
+          "type": "BLOB"
+        },
+        {
+          "cid": 7,
+          "dflt_value": null,
+          "name": "receipt",
+          "notnull": 0,
+          "pk": 0,
+          "type": "TEXT"
+        }
+      ],
+      "state": [
+        {
+          "cid": 0,
+          "dflt_value": null,
+          "name": "id",
+          "notnull": 0,
+          "pk": 1,
+          "type": "INTEGER"
+        },
+        {
+          "cid": 1,
+          "dflt_value": null,
+          "name": "stopped",
+          "notnull": 1,
+          "pk": 0,
+          "type": "INTEGER"
+        }
+      ],
+      "store_identity": [
+        {
+          "cid": 0,
+          "dflt_value": null,
+          "name": "campaign",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 1,
+          "dflt_value": null,
+          "name": "store_id",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        },
+        {
+          "cid": 2,
+          "dflt_value": null,
+          "name": "prior_history_receipt",
+          "notnull": 1,
+          "pk": 0,
+          "type": "TEXT"
+        }
+      ]
+    }
+  },
+  "schema_version": 1,
+  "sidecars": [],
+  "started_at": "2026-10-27T04:30:49.201645Z"
+}

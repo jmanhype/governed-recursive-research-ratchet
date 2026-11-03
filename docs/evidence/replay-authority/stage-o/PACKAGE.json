@@ -1,0 +1,82 @@
+{
+  "artifacts": {
+    "docs/evidence/replay-authority/stage-o/ADAPTER.json": {
+      "bytes": 4224,
+      "sha256": "24af76e3c560974af3e15cc4b70e21fd14accd0891cce64e36a4859a5c5273b2"
+    },
+    "docs/evidence/replay-authority/stage-o/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 3721,
+      "sha256": "93ba9a08410b54f06a3350b0a931c5a01ef4e1784a0784a35b87c839999d8ff7"
+    },
+    "docs/evidence/replay-authority/stage-o/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 3721,
+      "sha256": "91c8d64b29a3b9fc92eb9a53841233e3077c0ae9fe1d479d1214010f96043297"
+    },
+    "docs/evidence/replay-authority/stage-o/FULL-HOMEBREW-3.14.log": {
+      "bytes": 635,
+      "sha256": "f61eaf63b8f5735c1b2a3be93550423fa14943ad5a1eb8f4c1c51d0c02bf56f5"
+    },
+    "docs/evidence/replay-authority/stage-o/FULL-MINICONDA-3.12.log": {
+      "bytes": 635,
+      "sha256": "285c14c419c7bcd02878e97ff99ca064f2fcc3545b703d91bd96a0a29cba8dfb"
+    },
+    "docs/evidence/replay-authority/stage-o/REPORT.md": {
+      "bytes": 2957,
+      "sha256": "4f695a2553b5e1789a6729071c1c3e6ae024b11d28d46cfa90763574ccf2008c"
+    },
+    "docs/evidence/replay-authority/stage-o/REVIEW-APPROVED.md": {
+      "bytes": 1725,
+      "sha256": "8739cdd9f5080a8a827e53000728df06e7c837c5778aa11cfc803fc733a8c974"
+    },
+    "docs/evidence/replay-authority/stage-o/REVIEW-REQUEST.md": {
+      "bytes": 3757,
+      "sha256": "e80e9f30c6d208de49ccf63bbc05cd014fee0199503e4457855c86439685233d"
+    },
+    "research/replay_successor_runtime.py": {
+      "bytes": 10048,
+      "sha256": "256e61e7735c429e8b93f4131ec10a96e587575ce80d65715eb623f383dc3261"
+    },
+    "scripts/show-replay-successor-runtime": {
+      "bytes": 858,
+      "sha256": "f0d4a0e6eb2438325e451a1bd47480f32da6c43bbb090cb5ca4ca8e5f8787b85"
+    },
+    "tests/unit_replay_successor_runtime.py": {
+      "bytes": 12902,
+      "sha256": "5f487e06aded983e6056b9c6bff19dd3302508f4427b6d9a5a2ae9a3ebbf0e7e"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "369276b7fb9f59946df4c00a700d26d76ebead04",
+  "basis": {
+    "stage_n_package_sha256": "e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48",
+    "stage_n_review": "STAGE_N_NARROW_REWORK_REVIEW: APPROVED"
+  },
+  "created_at": "2026-10-28T21:20:00Z",
+  "independent_review": "STAGE_O_RUNTIME_ADAPTER_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage O design-only v4 runtime adapter WIP package",
+  "operator_authorization": "Authorized begin Stage O after committing Stage M/N/all-five",
+  "outcome": {
+    "adapter_valid": true,
+    "allowed_mutations": [],
+    "design_only": true,
+    "execution_authorized": false,
+    "protected_paths_accessed": [],
+    "replay_possible": false,
+    "spendable": null
+  },
+  "review_sequence": {
+    "initial": "STAGE_O_RUNTIME_ADAPTER_REVIEW: APPROVED",
+    "rework": "none-required"
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself"
+}

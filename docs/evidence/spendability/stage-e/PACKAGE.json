@@ -1,0 +1,76 @@
+{
+  "approved_stage_d_package_sha256": "c2627683bd1be9f63032d5c9f332aa3ee0c8327420afeda9a59562c5b3f4cb0e",
+  "artifacts": {
+    "docs/evidence/spendability/stage-e/BUNDLE.json": {
+      "bytes": 77567,
+      "sha256": "52f08fc740feee1e48de7fb79b83ccb684324339dab386c383805ec136956467"
+    },
+    "docs/evidence/spendability/stage-e/CAPACITY-CLEANUP.json": {
+      "bytes": 2456,
+      "sha256": "ea94d7c6d77c6bf71d7b46a2ee25401f358506fd69e5358bb56b570b6f5b9748"
+    },
+    "docs/evidence/spendability/stage-e/FOCUSED-HOMEBREW.log": {
+      "bytes": 2509,
+      "sha256": "a1811c6a806a9bb6921758ee2c36eedc8bdf377d836b74baea7906718c1ab136"
+    },
+    "docs/evidence/spendability/stage-e/FOCUSED-SYSTEM.log": {
+      "bytes": 1728,
+      "sha256": "8e7147091b9e6257d130191ca4a98b7ff565066e33cb480c017bfd0953b53e1b"
+    },
+    "docs/evidence/spendability/stage-e/FULL-UNIT-HOMEBREW.log": {
+      "bytes": 58902,
+      "sha256": "541a106764ac403128e0d17d3b03581c500b922b180ef4fce6a6cef3f6d74087"
+    },
+    "docs/evidence/spendability/stage-e/FULL-UNIT-SYSTEM.log": {
+      "bytes": 39567,
+      "sha256": "1af73d5acd3e40f162de10b956b6041f330024b73b76b1cf3e0b67d71080d9be"
+    },
+    "docs/evidence/spendability/stage-e/REREVIEW-APPROVED.md": {
+      "bytes": 876,
+      "sha256": "dc5123c57e73ba690e4b5b8ca9ec140d3d5f8079be963e6c80cfc87ef93155e3"
+    },
+    "docs/evidence/spendability/stage-e/REREVIEW-REQUEST.md": {
+      "bytes": 2178,
+      "sha256": "32d41d6e5321c4189548000ea274b89faea449f17c71c69fa4912e5cbb42a523"
+    },
+    "docs/evidence/spendability/stage-e/REVIEW-1-REJECTED.md": {
+      "bytes": 920,
+      "sha256": "bfb0a410bddfb64a0a5e3f876313d3fd342cc4393aa69d51b0de0f545d697023"
+    },
+    "docs/evidence/spendability/stage-e/REVIEW-REQUEST.md": {
+      "bytes": 3585,
+      "sha256": "c32ec411f034786726f68718e2eba72886393bb46338c9f2dccd196148cad3d9"
+    },
+    "docs/evidence/spendability/stage-e/VALIDATION.json": {
+      "bytes": 874,
+      "sha256": "28e322cb6e651962a6eb1e76974c8d99775181a4863c0db01c01f2e0b555cb05"
+    },
+    "research/spendability_bundle.py": {
+      "bytes": 17650,
+      "sha256": "08ef91d035ac5e82305f59152299a4222ef27bd88d86b1ec74c2a873ed92a914"
+    },
+    "scripts/assemble-spendability-bundle": {
+      "bytes": 3359,
+      "sha256": "266cbea21ba3233ff050e4ebd5fc25d4c6d33dd14def371e16974112a55509f2"
+    },
+    "tests/unit_spendability_bundle.py": {
+      "bytes": 10406,
+      "sha256": "6c29a994462175be8263eb43ab38491ae34bd50df0a059a34e2a3bab257a918f"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "d431807ce24e6c7decf57d22ffe478309da98743",
+  "independent_review": "STAGE_E_NARROW_REWORK_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage E approved fail-closed evidence-bundle package",
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself"
+}

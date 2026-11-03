@@ -1,0 +1,100 @@
+{
+  "artifacts": {
+    "docs/evidence/spendability/stage-g/CANDIDATE-INDEX.json": {
+      "bytes": 27293,
+      "sha256": "31466b133af19110cd80323ff4499642307bd2c74bff055079ec13738203c7bc"
+    },
+    "docs/evidence/spendability/stage-g/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 2072,
+      "sha256": "baeec883ba6561f79e6ff3755e41f9da1b4feb8c59383184e2e2a46896caa4fc"
+    },
+    "docs/evidence/spendability/stage-g/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 2072,
+      "sha256": "ee750d69eecddd2e2101cfff88e652c7cebe4d91efdc9a2a0db111c8df649054"
+    },
+    "docs/evidence/spendability/stage-g/FULL-HOMEBREW-3.14.log": {
+      "bytes": 64199,
+      "sha256": "f55e692b2b5a15f2dd0eab90605e01a353851e0bdf092b078efc43c083a0fd07"
+    },
+    "docs/evidence/spendability/stage-g/FULL-MINICONDA-3.12.log": {
+      "bytes": 65031,
+      "sha256": "0a9765c4891e8684780036c8b82426ff109b7d5110cbd44d5a434dfe74679e9b"
+    },
+    "docs/evidence/spendability/stage-g/HANDOFF.md": {
+      "bytes": 3819,
+      "sha256": "439592c0f12ccf675843135070bad4b4d9fadcc1baa03ec63bcb8202da7ad07a"
+    },
+    "docs/evidence/spendability/stage-g/REPLAY-SMOKE-RETRY-HOMEBREW-3.14.log": {
+      "bytes": 1809,
+      "sha256": "8455b98c4bb1a3f6b097d8aee0ddddc15bfaf41fda9da7d1ce79d8c1f79bb7ca"
+    },
+    "docs/evidence/spendability/stage-g/REPLAY-SMOKE-RETRY-MINICONDA-3.12.log": {
+      "bytes": 1809,
+      "sha256": "ba7717b58d5d79e939c23e45372b6f36213019fe341d95a9c341e6de2a1535ca"
+    },
+    "docs/evidence/spendability/stage-g/REREVIEW-APPROVED.md": {
+      "bytes": 1083,
+      "sha256": "d4746ecff635261ed5dd8b1af57a52c849835a7aa383ae6e18b9915139dde767"
+    },
+    "docs/evidence/spendability/stage-g/REVIEW-REQUEST.md": {
+      "bytes": 4343,
+      "sha256": "191419d98e60b634691ff31a5531cad50550a1edea71ffb81babd913728c1e90"
+    },
+    "docs/evidence/spendability/stage-g/VALIDATION.json": {
+      "bytes": 2572,
+      "sha256": "ff4b465e9111ff14e74c42914f994bb3e8695caa0503e22df959539bdc86459a"
+    },
+    "research/spendability_search.py": {
+      "bytes": 27428,
+      "sha256": "99e12225a660573cac060bdbadb6ac435d82b8bbf36a5c62dcef4142a17252e3"
+    },
+    "scripts/search-spendability-evidence": {
+      "bytes": 1203,
+      "sha256": "799fefeb821fe3ae7a2a7342b63fb290a7c392878595de19cd83c1651c486518"
+    },
+    "tests/unit_spendability_search.py": {
+      "bytes": 8510,
+      "sha256": "8710be30838004fd0ee942aa5e43e8dc85366200b86179bd267eee69ad3e44c3"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "5ea8afca67fb980f69ed3a97a19c0b2a356c5a8b",
+  "candidate_inventory": {
+    "final_classifications_made": 0,
+    "negative_search_not_established": 15,
+    "partial_candidate_items": 7,
+    "total_items": 30,
+    "validated_complete_candidate_items": 8
+  },
+  "created_at": "2026-10-28T00:45:00Z",
+  "independent_review": "STAGE_G_SEARCH_NARROW_REWORK_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage G non-protected evidence-search WIP package",
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "full_suite_gate": "unresolved-existing-process-table-test-under-host-load",
+    "spendable": null,
+    "valid": false
+  },
+  "schema_version": 1,
+  "search_evidence_boundary": {
+    "generator_consumes_search_receipts": false,
+    "manual_discovery_observations_are_exhaustive_proof": false,
+    "negative_results_are_established": false,
+    "protected_paths_accessed": []
+  },
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "stage_f_package_sha256": "388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23",
+  "stage_f_request_sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919",
+  "trusted_observation_export_snapshot_id": "a070c21845becd209d3ed84591d4d8c95db8604783cc76a997b829cc901760f6"
+}

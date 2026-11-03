@@ -1,0 +1,1787 @@
+{
+  "artifacts": {
+    "stage_f_request": {
+      "bytes": 34817,
+      "path": "docs/evidence/spendability/stage-f/REQUEST.json",
+      "sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919"
+    },
+    "stage_g_candidate_index": {
+      "bytes": 27293,
+      "path": "docs/evidence/spendability/stage-g/CANDIDATE-INDEX.json",
+      "sha256": "31466b133af19110cd80323ff4499642307bd2c74bff055079ec13738203c7bc"
+    },
+    "stage_g_package": {
+      "bytes": 4000,
+      "path": "docs/evidence/spendability/stage-g/PACKAGE.json",
+      "sha256": "d00b35c07f2b482f3441a767d179c5e163a27f0f2db4ff8544c727a7da44f4ca"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "basis": {
+    "stage_a_baseline_sha256": "7608cbe6fc5f671b88573eca8b642ebfbc172f0cb920f75d60ca34cfa60c730a",
+    "stage_f_package_sha256": "388b0022adfba2a2e60ca436239178fa07589b4ffbe724bae6b5f847a2e4be23",
+    "stage_f_request_sha256": "6c59851d15fa44afccc3907e0aa0bedd7eb629095898d50b51a53079183cf919",
+    "stage_g_candidate_index_sha256": "31466b133af19110cd80323ff4499642307bd2c74bff055079ec13738203c7bc",
+    "stage_g_independent_review": "STAGE_G_SEARCH_NARROW_REWORK_REVIEW: APPROVED",
+    "stage_g_package_sha256": "d00b35c07f2b482f3441a767d179c5e163a27f0f2db4ff8544c727a7da44f4ca",
+    "trusted_export_ledger_sha256": "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072cbf49feb09",
+    "trusted_export_readback_sha256": "2bbdb46aced148263505a775cee3e5033c20c337d1da6a73e875c87f62a821a8",
+    "trusted_export_snapshot_sha256": "745f5d2c9086550c184cccd484023d5e490f0c082550eb55524adf25948ac513"
+  },
+  "created_at": "2026-10-28T01:15:00Z",
+  "global_blocking_gaps": [
+    "artifact creation and retrieval timestamps",
+    "source-system custodian and chain of custody",
+    "retrieval method and independent custody review",
+    "final response classification by an independent reviewer"
+  ],
+  "items": [
+    {
+      "artifacts": [
+        {
+          "event_seq": 25,
+          "event_sha256": "c1cb27b0c52c213289eb3cf5519f006c9fc519a32bff0741bb2fcc0119a0834e",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd",
+          "role": "trusted-observation-object",
+          "sha256": "6e84577ab2448625d422383b0cc32a93a637eb80c0eb3aee1f2ce909d51f5ecd"
+        },
+        {
+          "meter_receipt_sha256": "26780e3f00de3d5ac79abde2d339f634627e7e8ae7d3784a96ab55f5b78473a3",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-1bf9d516461040c0baef70648c074d61",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "1bf9d516461040c0baef70648c074d61"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 18,
+          "event_sha256": "578e6edc2cc23a6c25408e74ce4633a6e58c34674dc1cc2a7bfb0742baf831c5",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77",
+          "role": "trusted-observation-object",
+          "sha256": "c3bdf8e65b117a109b7d5deb97971cba33fd5e781902c0c706f6b8a33ca4bd77"
+        },
+        {
+          "meter_receipt_sha256": "a2a346ff1ce6e9afcfc1a5665a71338f46a3bcf555ad2a3f4236ed690b03805f",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-5b7851814d764da1a3b3830abc9853ce",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "5b7851814d764da1a3b3830abc9853ce"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 1,
+          "event_sha256": "00412d02bef0fa0689bea7b5d506cb7e93c36469f0e260247997d03c6e72d944",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "blocking_gaps": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "definitive non-dispatch or operation-completion proof",
+        "pending disposition and stale-handle evidence",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "definitive non-dispatch or operation-completion proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pending disposition and stale-handle evidence",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-69523b39a51c44739114313c9325028c",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "request-only",
+      "stage_g_search_status": "partial-pending-record-candidate",
+      "subject": "69523b39a51c44739114313c9325028c"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 6,
+          "event_sha256": "5fcd1613e09e170ead6720988bb696b97400c395bf77c623afed87b5bada9c9c",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5",
+          "role": "trusted-observation-object",
+          "sha256": "72a38a168e0b84a9590e096408afd49416cbc125e3d1b60f2b722220998d2bd5"
+        },
+        {
+          "meter_receipt_sha256": "af8db9dd7b41f7efefa7a97ea3f4e52d7edeb0ffd2f8cc646f600ddae30120c0",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-7ecc4c7e17f742dc9ec2a8c6dada50f2",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "7ecc4c7e17f742dc9ec2a8c6dada50f2"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 24,
+          "event_sha256": "535be45a2eaf8aaedcc59d997b3e9cd8d1a6c6aab2070d2f130260b61b7e551b",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "blocking_gaps": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "definitive non-dispatch or operation-completion proof",
+        "pending disposition and stale-handle evidence",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "definitive non-dispatch or operation-completion proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pending disposition and stale-handle evidence",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-b34d8b9d106e42eab3a3e43daac98ddd",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "request-only",
+      "stage_g_search_status": "partial-pending-record-candidate",
+      "subject": "b34d8b9d106e42eab3a3e43daac98ddd"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 9,
+          "event_sha256": "92d0c913d0b118697ba5c069e0dd1d62fdba24cf272a906e7ad5e102f84427d8",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f",
+          "role": "trusted-observation-object",
+          "sha256": "5e743af5d292cac23c6bdc491ff9a4128a2ca08db8ce28b969feedfc24dcc83f"
+        },
+        {
+          "meter_receipt_sha256": "6dad7dc959412a33ff57d118af9396a409e0d4f0094def83136fccd31bdef6c1",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-b954f6890a1e43e3b13f24298fa7ca33",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "b954f6890a1e43e3b13f24298fa7ca33"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 12,
+          "event_sha256": "129d0547a3fed58be1ef7efee7745b0fcc933cae7dbb91300ce13b7338dddf99",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f",
+          "role": "trusted-observation-object",
+          "sha256": "23f57903a5fca6c9e550a986329388518aaa3bdcbf89893f8163c04c1270493f"
+        },
+        {
+          "meter_receipt_sha256": "f63ace9c97777f1838cb5c8c64531f34514f20741f789cb059277da72b3c4dda",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-b95be730d6a5408886071d29848bbd05",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "b95be730d6a5408886071d29848bbd05"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 28,
+          "event_sha256": "52a9bbe06fb528ef12cf7eec11f8fc0914c9dc74c6f5f43947d0633485d677c6",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "blocking_gaps": [
+        "exact original request bytes and canonical projection digest",
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "source artifact path, raw digest, and projection digest",
+        "definitive non-dispatch or operation-completion proof",
+        "pending disposition and stale-handle evidence",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "definitive non-dispatch or operation-completion proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pending disposition and stale-handle evidence",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-d375ce6a2d924646bec71df64e939a5b",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "request-only",
+      "stage_g_search_status": "partial-pending-record-candidate",
+      "subject": "d375ce6a2d924646bec71df64e939a5b"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 21,
+          "event_sha256": "1a4da96db1f87ff78ac42b241795851b86786932e16e17344eacf781b1d108ca",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd",
+          "role": "trusted-observation-object",
+          "sha256": "707b8bc5bfef26e589b659c5fa3b901b71d6a4754eceeba139533951f097cabd"
+        },
+        {
+          "meter_receipt_sha256": "a90855be6d190b08403107812cf15835d024fd1ff74487da7b0084d43b4528fe",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-d3c965a29ab547c999e66bf0b60eca9f",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "d3c965a29ab547c999e66bf0b60eca9f"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 3,
+          "event_sha256": "1b4cfdd20d4f95d29150653f8745cfff0e70004a00b7ed47180183f08e28b146",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc",
+          "role": "trusted-observation-object",
+          "sha256": "d35d33630ac14fd271204d03091709f586d5e9490185388f496ca3150d7769cc"
+        },
+        {
+          "meter_receipt_sha256": "a9376b669ca739736aecc2e531da1a9e80a85cbf262ac1bee7e62c98477fad41",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-e38c33051ff64b4eab106e65a200fe06",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "e38c33051ff64b4eab106e65a200fe06"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 15,
+          "event_sha256": "81540cbe1dfc4580a97d9ec7ea076c5e937a756d9deb43b4abbb1645c7877157",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        },
+        {
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/objects/09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96",
+          "role": "trusted-observation-object",
+          "sha256": "09cb1533c629552fb9db252baa92d125eba5bf21841caca1d4434bdc1926cd96"
+        },
+        {
+          "meter_receipt_sha256": "266c23dc2848508717b8a80e10fecefd19b57ae62ffdf03e91c0e9f7d225507a",
+          "path": "docs/evidence/spendability/stage-a/BASELINE.json",
+          "role": "meter-body-exact-copy"
+        }
+      ],
+      "blocking_gaps": [
+        "authenticated principal and issuer identity",
+        "issuer code, toolchain, policy, and runtime-profile identities",
+        "approved request authorization and idempotency key",
+        "dispatch operation identity and request boundary",
+        "UTC measurement start/end, clock, and window digest",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact original request bytes and canonical projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "authenticated principal and issuer identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "issuer code, toolchain, policy, and runtime-profile identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "approved request authorization and idempotency key",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "dispatch operation identity and request boundary",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "UTC measurement start/end, clock, and window digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "source artifact path, raw digest, and projection digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "original meter-body bytes and digest",
+          "status": "present"
+        },
+        {
+          "required_evidence": "receipt-to-meter and actual-usage join proof",
+          "status": "present"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "reservation-provenance",
+      "request_item_id": "PROV-eb045d10d73b48ef9d570a1cf870f6eb",
+      "response_readiness": "candidate-record-set-not-response-ready",
+      "stage_g_candidate_completeness": "request-observation-and-meter-join",
+      "stage_g_search_status": "validated-original-record-candidate",
+      "subject": "eb045d10d73b48ef9d570a1cf870f6eb"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 1,
+          "event_sha256": "00412d02bef0fa0689bea7b5d506cb7e93c36469f0e260247997d03c6e72d944",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "blocking_gaps": [
+        "request and idempotency identities",
+        "operation ID and dispatch outcome",
+        "final observation or explicit non-observation proof",
+        "cessation proof if dispatch occurred",
+        "evaluator stop/halt state and evidence",
+        "pre/post database hashes",
+        "stale-handle accounting",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "request and idempotency identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "operation ID and dispatch outcome",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "final observation or explicit non-observation proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "cessation proof if dispatch occurred",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "evaluator stop/halt state and evidence",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "stale-handle accounting",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "pending-disposition",
+      "request_item_id": "PEND-69523b39a51c44739114313c9325028c",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "request-and-gate-only",
+      "stage_g_search_status": "partial-pending-record-candidate",
+      "subject": "69523b39a51c44739114313c9325028c"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 24,
+          "event_sha256": "535be45a2eaf8aaedcc59d997b3e9cd8d1a6c6aab2070d2f130260b61b7e551b",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "blocking_gaps": [
+        "request and idempotency identities",
+        "operation ID and dispatch outcome",
+        "final observation or explicit non-observation proof",
+        "cessation proof if dispatch occurred",
+        "evaluator stop/halt state and evidence",
+        "pre/post database hashes",
+        "stale-handle accounting",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "request and idempotency identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "operation ID and dispatch outcome",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "final observation or explicit non-observation proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "cessation proof if dispatch occurred",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "evaluator stop/halt state and evidence",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "stale-handle accounting",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "pending-disposition",
+      "request_item_id": "PEND-b34d8b9d106e42eab3a3e43daac98ddd",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "request-and-gate-only",
+      "stage_g_search_status": "partial-pending-record-candidate",
+      "subject": "b34d8b9d106e42eab3a3e43daac98ddd"
+    },
+    {
+      "artifacts": [
+        {
+          "event_seq": 28,
+          "event_sha256": "52a9bbe06fb528ef12cf7eec11f8fc0914c9dc74c6f5f43947d0633485d677c6",
+          "path": "docs/evidence/trusted-observation/v4-run-9d3df87/evaluator/ledger.sqlite",
+          "role": "reservation-request-event"
+        }
+      ],
+      "blocking_gaps": [
+        "request and idempotency identities",
+        "operation ID and dispatch outcome",
+        "final observation or explicit non-observation proof",
+        "cessation proof if dispatch occurred",
+        "evaluator stop/halt state and evidence",
+        "pre/post database hashes",
+        "stale-handle accounting",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "request and idempotency identities",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "operation ID and dispatch outcome",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "final observation or explicit non-observation proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "cessation proof if dispatch occurred",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "evaluator stop/halt state and evidence",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "stale-handle accounting",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "pending-disposition",
+      "request_item_id": "PEND-d375ce6a2d924646bec71df64e939a5b",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "request-and-gate-only",
+      "stage_g_search_status": "partial-pending-record-candidate",
+      "subject": "d375ce6a2d924646bec71df64e939a5b"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-active",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "active"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-database_snapshot",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "database_snapshot"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_complete",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "recovery_complete"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_intent",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "recovery_intent"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_prior_active",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "recovery_prior_active"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-recovery_receipt",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "recovery_receipt"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-registration_prior_active",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "registration_prior_active"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "exact artifact bytes and digest",
+        "authorization and implementation-review identity",
+        "pre/post database identity and hashes",
+        "writer exclusion or lock record",
+        "unchanged-or-authorized postcondition",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "exact artifact bytes and digest",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "authorization and implementation-review identity",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "pre/post database identity and hashes",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "writer exclusion or lock record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "unchanged-or-authorized postcondition",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "historical-lineage",
+      "request_item_id": "LINEAGE-registration_receipt",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "registration_receipt"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "complete operation inventory and unique identifiers",
+        "reservation/run/request joins",
+        "start/end boundaries and overlap map",
+        "outcome, cancellation, failure, stop, and replay state",
+        "trusted receipts for each effect",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "complete operation inventory and unique identifiers",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "reservation/run/request joins",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "start/end boundaries and overlap map",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "outcome, cancellation, failure, stop, and replay state",
+          "status": "partial"
+        },
+        {
+          "required_evidence": "trusted receipts for each effect",
+          "status": "partial"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "operation-history",
+      "request_item_id": "OPERATIONS-1",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": "11-reservations-8-observations-30-events",
+      "stage_g_search_status": "partial-evaluator-export-only",
+      "subject": "dispatch-cancel-failure-stop-replay-history"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "complete side-store and export inventory",
+        "manual adjustment and refund approvals",
+        "replay or duplicate-effect records",
+        "campaign/store lineage and joins",
+        "cost or disposition receipt for each effect",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "complete side-store and export inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "manual adjustment and refund approvals",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "replay or duplicate-effect records",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "campaign/store lineage and joins",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "cost or disposition receipt for each effect",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "side-store-history",
+      "request_item_id": "SIDE-STORES-1",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "side-ledger-export-adjustment-refund-replay-inventory"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "responsible actor or process",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "campaign boundary and source-record inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "UTC intervals, clock, units, and overlap map",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "measured cost or affirmative nonexistence proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "tool/code identity used to inspect the domain",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-EXECUTION",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "execution"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "responsible actor or process",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "campaign boundary and source-record inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "UTC intervals, clock, units, and overlap map",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "measured cost or affirmative nonexistence proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "tool/code identity used to inspect the domain",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-OTHER",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "other"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "responsible actor or process",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "campaign boundary and source-record inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "UTC intervals, clock, units, and overlap map",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "measured cost or affirmative nonexistence proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "tool/code identity used to inspect the domain",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-PREPARATION",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "preparation"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "responsible actor or process",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "campaign boundary and source-record inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "UTC intervals, clock, units, and overlap map",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "measured cost or affirmative nonexistence proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "tool/code identity used to inspect the domain",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-REVIEW",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "review"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "responsible actor or process",
+        "campaign boundary and source-record inventory",
+        "UTC intervals, clock, units, and overlap map",
+        "measured cost or affirmative nonexistence proof",
+        "tool/code identity used to inspect the domain",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "responsible actor or process",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "campaign boundary and source-record inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "UTC intervals, clock, units, and overlap map",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "measured cost or affirmative nonexistence proof",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "tool/code identity used to inspect the domain",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "overhead-domain",
+      "request_item_id": "OVERHEAD-SELECTION",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "selection"
+    },
+    {
+      "artifacts": [],
+      "blocking_gaps": [
+        "complete campaign, store, profile, stage, and ceiling lineage",
+        "historical stop cause and observation record",
+        "paid-service decisions, proofs, and receipts",
+        "lost, truncated, never-created, and unauthenticated record inventory",
+        "complete recovery and interrupted-operation lineage",
+        "explicit boundary proving absence where no record exists",
+        "artifact creation and retrieval timestamps",
+        "source-system custodian and chain of custody",
+        "retrieval method and independent custody review",
+        "final response classification by an independent reviewer"
+      ],
+      "classification": null,
+      "coverage": [
+        {
+          "required_evidence": "complete campaign, store, profile, stage, and ceiling lineage",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "historical stop cause and observation record",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "paid-service decisions, proofs, and receipts",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "lost, truncated, never-created, and unauthenticated record inventory",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "complete recovery and interrupted-operation lineage",
+          "status": "missing"
+        },
+        {
+          "required_evidence": "explicit boundary proving absence where no record exists",
+          "status": "missing"
+        }
+      ],
+      "independent_review_required": true,
+      "kind": "global-historical-completeness",
+      "request_item_id": "GLOBAL-HISTORY-1",
+      "response_readiness": "not-ready",
+      "stage_g_candidate_completeness": null,
+      "stage_g_search_status": "search-completeness-not-established",
+      "subject": "registration-through-current-database-snapshot"
+    }
+  ],
+  "outcome": {
+    "allowed_mutations": [],
+    "classification_complete": false,
+    "execution_authorized": false,
+    "response_ready": false,
+    "spendable": null,
+    "valid": false
+  },
+  "record_type": "spendability-candidate-response-readiness-v1",
+  "schema_version": 1,
+  "summary": {
+    "candidate_record_sets": 8,
+    "candidate_record_sets_response_ready": 0,
+    "final_classifications_made": 0,
+    "not_ready_items": 22,
+    "total_items": 30
+  }
+}
