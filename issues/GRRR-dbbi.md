@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:13:55Z
-content_hash: "sha256:d4e1cf34c9ea3d3dddb65ff90746711a09df5c9812d96da515cb7c856c67ba27"
+updated_at: 2026-11-03T17:14:40Z
+content_hash: "sha256:06186213b3e33cc233c9f62771a94754fc526ceee178aee2a0e6f949d85850e9"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
@@ -151,3 +151,26 @@ Operator approved continuing into adaptation loop after contract admission.
 - Deterministic and random baselines run against corpus
 - Honest reporting: if Jev unavailable, comparison is incomplete
 - No fabrication of comparative results
+
+### 2026-11-03T17:14:40Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Selector comparison framework implemented: research/selector_comparison.py
+- 12/12 unit tests pass: tests/unit_selector_comparison.py
+- Reports generated: reports/comparison.json + comparison/comparison.md
+- Deterministic arm: working, reproducible
+- Random arm: working, reproducible with seed
+- Jev arm: honestly unavailable (no operator-provisioned adapter)
+- Three-arm comparison: incomplete per AC #4 (Jev unavailable)
+- No fabricated comparative results
+
+### proof
+- [x] AC #1 partial: deterministic and random selectors return validated ranked IDs
+- [x] AC #4: Jev marked unavailable, no heuristic relabeling
+- [x] AC #7 partial: real tests for valid arms and unavailable Jev
+- [ ] AC #2: full equal-budget execution with cost tracking (deferred)
+- [ ] AC #3: Jev endpoint verification (blocked — no adapter)
+- [ ] AC #5: unique defect counting with replay receipts (deferred)
+- [ ] AC #6: business target evaluation (blocked — comparison incomplete)
