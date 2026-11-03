@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T20:53:22Z
-content_hash: "sha256:c12f8adbc7d48c62fbde120231173fa6ef6d2072c8cc4aaa06b27a8b31b13dc4"
+updated_at: 2026-11-03T21:01:56Z
+content_hash: "sha256:f3fdcd0bc3a0d1608053a1b9a88d3c833dfbe9a4aa68b829fa546662c8dbda2d"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8]
 assignee: dev-GRRR-6sso
@@ -418,3 +418,16 @@ Design-only files created at story base aef59b5:
 - docs/evidence/jev-selector-measurement/PRE-REGISTERED-PLAN.md d1e7e2300c13429ce8c98cdec0b2052132bbc157d43f80851f2b907f3b2b27e2
 
 The proposed v2 plan remains not-approved, measurement_started=false, and execution_authorized=false. It excludes exploratory run 6cf35082 from three confirmatory repetitions, binds the frozen corpus/protected truth, uses equal budget 8, defines deterministic lexical/random seeds 42-44/three fresh Jev runs, caps confirmatory calls at 96 and cumulative calls at 128, sets conservative token ceilings, restricts outbound Jev state, defines selector-quality-only metrics/bootstrap/fail-closed rules, and forbids automatic rerun. Existing evaluation-plan.json is unchanged. Focused schema tests passed 11/11 on both interpreters; pvg verify PASS; gates PASS; diff check PASS. Independent design review is pending.
+
+### 2026-11-03T21:01:56Z speed
+## 2026-11-03 Second Three-Arm Design Review — REJECTED / Required Operator Hold
+
+Fresh Astra re-review verdict: THREE_ARM_DESIGN_REREVIEW: REJECTED.
+
+Findings:
+1. Blocking: proposed protected-truth hash has a transcription error. Actual corpus/protected/truth.json and manifest both hash to 7cf9f99f5836c4e3e147df2866d54480a706f2665a732fbf61bd1a0d0b4c52ea; proposed JSON currently pins ...fbf61bd0a0d0b4c52ea. Test does not compare the pinned hash to the artifact/manifest.
+2. Bootstrap reproducibility still underspecified: one RNG initialization lifetime, exact sampling API, repetition-value ordering, and loop nesting are not frozen.
+
+Reviewer certified byte-pin/exact-type validation, isolated invalid JSON tests, random catalog/shuffle, Jev ranking/model/tie behavior, percentile convention, prior-run exclusion, budgets, token arithmetic, privacy, fail-closed rules, and false execution flags. No selector execution, network, secret use, protected access, replay, admission, promotion, production mutation, commit, merge, or push occurred.
+
+This is the second rejected review of the same design brief. Per escalation policy, no third Astra review will be spawned. Work remains uncommitted at story/GRRR-6sso and awaits operator disposition.
