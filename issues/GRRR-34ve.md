@@ -4,11 +4,11 @@ title: "Admit one human-approved contract that rejects recurrence"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, delivered]
+labels: [milestone-1, integration, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:24:02Z
+updated_at: 2026-11-03T17:24:03Z
 content_hash: "sha256:eb0d6d724b591bd2818b028d301e5cb55572ab8c526bf0abbbb75be3811e8889"
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
