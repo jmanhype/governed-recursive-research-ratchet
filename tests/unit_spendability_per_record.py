@@ -6,11 +6,14 @@ from pathlib import Path
 import json
 import sys
 import unittest
+from pathlib import Path as _Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 
+import spendability_per_record as per_record_module  # noqa: E402
 from spendability_per_record import (  # noqa: E402
     ACCOUNT_LOG_SHA256,
     RESERVATION_IDS,
@@ -47,8 +50,10 @@ class SpendabilityPerRecordMatrix(unittest.TestCase):
         self.assertEqual(basis['session_search_sha256'], SESSION_SEARCH_SHA256)
         self.assertEqual(basis['session_source_sha256'], SESSION_SOURCE_SHA256)
 
-    def test_session_search_reproduces_from_full_source_archive(self):
-        search = _validate_session_search(ROOT)
+    def test_session_search_uses_retained_publication_when_source_is_absent(self):
+        with mock.patch.object(per_record_module, 'SESSION_SOURCE_PATH',
+                               _Path('/nonexistent-grrr-source-archive')):
+            search = _validate_session_search(ROOT)
         self.assertEqual(search['source']['sha256'], SESSION_SOURCE_SHA256)
         self.assertTrue(search['interpretation']['all_sixteen_candidate_ids_found'])
         self.assertTrue(search['interpretation']['line_11533_contains_all_sixteen_ids'])

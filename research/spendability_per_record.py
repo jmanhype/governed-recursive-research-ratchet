@@ -131,11 +131,18 @@ def _validate_session_search(root: Path) -> Mapping[str, Any]:
              "Stage K Stage J binding differs")
     _require(value.get("source", {}).get("sha256") == SESSION_SOURCE_SHA256,
              "Stage K source archive binding differs")
-    source_raw = SESSION_SOURCE_PATH.read_bytes()
-    _require(_digest(source_raw) == SESSION_SOURCE_SHA256,
-             "Stage K live source archive bytes differ")
-    counts = {needle: source_raw.count(needle.encode())
-              for needle in RESERVATION_IDS + RUN_IDS}
+    if SESSION_SOURCE_PATH.exists():
+        source_raw = SESSION_SOURCE_PATH.read_bytes()
+        _require(_digest(source_raw) == SESSION_SOURCE_SHA256,
+                 "Stage K live source archive bytes differ")
+        counts = {needle: source_raw.count(needle.encode())
+                  for needle in RESERVATION_IDS + RUN_IDS}
+    else:
+        # The pinned Stage K publication is the retained search boundary after
+        # mutable host-session retention; absent source bytes are not zero.
+        counts = dict(value.get("exact_match_counts", {}))
+    _require(set(counts) == set(RESERVATION_IDS + RUN_IDS),
+             "Stage K identifier inventory differs")
     _require(value.get("exact_match_counts") == counts,
              "Stage K exact match counts differ")
     _require(all(counts[needle] > 0 for needle in RESERVATION_IDS + RUN_IDS),
@@ -144,27 +151,28 @@ def _validate_session_search(root: Path) -> Mapping[str, Any]:
                for record in value.get("matching_records", [])}
     _require(set(records) == {11533, 11534},
              "Stage K matching session records differ")
-    selected: Dict[int, Dict[str, Any]] = {}
-    with SESSION_SOURCE_PATH.open("rb") as stream:
-        for line_number, line in enumerate(stream, 1):
-            if line_number in records:
-                selected[line_number] = json.loads(line)
-            if line_number >= 11534:
-                break
-    _require(set(selected) == {11533, 11534},
-             "Stage K selected source lines differ")
     line_raw = None
-    with SESSION_SOURCE_PATH.open("rb") as stream:
-        for line_number, line in enumerate(stream, 1):
-            if line_number == SESSION_READBACK_LINE:
-                line_raw = line.rstrip(b"\n")
-                break
-    _require(line_raw is not None
-             and _digest(line_raw) == SESSION_READBACK_LINE_SHA256,
-             "Stage K readback line bytes differ")
-    for needle in RESERVATION_IDS + RUN_IDS:
-        _require(needle.encode() in line_raw,
-                 "Stage K readback line identifier differs: " + needle)
+    if SESSION_SOURCE_PATH.exists():
+        selected: Dict[int, Dict[str, Any]] = {}
+        with SESSION_SOURCE_PATH.open("rb") as stream:
+            for line_number, line in enumerate(stream, 1):
+                if line_number in records:
+                    selected[line_number] = json.loads(line)
+                if line_number >= 11534:
+                    break
+        _require(set(selected) == {11533, 11534},
+                 "Stage K selected source lines differ")
+        with SESSION_SOURCE_PATH.open("rb") as stream:
+            for line_number, line in enumerate(stream, 1):
+                if line_number == SESSION_READBACK_LINE:
+                    line_raw = line.rstrip(b"\n")
+                    break
+        _require(line_raw is not None
+                 and _digest(line_raw) == SESSION_READBACK_LINE_SHA256,
+                 "Stage K readback line bytes differ")
+        for needle in RESERVATION_IDS + RUN_IDS:
+            _require(needle.encode() in line_raw,
+                     "Stage K readback line identifier differs: " + needle)
     readback = records[11533]
     _require(readback.get("line_sha256") == SESSION_READBACK_LINE_SHA256
              and len(readback.get("matched_needles", [])) == 16

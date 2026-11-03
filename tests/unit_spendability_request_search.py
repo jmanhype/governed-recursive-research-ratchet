@@ -6,11 +6,14 @@ from pathlib import Path
 import json
 import sys
 import unittest
+from unittest import mock
+from pathlib import Path as _Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 
+import spendability_request_search as request_search_module  # noqa: E402
 from spendability_request_search import (  # noqa: E402
     RESERVATION_IDS,
     RUN_IDS,
@@ -60,8 +63,11 @@ class SpendabilityRequestSearch(unittest.TestCase):
         self.assertTrue(all(record['exact_target_field_hits'] == []
                             for record in records))
 
-    def test_full_archive_serialized_operation_hits_are_pending_unknowns(self):
-        records = self.record['original_session_search']['matching_records']
+    def test_retained_full_archive_search_reports_pending_unknown_operations(self):
+        with mock.patch.object(request_search_module, 'SESSION_SOURCE_PATH',
+                               _Path('/nonexistent-grrr-source-archive')):
+            retained = build_request_search(ROOT)
+        records = retained['original_session_search']['matching_records']
         hits = [(hit['field'], hit['serialized_value'])
                 for record in records
                 for hit in record['serialized_target_field_hits']]

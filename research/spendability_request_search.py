@@ -19,6 +19,7 @@ TRUSTED_LEDGER_SHA256 = "11e3fba4f8ff3f1b27d65c359e76c1c99465164970e7d4f050c072c
 SESSION_SOURCE_SHA256 = "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e"
 SESSION_LINE_11533_SHA256 = "9ab13249897f4508a2410ba4eabbf29becaab434e7fba8cc3ab551f25650ae60"
 SESSION_LINE_11534_SHA256 = "e1b73e4b545b93cbc43164effce8e9e6f10c4c38ca11095e3b5f1b89fc4f1cd8"
+RETAINED_SESSION_SEARCH_SHA256 = "e568f36d965aa425971744573b562f005c3f1279ba73fef7610bc495224faaa3"
 SESSION_SOURCE_PATH = Path(
     "/Users/speed/.codex/sessions/2026/10/20/"
     "rollout-2026-10-20T06-57-58-01a156c2-7319-7bc3-a65c-b516699997ee_"
@@ -154,7 +155,21 @@ def _serialized_target_hits(raw: bytes) -> List[Dict[str, Any]]:
     return hits
 
 
-def _session_records(candidate_ids: Sequence[str]) -> Dict[str, Any]:
+def _session_records(candidate_ids: Sequence[str],
+                     retained_path: Path) -> Dict[str, Any]:
+    if not SESSION_SOURCE_PATH.exists():
+        retained_raw = retained_path.read_bytes()
+        _require(_digest(retained_raw) == RETAINED_SESSION_SEARCH_SHA256,
+                 "Stage L retained original-session search bytes differ")
+        result = json.loads(retained_raw)
+        _require(set(result.get("exact_match_counts", {})) == set(candidate_ids)
+                 and all(result["exact_match_counts"][identifier] > 0
+                         for identifier in candidate_ids),
+                 "Stage L retained identifier coverage differs")
+        _require(result.get("matching_line_numbers") == [11533, 11534],
+                 "Stage L retained matching lines differ")
+        return result
+
     source_raw = SESSION_SOURCE_PATH.read_bytes()
     _require(_digest(source_raw) == SESSION_SOURCE_SHA256,
              "Stage L original session archive bytes differ")
@@ -358,7 +373,8 @@ def build_request_search(root: Path,
     for reservation in all_request_ids:
         all_candidate_ids.append(reservation)
         all_candidate_ids.append(request_events[reservation]["body"]["request"]["run"])
-    session = _session_records(all_candidate_ids)
+    retained_path = root / "docs/evidence/spendability/stage-l/RETAINED-SESSION-SEARCH.json"
+    session = _session_records(all_candidate_ids, retained_path)
     meters = _meter_index(root)
     request_search_records = []
     for reservation in all_request_ids:

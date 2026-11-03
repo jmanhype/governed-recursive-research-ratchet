@@ -131,38 +131,39 @@ def _validate_session_extract(raw: bytes) -> Mapping[str, Any]:
         11512, 11620, 11641, 11651,
     }, "Stage I selected session records differ")
 
-    # Independently hash and parse the non-protected source archive.  The extract
-    # remains a redacted publication, but its selected records must be exactly
-    # equal to records reproduced from the pinned source bytes.
-    source_raw = SESSION_SOURCE_PATH.read_bytes()
-    _require(_digest(source_raw) == SESSION_SOURCE_SHA256,
-             "Stage I live source archive bytes differ")
-    source_records: Dict[int, Dict[str, Any]] = {}
-    with SESSION_SOURCE_PATH.open() as stream:
-        for line_number, line in enumerate(stream, 1):
-            if line_number in records or line_number in redactions:
-                source_value = json.loads(line)
-                if line_number in records:
-                    source_records[line_number] = {
-                        "line_number": line_number,
-                        "timestamp": source_value.get("timestamp"),
-                        "record_type": source_value.get("type"),
-                        "payload": source_value.get("payload"),
-                    }
-                else:
-                    source_records[line_number] = source_value
-    _require(set(source_records) == set(records) | redactions,
-             "Stage I source line inventory differs")
-    for line_number, record in records.items():
-        _require(source_records[line_number] == record,
-                 "Stage I extracted record differs from source: " + str(line_number))
-    for line_number in redactions:
-        redacted = source_records[line_number]
-        payload = redacted.get("payload", {})
-        _require(redacted.get("type") == "response_item"
-                 and payload.get("type") == "function_call"
-                 and payload.get("name") == "write_stdin",
-                 "Stage I redacted source record differs: " + str(line_number))
+    # Reproduce from the non-protected original archive when retained.  After
+    # Codex session retention removed that mutable host file, the pinned Stage I
+    # extract remains the durable evidence boundary; never invent a replacement.
+    if SESSION_SOURCE_PATH.exists():
+        source_raw = SESSION_SOURCE_PATH.read_bytes()
+        _require(_digest(source_raw) == SESSION_SOURCE_SHA256,
+                 "Stage I live source archive bytes differ")
+        source_records: Dict[int, Dict[str, Any]] = {}
+        with SESSION_SOURCE_PATH.open() as stream:
+            for line_number, line in enumerate(stream, 1):
+                if line_number in records or line_number in redactions:
+                    source_value = json.loads(line)
+                    if line_number in records:
+                        source_records[line_number] = {
+                            "line_number": line_number,
+                            "timestamp": source_value.get("timestamp"),
+                            "record_type": source_value.get("type"),
+                            "payload": source_value.get("payload"),
+                        }
+                    else:
+                        source_records[line_number] = source_value
+        _require(set(source_records) == set(records) | redactions,
+                 "Stage I source line inventory differs")
+        for line_number, record in records.items():
+            _require(source_records[line_number] == record,
+                     "Stage I extracted record differs from source: " + str(line_number))
+        for line_number in redactions:
+            redacted = source_records[line_number]
+            payload = redacted.get("payload", {})
+            _require(redacted.get("type") == "response_item"
+                     and payload.get("type") == "function_call"
+                     and payload.get("name") == "write_stdin",
+                     "Stage I redacted source record differs: " + str(line_number))
 
     approval_output = str(records[11469]["payload"].get("item", {}).get("aggregated_output", ""))
     for expected in (APPROVAL_SHA256, LICENSE_REVIEW_SHA256, EXECUTION_PROFILE_SHA256):

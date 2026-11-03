@@ -5,11 +5,13 @@ from hashlib import sha256
 from pathlib import Path
 import sys
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'research'))
 
+import spendability_provenance as provenance_module  # noqa: E402
 from spendability_provenance import (  # noqa: E402
     APPROVAL_SHA256,
     EXECUTION_COMPLETED_AT,
@@ -26,6 +28,17 @@ from spendability_provenance import (  # noqa: E402
     validate_provenance_record,
 )
 from spendability_stage_c import StageCError  # noqa: E402
+
+
+class _AbsentSourcePath:
+    def __init__(self, original):
+        self.original = original
+
+    def __str__(self):
+        return self.original
+
+    def exists(self):
+        return False
 
 
 SESSION_EXTRACT = ROOT / 'docs/evidence/spendability/stage-i/SESSION-EXTRACT.json'
@@ -57,14 +70,16 @@ class SpendabilityProvenance(unittest.TestCase):
         self.assertNotIn('api_key', text)
         self.assertFalse(extract['security']['credential_values copied'])
 
-    def test_extract_records_are_reproduced_from_pinned_source_archive(self):
-        extract = _validate_session_extract(self.session_raw)
+    def test_extract_uses_retained_publication_when_source_is_absent(self):
+        absent = _AbsentSourcePath(str(provenance_module.SESSION_SOURCE_PATH))
+        with mock.patch.object(provenance_module, 'SESSION_SOURCE_PATH', absent):
+            extract = _validate_session_extract(self.session_raw)
         source = extract['source']
         self.assertEqual(source['retrieval_method'],
                          'read-only exact JSONL line extraction')
         self.assertEqual(source['sha256'], SESSION_SOURCE_SHA256)
-        # _validate_session_extract itself hashes the source archive and compares
-        # every selected record; reaching this assertion means that proof passed.
+        # The pinned Stage I publication remains valid without inventing a
+        # replacement for the mutable original source archive.
         self.assertEqual(len(extract['records']), 12)
 
     def test_git_custody_binds_source_and_export_commits(self):

@@ -1,0 +1,123 @@
+{
+  "exact_match_counts": {
+    "191051406bbb469392dfdf9cee76a5e1": 4,
+    "1bf9d516461040c0baef70648c074d61": 1,
+    "20849b384ed641ca9f8e5c6f880d96dd": 3,
+    "283eab529e1c491583775cbe1a8f1c89": 3,
+    "2e1a9c4468794c128d80a568e26752da": 6,
+    "3848e1bb84214727b5647e4085b0257a": 6,
+    "5b7851814d764da1a3b3830abc9853ce": 1,
+    "60fa3361bf5640be8b251e6a1eab93bd": 4,
+    "69523b39a51c44739114313c9325028c": 2,
+    "7ecc4c7e17f742dc9ec2a8c6dada50f2": 2,
+    "93135d89fa334ec09d87b655db72c5b7": 6,
+    "a7da36feadcb442cb76bb1e0e08ce1a1": 2,
+    "b34d8b9d106e42eab3a3e43daac98ddd": 1,
+    "b954f6890a1e43e3b13f24298fa7ca33": 2,
+    "b95be730d6a5408886071d29848bbd05": 2,
+    "d375ce6a2d924646bec71df64e939a5b": 1,
+    "d3c965a29ab547c999e66bf0b60eca9f": 1,
+    "d6cdf6f3f93a4fc6ab154020c8cc221d": 6,
+    "e38c33051ff64b4eab106e65a200fe06": 2,
+    "e55f8e3b44604e509fb005d76d0d7e9f": 3,
+    "e67562e071f34ffb8f76c4f1c22d36fa": 1,
+    "eb045d10d73b48ef9d570a1cf870f6eb": 2
+  },
+  "matching_line_numbers": [
+    11533,
+    11534
+  ],
+  "matching_records": [
+    {
+      "exact_target_field_hits": [],
+      "item_type": "CommandExecution",
+      "line_bytes": 69658,
+      "line_number": 11533,
+      "line_sha256": "9ab13249897f4508a2410ba4eabbf29becaab434e7fba8cc3ab551f25650ae60",
+      "matched_candidate_ids": [
+        "191051406bbb469392dfdf9cee76a5e1",
+        "1bf9d516461040c0baef70648c074d61",
+        "20849b384ed641ca9f8e5c6f880d96dd",
+        "283eab529e1c491583775cbe1a8f1c89",
+        "2e1a9c4468794c128d80a568e26752da",
+        "3848e1bb84214727b5647e4085b0257a",
+        "5b7851814d764da1a3b3830abc9853ce",
+        "60fa3361bf5640be8b251e6a1eab93bd",
+        "69523b39a51c44739114313c9325028c",
+        "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+        "93135d89fa334ec09d87b655db72c5b7",
+        "a7da36feadcb442cb76bb1e0e08ce1a1",
+        "b34d8b9d106e42eab3a3e43daac98ddd",
+        "b954f6890a1e43e3b13f24298fa7ca33",
+        "b95be730d6a5408886071d29848bbd05",
+        "d375ce6a2d924646bec71df64e939a5b",
+        "d3c965a29ab547c999e66bf0b60eca9f",
+        "d6cdf6f3f93a4fc6ab154020c8cc221d",
+        "e38c33051ff64b4eab106e65a200fe06",
+        "e55f8e3b44604e509fb005d76d0d7e9f",
+        "e67562e071f34ffb8f76c4f1c22d36fa",
+        "eb045d10d73b48ef9d570a1cf870f6eb"
+      ],
+      "payload_type": "item_completed",
+      "raw_line_retained": false,
+      "record_type": "event_msg",
+      "serialized_target_field_hits": [
+        {
+          "byte_offset": 15075,
+          "field": "operation",
+          "serialized_value": "\\\"unknown\\\""
+        },
+        {
+          "byte_offset": 30706,
+          "field": "operation",
+          "serialized_value": "\\\"unknown\\\""
+        }
+      ],
+      "status": "completed",
+      "timestamp": "2026-10-21T20:00:54.106Z"
+    },
+    {
+      "exact_target_field_hits": [],
+      "item_type": null,
+      "line_bytes": 42139,
+      "line_number": 11534,
+      "line_sha256": "e1b73e4b545b93cbc43164effce8e9e6f10c4c38ca11095e3b5f1b89fc4f1cd8",
+      "matched_candidate_ids": [
+        "191051406bbb469392dfdf9cee76a5e1",
+        "2e1a9c4468794c128d80a568e26752da",
+        "3848e1bb84214727b5647e4085b0257a",
+        "60fa3361bf5640be8b251e6a1eab93bd",
+        "69523b39a51c44739114313c9325028c",
+        "7ecc4c7e17f742dc9ec2a8c6dada50f2",
+        "93135d89fa334ec09d87b655db72c5b7",
+        "b954f6890a1e43e3b13f24298fa7ca33",
+        "b95be730d6a5408886071d29848bbd05",
+        "d6cdf6f3f93a4fc6ab154020c8cc221d",
+        "e38c33051ff64b4eab106e65a200fe06",
+        "eb045d10d73b48ef9d570a1cf870f6eb"
+      ],
+      "payload_type": "function_call_output",
+      "raw_line_retained": false,
+      "record_type": "response_item",
+      "serialized_target_field_hits": [
+        {
+          "byte_offset": 13761,
+          "field": "operation",
+          "serialized_value": "\\\"unknown\\\""
+        }
+      ],
+      "status": null,
+      "timestamp": "2026-10-21T20:00:54.116Z"
+    }
+  ],
+  "raw_private_records_retained": false,
+  "search_method": "full-line exact-byte scan of every archive line",
+  "source_bytes": 26819042,
+  "source_path": "/Users/speed/.codex/sessions/2026/10/20/rollout-2026-10-20T06-57-58-01a156c2-7319-7bc3-a65c-b516699997ee_01a1592c-ec38-7e22-af4c-1b1997276e76.jsonl",
+  "source_sha256": "a595ff5c996d5d673e005a3d55e0b82a3a8187ed5693b2c232a0f16e771fa80e",
+  "tool_record_boundary": {
+    "classification": "operator tool/readback boundary, not reservation timing",
+    "completed_at_ms": 1792612854106,
+    "started_at_ms": 1792612839190
+  }
+}
