@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T17:30:13Z
-content_hash: "sha256:40cc9319901f07a79beca123c2d67eac379d12fa2ad3d2c048d9567e7820fb7a"
+content_hash: "sha256:de979d900935e495c039244d128905506a953911c9c29c3bc44f29f5e0f85ccd"
 blocks: [GRRR-6sso]
 was_blocked_by: [GRRR-dbbi, GRRR-34ve]
 assignee: dev-GRRR-fmvp
@@ -141,3 +141,6 @@ status: new
 - Follows: [[GRRR-dbbi]], [[GRRR-34ve]]
 
 ## Comments
+
+### 2026-11-03T17:30:13Z speed
+Started: building operator review surfaces (CLI + report generator) using real D011 replay evidence.
