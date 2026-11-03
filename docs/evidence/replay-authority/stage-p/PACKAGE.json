@@ -1,0 +1,94 @@
+{
+  "artifacts": {
+    "docs/evidence/replay-authority/stage-p/CONTRACT.json": {
+      "bytes": 8055,
+      "sha256": "0c4f800bb4b1efd7f831094123e4afd082fa1d18eb8f32bf3a1c8b1649ec8267"
+    },
+    "docs/evidence/replay-authority/stage-p/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 5284,
+      "sha256": "1b196761b5de3aaeb4711df00ddadab7310f220d5cc7fb171f5590c76532c954"
+    },
+    "docs/evidence/replay-authority/stage-p/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 5284,
+      "sha256": "40cb8ca1f4dcdee8d9dc3022ec89760e4ade35458ee09ffe4550ea15b9f31971"
+    },
+    "docs/evidence/replay-authority/stage-p/FULL-HOMEBREW-3.14.log": {
+      "bytes": 662,
+      "sha256": "6dffccf35486c84dbfb0b37b4d4e90b15c0bbeca43f4f4f4d81f23f67bc5a1f9"
+    },
+    "docs/evidence/replay-authority/stage-p/FULL-MINICONDA-3.12.log": {
+      "bytes": 662,
+      "sha256": "6198fb346fa04f901d0317fc749bb973e61b401e28fd5aa431743542347672ab"
+    },
+    "docs/evidence/replay-authority/stage-p/NARROW-REVIEW-REQUEST.md": {
+      "bytes": 2229,
+      "sha256": "1a9c36a4eef23c3ab8fead0856c487d76e6be86460b422d571224d4ca5a17147"
+    },
+    "docs/evidence/replay-authority/stage-p/REPORT.md": {
+      "bytes": 3844,
+      "sha256": "d6eda766d91bd023fa7be0d655e8246b5351e803b1f508193bc5a009593365db"
+    },
+    "docs/evidence/replay-authority/stage-p/REVIEW-APPROVED.md": {
+      "bytes": 1173,
+      "sha256": "5964f17961ba0b2b029aa832632b9babd1acc07f4faa72e6816c75ab882fd2a5"
+    },
+    "docs/evidence/replay-authority/stage-p/REVIEW-REJECTED.md": {
+      "bytes": 1093,
+      "sha256": "8f3b3e72ac5072c5e84f48dcc7d61b5678264e6393bf24c18e29ef65c184bb8f"
+    },
+    "docs/evidence/replay-authority/stage-p/REVIEW-REQUEST.md": {
+      "bytes": 4080,
+      "sha256": "c33052b15cf0841a11225ecca3e1ae5f41c76ff9a014ef6add1ec4e6ec1502fa"
+    },
+    "research/replay_successor_installer_contract.py": {
+      "bytes": 16355,
+      "sha256": "9e4d9bdf393cd219bfcf7ccc5d01917089cd67d51be40a0a571d03dcfcc90762"
+    },
+    "scripts/show-replay-successor-installer-contract": {
+      "bytes": 934,
+      "sha256": "dfa14c0e15869b8e2a508aad5d5b5ffea04719869fe4a586f37fe95a00029ea7"
+    },
+    "tests/unit_replay_successor_installer_contract.py": {
+      "bytes": 19505,
+      "sha256": "598eea1811e2791eab4dcf6045074d6110482653586774165b574dc48ba8480b"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "2051e7dd5378db6ed4c2057dd50aa3287bfe3525",
+  "basis": {
+    "predecessor_active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+    "predecessor_database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+    "predecessor_recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+    "stage_n_package_sha256": "e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48",
+    "stage_o_package_sha256": "283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b"
+  },
+  "created_at": "2026-10-28T23:20:00Z",
+  "independent_review": "STAGE_P_NARROW_REWORK_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage P design-only v4 installer/authorization contract WIP package",
+  "operator_authorization": "Approved Stage O commit then begin Stage P design-only contract",
+  "outcome": {
+    "allowed_mutations": [],
+    "authorization_authenticated": false,
+    "contract_valid": true,
+    "design_only": true,
+    "installation_ready": false,
+    "protected_paths_accessed": [],
+    "source_or_receipt_hashes_issued": false
+  },
+  "review_sequence": {
+    "initial": "STAGE_P_INSTALLER_CONTRACT_REVIEW: REJECTED",
+    "narrow": "STAGE_P_NARROW_REWORK_REVIEW: APPROVED",
+    "rework": "integer-strict schema versions and boolean/float regressions"
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself"
+}

@@ -1,0 +1,213 @@
+{
+  "authorization_requirement": {
+    "action": "install-fresh-v4-replay-successor-poc",
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "basis": {
+      "predecessor_active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "predecessor_database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "predecessor_recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+      "stage_n_package_sha256": "e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48",
+      "stage_o_package_sha256": "283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b",
+      "story_head": "2051e7dd5378db6ed4c2057dd50aa3287bfe3525"
+    },
+    "budget_amendment_authorized": false,
+    "budget_amendment_required": true,
+    "distinct_receipts_required": [
+      "installer_sha256",
+      "plan_sha256",
+      "review_sha256"
+    ],
+    "execution_authorized": false,
+    "external_authorization_sha256_required": true,
+    "must_preserve_predecessor": true,
+    "principal": "operator-via-exclusive-root-parent",
+    "protected_installation_requested": true,
+    "reconciliation_authorized": false,
+    "record_type": "replay-successor-v4-authorization-requirement-v1",
+    "replay_authorized": false,
+    "schema_version": 1
+  },
+  "contract": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "authorization": {
+      "action": "install-fresh-v4-replay-successor-poc",
+      "admission": "blocked",
+      "automatic_merge": false,
+      "budget_amendment_authorized": false,
+      "budget_amendment_required": true,
+      "execution_authorized": false,
+      "plan_sha256": null,
+      "principal": "operator-via-exclusive-root-parent",
+      "promotion": "disabled",
+      "push": false,
+      "reconciliation_authorized": false,
+      "record_sha256_policy": "external-exact-hash-required-at-install",
+      "replay_authorized": false,
+      "review_sha256": null
+    },
+    "basis": {
+      "predecessor_active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "predecessor_database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "predecessor_recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+      "stage_n_package_sha256": "e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48",
+      "stage_o_package_sha256": "283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b",
+      "story_head": "2051e7dd5378db6ed4c2057dd50aa3287bfe3525"
+    },
+    "decision": "candidate-installer-contract-not-issued",
+    "gates": {
+      "exact_plan_issued": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "independent_security_review": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "installation": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "installer_source_built": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "operator_authorization_issued": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "postflight": {
+        "evidence": [],
+        "status": "not-run"
+      },
+      "protected_staging": {
+        "evidence": [],
+        "status": "not-run"
+      }
+    },
+    "installer": {
+      "authorization_sha256": null,
+      "entrypoint": "/Library/GRRR/bootstrap/install-replay-successor-v4",
+      "exclusive_parent": true,
+      "failure_mode": "refuse-no-retry-preserve-partial-evidence",
+      "install_once": true,
+      "interpreter_sha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26",
+      "issuance_status": "unissued",
+      "plan_sha256": null,
+      "predecessor_mutations": [],
+      "predecessor_read_only": true,
+      "protected_access": "design-only-no-access",
+      "review_sha256": null,
+      "rollback_scope": "new-successor-namespace-only",
+      "source_artifacts": {
+        "atomic-publisher": "/Library/GRRR/bootstrap/replay-successor-v4-atomic_publisher.py",
+        "failure-preservation": "/Library/GRRR/bootstrap/replay-successor-v4-failure_preservation.py",
+        "installer-entrypoint": "/Library/GRRR/bootstrap/install-replay-successor-v4",
+        "postflight-verifier": "/Library/GRRR/bootstrap/replay-successor-v4-postflight_verifier.py",
+        "protected-preflight": "/Library/GRRR/bootstrap/replay-successor-v4-protected_preflight.py",
+        "stage-n-contract": "/Library/GRRR/bootstrap/replay-successor-v4-stage_n_contract.py",
+        "stage-o-runtime-adapter": "/Library/GRRR/bootstrap/replay-successor-v4-stage_o_runtime_adapter.py",
+        "v4-store-schema": "/Library/GRRR/bootstrap/replay-successor-v4-v4_store_schema.py"
+      },
+      "source_roles": [
+        "installer-entrypoint",
+        "v4-store-schema",
+        "stage-n-contract",
+        "stage-o-runtime-adapter",
+        "protected-preflight",
+        "atomic-publisher",
+        "postflight-verifier",
+        "failure-preservation"
+      ],
+      "source_sha256": {
+        "atomic-publisher": null,
+        "failure-preservation": null,
+        "installer-entrypoint": null,
+        "postflight-verifier": null,
+        "protected-preflight": null,
+        "stage-n-contract": null,
+        "stage-o-runtime-adapter": null,
+        "v4-store-schema": null
+      },
+      "target_directory": "/Library/GRRR/accounting-poc2/unissued-independent-replay-v4",
+      "target_store_id": "unissued-independent-replay-v4"
+    },
+    "outcome": {
+      "allowed_mutations": [],
+      "authorization_issued": false,
+      "contract_valid": true,
+      "design_only": true,
+      "installation_ready": false,
+      "installer_issued": false,
+      "protected_access_performed": false,
+      "spendable": null
+    },
+    "record_type": "replay-successor-v4-installer-contract-v1",
+    "schema_version": 1
+  },
+  "summary": {
+    "authority": {
+      "admission": false,
+      "merge": false,
+      "promotion": false,
+      "protected_access": false,
+      "push": false,
+      "reconcile": false,
+      "replay": false,
+      "write": false
+    },
+    "basis": {
+      "predecessor_active_sha256": "9c5194dd12ff7601917fcccc293c459db09a41da8bad9fa9983cbef618d453f8",
+      "predecessor_database_sha256": "9c6ff2561a364ed982cd5477dd4b200c995da6910c9a17aa3d3c411a962d64f3",
+      "predecessor_recovery_sha256": "6d3d5b092c0ee8273a657c83823d8465b215f2b1b66ec627dfde2d96b21fe587",
+      "stage_n_package_sha256": "e349cc8349f62072af94f8b82ee1aafa1648db22270a77b9dba278469d305a48",
+      "stage_o_package_sha256": "283918e2c1df4b9b25b79a26be90de9e5d20ea8c195b058a5b827c474872553b",
+      "story_head": "2051e7dd5378db6ed4c2057dd50aa3287bfe3525"
+    },
+    "budget_amendment_authorized": false,
+    "budget_amendment_required": true,
+    "decision": "candidate-installer-contract-not-issued",
+    "execution_authorized": false,
+    "future_action": "install-fresh-v4-replay-successor-poc",
+    "future_principal": "operator-via-exclusive-root-parent",
+    "implementation_status": "design-only",
+    "interpreter_sha256": "5c5950c62eee5fd227a67e4bdfcde81c9add59799bba0949635f3d5ba9661c26",
+    "reconciliation_authorized": false,
+    "record_type": "replay-successor-v4-installer-contract-v1",
+    "replay_authorized": false,
+    "schema_version": 1,
+    "source_roles": [
+      "installer-entrypoint",
+      "v4-store-schema",
+      "stage-n-contract",
+      "stage-o-runtime-adapter",
+      "protected-preflight",
+      "atomic-publisher",
+      "postflight-verifier",
+      "failure-preservation"
+    ],
+    "unissued_receipts": [
+      "source_sha256",
+      "plan_sha256",
+      "review_sha256",
+      "authorization_sha256"
+    ]
+  }
+}
