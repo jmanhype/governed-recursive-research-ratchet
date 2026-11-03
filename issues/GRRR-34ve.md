@@ -1,15 +1,15 @@
 ---
 id: GRRR-34ve
 title: "Admit one human-approved contract that rejects recurrence"
-status: in_progress
+status: open
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:12:52Z
-content_hash: "sha256:e64b29fbd801166d384a70175346a0914897ef5c44ed2ecff7a7dd0fc4dc4095"
+updated_at: 2026-11-03T17:13:45Z
+content_hash: "sha256:11e741330fb7d4896ec02587a6d606997201cba4e08ee830c74d8b08377dd299"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
@@ -120,6 +120,7 @@ status: new
 - 2026-11-03T17:11:10Z status: open -> in_progress
 - 2026-11-03T17:11:10Z auto-follows: linked to predecessor GRRR-z3w9
 - 2026-11-03T17:11:10Z claimed by dev-GRRR-34ve
+- 2026-11-03T17:13:45Z status: in_progress -> open
 
 ## Links
 - Parent: [[GRRR-2t3h]]
