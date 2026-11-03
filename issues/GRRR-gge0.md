@@ -8,10 +8,10 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T23:07:30Z
-content_hash: "sha256:80ae5ffbc53cc996948ef04526bd6a7c5f56fa4f4a5e45e3f11caf8b4662ec5f"
+updated_at: 2026-11-03T23:07:31Z
+content_hash: "sha256:60ecbf149b2e7a77b064945e0fbd2864dd1c7820d3f5b7c6a988798e1ce1d7e1"
 assignee: dev-GRRR-gge0
-follows: [GRRR-fmvp]
+follows: [GRRR-fmvp, GRRR-34ve]
 ---
 
 ## Description
@@ -265,10 +265,12 @@ status: in_progress
 - 2026-11-03T22:07:57Z status: open -> in_progress
 - 2026-11-03T22:07:57Z auto-follows: linked to predecessor GRRR-fmvp
 - 2026-11-03T22:07:57Z claimed by dev-GRRR-gge0
+- 2026-11-03T23:07:31Z status: in_progress -> in_progress
+- 2026-11-03T23:07:31Z auto-follows: linked to predecessor GRRR-34ve
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Follows: [[GRRR-fmvp]]
+- Follows: [[GRRR-fmvp]], [[GRRR-34ve]]
 
 ## Comments
 
