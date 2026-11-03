@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T21:32:27Z
-content_hash: "sha256:7360c17225cfd42dcb22aa02a6ab04d580c045f1029fe30eb8adf1c78cab96bd"
+updated_at: 2026-11-03T21:36:50Z
+content_hash: "sha256:46163e3308b4bee7729ee47ff2776f851d2aa3d36cc1b527091bd9c53a346fc8"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 assignee: dev-GRRR-6sso
@@ -478,3 +478,10 @@ A prepare-only preflight was implemented after the assigned worker stalled witho
 ## 2026-11-03 Execution Preflight Rework — Ready for Re-review
 
 Reviewer rejected output-boundary handling. Rework now rejects lexical traversal before normalization, requires an absolute real-directory ancestor path, traverses ancestors with O_NOFOLLOW dir_fd operations and inode checks, and writes the request relative to the held parent descriptor. Added regressions for lexical dot-dot and non-immediate symlinked ancestors. The pilot semantic test now bypasses only the pinned report hash wrapper while preserving modified semantic JSON, so count/usage checks execute. Focused tests passed 9/9 on both interpreters; pvg verify PASS; gates PASS with one non-failing complexity warning; diff check PASS. Still no execution/network/secret/protected access.
+
+### 2026-11-03T21:36:50Z speed
+## 2026-11-03 Execution Preflight Re-review — APPROVED; Request Prepared
+
+Fresh reviewer verdict: EXECUTION_PREFLIGHT_REREVIEW: APPROVED. It verified exact WIP hashes, pre-filesystem lexical/protected refusals, safe O_NOFOLLOW dirfd ancestor traversal, held-descriptor writes, meaningful path/pilot tests, exact identities/arithmetic, and prepare-only output with no secret/network/selector execution.
+
+Parent generated operator-owned request /Users/speed/.codex/grrr-authorizations/three-arm-execution-request-20261103.json using the reviewed CLI. Request SHA and execution flags are recorded in tracker evidence. It grants no execution authority. Implementation remains uncommitted pending explicit commit authorization.
