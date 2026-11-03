@@ -1,15 +1,17 @@
 ---
 id: GRRR-gge0
 title: "Run one governed adaptation cycle"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T22:07:39Z
-content_hash: "sha256:b65bf18929336e85c4d4841842735e5c16ae081930ddefbd06be03a6e3c3aba2"
+updated_at: 2026-11-03T22:07:57Z
+content_hash: "sha256:cb3548a20748c61e1f1b8da88fc263460d7364833351e958d0d129b5d90b54a7"
+assignee: dev-GRRR-gge0
+follows: [GRRR-fmvp]
 ---
 
 ## Description
@@ -120,9 +122,12 @@ status: new
 
 
 ## History
-
+- 2026-11-03T22:07:57Z status: open -> in_progress
+- 2026-11-03T22:07:57Z auto-follows: linked to predecessor GRRR-fmvp
+- 2026-11-03T22:07:57Z claimed by dev-GRRR-gge0
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Follows: [[GRRR-fmvp]]
 
 ## Comments
