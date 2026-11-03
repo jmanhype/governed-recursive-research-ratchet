@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T23:06:11Z
-content_hash: "sha256:acdd7c4d3c22f5d654155ba273c4a07c81dc52d56c6a788e4b2d9554b1b87c60"
+updated_at: 2026-11-03T23:06:44Z
+content_hash: "sha256:181ce6d5b4d171498de11a43bcba0a6f13706692a08ab6252d12a967ae62f42c"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -119,6 +119,61 @@ status: new
 
 
 ## Notes
+
+## Implementation Evidence
+
+Summary: First governed offline adaptation cycle completed with an honest no-change result. Reverse lexical scored 8/8 but was rejected for D/C local-ID leakage; fixed random seeds 45/46/47 scored [4,6,4], mean 14/3, below benchmark 6.0. Approved default retained; every authority flag false.
+
+Commit SHA: cf3eb55422ba18898541318c138cd82543419d12.
+
+Changed files and SHA-256:
+- research/harness_adaptation.py — 31829168251d51fcede72e795eda1522192cc5f6496ed578dc769b664cf9308a
+- scripts/run-harness-adaptation-cycle — 840cd2157ff5a094ea9f6cc1b6c3d92c8b82d195a9b81fde77f8d030fa3bbf20
+- reports/adaptation-cycle-1.json — 550944a2b81b1e52cf4c9aaf410b5e43bcb5758aa0eb1bfa9ba4a63094d352ba
+- reports/adaptation-cycle-1.md — 8e3c2ec84f2e424b1918dca21754f40a4b5ca6ea2c471cea9caf1017ca09678d
+- tests/unit_harness_adaptation.py — f643c75f6799435e0919a5c3d865d30610625b095280b31cab518356cb095c23
+
+Immutable bindings: plan 97ec4b8ccc34b3fc4da4fcfbef33b49bbb3f4f1c445cfecdb752715ddf034be1; result b7bb2ec8717e8921e16f9a3e312f6ad46839a125634dc6e3d144499cc841fefb; corpus dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529; truth 7cf9f99f5836c4e3e147df2866d54480a706f2665a732fbf61bd1a0d0b4c52ea.
+
+## CI/Test Results
+
+Commands run:
+- /usr/bin/python3 -I -B -m unittest discover -s tests -p unit_harness_adaptation.py -v — 15/15 OK
+- /opt/homebrew/bin/python3 -I -B -m unittest discover -s tests -p unit_harness_adaptation.py -v — 15/15 OK
+- Worker full no-guest inventory on Python 3.14 and 3.12 — 807/807 OK each
+- pvg verify selected files — PASS
+- pvg gates selected files — PASS
+- git diff --check and git diff --cached --check — PASS
+
+Independent review: initial GRRR_ADAPTATION_REVIEW rejected unsafe concurrent cleanup; rework removed deletion and added races; GRRR_ADAPTATION_REREVIEW: APPROVED.
+
+Diff-budget disclosure: 5 files, 920 inserted lines, over approximate 500-LOC budget due mandatory safe traversal, concurrency, leakage, and adversarial coverage; reviewer considered structure justified.
+
+## AC Verification
+
+1. PASS — exact immutable bindings fail closed.
+2. PASS — exactly reverse lexical and fixed random 45/46/47; no search/model call.
+3. PASS — reverse lexical 8/8 measured and rejected for leakage.
+4. PASS — random block [4,6,4], mean 14/3; did not beat 6.0.
+5. PASS — no-change compose; approved default and false authorities retained.
+6. PASS — deterministic sanitized exclusive JSON/Markdown outputs.
+7. PASS — tamper, malformed, leakage, protected/traversal/symlink, duplicate, and concurrent-race paths fail closed.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit cf3eb55422ba18898541318c138cd82543419d12; focused 15/15 both interpreters; worker full 807/807 both; independent re-review approved.
+
+### proof
+- [x] AC #1: immutable input binding and drift refusal.
+- [x] AC #2: exactly two fixed offline candidates.
+- [x] AC #3: leakage-rejecting reverse-lexical probe.
+- [x] AC #4: honest fixed-block comparison.
+- [x] AC #5: no-change compose and false authority flags.
+- [x] AC #6: deterministic sanitized outputs.
+- [x] AC #7: adversarial fail-closed coverage.
+
 ## Implementation Evidence (READY_FOR_REVIEW; intentionally not delivered)
 
 PROOF:
