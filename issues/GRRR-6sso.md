@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T21:07:03Z
-content_hash: "sha256:f2a20986c67d15c92a70ea8ce76e4c29cae6b0df1025e6d57f8910716625174c"
+content_hash: "sha256:9ac06ce470c9328ddae95143e5ecf959a7d31a4b477de6ee455aee25bb6af4cd"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 assignee: dev-GRRR-6sso
@@ -441,3 +441,8 @@ This is the second rejected review of the same design brief. Per escalation poli
 ## 2026-11-03 Design-Hold Claim Release
 
 Claim released after the second rejected three-arm design review. The story worktree and uncommitted proposed-design files remain preserved. No execution occurred.
+
+### 2026-11-03T21:07:03Z speed
+## 2026-11-03 Operator-Authorized Hash/Bootstrap Rework — Started
+
+Live state confirmed the two review findings: proposed truth hash differs from the artifact/manifest by one nibble, and bootstrap sampling does not pin RNG lifetime/API/order. Story reclaimed for design-only rework. No execution, network, secret use, protected access, replay, admission, promotion, production mutation, commit, merge, or push.
