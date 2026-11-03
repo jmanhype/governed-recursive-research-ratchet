@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T18:05:30Z
-content_hash: "sha256:da6b8316a291a7c4d3d82887a1c0110cdaf0f2dc75aa0b2c978afced249740ed"
+updated_at: 2026-11-03T18:07:00Z
+content_hash: "sha256:70000373efd067149e616e23a84c11cb9d619202fc4295a90bb9d1f8d6be44c2"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -234,3 +234,17 @@ Boundary: opaque Jev references + allowlisted category only; semantic D/C IDs, k
 Parent independently reran focused suite 24/24 on system and Homebrew Python; pvg verify PASS; pvg gates PASS; git diff check PASS; evaluation-plan remains unchanged/not-approved. Worker no-guest suites excluding capacity-dependent conservative-genesis passed 735/735; full suite was honestly capacity-blocked at the unchanged 15.35 GiB floor.
 
 Capstone remains BLOCKED, not delivered: AC1 full journey, AC2 full-system corpus, AC3 authorized real selector measurement/Jev, AC4 full stop/recovery/race journey, AC5 full adversarial matrix, AC6 accessibility walkthrough, and AC7 full immutable packet remain unmet. Independent Jev-boundary security review is pending.
+
+### 2026-11-03T18:07:00Z speed
+## 2026-11-03 Jev Boundary Security Review — REJECTED; Rework Dispatched
+
+Fresh independent Astra review verdict: JEV_BOUNDARY_REVIEW: REJECTED.
+
+Findings:
+1. High: default urlopen redirect handling can forward the Authorization credential from validated HTTPS to a redirected HTTP origin.
+2. High: selector manifest/public/catalog binding was declarative; a mocked empty manifest plus invented GRRR-VC-Z999 could reach available selection.
+3. Medium: transport-originated JevError messages escaped unsanitized.
+
+Reviewer independently matched all four WIP hashes and reran focused 24/24 offline. Probes used fake credentials/injected data and no network. No protected access or mutations.
+
+Parent measured free space 26,786,766,848 bytes: both the 15.35GB and 16.106GB floors now pass. Fresh GLM rework agent developer_grrr_6sso_jev_rework_v2 is assigned to fix only the three findings with regressions; no measurement/capstone authority granted.
