@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:13:55Z
-content_hash: "sha256:3843c97bc121d1f0c17069c6dab36acc810c3252e7b80219cacbdaaf89d444df"
+content_hash: "sha256:d4e1cf34c9ea3d3dddb65ff90746711a09df5c9812d96da515cb7c856c67ba27"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
@@ -138,3 +138,16 @@ status: new
 - Follows: [[GRRR-bnkf]], [[GRRR-z3w9]]
 
 ## Comments
+
+### 2026-11-03T17:13:55Z speed
+## 2026-11-03 Selector Comparison Started — Operator Approved
+
+Operator approved continuing into adaptation loop after contract admission.
+
+### Approach
+- Build three selector arms: deterministic, random, Jev-guided
+- Use existing frozen corpus (32 scenarios, v2.2)
+- Jev arm: no external API provisioned → mark unavailable per AC #4
+- Deterministic and random baselines run against corpus
+- Honest reporting: if Jev unavailable, comparison is incomplete
+- No fabrication of comparative results
