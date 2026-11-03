@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
 updated_at: 2026-11-03T23:07:31Z
-content_hash: "sha256:60ecbf149b2e7a77b064945e0fbd2864dd1c7820d3f5b7c6a988798e1ce1d7e1"
+content_hash: "sha256:26931fc5dfe84a5f545bf7d48b74e22d7e1f211f154f82528604a926934baed9"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp, GRRR-34ve]
 ---
@@ -123,6 +123,17 @@ status: new
 ### CI/Test Results
 
 Focused adaptation suite passed 15/15 under both required interpreters. Worker full no-guest inventory passed 807/807 under Python 3.14 and Python 3.12. `pvg verify`, `pvg gates`, `git diff --check`, and `git diff --cached --check` passed. Canonical CLI generation was deterministic and duplicate output failed closed. Independent security rereview returned GRRR_ADAPTATION_REREVIEW: APPROVED.
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-03.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
 
 ## nd_contract
 status: delivered
