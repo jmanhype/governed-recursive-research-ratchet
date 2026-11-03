@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T19:12:56Z
-content_hash: "sha256:8da072f199f3bdc2c6d4e887de0818c3b2cfabcfb0684a072ab4eb2c0ac5551c"
+updated_at: 2026-11-03T19:13:27Z
+content_hash: "sha256:b2e058ec17834c228ae75de5fbb4ca103961a3c2a69c5fc8d6b52fa41c118f19"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -315,3 +315,8 @@ Operator approved continuing/getting Jev working. The independently hardened bou
   - docs/evidence/milestone-packet/REWORK-GRRR-6sso.md f754aac7a483642397c4e1795ea975f15a19f6bcffc97f6214f4c75438c7268c
 
 Worktree clean after commit. No merge or push. Real selector measurement has not started and remains a separately recorded authorization/cost boundary.
+
+### 2026-11-03T19:13:27Z speed
+## 2026-11-03 Real Selector Measurement Runner — Repository-Only Dispatch
+
+Operator approved getting Jev working. The hardened boundary is committed at 1052a1b. A fresh GLM agent is now implementing a fail-closed one-shot measurement runner using injected transport only. It must require a separate exact authorization record and real-run opt-in, cap calls at 32, forbid retries, preserve partial JSONL evidence, sum token usage without fabricating monetary cost, and reject credential/semantic leakage. This dispatch does not start measurement or access the real secret/network.
