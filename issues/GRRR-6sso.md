@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T20:23:37Z
-content_hash: "sha256:40688defd35155c2c045455755c6daf657d10f1f4f343a497f03d86d4f995481"
+content_hash: "sha256:9738d800b780088596a8c4ae72b08b9b6b218ca680ce56f2da54c0e7b4046c48"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 ---
@@ -393,3 +393,8 @@ Reviewer independently matched events/report/RUN-RECORD hashes; verified complet
 - Story worktree is clean after the evidence commit.
 - The independently reviewed real run completed 32/32 calls with zero retries and is preserved under docs/evidence/jev-selector-measurement/run-20261103T201719Z/.
 - No merge or push. The capstone remains in progress because the action-authorized capability run is not the pre-registered three-arm AC3 evaluation.
+
+### 2026-11-03T20:23:37Z speed
+## 2026-11-03 Claim Release After Completed Jev Capability Work
+
+The loop recover command preserved the story worktree as foreign because it remained actively claimed. The claim was released explicitly after commits 1052a1b, 4b4ae82, and aef59b5 and after the real-run evidence review. The story remains open because capstone ACs are not complete; no PM acceptance or merge is requested from this capability slice.
