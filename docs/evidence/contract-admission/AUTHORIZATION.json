@@ -1,0 +1,9 @@
+{
+  "authorization_type": "permanent-contract-admission",
+  "authorized_at": "2026-11-03T17:00:00Z",
+  "authorized_by": "operator-speed",
+  "consumed": false,
+  "contract_sha256": "ab4339807b8fae5b96713131ef524a409b475bb7c158a4318fce5de80b668aa4",
+  "record_type": "grrr-contract-admission-authorization-v1",
+  "schema_version": 1
+}

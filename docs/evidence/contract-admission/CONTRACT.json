@@ -1,0 +1,28 @@
+{
+  "challenge": "GRRR-VC-D011",
+  "contract_sha256": "ab4339807b8fae5b96713131ef524a409b475bb7c158a4318fce5de80b668aa4",
+  "expected_behavior": {
+    "defect_behavior": "Display text not captured when parsing wikilinks",
+    "expected_display": "PM",
+    "expected_title": "Sr PM Agent",
+    "input": "[[Sr PM Agent|PM]]"
+  },
+  "record_type": "grrr-counterexample-contract-v1",
+  "replay_binding": {
+    "export_sha256": "ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689",
+    "finding": "Verified defect",
+    "verified": true
+  },
+  "schema_version": 1,
+  "source_binding": {
+    "archive_sha256": "e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e",
+    "commit": "129e0b3f15a3bd6af949ee47d76f6855c582ab73"
+  },
+  "specification": {
+    "case": "TestParseWikilinks/link with display text",
+    "expected": "Display text must be captured from [[Title|Display]] syntax",
+    "member": "wikilinks_test.go",
+    "source_archive_sha256": "e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e",
+    "source_commit": "129e0b3f15a3bd6af949ee47d76f6855c582ab73"
+  }
+}

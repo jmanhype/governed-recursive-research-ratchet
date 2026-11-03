@@ -1,0 +1,9 @@
+{
+  "admitted_at": "2026-11-03T17:12:39Z",
+  "authorization_sha256": "9e3c7516a90af934377fcc90cc888b2c56b8a58dd6bd5f2d6473e8c31002696f",
+  "contract_sha256": "ab4339807b8fae5b96713131ef524a409b475bb7c158a4318fce5de80b668aa4",
+  "outcome": "admitted",
+  "record_type": "grrr-contract-admission-v1",
+  "registry_version": 1,
+  "schema_version": 1
+}
