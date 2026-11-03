@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T22:08:38Z
-content_hash: "sha256:b5a6ae8bb431874c1247f934c3d46e5e73ec82f3bd3293f1676a197eff770de1"
+updated_at: 2026-11-03T22:20:40Z
+content_hash: "sha256:5bf61c2530b708361cb542c57dfef0730837ddcf864711e3247c1bd95efbda1d"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -119,7 +119,71 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (READY_FOR_REVIEW; intentionally not delivered)
 
+PROOF:
+
+### Scope and result
+- Worktree: `.claude/worktrees/dev-GRRR-gge0` on `story/GRRR-gge0`, based on `5b50e29272819da205fc09e051f82c2639a7a197`.
+- Completed exactly one offline deterministic Propose-Probe-Compose cycle. Compose decision: `no-change`; retained `retain-deterministic-lexical-baseline`.
+- Reverse lexical selected 8 D IDs, measured 8/8, and was rejected by the D/C local-ID-prefix leakage gate.
+- Random seeds 45/46/47 were evaluated as one full block: defect counts 4/6/4, mean 14/3 = 4.666667, critical mean 10/3, clean mean 10/3, unique defects 12; did not exceed benchmark 6.0.
+- No network, Jev call, secret read, `/Library/GRRR` access, VM, replay, admission, promotion, production mutation, source commit, merge, or push was performed.
+
+### Files and SHA-256
+- `research/harness_adaptation.py` — `f090ea195bfe4c540e5e1e6b4192afd4765ca1a175ee974120c9332037b05a92`
+- `scripts/run-harness-adaptation-cycle` — `27c1b80ad3dc1aa1b1a0fe5e5c42ab24c1796964b726e36372f67c70e8f0e343`
+- `reports/adaptation-cycle-1.json` — `18ce890a47cc057445600b6527c94c34d0fc58b0c41b19643bd6bb2da29b0a8c`
+- `reports/adaptation-cycle-1.md` — `530974387a25019a22667bae49c4506ad06758ae3d79d4e58924b1b7bb1921b9`
+- `tests/unit_harness_adaptation.py` — `0c272b64ed61184789b27cb9cb5a4e8c77f6e90667659c4ca96fb805013926ea`
+
+### Required CLI
+- `scripts/run-harness-adaptation-cycle --plan corpus/evaluation-plan-v2-proposed.json --result docs/evidence/jev-selector-measurement/three-arm-result-20261103T214701Z/report.json --corpus-root corpus --output reports/adaptation-cycle-1.json --summary-output reports/adaptation-cycle-1.md`
+- Exit 0; stdout: `{"compose":"no-change",...,"status":"complete"}`. Fresh-output rerun was byte-identical; a duplicate invocation exited 2 without overwriting.
+
+### Test and gate evidence
+- `/usr/bin/python3 -m py_compile research/harness_adaptation.py scripts/run-harness-adaptation-cycle tests/unit_harness_adaptation.py` — PASS.
+- `/opt/homebrew/bin/python3 -m py_compile research/harness_adaptation.py scripts/run-harness-adaptation-cycle tests/unit_harness_adaptation.py` — PASS.
+- `/usr/bin/python3 -m unittest -v tests.unit_harness_adaptation tests.unit_selector_comparison tests.unit_evaluation_plan_v2 tests.unit_jev_three_arm_analysis` — 55/55 PASS, 0 failures/errors/skips.
+- `/opt/homebrew/bin/python3 -m unittest -v tests.unit_harness_adaptation tests.unit_selector_comparison tests.unit_evaluation_plan_v2 tests.unit_jev_three_arm_analysis` — 55/55 PASS, 0 failures/errors/skips.
+- `pvg verify research/harness_adaptation.py scripts/run-harness-adaptation-cycle reports/adaptation-cycle-1.json reports/adaptation-cycle-1.md tests/unit_harness_adaptation.py --include-tests --format=text` — `VERIFY: PASSED (2 files scanned, 0 issues)`.
+- `pvg gates research/harness_adaptation.py scripts/run-harness-adaptation-cycle reports/adaptation-cycle-1.json reports/adaptation-cycle-1.md tests/unit_harness_adaptation.py --format text` — `GATES: PASS (0 warn, 0 skipped)`.
+- `git diff --check` — PASS (after intent-to-add registration for the five new paths).
+- Sanitizer assertion script over both final outputs — PASS: no `expected_behavior`, raw provider response text, or `/Library/GRRR` path.
+
+### AC Verification
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Exact immutable input binding and fail-closed schema/hash drift | PASS | `run_adaptation_cycle`; exact plan/result/truth/manifest/public hashes in report; real temp-copy tamper tests |
+| 2. Exactly two fixed candidates, no search/holdout/model/credential input | PASS | reverse lexical plus fixed seeds 45/46/47; report provenance/controls; `tests/unit_harness_adaptation.py` |
+| 3. Reverse lexical 8/8 but leakage rejection decisive | PASS | report proposal 1; reverse test |
+| 4. Full random-block metrics vs benchmark 6.0 | PASS | report proposal 2; block test |
+| 5. Pre-registered no-change compose and all authority false | PASS | report compose/authority/controls; no-compose test |
+| 6. Deterministic exclusive JSON plus sanitized Markdown | PASS | real CLI integration test and final byte hashes |
+| 7. Fail-closed tamper/malformed/leakage/unsafe/duplicate behavior | PASS | real-input tests; no skips or trusted-evaluator mocks |
+
+LEARNINGS:
+- The corpus canonical freeze digest alone would not reject semantically unchanged manifest whitespace drift; exact manifest/public byte hashes were also pinned and tested.
+- Separating immutable binding from fixed candidate generation made leakage rejection auditable without exposing protected expected behavior.
+- The honest no-change outcome is correctly representable as a complete cycle rather than a failed run.
+
+### Budget disclosure
+- Current diff: 5 files, 646 added lines versus the stated approximate 4 files / under-500 LOC budget. The overage is driven by mandatory fail-closed real-input cases and the separately required Markdown summary; no AC was waived.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Final source/report hashes and all required focused tests/gates recorded above; work remains uncommitted and not delivered pending independent PM review.
+
+### proof
+- [x] AC #1: Exact approved-plan/result/frozen-corpus/truth bytes are SHA-256-bound and drift fails closed.
+- [x] AC #2: Exactly reverse-lexical and fixed random seeds 45/46/47 are generated without search or forbidden inputs.
+- [x] AC #3: Reverse lexical records 8/8 and remains rejected for D/C local-ID-prefix leakage.
+- [x] AC #4: Seeds 45/46/47 are evaluated as a full block with all required metrics against 6.0.
+- [x] AC #5: No candidate composed a change; default retained and every authority flag is false.
+- [x] AC #6: Exclusive deterministic JSON and sanitized Markdown outputs were generated and tested.
+- [x] AC #7: Real-input drift, malformed selection, leakage, unsafe output, and duplicate-output cases fail closed without skips.
 
 ## History
 - 2026-11-03T22:07:57Z status: open -> in_progress
