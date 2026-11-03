@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T21:12:00Z
-content_hash: "sha256:b6dadf5931a489660c51b338bd661f853a5ef739ab2f53497d10d00ddf7753af"
+updated_at: 2026-11-03T21:13:03Z
+content_hash: "sha256:4c274ef731b3effeed23e527b97d2c6392777893cd856b1332c85e4cb33ac26e"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 assignee: dev-GRRR-6sso
@@ -463,3 +463,8 @@ Focused tests passed 12/12 on both interpreters; pvg verify/gates PASS; existing
 Narrow reviewer verdict: HASH_BOOTSTRAP_NARROW_REVIEW: APPROVED. Operator approved the corrected design. Exact plan/validator/tests/narrative and a separate design-only approval record were committed to story/GRRR-6sso.
 
 Design approval does not authorize execution; the reviewed JSON retains not-approved/measurement_started=false/execution_authorized=false pending separate execution authorization and preflight. No selector/network/secret/protected execution occurred; no merge or push.
+
+### 2026-11-03T21:13:03Z speed
+## 2026-11-03 Execution Preflight Dispatch — No Execution
+
+After commit 9e107609db76022ed6d8e138cbbece2e41d634ee, a fresh GLM agent is preparing a repository-only execution checklist/preflight. It must validate exact design and approval hashes, excluded pilot evidence, protected-truth binding, and all call/token arithmetic, then emit a sanitized prepare-only authorization request. It is explicitly denied secret access/probing, network/Jev execution, selector execution, protected paths, replay, admission, promotion, production mutation, commit, merge, and push.
