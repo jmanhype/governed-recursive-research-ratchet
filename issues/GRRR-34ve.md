@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:11:10Z
-content_hash: "sha256:34f800660976e8b01dd2e7a68db3fa77b5700898b84b56be714a7815159a2ae9"
+content_hash: "sha256:156196f4d742f65377cb44205b8f2bbe0aa1bd8055a36778ba72b1ce67e44bd2"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
@@ -128,3 +128,21 @@ status: new
 - Follows: [[GRRR-z3w9]]
 
 ## Comments
+
+### 2026-11-03T17:11:10Z speed
+## 2026-11-03 Operator-Authorized Contract Admission — Started
+
+Operator approved: "Let's do that, and then let's start the adaptation loop. I approve all of that."
+
+### Scope
+- Admit D011 (wikilink display text) as permanent regression contract
+- Verify recurrence rejection
+- Then begin adaptation loop (Karpathy autoresearch + Harness²)
+
+### Approach
+- Use verified replay evidence from GRRR-z3w9 (export-ca47bda9)
+- Create immutable contract object
+- Implement authorization validation
+- Implement atomic admission with crash recovery
+- Demonstrate recurrence rejection
+- All under existing governance gates
