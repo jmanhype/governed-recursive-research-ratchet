@@ -1,0 +1,137 @@
+{
+  "artifacts": {
+    "docs/evidence/replay-authority/stage-r/ABSENT-LEAF-REVIEW-APPROVED.md": {
+      "bytes": 1393,
+      "sha256": "e84d5abc30aea4d1e7885f5ebe8df3217d7c35d206b0fa3c5d5b95b986f1cf61"
+    },
+    "docs/evidence/replay-authority/stage-r/ABSENT-LEAF-REVIEW-REQUEST.md": {
+      "bytes": 3364,
+      "sha256": "b3b28537c62905c5b0adc3ae879fe969735696f9c0eaf057068002b00dd81dc9"
+    },
+    "docs/evidence/replay-authority/stage-r/ABSENT-LEAF-REWORK-REPORT.md": {
+      "bytes": 2860,
+      "sha256": "74be68b4eb164100f76dd683f859af2d2f57224200d3ca3762c00f790fd49336"
+    },
+    "docs/evidence/replay-authority/stage-r/FOCUSED-HOMEBREW-3.14.log": {
+      "bytes": 2941,
+      "sha256": "b643cccc6a5dd2734ed0468779c19313ff5c6033d59e76284553ecf13ee54337"
+    },
+    "docs/evidence/replay-authority/stage-r/FOCUSED-MINICONDA-3.12.log": {
+      "bytes": 2941,
+      "sha256": "4f9fa21b6c8760b5e30815798a8f51d289da02861eb37f1a053521ffa68c04e3"
+    },
+    "docs/evidence/replay-authority/stage-r/FULL-HOMEBREW-3.14.log": {
+      "bytes": 715,
+      "sha256": "3e986d1e0febab3cdb779ecdb88dd773e0208e7eff1709528e0b1f08da51cddc"
+    },
+    "docs/evidence/replay-authority/stage-r/FULL-MINICONDA-3.12.log": {
+      "bytes": 715,
+      "sha256": "7d18fcc243432d81ade5b5c1d00f2322f1953dadf53df29646fb57c64d2f70f8"
+    },
+    "docs/evidence/replay-authority/stage-r/NARROW-REVIEW-REJECTED.md": {
+      "bytes": 1238,
+      "sha256": "0a2088e4c8d4e696c1e3f636325abf869b32126032b2531698bebabd9355994c"
+    },
+    "docs/evidence/replay-authority/stage-r/NARROW-REVIEW-REQUEST.md": {
+      "bytes": 3231,
+      "sha256": "5eaf2028819e3c0f0a7e58a43b4acd314860fa1eaaf8e159baaf8382cf5db8f6"
+    },
+    "docs/evidence/replay-authority/stage-r/REPORT.md": {
+      "bytes": 4502,
+      "sha256": "a5fcbd7463d9cc586599082a9c4ef07b84fb933ce2f01b9a86c608ca7f92f950"
+    },
+    "docs/evidence/replay-authority/stage-r/REVIEW-REJECTED.md": {
+      "bytes": 998,
+      "sha256": "671f5acd6759cb0ddda7f7eca73fcdc6eb23f52c0f8de66e89d912494878504e"
+    },
+    "docs/evidence/replay-authority/stage-r/REVIEW-REQUEST.md": {
+      "bytes": 4897,
+      "sha256": "ea748cfccefdff8f2cd206245f484aa9c5c7a981059b390e89829c319269d9b0"
+    },
+    "docs/evidence/replay-authority/stage-r/SOURCE-BUNDLE.json": {
+      "bytes": 4073,
+      "sha256": "31cb9b8ee538ac22553927fe5f8006c47461073578f9d025f3ddb892ed3ca84c"
+    },
+    "docs/evidence/replay-authority/stage-r/source/install-replay-successor-v4": {
+      "bytes": 970,
+      "sha256": "94b37112fc3b3146078b6edd0cf80d5e845f1cc83543344d79400d144d453dbc"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-atomic_publisher.py": {
+      "bytes": 892,
+      "sha256": "c448f4853e6bb9467c6994b64b3f04dfd9ee9c6d0718de69529eb24218e5a719"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-failure_preservation.py": {
+      "bytes": 1263,
+      "sha256": "8fb37a74e96c7fab7f96fed74ad1aea187fc306716ebb024a1cd0059ca9ded47"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-postflight_verifier.py": {
+      "bytes": 2683,
+      "sha256": "f276c0bd84a4fe43d5661672600734120af1332c45c372fc6881a2913491ca46"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-protected_preflight.py": {
+      "bytes": 3067,
+      "sha256": "0e09ccc6f995e24ab983489755df6a14028c154a99b84811b95d6ea95bf0946f"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-stage_n_contract.py": {
+      "bytes": 2267,
+      "sha256": "d2105c6fbab6edd42ad9724e6ff2313d2531c11af14625bfb0cf8a81b9646fb5"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-stage_o_runtime_adapter.py": {
+      "bytes": 1445,
+      "sha256": "f54f051684dd9be4ccf635d3029cb1f099ddb227e8d763efad2c8bf24e3478c4"
+    },
+    "docs/evidence/replay-authority/stage-r/source/replay-successor-v4-v4_store_schema.py": {
+      "bytes": 2443,
+      "sha256": "629c6a70936fb94ea4b4a89b4dc3c94095aa2586194c077e4c06258b2c7ce644"
+    },
+    "research/replay_successor_source_issuance.py": {
+      "bytes": 7789,
+      "sha256": "8a71e1d5020bafb75236d81abdf0bc79a2c236422a6c3c11ed43900fe7d755b4"
+    },
+    "scripts/prepare-replay-successor-v4-source-issuance": {
+      "bytes": 692,
+      "sha256": "d6d7a0bbf594c3fda3570eb149275ee5eafce67b7241fb436d10761c6b822e13"
+    },
+    "tests/unit_replay_successor_source_issuance.py": {
+      "bytes": 14858,
+      "sha256": "e9aac58ccf0d0ad0f2e483cb0335d4eadaa1ffebefc929df17a1adb19f08b759"
+    }
+  },
+  "authority": {
+    "admission": false,
+    "merge": false,
+    "promotion": false,
+    "protected_access": false,
+    "push": false,
+    "reconcile": false,
+    "replay": false,
+    "write": false
+  },
+  "base_commit": "23fdac5fcdc9bcef5147314a8f3c8bcb6d458d3f",
+  "canonical_role_identity": "b6354127a7552b628506c25dc7eee27c8ecb371f56bf565a63dd247b31445084",
+  "created_at": "2026-11-03T16:00:00Z",
+  "independent_review": "STAGE_R_ABSENT_LEAF_REVIEW: APPROVED",
+  "kind": "GRRR-z3w9 Stage R prepared-not-issued v4 source package WIP",
+  "operator_authorization": "Revised absent-leaf preflight rework and fresh differently scoped independent review",
+  "outcome": {
+    "allowed_mutations": [],
+    "eight_distinct_source_roles": true,
+    "issued": false,
+    "prepared": true,
+    "protected_paths_accessed": [],
+    "sandbox_functional_checks": true
+  },
+  "review_sequence": {
+    "initial": "STAGE_R_SOURCE_ISSUANCE_REVIEW: REJECTED",
+    "narrow": "STAGE_R_NARROW_REWORK_REVIEW: REJECTED",
+    "revised_absent_leaf": "STAGE_R_ABSENT_LEAF_REVIEW: APPROVED"
+  },
+  "schema_version": 1,
+  "self_hash_policy": "PACKAGE.json intentionally does not hash itself",
+  "test_summary": {
+    "focused_homebrew_3_14": "16/16 passed",
+    "focused_miniconda_3_12": "16/16 passed",
+    "full_homebrew_3_14": "614/614 passed",
+    "full_miniconda_3_12": "614/614 passed"
+  }
+}
