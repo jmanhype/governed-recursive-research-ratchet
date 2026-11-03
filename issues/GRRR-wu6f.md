@@ -8,13 +8,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T04:04:40Z
-content_hash: "sha256:b0c5354e3296a2ef28aedf40fc7aeda261599d44a896b44e0da5ace7afa5d72a"
+content_hash: "sha256:48e35974c11b65bdae0b07d739d17c58ccbfc6922ad17600b565eae76cbea469"
 labels: [milestone-1, integration, spendability-validator, accepted]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
 closed_at: 2026-10-26T03:53:35Z
 close_reason: "Accepted: strict type-first enum validation closes the malformed-value fail-closed gap while preserving all 28 cases and boundaries"
-led_to: [GRRR-z3w9]
+led_to: [GRRR-z3w9, GRRR-6sso]
 ---
 
 ## Description
@@ -352,7 +352,7 @@ status: in_progress
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Follows: [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]]
-- Led to: [[GRRR-z3w9]]
+- Led to: [[GRRR-z3w9]], [[GRRR-6sso]]
 
 ## Comments
 

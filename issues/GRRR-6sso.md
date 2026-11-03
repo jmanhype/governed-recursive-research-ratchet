@@ -9,10 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T17:32:12Z
-content_hash: "sha256:e1ffe3dcdb39f78cda72eaa67caad062b169121dc3dc33f7e8edec519dcdcca1"
+content_hash: "sha256:385cdd0a96f7bf746959cf062a6ea83ea8663436f4ce474c460eab24ad1374eb"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 assignee: dev-GRRR-6sso
-follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
+follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f]
 ---
 
 ## Description
@@ -151,11 +151,13 @@ status: new
 - 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-34ve
 - 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-fmvp
 - 2026-11-03T17:32:12Z claimed by dev-GRRR-6sso
+- 2026-11-03T17:32:12Z status: in_progress -> in_progress
+- 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-wu6f
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
-- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
+- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]]
 
 ## Comments
 
