@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:24:03Z
-content_hash: "sha256:eb0d6d724b591bd2818b028d301e5cb55572ab8c526bf0abbbb75be3811e8889"
+content_hash: "sha256:05a4b62258dcae8fa7c1a8ec94fc89c0aba00ba5768641d37fc48d4da1f6810c"
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
 follows: [GRRR-z3w9, GRRR-dbbi]
@@ -111,6 +111,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-03.
+
+### proof
+- [x] Story closed after accepted label was applied.
 
 
 ## nd_contract
