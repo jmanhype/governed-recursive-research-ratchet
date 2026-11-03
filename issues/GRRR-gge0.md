@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T22:47:09Z
-content_hash: "sha256:0ebce9f3155a2a5da106d9fdf470b074dfcb39c332943fc9a68eb8c466e1d8ec"
+updated_at: 2026-11-03T23:06:11Z
+content_hash: "sha256:acdd7c4d3c22f5d654155ba273c4a07c81dc52d56c6a788e4b2d9554b1b87c60"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -242,3 +242,67 @@ Parent reran focused adaptation suite 15/15 on both interpreters; pvg verify/gat
 Fresh Astra reviewer verdict: GRRR_ADAPTATION_REREVIEW: APPROVED. Reviewer matched all five final hashes, reran the focused suite (15/15), and independently probed partial writes, zero/negative writes, reservation races, descriptor closure, and close failures. It confirmed no implementation cleanup deletes concurrent entries and all prior adaptation semantics remain intact: reverse lexical 8/8 rejected for leakage; fixed block mean 14/3 below benchmark 6.0; no composed strategy change; all authority flags false.
 
 Approval is scoped to the bounded adaptation implementation, not broader security certification or runtime promotion. Work remains uncommitted pending explicit operator commit authorization.
+
+### 2026-11-03T23:06:11Z speed
+## Implementation Evidence (DELIVERED)
+
+Summary: The first post-foundational, repository-only Karpathy/Harness²-style Propose–Probe–Compose cycle completed with an honest no-change outcome. Reverse lexical scored 8/8 but was rejected for decisive D/C local-ID-prefix leakage. The fixed random block seeds 45/46/47 scored [4,6,4], mean 14/3, below the immutable random benchmark 6.0. No strategy was composed; the approved default remains retain-deterministic-lexical-baseline and every authority flag is false.
+
+Commit: cf3eb55422ba18898541318c138cd82543419d12 on story/GRRR-gge0 (base 5b50e29272819da205fc09e051f82c2639a7a197). Worktree clean after commit.
+
+Files and SHA-256:
+- research/harness_adaptation.py 31829168251d51fcede72e795eda1522192cc5f6496ed578dc769b664cf9308a
+- scripts/run-harness-adaptation-cycle 840cd2157ff5a094ea9f6cc1b6c3d92c8b82d195a9b81fde77f8d030fa3bbf20
+- reports/adaptation-cycle-1.json 550944a2b81b1e52cf4c9aaf410b5e43bcb5758aa0eb1bfa9ba4a63094d352ba
+- reports/adaptation-cycle-1.md 8e3c2ec84f2e424b1918dca21754f40a4b5ca6ea2c471cea9caf1017ca09678d
+- tests/unit_harness_adaptation.py f643c75f6799435e0919a5c3d865d30610625b095280b31cab518356cb095c23
+
+Immutable inputs:
+- Approved plan SHA 97ec4b8ccc34b3fc4da4fcfbef33b49bbb3f4f1c445cfecdb752715ddf034be1
+- Completed result SHA b7bb2ec8717e8921e16f9a3e312f6ad46839a125634dc6e3d144499cc841fefb
+- Corpus freeze digest dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529
+- Protected truth SHA 7cf9f99f5836c4e3e147df2866d54480a706f2665a732fbf61bd1a0d0b4c52ea
+
+## CI/Test Results
+
+Commands run:
+- PYTHONDONTWRITEBYTECODE=1 GRRR_JEV_DISABLE=1 /usr/bin/python3 -I -B -m unittest discover -s tests -p unit_harness_adaptation.py -v — 15/15 OK
+- PYTHONDONTWRITEBYTECODE=1 GRRR_JEV_DISABLE=1 /opt/homebrew/bin/python3 -I -B -m unittest discover -s tests -p unit_harness_adaptation.py -v — 15/15 OK
+- Worker full no-guest inventory under Python 3.14 and 3.12 — 807/807 OK each
+- pvg verify selected five files — PASS
+- pvg gates selected five files — PASS
+- git diff --check and git diff --cached --check — PASS
+
+Independent review:
+- GRRR_ADAPTATION_REVIEW: REJECTED initially because failure cleanup could delete concurrent files.
+- Rework removed deletion, preserved partial exclusive artifacts, and added race tests.
+- GRRR_ADAPTATION_REREVIEW: APPROVED after 15/15 focused tests and independent race probes.
+
+Diff-budget disclosure: 5 files / 920 inserted lines, exceeding the approximate 4-file under-500-LOC budget. Overage is driven by mandatory safe openat traversal, no-deletion concurrency behavior, leakage detection, syscall guards, and adversarial tests. Independent review considered the five-file structure justified; no mandatory tests were dropped.
+
+## AC Verification
+
+| AC | Result |
+|---|---|
+| 1 | PASS: exact plan/result/corpus/truth hashes bind before proposal. |
+| 2 | PASS: exactly reverse-lexical and fixed random block 45/46/47; no seed search or model call. |
+| 3 | PASS: reverse lexical measured 8/8 and decisively rejected for D/C prefix leakage. |
+| 4 | PASS: fixed block repetitions [4,6,4], mean 14/3, critical 10/3, clean 10/3, unique 12; below 6.0. |
+| 5 | PASS: no-change compose; approved default retained; all authority flags false. |
+| 6 | PASS: deterministic exclusive JSON/Markdown outputs with sanitized input hashes and metrics. |
+| 7 | PASS: real-input tamper, malformed selection, leakage, protected/double-slash/traversal, symlink, duplicate-output, and concurrent reservation tests fail closed. |
+
+## nd_contract
+status: delivered
+
+### evidence
+- Implementation commit cf3eb55422ba18898541318c138cd82543419d12; focused 15/15 tests on both interpreters; worker full no-guest 807/807 on both; independent narrow security rereview approved.
+
+### proof
+- [x] AC #1: immutable input binding and fail-closed drift handling proven.
+- [x] AC #2: exactly two fixed offline candidates generated without forbidden inputs.
+- [x] AC #3: reverse lexical 8/8 measured and rejected as leakage.
+- [x] AC #4: full fixed random block evaluated honestly and did not beat benchmark.
+- [x] AC #5: no strategy composed; approved default and false authority flags preserved.
+- [x] AC #6: deterministic sanitized outputs and exclusive-output behavior proven.
+- [x] AC #7: adversarial path, tamper, race, and malformed-input coverage passed.
