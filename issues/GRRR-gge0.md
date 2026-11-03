@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T22:45:32Z
-content_hash: "sha256:18c1a18494061d45b52be5f59e41f6be7d66ba60df00cb62fa0249a921e1dab5"
+updated_at: 2026-11-03T22:47:09Z
+content_hash: "sha256:0ebce9f3155a2a5da106d9fdf470b074dfcb39c332943fc9a68eb8c466e1d8ec"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -235,3 +235,10 @@ Final hashes:
 - tests/unit_harness_adaptation.py f643c75f6799435e0919a5c3d865d30610625b095280b31cab518356cb095c23
 
 Parent reran focused adaptation suite 15/15 on both interpreters; pvg verify/gates and diff checks passed. Worker full no-guest inventory passed 807/807 on both interpreters. No network/Jev/secret/protected access/replay/admission/promotion/production mutation/commit/merge/push.
+
+### 2026-11-03T22:47:09Z speed
+## 2026-11-03 Adaptation Narrow Security Re-review — APPROVED
+
+Fresh Astra reviewer verdict: GRRR_ADAPTATION_REREVIEW: APPROVED. Reviewer matched all five final hashes, reran the focused suite (15/15), and independently probed partial writes, zero/negative writes, reservation races, descriptor closure, and close failures. It confirmed no implementation cleanup deletes concurrent entries and all prior adaptation semantics remain intact: reverse lexical 8/8 rejected for leakage; fixed block mean 14/3 below benchmark 6.0; no composed strategy change; all authority flags false.
+
+Approval is scoped to the bounded adaptation implementation, not broader security certification or runtime promotion. Work remains uncommitted pending explicit operator commit authorization.
