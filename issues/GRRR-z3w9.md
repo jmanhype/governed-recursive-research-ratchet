@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T14:22:59Z
-content_hash: "sha256:eb133afd91755af806d833b0c5959f4b6e4bc74c5fb8794609840e38d0983109"
+updated_at: 2026-11-03T14:33:05Z
+content_hash: "sha256:5185afae6ced98860fb27e03b560d9621d0d90a8c169d2cc0001c201d009def5"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3785,3 +3785,47 @@ Operator authorized "Continue stage s". Stage S is defined as: exact v4 protecte
 - Validate all hash bindings
 - Obtain independent review
 - No /Library/GRRR access or mutation, no protected staging/installation, no budget amendment, no reconciliation, no replay, no promotion, no admission, no merge, no push
+
+### 2026-11-03T14:33:05Z speed
+## 2026-11-03 Stage S Authorization Preparation — Independently Approved After Rework
+
+Operator authorized "Continue stage s". Stage S prepared the exact v4 protected-staging plan and operator-authorization requirement record, repository-only. No /Library/GRRR access or mutation, protected staging/installation, budget amendment, reconciliation, replay execution, promotion, admission, production mutation, merge, or push occurred.
+
+### Initial review rejection
+STAGE_S_AUTHORIZATION_REVIEW: REJECTED — six validator bypasses:
+- empty authority dict
+- missing authorization_hash field
+- extra predecessor-binding field
+- missing/wrong base_commit
+- extra staging item field with recomputed digest
+- prepared_at=None
+
+### Correction
+- Exact nested key-set enforcement for basis, staging items, predecessor binding, authorization requirement, and authority
+- Exact base_commit and prepared_at validation
+- 13 regression tests covering every reviewer mutation probe
+
+### Narrow rework review
+STAGE_S_NARROW_REWORK_REVIEW: APPROVED
+
+Reviewer independently verified:
+- All six bypass categories reject
+- 13 regression tests cover every probe
+- 42/42 focused tests both interpreters
+- 656/656 full no-guest tests both interpreters
+- Deterministic emission byte-identical
+- Record SHA-256: 1d27da0d718ac7713f54bc73d4b87d5bcd1ea57f3eb55de1e74b0e2c933a75c9
+- Package SHA-256: 4f81a932e0dc1ce58495d925a6c0a574653d897f6bea6c88b8ada1f3ce344ceb
+- 10/10 package members verified
+- No protected access or mutation
+
+### Stage S record semantics
+- Status: prepared-not-authorized
+- All authority flags false
+- Operator authorization hash/by/at all null
+- Predecessor mutation forbidden
+- Installation target is sibling not replacement
+- Denied: budget amendment, reconciliation, replay, admission, promotion, merge, push, production mutation
+
+### State
+Stage S WIP is independently approved but uncommitted. Claim is released. Next step requires explicit operator authorization to commit and/or proceed to Stage T (protected staging / operator authorization).
