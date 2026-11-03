@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T19:31:58Z
-content_hash: "sha256:c7a2d4ce280271e2f9a933d2e831f42cadfa5289593a08e46cc04c295ec32176"
+updated_at: 2026-11-03T19:51:27Z
+content_hash: "sha256:610e1b323b332d64c2a86c58fa09bb353ef277638a76596e77f6955a164f777c"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -333,3 +333,12 @@ Findings:
 4. Medium: authorization accepts float 32.0/8.0 rather than exact non-boolean integers.
 
 Reviewer verified supplied hashes and 8/8 offline tests, but probes established all four issues. No real credential/network/protected access or edits. Fresh GLM agent developer_grrr_6sso_runner_rework_v2 is fixing exactly these findings. Real measurement remains not-started.
+
+### 2026-11-03T19:51:26Z speed
+## 2026-11-03 Second Measurement-Runner Review — REJECTED / Required Operator Hold
+
+Fresh Astra re-review verdict: MEASUREMENT_RUNNER_REREVIEW: REJECTED. The default-transport, exact-integer, and post-call truthfulness fixes were confirmed, but path containment still accepts PosixPath `//Library/GRRR/...` because pathlib preserves the `//` anchor and the lexical check compares only against `/Library/GRRR`. No protected filesystem access occurred in the reviewer probe.
+
+This is the second failed review of the same bounded measurement-runner brief. Per escalation policy, no third Astra review will be spawned and implementation is held for operator review. Current WIP remains uncommitted; no real secret/network/protected access/measurement/replay/admission/promotion/production mutation/merge/push occurred.
+
+Parent independently reran runner tests 15/15 on both interpreters. Full-suite failures were confined to intermittent unit_replay_smoke timing/process-cessation tests and are not attributed to this runner without further review.
