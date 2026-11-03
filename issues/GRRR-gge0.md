@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
 updated_at: 2026-11-03T23:14:47Z
-content_hash: "sha256:ddb8457d94de7c5f5eb86fdf21e0ecccf2b26c75541c029877b14f84ad8bd7f8"
+content_hash: "sha256:da29027152e296fafe70eed2823bd12680dd9101760c32b94d40e6483c3208c1"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp, GRRR-34ve]
 closed_at: 2026-11-03T23:14:47Z
@@ -125,6 +125,17 @@ status: new
 ### CI/Test Results
 
 Focused adaptation suite passed 15/15 under both required interpreters. Worker full no-guest inventory passed 807/807 under Python 3.14 and Python 3.12. `pvg verify`, `pvg gates`, `git diff --check`, and `git diff --cached --check` passed. Canonical CLI generation was deterministic and duplicate output failed closed. Independent security rereview returned GRRR_ADAPTATION_REREVIEW: APPROVED.
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-03.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
 
 ## PM Decision
 ACCEPTED [2026-11-03]: Independent evidence review meets all seven ACs.
