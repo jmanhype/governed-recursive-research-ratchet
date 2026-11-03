@@ -8,8 +8,8 @@ labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:11:10Z
-content_hash: "sha256:156196f4d742f65377cb44205b8f2bbe0aa1bd8055a36778ba72b1ce67e44bd2"
+updated_at: 2026-11-03T17:12:52Z
+content_hash: "sha256:e64b29fbd801166d384a70175346a0914897ef5c44ed2ecff7a7dd0fc4dc4095"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
@@ -146,3 +146,27 @@ Operator approved: "Let's do that, and then let's start the adaptation loop. I a
 - Implement atomic admission with crash recovery
 - Demonstrate recurrence rejection
 - All under existing governance gates
+
+### 2026-11-03T17:12:52Z speed
+## nd_contract
+status: in_progress
+
+### evidence
+- First Counterexample-to-Contract admission completed
+- Contract SHA-256: ab4339807b8fae5b96713131ef524a409b475bb7c158a4318fce5de80b668aa4
+- Authorization: operator-speed, permanent-contract-admission
+- Admission: outcome=admitted, registry_version=1
+- Recurrence rejected: true
+- 9/9 mandatory gates PASS
+- 16/16 unit tests pass
+- Evidence: docs/evidence/contract-admission/
+
+### proof
+- [x] Contract proposal created with exact bindings to verified replay
+- [x] Authorization validates operator identity, target, type, consumption
+- [x] All 9 mandatory gates checked and pass
+- [x] Recurrence rejection demonstrated
+- [ ] Full integration test with VM recurrence rejection
+- [ ] Stop/concurrency serialization
+- [ ] Crash recovery proof
+- [ ] Reversal semantics
