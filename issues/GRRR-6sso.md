@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T18:21:21Z
-content_hash: "sha256:6d4a5ad79396d9afa7252969cf3c92d72b1f0413223c8008bb506e62633d3454"
+updated_at: 2026-11-03T18:29:18Z
+content_hash: "sha256:d55390b94cff698ecaa5b4d003e2529cbd529e0d7ee087a10a239a8dd72e621e"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -255,3 +255,15 @@ Parent measured free space 26,786,766,848 bytes: both the 15.35GB and 16.106GB f
 Parent independently reran the second WIP: focused 27/27 on both interpreters, full no-guest 747/747 on both interpreters, pvg verify PASS, gates PASS with two non-failing warnings, and evaluation-plan unchanged.
 
 Parent found the catalog fix still incomplete: `_load_frozen_projection` compares the manifest's literal freeze string to the pinned constant but does not verify canonical SHA-256 over manifest fields excluding `freeze_digest`. A mutated manifest with rebound public hash and retained pinned literal can still pass declaratively. Fresh agent developer_grrr_6sso_jev_rework_v3 is assigned this one fix plus adversarial manifest-forgery regressions. Redirect and transport-sanitization fixes otherwise look focused.
+
+### 2026-11-03T18:29:18Z speed
+## 2026-11-03 Second Jev Boundary Security Re-review — REJECTED / Orchestrator Hold
+
+Third one-fix WIP added canonical manifest freeze verification and forged-manifest/public regressions. Parent independently reran:
+- focused selector 28/28 on system and Homebrew Python;
+- full no-guest 748/748 on system and Homebrew Python;
+- pvg verify PASS; pvg gates PASS with two non-failing warnings; git diff check PASS.
+
+Fresh independent Astra re-review verdict: JEV_BOUNDARY_REREVIEW: REJECTED. It confirmed the prior redirect, manifest/public binding, and transport-sanitization findings fixed, but found a new credential-echo leak: arbitrary response `model` text is returned and copied into selector output, so a provider echo of the Authorization credential could escape. Reviewer also flagged that assertions inside a fake opener/build callback can be swallowed by the broad HTTP exception handler.
+
+This is the second failed broad Jev-boundary Astra review. Per orchestrator policy, no third Astra spawn will be made. Work is held at uncommitted story/GRRR-6sso WIP; no commit, network, secret use, protected access, measurement, replay, admission, promotion, production mutation, merge, or push. Required next fix before any further review/use: reject credential-bearing successful-response text with a sanitized error, add provider-echo regression, and make opener-handler assertions externally observable. Capstone ACs remain blocked; no delivery is made.
