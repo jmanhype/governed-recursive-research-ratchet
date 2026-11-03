@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T23:06:44Z
-content_hash: "sha256:181ce6d5b4d171498de11a43bcba0a6f13706692a08ab6252d12a967ae62f42c"
+updated_at: 2026-11-03T23:07:30Z
+content_hash: "sha256:80ae5ffbc53cc996948ef04526bd6a7c5f56fa4f4a5e45e3f11caf8b4662ec5f"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -119,6 +119,27 @@ status: new
 
 
 ## Notes
+
+### CI/Test Results
+
+Focused adaptation suite passed 15/15 under both required interpreters. Worker full no-guest inventory passed 807/807 under Python 3.14 and Python 3.12. `pvg verify`, `pvg gates`, `git diff --check`, and `git diff --cached --check` passed. Canonical CLI generation was deterministic and duplicate output failed closed. Independent security rereview returned GRRR_ADAPTATION_REREVIEW: APPROVED.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit cf3eb55422ba18898541318c138cd82543419d12 contains the exact reviewed five-file adaptation implementation.
+- Focused tests: 15/15 on system and Homebrew Python. Full no-guest worker inventory: 807/807 on both interpreters.
+- Independent GRRR_ADAPTATION_REREVIEW: APPROVED after concurrent-reservation and output-boundary rework.
+
+### proof
+- [x] AC #1: exact immutable bindings and drift refusal.
+- [x] AC #2: exactly two fixed offline candidates.
+- [x] AC #3: reverse lexical measured 8/8 and rejected for decisive D/C leakage.
+- [x] AC #4: fixed random block [4,6,4], mean 14/3, honestly below benchmark 6.0.
+- [x] AC #5: no-change compose; approved default retained; all authority flags false.
+- [x] AC #6: deterministic sanitized JSON/Markdown outputs with exclusive-output behavior.
+- [x] AC #7: tamper, malformed, leakage, protected/traversal/symlink, duplicate, and concurrent-race paths fail closed.
 
 ## Implementation Evidence
 
