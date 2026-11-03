@@ -1,19 +1,20 @@
 ---
 id: GRRR-dbbi
 title: "Compare three selectors without overstating research value"
-status: open
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:17:10Z
-content_hash: "sha256:d257c79a6bf194bd74a5c5d097835aec18a69f2c1dea3de34672be74977cfd09"
-blocks: [GRRR-fmvp, GRRR-6sso]
+updated_at: 2026-11-03T17:17:56Z
+content_hash: "sha256:0999315fb45a5933a69170b96e2f4116f91635c7b0d4744f3bfb7b2f32d8095f"
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
 follows: [GRRR-bnkf, GRRR-z3w9]
+closed_at: 2026-11-03T17:17:56Z
+close_reason: "PM acceptance: honest partial delivery. Deterministic and random baselines working. Jev correctly marked unavailable. No fabricated results. 12/12 tests independently verified."
 ---
 
 ## Description
@@ -131,10 +132,12 @@ status: new
 - 2026-11-03T17:13:55Z auto-follows: linked to predecessor GRRR-z3w9
 - 2026-11-03T17:13:55Z claimed by dev-GRRR-dbbi
 - 2026-11-03T17:17:10Z status: in_progress -> open
+- 2026-11-03T17:17:56Z status: open -> closed
+- 2026-11-03T17:17:56Z dep_removed: no_longer_blocks GRRR-fmvp
+- 2026-11-03T17:17:56Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-fmvp]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-bnkf]], [[GRRR-z3w9]]
 - Follows: [[GRRR-bnkf]], [[GRRR-z3w9]]
 
