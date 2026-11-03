@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""Exclusive CLI for the one permitted offline adaptation cycle."""
+
+import argparse
+import contextlib
+import json
+import os
+import stat
+import sys
+from pathlib import Path
+from typing import Tuple
+
+ROOT = Path(__file__).parents[1]
+sys.path.insert(0, str(ROOT / "research"))
+
+from harness_adaptation import AdaptationCycleError, run_adaptation_cycle
+
+
+def _path_components(raw: str):
+    return [component for component in raw.split("/") if component and component != "."]
+
+
+def protected_path(path: Path) -> bool:
+    try:
+        raw = os.fspath(path)
+    except TypeError as exc:
+        raise AdaptationCycleError("output path must be textual") from exc
+    if not isinstance(raw, str):
+        raise AdaptationCycleError("output path must be textual")
+    if "\0" in raw or raw.startswith("//"):
+        return True
+    components = raw.split("/")
+    if any(component == ".." for component in components):
+        return True
+    lexical = [component.casefold() for component in _path_components(raw)]
+    if not raw.startswith("/"):
+        lexical = _path_components(os.getcwd().casefold()) + lexical
+    return lexical[:2] == ["library", "grrr"]
+
+
+def _validate_output_paths(json_path: Path, markdown_path: Path) -> None:
+    if protected_path(json_path) or protected_path(markdown_path):
+        raise AdaptationCycleError("unsafe or protected output path refused")
+    if Path(os.fspath(json_path)) == Path(os.fspath(markdown_path)):
+        raise AdaptationCycleError("JSON and Markdown outputs must be distinct")
+
+
+def _open_directory(name, dir_fd=None):
+    if not hasattr(os, "O_NOFOLLOW") or not os.supports_dir_fd:
+        raise AdaptationCycleError("safe directory traversal unsupported")
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+    flags |= os.O_NOFOLLOW | getattr(os, "O_NONBLOCK", 0)
+    fd = os.open(name, flags, dir_fd=dir_fd)
+    if not stat.S_ISDIR(os.fstat(fd).st_mode):
+        os.close(fd)
+        raise AdaptationCycleError("unsafe output ancestor")
+    return fd
+
+
+def _open_at(parent_fd: int, component: str) -> int:
+    child_fd = None
+    try:
+        before = os.stat(component, dir_fd=parent_fd, follow_symlinks=False)
+        if not stat.S_ISDIR(before.st_mode):
+            raise AdaptationCycleError("unsafe output ancestor")
+        child_fd = _open_directory(component, dir_fd=parent_fd)
+        after = os.fstat(child_fd)
+    except OSError as exc:
+        if child_fd is not None:
+            os.close(child_fd)
+        raise AdaptationCycleError("unsafe output ancestor") from exc
+    if (before.st_dev, before.st_ino) != (after.st_dev, after.st_ino):
+        os.close(child_fd)
+        raise AdaptationCycleError("output ancestor changed during validation")
+    return child_fd
+
+
+def _parent_fd(raw: str) -> Tuple[int, str, Tuple[int, int]]:
+    components = _path_components(raw)
+    if not components:
+        raise AdaptationCycleError("output must name a file")
+    fd = _open_directory("/") if raw.startswith("/") else _open_directory(".")
+    try:
+        for component in components[:-1]:
+            child_fd = _open_at(fd, component)
+            os.close(fd)
+            fd = child_fd
+        identity = os.fstat(fd)
+        return fd, components[-1], (identity.st_dev, identity.st_ino)
+    except Exception:
+        os.close(fd)
+        raise
+
+
+def _validated_parents(json_path: Path, markdown_path: Path):
+    _validate_output_paths(json_path, markdown_path)
+    json_parent = markdown_parent = None
+    try:
+        json_parent = _parent_fd(os.fspath(json_path))
+        markdown_parent = _parent_fd(os.fspath(markdown_path))
+        json_fd, json_name, json_id = json_parent
+        markdown_fd, markdown_name, markdown_id = markdown_parent
+        if json_id == markdown_id and json_name == markdown_name:
+            raise AdaptationCycleError("JSON and Markdown outputs must be distinct")
+        for label, parent_fd, name in (
+            ("JSON", json_parent[0], json_name),
+            ("Markdown", markdown_parent[0], markdown_name),
+        ):
+            try:
+                os.stat(name, dir_fd=parent_fd, follow_symlinks=False)
+            except FileNotFoundError:
+                continue
+            raise AdaptationCycleError(f"{label} output already exists")
+        return json_parent[:2], markdown_parent[:2]
+    except Exception:
+        for parent in (json_parent, markdown_parent):
+            if parent is not None:
+                os.close(parent[0])
+        raise
+
+
+def validate_outputs(json_path: Path, markdown_path: Path) -> None:
+    json_parent, markdown_parent = _validated_parents(json_path, markdown_path)
+    os.close(json_parent[0])
+    os.close(markdown_parent[0])
+
+
+def reserve(name: str, parent_fd: int) -> int:
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    return os.open(name, flags, 0o600, dir_fd=parent_fd)
+
+
+def _close_descriptors(descriptors) -> None:
+    for descriptor in descriptors:
+        if descriptor is not None:
+            with contextlib.suppress(OSError):
+                os.close(descriptor)
+
+
+def _write_all(descriptor: int, content: bytes) -> None:
+    remaining = memoryview(content)
+    while remaining:
+        written = os.write(descriptor, remaining)
+        if written <= 0:
+            raise OSError("short write while creating adaptation output")
+        remaining = remaining[written:]
+
+
+def markdown_summary(report: dict) -> bytes:
+    reverse, random_block = report["proposals"]
+    inputs = report["inputs"]
+    return "\n".join([
+        "# GRRR adaptation cycle 1",
+        "- Outcome: **no composed strategy change**; retain the deterministic lexical baseline.",
+        "- Benchmark: random mean **6.0** from the immutable completed result.",
+        "- Reverse lexical: measured **8/8**, but **rejected for D/C local-ID prefix leakage**.",
+        "- Fixed random block 45/46/47: mean **14/3**, critical mean **10/3**, clean mean **10/3**, unique defects **12**.",
+        f"- `{reverse['proposal_id']}`: eligible=false; leakage reason: {reverse['leakage']['reason']}.",
+        f"- `{random_block['proposal_id']}`: eligible=true; exceeds_benchmark=false; full block retained.",
+        f"- Plan / result SHA-256: `{inputs['approved_plan']['sha256']}` / `{inputs['completed_result']['sha256']}`",
+        f"- Corpus freeze digest / protected truth SHA-256: `{inputs['frozen_corpus']['freeze_digest']}` / `{inputs['protected_truth']['sha256']}`",
+        "All promotion, admission, execution, production mutation, merge, and push flags are false. No automatic rerun is authorized; operator review is required.", "",
+    ]).encode("ascii")
+
+
+def write_outputs(report: dict, json_path: Path, markdown_path: Path) -> None:
+    (json_parent, json_name), (markdown_parent, markdown_name) = _validated_parents(
+        json_path, markdown_path
+    )
+    json_fd = markdown_fd = None
+    try:
+        json_fd = reserve(json_name, json_parent)
+        markdown_fd = reserve(markdown_name, markdown_parent)
+        json_bytes = (json.dumps(
+            report, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
+            allow_nan=False,
+        ) + "\n").encode("ascii")
+        _write_all(json_fd, json_bytes)
+        _write_all(markdown_fd, markdown_summary(report))
+    finally:
+        _close_descriptors((
+            json_fd, markdown_fd, json_parent, markdown_parent,
+        ))
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Run one bounded offline Harness adaptation cycle."
+    )
+    parser.add_argument("--plan", type=Path, required=True)
+    parser.add_argument("--result", type=Path, required=True)
+    parser.add_argument("--corpus-root", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--summary-output", type=Path, required=True)
+    args = parser.parse_args(argv)
+    try:
+        _validate_output_paths(args.output, args.summary_output)
+        report = run_adaptation_cycle(args.plan, args.result, args.corpus_root)
+        write_outputs(report, args.output, args.summary_output)
+    except (AdaptationCycleError, OSError, TypeError, ValueError) as exc:
+        print(f"ADAPTATION_REFUSED: {exc}", file=sys.stderr)
+        return 2
+    print(json.dumps({
+        "status": report["status"], "compose": report["compose"]["action"],
+        "output": os.fspath(args.output),
+    }, sort_keys=True, separators=(",", ":")))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
