@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T22:20:40Z
-content_hash: "sha256:5bf61c2530b708361cb542c57dfef0730837ddcf864711e3247c1bd95efbda1d"
+updated_at: 2026-11-03T22:35:10Z
+content_hash: "sha256:eea21e6b1e85b7e90510699e910a15f7a77c5352f205aa566ef3d12bece64eac"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -207,3 +207,17 @@ Because the result artifacts are currently on unmerged story/GRRR-6sso at 5b50e2
 ## 2026-11-03 Adaptation Cycle Dispatch
 
 Fresh GLM agent developer_grrr_gge0_adaptation_v1 claimed the stacked worktree at base 5b50e29. Scope is exactly one offline deterministic Propose–Probe–Compose cycle: reverse-lexical leakage rejection plus fixed random seeds 45/46/47 against benchmark 6.0. Denials: network/Jev, secret read, protected access, VM, replay, admission, promotion, production mutation, commit, merge, push.
+
+### 2026-11-03T22:35:10Z speed
+## 2026-11-03 Adaptation Security Rework — Parent Verified
+
+Final WIP hashes after security rework:
+- research/harness_adaptation.py 31829168251d51fcede72e795eda1522192cc5f6496ed578dc769b664cf9308a
+- scripts/run-harness-adaptation-cycle 41f1fe749581ad902f554111cc343201588ee09c23d095ee28bc1fd7ab95fc5a
+- reports/adaptation-cycle-1.json 550944a2b81b1e52cf4c9aaf410b5e43bcb5758aa0eb1bfa9ba4a63094d352ba
+- reports/adaptation-cycle-1.md 8e3c2ec84f2e424b1918dca21754f40a4b5ca6ea2c471cea9caf1017ca09678d
+- tests/unit_harness_adaptation.py 50f5eba4bfaf6a95a2b0b7217037ff6f7567938a5bc4b8f6df9c8d811bd38c61
+
+Rework fixes: lexical/double-slash/protected path rejection before path syscalls; O_NOFOLLOW dirfd ancestor traversal with inode checks; held-parent exclusive writes; deterministic undeclared reverse-lexical leakage detection; all-defect composition control; non-immediate symlink/traversal/syscall-guard regressions.
+
+Parent reran focused adaptation tests 13/13 on both interpreters, pvg verify PASS, gates PASS, diff checks PASS. Current diff is 5 files/855 added lines, 355 over approximate story budget because mandatory safe traversal and adversarial tests expanded scope; this remains explicitly disclosed for PM review. No network/Jev/secret/protected access/replay/admission/promotion/production mutation/commit/merge/push.
