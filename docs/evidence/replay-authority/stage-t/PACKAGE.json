@@ -1,0 +1,71 @@
+{
+  "artifacts": [
+    {
+      "bytes": 4705,
+      "path": "docs/evidence/replay-authority/stage-t/FOCUSED-HOMEBREW-3.14.log",
+      "sha256": "d7d8a250593db452e1a91bda0b0214bd64dbc5426638b40ecfa3070fe128ac8a"
+    },
+    {
+      "bytes": 4705,
+      "path": "docs/evidence/replay-authority/stage-t/FOCUSED-MINICONDA-3.12.log",
+      "sha256": "d7d8a250593db452e1a91bda0b0214bd64dbc5426638b40ecfa3070fe128ac8a"
+    },
+    {
+      "bytes": 792,
+      "path": "docs/evidence/replay-authority/stage-t/FULL-HOMEBREW-3.14.log",
+      "sha256": "8e9a1acf05409b19e21d218e0a47d5a7f81f7b167a736f99495ba92d1da73ede"
+    },
+    {
+      "bytes": 792,
+      "path": "docs/evidence/replay-authority/stage-t/FULL-MINICONDA-3.12.log",
+      "sha256": "f7ebf7de0a3ca2bc9d9ec1ed50f4283c03d1f2df429e2cb2974baa78869f641f"
+    },
+    {
+      "bytes": 2701,
+      "path": "docs/evidence/replay-authority/stage-t/REPORT.md",
+      "sha256": "c96ee21837822fe15301ae1c12bd2e6e2b6cd8cdeae1f490b3248693f2bb0cc1"
+    },
+    {
+      "bytes": 2092,
+      "path": "docs/evidence/replay-authority/stage-t/REVIEW-REQUEST.md",
+      "sha256": "23e5cdbdfdef0d8389e50f2c5a674615f73013fed42633a5ad515fc50d7e5b2e"
+    },
+    {
+      "bytes": 3002,
+      "path": "docs/evidence/replay-authority/stage-t/SANDBOX-SMOKE.json",
+      "sha256": "e7e413219af9aab7c3b12c11129631e5f91255f6336422a7215a8f95fd15450e"
+    },
+    {
+      "bytes": 12227,
+      "path": "research/replay_successor_staging.py",
+      "sha256": "8070a181109a6c406ca8a50907217b336f64434d42089986c3ebae8b479164a7"
+    },
+    {
+      "bytes": 7135,
+      "path": "scripts/stage-replay-successor-v4-sources",
+      "sha256": "8b0339a76581b98350fa661808475d29db4cfb836f7b4c1f1c9bb74c62c5f4e8"
+    },
+    {
+      "bytes": 11975,
+      "path": "tests/unit_replay_successor_staging.py",
+      "sha256": "e257a6b93b24812dfc86c3cddffda72d8432be379e531bbbe89cf92aaff1961e"
+    }
+  ],
+  "base_commit": "19ec1da534174039105a9ceaa532d13c91d8f09c",
+  "decision": "prepared-not-executed",
+  "denied": [
+    "protected_access",
+    "protected_staging_execution",
+    "installation",
+    "budget_amendment",
+    "reconciliation",
+    "replay_execution",
+    "admission",
+    "promotion",
+    "production_mutation",
+    "merge",
+    "push"
+  ],
+  "record_type": "replay-successor-v4-staging-preparation-package-v1",
+  "schema_version": 1
+}

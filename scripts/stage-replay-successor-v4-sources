@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""Stage the eight v4 source files with exact hash verification.
+
+Sandbox mode (default): stages into a caller-supplied sandbox root.
+Protected mode (--protected): requires explicit flag; stages into
+/Library/GRRR/bootstrap.  The caller is responsible for privilege.
+
+This script does NOT install the v4 store, amend a budget, reconcile,
+execute replay, admit, promote, merge, or push.
+"""
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "research"))
+
+from replay_successor_staging import (
+    authorization_digest,
+    check_no_symlink_ancestors,
+    validate_authorization,
+)
+
+
+SOURCE_DIR_NAME = "docs/evidence/replay-authority/stage-r/source"
+ROLE_FILES = {
+    "installer-entrypoint": "install-replay-successor-v4",
+    "v4-store-schema": "replay-successor-v4-v4_store_schema.py",
+    "stage-n-contract": "replay-successor-v4-stage_n_contract.py",
+    "stage-o-runtime-adapter": "replay-successor-v4-stage_o_runtime_adapter.py",
+    "protected-preflight": "replay-successor-v4-protected_preflight.py",
+    "atomic-publisher": "replay-successor-v4-atomic_publisher.py",
+    "postflight-verifier": "replay-successor-v4-postflight_verifier.py",
+    "failure-preservation": "replay-successor-v4-failure_preservation.py",
+}
+EXPECTED_SHA256 = {
+    "installer-entrypoint": "94b37112fc3b3146078b6edd0cf80d5e845f1cc83543344d79400d144d453dbc",
+    "v4-store-schema": "629c6a70936fb94ea4b4a89b4dc3c94095aa2586194c077e4c06258b2c7ce644",
+    "stage-n-contract": "d2105c6fbab6edd42ad9724e6ff2313d2531c11af14625bfb0cf8a81b9646fb5",
+    "stage-o-runtime-adapter": "f54f051684dd9be4ccf635d3029cb1f099ddb227e8d763efad2c8bf24e3478c4",
+    "protected-preflight": "0e09ccc6f995e24ab983489755df6a14028c154a99b84811b95d6ea95bf0946f",
+    "atomic-publisher": "c448f4853e6bb9467c6994b64b3f04dfd9ee9c6d0718de69529eb24218e5a719",
+    "postflight-verifier": "f276c0bd84a4fe43d5661672600734120af1332c45c372fc6881a2913491ca46",
+    "failure-preservation": "8fb37a74e96c7fab7f96fed74ad1aea187fc306716ebb024a1cd0059ca9ded47",
+}
+PROTECTED_ROOT = "/Library/GRRR/bootstrap"
+FILE_MODE = 0o440
+DIR_MODE = 0o750
+
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def stage(
+    source_dir: Path,
+    staging_root: Path,
+    protected: bool,
+    authorization_record: dict,
+) -> list:
+    """Stage the eight source files. Returns list of staged records."""
+    auth = validate_authorization(authorization_record)
+    auth_digest = authorization_digest(auth)
+
+    if protected:
+        if str(staging_root) != PROTECTED_ROOT:
+            raise RuntimeError(f"protected mode requires {PROTECTED_ROOT}")
+    else:
+        if not staging_root.is_absolute():
+            raise RuntimeError(
+                f"sandbox root must be absolute: {staging_root}"
+            )
+        resolved = str(staging_root.resolve())
+        if resolved.startswith("/Library"):
+            raise RuntimeError(
+                "sandbox mode must not target /Library; use --protected"
+            )
+
+    check_no_symlink_ancestors(staging_root.parent)
+
+    staging_root.mkdir(parents=True, exist_ok=False, mode=DIR_MODE)
+    os.chmod(staging_root, DIR_MODE)
+
+    staged = []
+    for role in sorted(ROLE_FILES):
+        filename = ROLE_FILES[role]
+        src = source_dir / filename
+        dst = staging_root / filename
+
+        if not src.is_file():
+            raise RuntimeError(f"source missing: {src}")
+        if dst.exists() or dst.is_symlink():
+            raise RuntimeError(f"destination already exists: {dst}")
+
+        # Read once, hash those exact bytes, then write those exact bytes.
+        raw = src.read_bytes()
+        actual = hashlib.sha256(raw).hexdigest()
+        if actual != EXPECTED_SHA256[role]:
+            raise RuntimeError(f"source hash mismatch for {role}: {actual}")
+
+        fd = os.open(dst, os.O_WRONLY | os.O_CREAT | os.O_EXCL, FILE_MODE)
+        try:
+            written = os.write(fd, raw)
+            if written != len(raw):
+                raise RuntimeError(
+                    f"short write for {role}: wrote {written} of {len(raw)}"
+                )
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+        os.chmod(dst, FILE_MODE)
+
+        # Read back destination bytes and verify
+        written_raw = dst.read_bytes()
+        verify = hashlib.sha256(written_raw).hexdigest()
+        if verify != EXPECTED_SHA256[role]:
+            raise RuntimeError(f"post-write hash mismatch for {role}: {verify}")
+        if len(written_raw) != len(raw):
+            raise RuntimeError(
+                f"post-write size mismatch for {role}: {len(written_raw)} != {len(raw)}"
+            )
+
+        staged.append({
+            "role": role,
+            "sha256": verify,
+            "destination": str(dst),
+            "bytes": len(raw),
+        })
+
+    for item in staged:
+        item["authorization_sha256"] = auth_digest
+
+    return staged
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Stage v4 source files with exact hash verification"
+    )
+    parser.add_argument(
+        "--sandbox-root",
+        type=Path,
+        help="Sandbox staging root (must not be under /Library)",
+    )
+    parser.add_argument(
+        "--protected",
+        action="store_true",
+        help="Stage to /Library/GRRR/bootstrap (requires root privilege)",
+    )
+    parser.add_argument(
+        "--authorization-file",
+        type=Path,
+        required=True,
+        help="Path to filled operator authorization record (JSON)",
+    )
+    args = parser.parse_args()
+
+    if not args.sandbox_root and not args.protected:
+        parser.error("either --sandbox-root or --protected is required")
+    if args.sandbox_root and args.protected:
+        parser.error("cannot use both --sandbox-root and --protected")
+
+    try:
+        authorization_record = json.loads(
+            args.authorization_file.read_text(encoding="ascii")
+        )
+    except Exception as e:
+        print(f"AUTHORIZATION_ERROR: {e}", file=sys.stderr)
+        return 1
+
+    repo_root = Path(__file__).resolve().parent.parent
+    source_dir = repo_root / SOURCE_DIR_NAME
+
+    if not source_dir.is_dir():
+        print(f"ERROR: source directory missing: {source_dir}", file=sys.stderr)
+        return 1
+
+    staging_root = (
+        Path(PROTECTED_ROOT) if args.protected else args.sandbox_root
+    )
+
+    try:
+        staged = stage(
+            source_dir, staging_root, args.protected, authorization_record
+        )
+    except Exception as e:
+        print(f"STAGING_ERROR: {e}", file=sys.stderr)
+        return 1
+
+    result = {
+        "outcome": "staged-not-installed",
+        "staging_root": str(staging_root),
+        "staged_files": staged,
+        "protected": args.protected,
+    }
+    json.dump(result, sys.stdout, indent=2, sort_keys=True)
+    sys.stdout.write("\n")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
