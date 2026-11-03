@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T21:08:00Z
-content_hash: "sha256:1d8f8a845158dd211cd16973ce9aca6efa13aa141a6b21d0e579aa5a19d949dd"
+updated_at: 2026-11-03T21:12:00Z
+content_hash: "sha256:b6dadf5931a489660c51b338bd661f853a5ef739ab2f53497d10d00ddf7753af"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt]
 assignee: dev-GRRR-6sso
@@ -456,3 +456,10 @@ Operator authorized continuation. Live recheck found the design WIP still uncomm
 
 Current hashes: plan 97ec4b8ccc34b3fc4da4fcfbef33b49bbb3f4f1c445cfecdb752715ddf034be1; validator ca31b3cf53e70d038da6ed7a835f0ad07dcc2b3de68bf9b1e18a0c825fea8809; tests f2ae917ef806d8ccabf98adaf8c4634c425b812f11f3198934e7bbf69879893b; design doc de82208f2b4e55544dc25b43e91fe9156cee348b3fa82ba812078fc92ea3ad7b.
 Focused tests passed 12/12 on both interpreters; pvg verify/gates PASS; existing evaluation-plan unchanged; no execution/network/secret/protected access/replay/admission/promotion/production mutation/merge/push.
+
+### 2026-11-03T21:12:00Z speed
+## 2026-11-03 Pre-Registered Three-Arm Design — Approved and Committed
+
+Narrow reviewer verdict: HASH_BOOTSTRAP_NARROW_REVIEW: APPROVED. Operator approved the corrected design. Exact plan/validator/tests/narrative and a separate design-only approval record were committed to story/GRRR-6sso.
+
+Design approval does not authorize execution; the reviewed JSON retains not-approved/measurement_started=false/execution_authorized=false pending separate execution authorization and preflight. No selector/network/secret/protected execution occurred; no merge or push.
