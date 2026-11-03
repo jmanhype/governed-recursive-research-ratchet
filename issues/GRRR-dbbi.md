@@ -1,15 +1,15 @@
 ---
 id: GRRR-dbbi
 title: "Compare three selectors without overstating research value"
-status: in_progress
+status: open
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:14:40Z
-content_hash: "sha256:06186213b3e33cc233c9f62771a94754fc526ceee178aee2a0e6f949d85850e9"
+updated_at: 2026-11-03T17:17:10Z
+content_hash: "sha256:d7f85e54f11dec1198ea1b1030518cd72d7d7dac398d0d428d703b9febf1d6bd"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
@@ -130,6 +130,7 @@ status: new
 - 2026-11-03T17:13:55Z auto-follows: linked to predecessor GRRR-bnkf
 - 2026-11-03T17:13:55Z auto-follows: linked to predecessor GRRR-z3w9
 - 2026-11-03T17:13:55Z claimed by dev-GRRR-dbbi
+- 2026-11-03T17:17:10Z status: in_progress -> open
 
 ## Links
 - Parent: [[GRRR-2t3h]]
