@@ -4,7 +4,7 @@ title: "Run one governed adaptation cycle"
 status: closed
 priority: 1
 type: task
-labels: [milestone-2, integration, adaptation, delivered]
+labels: [milestone-2, integration, adaptation, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
