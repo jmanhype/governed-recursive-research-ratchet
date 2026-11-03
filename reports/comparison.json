@@ -1,0 +1,58 @@
+{
+  "arms": {
+    "deterministic": {
+      "arm": "deterministic",
+      "budget": 8,
+      "catalog_size": 32,
+      "provenance": "lexical-order-under-budget",
+      "seed": 0,
+      "selected": [
+        "GRRR-VC-C001",
+        "GRRR-VC-C002",
+        "GRRR-VC-C003",
+        "GRRR-VC-C004",
+        "GRRR-VC-C005",
+        "GRRR-VC-C006",
+        "GRRR-VC-C007",
+        "GRRR-VC-C008"
+      ],
+      "selector_version": "1.0.0"
+    },
+    "jev": {
+      "arm": "jev",
+      "available": false,
+      "budget": 8,
+      "catalog_size": 32,
+      "provenance": "unavailable",
+      "reason": "No operator-provisioned Jev adapter available; arm unavailable",
+      "seed": null,
+      "selected": [],
+      "selector_version": null
+    },
+    "random": {
+      "arm": "random",
+      "budget": 8,
+      "catalog_size": 32,
+      "provenance": "seeded-shuffle-under-budget",
+      "seed": 42,
+      "selected": [
+        "GRRR-VC-C003",
+        "GRRR-VC-D006",
+        "GRRR-VC-D011",
+        "GRRR-VC-D016",
+        "GRRR-VC-C002",
+        "GRRR-VC-D012",
+        "GRRR-VC-D023",
+        "GRRR-VC-D007"
+      ],
+      "selector_version": "1.0.0"
+    }
+  },
+  "budget_per_arm": 8,
+  "comparison_complete": false,
+  "corpus_freeze_digest": "dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529",
+  "jev_available": false,
+  "outcome": "incomplete-jev-unavailable",
+  "schema_version": 1,
+  "seed": 42
+}
