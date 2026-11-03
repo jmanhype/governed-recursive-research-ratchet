@@ -1,17 +1,18 @@
 ---
 id: GRRR-6sso
 title: "E2e: Operator completes a governed vlt research ratchet"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T17:39:32Z
-content_hash: "sha256:e49843d2647dd6de5b2a8ada2a52e4a18813a716bb5f596ac6a76772de9bab82"
+updated_at: 2026-11-03T17:40:01Z
+content_hash: "sha256:040b9489a081dcf071778b756b12bd44b0ad3eb7de48a2519f06ab50fb47cad6"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
-follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f]
+follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
+assignee: dev-GRRR-6sso
 ---
 
 ## Description
@@ -174,11 +175,14 @@ status: delivered
 - 2026-11-03T17:32:12Z auto-follows: linked to predecessor GRRR-wu6f
 - 2026-11-03T17:39:31Z status: in_progress -> open
 - 2026-11-03T17:39:31Z released by speed
+- 2026-11-03T17:40:01Z status: open -> in_progress
+- 2026-11-03T17:40:01Z auto-follows: linked to predecessor GRRR-d8ji
+- 2026-11-03T17:40:01Z claimed by dev-GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
-- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]]
+- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]]
 
 ## Comments
 
