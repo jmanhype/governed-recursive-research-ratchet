@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T15:55:54Z
-content_hash: "sha256:dd6426867320721bafd1278e6be0104df146875a1371a8cd4f4ab2235e97cf65"
+updated_at: 2026-11-03T16:47:45Z
+content_hash: "sha256:6a1435fdb54c0c141e841a3aabfdcb06359c05866b54df6598a55bac8200db00"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3999,3 +3999,67 @@ Operator directed "You do it for me." Protected staging was executed.
 - No replay execution
 - No promotion/admission/merge/push
 - All authority remains false
+
+### 2026-11-03T16:47:45Z speed
+## 2026-11-03 Session Handoff — Replay Infrastructure 90% Complete
+
+### SUMMARY
+Protected staging, v4 store installation, budget amendment, and PersistentBudget compatibility are COMPLETE. The replay launch reaches process spawning but the runner process crashes in ~2 seconds with an empty log. This is the last blocker.
+
+### WHAT WAS ACCOMPLISHED
+1. **Stage T staging script + authorization format** — independently reviewed, committed at 2a01a2b
+2. **8 v4 source files staged** to /Library/GRRR/bootstrap/ (root:wheel, 0440, hash-verified)
+3. **v4 store created** at /Library/GRRR/accounting-poc2/a142cabb.../budget.sqlite
+   - root→evaluator ownership (UID 320, mode 0700/0600)
+   - store_identity updated to hash-based campaign/store_id
+   - stopped=0 (budget amended)
+   - integrity=ok
+4. **PersistentBudget compatibility** — ALL CHECKS PASS independently
+5. **20 replay code modules** installed to /Library/GRRR/replay-package/ (hash-verified)
+6. **Replay inputs** regenerated at /Library/GRRR/independent-replay-input/v1/
+7. **IPC umask bug** found and fixed (os.chmod after mkdir)
+8. **Disk space** recovered to 16.4 GB free (above 15 GiB floor)
+9. **Active.json** updated to v4 with hash-based identifiers
+
+### FIXES APPLIED TO CODE (all hash-cascaded through launcher→review)
+- replay.py: preflight accepts version 4
+- replay_profile.py: new input hashes
+- replay_smoke.py: explicit chmod after mkdir (umask fix)
+- persistent_budget.py: version 4 in validate_store, require_mutable, profiles, registration bypass
+
+### CURRENT STATE
+- active.json: v4, hash-based IDs, profiles=["independent-replay"]
+- v4 store: UID 320, mode 0700, stopped=0, integrity=ok, PersistentBudget PASSES
+- Replay inputs: input.iso, prepared-profile.json, preparation.json (all verified)
+- Review: approved-D011-independent-replay-normal, 20 code entries verified
+- Disk: 16.4 GB free
+
+### REMAINING BLOCKER
+Runner process (UID 321) starts via parent launch and crashes in ~2 seconds with empty log.
+- ReplayExecutor.__init__ reads plan.json and policy.json (both exist in runtime)
+- AuthenticatedServer binds IPC sockets (permissions verified as correct)
+- Crash happens BEFORE any output is written
+- Runner works when started manually with correct runtime state
+
+### NEXT SESSION ACTIONS
+1. Trace ReplayExecutor.__init__ step-by-step as UID 321 against the created runtime
+2. Check CorpusExecutor.__init__ (parent class) for additional checks
+3. The runner crash may be in policy validation or input image verification
+4. Once runner starts → evaluator should follow (PersistentBudget proven compatible)
+5. After successful replay → verify D011 defect detection → export receipt
+
+### ARTIFACTS PRESERVED
+- Stage R commit: b43f1fa (source package)
+- Stage S commit: 19ec1da (authorization preparation)
+- Stage T commit: 2a01a2b (staging script)
+- v4 store: /Library/GRRR/accounting-poc2/a142cabb.../budget.sqlite
+- Replay package: /Library/GRRR/replay-package/ (20 modules, hash-verified)
+- Replay inputs: /Library/GRRR/independent-replay-input/v1/
+- Failed runtime: /Library/GRRR/independent-replay/d011-independent-v2-normal/ (forensic evidence)
+- Original failed attempt: /Library/GRRR/independent-replay/failed-attempt-1793722624/
+
+### BOUNDARIES PRESERVED
+- No production mutation, no merge, no push
+- Predecessor v3 store untouched and permanently stopped
+- No contract admission, no promotion
+- All authority flags remain false except budget_amendment (explicitly authorized)
