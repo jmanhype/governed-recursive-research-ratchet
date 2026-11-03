@@ -14,6 +14,7 @@ from typing import Any, Dict
 
 SCHEMA_VERSION = 1
 CHALLENGE = "GRRR-VC-D011"
+APPROVED_OPERATOR = "operator-speed"
 REPLAY_EXPORT_SHA256 = (
     "ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689"
 )
@@ -113,6 +114,10 @@ def validate_contract(value: dict) -> dict:
         raise AdmissionError("record_type differs")
     if value["challenge"] != CHALLENGE:
         raise AdmissionError("challenge differs")
+    # Enforce export hash binding
+    replay_export = value["replay_binding"].get("export_sha256")
+    if replay_export != REPLAY_EXPORT_SHA256:
+        raise AdmissionError("replay export hash binding differs")
     core = {k: v for k, v in value.items() if k != "contract_sha256"}
     if value["contract_sha256"] != _digest(core):
         raise AdmissionError("contract_sha256 mismatch")
@@ -137,6 +142,8 @@ def validate_authorization(auth: dict, contract: dict) -> dict:
         raise AdmissionError("authorization targets a different contract")
     if not isinstance(auth["authorized_by"], str) or not OPERATOR_RE.match(auth["authorized_by"]):
         raise AdmissionError("authorized_by must be a valid operator name")
+    if auth["authorized_by"] != APPROVED_OPERATOR:
+        raise AdmissionError("authorized_by is not the approved operator")
     if not isinstance(auth["authorized_at"], str) or not TIMESTAMP_RE.match(auth["authorized_at"]):
         raise AdmissionError("authorized_at must be ISO-8601 UTC")
     if auth["authorization_type"] != "permanent-contract-admission":
@@ -162,13 +169,42 @@ def check_gates(replay_receipt: dict) -> dict:
     return results
 
 
+_consumed_authorizations = set()
+
+
+def consume_authorization(auth: dict) -> str:
+    """Consume a validated authorization so it cannot be reused."""
+    auth_hash = _digest(auth)
+    if auth_hash in _consumed_authorizations:
+        raise AdmissionError("authorization already consumed")
+    _consumed_authorizations.add(auth_hash)
+    return auth_hash
+
+
+_admitted_contracts = {}
+
+
+def persist_admission(admission: dict) -> dict:
+    """Persist an admission to the in-process registry; reject duplicates."""
+    contract_hash = admission["contract_sha256"]
+    if contract_hash in _admitted_contracts:
+        raise AdmissionError("contract already admitted")
+    _admitted_contracts[contract_hash] = admission
+    return admission
+
+
 def admit(contract: dict, authorization: dict, replay_receipt: dict) -> dict:
     """Perform contract admission after all checks pass."""
     validated_contract = validate_contract(contract)
     validated_auth = validate_authorization(authorization, validated_contract)
-    check_gates(replay_receipt)
-    auth_hash = _digest(validated_auth)
-    return {
+    # Bind receipt to the contract's export hash
+    receipt_finding = replay_receipt.get("finding")
+    receipt_verified = replay_receipt.get("verified")
+    if receipt_finding != "Verified defect" or receipt_verified is not True:
+        raise AdmissionError("replay receipt finding/verified mismatch")
+    gate_results = check_gates(replay_receipt)
+    auth_hash = consume_authorization(validated_auth)
+    admission = {
         "schema_version": SCHEMA_VERSION,
         "record_type": "grrr-contract-admission-v1",
         "contract_sha256": validated_contract["contract_sha256"],
@@ -176,15 +212,25 @@ def admit(contract: dict, authorization: dict, replay_receipt: dict) -> dict:
         "admitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "registry_version": 1,
         "outcome": "admitted",
+        "gate_results": gate_results,
     }
+    return persist_admission(admission)
 
 
 def recurrence_rejected(admission: dict, replay_receipt: dict) -> bool:
     """Check that the admitted contract rejects recurrence of the defect."""
+    if not isinstance(admission, dict):
+        return False
+    if not isinstance(replay_receipt, dict):
+        return False
     if admission.get("outcome") != "admitted":
         return False
-    if replay_receipt.get("finding") != "Verified defect":
+    contract_hash = admission.get("contract_sha256")
+    if not contract_hash or not HASH_RE.match(contract_hash):
         return False
-    if replay_receipt.get("verified") is not True:
+    if contract_hash not in _admitted_contracts:
         return False
-    return True
+    gates = admission.get("gate_results", {})
+    if not gates or not all(s == "pass" for s in gates.values()):
+        return False
+    return replay_receipt.get("finding") == "Verified defect" and replay_receipt.get("verified") is True

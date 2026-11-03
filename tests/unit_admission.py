@@ -11,7 +11,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "research"))
 
 from admission import (
+    APPROVED_OPERATOR,
     CHALLENGE,
+    REPLAY_EXPORT_SHA256,
     AdmissionError,
     admit,
     build_contract,
@@ -20,6 +22,7 @@ from admission import (
     validate_authorization,
     validate_contract,
 )
+import admission as _admission_mod
 
 VALID_RECEIPT = {
     "finding": "Verified defect",
@@ -52,6 +55,8 @@ def _valid_auth(contract):
 
 class TestAdmission(unittest.TestCase):
     def setUp(self):
+        _admission_mod._consumed_authorizations.clear()
+        _admission_mod._admitted_contracts.clear()
         self.contract = build_contract()
         self.auth = _valid_auth(self.contract)
         self.receipt = copy.deepcopy(VALID_RECEIPT)
@@ -99,6 +104,53 @@ class TestAdmission(unittest.TestCase):
         bad["authorization_type"] = "software-promotion"
         with self.assertRaises(AdmissionError):
             validate_authorization(bad, self.contract)
+
+    def test_wrong_operator_rejects(self):
+        bad = copy.deepcopy(self.auth)
+        bad["authorized_by"] = "intruder"
+        with self.assertRaises(AdmissionError):
+            validate_authorization(bad, self.contract)
+
+    def test_wrong_export_hash_rejects(self):
+        bad = copy.deepcopy(self.contract)
+        bad["replay_binding"]["export_sha256"] = "0" * 64
+        with self.assertRaises(AdmissionError):
+            validate_contract(bad)
+
+    def test_authorization_consumed_after_use(self):
+        result1 = admit(self.contract, self.auth, self.receipt)
+        self.assertEqual(result1["outcome"], "admitted")
+        # Same authorization cannot be reused
+        with self.assertRaises(AdmissionError):
+            admit(self.contract, self.auth, self.receipt)
+
+    def test_duplicate_contract_admission_rejects(self):
+        result1 = admit(self.contract, self.auth, self.receipt)
+        self.assertEqual(result1["outcome"], "admitted")
+        # New authorization for same contract also blocked (already admitted)
+        auth2 = copy.deepcopy(self.auth)
+        auth2["authorized_at"] = "2026-11-03T18:00:00Z"
+        with self.assertRaises(AdmissionError):
+            admit(self.contract, auth2, self.receipt)
+
+    def test_recurrence_checks_contract_registry(self):
+        result = admit(self.contract, self.auth, self.receipt)
+        # Valid recurrence check
+        self.assertTrue(recurrence_rejected(result, self.receipt))
+        # Fake admission (not in registry) rejects
+        fake = {"outcome": "admitted", "contract_sha256": "f" * 64}
+        self.assertFalse(recurrence_rejected(fake, self.receipt))
+
+    def test_recurrence_checks_gate_results(self):
+        result = admit(self.contract, self.auth, self.receipt)
+        bad_result = copy.deepcopy(result)
+        bad_result["gate_results"]["isolation"] = "not-run"
+        self.assertFalse(recurrence_rejected(bad_result, self.receipt))
+
+    def test_admission_includes_gate_results(self):
+        result = admit(self.contract, self.auth, self.receipt)
+        self.assertIn("gate_results", result)
+        self.assertEqual(len(result["gate_results"]), 9)
 
     def test_all_gates_pass(self):
         results = check_gates(self.receipt)
