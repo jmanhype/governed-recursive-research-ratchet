@@ -4,7 +4,7 @@ title: "Verify a defect from fresh trusted inputs"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, blocked, delivered, accepted]
+labels: [milestone-1, integration, blocked, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
