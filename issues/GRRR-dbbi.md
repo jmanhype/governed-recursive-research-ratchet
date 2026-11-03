@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:17:10Z
-content_hash: "sha256:d7f85e54f11dec1198ea1b1030518cd72d7d7dac398d0d428d703b9febf1d6bd"
+content_hash: "sha256:d257c79a6bf194bd74a5c5d097835aec18a69f2c1dea3de34672be74977cfd09"
 blocks: [GRRR-fmvp, GRRR-6sso]
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
@@ -175,3 +175,6 @@ status: delivered
 - [ ] AC #3: Jev endpoint verification (blocked — no adapter)
 - [ ] AC #5: unique defect counting with replay receipts (deferred)
 - [ ] AC #6: business target evaluation (blocked — comparison incomplete)
+
+### 2026-11-03T17:17:10Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
