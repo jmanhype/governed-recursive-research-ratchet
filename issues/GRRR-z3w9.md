@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T05:18:52Z
-content_hash: "sha256:de70aef8a0da284871238bd614cf283f60ff877f860df2176dfba8e44f616200"
+updated_at: 2026-11-03T05:19:56Z
+content_hash: "sha256:dbbccd33c1ed34c1fbf17364b47141ae71a062f09038c61e3ae3fd310b2d73ec"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3340,3 +3340,27 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-11-03T05:19:56Z speed
+## 2026-11-02 Operator-Authorized Stage P Commit — Completed
+
+Operator approval “Ok begin until done” was interpreted through the previously stated next safe scope: commit the independently approved Stage P WIP, then begin Stage Q v4 installer source implementation and independent review. No protected access, installer execution, protected staging, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push was authorized.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `5c130a02958042975c8522f71e134f19627c999d`.
+- Parent: `2051e7dd5378db6ed4c2057dd50aa3287bfe3525`.
+- Subject: `feat(GRRR-z3w9): design v4 installer authorization contract`.
+- Worktree is clean after commit.
+- No push occurred.
+
+### Verification before commit
+
+- Stage P package: 13/13 members PASS; package SHA-256 `ba7e8a45486a21ff399027821d3b0bd1d21c6577730597f900f3c21fb192c0b1`.
+- Focused Stage P tests: 27/27 on Homebrew Python 3.14.3 and Miniconda Python 3.12.7.
+- Deterministic emitter matched retained `CONTRACT.json`.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+
+Stage Q begins as repository-only installer-core implementation. The checkout entrypoint must refuse live installation; exact protected source issuance and installation remain separately reviewable gates.
