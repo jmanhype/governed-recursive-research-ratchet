@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T16:58:44Z
-content_hash: "sha256:99f1cbd47fc86ed59d5737f50dd3233fd0ca4ac95dd83aea858bd15ab0063cbe"
+updated_at: 2026-11-03T17:03:24Z
+content_hash: "sha256:ea4a3354d6c1c41a7e209b938670d68f2de0793d30ef1987885e3bd2ffe1c310"
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
 assignee: dev-GRRR-z3w9
@@ -4177,3 +4177,14 @@ status: delivered
 - [x] AC #3: ReplayReceipt carries Finding=Verified defect and each mandatory gate with evidence.
 - [x] AC #4: Real integration tests executed with valid seed, clean baseline, and isolated candidate.
 - [ ] AC #5: Two consecutive independent replay failures policy not triggered (zero failures; not applicable to this successful run).
+
+### 2026-11-03T17:03:24Z speed
+## 2026-11-03 Authoritative Merge Result
+
+Accepted story GRRR-z3w9 was merged into epic/GRRR-2t3h.
+
+- Story branch: story/GRRR-z3w9
+- Story HEAD: $(git -C "$W" rev-parse HEAD)
+- Epic HEAD after merge: $(git rev-parse HEAD)
+- Story commit contains in epic: yes
+- No push (local only)
