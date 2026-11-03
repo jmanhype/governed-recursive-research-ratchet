@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T17:39:31Z
-content_hash: "sha256:5853e0c27db8dd6876a9257262fd79f4dd79d93ffb0579236b041c71a68d1e72"
+content_hash: "sha256:a5fa6591ce96324ae079ee4ed55d3e259f704b8316e336dd2f81dc2671f9364f"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f]
 ---
@@ -191,3 +191,6 @@ status: delivered
 - [ ] AC #4: Stop/recovery full testing (deferred)
 - [ ] AC #5: Adversarial testing full suite (deferred)
 - [ ] AC #6: Accessibility walkthrough (deferred)
+
+### 2026-11-03T17:39:31Z speed
+EXPECTED: Delivered capstone must include implementation evidence, commands/test results, commit SHA, AC-by-AC verification, and complete or explicitly blocked status for all seven ACs. DELIVERED: verify-delivery failed 6/9: missing Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA, and AC verification. Independent PM review returned REVIEW_RESULT: REJECTED. GAP: AC2 full-corpus system proof, AC4 stop/recovery proof, AC5 full adversarial proof, and AC6 accessibility walkthrough remain unchecked; AC3 is incomplete because Jev was recorded unavailable. FIX: rework as the dispatched story, retain real artifacts, provide exact commands/exit counts/revisions/hashes, and either complete the Jev arm under authorized secret handling or record a blocked result without claiming completion.
