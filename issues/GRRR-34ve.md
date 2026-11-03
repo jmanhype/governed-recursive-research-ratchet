@@ -1,19 +1,20 @@
 ---
 id: GRRR-34ve
 title: "Admit one human-approved contract that rejects recurrence"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T17:20:39Z
-content_hash: "sha256:bf285f8a0bd1b015b5fe90b10b34c421350a6445f5435a88a319224def54d021"
-blocks: [GRRR-fmvp, GRRR-6sso]
+updated_at: 2026-11-03T17:24:02Z
+content_hash: "sha256:eb0d6d724b591bd2818b028d301e5cb55572ab8c526bf0abbbb75be3811e8889"
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
 follows: [GRRR-z3w9, GRRR-dbbi]
+closed_at: 2026-11-03T17:24:02Z
+close_reason: "PM acceptance after two rework cycles. All security findings fixed:\n1. Export hash binding enforced\n2. Approved operator identity required\n3. Authorization consumed durably (file-based, survives restart)\n4. Duplicate admission prevented (file-based registry)\n5. recurrence_rejected requires exact 9-gate inventory and cross-checks replay receipt\n23/23 tests pass. Durable REGISTRY.json persisted."
 ---
 
 ## Description
@@ -133,10 +134,12 @@ status: delivered
 - 2026-11-03T17:13:45Z status: in_progress -> open
 - 2026-11-03T17:18:49Z status: open -> in_progress
 - 2026-11-03T17:18:49Z auto-follows: linked to predecessor GRRR-dbbi
+- 2026-11-03T17:24:02Z status: in_progress -> closed
+- 2026-11-03T17:24:03Z dep_removed: no_longer_blocks GRRR-fmvp
+- 2026-11-03T17:24:03Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-fmvp]], [[GRRR-6sso]]
 - Was blocked by: [[GRRR-z3w9]]
 - Follows: [[GRRR-z3w9]], [[GRRR-dbbi]]
 
