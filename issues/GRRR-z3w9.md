@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T05:19:56Z
-content_hash: "sha256:dbbccd33c1ed34c1fbf17364b47141ae71a062f09038c61e3ae3fd310b2d73ec"
+updated_at: 2026-11-03T05:43:55Z
+content_hash: "sha256:2271e631c4424c76688382bcbcecbfbc28e94d6952b76a484187029cafcafb6e"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3364,3 +3364,71 @@ Operator approval “Ok begin until done” was interpreted through the previous
 - `git diff --check`: PASS.
 
 Stage Q begins as repository-only installer-core implementation. The checkout entrypoint must refuse live installation; exact protected source issuance and installation remain separately reviewable gates.
+
+### 2026-11-03T05:43:55Z speed
+## 2026-11-02 Stage Q Installer Core — Two Independent Review Rejections; Work Stopped
+
+Operator approval “Ok begin until done” was interpreted as continue the repository-only Stage Q v4 installer source implementation and review. Stage Q did not intentionally read protected content, stage protected records, execute a protected installer, amend budget, reconcile, execute replay, promote, admit, merge, mutate production, or push.
+
+### Completed repository implementation
+
+- Added sandbox installer core `research/replay_successor_installer.py`.
+- Added checkout-refusing CLI `scripts/install-replay-successor-v4`.
+- Added `tests/unit_replay_successor_installer.py`.
+- The core validates exact eight-role source identities, plan/review/external authorization, synthetic canonical identity, stopped empty v4 store creation, binding/database receipts, one-shot target behavior, uncertain failure evidence, exact authority denial, and checkout refusal.
+- Repaired a separate full-suite durability defect after Codex session retention removed a mutable original source archive. Stage I/K/L validators now use hash-pinned retained publications when that source is absent, while preserving original source identity and unresolved unknowns rather than treating absence as zero.
+- Added retained Stage L projection SHA-256 `e568f36d965aa425971744573b562f005c3f1279ba73fef7610bc495224faaa3`.
+
+### First review
+
+Initial review returned `STAGE_Q_INSTALLER_CORE_REVIEW: REJECTED`:
+
+1. postflight failure could leave success-looking artifacts plus uncertainty, and verifier still accepted it;
+2. exact SQLite object/schema inventory was missing;
+3. sandbox containment was only caller convention.
+
+Correction added uncertainty dominance, exact object/DDL checks, explicit sandbox-root containment, protected-root lexical rejection, symlink checks, and failure injection at each publication step. Local focused suites passed 34/34 and full suites passed 595/595 on both interpreters.
+
+### Second review
+
+Fresh narrow review returned `STAGE_Q_NARROW_REWORK_REVIEW: REJECTED`:
+
+1. `_safe_sandbox_path` performs metadata access before lexical protected-root rejection;
+2. `sandbox/../outside` can escape the supplied root;
+3. a sandbox root beneath a symlinked ancestor can evade ancestor checking.
+
+With protected metadata syscalls blocked, the reviewer measured 33 passed / 1 failed on both interpreters.
+
+### Boundary disclosure
+
+The repository’s own protected-root regression performed metadata access under `/Library/GRRR` before rejection. This was contrary to the declared no-access boundary. No protected content was read, no protected state changed, and the reviewer confirmed no protected mutation occurred. The finding is preserved in `docs/evidence/replay-authority/stage-q/NARROW-REVIEW-REJECTED.md`.
+
+Per the two-failure Astra escalation discipline, no third review of the same Stage Q brief was spawned. Work is stopped pending explicit operator direction.
+
+### Current state
+
+- Story HEAD remains `5c130a02958042975c8522f71e134f19627c999d`.
+- Stage Q implementation/evidence is uncommitted WIP.
+- Claim is released after this handoff.
+- No protected installation, budget amendment, reconciliation, replay, admission, promotion, merge, or push occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage Q source/tests and both review rejections are present as WIP.
+- Reviewer evidence is retained under `docs/evidence/replay-authority/stage-q/`.
+
+### proof
+- [x] Repository-only installer core implemented and tested.
+- [x] Mutable-session durability defect repaired with hash-pinned retained projections.
+- [x] Initial review blockers substantially corrected and covered by tests.
+- [x] Narrow review found remaining protected-boundary metadata ordering, `..`, and symlink-root escapes.
+- [x] Two independent review rejections preserved; no third same-brief Astra review spawned.
+- [ ] Explicit operator direction obtained for Stage Q containment rework and a fresh, differently scoped review.
+- [ ] Stage Q WIP corrected, independently reviewed, committed, and accepted.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
