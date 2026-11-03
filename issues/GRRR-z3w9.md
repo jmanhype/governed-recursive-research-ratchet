@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T15:30:11Z
-content_hash: "sha256:28cf84660130391f24f5720133bf7909445d84b6dab2df690d4eb5974d77cbcd"
+updated_at: 2026-11-03T15:32:42Z
+content_hash: "sha256:d9998582188c0e9d6cb8877809494cb5cdbd139ebe7d5292e0ae2464eb2fe411"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3911,3 +3911,31 @@ STAGE_T_NARROW_REWORK_REVIEW: REJECTED — three remaining blockers:
 
 ### State
 Per two-rejection escalation discipline, no third review of the same Stage T brief will be spawned without explicit operator direction. The corrected WIP is present but uncommitted. Story claim is released.
+
+### 2026-11-03T15:32:42Z speed
+## 2026-11-03 Stage T Commit — Independently Approved Second-Fix Review
+
+Operator directed "You decide." Following the Stage R pattern, a fresh differently-scoped review of only the three second-rejection fixes was spawned.
+
+### Review outcome
+STAGE_T_SECOND_FIX_REVIEW: APPROVED
+
+Reviewer independently verified:
+- Traversal/subdirectory/unnormalized/empty destinations all reject
+- Relative-path ancestor check raises; CLI exits 1
+- Short-write, hash-mismatch, and size-mismatch probes all raise
+- 35/35 focused tests both interpreters
+- Package SHA-256: 2146c99d3e8af2d9821c69d00e3b0f381c72aabd6fc31e3b5f7713c83720e182
+
+### Commit
+- Commit: 2a01a2b1dac15f841c64c3c7f12edbf40170f352
+- Parent: 19ec1da534174039105a9ceaa532d13c91d8f09c
+- Files: 12 files, 1226 insertions
+- Worktree clean after commit
+- Full no-guest: 691/691 both interpreters
+
+### Boundaries preserved
+No /Library/GRRR access, protected staging execution, installation, budget amendment, reconciliation, replay, promotion, admission, merge, or push.
+
+### State
+Stage T committed. Story remains open/blocked. Next: operator must fill the authorization record and authorize actual protected staging.
