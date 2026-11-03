@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T13:47:16Z
-content_hash: "sha256:96d1a88d17b872a4a03d3f6afdbfb0f82ab7c753ff4b445b7caa0785e3db8eeb"
+updated_at: 2026-11-03T14:07:41Z
+content_hash: "sha256:09f07c6d9cbc523775eddc555190874a26bb8cb4d86366ab6dfdac425fe355a5"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3576,3 +3576,77 @@ status: in_progress
 ## 2026-11-03 Operator-Authorized Stage R Source Issuance Preparation — Started
 
 Operator authorized exact v4 protected-source issuance-package preparation and independent review. Scope is repository-only: prepare the eight exact Stage P source-role bytes and their hash-bound issuance record, prove sandbox functionality, and obtain review. No `/Library/GRRR` access or mutation, protected staging/installation, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push is authorized.
+
+### 2026-11-03T14:07:41Z speed
+## 2026-11-03 Stage R Source Issuance Preparation — Two Review Rejections; Work Stopped
+
+Operator authorized exact v4 protected-source issuance-package preparation and independent review. No `/Library/GRRR` access or mutation, protected staging/installation, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+### Implemented WIP
+
+- Added eight retained source-role files under `docs/evidence/replay-authority/stage-r/source/`.
+- Added builder `research/replay_successor_source_issuance.py`, emitter `scripts/prepare-replay-successor-v4-source-issuance`, and `tests/unit_replay_successor_source_issuance.py`.
+- Generated exact `SOURCE-BUNDLE.json`.
+- Package maps exactly the eight Stage P roles and protected destination paths.
+- All eight source hashes are distinct and pinned.
+- Stage N source preserves unresolved spendability, all original ceilings encumbered, and the three exact predecessor holds.
+- Stage O source remains unissued and blocks replay.
+- Sandbox source checks exercise store creation, exact SQLite object/DDL postflight, atomic publication, uncertainty preservation, protected preflight, and checkout refusal.
+- Bundle remains `prepared-not-issued`; operator issuance and protected staging remain not-run; all authority remains false.
+
+### First review
+
+`STAGE_R_SOURCE_ISSUANCE_REVIEW: REJECTED`
+
+Findings:
+1. an existing leaf symlink was accepted when `exists=False`;
+2. sandbox root could be accepted as a file target;
+3. initial review request had an installer hash typo.
+
+Correction rejected existing leaf symlinks and root-as-file, added regressions, and regenerated hashes.
+
+### Second review
+
+`STAGE_R_NARROW_REWORK_REVIEW: REJECTED`
+
+Remaining blocker:
+- final-leaf validation now unconditionally calls `lstat`;
+- a genuinely absent final leaf with `exists=False` raises `FileNotFoundError`;
+- the `exists` argument is unused.
+
+Reviewer confirmed the corrected symlink/root cases and all other package properties still pass, but controlled absence regressed.
+
+### Current measured state
+
+- Stage R focused after first correction: 15/15 on Python 3.14.3 and 3.12.7.
+- Full no-guest suites: 613/613 on Python 3.14.3 and 3.12.7.
+- Deterministic bundle regeneration: byte-identical.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+- Current canonical role identity: `2fc2821d0301718e94072f46094b959131598c7233b158dead64fb7a0b46cbff`.
+- Current generated bundle SHA-256: `38cc6f7904cf130e616772c98d1b526785763871dd6f498d1f02bb8af916e4e4`.
+
+### State
+
+Per two-failure escalation discipline, no third review of the same Stage R brief was spawned. Stage R remains uncommitted WIP; claim is released. A revised absent-leaf correction and fresh differently scoped review require explicit operator direction.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Stage R source package, builder, tests, generated bundle, logs, both rejection findings, and report are present as WIP.
+- No protected access or operational effect occurred.
+
+### proof
+- [x] Exact eight-role source package prepared in repository.
+- [x] Distinct role hashes and canonical role identity generated deterministically.
+- [x] Stage N/O semantics, stopped/empty SQLite behavior, uncertainty, and refusal behavior tested.
+- [x] First review blockers substantially corrected.
+- [x] Second review preserved the remaining genuine-absence regression.
+- [ ] Operator direction for revised absent-leaf rework and fresh differently scoped review.
+- [ ] Stage R WIP corrected, independently reviewed, committed, and accepted.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
