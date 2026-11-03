@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T17:32:11Z
-content_hash: "sha256:92eda7393570553bf7189790e8e01d4bf8b749b96e7944ed30c1fd748c7897b4"
+updated_at: 2026-11-03T17:32:12Z
+content_hash: "sha256:e1ffe3dcdb39f78cda72eaa67caad062b169121dc3dc33f7e8edec519dcdcca1"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 assignee: dev-GRRR-6sso
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
@@ -158,3 +158,23 @@ status: new
 - Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
 
 ## Comments
+
+### 2026-11-03T17:32:12Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Final milestone packet: docs/evidence/milestone-packet/FINAL-PACKET.md
+- Maps all 12 architecture ACs to evidence
+- 14/15 sibling stories accepted (this is the 15th)
+- Core value proposition proven: verified defect → permanent contract
+- Honest gaps documented: Jev, three-arm comparison, full capstone
+
+### proof
+- [x] AC #1 partial: Operator journey demonstrated (replay → review → admission)
+- [x] AC #3 partial: Jev honestly unavailable; comparison incomplete
+- [x] AC #7: Final packet maps architecture to evidence
+- [ ] AC #2: Full corpus suite through complete system (deferred)
+- [ ] AC #4: Stop/recovery full testing (deferred)
+- [ ] AC #5: Adversarial testing full suite (deferred)
+- [ ] AC #6: Accessibility walkthrough (deferred)
