@@ -1,17 +1,19 @@
 ---
 id: GRRR-fmvp
 title: "Review the same governed decision across accessible surfaces"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, integration]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-10-20T03:20:57Z
-content_hash: "sha256:0529b5c652961a6ba1bd66bcd139c4b1fcb3383d7c615411fc51a3e11f62c6f6"
+updated_at: 2026-11-03T17:30:13Z
+content_hash: "sha256:40cc9319901f07a79beca123c2d67eac379d12fa2ad3d2c048d9567e7820fb7a"
 blocks: [GRRR-6sso]
 was_blocked_by: [GRRR-dbbi, GRRR-34ve]
+assignee: dev-GRRR-fmvp
+follows: [GRRR-dbbi, GRRR-34ve]
 ---
 
 ## Description
@@ -127,10 +129,15 @@ status: new
 - 2026-10-20T03:19:06Z dep_added: blocks GRRR-6sso
 - 2026-11-03T17:17:56Z dep_removed: was_blocked_by GRRR-dbbi
 - 2026-11-03T17:24:03Z dep_removed: was_blocked_by GRRR-34ve
+- 2026-11-03T17:30:13Z status: open -> in_progress
+- 2026-11-03T17:30:13Z auto-follows: linked to predecessor GRRR-dbbi
+- 2026-11-03T17:30:13Z auto-follows: linked to predecessor GRRR-34ve
+- 2026-11-03T17:30:13Z claimed by dev-GRRR-fmvp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
 - Was blocked by: [[GRRR-dbbi]], [[GRRR-34ve]]
+- Follows: [[GRRR-dbbi]], [[GRRR-34ve]]
 
 ## Comments
