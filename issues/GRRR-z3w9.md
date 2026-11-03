@@ -4,11 +4,11 @@ title: "Verify a defect from fresh trusted inputs"
 status: closed
 priority: 1
 type: task
-labels: [milestone-1, integration, blocked, delivered]
+labels: [milestone-1, integration, blocked, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T16:58:43Z
+updated_at: 2026-11-03T16:58:44Z
 content_hash: "sha256:ebe7a36b2c09270131ce85da699b9c238cff8d860b5a0071e4036363efd71468"
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
