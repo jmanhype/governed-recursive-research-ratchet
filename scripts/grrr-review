@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""GRRR replay review surface — generate reports from verified evidence."""
+import argparse, json, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "research"))
+
+from review_report import load_replay_data, build_report, to_markdown, to_plain_text, to_json
+
+EVIDENCE = ROOT / "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe"
+
+def main():
+    p = argparse.ArgumentParser(description="GRRR replay review")
+    p.add_argument("--format", choices=["text", "markdown", "json"], default="text")
+    args = p.parse_args()
+    data = load_replay_data(EVIDENCE)
+    report = build_report(data)
+    if args.format == "markdown":
+        print(to_markdown(report))
+    elif args.format == "json":
+        print(to_json(report))
+    else:
+        print(to_plain_text(report))
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())
