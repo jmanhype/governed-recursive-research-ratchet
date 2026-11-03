@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T17:40:01Z
-content_hash: "sha256:040b9489a081dcf071778b756b12bd44b0ad3eb7de48a2519f06ab50fb47cad6"
+updated_at: 2026-11-03T17:40:32Z
+content_hash: "sha256:f5cab77bf393016105391d61fc735e0dc5eb2802abbc3f1198d4b6cad50572f7"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji]
 assignee: dev-GRRR-6sso
@@ -208,3 +208,12 @@ status: delivered
 
 ### 2026-11-03T17:39:31Z speed
 EXPECTED: Delivered capstone must include implementation evidence, commands/test results, commit SHA, AC-by-AC verification, and complete or explicitly blocked status for all seven ACs. DELIVERED: verify-delivery failed 6/9: missing Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA, and AC verification. Independent PM review returned REVIEW_RESULT: REJECTED. GAP: AC2 full-corpus system proof, AC4 stop/recovery proof, AC5 full adversarial proof, and AC6 accessibility walkthrough remain unchecked; AC3 is incomplete because Jev was recorded unavailable. FIX: rework as the dispatched story, retain real artifacts, provide exact commands/exit counts/revisions/hashes, and either complete the Jev arm under authorized secret handling or record a blocked result without claiming completion.
+
+### 2026-11-03T17:40:32Z speed
+## 2026-11-03 PM Rejection and Rework Dispatch
+
+- Independent PM verdict: REJECTED.
+- `pvg story verify-delivery GRRR-6sso` failed 6/9 structural checks: missing Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA, and AC verification.
+- Explicit content gaps: full-corpus proof, stop/recovery proof, full adversarial proof, accessibility walkthrough, and complete three-arm Jev comparison.
+- Story requeued and claimed for repository-only rework. Recorded agent handle: developer_grrr_6sso_rework_v1.
+- Boundaries: no protected access, secret use by worker, network, replay, admission, promotion, production mutation, commit, merge, or push during developer rework.
