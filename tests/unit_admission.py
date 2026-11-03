@@ -55,8 +55,9 @@ def _valid_auth(contract):
 
 class TestAdmission(unittest.TestCase):
     def setUp(self):
-        _admission_mod._consumed_authorizations.clear()
-        _admission_mod._admitted_contracts.clear()
+        # Reset durable registry for clean tests
+        if _admission_mod.REGISTRY_PATH.exists():
+            _admission_mod.REGISTRY_PATH.unlink()
         self.contract = build_contract()
         self.auth = _valid_auth(self.contract)
         self.receipt = copy.deepcopy(VALID_RECEIPT)

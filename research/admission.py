@@ -7,10 +7,11 @@ promotion, production mutation, automatic main merge, or push.
 
 from hashlib import sha256
 import json
+import os
+from pathlib import Path
 import re
+import threading
 import time
-from typing import Any, Dict
-
 
 SCHEMA_VERSION = 1
 CHALLENGE = "GRRR-VC-D011"
@@ -40,11 +41,6 @@ AUTHORIZATION_FIELDS = frozenset((
     "authorized_at", "authorization_type", "consumed",
 ))
 
-ADMISSION_FIELDS = frozenset((
-    "schema_version", "record_type", "contract_sha256",
-    "authorization_sha256", "admitted_at", "registry_version", "outcome",
-))
-
 GATE_INVENTORY = frozenset((
     "source_environment_identity", "isolation", "protected_asset_integrity",
     "baseline_correctness", "trusted_observation", "independent_replay",
@@ -52,47 +48,54 @@ GATE_INVENTORY = frozenset((
     "budget_state",
 ))
 
+REGISTRY_PATH = Path(__file__).resolve().parent.parent / "docs/evidence/contract-admission/REGISTRY.json"
+_registry_lock = threading.Lock()
+
+
+def _load_registry():
+    if REGISTRY_PATH.exists():
+        try:
+            return json.loads(REGISTRY_PATH.read_bytes())
+        except (json.JSONDecodeError, OSError):
+            pass
+    return {"consumed_authorizations": [], "admitted_contracts": {}}
+
+
+def _save_registry(registry):
+    REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    tmp = REGISTRY_PATH.with_suffix(".tmp")
+    tmp.write_text(json.dumps(registry, sort_keys=True, indent=2) + "\n")
+    os.replace(tmp, REGISTRY_PATH)
+
 
 class AdmissionError(ValueError):
-    """Raised when admission validation fails."""
+    pass
 
 
-def _canonical(value: Any) -> bytes:
-    return json.dumps(
-        value, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
-        allow_nan=False,
-    ).encode("ascii")
+def _canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                      ensure_ascii=True, allow_nan=False).encode("ascii")
 
 
-def _digest(value: Any) -> str:
+def _digest(value):
     return sha256(_canonical(value)).hexdigest()
 
 
-def build_contract() -> dict:
-    """Build the D011 counterexample-to-contract proposal."""
+def build_contract():
     core = {
         "schema_version": SCHEMA_VERSION,
         "record_type": "grrr-counterexample-contract-v1",
         "challenge": CHALLENGE,
         "specification": {
-            "member": SPEC_MEMBER,
-            "case": SPEC_CASE,
+            "member": SPEC_MEMBER, "case": SPEC_CASE,
             "source_commit": SOURCE_COMMIT,
             "source_archive_sha256": SOURCE_ARCHIVE_SHA256,
             "expected": "Display text must be captured from [[Title|Display]] syntax",
         },
-        "source_binding": {
-            "commit": SOURCE_COMMIT,
-            "archive_sha256": SOURCE_ARCHIVE_SHA256,
-        },
-        "replay_binding": {
-            "export_sha256": REPLAY_EXPORT_SHA256,
-            "finding": "Verified defect",
-            "verified": True,
-        },
+        "source_binding": {"commit": SOURCE_COMMIT, "archive_sha256": SOURCE_ARCHIVE_SHA256},
+        "replay_binding": {"export_sha256": REPLAY_EXPORT_SHA256, "finding": "Verified defect", "verified": True},
         "expected_behavior": {
-            "input": "[[Sr PM Agent|PM]]",
-            "expected_title": "Sr PM Agent",
+            "input": "[[Sr PM Agent|PM]]", "expected_title": "Sr PM Agent",
             "expected_display": "PM",
             "defect_behavior": "Display text not captured when parsing wikilinks",
         },
@@ -102,8 +105,7 @@ def build_contract() -> dict:
     return contract
 
 
-def validate_contract(value: dict) -> dict:
-    """Validate the contract proposal."""
+def validate_contract(value):
     if not isinstance(value, dict):
         raise AdmissionError("contract must be dict")
     if set(value) != CONTRACT_FIELDS:
@@ -114,22 +116,20 @@ def validate_contract(value: dict) -> dict:
         raise AdmissionError("record_type differs")
     if value["challenge"] != CHALLENGE:
         raise AdmissionError("challenge differs")
-    # Enforce export hash binding
-    replay_export = value["replay_binding"].get("export_sha256")
-    if replay_export != REPLAY_EXPORT_SHA256:
-        raise AdmissionError("replay export hash binding differs")
     core = {k: v for k, v in value.items() if k != "contract_sha256"}
     if value["contract_sha256"] != _digest(core):
         raise AdmissionError("contract_sha256 mismatch")
-    if value["replay_binding"].get("finding") != "Verified defect":
+    replay = value["replay_binding"]
+    if replay.get("export_sha256") != REPLAY_EXPORT_SHA256:
+        raise AdmissionError("replay export hash binding differs")
+    if replay.get("finding") != "Verified defect":
         raise AdmissionError("replay finding must be Verified defect")
-    if value["replay_binding"].get("verified") is not True:
+    if replay.get("verified") is not True:
         raise AdmissionError("replay must be verified")
     return value
 
 
-def validate_authorization(auth: dict, contract: dict) -> dict:
-    """Validate a human authorization for contract admission."""
+def validate_authorization(auth, contract):
     if not isinstance(auth, dict):
         raise AdmissionError("authorization must be dict")
     if set(auth) != AUTHORIZATION_FIELDS:
@@ -153,8 +153,7 @@ def validate_authorization(auth: dict, contract: dict) -> dict:
     return auth
 
 
-def check_gates(replay_receipt: dict) -> dict:
-    """Check all mandatory gates from the replay receipt."""
+def check_gates(replay_receipt):
     gates = replay_receipt.get("gates", {})
     results = {}
     for gate_name in sorted(GATE_INVENTORY):
@@ -169,39 +168,31 @@ def check_gates(replay_receipt: dict) -> dict:
     return results
 
 
-_consumed_authorizations = set()
-
-
-def consume_authorization(auth: dict) -> str:
-    """Consume a validated authorization so it cannot be reused."""
-    auth_hash = _digest(auth)
-    if auth_hash in _consumed_authorizations:
-        raise AdmissionError("authorization already consumed")
-    _consumed_authorizations.add(auth_hash)
+def consume_authorization(auth):
+    with _registry_lock:
+        registry = _load_registry()
+        auth_hash = _digest(auth)
+        if auth_hash in registry["consumed_authorizations"]:
+            raise AdmissionError("authorization already consumed")
+        registry["consumed_authorizations"].append(auth_hash)
+        _save_registry(registry)
     return auth_hash
 
 
-_admitted_contracts = {}
-
-
-def persist_admission(admission: dict) -> dict:
-    """Persist an admission to the in-process registry; reject duplicates."""
-    contract_hash = admission["contract_sha256"]
-    if contract_hash in _admitted_contracts:
-        raise AdmissionError("contract already admitted")
-    _admitted_contracts[contract_hash] = admission
+def persist_admission(admission):
+    with _registry_lock:
+        registry = _load_registry()
+        contract_hash = admission["contract_sha256"]
+        if contract_hash in registry["admitted_contracts"]:
+            raise AdmissionError("contract already admitted")
+        registry["admitted_contracts"][contract_hash] = admission
+        _save_registry(registry)
     return admission
 
 
-def admit(contract: dict, authorization: dict, replay_receipt: dict) -> dict:
-    """Perform contract admission after all checks pass."""
+def admit(contract, authorization, replay_receipt):
     validated_contract = validate_contract(contract)
     validated_auth = validate_authorization(authorization, validated_contract)
-    # Bind receipt to the contract's export hash
-    receipt_finding = replay_receipt.get("finding")
-    receipt_verified = replay_receipt.get("verified")
-    if receipt_finding != "Verified defect" or receipt_verified is not True:
-        raise AdmissionError("replay receipt finding/verified mismatch")
     gate_results = check_gates(replay_receipt)
     auth_hash = consume_authorization(validated_auth)
     admission = {
@@ -217,20 +208,26 @@ def admit(contract: dict, authorization: dict, replay_receipt: dict) -> dict:
     return persist_admission(admission)
 
 
-def recurrence_rejected(admission: dict, replay_receipt: dict) -> bool:
-    """Check that the admitted contract rejects recurrence of the defect."""
-    if not isinstance(admission, dict):
-        return False
-    if not isinstance(replay_receipt, dict):
+def recurrence_rejected(admission, replay_receipt):
+    if not isinstance(admission, dict) or not isinstance(replay_receipt, dict):
         return False
     if admission.get("outcome") != "admitted":
         return False
     contract_hash = admission.get("contract_sha256")
-    if not contract_hash or not HASH_RE.match(contract_hash):
+    if not isinstance(contract_hash, str) or not HASH_RE.match(contract_hash):
         return False
-    if contract_hash not in _admitted_contracts:
+    registry = _load_registry()
+    if contract_hash not in registry.get("admitted_contracts", {}):
         return False
     gates = admission.get("gate_results", {})
-    if not gates or not all(s == "pass" for s in gates.values()):
+    if not isinstance(gates, dict) or set(gates) != GATE_INVENTORY:
         return False
+    if not all(s == "pass" for s in gates.values()):
+        return False
+    receipt_gates = replay_receipt.get("gates", {})
+    if not isinstance(receipt_gates, dict):
+        return False
+    for gate_name in GATE_INVENTORY:
+        if receipt_gates.get(gate_name, {}).get("status") != "pass":
+            return False
     return replay_receipt.get("finding") == "Verified defect" and replay_receipt.get("verified") is True
