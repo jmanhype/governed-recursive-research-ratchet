@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T15:19:20Z
-content_hash: "sha256:9b38b7c664090630d8c9a07e54a63b1cf8c686817165ae5aa554af310face7b1"
+updated_at: 2026-11-03T15:29:00Z
+content_hash: "sha256:f2428019c825e596d03f8bfd9db581d814e9e871a7118cdeb52e7627e02588d2"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3876,3 +3876,34 @@ Stage T is defined as: exact parent-mediated protected-staging command preparati
 - Define the protected staging verification checklist
 - Obtain independent review
 - No /Library/GRRR access or mutation, no protected staging execution, no budget amendment, no reconciliation, no replay, no promotion, no admission, no merge, no push
+
+### 2026-11-03T15:29:00Z speed
+## 2026-11-03 Stage T — Two Rejections, Fixes Applied, Awaiting Operator Direction
+
+### Initial review
+STAGE_T_STAGING_REVIEW: REJECTED — four blockers:
+1. Symlink ancestors accepted (resolve() eliminated symlinks)
+2. Execution not authorization-bound (--protected alone sufficed)
+3. Outcome validator accepted outside destinations, all-zero digest, boolean bytes
+4. Source verification/copy race (hash one read, copy separate read)
+
+### First rework
+Fixed all four; added 5 regression tests (31 total).
+
+### Narrow rework review
+STAGE_T_NARROW_REWORK_REVIEW: REJECTED — three remaining blockers:
+1. Destination traversal: prefix check accepted /Library/GRRR/bootstrap/../../../tmp/elsewhere
+2. Relative sandbox roots bypassed symlink check
+3. Script hashed source raw bytes for "verify" rather than reading back destination; os.write return unchecked
+
+### Second rework (applied, not yet reviewed)
+- Destination validation now uses posixpath.normpath and rejects unnormalized, traversal, and subdirectory paths
+- check_no_symlink_ancestors requires absolute paths
+- Script checks os.write return length equals source length
+- Script reads back destination bytes and verifies hash and size
+- 4 additional regression tests (35 total)
+- All 35/35 focused tests pass both interpreters
+- Sandbox smoke passes; relative path rejected
+
+### State
+Per two-rejection escalation discipline, no third review of the same Stage T brief will be spawned without explicit operator direction. The corrected WIP is present but uncommitted. Story claim is released.
