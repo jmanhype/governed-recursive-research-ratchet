@@ -1,0 +1,24 @@
+{
+  "action": "install-fresh-v4-replay-successor-poc",
+  "authorization_hash": "dab4b0f67fa0f2a3dae4981bb00247d4bb12865f076938bce1d368485ce7d68c",
+  "authorized_by": "operator-speed",
+  "authorized_at": "2026-11-03T15:37:23Z",
+  "method": "sandbox-verify-then-protected-copy",
+  "outcome": "staged-not-installed",
+  "staging_root": "/Library/GRRR/bootstrap",
+  "staged_files": [
+    {"role": "installer-entrypoint", "sha256": "94b37112fc3b3146078b6edd0cf80d5e845f1cc83543344d79400d144d453dbc", "destination": "/Library/GRRR/bootstrap/install-replay-successor-v4", "bytes": 970, "mode": "0440", "owner": "root:wheel"},
+    {"role": "v4-store-schema", "sha256": "629c6a70936fb94ea4b4a89b4dc3c94095aa2586194c077e4c06258b2c7ce644", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-v4_store_schema.py", "bytes": 2443, "mode": "0440", "owner": "root:wheel"},
+    {"role": "stage-n-contract", "sha256": "d2105c6fbab6edd42ad9724e6ff2313d2531c11af14625bfb0cf8a81b9646fb5", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-stage_n_contract.py", "bytes": 2267, "mode": "0440", "owner": "root:wheel"},
+    {"role": "stage-o-runtime-adapter", "sha256": "f54f051684dd9be4ccf635d3029cb1f099ddb227e8d763efad2c8bf24e3478c4", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-stage_o_runtime_adapter.py", "bytes": 1445, "mode": "0440", "owner": "root:wheel"},
+    {"role": "protected-preflight", "sha256": "0e09ccc6f995e24ab983489755df6a14028c154a99b84811b95d6ea95bf0946f", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-protected_preflight.py", "bytes": 3067, "mode": "0440", "owner": "root:wheel"},
+    {"role": "atomic-publisher", "sha256": "c448f4853e6bb9467c6994b64b3f04dfd9ee9c6d0718de69529eb24218e5a719", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-atomic_publisher.py", "bytes": 892, "mode": "0440", "owner": "root:wheel"},
+    {"role": "postflight-verifier", "sha256": "f276c0bd84a4fe43d5661672600734120af1332c45c372fc6881a2913491ca46", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-postflight_verifier.py", "bytes": 2683, "mode": "0440", "owner": "root:wheel"},
+    {"role": "failure-preservation", "sha256": "8fb37a74e96c7fab7f96fed74ad1aea187fc306716ebb024a1cd0059ca9ded47", "destination": "/Library/GRRR/bootstrap/replay-successor-v4-failure_preservation.py", "bytes": 1263, "mode": "0440", "owner": "root:wheel"}
+  ],
+  "predecessor_untouched": true,
+  "installation_performed": false,
+  "budget_amended": false,
+  "reconciliation_performed": false,
+  "replay_executed": false
+}
