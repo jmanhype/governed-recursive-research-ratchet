@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T15:38:51Z
-content_hash: "sha256:029d913c0e1dfcd33323730fe8acb3758c5364dd3292e63dca104b55a2a240c1"
+updated_at: 2026-11-03T15:55:54Z
+content_hash: "sha256:dd6426867320721bafd1278e6be0104df146875a1371a8cd4f4ab2235e97cf65"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3973,3 +3973,29 @@ Operator directed "You do it for me." Protected staging was executed.
 - No reconciliation
 - No replay execution
 - No promotion/admission/merge/push
+
+### 2026-11-03T15:55:53Z speed
+## 2026-11-03 v4 Store Installed — Stopped, Empty, Verified
+
+### Installation
+- Target: /Library/GRRR/accounting-poc2/unissued-independent-replay-v4
+- Database: budget.sqlite, 45056 bytes, root:wheel, mode 0600
+- Database SHA-256: 920e91ece0acd0290e35012452e3db8fe44fd5f7e416e368270afd1559a4ce9e
+- Directory: root:wheel, mode 0700
+
+### Verification
+- stopped=1
+- campaign=GRRR-REPLAY-SUCCESSOR-POC-2
+- store_id=unissued-independent-replay-v4
+- prior_history_receipt=6d3d5b09...
+- reservations=0, metering=0, overhead=0
+- 10 SQLite objects (5 tables + 5 indexes)
+- PRAGMA integrity_check=ok
+
+### Boundaries preserved
+- Predecessor store untouched
+- No budget amendment
+- No reconciliation
+- No replay execution
+- No promotion/admission/merge/push
+- All authority remains false
