@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T20:38:30Z
-content_hash: "sha256:d2e7260824ec2be2e454b4e004a2a359a3f3b62b7b971b96775197c935d3c8b7"
+content_hash: "sha256:dd3c7c91e79ba9861681833606cf1679953f8137cc14ce4eaca5d27e7eaddd77"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8]
 assignee: dev-GRRR-6sso
@@ -402,3 +402,8 @@ Reviewer independently matched events/report/RUN-RECORD hashes; verified complet
 ## 2026-11-03 Claim Release After Completed Jev Capability Work
 
 The loop recover command preserved the story worktree as foreign because it remained actively claimed. The claim was released explicitly after commits 1052a1b, 4b4ae82, and aef59b5 and after the real-run evidence review. The story remains open because capstone ACs are not complete; no PM acceptance or merge is requested from this capability slice.
+
+### 2026-11-03T20:38:30Z speed
+## 2026-11-03 Operator-Authorized Pre-Registered Three-Arm Design — No Execution
+
+Operator authorized design only. Live story worktree is clean at aef59b583afbef3eba0793bc081bf96858326ddb; story reclaimed for a design-only slice. The existing evaluation plan remains not-approved/measurement_started=false and the completed Jev run is exploratory capability evidence. No selector execution, network call, secret read, replay, admission, promotion, production mutation, merge, or push is authorized.
