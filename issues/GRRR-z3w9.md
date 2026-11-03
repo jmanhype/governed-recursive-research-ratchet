@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T13:16:39Z
-content_hash: "sha256:aa4148a5f2791600d09c742a47513211da6ecb8f5b39080a983bc5da0d85ebad"
+updated_at: 2026-11-03T13:32:13Z
+content_hash: "sha256:8ef76141ad0114e9e263ed17f1927f12325968efa3aa4e062ca9a0f159acb871"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3441,3 +3441,64 @@ status: in_progress
 ## 2026-11-03 Operator-Authorized Stage Q Containment Rework — Started
 
 Operator explicitly authorized containment-only rework and fresh independent review under a revised brief. Required behavior: lexical canonicalization/validation before any filesystem metadata call; reject `..`, absolute escapes, symlinked sandbox roots/ancestors, and every `/Library/GRRR` path without stat/lstat; add syscall-guard tests proving zero protected metadata access. No protected access/mutation, installer staging/execution, budget amendment, reconciliation, replay, admission, promotion, production mutation, merge, or push is authorized.
+
+### 2026-11-03T13:32:13Z speed
+## 2026-11-03 Stage Q Containment Rework — Revised-Brief Retry Approved, Uncommitted WIP
+
+Operator authorized Stage Q containment rework and fresh independent review under a revised brief. The work did not access or mutate `/Library/GRRR`, stage/install protected records, amend budget, reconcile, execute replay, admit, promote, mutate production, merge, or push.
+
+### Rework
+
+- Replaced containment validation with a lexical-first phase that rejects `..`, repeated leading-root separators, absolute escapes, the entire `/Library` tree, `/Library/GRRR`, and all protected descendants before any stat/lstat call.
+- Only after lexical safety, validates every real filesystem component from root through sandbox root and target/source leaf, rejecting symlinked roots and ancestors.
+- Added fail-closed syscall guards that stop before real `os.stat`/`os.lstat` for repeated-root, `/Library`, or `/Library/...` paths, preventing a regression in the test from itself accessing protected metadata.
+- Added regressions for `//Library`, `//Library/GRRR`, `/Library/unrelated`, explicit `..`, absolute escape, and symlinked sandbox-root ancestors.
+- Preserved exact SQLite inventory/schema rejection, uncertainty dominance, failures at all publication stages, durable retained-evidence fallback, and checkout refusal.
+
+### Review sequence
+
+1. `STAGE_Q_CONTAINMENT_REWORK_REVIEW: REJECTED`
+   - repeated-leading-slash bypass;
+   - unrelated `/Library/...` sandbox could stat `/Library`.
+2. Corrected both alias classes and used the one permitted retry.
+3. `STAGE_Q_CONTAINMENT_ALIAS_REVIEW: APPROVED`
+
+Reviewer independently reproduced:
+- focused installer tests 37/37 on Python 3.14.3 and 3.12.7 with `ResourceWarning` as error;
+- 40 fully mocked lexical probes per interpreter;
+- zero stat/lstat/fstat calls;
+- preserved symlink, exact SQLite inventory/schema, uncertainty, publication-failure, and checkout behavior;
+- exact source/CLI/test hashes;
+- no protected access or mutation.
+
+### Verification
+
+- Stage Q focused tests: 37/37 on Homebrew 3.14.3 and Miniconda 3.12.7.
+- Full no-guest suites: 598/598 on Homebrew 3.14.3 and Miniconda 3.12.7.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+- Stage Q package: 25/25 members verified; SHA-256 `d953651c0bd635a1e80295376665fd2331b86ac9b5f25f726b945bcf9e41fb3e`.
+
+### State
+
+Stage Q remains uncommitted because this authorization did not include a source/evidence commit. Story claim is released after this handoff. No protected issuance/staging/installation, budget amendment, reconciliation, replay, PM acceptance, merge, or push occurred.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Approved Stage Q package is present at `docs/evidence/replay-authority/stage-q/PACKAGE.json` with SHA-256 `d953651c0bd635a1e80295376665fd2331b86ac9b5f25f726b945bcf9e41fb3e`.
+- Base source commit remains `5c130a02958042975c8522f71e134f19627c999d`.
+
+### proof
+- [x] Containment paths canonicalize and reject unsafe spellings before filesystem metadata.
+- [x] Repeated leading roots, `..`, absolute escapes, `/Library` tree, `/Library/GRRR`, and symlinks reject fail-closed.
+- [x] Zero protected metadata syscalls in guarded lexical probes.
+- [x] Stage Q installer and durability WIP independently approved through revised retry.
+- [ ] Stage Q WIP commit authorized and performed.
+- [ ] Exact protected source issuance, staging, operator authorization, installation, and postflight remain separate.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
