@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T13:38:19Z
-content_hash: "sha256:084bc5d9435fb8735b1bcc201fba66e092af9e60b127200e9b2edfe8f320b737"
+updated_at: 2026-11-03T13:40:40Z
+content_hash: "sha256:5154cddadb906b7c3bc65a1ed156beca23673d69a315cede033d8cd8961b3c8d"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3501,6 +3501,67 @@ status: in_progress
 - [x] Stage Q installer and durability WIP independently approved through revised retry.
 - [ ] Stage Q WIP commit authorized and performed.
 - [ ] Exact protected source issuance, staging, operator authorization, installation, and postflight remain separate.
+- [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
+- [ ] AC #2: live specification-confirmed reproduction remains unproven.
+- [ ] AC #3: complete live ReplayReceipt remains absent.
+- [ ] AC #4: four real replay integration modes remain unexecuted.
+- [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-11-03T13:40:40Z speed
+## 2026-11-03 Operator-Authorized Stage Q Commit — Completed
+
+Operator authorized committing the independently approved Stage Q sandbox-installer and retained-evidence WIP. No `/Library/GRRR` access or mutation, protected staging/installation, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push was authorized or performed.
+
+### Commit
+
+- Branch: `story/GRRR-z3w9`.
+- Commit: `23fdac5fcdc9bcef5147314a8f3c8bcb6d458d3f`.
+- Parent: `5c130a02958042975c8522f71e134f19627c999d`.
+- Subject: `feat(GRRR-z3w9): implement sandboxed v4 installer core`.
+- Exact committed scope: 26 files.
+- Worktree is clean after commit.
+- No push occurred.
+
+### Pre-commit package verification
+
+- Stage Q package: 25/25 members PASS.
+- Package SHA-256: `d953651c0bd635a1e80295376665fd2331b86ac9b5f25f726b945bcf9e41fb3e`.
+- Independent approval: `STAGE_Q_CONTAINMENT_ALIAS_REVIEW: APPROVED`.
+- Package base source commit: `5c130a02958042975c8522f71e134f19627c999d`.
+
+### Current test evidence
+
+Run immediately before commit without changing reviewed package evidence:
+
+- Stage Q installer focused:
+  - Homebrew Python 3.14.3: 37/37 passed.
+  - Miniconda Python 3.12.7: 37/37 passed.
+- Retained evidence suites:
+  - Stage I provenance: 13/13 passed.
+  - Stage K per-record: 14/14 passed.
+  - Stage L request search: 15/15 passed.
+- Full no-guest suites:
+  - Homebrew Python 3.14.3: 598/598 passed.
+  - Miniconda Python 3.12.7: 598/598 passed.
+- `pvg verify`: PASS.
+- `git diff --check`: PASS.
+
+Post-commit package verification was repeated with the same 25/25 member result and package hash. The story remains open/blocked; live replay ACs remain unmet and protected issuance/installation, budget amendment, reconciliation, replay authorization, and PM acceptance remain separate gates.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Independently approved Stage Q package committed at `23fdac5fcdc9bcef5147314a8f3c8bcb6d458d3f`.
+- Story worktree is clean.
+
+### proof
+- [x] Approved sandbox installer core and retained-evidence durability package committed.
+- [x] Lexical protected-path containment and syscall-guard proof committed.
+- [x] Post-commit package verification passed.
+- [ ] Exact protected source issuance and review.
+- [ ] Protected staging, operator authorization, installation, and postflight.
+- [ ] Budget amendment/reconciliation gate.
 - [ ] AC #1: fresh trusted replay remains unexecuted and separately gated.
 - [ ] AC #2: live specification-confirmed reproduction remains unproven.
 - [ ] AC #3: complete live ReplayReceipt remains absent.
