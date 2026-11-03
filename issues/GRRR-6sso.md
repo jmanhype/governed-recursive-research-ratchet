@@ -8,8 +8,8 @@ labels: [milestone-1, capstone]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T20:38:30Z
-content_hash: "sha256:dd3c7c91e79ba9861681833606cf1679953f8137cc14ce4eaca5d27e7eaddd77"
+updated_at: 2026-11-03T20:53:22Z
+content_hash: "sha256:c12f8adbc7d48c62fbde120231173fa6ef6d2072c8cc4aaa06b27a8b31b13dc4"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8]
 assignee: dev-GRRR-6sso
@@ -407,3 +407,14 @@ The loop recover command preserved the story worktree as foreign because it rema
 ## 2026-11-03 Operator-Authorized Pre-Registered Three-Arm Design — No Execution
 
 Operator authorized design only. Live story worktree is clean at aef59b583afbef3eba0793bc081bf96858326ddb; story reclaimed for a design-only slice. The existing evaluation plan remains not-approved/measurement_started=false and the completed Jev run is exploratory capability evidence. No selector execution, network call, secret read, replay, admission, promotion, production mutation, merge, or push is authorized.
+
+### 2026-11-03T20:53:22Z speed
+## 2026-11-03 Pre-Registered Three-Arm Design WIP — No Execution
+
+Design-only files created at story base aef59b5:
+- corpus/evaluation-plan-v2-proposed.json e572c4c0f54351ea3354379bb1326f88186aa3c22147db0df63e4cfee6223292
+- research/evaluation_plan_v2.py 6fad8c925bbed5e9b185d5deb08ee1be74c0cc00e1c4bbe0dd5d68f9379a9499
+- tests/unit_evaluation_plan_v2.py 657f3cb2a5df41081ded68f93f943f4d8cd539e74a47d25716bebc07bcf4602e
+- docs/evidence/jev-selector-measurement/PRE-REGISTERED-PLAN.md d1e7e2300c13429ce8c98cdec0b2052132bbc157d43f80851f2b907f3b2b27e2
+
+The proposed v2 plan remains not-approved, measurement_started=false, and execution_authorized=false. It excludes exploratory run 6cf35082 from three confirmatory repetitions, binds the frozen corpus/protected truth, uses equal budget 8, defines deterministic lexical/random seeds 42-44/three fresh Jev runs, caps confirmatory calls at 96 and cumulative calls at 128, sets conservative token ceilings, restricts outbound Jev state, defines selector-quality-only metrics/bootstrap/fail-closed rules, and forbids automatic rerun. Existing evaluation-plan.json is unchanged. Focused schema tests passed 11/11 on both interpreters; pvg verify PASS; gates PASS; diff check PASS. Independent design review is pending.
