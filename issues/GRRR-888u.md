@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-03T23:27:53Z
-content_hash: "sha256:c47c45c4ab23282737dd5118f9372d607f0c4b8cc67cdd9e8f35a1113f063a08"
+updated_at: 2026-11-03T23:27:56Z
+content_hash: "sha256:5d92c6f367b49c7719177f8e34f7be65bbdb0e108bd22ffd8029b9d13b3220ca"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0]
 ---
@@ -111,3 +111,8 @@ status: new
 - Follows: [[GRRR-gge0]]
 
 ## Comments
+
+### 2026-11-03T23:27:56Z speed
+## 2026-11-03 Anti-Cheat Scorecard Evaluation Started
+
+Story claimed and stacked from accepted GRRR-gge0 commit cf3eb55422ba18898541318c138cd82543419d12. Pinned external source is seanchatmangpt/anti-cheat-scorecard v26.8.29 commit 5271351d079f79634de2f8b91970b80daf9bcb86. Scope is research/advisory evaluation only; no runtime integration, trusted-gate authority, protected access, network scan, credential use, replay, admission, promotion, production mutation, merge, or push.
