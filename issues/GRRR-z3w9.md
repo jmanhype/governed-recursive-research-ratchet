@@ -8,8 +8,8 @@ labels: [milestone-1, integration, blocked]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T14:17:38Z
-content_hash: "sha256:15b9188e74bb71337def3e89e06853e27aa87cf174626fd6fba6c11baec8171d"
+updated_at: 2026-11-03T14:20:49Z
+content_hash: "sha256:dcaa37e8d3a5c4870c62416b6fe02c8e2b0ad862323fe45184aabf16df1664f5"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3726,3 +3726,46 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-11-03T14:20:49Z speed
+## 2026-11-03 Stage R WIP Commit — Repository Only
+
+Operator-authorized: commit independently approved prepared-not-issued source package WIP to story/GRRR-z3w9. No protected access, staging, installation, budget amendment, reconciliation, replay execution, promotion, admission, merge, or push.
+
+### Evidence
+- Story branch: story/GRRR-z3w9
+- Commit: b43f1fa483c8a281246f425d6c5b66606d867bff
+- Commit message: "feat(GRRR-z3w9): Stage R prepared-not-issued source package WIP"
+- Files: 25 files, 1776 insertions
+- PACKAGE.json SHA-256: c1b70a4fc1279e48c25a6004d93bc6b6055981524c1f5acd0ff9885fe28a5a9c
+- SOURCE-BUNDLE identity: b6354127a7552b628506c25dc7eee27c8ecb371f56bf565a63dd247b31445084
+- Independent review verdict: STAGE_R_ABSENT_LEAF_REVIEW: APPROVED
+- Worktree clean after commit: yes
+
+### Corrected preflight semantics
+- Accepts genuinely absent final leaf only when exists=False
+- Rejects every existing final symlink including dangling symlinks
+- Retains sandbox-root-as-file rejection
+- Adds true absent-leaf regressions
+- All previously reviewed Stage R semantics preserved
+
+### Test evidence (retained)
+- Focused tests: 16/16 passed both interpreters
+- Full no-guest suite: 614/614 passed both interpreters
+- Deterministic regeneration: byte-identical
+- git diff --check: PASS
+
+### Boundaries preserved
+- No /Library/GRRR access or mutation
+- No protected record staging or installation
+- No budget amendment
+- No reconciliation
+- No replay execution
+- No promotion
+- No contract admission
+- No merge
+- No production mutation
+- No push
+
+### Status
+WIP committed. Story remains in_progress. Next step requires explicit operator authorization for any protected operation.
