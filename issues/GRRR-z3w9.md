@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T14:11:08Z
-content_hash: "sha256:e79de8fe4c71de91cc2c145695879aafb06b3d4ace586c8cc60121e76d986731"
+content_hash: "sha256:90d6e37323d4bf30f92d4b875dcfb1162c80444b567f34158c28154c93c9bb9b"
 blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
@@ -3654,3 +3654,8 @@ status: in_progress
 - [ ] AC #3: complete live ReplayReceipt remains absent.
 - [ ] AC #4: four real replay integration modes remain unexecuted.
 - [ ] AC #5: retained live two-failure sequence remains unproven.
+
+### 2026-11-03T14:11:08Z speed
+## 2026-11-03 Operator-Authorized Revised Stage R Absent-Leaf Rework — Started
+
+Operator authorized a revised, differently scoped Stage R rework and fresh independent review. Required behavior: accept a genuinely absent final leaf when `exists=False`; reject every existing final symlink including dangling symlinks; retain sandbox-root-as-file rejection; add true absent-leaf regressions; refresh exact source/package hashes; and preserve all reviewed Stage R semantics. No `/Library/GRRR` access or mutation, protected staging/installation, budget amendment, reconciliation, replay, promotion, admission, production mutation, merge, or push is authorized.
