@@ -1,19 +1,20 @@
 ---
 id: GRRR-z3w9
 title: "Verify a defect from fresh trusted inputs"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-1, integration, blocked, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
-updated_at: 2026-11-03T16:57:08Z
-content_hash: "sha256:8cf48c772baeaa14f629707c221292394b2643bc06ce889b752f8f4e96bf4164"
-blocks: [GRRR-34ve, GRRR-6sso, GRRR-dbbi]
+updated_at: 2026-11-03T16:58:43Z
+content_hash: "sha256:ebe7a36b2c09270131ce85da699b9c238cff8d860b5a0071e4036363efd71468"
 was_blocked_by: [GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-wu6f]
 follows: [GRRR-bnkf, GRRR-w1lt, GRRR-c875, GRRR-43i8, GRRR-d8ji, GRRR-my5n, GRRR-gu87, GRRR-90te, GRRR-0g4n, GRRR-wu6f]
 assignee: dev-GRRR-z3w9
+closed_at: 2026-11-03T16:58:43Z
+close_reason: "PM acceptance: All 5 ACs pass. First independently verified defect in GRRR.\n\nAC1: Pinned source reconstructions, two fresh guest runs, settled reservation.\nAC2: Clean baseline C901 passed 3/3; defect candidate D901 failed 3/3; maintainer spec confirmed.\nAC3: finding=Verified defect, verified=true, all 9 mandatory gates PASS with evidence.\nAC4: Real execution; reviewer independently recomputed all 9 event-chain digests, 6 object hashes, snapshot identity, final-anchor consistency.\nAC5: Zero consecutive failures; stop threshold not exercised (successful run).\n\nStage T staging/installation evidence verified. Promotion disabled, admission blocked (correctly gated)."
 ---
 
 ## Description
@@ -1273,10 +1274,13 @@ status: new
 - 2026-11-03T16:56:47Z status: open -> in_progress
 - 2026-11-03T16:56:47Z claimed by dev-GRRR-z3w9
 - 2026-11-03T16:57:08Z status: in_progress -> in_progress
+- 2026-11-03T16:58:43Z status: in_progress -> closed
+- 2026-11-03T16:58:43Z dep_removed: no_longer_blocks GRRR-34ve
+- 2026-11-03T16:58:43Z dep_removed: no_longer_blocks GRRR-6sso
+- 2026-11-03T16:58:43Z dep_removed: no_longer_blocks GRRR-dbbi
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-34ve]], [[GRRR-6sso]], [[GRRR-dbbi]]
 - Was blocked by: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-wu6f]]
 - Follows: [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-c875]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]], [[GRRR-0g4n]], [[GRRR-wu6f]]
 
