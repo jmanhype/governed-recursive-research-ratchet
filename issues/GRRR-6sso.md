@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-03T17:32:12Z
-content_hash: "sha256:385cdd0a96f7bf746959cf062a6ea83ea8663436f4ce474c460eab24ad1374eb"
+updated_at: 2026-11-03T17:32:13Z
+content_hash: "sha256:46604e6e991605a53853ec2b9e4a0c190bdcf3982b29ec6c76588208726e8115"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 assignee: dev-GRRR-6sso
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f]
@@ -116,6 +116,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-03.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
 
 
 ## History
