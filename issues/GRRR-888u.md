@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-03T23:30:33Z
-content_hash: "sha256:74ba70c285a4173567633b4efef5100fa3b3163c1e91e5c8daf7e5eda25b6b52"
+updated_at: 2026-11-03T23:42:48Z
+content_hash: "sha256:44727ac1be59368199d8cd531af84bf720533b485d4417678680fc4f43d0cf44"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0]
 ---
@@ -140,3 +140,8 @@ The previous note included incorrect anticipated hashes. Parent-measured current
 - docs/evidence/anti-cheat-scorecard/ARTIFACTS.md 5c44d2058745dc4afbcf2ed016e80ec2d3849a00b1893590ce85e08996ffa943
 
 All other measured counts, output hashes, controls, and advisory-only recommendation remain unchanged.
+
+### 2026-11-03T23:42:48Z speed
+## 2026-11-03 Anti-Cheat Evaluation Review Rework
+
+Independent review rejected two evidence gaps. Corrected full scan warning count from 5487 to 5486 plus one informational row; pattern counts now total warnings exactly. Added auditable reproduction_commands for clone/checkout, target identity, all-pattern tests, binary build, full scan, five-file subset construction/scan, seeded fixture/scan, absent input, empty input, and rerun. Updated hashes and retained control exit codes. Advisory-only recommendation unchanged.
