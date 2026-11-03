@@ -8,8 +8,8 @@ labels: [milestone-2, integration, adaptation]
 parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
-updated_at: 2026-11-03T22:35:10Z
-content_hash: "sha256:eea21e6b1e85b7e90510699e910a15f7a77c5352f205aa566ef3d12bece64eac"
+updated_at: 2026-11-03T22:45:32Z
+content_hash: "sha256:18c1a18494061d45b52be5f59e41f6be7d66ba60df00cb62fa0249a921e1dab5"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp]
 ---
@@ -221,3 +221,17 @@ Final WIP hashes after security rework:
 Rework fixes: lexical/double-slash/protected path rejection before path syscalls; O_NOFOLLOW dirfd ancestor traversal with inode checks; held-parent exclusive writes; deterministic undeclared reverse-lexical leakage detection; all-defect composition control; non-immediate symlink/traversal/syscall-guard regressions.
 
 Parent reran focused adaptation tests 13/13 on both interpreters, pvg verify PASS, gates PASS, diff checks PASS. Current diff is 5 files/855 added lines, 355 over approximate story budget because mandatory safe traversal and adversarial tests expanded scope; this remains explicitly disclosed for PM review. No network/Jev/secret/protected access/replay/admission/promotion/production mutation/commit/merge/push.
+
+### 2026-11-03T22:45:32Z speed
+## 2026-11-03 Concurrent-Deletion Rework — Parent Verified
+
+Independent review correctly rejected unconditional failure cleanup because it could delete concurrent output entries this invocation never created. Rework removed all unlink/remove cleanup, preserves partial exclusive-created artifacts, closes descriptors in one finally path, and detects short writes. Deterministic race tests now prove concurrent Markdown and concurrent JSON+Markdown entries remain byte-unchanged when reservation races occur.
+
+Final hashes:
+- research/harness_adaptation.py 31829168251d51fcede72e795eda1522192cc5f6496ed578dc769b664cf9308a
+- scripts/run-harness-adaptation-cycle 840cd2157ff5a094ea9f6cc1b6c3d92c8b82d195a9b81fde77f8d030fa3bbf20
+- reports/adaptation-cycle-1.json 550944a2b81b1e52cf4c9aaf410b5e43bcb5758aa0eb1bfa9ba4a63094d352ba
+- reports/adaptation-cycle-1.md 8e3c2ec84f2e424b1918dca21754f40a4b5ca6ea2c471cea9caf1017ca09678d
+- tests/unit_harness_adaptation.py f643c75f6799435e0919a5c3d865d30610625b095280b31cab518356cb095c23
+
+Parent reran focused adaptation suite 15/15 on both interpreters; pvg verify/gates and diff checks passed. Worker full no-guest inventory passed 807/807 on both interpreters. No network/Jev/secret/protected access/replay/admission/promotion/production mutation/commit/merge/push.
