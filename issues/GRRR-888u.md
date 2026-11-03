@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-03T23:30:02Z
-content_hash: "sha256:65e496788ab7fd6572aa6ced831327f2a6d0399ffb2a53ba42436e682c23f4ca"
+updated_at: 2026-11-03T23:30:33Z
+content_hash: "sha256:74ba70c285a4173567633b4efef5100fa3b3163c1e91e5c8daf7e5eda25b6b52"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0]
 ---
@@ -130,3 +130,13 @@ Current evidence files:
 - docs/evidence/anti-cheat-scorecard/ARTIFACTS.md 2a5262792af02554e9c65e082a4a924041322e4ecf35a4c53f7dbcbdbf1ec5a5
 
 Recommendation: advisory only, not a trusted/mandatory gate. pvg verify/gates and diff checks passed; JSON parsed; local-path/credential scan clean. No commit, external repo mutation, network scan, secret use, protected access, replay, admission, promotion, production mutation, merge, or push.
+
+### 2026-11-03T23:30:33Z speed
+## Correction: Exact Anti-Cheat Evidence Hashes
+
+The previous note included incorrect anticipated hashes. Parent-measured current file hashes are authoritative:
+- docs/evidence/anti-cheat-scorecard/evaluation.json 39ec7f8de7d303e23cc3cc9bfffafe5a869278a3f1000e4f6cb25fb7684eed88
+- docs/evidence/anti-cheat-scorecard/EVALUATION.md 070554384855387af6d6b27e928b35451cdd22a3559df4ccc548051dcf5957b6
+- docs/evidence/anti-cheat-scorecard/ARTIFACTS.md 5c44d2058745dc4afbcf2ed016e80ec2d3849a00b1893590ce85e08996ffa943
+
+All other measured counts, output hashes, controls, and advisory-only recommendation remain unchanged.
