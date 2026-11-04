@@ -9,10 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T01:03:44Z
-content_hash: "sha256:beb9c6da4334293cf86af36e88c51d2ef88b44427ceb24f897c772b608b3263c"
+content_hash: "sha256:d9f8e523032d52faef2467f05c714bb41a08d938a74b6b68c565a76d43cca653"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
-blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
+blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f, GRRR-ev2w]
 ---
 
 ## Description
@@ -346,10 +346,11 @@ status: delivered
 - 2026-11-04T01:05:03Z dep_added: blocked_by GRRR-w1lt
 - 2026-11-04T01:05:04Z dep_added: blocked_by GRRR-wu6f
 - 2026-11-04T01:07:35Z dep_removed: was_blocked_by GRRR-gzgq
+- 2026-11-04T01:07:35Z dep_added: blocked_by GRRR-ev2w
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-43i8]], [[GRRR-888u]], [[GRRR-d8ji]], [[GRRR-gge0]], [[GRRR-w1lt]], [[GRRR-wu6f]]
+- Blocked by: [[GRRR-43i8]], [[GRRR-888u]], [[GRRR-d8ji]], [[GRRR-gge0]], [[GRRR-w1lt]], [[GRRR-wu6f]], [[GRRR-ev2w]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-gzgq]]
 - Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]], [[GRRR-888u]]
 
