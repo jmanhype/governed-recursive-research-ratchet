@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T15:54:51Z
-content_hash: "sha256:e781719118285763c5074105b03fbe441fda7c4fe23f29457b01258ae03ee2e9"
+content_hash: "sha256:d634d1fb70d394f2c69444e0f6552399b022a266bb3bc5aaf80f5fd46703433f"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f, GRRR-q3hp]
@@ -1170,3 +1170,20 @@ Operator explicitly asked the agent to supply the answers. An agent-authored ans
 
 ### 2026-11-04T13:05:53Z speed
 loop: story branch already merged into epic/GRRR-2t3h (5b50e29) by a prior session; routed to PM review against the epic branch instead of re-dispatching a developer. PM: review the LANDED code on epic/GRRR-2t3h, then accept or reject.
+
+### 2026-11-04T15:54:51Z speed
+## Independent PM Decision - Rejection Transcribed by Dispatcher
+
+Decision source: `/root/pm_grrr_capstone_live_review`, returned verdict REJECT after independently reading the live GRRR-6sso proof and landed tree. The reviewer reported no tracker transition had executed. Its bounded transition-only follow-up was interrupted before dispatcher writeback to prevent concurrent/duplicate rejection. This is a dispatcher transcription of the independent rejection, not a new parent acceptance/review.
+
+EXPECTED: GRRR-6sso must demonstrate the real complete governed operator journey with fresh VM/evaluator/replay/ledger receipts, all mandatory gates, and measured review evidence. Component closures and checklist results are insufficient.
+
+DELIVERED: The recorded delivery disclaims completion; the landed epic lacks the story's newer tests/e2e artifact; the reviewed story package contains an intentionally checklist-only milestone entrypoint; the actual authorized attempt stopped in preflight with no VM or replay launched.
+
+GAP: No complete fresh capstone runtime proof exists. The delivered label contradicts blocked/incomplete proof. No independent PM acceptance can be granted from the available component/package evidence.
+
+FIX: Keep all capstone ACs intact; resolve P0 blocker GRRR-q3hp using reviewed execution wiring, restore capacity above the existing floor, establish authenticated remaining budget receipts, then obtain the separately bounded live evidence and independent review. Do not merge or invent a pass.
+
+Dispatcher factual clarifications (do not change the REJECT outcome): the operator has already supplied the exact conditional run grant, recorded in Notes; the immutable request's execution_authorized=false is request-only semantics, not evidence that the grant is absent. Capacity is not the sole blocker: execution wiring and cumulative allowance proof are also unresolved. A changed runtime revision cannot inherit the old grant silently.
+
+AC proof: AC1/2/4/5/7 full live journey/gate evidence remains unproven; AC3 strategy measurements do not establish complete cumulative allowance closure; AC6 has a fresh five-minute operator preflight attestation but not complete runtime accessibility proof. No AC or threshold is waived, and no source change or runtime effect is authorized by this rejection.
