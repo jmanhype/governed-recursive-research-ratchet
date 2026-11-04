@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-04T16:46:18Z
-content_hash: "sha256:d4f05ac032f5ee0042075b734ed912cd4e77438e4f2257893305e4e4a6d1ad3b"
+content_hash: "sha256:9568981b90a4eac87bdfbd89901b356d62bb9ceca769bcac275e5d19f9e40f92"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w]
 blocked_by: [GRRR-wcwy]
@@ -105,6 +105,20 @@ Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocke
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 2026-11-04 proposed v4 evaluator interface contract retained below. Artifact /tmp/grrr-q3hp-v4-interface-contract-20261104.md,225 lines,SHA256 f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3. PROPOSED, NOT ACCEPTED, NOT DEPLOYED; no source implementation or live capability claimed. It defines a minimal source-only contract/client/read-only refusal-service slice and separately gated later adapter/migration/authorization work. Independent review is still required; raw reviewed JSON/Markdown request-binding semantics must be made explicit before implementation. Existing 11 common.GATES match the approved capstone inventory; no missing-gate concern is asserted. User-directed remediation does not silently authorize installation, v4 writes, new revision execution, reconciliation or capstone acceptance.
 2026-11-04 independent FIRST_SLICE_V2_REVIEW: APPROVED for exact /tmp/grrr-q3hp-v4-interface-contract-v2-20261104.md SHA2569b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad (250lines). Reviewed repairs: separate exact decisionJSON+Markdown/requestID/package/outputroot from invocation; raw Grant and human-authorization digests; exactlyall11gates; strict operatorUID; defined start-envelope digest; explicit nonproduction localpeer tests. Approval permits ONLY source-only contract/hash validators, explicit-peer client, read-only observation/refusal façade and no-guest local-peer tests. It does NOT accept full q3hp mapping, livev4, grant issuance/migration, spendability, protected access, installation, driver integration or VM/runtime. Existing v1 mutation guards remain unchanged. Source prerequisite is being split from driver because q3hp AC1 cannot be bypassed; failed SrPM stream produced no issue/source effects and was stopped. Implementation is not yet claimed.
+## nd_contract
+status: new
+
+### evidence
+- First source-only protocol/refusal boundary contract9b0f... was independently approved, but full driver mapping remains unready.
+- New prerequisite GRRR-wcwy carries only that accepted source slice; this story is blocked by it and released without code changes.
+- Clean preparatory q3hp worktree may be removed/recreated from preserved story branch to avoid duplicate disk usage; no unique evidence/WIP exists there.
+
+### proof
+- [ ] AC1: full q3hp runtime mapping not accepted.
+- [ ] AC2/3: no driver/runtime capability implemented.
+- [ ] AC4: live evidence remains not-run.
+- [x] Scope: capstone rejection/gates and source-only separation retained.
+
 # GRRR-q3hp — proposed evaluator interface contract, 2026-11-04
 
 **PROPOSED / NOT ACCEPTED / NOT DEPLOYED.** This specifies a source-only first
