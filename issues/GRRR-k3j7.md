@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-04T22:36:45Z
-content_hash: "sha256:338ae9d6c5bd84cee9126ed83da598001edad47e694262d08b849e90e411312a"
+updated_at: 2026-11-04T23:54:15Z
+content_hash: "sha256:76481b5b0676074be0c6b8e99f0f6389c98a5b69241d4b487e21dee082f2a528"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -244,6 +244,28 @@ status: in_progress
 - [x] No mandatory criterion removed or old source/runtime grant silently transferred.
 - [ ] AC #2-11: remaining implementation and reproduced evidence not complete.
 - [ ] AC #12: complete independent security/PM acceptance not yet obtained.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator explicitly requested connecting PAIVOT, Agent Autoloop and Jeffrey's skills to continue GRRR. This authorizes a bounded source-verification coordination pilot, not new evaluator/promotion authority or completion of this story.
+- PAIVOT remains the sole work selector and tracker. A fresh loop result reported the existing claimed GRRR-k3j7 worktree stalled; its public WIP is retained, not discarded by blind recovery. The root coordinator is active. The integration pilot may surface wait/stalled truthfully; it cannot invent ready stories or claims.
+- Public Agent Autoloop source is pinned to c0ceda50206e58f19d384cd16510545e38294ff1, archive SHA2567c0608c417e6500334457d9922a2149aeca6fd8597004b448196a94262739cfc. Initial custom-profile failures are retained. Separate operator-authorized normal-user tests passed six selected worker checks and one real local HTTP/SQLite question/answer/resume journey, with no real model/provider requests.
+- All48 synthetic timed command fixtures completed and outputs were verified. Autoloop capacity2 median1.623s for four jobs; direct parallel capacity2 median1.436s; three repetitions per arm. This is not AI coding throughput, a superiority finding, independent evaluator proof, or GRRR capstone evidence.
+- /root/connect_paivot_autoloop_pilot owns only outputs/paivot-autoloop-pilot outside this source checkout, building a finite real host/kernel/worker lane for at most two allowed public source-verification commands. No fakeHub substitution or real AI adapters, secrets, service installation, delivery automation, tracker/Git mutation, or protected access is allowed. The pilot is not yet verified or installed.
+- /root/review_backend_index_wip independently reviews exact schema2249d8b8a69baf6f88ba62934cfd9ba4fcf0f6cdaa12d400c3bae86e388001c8/indexfe90fcd9fc80841030ad81c9ebdd9c5d0c0c788815c1c6f30825696894d96976/tests15fff01697bd9ad0051ee64f5e476bb76cf59f22e3ffed3be65b0a120bcf796b. It is scoped source review, not PM acceptance of all12ACs.
+- The29 index source tests passed parent rerun and retained runs on Python3.14/3.12/3.9. The explicit complete WIP suite now includes index coverage; a fresh combined143-test source verification is running, with no result claimed yet. Reviewer/store/launch/campaign/accounting completeness remain separate acceptance obligations.
+- Jeffrey's catalog was checked; installed anti-ceremony and real-service-testing skills were read. Selection uses the catalog plus installed inventory, then relevant full skills, not bulk installation or a second runtime authority.
+- Latest measured available space is above both documented floors. This removes a space-only blocker, not the requirements for exact-target protected execution authorization and current preflight.
+- No /Library/GRRR access even metadata, protected installation/accounting/reconcile/unstop, VM/live replay, contract admission/promotion, main/production mutation, or push is authorized by this pilot. The operator's request for normal-user upstream tests does not expand this GRRR story's protected scope. Optional research expansions remain optional; no original acceptance criterion was removed.
+
+### proof
+- [x] Original failed trial attempts retained and separated from passing normal-user evidence.
+- [x] Current core WIP preserved; no false delivery, acceptance, merge, or promotion claim.
+- [ ] AC #2-11 complete implementation and integrated source verification remain unfinished.
+- [ ] AC #12 complete independent security/PM acceptance remains pending.
+
 
 ## History
 - 2026-11-04T21:39:55Z dep_added: blocks GRRR-q3hp
