@@ -8,8 +8,8 @@ labels: [milestone-1, security, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:03:31Z
 created_by: speed
-updated_at: 2026-11-04T01:03:31Z
-content_hash: "sha256:575b1bdee8dbde5bff330d5d880309683ec8bb470a2fe4b490e795dbee029dca"
+updated_at: 2026-11-04T01:03:32Z
+content_hash: "sha256:85e626e16e46a27a9a5eb0645f12565d84810feffccebe4b7461ad8cdafcb880"
 blocks: [GRRR-6sso]
 ---
 
@@ -119,3 +119,6 @@ status: new
 - Blocks: [[GRRR-6sso]]
 
 ## Comments
+
+### 2026-11-04T01:03:32Z speed
+RECOMMEND hard-tdd: corrupt durable security state has subtle failure-preservation cases. Adds RED/GREEN phases and roughly doubles agent passes, tokens, and wall-clock time; label not applied because no hard-TDD authorization exists for this story.
