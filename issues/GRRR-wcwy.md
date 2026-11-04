@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:26:22Z
-content_hash: "sha256:170877cb5f48979a7637c26c6cd5158915b8e499409cc05080c3f0f684ce444e"
+updated_at: 2026-11-04T17:31:37Z
+content_hash: "sha256:939fbe8c447f8ba79b56d5614a81cc80be8629c2c49c68d41cfdad797e41d71a"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary]
 assignee: dev-GRRR-wcwy
@@ -331,6 +331,81 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+## Implementation Evidence (DELIVERED SOURCE COMPONENT)
+
+PROOF:
+
+### Commit
+- Branch: story/GRRR-wcwy
+- Producing commit: 8cf7d0d86d5103de3709d432a8c35b8101020440
+- Parent: 0b2365e30ab5858cb419f4f4ce9b2ce001850541
+- Exact eight reviewed files, 1034 insertions and 2 deletions, within 1200-line budget. No additional runtime modules changed. Root epic is not yet merged.
+- Operator explicitly authorized local source commits, PM delivery and PM-accepted epic merges. The earlier WIP-only commit restriction is superseded for this local-source workflow only. No push or protected authority is granted.
+
+### CI/Test Results
+- Local post-commit commands, each run synchronously in .claude/worktrees/dev-GRRR-wcwy:
+  - /opt/homebrew/bin/python3 -B scripts/test-story evaluator-contract (Python3.14.3)
+  - /Users/speed/miniconda3/bin/python3 -B scripts/test-story evaluator-contract (Python3.12.7)
+  - /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -B scripts/test-story evaluator-contract (Python3.9.6)
+- EACH reports SOURCE_ONLY tests=19 failures=0 errors=0 skipped=0; full capstone NOT-RUN; exit0. These are19 repeated source tests, not57 distinct scenarios or isolated corpus observations. Nine contract tests and ten local-peer tests execute real parsers and real AF_UNIX credentials; positive authentication is not mocked. Negative effect guards are explicitly unit evidence.
+- Existing full VM/corpus/replay suites and11 capstone gates were NOT RUN under this source-only scope. They remain mandatory live gates for GRRR-6sso; no historical/protocol test upgrades them to pass. No external CI is claimed.
+- Raw producing-commit command arrays, stdout/stderr, durations and SHA256s: .git/paivot/wip/GRRR-wcwy/post-commit-20261104/runs.json plus run0..run4.stdout/stderr. Exact source hashes and commit.txt retained there. Verification script /tmp/grrr-wcwy-commit-verify-20261104.py.
+
+### Coverage
+- Producing-commit command: /opt/homebrew/bin/python3 -B -m trace --count --summary --missing --coverdir <repo>/.git/paivot/wip/GRRR-wcwy/post-commit-20261104/coverage tests/unit_capstone_suite.py
+- Measured standard-library trace LINE coverage: capstone_contract95.6%, capstone_client96.9%, capstone_service93.5%. Branch coverage and VM/runtime coverage are unmeasured; this is not a full-milestone coverage percentage. Raw summary run4.stdout and annotated coverage files retained; the traced suite also executed19 tests with no errors/failures/skips.
+
+### Independent Security Review
+- SOURCE_SLICE_REVIEW: APPROVED, no material in-scope defect found, exact all-eight per-file hashes match.
+- /tmp/grrr-wcwy-security-code-review-20261104.md SHA256 f18b42dd36979b9bb13fabe7ef3d71b7b99b2bb9c9898187f857fcd902de778b.
+- Independent reviewer ran19 tests twice on Python3.14.3; retained log SHA256 e6c65e47d612ed90d56be91a1820d90351d2c7fa9953ce963c31dc70ddcdc755. Review/log also retained in .git/paivot/wip/GRRR-wcwy/parent-verify-20261104/.
+- Review is not PM acceptance, protected issuance, installation, spendability, UID320/321 or VM proof.
+
+### pvg verify
+- Command: pvg verify research/capstone_contract.py research/capstone_client.py research/capstone_service.py tests/unit_capstone_contract.py tests/unit_capstone_peer.py tests/unit_capstone_suite.py scripts/test-story docs/CAPSTONE-EVALUATOR-PROTOCOL.md --format=text
+- Output: VERIFY: PASSED (6 files scanned, 0 issues), exit0. All explicit paths were supplied; six eligible Python files scanned. git diff --check clean before commit, working tree clean after commit.
+- Existing common.py, trusted_transport.py, budget.py, persistent_budget.py, replay.py and ledger.py byte-identical to parent. Existing modes are preserved; only evaluator-contract source dispatch added.
+
+### AC Verification
+| AC | Requirement | Source | Test/evidence | Result |
+|---|---|---|---|---|
+| 1 | Exact bounded nested schemas,11 gates, distinct original-byte bindings and consistency-only meaning | capstone_contract.py | ContractTests9 tests, explicit raw input changes and type/schema adversaries | PASS source-only |
+| 2 | Explicit peer-before-payload, production-pinned refusal and test-only factory | capstone_client.py; capstone_service.py uses unchanged AuthenticatedServer | PeerTests wrong-server/client-before-payload/slot; real same-UID sockets | PASS local-peer only |
+| 3 | Unsupported v4, unknown/unissued allowance, unconditional start refusal, absent status/stop failure | RefusalService.handle; production_client | real_refusal_channels, counterfeit_grant_cannot_start, no_protected_io negative guard | PASS refusal surface |
+| 4 | Real public no-guest parsing/transport and nonzero/no-skip suite | unit_capstone_suite.py and both test modules | 19 executed,0fail/0error/0skip on all3 interpreters | PASS source-only |
+| 5 | Legacy guards/modes unchanged; exact scope docs | scripts/test-story; docs/CAPSTONE-EVALUATOR-PROTOCOL.md | parent diff; exact accepted contract is doc suffix; static scan clean | PASS |
+| 6 | Measured commands/counts/outputs/hashes and honest coverage | post-commit evidence directory | exact producing SHA, raw results and trace line coverage above | PASS |
+| 7 | No protected/runtime authority; no q3hp/6sso closure | documentation and unchanged guarded modules | no protected access, install, issue, mutation, VM/replay, secret/network call, admission/promotion/prod, merge or push | PASS boundary |
+
+### Observations and Routing
+- No installed authority descriptor/backend exists. This component intentionally refuses observe instead of inventing an issued raw Grant digest. Hash consistency is not provenance/authentication/authority. v4 remains unsupported and starts cannot dispatch. Actual driver, allowance, protected install and live capstone are not delivered by this story.
+- CoS is unavailable. GLM and Qwen review attempts returned no artifact within bounds and were interrupted; only the artifact-producing fresh security review was accepted. A subsequent bounded GLM deliver-only attempt likewise produced no side effect and was interrupted. Parent performed authorized mechanical commit/delivery as final routine fallback, not a new implementation or independent PM decision.
+- bd sync --from-main was attempted and reports no beads database; no competing tracker was initialized. Existing shared pvg nd vault remains authoritative; sync uses --no-push.
+- Actual disk measurement remains below the replay floor despite the operator's capacity report. No cache deletion, VM, or candidate execution was performed; source tests are tiny public fixtures only.
+
+LEARNINGS:
+- Unissued authority cannot honestly populate an issued-Grant observation; fail with RecoveryRequired rather than manufacture a receipt.
+- A valid hash/schema is consistency, not protected provenance or permission; test-only kernel peer results must stay visibly nonproduction.
+- Preserve exact WIP/test/review evidence outside disposable worktrees and bind post-commit evidence to the producing revision.
+- Bound unavailable worker routes and do not count silence, missing gates or stale tracker summaries as acceptance.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit8cf7d0d86d5103de3709d432a8c35b8101020440;19 source tests per interpreter,0fail/0error/0skip on3.14/3.12/3.9; static6eligible files0issues.
+- Independent source security review approved exact bytes, not PM or runtime authority.
+- Raw source/test/coverage/review manifests retained outside disposable worktree; no protected access, VM/replay, mutation, merge or push.
+
+### proof
+- [x] AC1 strict schemas and raw bindings.
+- [x] AC2 actual explicit-peer local refusal boundary.
+- [x] AC3 truthful unissued/unsupported/absent capability failures.
+- [x] AC4 nonzero no-skip source suite.
+- [x] AC5 existing guarded modules/modes unchanged and scope documented.
+- [x] AC6 producing-commit raw test/hash/line-coverage evidence.
+- [x] AC7 source-only scope; q3hp and capstone remain unaccepted.
+
 # Local-source workflow authorization
 
 Operator response: "Authorized and you have enough space now".
