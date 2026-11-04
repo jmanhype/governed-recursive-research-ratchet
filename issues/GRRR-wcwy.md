@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:31:39Z
-content_hash: "sha256:f2f909d9ee6301936e3bc374752904db5e152e7f6f7c7a64d3e5cee787f866b7"
+updated_at: 2026-11-04T17:34:13Z
+content_hash: "sha256:0df70f40a2704192adbdeb4409c29ee72e5fb8792e8883d21c0512db3e01086f"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary, delivered]
 assignee: dev-GRRR-wcwy
@@ -493,6 +493,63 @@ status: in_progress
 ### proof
 - [ ] AC1-6: implementation and measured source-test evidence pending.
 - [x] AC7 boundary: capstone remains deferred/rejected-x3; no protected/runtime authority is granted.
+
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+- Commands run:
+  - /opt/homebrew/bin/python3 -B scripts/test-story evaluator-contract
+  - /Users/speed/miniconda3/bin/python3 -B scripts/test-story evaluator-contract
+  - /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -B scripts/test-story evaluator-contract
+  - pvg verify research/capstone_contract.py research/capstone_client.py research/capstone_service.py tests/unit_capstone_contract.py tests/unit_capstone_peer.py tests/unit_capstone_suite.py scripts/test-story docs/CAPSTONE-EVALUATOR-PROTOCOL.md --format=text
+- Summary: source unit/local-peer PASS (19 tests on EACH of Python3.14.3,3.12.7,3.9.6; failures0, errors0, skipped0; all exit0); static PASS (6 eligible files,0issues). VM/corpus/replay/build and full capstone11 gates NOT-RUN, not skipped-green. No external CI claimed.
+- Coverage: stdlib trace LINE coverage contract95.6%, client96.9%, service93.5%, measured on producing commit by /opt/homebrew/bin/python3 -B -m trace --count --summary --missing --coverdir <repo>/.git/paivot/wip/GRRR-wcwy/post-commit-20261104/coverage tests/unit_capstone_suite.py. Branch/runtime coverage unmeasured. These source results are not VM or allowance evidence.
+- Raw command arrays/stdout/stderr/hash manifests: .git/paivot/wip/GRRR-wcwy/post-commit-20261104/runs.json and run0..run4.stdout/stderr. Earlier detailed delivery proof, AC mapping and all historical notes are preserved above.
+
+### Commit
+- Branch: story/GRRR-wcwy
+- SHA: 8cf7d0d86d5103de3709d432a8c35b8101020440
+- Exact reviewed8files,1034insertions/2deletions, existing guarded modules unchanged; no push.
+
+### Independent Review and Scope
+- SOURCE_SLICE_REVIEW: APPROVED. Exact security review SHA256 f18b42dd36979b9bb13fabe7ef3d71b7b99b2bb9c9898187f857fcd902de778b; independent19-test replay twice on3.14,0fail/error/skip. Retained review and log under .git/paivot/wip/GRRR-wcwy/parent-verify-20261104/.
+- Operator authorized local source commits, PM delivery and only PM-accepted epic merges. This supersedes historical WIP-only source restrictions, not protected/runtime gates. No main/push/protected install/write/reconcile/stop release/VM/replay/admit/promote/prod authority.
+- No installed authority backend or descriptor: v4 unsupported, observe refuses absent issuance, start always blocked, status/stop absent. Data consistency is not provenance/authentication/authority. Full q3hp/6sso remain unaccepted.
+- Delivery-note repair is append-only: native append-notes insertion left earlier contracts after newer ones and the first proof used a noncanonical heading. This canonical proof was inserted at Notes EOF through the official pvg nd edit editor API, using one apply_patch insertion. No prior text, code, criteria, hashes or gate was changed; no pvg/nd implementation was modified.
+
+### AC Verification
+| AC # | Requirement | Code Location | Test Location | Status |
+|---|---|---|---|---|
+| 1 | exact schemas11gates/raw bindings, consistency only | capstone_contract.py | ContractTests9 | PASS source |
+| 2 | authenticated peer-before-payload/slot, explicit test-only boundary | capstone_client.py; capstone_service.py | PeerTests10 with actual AF_UNIX credentials | PASS local only |
+| 3 | truthful unsupported/unissued/start refusal and no fabricated effects | RefusalService; production_client | real_refusal_channels; counterfeit_grant_cannot_start | PASS refusal |
+| 4 | real bounded19test suite, no zero/skip green | unit_capstone_suite.py | 3 producing-commit interpreter runs | PASS source |
+| 5 | existing guards/modes preserved and exact contract docs | scripts/test-story; protocol docs | exact diff/hash/static evidence | PASS |
+| 6 | actual commands/counts/coverage/source hashes | retained post-commit evidence | run0..run4 and manifests | PASS |
+| 7 | source-only and no protected/full-capstone authority | documented scope and unchanged modules | reviewed exact bytes; no protected effects | PASS boundary |
+
+LEARNINGS:
+- Never fabricate an observation digest from unissued authority; fail closed.
+- Keep actual local-peer source tests distinct from production identity, VM and allowance proof.
+- Preserve old notes byte-for-byte, but verify the authoritative proof is actually at Notes EOF rather than trusting append placement.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Producing SHA8cf7d0d86d5103de3709d432a8c35b8101020440,19source tests per3interpreters,0fail/error/skip, static6eligible files0issues. Exact raw results/review retained.
+- Local source commit/delivery authorized; independent security review approved. PM acceptance pending. No merge/push/protected/runtime operation.
+
+### proof
+- [x] AC #1: strict schemas and original-byte consistency bindings.
+- [x] AC #2: actual unprivileged AF_UNIX peer-before-payload/slot boundary.
+- [x] AC #3: unsupported/unissued/absent capability refusals, no claimed effect.
+- [x] AC #4:19 source tests,0fail/error/skip, all3interpreters.
+- [x] AC #5: existing guarded modules/modes unchanged, exact contract docs retained.
+- [x] AC #6: producing-commit commands/results/hash/line-coverage evidence.
+- [x] AC #7: no protected authority or capstone closure implied.
 
 ## History
 - 2026-11-04T16:46:17Z dep_added: blocks GRRR-q3hp
