@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T19:40:27Z
-content_hash: "sha256:ec66d20b6d969eef328df5d1bf47c0c9027d6edcfc35dc3934e1361d0418ac85"
+updated_at: 2026-11-04T19:51:20Z
+content_hash: "sha256:802b081fd6261925f947fcace2e0692797100147db7c0c54fa587b5febbfca8d"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
@@ -876,6 +876,23 @@ Parent's later `df -k /` observation reported 5,663,168 KiB available, or 5,799,
 Workflow writeback also exposed a tool failure: `pvg story reject GRRR-6sso` refused with `property "assignee" not found`. Live status/labels remained unchanged. A subsequent normal atomic `pvg nd claim ... --agent pm-rejection-writeback` without force was refused because GRRR-q3hp blocks the story. No force claim, manual label/status workaround, raw issue-file edit, or pvg-core change was used. The independent PM rejection is substantive but not a landed transition; do not claim otherwise.
 
 Current result: GRRR-q3hp AC1 mapping is blocked by concrete missing trusted capability; no implementation has begun. Capstone runtime evidence and cumulative allowances remain unestablished. Source checkout remains untouched; no protected mutation, VM/replay, network/inference, credential, admission, promotion, merge or push occurred. The exact-old-revision conditional grant does not silently authorize new implementation or deployment.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Previous goal turn made authoritative progress: accepted durable journal source merged at2b601462ba0ffb5aee6239aa22b06c26801dfaf9; merged25+19+7 source tests passed on each of3interpreters. Current goal turn selected q3hp via pvg loop next and claimed atomically.
+- Fresh cheap source audits completed and hashes verified: spendability API4243a218d31002180f108d28d7a336f83acfbff694924b8c5d53f63fbcb1685a; reserved replay API026b31f242f51cd03feb1ac2e76d0cfe2d0d508ddf5a1783cc92c7cf2ab74a8e. Retained under .git/paivot/wip/GRRR-q3hp/. No protected/private I/O or tests in those audits.
+- Critical design input: replay performs TWO guest sends, while journal v1 authorizes ONE send. An executable bridge must explicitly bind each finite dispatch; it cannot reuse one permit or quietly redefine it. Existing validator success remains conditional package arithmetic, not live v4 allowance or execution authority.
+- Coordinator correction to audit wording: resources are not commensurate. Any conservative allowance must be a VECTOR using componentwise minimum across POC/milestone for EACH resource; never a scalar minimum across cents and microseconds. Missing/unbounded history stays null/blocked.
+- One bounded multi-file architecture/QC/security design delegated to /root/design_executable_backend_bridge. It must resolve real production transport, current-v4 authority/adapters, reserved replay/control, gate phases and driver/failure/campaign schemas as one substantive source bridge, not propose another refusal-only success.
+- Existing approved architecture distinguishes execution from verification/review/admission; post-run gates cannot be pre-passed or dropped. All11 mandatory gates still require fresh individual evidence before full acceptance/admission. The full7-journey capstone remains deferred/rejected and unmet.
+- Source implementation is not permitted until this integrated design is independently accepted. No source edit or VM/protected/runtime effect performed in this goal turn so far. Current local-source workflow grant remains active; no new approval requested for it.
+
+### proof
+- [ ] AC #1: complete concrete backend/driver mapping accepted; design work ongoing.
+- [ ] AC #2-4: real prepare/run source wiring and source/runtime evidence still missing.
+- [x] AC #5 boundary: no protected access, allowance/reconciliation/stop release, VM/replay, admission/promotion, production/main effect or push.
 
 ## History
 - 2026-11-04T13:37:44Z dep_added: blocks GRRR-6sso
