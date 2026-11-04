@@ -4,7 +4,7 @@ title: "E2e: Operator completes a governed vlt research ratchet"
 status: open
 priority: 1
 type: task
-labels: [milestone-1, capstone]
+labels: [milestone-1, capstone, rejected]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
