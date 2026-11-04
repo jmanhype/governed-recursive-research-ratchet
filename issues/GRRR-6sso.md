@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T00:55:45Z
-content_hash: "sha256:667030b0fd6ef25d875a01daa9c27b3550920b7d84b4d5c405ae36c6acb373bb"
+updated_at: 2026-11-04T00:56:07Z
+content_hash: "sha256:78344d4a53958018d2fd03ee890f5b3438f957e62d716d87793c52021acdfcd0"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
 ---
@@ -115,6 +115,8 @@ status: new
 
 
 ## Notes
+Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
+
 ## Implementation Evidence
 
 Status: BLOCKED, not delivered.
