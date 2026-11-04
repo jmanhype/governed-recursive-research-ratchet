@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:27:45Z
-content_hash: "sha256:bc8d1e499a2755e57c2687451515dc2dda79e9a3afb22e00feccfaca23154d0e"
+content_hash: "sha256:c00a4dd63e126fae49e49fed917023c57b40719754ab8a97626a9ffd6930fb52"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0]
 ---
@@ -534,3 +534,31 @@ Evidence, analyzer, tests, result packet, review approval, and 15-file SHA manif
 
 ### 2026-11-04T00:22:02Z speed
 loop: story branch already merged into epic/GRRR-2t3h (b08754e) by a prior session; routed to PM review against the epic branch instead of re-dispatching a developer. PM: review the LANDED code on epic/GRRR-2t3h, then accept or reject.
+
+### 2026-11-04T00:27:45Z speed
+## PM Decision
+REJECTED [2026-11-03]: Independent review of the landed result at b08754ef4623a00b1f3839b343491c4b8a6c4f0c.
+
+EXPECTED: A delivered capstone must retain authoritative EOF delivery proof with Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA, and AC-by-AC verification, and must satisfy the seven story ACs through the real mandatory E2E workflow.
+DELIVERED: The landed commit only adds docs/evidence/milestone-packet/FINAL-PACKET.md. pvg story verify-delivery passed 3 and failed 6: authoritative contract is not EOF, and Implementation Evidence, CI/Test Results, Commands run, Summary, and AC verification are missing. The packet itself labels Jev/three-arm/full-capstone incomplete. At the landed commit, ./scripts/test-story milestone-e2e exits 2 with usage only; no milestone E2E path or mandatory enumeration is present. pvg verify also fails with three static stub findings in research/admission.py and research/review_report.py.
+GAP: AC1 lacks the full unedited operator journey commands/outputs/receipt hashes; AC2 has no >=20-seed full-system result; AC3 is explicitly incomplete; AC4 lacks stop/crash/recovery proof; AC5 lacks the adversarial fail-closed suite; AC6 lacks the accessibility walkthrough and measured burden; AC7 has bare evidence labels but not exact revisions, costs, warnings, unresolved blocks, and rollback evidence for every mapping. Later unmerged WIP/evidence is outside this landed review.
+FIX: Deliver a complete or explicitly blocked capstone packet at the reviewed landed revision: add/restore the mandatory milestone-e2e entrypoint and real evidence, make the delivered nd_contract authoritative at EOF, record exact commands/exit counts/SHAs and every AC status, and rerun pvg story verify-delivery plus the story's required verification ladder. Do not claim completion for unavailable Jev or deferred ACs.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Reviewed landed epic commit b08754ef4623a00b1f3839b343491c4b8a6c4f0c and FINAL-PACKET.md SHA256 70bd1af08a6c41a25558f137c8d43d850912f33b1d974c1c9c07de649e31f012.
+- pvg story verify-delivery GRRR-6sso: Passed 3, Failed 6, exit 1.
+- ./scripts/test-story milestone-e2e at b08754e: usage error, exit 2.
+- pvg verify at b08754e: FAILED, 71 files scanned, 3 static stub issues.
+- Focused local tests unit_admission.py + unit_review_report.py: 29 passed; these cannot substitute for the missing mandatory E2E.
+
+### proof
+- [ ] AC #1: Full operator journey evidence is missing.
+- [ ] AC #2: >=20 independently validated representative seeds/full mandatory system proof is missing.
+- [ ] AC #3: Three-arm comparison is explicitly incomplete at the landed revision.
+- [ ] AC #4: Stop, idempotency, race, crash/recovery, and restoration proof is missing.
+- [ ] AC #5: Full forged/stale/missing/budget/protected-write/ambiguous-spec fail-closed proof is missing.
+- [ ] AC #6: Keyboard-only accessibility walkthrough, decisions, and measured review burden are missing.
+- [ ] AC #7: Final packet lacks complete immutable receipt/revision/cost/warning/block/rollback mapping.
