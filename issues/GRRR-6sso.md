@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T02:29:51Z
-content_hash: "sha256:3cfac4744a791ebcbf089fa5c9292614ddaae05e6a88c3c1162e9b74c35129a5"
+updated_at: 2026-11-04T03:00:34Z
+content_hash: "sha256:49f4dc01e0709788f55c63b0f64aa4c39e0c35885ac0d384365150f695639690"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -812,3 +812,14 @@ It cannot authorize execution because:
 5. `execution_authorized` remains false.
 
 No protected path, VM/QEMU launch, replay, admission, promotion, production mutation, external Jev/network call, secret access, stash pop, merge, or push is authorized by this note. The story remains deferred/non-executing until the missing independent gates and exact-target grant are complete.
+
+### 2026-11-04T03:00:34Z speed
+## 2026-11-04 Narrow Independent Binding Review — REJECTED
+
+Fresh reviewer verdict: `E2E_NARROW_BINDING_REVIEW: REJECTED`.
+
+Reviewed package commit `dfb9d6daa1e8b259445c4fb1e22e28373481729a`; raw request hashes matched JSON `e4eec4393a95cc0d3da9a366538558890d0a5ce99fa97cb36ab80970ddf1a3b0` and Markdown `f903205410bb38ab38942f0a05e4f09537827f441caf78cb520c00d9329e609d`. Authority, output, denial, malformed/stale/missing checks otherwise held.
+
+Blocking finding: request labels parent `c928791cdaa72df91e61002c40317457b543b032` as `story_current` / `story_head_must_match`, while actual package HEAD is `dfb9d6d...`. Validator trusts caller-supplied claimed head, so package-commit versus runtime-base semantics are not sufficiently distinct.
+
+Required repository-only fix: explicitly separate review/package commit from parent runtime base, rename misleading semantics, and validate both bindings independently during review/preflight. This remains non-authoritative; execution_authorized=false.
