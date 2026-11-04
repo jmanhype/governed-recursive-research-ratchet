@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T14:56:58Z
-content_hash: "sha256:6999190c9f947ef254944d1649a75998a0cd61953c0fbcec2d2e374ac2ea5bd0"
+updated_at: 2026-11-04T15:15:56Z
+content_hash: "sha256:922c4f3cdb68a87039762c22cf42cc6a8aa183cd930fd0857dc36b8494985141"
 blocks: [GRRR-6sso]
 ---
 
@@ -101,6 +101,25 @@ status: new
 Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocker wiring does not change any capstone AC and does not constitute or authorize VM/replay execution. True capstone closure still requires separately authorized live runtime/evaluator/ledger proof plus all existing review and human gates.
 2026-11-04 fresh capacity update after operator reported more space: df -k / and /System/Volumes/Data both returned 15110888 KiB available = 15473549312 bytes. This clears only the 15350000000-byte preparation CAPACITY floor by 123549312 bytes. It remains below the 16106127360-byte replay CAPACITY floor by 632578048 bytes. These arithmetic checks are not full preparation/preflight approval or VM runtime proof. Source floors verified at reviewed package 51ebc998e7c07018740ec53e389646a5b465cc75. Existing v4 runtime incompatibility and missing authenticated capability findings remain unchanged; no VM/replay, cleanup, protected access/mutation, budget reconciliation, source edit, commit, merge or push occurred.
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
+## 2026-11-04 Authorized Regenerable Compiler-Cache Cleanup - Verified
+
+Operator authorized: "Clean out the 633 we need cleared".
+
+Only generated files older than one day with extensions .pcm or .swiftmodule were removed from the user's Darwin Clang ModuleCache. No compiler process was detected; bounded lsof exited 1 with empty output/stderr (no open cache file found). Root/ancestor symlinks, user ownership, root identity, per-file device/inode/size/blocks/mtime, and single-link checks guarded deletion. No rm-rf or privileged identity was used.
+
+- Deleted files: 1096; allocated bytes removed: 788574208.
+- Selected and deleted inventories match exactly, both SHA-256 ab3fd94ef061ed355f2d50b7aaec7338f2fc4c7e1959cc5ae2b6097e4651b8a7.
+- Cleanup script SHA-256: 8676654deb44a5ff3d47b74adb0b68033111a1abcc053c133577a24f1d9953b4.
+- Raw result SHA-256: 124456aa85354b298add7217b2a96a9e19eefe2ca434020c4f74d9e706ff324c.
+- Raw script observation: free bytes before 15390605312; after 16171376640; net increase 780771328. Other host activity can affect this net figure.
+- Later independent df observation: free bytes 16162504704; preparation floor 15350000000 PASS; replay floor 16106127360 PASS with 56377344 bytes headroom. This is a point-in-time capacity check only, not authorization or a full preflight/runtime pass.
+- Compiler cache remained present at 8 KiB; zero .pcm/.swiftmodule files remained. The next build can regenerate those modules.
+- Artifacts: /tmp/grrr-clang-cache-cleanup-20261104.sh, .result.txt, .selected-inventory.txt, .deleted-inventory.txt. Core scalar results and hashes are retained in nd independently of temporary file lifetime.
+- An initial post-clean awk display expression had a syntax error; it performed no deletion. The final floor calculation was independently recomputed from fresh df output using the tool orchestrator; no failed calculation was counted as a pass.
+
+Active Codex updater, all application/runtime installations, repositories, GRRR evidence, replay inputs, protected accounting and production data were not altered. Chrome's cache-only dialog was inspected, found under 1 MB, and canceled without deleting browsing data; a temporary version tab was closed, restoring the original settings tab. No npm cache or other application's data was deleted.
+
+Source HEAD remains 0b2365e30ab5858cb419f4f4ce9b2ce001850541 with a clean source checkout. No /Library/GRRR access or mutation, VM/replay, spendability write/reconciliation, stop clearing, admission, promotion, merge, push or credential use occurred. The v4 compatibility and authenticated-interface blockers remain; this cleanup does not satisfy them. Headroom is narrow and must be rechecked before any future launch.
 
 # GRRR-q3hp bounded architecture mapping
 
