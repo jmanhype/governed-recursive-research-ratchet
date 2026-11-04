@@ -1,18 +1,19 @@
 ---
 id: GRRR-wcwy
 title: "Source-only evaluator protocol and authenticated refusal boundary"
-status: in_progress
+status: closed
 priority: 0
 type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:34:48Z
-content_hash: "sha256:a12252540f91d226d40c0b2849ecfc7b140a84a735fbf1988386107210c68454"
-blocks: [GRRR-q3hp]
+updated_at: 2026-11-04T17:36:39Z
+content_hash: "sha256:adb4bfc315eca88630028fc4ca9ac9f7c668f0c5b2e2faf62f1672828e55a93c"
 labels: [milestone-1, source-only, security-boundary, delivered]
 assignee: dev-GRRR-wcwy
 follows: [GRRR-ev2w, GRRR-888u]
+closed_at: 2026-11-04T17:36:38Z
+close_reason: "Independent PM: exact commit8cf7d0d source-only AC1-7 verified; source hashes/raw proof/static gate pass; no runtime authority"
 ---
 
 ## Description
@@ -565,10 +566,11 @@ status: delivered
 - 2026-11-04T16:46:19Z claimed by dev-GRRR-wcwy
 - 2026-11-04T17:31:38Z status: in_progress -> in_progress
 - 2026-11-04T17:31:38Z auto-follows: linked to predecessor GRRR-888u
+- 2026-11-04T17:36:39Z status: in_progress -> closed
+- 2026-11-04T17:36:39Z dep_removed: no_longer_blocks GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-q3hp]]
 - Follows: [[GRRR-ev2w]], [[GRRR-888u]]
 
 ## Comments
