@@ -37,9 +37,18 @@ class DecisionRequestSchema(unittest.TestCase):
 
     def package_with(self, request=None, markdown=None, index=None):
         package = self.baseline_package()
-        package.request_bytes = request if request is not None else package.request_bytes
-        package.markdown_bytes = markdown if markdown is not None else package.markdown_bytes
-        package.index_bytes = index if index is not None else package.index_bytes
+        if request is not None:
+            package.request_bytes = (
+                json.dumps(request, sort_keys=True, separators=(",", ":")).encode("ascii")
+                if isinstance(request, (dict, list)) else request
+            )
+        if markdown is not None:
+            package.markdown_bytes = markdown.encode("utf-8") if isinstance(markdown, str) else markdown
+        if index is not None:
+            package.index_bytes = (
+                json.dumps(index, sort_keys=True, separators=(",", ":")).encode("ascii")
+                if isinstance(index, (dict, list)) else index
+            )
         return package
 
     def assert_rejected(self, request=None, markdown=None, index=None):

@@ -117,12 +117,12 @@ class ResolvedPackage:
 
     def __init__(self, repository: Any, runtime_base: str, package_commit: str,
                  request_bytes: bytes, markdown_bytes: bytes, index_bytes: bytes) -> None:
-        self.repository = repository
-        self.runtime_base = runtime_base
-        self.package_commit = package_commit
-        self.request_bytes = request_bytes
-        self.markdown_bytes = markdown_bytes
-        self.index_bytes = index_bytes
+        self.repository: Any = repository
+        self.runtime_base: str = runtime_base
+        self.package_commit: str = package_commit
+        self.request_bytes: bytes = request_bytes
+        self.markdown_bytes: bytes = markdown_bytes
+        self.index_bytes: bytes = index_bytes
 
 
 def _keys(value: dict, expected: set[str], label: str) -> None:
@@ -205,7 +205,7 @@ def _validate_request_identity(request: dict, runtime_base: str) -> None:
         raise DecisionRequestError("runtime base differs from immutable request binding")
     for key, _value in _walk(request):
         leaf = key.rsplit(".", 1)[-1]
-        if "package" in leaf and "commit" in leaf:
+        if leaf == "package_commit" or leaf.endswith(".package_commit"):
             raise DecisionRequestError("package commit must be bound externally, not claimed in JSON")
 
 
