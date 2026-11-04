@@ -9,7 +9,8 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
 updated_at: 2026-11-04T21:39:45Z
-content_hash: "sha256:933f22fc31eb2aa89c682a59a1d78be022d539e62f79c21ba9b29b218f52ede1"
+content_hash: "sha256:092daa442ea303d48d7ace317c824c91e9c61209dc620d47fb4f52e87817a170"
+blocks: [GRRR-q3hp]
 ---
 
 ## Description
@@ -209,9 +210,10 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## History
-
+- 2026-11-04T21:39:55Z dep_added: blocks GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-q3hp]]
 
 ## Comments
