@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T13:18:49Z
-content_hash: "sha256:d392cee11592900fe43e098a4a1aba1cd7983cb4e04702e93430662252a8f504"
+updated_at: 2026-11-04T13:26:48Z
+content_hash: "sha256:61a5d06efd5ef9e6e4f90d1bcd6d4c19c85cdfb5d7e056a85d49028b0aeacf51"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -118,6 +118,20 @@ status: new
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
 Supplement verification: parent readback confirmed the five-minute attestation text is present exactly once, both E2E request hashes remain unchanged, and execution_authorized remains false. A bounded fresh GLM attestation-only reviewer did not return a verdict before interruption; no new independent approval is claimed. Prior independently reviewed request semantics are unchanged. No source-tree changes or runtime actions were performed.
+## 2026-11-04 Operator Approval - Bounded Blocker Remediation
+
+The operator replied `approved` to the prior report identifying insufficient capacity, a checklist-only capstone entrypoint, and unreconciled cumulative allowances. This permits bounded reversible remediation work and independent review, not weakening any acceptance criterion or silently substituting a new runtime revision into the existing grant.
+
+Active actions: read-only cache/process capacity audit; independent PM review selected by `pvg loop next --json`; one Sr PM repair story scoped to existing-component capstone execution wiring; protected read-only budget-binding inspection. No cleanup, source implementation, or runtime execution is claimed by this note.
+
+Fresh parent observations:
+- Epic unchanged at `0b2365e30ab5858cb419f4f4ce9b2ce001850541`; source checkout clean.
+- `df -k /` now reports `7255348` KiB available (`7429476352` bytes); swap used `24351.06M`. Measurements are point-in-time, not a new allowance.
+- Live successor binding `/Library/GRRR/accounting-poc2/active.json` is version 4 and contains only profile `independent-replay`. SHA-256 `ed40ee14278426d7af0b11a7b3a1e3ce4719f0cbad2bf7e566fd73224a6cd283`.
+- Its exact store directory is mode 0700, owned by `_grrr_evaluator`. The parent was denied metadata access to `budget.sqlite`. Because the shell failed at that check, the proposed read-only SQLite query did not execute. No elevated retry, permission modification, or state change followed. A live allowance receipt remains unestablished; permission denial is not evidence of zero usage or missing data.
+
+Scope exclusions remain: no protected accounting writes/reconciliation, stop clearing, protected recovery, permanent admission, promotion, production mutation, credentials, external Jev calls, merge or push. The earlier one-run authorization remains bound to its exact reviewed target. New wiring must receive independent review and exact revised binding before use; no gate or budget is relaxed.
+
 ## 2026-11-04 Authorized Bounded Run - Preflight Stopped Before Launch
 
 The exact conditional execution authorization is recorded in Notes under `Operator Authorization - Conditional Bounded Run`, digest `886b28daa787fc21343c8c73575e36df952e0a5148370a7a904627a992659d92`. The operator authorized execution if mandatory preflight passes; do not misclassify this decision as planning-only or request the same unchanged approval again. No mandatory gate was waived.
