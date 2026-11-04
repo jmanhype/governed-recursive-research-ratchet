@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:54:31Z
-content_hash: "sha256:4e22055e59112098bb4632e0d937135e76882e5d3bf35af9f58b929bd9df23e8"
+updated_at: 2026-11-04T03:57:37Z
+content_hash: "sha256:5dfe972c4d957eb0723670bc1f43006de433b811ac32a42bce2c89af48ceed6d"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -942,3 +942,17 @@ The operator authorized one read-only receipt lookup. Outcome:
 Official public model documentation lists `jev-1.14.0` at `$42/Btok` (`$0.042/Mtok`) input and free output. Applied only as a non-authoritative list-price exposure projection, not actual billing reconciliation: pilot `12,548` input tokens -> `$0.000527016`; confirmatory `37,644` -> `$0.001581048`; cumulative `50,192` -> `$0.002108064`. Actual USD remains unknown because account-specific discounts, credits, plan, billing period, statement, and exact run coverage are not established.
 
 No model/inference call, retry, protected path, mutation, merge, or push occurred.
+
+### 2026-11-04T03:57:37Z speed
+## 2026-11-04 Operator-Authorized Conservative Jev Cost Bound
+
+The operator explicitly authorized using official public-rate exposure as a conservative Jev cost bound:
+
+- Model: `jev-1.14.0`
+- Official public rate: `$42/Btok` input, output free
+- Cumulative provider-observed input: `50,192` tokens
+- Conservative public-rate exposure: `$0.002108064`
+- Incremental reservation remains the full `$50`
+- Missing account-specific invoice/credits/discounts remains recorded, but is not treated as a blocker to Jev preflight because bounded exposure is far below the ceiling and no further Jev call is authorized.
+
+This is a cost-bound accounting decision only. It does not authorize VM/QEMU, protected access, replay, admission, promotion, production mutation, external Jev/network call, secret read, stash pop, merge, or push. Exact approved E2E request bytes remain unchanged.
