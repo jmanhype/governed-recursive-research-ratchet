@@ -5,8 +5,8 @@ import subprocess
 import sys
 ROOT = Path(__file__).resolve().parents[1]
 if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight'], ['trusted-observation'],
-                        ['validated-corpus'], ['durable-evidence'], ['safe-stop'], ['independent-replay'], ['evaluator-contract']):
-    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|validated-corpus|durable-evidence|safe-stop|independent-replay|evaluator-contract', file=sys.stderr)
+                        ['validated-corpus'], ['durable-evidence'], ['safe-stop'], ['independent-replay'], ['evaluator-contract'], ['capstone-journal']):
+    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|validated-corpus|durable-evidence|safe-stop|independent-replay|evaluator-contract|capstone-journal', file=sys.stderr)
     raise SystemExit(2)
 if sys.argv[1] == 'offline-preflight':
     import json
@@ -22,6 +22,10 @@ if sys.argv[1] == 'offline-preflight':
         print('FAIL: mandatory offline prerequisites unavailable: ' + str(exc), file=sys.stderr)
         raise SystemExit(1)
 try:
+    if sys.argv[1] == 'capstone-journal':
+        result = subprocess.run([sys.executable, '-B', str(ROOT / 'tests/unit_capstone_journal_suite.py')],
+                                cwd=ROOT, timeout=120)
+        raise SystemExit(result.returncode)
     if sys.argv[1] == 'evaluator-contract':
         result = subprocess.run([sys.executable, '-B', str(ROOT / 'tests/unit_capstone_suite.py')],
                                 cwd=ROOT, timeout=120)

@@ -58,6 +58,66 @@ skips, failures or errors exit nonzero. Existing runtime modes are untouched.
 All full-capstone gates remain NOT-RUN. Test results do not establish allowance,
 spendability, installed endpoint integrity, cessation or settlement.
 
+## Source-only journal prerequisite (GRRR-yt6a)
+
+This later slice adds an **unwired local journal**, superseding only the earlier
+statement that no source journal exists. It does not change the refusing service,
+install a backend/schema, issue grants, or complete the driver/capstone contract.
+`capstone_journal_schema.CORE_SQL/JOURNAL_SQL` declare exact source schema; there
+is deliberately no production migration, empty-registry fallback or issuance API.
+
+`open_existing(ledger: Ledger) -> Journal` requires actual UID320 before touching
+the supplied trusted Ledger. It validates preinstalled schema, core hash chain,
+idempotency correspondence, original preissued Grant bytes and replayed journal
+state. It performs no filesystem open, DDL or repair. The existing ledger owner
+must supply the trusted connection; Python objects are not an in-process sandbox.
+The distinct `open_public_fixture(ledger, directory)` factory only accepts private
+`/private/tmp/capstone-journal-fixture-*` public test directories, with lexical
+rejection before metadata. It does not pretend that actual host UID501 is UID320.
+
+Public Journal methods:
+
+- `claim(start: dict, authenticated_uid: int) -> JournalRecord`
+- `record_reserved(operation_id: str, reservation: str) -> JournalRecord`
+- `mark_dispatch_pending(operation_id: str) -> tuple[JournalRecord, Optional[DispatchPermit]]`
+- `request_stop(operation_id: str, authenticated_uid: int) -> JournalRecord`
+- `status(operation_id: str, authenticated_uid: int) -> JournalRecord`
+
+`JournalRecord` is frozen local data: operation_id, grant_id, plan_sha256,
+start_request_sha256 (hex digest strings), operator_uid (int), state (str),
+reservation (optional hex digest), stop_requested (bool), ledger_sequence (int).
+It is **not** the full contract Operation, Receipt or Anchor and conveys no gate
+passes, historical reconciliation, spendable allowance or permission to execute.
+Authenticated UID is supplied by the trusted caller; this module adds no peer
+authentication or transport. Reservation/pending methods are evaluator-internal,
+not operator-facing RPCs, and never call a budget reservation API.
+
+Grant consumption, operation insertion and hash-linked event commit in the SAME
+SQLite database. Callback-time replay checks the entire prior chain and state
+after BEGIN IMMEDIATE; a competing stale-tip append rolls back rather than forks
+the chain. Contention refuses, with no automatic retry after an ambiguous error.
+An identical claim returns current recorded state only; changed starts refuse.
+Reservation references are immutable. Stop latches monotonically and is checked
+in the reserved-to-pending transaction. Status uses a SELECT-only snapshot and
+refuses absent or corrupt state rather than synthesizing success.
+
+Only a committed live reserved-to-dispatch-pending transition returns a permit.
+The opaque process-local permit has one `consume() -> None` use, rejects copies,
+serialization and post-fork use, and contains no serializable authority token.
+Cached callbacks, duplicates and reopened pending state never renew a permit.
+There is no transition/recovery API for unknown state: unsupported or corrupted
+persisted unknown histories refuse open, never repair or grant permission.
+Loss of a permit is conservative and irreversible here. This mechanism **does
+not solve stop-versus-real-send coupling**; no dispatcher or send exists.
+
+`./scripts/test-story capstone-journal` runs only tiny public SQLite fixtures,
+including separate-process races and actual process exits before/after COMMIT.
+Zero/skipped/failing suites fail. Legacy durable-evidence unit tests remain unit
+policy/storage regressions (their identity-constant patch is NOT kernel identity
+proof). No VM, runtime identity, production installation or CI result is implied.
+All full-capstone gates remain NOT-RUN; independent security/PM source review is
+required before merge, and protected migration/issuance/execution remain gated.
+
 ## Exact accepted source-only contract (verbatim to end of file)
 
 # GRRR-q3hp — proposed evaluator interface contract, 2026-11-04
