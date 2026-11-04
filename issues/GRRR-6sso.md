@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:55:26Z
-content_hash: "sha256:d3055270457dd2c231b63bead56c78965d20ac179c79f4f534a93b8e90e75f80"
+content_hash: "sha256:341bb7dfcf7e08c7266070581c57f3631eae48b57c2fe9a83003df17a5d796f0"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
 assignee: dev-GRRR-6sso
@@ -645,3 +645,6 @@ Before merging accepted GRRR-888u, the unrelated epic-root WIP was preserved wit
 ## 2026-11-04 Capstone Rework Dispatch Base
 
 story/GRRR-6sso was fast-forwarded from 5b50e29272819da205fc09e051f82c2639a7a197 to accepted epic/GRRR-2t3h commit 845b47d221773eb4157491d35f57dce47ce8afe6 before the second-rejection rework. The preserved stash remains unreviewed and is excluded from the rework base.
+
+### 2026-11-04T00:55:26Z speed
+BLOCKED: Repository-only checklist/packet committed at ff0aa463dca9523490c1a93a730cfe8a5cf19756. All seven mandatory full-capstone ACs remain incomplete; exact missing artifacts, unknown costs and human/protected gates are mapped in FINAL-PACKET.md. Production admission corrupt-registry fallback is a separate responsible-story defect. No deliver call; release per developer BLOCKED protocol.
