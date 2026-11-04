@@ -1,18 +1,19 @@
 ---
 id: GRRR-ev2w
 title: "Bug: Fail closed on corrupt admission registry"
-status: in_progress
+status: closed
 priority: 0
 type: bug
 labels: [milestone-1, security, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
-updated_at: 2026-11-04T01:18:06Z
-content_hash: "sha256:f4d3b59a6b7b703bd459a3408585ca0653edbf9315b1e130c544bd78ef8bf503"
-blocks: [GRRR-6sso]
+updated_at: 2026-11-04T01:21:13Z
+content_hash: "sha256:fa9960a64d501a8f65f0cf34c058124ffae64d261a3b3316a4f339181549aaa8"
 assignee: dev-GRRR-ev2w
 follows: [GRRR-888u, GRRR-gge0]
+closed_at: 2026-11-04T01:21:13Z
+close_reason: "Accepted: branch 710e6fb matches the delivered hashes; 9/9 delivery proof, 28 unit and 6 real-filesystem integration executions on Python 3.14/3.9 with 0 failures/skips, and the 3-file 197-line diff satisfy all six fail-closed/durability ACs within scope."
 ---
 ## Description
 ## Context
@@ -246,10 +247,11 @@ status: delivered
 - 2026-11-04T01:11:27Z claimed by dev-GRRR-ev2w
 - 2026-11-04T01:17:37Z status: in_progress -> in_progress
 - 2026-11-04T01:17:37Z auto-follows: linked to predecessor GRRR-gge0
+- 2026-11-04T01:21:13Z status: in_progress -> closed
+- 2026-11-04T01:21:13Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-6sso]]
 - Follows: [[GRRR-888u]], [[GRRR-gge0]]
 
 ## Comments
