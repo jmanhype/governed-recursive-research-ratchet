@@ -9,9 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:56:07Z
-content_hash: "sha256:78344d4a53958018d2fd03ee890f5b3438f957e62d716d87793c52021acdfcd0"
+content_hash: "sha256:a3178dd636c38a540ad313dec54f5cb6906d4020e7ccbf83338b663584071082"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
+blocked_by: [GRRR-gzgq]
 ---
 
 ## Description
@@ -333,9 +334,11 @@ status: delivered
 - 2026-11-04T00:46:41Z claimed by dev-GRRR-6sso
 - 2026-11-04T00:55:26Z status: in_progress -> open
 - 2026-11-04T00:55:26Z released by speed
+- 2026-11-04T01:03:31Z dep_added: blocked_by GRRR-gzgq
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocked by: [[GRRR-gzgq]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
 - Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]], [[GRRR-888u]]
 
