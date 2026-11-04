@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:22:02Z
-content_hash: "sha256:39f61ba405b9bfaac691de5711917c28c14bf0c4f4df8f1667ca909a335bc86a"
+content_hash: "sha256:ce4d06757bc85b87561c549d464df1f9a5af25ce2819e1e4edb0a99a90f5db99"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0]
 ---
@@ -528,3 +528,6 @@ Local frozen-truth analysis report docs/evidence/jev-selector-measurement/three-
 Independent reviewer verdict: THREE_ARM_RESULT_REVIEW: APPROVED. Reviewer matched all hashes, validated event/report integrity and budgets, recomputed all arm metrics and bootstrap results, confirmed leakage boundaries, and reran focused tests. Result remains selector-quality-only: deterministic mean 0, random mean 6, Jev mean 5; outcome inconclusive-jev-did-not-win, measured leading arm random, no superiority or promotion claim.
 
 Evidence, analyzer, tests, result packet, review approval, and 15-file SHA manifest committed to story/GRRR-6sso. No additional external call, rerun, replay, admission, promotion, production mutation, merge, or push.
+
+### 2026-11-04T00:22:02Z speed
+loop: story branch already merged into epic/GRRR-2t3h (b08754e) by a prior session; routed to PM review against the epic branch instead of re-dispatching a developer. PM: review the LANDED code on epic/GRRR-2t3h, then accept or reject.
