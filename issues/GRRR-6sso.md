@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T04:13:53Z
-content_hash: "sha256:563f57733dac0f6d8ea99d7336ece124a551120b09fff9b20281716c82f00ec1"
+updated_at: 2026-11-04T04:15:41Z
+content_hash: "sha256:2c253bdd19a04a65c13c52e7cdf274deb06710c36f95e3bc1c261e0dc921fa22"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -979,3 +979,10 @@ Supplement commit: `b1d8bfd702fb577d1c437ffeb12f3ab6ebe1d751`.
 - `docs/evidence/milestone-packet/JEV-COST-BOUND.md` SHA-256 `acca35f9953e4e096e44e6833b94dc73e7cd57a60efe38a062252dfe04501460`
 
 Parent independently checked exact model/rate/usage/arithmetic, full $50 reservation, unresolved settlement, unchanged approved request bytes, JSON semantics, `pvg verify`, and diff checks. The capstone remains unaccepted and blocked; accessibility/review-time closure and exact runtime authorization are still required.
+
+### 2026-11-04T04:15:41Z speed
+## 2026-11-04 Accessibility Preflight Walkthrough — Awaiting Operator Result
+
+Keyboard-only command transcript captured at `/tmp/grrr-accessibility-preflight-20261104-v2.txt`; SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a`, 5,621 bytes. It exercises real plain-text/Markdown review output, CLI help discoverability, decision choices, stop, and recovery vocabulary. No ANSI color escapes. Started at `2026-11-04T04:15:13Z`; operator response time pending.
+
+This preflight does not substitute for the full runtime accessibility journey or authorize execution.
