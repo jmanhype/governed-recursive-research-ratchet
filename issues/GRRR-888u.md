@@ -8,10 +8,10 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:16:11Z
-content_hash: "sha256:46dd977fdaa67583dd9b3ae1fe3867af0826f98ef25aeff76cc864dadd98f083"
+updated_at: 2026-11-04T00:16:12Z
+content_hash: "sha256:1d9efc13c9184500cc087ccdd67391ab608d0ab5654cadfa9fbb8623514befcb"
 assignee: dev-GRRR-888u
-follows: [GRRR-gge0]
+follows: [GRRR-gge0, GRRR-fmvp]
 ---
 
 ## Description
@@ -176,10 +176,12 @@ status: delivered
 - 2026-11-03T23:27:53Z status: open -> in_progress
 - 2026-11-03T23:27:53Z auto-follows: linked to predecessor GRRR-gge0
 - 2026-11-03T23:27:53Z claimed by dev-GRRR-888u
+- 2026-11-04T00:16:12Z status: in_progress -> in_progress
+- 2026-11-04T00:16:12Z auto-follows: linked to predecessor GRRR-fmvp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Follows: [[GRRR-gge0]]
+- Follows: [[GRRR-gge0]], [[GRRR-fmvp]]
 
 ## Comments
 
