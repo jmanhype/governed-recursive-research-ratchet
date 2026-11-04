@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "story_id": "GRRR-6sso",
+  "basis_transcript_sha256": "42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a",
+  "transcript_bytes": 5621,
+  "started_at": "2026-11-04T04:15:13Z",
+  "operator_result": "ACCESSIBILITY PASS",
+  "self_reported_review_minutes": 1,
+  "interface": "voice/text keyboard-equivalent",
+  "no_color_escapes": true,
+  "required_vocab_present": true,
+  "execution_authorized": false,
+  "runtime_authority": false
+}

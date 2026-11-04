@@ -1,0 +1,129 @@
+GRRR ACCESSIBILITY PREFLIGHT — KEYBOARD-ONLY COMMAND SURFACE
+started_at=2026-11-04T04:15:13Z
+--- COMMAND: scripts/grrr-review --format text ---
+GRRR REPLAY REVIEW
+===================
+Challenge:       unknown
+Finding:         Verified defect
+Verified:        True
+Execution State: Completed
+Gates:           9/11 pass
+Elapsed:         47.7 seconds
+Cost:            $0.00
+Recommendation:  Approve permanent contract admission
+Decision State:  Ready for review
+Snapshot:        ab8d72f25c3a4ce2...
+--- COMMAND: scripts/grrr-review --format markdown ---
+# GRRR Replay Review
+
+## Decision Summary
+
+- **Challenge:** unknown
+- **Finding:** Verified defect
+- **Verified:** True
+- **Execution State:** Completed
+- **Gates:** 9/11 pass
+- **Elapsed:** 47.7 seconds
+- **Cost:** $0.00
+- **Recommendation:** Approve permanent contract admission
+
+## Technical Verification
+
+- Run ID: `dc4e157ee0944793a5953f8805302538`
+- Snapshot SHA-256: `ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689`
+
+## Full Audit
+
+- Snapshot is not fresh replay; recorded output only.
+- Historical evidence; currency must be verified before action.
+
+---
+Decision state: **Ready for review**
+--- COMMAND: import runner; runner.parser().print_help() ---
+usage: -c [-h] {start,status,review,evidence,decide,stop,recover} ...
+
+Bounded synthetic walkthrough only. Inspect: status/evidence. Emergency stop:
+stop RUN. Recovery unavailable.
+
+positional arguments:
+  {start,status,review,evidence,decide,stop,recover}
+
+options:
+  -h, --help            show this help message and exit
+--- COMMAND: runner parser subcommand evidence help ---
+usage: -c evidence [-h] --level {decision,technical,audit}
+                   --format {text,markdown,json}
+                   run
+
+positional arguments:
+  run
+
+options:
+  -h, --help            show this help message and exit
+  --level {decision,technical,audit}
+  --format {text,markdown,json}
+--- COMMAND: runner parser subcommand decide help ---
+usage: -c decide [-h]
+                 --action {approve-evidence,admit-contract,reject,needs-evidence,request-change}
+                 --target TARGET
+                 run
+
+positional arguments:
+  run
+
+options:
+  -h, --help            show this help message and exit
+  --action {approve-evidence,admit-contract,reject,needs-evidence,request-change}
+  --target TARGET
+--- COMMAND: runner parser subcommand stop help ---
+usage: -c stop [-h] [--key KEY] [--reason REASON] run
+
+positional arguments:
+  run
+
+options:
+  -h, --help       show this help message and exit
+  --key KEY
+  --reason REASON
+--- COMMAND: runner parser subcommand recover help ---
+usage: -c recover [-h] [--plan PLAN] [--execute] run
+
+positional arguments:
+  run
+
+options:
+  -h, --help   show this help message and exit
+  --plan PLAN
+  --execute
+--- MILESTONE BLOCKED SUMMARY (first 30 lines) ---
+BLOCKED: milestone-e2e; repository-only evidence checklist, NOT a runtime E2E pass
+source_environment_identity: not-run -- Current approved source, license, build and environment identity receipts.
+isolation: not-run -- Authorized disposable offline VM and boundary-probe receipts for the full journey.
+protected_asset_integrity: not-run -- Authorized before/after protected integrity receipts, not host inspection here.
+baseline_correctness: not-run -- Fresh independently observed clean-baseline pass paired with recurrence rejection.
+trusted_observation: not-run -- Evaluator-authenticated observations for every required challenge and negative case.
+independent_replay: not-run -- Independent replay receipts across the required seed set; D011 alone is insufficient.
+specification_traceability: not-run -- Reviewed requirement mappings and ambiguous-spec rejection for every seed.
+evidence_integrity_currency: not-run -- Independent trusted-anchor verification including tamper/truncate/missing cases.
+budget_state: not-run -- Independent USD receipt plus cumulative execution/review/reservation accounting within caps.
+reviewer_outcome: not-run -- Independent acceptance of this exact complete capstone snapshot; none claimed here.
+action_specific_human_approval: not-run -- Fresh exact-target preflight/replay/admission grants; historical grants are not reusable.
+AC1: not-run -- Unedited authorized clean-environment start/monitor/report/replay/review/admission/recurrence transcript.
+AC2: not-run -- At least 20 validated representative seeds plus negatives through all gates; 100% critical, >=90% others; zero invalid admissions.
+AC3: not-run -- Full equal-budget comparison cost evidence: retained three-arm selector result has USD unknown and is selector-quality-only.
+AC4: not-run -- Hung executor cessation, idempotency, races, each durable crash transition, pre-stop admission listing and verified restoration or Recovery required.
+AC5: not-run -- Full forged/stale/missing/budget/protected-write/ambiguous-spec matrix and export attacks with matching CLI/Markdown/JSON safe actions.
+AC6: not-run -- Actual keyboard/screen-reader inspection, reject/request evidence/stop walkthrough with measured review burden.
+AC7: not-run -- Final exact-revision architecture/business/design mapping with complete runtime receipts, cost/warning/block/rollback evidence.
+Historical adaptation: hash-matched
+Historical admission: hash-matched
+Historical architecture: hash-matched
+Historical authorization: hash-matched
+Historical business: hash-matched
+Historical contract: hash-matched
+Historical corpus: hash-matched
+Historical design: hash-matched
+Historical durable: hash-matched
+Historical export_verification: hash-matched
+Historical jev_design: hash-matched
+completed_at=2026-11-04T04:15:14Z
