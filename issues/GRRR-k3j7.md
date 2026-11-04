@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-04T21:39:55Z
-content_hash: "sha256:eda4840a21f922d3b900b846d8c86dfecd0ebc3b13df352d13dab1d042d1b3b8"
+updated_at: 2026-11-04T21:41:26Z
+content_hash: "sha256:f04c696d72ce2fbddacffd0b9be3db1bfdd67674b9c0ce239a62e5a56b2a12c7"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -210,6 +210,21 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 ## Notes
 
+
+## nd_contract
+status: in_progress
+
+### evidence
+- pvg loop next selected GRRR-k3j7; atomic claim dev-GRRR-k3j7. Owned .claude/worktrees/dev-GRRR-k3j7 on story/GRRR-k3j7 from2b601462ba0ffb5aee6239aa22b06c26801dfaf9.
+- Independent design acceptance55155e52a5543325b1b071ca66b596e3795fa9456f04e6fda0efb9ce43e425d1 and review2e6d50ddd3e638365284f344cc5412975362cd6d7ee94dc87651e402b8b9d3d3 verified from actual artifacts. Exact four normative input hashes are embedded in self-contained story description; no worker can self-approve source delivery.
+- /root/implement_backend_contracts exact GLM Coding Plan owns ONLY capstone_backend_contract.py and its focused unit test; /root/implement_executable_backend bounded Astra owns remaining listed source/tests/docs. They are told not alone and cannot revert concurrent edits. No recursive delegation, source commits centrally coordinated.
+- Real private-temp SQLite/AF_UNIX/SCM_RIGHTS/harmless-owned-child positive source tests required. Source factories remain nonproduction. Existing baseline19+25tests each passed all3interpreters; zero required skips. Docker absent; no dependency/network setup authorized.
+- Every original12AC remains required; no source implementation/PM/runtime success claimed at dispatch. All11 gates/all7 capstone journeys unchanged. No protected access, installation, activation/reconcile/unstop, VM/live replay, permanent admission/promotion, main/prod or push authorized.
+
+### proof
+- [x] AC #1 prerequisite: exact accepted design and independent review exist, implementation must still demonstrate conformance.
+- [ ] AC #2-11: implementation and parent reproduced evidence pending.
+- [ ] AC #12: independent security/PM acceptance pending; no accepted merge permitted yet.
 
 ## History
 - 2026-11-04T21:39:55Z dep_added: blocks GRRR-q3hp
