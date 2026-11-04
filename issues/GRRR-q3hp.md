@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-04T21:11:58Z
-content_hash: "sha256:bf255a2aa6f44770a916c854d0d25f0ddbcd311c2504afbbdc68c4d4d3bae8c7"
+content_hash: "sha256:4cd284c033278440276e20991847a779dc4087c4dc61bdc5467c0c93ee015f3a"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
@@ -922,3 +922,6 @@ status: in_progress
 - Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]]
 
 ## Comments
+
+### 2026-11-04T21:11:58Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
