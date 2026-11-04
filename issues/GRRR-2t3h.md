@@ -7,8 +7,8 @@ type: epic
 labels: [milestone-1]
 created_at: 2026-10-20T03:08:52Z
 created_by: speed
-updated_at: 2026-11-04T22:27:11Z
-content_hash: "sha256:f8c63aba45c1651d9684b65d633b9a6ae68936329af7884256e7e7f0f4590547"
+updated_at: 2026-11-04T22:29:32Z
+content_hash: "sha256:7dd21615d4272e689601a10e1ccf023aab28f4ceb2317e05a38bb46b25ac5f71"
 ---
 
 ## Description
@@ -147,6 +147,33 @@ access, installation/accounting/reconciliation/stop release, VM/replay,
 permanent admission/promotion, production/main/push, new paid-service spending,
 credential use, or a legal commitment. Existing execution permissions unchanged.
 No component or whole-system implementation acceptance is claimed by this note.
+
+## Latest operator scope decision: restore optional additions
+
+Authoritative user instruction on2026-11-04, superseding the immediately prior
+required-all instruction: "We can put them back into optional ... give me a ranked list of the options."
+
+The prior required-all full-project scope note remains historical evidence, not
+the current completion rule. Additional Karpathy-style autonomous patch research,
+expanded Harness2 adaptation, further Jev integration, Anti-Cheat advisory
+integration, Machinery extensions, ggen, wasm4pm, dteam and Bend2 return to
+OPTIONAL proposals, ranked by GRRR benefit, effort and risk. No automatic selection
+or installation is implied by ranking. Existing mandatory first-milestone/core
+requirements and any already-approved Jev/strategy comparison ACs remain unchanged;
+this reversal does not excuse incomplete original capstone gates or comparisons.
+
+The complete required evaluator/backend, protected execution, ledger/accounting,
+operator workflow and original capstone remain required. Extra components do
+not become new completion gates merely because they appeared in the options list.
+Future optional implementation needs a specific selected scope and its normal
+design/license/security/verification gates. Anti-Cheat remains advisory only.
+
+Sr.PM /root/record_required_full_system_scope was immediately notified of this
+reversal and told not to create further required-all work. Any already-created
+broader epic must retain history but become an unaccepted optional proposal;
+do not delete/rewrite previous notes or silently switch the active M1 dispatcher.
+No protected access/install/accounting/replay/admission/promotion/main/prod/push,
+new spending, credential use or legal commitment is authorized by this decision.
 
 ## History
 
