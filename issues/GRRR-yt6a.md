@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
 updated_at: 2026-11-04T19:28:40Z
-content_hash: "sha256:cdc1e5d95389b2722d264192336a9f58d79c1d81259e54540500e4e0a20df4fb"
+content_hash: "sha256:5d63e7eecd78922d201b05239b0e8402d6150331018a00ac67f44d966cff199d"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
@@ -117,6 +117,77 @@ status: in_progress
 ### proof
 - [ ] AC1-8 implementation, tests and independent review pending.
 - [x] Scope: q3hp remains blocked; no capstone completion or live authority inferred.
+
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- /opt/homebrew/bin/python3 -B scripts/test-story capstone-journal
+- /opt/homebrew/bin/python3 -B tests/unit_capstone_suite.py
+- /opt/homebrew/bin/python3 -B -m unittest discover -s tests -p unit_durable_evidence.py -v
+- Repeat those three exact commands with /Users/speed/miniconda3/bin/python3 and /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9.
+- pvg verify research/capstone_journal.py research/capstone_journal_schema.py tests/unit_capstone_journal.py tests/unit_capstone_journal_suite.py scripts/test-story docs/CAPSTONE-EVALUATOR-PROTOCOL.md --include-tests --format=text
+Summary: EACH of Python3.14.3,3.12.7,3.9.6 passed journal25, unchanged wcwy19, durable unit7, failures0/errors0/skips0, exit0. Static PASS4eligible files0issues. Nine source suite invocations independently reproduced by parent; these are51 source tests per interpreter, not153 distinct scenarios or VM observations. No full VM/corpus/replay/build/CI or capstone gate was run or implied.
+- Author raw evidence /tmp/grrr-yt6a-evidence-20261104/, preserved under .git/paivot/wip/GRRR-yt6a/parent-verify-20261104/author-evidence/. Parent exact command arrays/stdout/stderr/hash receipts in runs.json, run0..run10.stdout/stderr and source-hashes.json. validation-receipt.json SHA256 ffa1b6d164d311868d5465647e37b736ed5795aebd51ce449f83b5136ac776a8.
+- Parent verification /tmp/grrr-yt6a-parent-verify-20261104.py executed all11 commands successfully (9 suites, static, extra trace). Its final unanchored diagnostics filter falsely matched the stdlib traceback MODULE NAME in trace stdout and exited1. Original harness/raw outputs retained, filter fixed to anchored stderr diagnostics, and /tmp/grrr-yt6a-finish-parent-validation-20261104.py revalidated every raw hash/count/exit plus exact source. This was a parent-only validation bug, not a skipped/failing source test; no test requirement/code/log was weakened or rewritten.
+
+### Coverage
+- Author accurately reported unmeasured coverage. Parent subsequently measured stdlib trace LINE coverage: capstone_journal98.9%, capstone_journal_schema100.0%, using /opt/homebrew/bin/python3 -B -m trace --count --summary --missing --coverdir <repo>/.git/paivot/wip/GRRR-yt6a/parent-verify-20261104/coverage tests/unit_capstone_journal_suite.py. Extra trace executed25 tests,0fail/error/skip, exit0. Raw summary run10.stdout.
+- Branch coverage, subprocess-child line coverage and production/runtime coverage remain unmeasured. Percentages are not an aggregate capstone assurance score.
+
+### Commit
+- Branch: story/GRRR-yt6a
+- SHA: 2dc0b3a8920135c578d0d5aaec6aaefbbb2b55d6
+- Base: 9a439a09161b7c62da8acc36a9cefef8f2924faf
+- Six scoped files,966insertions/2deletions, within1200line budget. Source manifest verified against working tree and commit; clean working tree. Preserved source patch SHA256 3c2c745f0f99d39c3af7b5fc37e04c24750cbaf6af790c7f2a5df39975ee33db.
+- Local source commit/delivery authorized by operator; independent security/PM acceptance is still pending. No epic/main merge or push performed for this story.
+
+### Source Wiring and Boundaries
+- Explicit scripts/test-story capstone-journal invokes only the real source-suite runner, which rejects zero/skipped/failing/error results. No production service, migration, issuance, budget or dispatch wiring is added.
+- Public APIs are typed. Production open_existing requires actual UID320 before effectful I/O; explicit private-temp factory requires actual unprivileged UID and rejects0/320/321. No getpeereid/os.getuid impersonation. Fixture transactions reuse unmodified Ledger methods with real SQLite; this is not production identity proof.
+- Callback-time chain/state replay revalidates after BEGIN IMMEDIATE, preventing existing Ledger's pre-BEGIN tip check from permitting a stale fork. Cached callbacks cannot mint transition permits. Two tables plus declared constraints/triggers are SOURCE schema, not a protected migration/issuer.
+- Legacy common/Ledger/transport/PersistentBudget/replay/v4 schema and wcwy modules byte unchanged. Accepted contract remains exact docs suffix SHA256 9b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad; journal documentation is inserted before it.
+
+### pvg verify
+- Exact explicit-path command above: VERIFY: PASSED (4 files scanned,0issues), exit0. Four eligible Python files scanned; docs/script not falsely counted. Whitespace diff and working tree clean. Raw results retained.
+
+### AC Verification
+| AC # | Requirement | Code Location | Test Location | Status |
+|---|---|---|---|---|
+| 1 | exact existing schema/core history/corrupt-row refusal, no DDL/repair | journal_schema.validate_schema; journal._validate/open_existing | missing/extra/corrupt/settings/boolean-version tests | PASS source |
+| 2 | original raw Grant/auth/operator and same-DB atomic consumption/op/event | _binding; claim; _change callback | exact-replay/counterfeit/atomic crash tests | PASS public SQLite |
+| 3 | changed start refusal, unique consumption, in-transaction linear chain, cached no-permit | _change; _validate | same/different-grant real thread/connection/process races and cached-ledger tests | PASS source |
+| 4 | before/after-COMMIT cuts, conservative reopen, one-use process-local permit | DispatchPermit; mark_dispatch_pending | actual process exits, pending/reopen/unknown/fork/serialization tests | PASS source, not VM |
+| 5 | monotonic stop, immutable reservation, SELECT-only status, absent fails | request_stop; record_reserved; status | stop/pending race, immutable reservation/status/unknown tests | PASS local state |
+| 6 | real SQLite and explicit nonproduction fixtures; three interpreters/raw artifacts | journal fixture factory and source suite | 25+19+7 on each,0fail/error/skip; source hashes and measured limits above | PASS source |
+| 7 | legacy guards/exact contract unchanged; no fake Operation/Receipt/authority | six-file diff; protocol docs | hash/diff/contract-suffix verification, frozen local JournalRecord | PASS boundary |
+| 8 | authorized local source workflow only; no protected/live closure | full scoped diff and documented limits | independent review pending; no effects beyond public source fixtures | PASS scope, PM pending |
+
+LEARNINGS:
+- Existing Ledger tip/idempotency checks happen before BEGIN; same-database callback revalidation is essential for multiple connections, not merely a thread lock.
+- An append cache hit that skipped its callback must never mint a new effect permit. Reopened pending and unsupported unknown state fail closed, never renew or repair.
+- Original grant bytes, canonical local records and full capstone authority are different things; a local journal record must not fabricate an Anchor or spendable allowance.
+- Stop latching in the journal does not solve future stop-versus-real-send coupling; no dispatcher exists here. Local SQLite/identity-policy tests are not installed UID320 or VM proof.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit2dc0b3a8920135c578d0d5aaec6aaefbbb2b55d6; exact6files/966insertions2deletions;9 source suite runs reproduced on3interpreters, each25+19+7 tests,0fail/error/skip; static4eligible files0issues.
+- Parent trace LINE coverage journal98.9/schema100.0; not branch/subprocess/runtime. Raw source/test/coverage and resolved parent-harness filter issue preserved.
+- Local source workflow authorized; independent security/PM review pending. No protected access/install/issuance/accounting/reconciliation/stop release/VM/replay/admit/promote/production/main effect, merge or push.
+
+### proof
+- [x] AC #1: exact existing schema/history corruption refusal without repair.
+- [x] AC #2: original raw-bound atomic same-DB grant/op/event.
+- [x] AC #3: idempotency and real multi-connection/process linear-chain races.
+- [x] AC #4: actual crash cuts and no renewed opaque one-use permit.
+- [x] AC #5: monotonic stop, immutable reservation, read-only/absent status.
+- [x] AC #6: real source suites3interpreters/raw evidence and honest coverage.
+- [x] AC #7: unchanged guarded modules and exact embedded contract; local records not authority.
+- [x] AC #8: source-only scope, no q3hp/capstone closure or protected/runtime effects.
 
 ## History
 - 2026-11-04T18:43:15Z dep_added: blocks GRRR-q3hp
