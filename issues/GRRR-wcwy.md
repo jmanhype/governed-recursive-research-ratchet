@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
 updated_at: 2026-11-04T17:36:39Z
-content_hash: "sha256:adb4bfc315eca88630028fc4ca9ac9f7c668f0c5b2e2faf62f1672828e55a93c"
+content_hash: "sha256:4741d6161e974f956cbe556cc761b301274feee178c02d42c1459c8229fe4b5a"
 labels: [milestone-1, source-only, security-boundary, accepted]
 assignee: dev-GRRR-wcwy
 follows: [GRRR-ev2w, GRRR-888u]
@@ -332,6 +332,16 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-04.
+
+### proof
+- [x] Story closed after accepted label was applied.
 
 
 ## nd_contract
