@@ -7,9 +7,10 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T16:45:10Z
+updated_at: 2026-11-04T16:46:17Z
 content_hash: "sha256:c290bff89c2e7c54d362f56a430933481aa2bdae77fb4979bf930046543ef4c5"
 blocks: [GRRR-q3hp]
+labels: [milestone-1, source-only, security-boundary]
 ---
 
 ## Description
