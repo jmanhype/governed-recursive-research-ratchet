@@ -1,16 +1,18 @@
 ---
 id: GRRR-ev2w
 title: "Bug: Fail closed on corrupt admission registry"
-status: open
+status: in_progress
 priority: 0
 type: bug
 labels: [milestone-1, security, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
-updated_at: 2026-11-04T01:10:14Z
-content_hash: "sha256:a3915331fb5ba721f726c849c1dc3a120c54e910057f9ae6642f0484c55fce6b"
+updated_at: 2026-11-04T01:11:27Z
+content_hash: "sha256:968d1f88ae54b3a8cfd19e47f2e36243b31b791c811a3f788f41d0cff3c19244"
 blocks: [GRRR-6sso]
+assignee: dev-GRRR-ev2w
+follows: [GRRR-888u]
 ---
 ## Description
 ## Context
@@ -112,10 +114,14 @@ status: new
 
 ## History
 - 2026-11-04T01:07:35Z dep_added: blocks GRRR-6sso
+- 2026-11-04T01:11:27Z status: open -> in_progress
+- 2026-11-04T01:11:27Z auto-follows: linked to predecessor GRRR-888u
+- 2026-11-04T01:11:27Z claimed by dev-GRRR-ev2w
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
+- Follows: [[GRRR-888u]]
 
 ## Comments
 
