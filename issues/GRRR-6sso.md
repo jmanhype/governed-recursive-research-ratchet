@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:01:16Z
-content_hash: "sha256:b580218d31c6a65143c0a31aa32d9ef1993c3bbe3906b77791a729065c84f909"
+updated_at: 2026-11-04T03:11:50Z
+content_hash: "sha256:70b770ce006e454b1a6890c05a2edaab79bb35caeb74c9254b55498a01ec86e8"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -118,6 +118,48 @@ status: new
 
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
+## 2026-11-04 Binding Rework — Still BLOCKED, Not Delivered
+
+Repository-only corrected package commit: `51ebc998e7c07018740ec53e389646a5b465cc75` on `story/GRRR-6sso`. Immutable runtime base remains `c928791cdaa72df91e61002c40317457b543b032`; Git ancestry was verified. The package SHA is deliberately absent from request JSON and must be bound externally by independent review/human authorization.
+
+Exact raw request hashes at package commit `51ebc998e7c07018740ec53e389646a5b465cc75`:
+- `docs/evidence/milestone-packet/E2E-DECISION-REQUEST.json` SHA-256 `79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb`
+- `docs/evidence/milestone-packet/E2E-DECISION-REQUEST.md` SHA-256 `284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4`
+
+Binding correction evidence:
+- Request semantics now distinguish immutable runtime base from the externally supplied post-commit package SHA; no self-referential package hash is embedded.
+- Preflight requires both `--runtime-base` and `--package-commit`, resolves exact JSON/Markdown/index blobs from the supplied Git package commit, checks request/blob IDs and all 19 historical Git-object hashes, verifies runtime-base ancestry, and ignores checkout-local/caller-supplied request claims.
+- Focused coverage now rejects missing either argument, mismatched runtime or package binding, wrong ancestry, unavailable/forged package commits, and an embedded `package_commit` claim; malformed/stale/missing/authority tests remain.
+
+Verification:
+- `/opt/homebrew/bin/python3 -B tests/e2e/e2e_decision_request_checklist.py`: 13/13 OK (Python 3.14.3).
+- `/Users/speed/miniconda3/bin/python3 -B tests/e2e/e2e_decision_request_checklist.py`: 13/13 OK (Python 3.12.7).
+- Explicit preflight on both interpreters with base `c928791...` and package `51ebc99...`: schema valid, decision blocked, `execution_authorized=false`, identical raw hashes above.
+- `pvg verify <five changed files> --include-tests --format=text`: PASSED, 2 Python files scanned, 0 issues.
+- `pvg gates tests/e2e/e2e_decision_request.py tests/e2e/e2e_decision_request_checklist.py --format text`: PASS, 0 warnings, 0 skipped.
+- `git diff --check` and `git diff --cached --check`: PASS; worktree clean after commit.
+- `pvg story verify-delivery GRRR-6sso`: Passed 6, Failed 3 (missing delivered label/contract by design); full seven capstone ACs remain unmet.
+
+All 11 gates and 7 journeys remain blocked/not-run. Independent exact-byte package review, cost/review-time reconciliation, accessibility walkthrough approval, and fresh action-specific human authorization remain absent. This note grants no execution, protected access, VM/QEMU, replay, admission, promotion, production mutation, network/Jev, secret, stash, merge, or push authority.
+
+## nd_contract
+status: new
+
+### evidence
+- Corrected repository-only package committed at `51ebc998e7c07018740ec53e389646a5b465cc75`; runtime base `c928791cdaa72df91e61002c40317457b543b032` verified as ancestor.
+- Raw JSON/Markdown SHA-256 values recorded above; package SHA intentionally requires external independent review/human binding.
+- Focused tests 13/13 passed on Python 3.14.3 and 3.12.7; preflight remained blocked/non-authoritative on both; pvg verify/gates and Git diff checks passed.
+
+### proof
+- [x] Binding-rejection fix: runtime-base versus external package-commit semantics are distinct and Git-object-backed.
+- [ ] AC #1: full authorized clean-environment operator journey missing.
+- [ ] AC #2: >=20 seed full mandatory system receipts missing.
+- [ ] AC #3: cumulative equal-budget USD closure and full comparison evidence missing.
+- [ ] AC #4: complete hung-runner/race/crash/recovery/restoration evidence missing.
+- [ ] AC #5: complete adversarial and export-integrity surface-parity evidence missing.
+- [ ] AC #6: actual keyboard/screen-reader walkthrough and measured review burden missing.
+- [ ] AC #7: complete immutable runtime/cost/warning/rollback closure missing.
+
 ## 2026-11-04 Sr PM Bug Triage Correction
 - The malformed intermediate tracker draft `GRRR-gzgq` was soft-deleted after live `nd` body updates appended duplicate canonical sections. Its dependency was cleaned by `nd delete`.
 - Final admission-registry bug is `GRRR-ev2w`; `GRRR-6sso` depends on it. No source, protected access, external call, merge, or push occurred.
