@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:11:51Z
-content_hash: "sha256:87f7159b332f1227d01dffbed752b90f7e16b20a4e1d67caeb4d2cb6806f20ff"
+updated_at: 2026-11-04T03:18:46Z
+content_hash: "sha256:c0cef85f491ab267166f92d138bab259beb86e852c3bfce739cc2d24f46602a5"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -872,3 +872,15 @@ Required repository-only fix: explicitly separate review/package commit from par
 
 ### 2026-11-04T03:11:51Z speed
 BLOCKED: Binding rework committed at 51ebc998e7c07018740ec53e389646a5b465cc75, but independent review/human authorization and all seven full capstone ACs remain absent; do not deliver.
+
+### 2026-11-04T03:18:46Z speed
+## 2026-11-04 Narrow Binding Re-review — APPROVED
+
+Fresh independent reviewer verdict: `E2E_NARROW_BINDING_REREVIEW: APPROVED`.
+
+Package commit: `51ebc998e7c07018740ec53e389646a5b465cc75`. Immutable runtime base: `c928791cdaa72df91e61002c40317457b543b032`. Reviewer verified ancestry, exact Git blob IDs, raw SHA-256 identities, explicit dual CLI bindings, checkout-local claim rejection, self-reference rejection, and 13/13 focused fail-closed tests.
+
+JSON SHA-256: `79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb`.
+Markdown SHA-256: `284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4`.
+
+Approval is limited to binding semantics. It does not approve the full E2E journey, authorize execution, reconcile cost, satisfy accessibility, or change `execution_authorized=false`.
