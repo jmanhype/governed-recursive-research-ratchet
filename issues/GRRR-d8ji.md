@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-24T20:19:06Z
 created_by: speed
 updated_at: 2026-10-25T20:41:44Z
-content_hash: "sha256:4285034794167509681f09d5c2f9087327d0d3d77e31a604ae53bb21732985d6"
+content_hash: "sha256:4d5a88b2ebd7b675ec2074694418f31401fe691484015363fe70e63dc470f50e"
 blocked_by: [GRRR-43i8]
 follows: [GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875, GRRR-my5n, GRRR-gu87, GRRR-90te]
 labels: [blocked, accepted]
@@ -16,6 +16,7 @@ assignee: dev-GRRR-d8ji
 closed_at: 2026-10-25T16:58:05Z
 close_reason: "Accepted: independent full re-review verifies AC1-7, exact-byte no-guest and parent stop-only integration proof, and corrected current/historical documentation. No replay, reconciliation, merge or production authority."
 led_to: [GRRR-z3w9, GRRR-wu6f, GRRR-6sso]
+blocks: [GRRR-6sso]
 ---
 
 ## Description
@@ -351,9 +352,11 @@ LEARNINGS:
 - 2026-10-25T16:56:40Z auto-follows: linked to predecessor GRRR-90te
 - 2026-10-25T16:58:06Z status: in_progress -> closed
 - 2026-10-25T16:58:06Z dep_removed: no_longer_blocks GRRR-z3w9
+- 2026-11-04T01:05:03Z dep_added: blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-6sso]]
 - Blocked by: [[GRRR-43i8]]
 - Follows: [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]], [[GRRR-gu87]], [[GRRR-90te]]
 - Led to: [[GRRR-z3w9]], [[GRRR-wu6f]], [[GRRR-6sso]]
