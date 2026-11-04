@@ -4,7 +4,7 @@ title: "Bug: Fail closed on corrupt admission registry"
 status: closed
 priority: 0
 type: bug
-labels: [milestone-1, security, integration, discovered-by-developer, delivered]
+labels: [milestone-1, security, integration, discovered-by-developer, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
