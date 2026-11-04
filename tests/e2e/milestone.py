@@ -97,7 +97,7 @@ def checklist() -> dict:
                     'executed': 0, 'passed': 0, 'failed': 0, 'not_run': len(GATES) + len(JOURNEYS),
                     'skipped': 0, 'provenance_hash_matched': sum(p['status'] == 'hash-matched' for p in provenance),
                     'provenance_errors': sum(p['status'] == 'error' for p in provenance)},
-        'next_action': 'Stop. Obtain missing evidence and separately scoped human authorization; do not rerun paid calls or protected actions.',
+        'next_action': 'Stop. Independently review docs/evidence/milestone-packet/E2E-DECISION-REQUEST.json and .md; execution_authorized remains false until separate human authorization.',
         'warning': 'Hash-matched historical records are not fresh gate passes, independent authentication, complete export verification, or full E2E results.',
     }
 

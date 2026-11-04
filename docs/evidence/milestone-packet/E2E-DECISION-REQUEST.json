@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "record_type": "grrr-e2e-authorization-decision-request-v1",
+  "request_id": "GRRR-6sso-exact-target-e2e-v1",
+  "created_at": "2026-11-04T01:51:58Z",
+  "decision_state": "blocked-awaiting-independent-review-and-human-authorization",
+  "execution_authorized": false,
+  "story_id": "GRRR-6sso",
+  "revisions": {
+    "historical_evidence_base": "845b47d221773eb4157491d35f57dce47ce8afe6",
+    "admission_fail_closed_fix": "710e6fb1affa366da6ca4c855f49805d3bdb944d",
+    "epic_current": "0b2365e30ab5858cb419f4f4ce9b2ce001850541",
+    "story_current": "c928791cdaa72df91e61002c40317457b543b032",
+    "main_observed_not_target": "c2970356436531565711fb3c2df24eb91c3ed510"
+  },
+  "revision_policy": {
+    "story_head_must_match": "c928791cdaa72df91e61002c40317457b543b032",
+    "epic_head_must_match": "0b2365e30ab5858cb419f4f4ce9b2ce001850541",
+    "admission_fix_must_be_ancestor": true,
+    "changed_request_hash_requires_new_review": true
+  },
+  "historical_evidence": {
+    "index_path": "docs/evidence/milestone-packet/evidence-index.json",
+    "scope": "historical-provenance-only",
+    "base_revision": "845b47d221773eb4157491d35f57dce47ce8afe6",
+    "artifact_count": 19,
+    "limit": "Immutable identity pinning is not current runtime proof, approval, replay, admission, export verification, or E2E success.",
+    "artifacts": {
+      "adaptation": {
+        "path": "reports/adaptation-cycle-1.json",
+        "revision": "cf3eb55422ba18898541318c138cd82543419d12",
+        "sha256": "550944a2b81b1e52cf4c9aaf410b5e43bcb5758aa0eb1bfa9ba4a63094d352ba"
+      },
+      "admission": {
+        "path": "docs/evidence/contract-admission/ADMISSION.json",
+        "revision": "0503286612075c06d0acda654b740f12ee9a873f",
+        "sha256": "c875e5668ccbc3f79735045fc69899bddd675552207bb3d34e40fc27a7326686"
+      },
+      "architecture": {
+        "path": "docs/ARCHITECTURE.md",
+        "revision": "0fa26e4cf6f0c35b19fb6f1f75259932b00a086e",
+        "sha256": "c06101668429195596a4d2bf4e4731d02ae0a0b870da93a50bbe6c9f4382add0"
+      },
+      "authorization": {
+        "path": "docs/evidence/contract-admission/AUTHORIZATION.json",
+        "revision": "0503286612075c06d0acda654b740f12ee9a873f",
+        "sha256": "55dbedc3e03c31a61830e2e83969243cac7958f86ee5b86d0ba488b77fe4e911"
+      },
+      "business": {
+        "path": "docs/BUSINESS.md",
+        "revision": "67ea3709b0ad1d3d496d90e99af3feca8b25f745",
+        "sha256": "7d56b562c4b3c194e2ee76ccdd4be68aa22ff0f8b749bdefacbd03e868a5dd82"
+      },
+      "contract": {
+        "path": "docs/evidence/contract-admission/CONTRACT.json",
+        "revision": "0503286612075c06d0acda654b740f12ee9a873f",
+        "sha256": "d9ef76d4f99f8d354fdbeb7473a88423728cdc46ff15800f7b58109dad5a4910"
+      },
+      "corpus": {
+        "path": "docs/evidence/validated-corpus/v2.2-batched-run/aggregate.json",
+        "revision": "3f6d8dcfb407438591ad13c9bc14d60886bb0d73",
+        "sha256": "93f2558864a7bdfa01dd0e8042ae8330834659ef71812f17a6ddc9efac3c5cc4"
+      },
+      "design": {
+        "path": "docs/DESIGN.md",
+        "revision": "67ea3709b0ad1d3d496d90e99af3feca8b25f745",
+        "sha256": "97f0e36febd2ad4dce43cc2912db477735f82349d9d3f965d22216d6a566b252"
+      },
+      "durable": {
+        "path": "docs/evidence/durable-evidence/attempt-20261021T204415Z-c360927f/summary.json",
+        "revision": "1c2a1c595703abf6a94e96792c5f1deb60841ca8",
+        "sha256": "d7b8d4c14510a689f9742edba1f5a7d8019b58cfd191bce9b48ba4cb421556c6"
+      },
+      "export_verification": {
+        "path": "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/VERIFY.md",
+        "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+        "sha256": "f73589682a553d48d6a6c452720d030e087f07a30e2bc598ca09232dc698cecb"
+      },
+      "jev_design": {
+        "path": "corpus/evaluation-plan-v2-proposed.json",
+        "revision": "9e107609db76022ed6d8e138cbbece2e41d634ee",
+        "sha256": "97ec4b8ccc34b3fc4da4fcfbef33b49bbb3f4f1c445cfecdb752715ddf034be1"
+      },
+      "jev_manifest": {
+        "path": "docs/evidence/jev-selector-measurement/CONFIRMATORY-SHA256SUMS",
+        "revision": "5b50e29272819da205fc09e051f82c2639a7a197",
+        "sha256": "0632b43338155d0cf9802dc21079b2aa66dc6bb11a3710f312cf3dc546788d36"
+      },
+      "jev_result": {
+        "path": "docs/evidence/jev-selector-measurement/three-arm-result-20261103T214701Z/report.json",
+        "revision": "5b50e29272819da205fc09e051f82c2639a7a197",
+        "sha256": "b7bb2ec8717e8921e16f9a3e312f6ad46839a125634dc6e3d144499cc841fefb"
+      },
+      "jev_review": {
+        "path": "docs/evidence/jev-selector-measurement/three-arm-result-20261103T214701Z/REVIEW-APPROVED.md",
+        "revision": "5b50e29272819da205fc09e051f82c2639a7a197",
+        "sha256": "57d71f12f21f0f0a6407923fc8c1137e819b7ecf3d297670e0b58a5d96cc4db1"
+      },
+      "lifecycle": {
+        "path": "docs/evidence/replay-authority/replay-result/lifecycle.json",
+        "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+        "sha256": "4f9c08584c72b4dc8cf0e878ae901007a97024ab8d60889987e5dba9c76ca795"
+      },
+      "replay_receipt": {
+        "path": "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/objects/78fde524d9562f6cb28df336512b3ca84bc8d72c72b47cd71f1a47516613ab4e",
+        "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+        "sha256": "78fde524d9562f6cb28df336512b3ca84bc8d72c72b47cd71f1a47516613ab4e"
+      },
+      "scorecard": {
+        "path": "docs/evidence/anti-cheat-scorecard/evaluation.json",
+        "revision": "86ace00860f62f302f4f633eefa6c98b5cce8252",
+        "sha256": "2bcaa7cdaacc6b8d642846c498fcf1e93655948afa2cd1a8463fcbc36359bd12"
+      },
+      "snapshot": {
+        "path": "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/snapshot.json",
+        "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+        "sha256": "ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689"
+      },
+      "stop": {
+        "path": "docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0/manifest.json",
+        "revision": "3f4a9cf2c52ae5992f76ff5350e63518ba1fad83",
+        "sha256": "88c4768aeee38a36c3dafb07480978515fceec365658b171278bce945da811cc"
+      }
+    }
+  },
+  "mandatory_gates": [
+    {"id": "source_environment_identity", "status": "required-not-run", "evidence_required": "Current approved source, license, build and environment identity receipts."},
+    {"id": "isolation", "status": "required-not-run", "evidence_required": "Authorized disposable offline VM and boundary-probe receipts for the full journey."},
+    {"id": "protected_asset_integrity", "status": "required-not-run", "evidence_required": "Authorized before/after protected integrity receipts, not host inspection here."},
+    {"id": "baseline_correctness", "status": "required-not-run", "evidence_required": "Fresh independently observed clean-baseline pass paired with recurrence rejection."},
+    {"id": "trusted_observation", "status": "required-not-run", "evidence_required": "Evaluator-authenticated observations for every required challenge and negative case."},
+    {"id": "independent_replay", "status": "required-not-run", "evidence_required": "Independent replay receipts across the required seed set; D011 alone is insufficient."},
+    {"id": "specification_traceability", "status": "required-not-run", "evidence_required": "Reviewed requirement mappings and ambiguous-spec rejection for every seed."},
+    {"id": "evidence_integrity_currency", "status": "required-not-run", "evidence_required": "Independent trusted-anchor verification including tamper/truncate/missing cases."},
+    {"id": "budget_state", "status": "required-not-run", "evidence_required": "Independent USD receipt plus cumulative execution/review/reservation accounting within caps."},
+    {"id": "reviewer_outcome", "status": "required-not-run", "evidence_required": "Independent acceptance of this exact complete capstone snapshot; none claimed here."},
+    {"id": "action_specific_human_approval", "status": "required-not-run", "evidence_required": "Fresh exact-target preflight/replay/admission grants; historical grants are not reusable."}
+  ],
+  "acceptance_criteria_journeys": [
+    {"id": "AC1", "status": "blocked-not-run", "evidence_required": "Unedited authorized clean-environment start/monitor/report/replay/review/admission/recurrence transcript."},
+    {"id": "AC2", "status": "blocked-not-run", "evidence_required": "At least 20 validated representative seeds plus negatives through all gates; 100% critical, >=90% others; zero invalid admissions."},
+    {"id": "AC3", "status": "blocked-not-run", "evidence_required": "Full equal-budget comparison cost evidence: retained three-arm selector result has USD unknown and is selector-quality-only."},
+    {"id": "AC4", "status": "blocked-not-run", "evidence_required": "Hung executor cessation, idempotency, races, each durable crash transition, pre-stop admission listing and verified restoration or Recovery required."},
+    {"id": "AC5", "status": "blocked-not-run", "evidence_required": "Full forged/stale/missing/budget/protected-write/ambiguous-spec matrix and export attacks with matching CLI/Markdown/JSON safe actions."},
+    {"id": "AC6", "status": "blocked-not-run", "evidence_required": "Actual keyboard/screen-reader inspection, reject/request evidence/stop walkthrough with measured review burden."},
+    {"id": "AC7", "status": "blocked-not-run", "evidence_required": "Final exact-revision architecture/business/design mapping with complete runtime receipts, cost/warning/block/rollback evidence."}
+  ],
+  "workflow": {
+    "preflight": {
+      "decision": "blocked",
+      "required_checks": [
+        "Verify clean story worktree, exact story/epic/base/admission-fix revisions, and admission-fix ancestry before any VM launch.",
+        "Verify all 19 historical evidence identities against the pinned index and current local Git objects without elevating them to fresh passes.",
+        "Verify source commit, archive, input ISO, VM image, preparation and profile hashes; exact interpreter/tool versions; disk/capacity; and evaluator/runner identity separation.",
+        "Verify corpus freeze, protected artifact digests, seed partitions, ledger schema/tip/anchor reservations, and complete output-name availability.",
+        "Run independent package review and cost/review-time reconciliation; any malformed, stale, missing, unknown, or exhausted value stops before launch."
+      ],
+      "failure_policy": "fail-closed-before-any-vm-launch"
+    },
+    "vm": {
+      "mode": "dedicated-disposable-offline",
+      "source_commit": "129e0b3f15a3bd6af949ee47d76f6855c582ab73",
+      "source_archive_sha256": "e644b9848b306f158a2367293dd96c66dac2bed97c0dd42891db007667c0ae7e",
+      "input_iso_sha256": "57c48a6845d65b6b3674c80367af42c062cf079d7bbdc4491331a4945375d2b6",
+      "image_sha256": "6c3cb672f367fd5164672e0a2d36f720dcc705414c6dcf96ab9e9d3adfa327f3",
+      "preparation_sha256": "755af0f8d9fc632287b5b099fc7ac913ad9a01970f0ad84145a2c15fce96815c",
+      "profile_sha256": "b3b92a6382c1ed276862675540ab07ba399a4e0dc8bcdc7254138e5abc86db71",
+      "network": "disabled",
+      "guest_limit": "one candidate per fresh disposable VM; no host or container fallback",
+      "boundary_probes_required": true
+    },
+    "evaluator": {
+      "role": "independent-protected-evaluator",
+      "principal_binding": "transport-authenticated-principal",
+      "payload_role_trust": false,
+      "runner_uid": 321,
+      "evaluator_uid": 320,
+      "owns": ["protected expectations", "gate verdicts", "budget reservations", "evidence receipts"],
+      "unknown_or_partial_outcome": "GateBlocked or RecoveryRequired; no aggregate success"
+    },
+    "ledger": {
+      "mode": "append-only-hash-chained",
+      "historical_d011_snapshot_sha256": "ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689",
+      "historical_recorded_anchor_sha256": "34dc2753bc0be33753a3312b48f9530ff3e00019757254529310e053fd0e905e",
+      "historical_durable_snapshot_sha256": "83567fa3aaeb646ac040454f49070767b1a758bbecb650d462570833b51a11c2",
+      "historical_durable_anchor_sha256": "0955178e5c5d47e512ebdd2505b7f31cb7bcbb60cd6b3503c493dfc1f5cf0a37",
+      "fresh_journey_requirement": "new expected-tip bindings, idempotency keys, independently retained anchor, snapshot verification, and complete export receipt",
+      "historical_limit": "Historical anchors are identities only and do not establish current export verification."
+    },
+    "seed_inventory": {
+      "corpus_version": "GRRR-validated-corpus-v2.2-isolated",
+      "corpus_freeze_sha256": "dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529",
+      "protected_truth_sha256": "7cf9f99f5836c4e3e147df2866d54480a706f2665a732fbf61bd0a0d0b4c52ea",
+      "protected_seeds_sha256": "a65986b494318165341d4bae3597517c647242c5305e85be72695265bf54d7c9",
+      "minimum_representative_required": 20,
+      "defect_count": 24,
+      "clean_negative_count": 8,
+      "critical_count": 17,
+      "required_threshold": "100% critical and >=90% remaining under the approved corpus rule",
+      "partitions": {
+        "training": ["GRRR-VC-C002", "GRRR-VC-C004", "GRRR-VC-C006", "GRRR-VC-C008", "GRRR-VC-D002", "GRRR-VC-D004", "GRRR-VC-D006", "GRRR-VC-D008", "GRRR-VC-D010", "GRRR-VC-D012", "GRRR-VC-D014", "GRRR-VC-D016", "GRRR-VC-D018", "GRRR-VC-D020", "GRRR-VC-D022", "GRRR-VC-D024"],
+        "measurement": ["GRRR-VC-C003", "GRRR-VC-C007", "GRRR-VC-D003", "GRRR-VC-D007", "GRRR-VC-D011", "GRRR-VC-D015", "GRRR-VC-D019", "GRRR-VC-D023"],
+        "holdout": ["GRRR-VC-C001", "GRRR-VC-C005", "GRRR-VC-D001", "GRRR-VC-D005", "GRRR-VC-D009", "GRRR-VC-D013", "GRRR-VC-D017", "GRRR-VC-D021"]
+      },
+      "challenge_ids": ["GRRR-VC-D001", "GRRR-VC-D002", "GRRR-VC-D003", "GRRR-VC-D004", "GRRR-VC-D005", "GRRR-VC-D006", "GRRR-VC-D007", "GRRR-VC-D008", "GRRR-VC-D009", "GRRR-VC-D010", "GRRR-VC-D011", "GRRR-VC-D012", "GRRR-VC-D013", "GRRR-VC-D014", "GRRR-VC-D015", "GRRR-VC-D016", "GRRR-VC-D017", "GRRR-VC-D018", "GRRR-VC-D019", "GRRR-VC-D020", "GRRR-VC-D021", "GRRR-VC-D022", "GRRR-VC-D023", "GRRR-VC-D024", "GRRR-VC-C001", "GRRR-VC-C002", "GRRR-VC-C003", "GRRR-VC-C004", "GRRR-VC-C005", "GRRR-VC-C006", "GRRR-VC-C007", "GRRR-VC-C008"]
+    },
+    "replay": {
+      "scope": "every listed seed and clean negative through all 11 gates",
+      "receipt_requirement": "fresh operation IDs, expected ledger tips, unedited command/output hashes, gate-specific outcomes, and no reuse of D011 as full-set proof",
+      "repeated_failure_threshold_proposed": 2,
+      "threshold_status": "requires independent review and human approval before launch",
+      "ambiguous_or_unknown_outcome": "fail closed and query by operation ID; never duplicate effects"
+    },
+    "admission": {
+      "scope": "one exact reviewed contract with clean-baseline pass and recurrence rejection",
+      "fresh_grant_required": true,
+      "required_binding": ["exact contract digest", "verified snapshot reference", "current run epoch", "idempotency key", "transport-authenticated admission principal"],
+      "registry_policy": "The accepted GRRR-ev2w fail-closed registry behavior is current; malformed, unreadable, invalid-shape, directory, and dangling-link registry states must remain blocked.",
+      "invalid_or_duplicate_admission_count_allowed": 0
+    },
+    "negative_cases": [
+      {"id": "forged_identity", "expected": "fail-closed-no-mutation"},
+      {"id": "forged_evidence", "expected": "fail-closed-no-mutation"},
+      {"id": "stale_approval", "expected": "fail-closed-no-mutation"},
+      {"id": "missing_mandatory_gate", "expected": "fail-closed-no-mutation"},
+      {"id": "unknown_budget", "expected": "fail-closed-no-dispatch"},
+      {"id": "exhausted_budget", "expected": "hard-stop"},
+      {"id": "protected_write_attempt", "expected": "blocked-and-preserved"},
+      {"id": "ambiguous_specification", "expected": "blocked"},
+      {"id": "tampered_export", "expected": "integrity-failure"},
+      {"id": "truncated_export", "expected": "integrity-failure"},
+      {"id": "missing_export", "expected": "integrity-failure"},
+      {"id": "duplicate_authorization", "expected": "fail-closed"},
+      {"id": "duplicate_contract", "expected": "fail-closed"},
+      {"id": "unusable_admission_registry", "expected": "fail-closed-and-preserve-registry-bytes"}
+    ],
+    "stop_and_recovery": {
+      "hung_executor_case_required": true,
+      "stop_receipt_requirement": "operator stop command, real executor cessation/fence, repeated idempotent request, and durable dispatch/admission ordering",
+      "crash_transition_coverage": "every durable transition with committed-before-stop admission accurately listed",
+      "restoration_rule": "verified restoration only from preserved hashes/artifacts and ledger state; otherwise explicit RecoveryRequired",
+      "hard_stop_triggers": ["budget/runtime/review exhaustion", "authorization or protected-write violation", "isolation failure", "missing dependency", "evidence integrity failure", "unrecoverable state", "repeated unreproducibility"],
+      "rollback_rule": "preserve all evidence and baseline state; repository changes are review/revert only; no destructive cleanup, stash pop, merge, or push"
+    },
+    "cost_and_review_time_reconciliation": {
+      "status": "required-before-launch",
+      "independent_of_execution_team": true,
+      "must_close": ["incremental USD", "cumulative USD", "execution wall time summed across concurrent arms and replays", "preparation time", "review time", "open reservations"],
+      "current_values": "unknown-not-zero",
+      "historical_three_arm_usage": {"calls": 96, "retries": 0, "input_tokens": 37644, "output_tokens": 2208, "usd": null},
+      "no_paid_dispatch_when_unknown": true
+    },
+    "accessibility_walkthrough": {
+      "status": "blocked-not-run",
+      "modes": ["keyboard-only", "screen-reader"],
+      "required_actions": ["inspect layered report", "distinguish execution/finding/decision/effect", "reject", "request evidence", "stop", "review recovery"],
+      "timing_requirement": "measured aggregate review time recorded separately from execution"
+    }
+  },
+  "budgets": {
+    "currency": "USD",
+    "proposed_incremental_maxima": {"usd": 50, "execution_hours": 6, "review_minutes": 60},
+    "cumulative_ceilings": {"usd_including_poc": 150, "execution_hours": 24, "review_minutes": 180},
+    "current_cumulative_spend": "unknown",
+    "automatic_increase": false,
+    "rules": ["unknown maximum cost blocks paid dispatch", "uncertain usage retains a reservation", "sum concurrent arms and replays", "track preparation and review separately"]
+  },
+  "outputs": {
+    "root": "docs/evidence/milestone-e2e/GRRR-6sso-exact-target-v1",
+    "state": "reserved-not-created",
+    "mutability": "write-once-then-immutable",
+    "fixed_paths": [
+      "PREFLIGHT.json", "VM-IDENTITY.json", "EVALUATOR-IDENTITY.json", "LEDGER-ANCHOR.json",
+      "SEED-INVENTORY.json", "ADMISSION-GRANT.json", "ADMISSION-RECEIPT.json",
+      "NEGATIVE-MATRIX.json", "STOP-RECOVERY.json", "COST-RECONCILIATION.json",
+      "ACCESSIBILITY-WALKTHROUGH.md", "OPERATOR-TRANSCRIPT.md", "FINAL-REPORT.md",
+      "REVIEW-APPROVAL.md", "SHA256SUMS"
+    ],
+    "per_seed_path_template": "replay/{seed_id}.json",
+    "per_negative_path_template": "negative/{case_id}.json",
+    "checksum_policy": "SHA256SUMS must cover every emitted file; overwrite, missing entry, mutation after review, traversal, absolute path, or protected-path reference is invalid"
+  },
+  "review_requirement": {
+    "independent_review_required": true,
+    "reviewer_must_reconcile": ["story ACs", "11 gates", "7 journeys", "19 evidence identities", "seed partitions", "negative matrix", "budget arithmetic", "accessibility obligations", "output destinations", "rollback and stop behavior"],
+    "human_decision_required": true,
+    "approval_binding": ["exact JSON request bytes", "exact Markdown request bytes", "request_id", "all revisions", "budget maxima", "immutable output root"],
+    "historical_approval_reuse": false,
+    "delivery_and_pm_acceptance_distinct": true
+  },
+  "denied_until_separately_authorized": [
+    "/Library/GRRR access",
+    "protected read or write",
+    "VM or QEMU launch",
+    "replay",
+    "admission",
+    "promotion",
+    "production mutation",
+    "external Jev or network call",
+    "secret or credential access",
+    "stash pop",
+    "merge",
+    "push",
+    "automatic budget increase",
+    "harness adaptation or autonomous patch generation"
+  ],
+  "rollback_and_stop_behavior": {
+    "default_decision": "blocked",
+    "effect_now": "none",
+    "on_error": "stop, preserve inputs/evidence/ledger, and require recovery review",
+    "on_ambiguous_committed_state": "RecoveryRequired and list committed-before-stop admissions",
+    "runtime_disposal": "fresh disposable VM only after logs and evidence are durably exported and hashed",
+    "repository_recovery": "review/revert this story commit only; preserve evidence and excluded stash"
+  },
+  "self_hash_policy": "This JSON intentionally does not hash itself; independent review and human approval must hash the exact JSON and Markdown bytes."
+}

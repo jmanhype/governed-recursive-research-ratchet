@@ -2,9 +2,12 @@
 ## Current capstone verdict — BLOCKED (repository-only rework, 2026-11-04 UTC)
 
 **Do not approve the full capstone from this packet.** This section supersedes
-the historical packet below and the older REWORK-GRRR-6sso notes. The accepted-epic
-input is `845b47d221773eb4157491d35f57dce47ce8afe6`; the unreviewed selector/Jev
-stash is excluded. No real journey ran in this rework. No protected path was
+the historical packet below and the older REWORK-GRRR-6sso notes. The current
+exact revisions are story `c928791cdaa72df91e61002c40317457b543b032`, epic
+`0b2365e30ab5858cb419f4f4ce9b2ce001850541`, historical evidence base
+`845b47d221773eb4157491d35f57dce47ce8afe6`, and accepted admission fix
+`710e6fb1affa366da6ca4c855f49805d3bdb944d`. The unreviewed selector/Jev stash
+is excluded. No real journey ran in this rework. No protected path was
 inspected, no replay/admission/production action occurred, and no external
 Jev call or credential access occurred. Delivery, PM acceptance, human contract
 approval and deployment are different decisions; none follows from this report.
@@ -30,7 +33,7 @@ runtime work; setting a manifest flag or supplying old approval cannot do so.
 
 [`evidence-index.json`](evidence-index.json) gives each evidence ID below its
 exact repository path, full last-changing commit and raw-file SHA-256, all
-checked against the input commit above. It pins 19 artifacts; paths are not
+checked against its recorded historical base revision above. It pins 19 artifacts; paths are not
 live protected installations. The complete three-arm per-run stdout/stderr,
 event and result hashes are additionally retained in `jev_manifest` (15 entries).
 The checklist validates that manifest blob, not all objects nested inside it.
@@ -74,7 +77,7 @@ each has its own warning/block. NONE is a new capstone PASS.
 | 3 Trusted observation | `replay_receipt`, `corpus` | D011 evidence does not cover all forged/race/supervisor cases. | C1 / R1 |
 | 4 Ledger | `durable`, `snapshot`, `export_verification` | Historical 4/4; current independent anchor and complete adversarial export receipts absent. | C1 / R1 |
 | 5 Replay/spec | `replay_receipt`, `contract`, `lifecycle` | D011 only; full seed set and ambiguity/failed-replay rejection missing. | C2 / R1 |
-| 6 Admission | `contract`, `authorization`, `admission` | Historical action record, not fresh approval or comprehensive race/recovery proof; W1 applies. | C1 / R1 |
+| 6 Admission | `contract`, `authorization`, `admission` | The historical fail-open registry defect was repaired by accepted GRRR-ev2w at `710e6fb`; fresh approval and comprehensive race/recovery proof remain missing. | C1 / R1 |
 | 7 Corpus | `corpus` | 32 fixture scenarios/96 repetitions != full-system detection thresholds. | C3 / R1 |
 | 8 Comparison | `jev_design`, `jev_result`, `jev_review`, `jev_manifest` | Genuine measurement; USD unknown; descriptive selection only. | C4 / R1 |
 | 9 Budget/stop | `stop`, `jev_result` | Historical 8/8 no-guest stop tests; complete budget and hung VM/admission race proof absent. | C1 / R1 |
@@ -113,15 +116,17 @@ each has its own warning/block. NONE is a new capstone PASS.
   USD is null (`unknown-until-independent-receipt`). The historical $0 claim
   below is invalid as current aggregate evidence. Random mean 6, Jev mean 5
   (bootstrap 95% 4–6), deterministic mean 0. Keep deterministic baseline policy.
-- **W1 real static finding:** `research/admission.py:60` suppresses unreadable or
-  malformed registry errors and falls back to empty state. That can lose durable
-  duplicate/admission knowledge. A responsible security/admission story must
-  repair and test it; capstone explicitly forbids production feature changes.
-  It remains a blocker, not an ignored historical warning.
+- **W1 resolved before the exact-target request:** the admission registry
+  fail-open defect was repaired and tested by accepted GRRR-ev2w at
+  `710e6fb1affa366da6ca4c855f49805d3bdb944d`, then integrated by epic merge
+  `0b2365e30ab5858cb419f4f4ce9b2ce001850541`. Malformed, unreadable,
+  invalid-shape, directory, and dangling-link registry states now fail closed.
+  That repair is not fresh full-journey admission/race/recovery proof, so the
+  capstone ACs remain blocked.
 - **W2 scanner classification:** `AdmissionError` and `ReportError` bare `pass`
   bodies are intentional exception subclasses, not unimplemented operations.
-  They are two additional pvg static findings; no suppression or scanner bypass
-  was added. Whole-production static status remains FAILED (3 findings).
+  They are the two remaining pvg static findings at the current admission fix;
+  no suppression or scanner bypass was added.
 - **W3 completeness:** accepted siblings, optional adaptation and the scorecard
   evaluation cannot convert missing capstone receipts into passes. Known stale
   historical prose is preserved below for audit, not current truth.
@@ -138,12 +143,14 @@ each has its own warning/block. NONE is a new capstone PASS.
 
 ### Safe handoff
 
-Keep this story unaccepted. Route W1 to the responsible story. Obtain independent
-cost and review-time reconciliation and the missing accessibility walkthrough.
-Then request one exact-target protected E2E decision package covering preflight,
-VM/evaluator/ledger, seed inventory, replay, admission, negative cases, stop and
-recovery, with bounded budgets and immutable output destinations. That package
-must be reviewed/authorized before execution; this checklist grants no authority.
+Keep this story unaccepted. W1 has been resolved as recorded above. The exact-target
+request is now [`E2E-DECISION-REQUEST.json`](E2E-DECISION-REQUEST.json) with the
+operator-facing [`E2E-DECISION-REQUEST.md`](E2E-DECISION-REQUEST.md). It covers
+preflight, VM/evaluator/ledger, seed inventory, replay, admission, negative cases,
+stop/recovery, independent cost/review-time reconciliation, accessibility, bounded
+budgets/ceilings, immutable destinations, denial list, rollback, and all 11 gates
+and 7 AC journeys. Independent review and a separate human decision are still
+required; `execution_authorized=false`, and this checklist grants no authority.
 Repository verification commands/results are in `VERIFICATION.md`.
 
 ---
