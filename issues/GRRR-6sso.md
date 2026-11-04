@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T00:46:41Z
-content_hash: "sha256:6388ab9b7c3ec6396adc1d09fdc20c38848dbc0fb816634b0127f619aa4d4f91"
+updated_at: 2026-11-04T00:55:26Z
+content_hash: "sha256:d3055270457dd2c231b63bead56c78965d20ac179c79f4f534a93b8e90e75f80"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
 assignee: dev-GRRR-6sso
@@ -116,6 +116,65 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (BLOCKED, not delivered)
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `/opt/homebrew/bin/python3 -B tests/e2e/milestone_checklist.py`: 4/4 passed, 0 failures/errors/skips (Python 3.14.3).
+- `/Users/speed/miniconda3/bin/python3 -B tests/e2e/milestone_checklist.py`: 4/4 passed, 0 failures/errors/skips (Python 3.12.7).
+- `./scripts/test-story milestone-e2e`: exit 1, 11 required gates + 7 required journeys; 0 executed/passed/failed, 18 not-run, 0 skipped; 19 historical hashes matched, 0 provenance errors.
+- `/opt/homebrew/bin/python3 -B scripts/test-story milestone-e2e` and `/Users/speed/miniconda3/bin/python3 -B scripts/test-story milestone-e2e`: same counts and exit 1; identical stdout SHA256 8fa9e1e8156fd91546ca0399531552ab2ba90993ce9c878002be461a706c7d50.
+- `pvg verify scripts/test-story tests/e2e/milestone.py tests/e2e/milestone_checklist.py docs/evidence/milestone-packet/FINAL-PACKET.md docs/evidence/milestone-packet/evidence-index.json --include-tests --format=text`: PASS, 2 Python files scanned, 0 findings; not whole-repo certification.
+- `pvg gates scripts/test-story tests/e2e/milestone.py tests/e2e/milestone_checklist.py --format text`: PASS, 0 warn, 0 skipped.
+- `pvg verify research/admission.py research/review_report.py --format=text`: FAIL, 3 findings (one real silent registry reset; two intentional exception subclasses). Reported, not suppressed.
+- `git diff --check`: exit 0.
+
+Summary: repository-only checklist CLI regressions PASS (8 total executions); required protected capstone BLOCKED, 0 executed, 18 not-run; production static finding unresolved. No mocks, protected-path access, external calls, credentials, replay, admission, promotion, production mutation, push, merge or stash pop in this rework.
+Coverage: not measured; no percentage claimed. Full protected E2E and broad suites that may inspect protected paths were not run, not represented as skipped success.
+
+### Commit and artifact evidence
+- Branch story/GRRR-6sso, input 845b47d221773eb4157491d35f57dce47ce8afe6.
+- Source/test/packet commit b0e8d8119c8ec1194874c2f9aa347416651c415d; all reported test results produced at this SHA.
+- Documentation-only verification commit ff0aa463dca9523490c1a93a730cfe8a5cf19756.
+- docs/evidence/milestone-packet/VERIFICATION.md SHA256 aeaa6cd76c0b8dc722d8eba9dcfba8a1c28a5fca5a211c44d2bddbe7b2a99342 contains exact commands, stdout/stderr, hashes, interpreter versions, elapsed time and 7-AC map.
+- docs/evidence/milestone-packet/FINAL-PACKET.md SHA256 ed12a502c8b131e869f14c6fa31303481ad370217b40aa3a6b972e8dbcccfbd1 maps architecture AC1-12, business/design outcomes, costs, warnings, blocks and rollback.
+- docs/evidence/milestone-packet/evidence-index.json SHA256 d321f8ec71ef7d1be1a967f82dfcafa4e66720c743395aafaa3392005568526b pins 19 exact artifact paths/commits/raw hashes. Hash match is not fresh authority or full export verification.
+- Wiring: scripts/test-story dispatches milestone-e2e to tests/e2e/milestone.py; tests/e2e/milestone_checklist.py exercises real CLI text/JSON, absent Git objects, malformed index and rejected skip/execution flags. No pass mode or protected runtime imports.
+- Six files, 861 insertions/2 deletions; sixth file is retained verification output. Excluded stash remains untouched.
+
+### AC Verification
+| AC # | Requirement | Evidence/code/test | Status |
+|---|---|---|---|
+| 1 | Clean authorized full operator journey | FINAL-PACKET AC1; milestone checklist; real full transcript absent | BLOCKED |
+| 2 | >=20 seeds through complete mandatory gates | Historical 32 fixture scenarios/96 repetitions, downstream gates incomplete | BLOCKED |
+| 3 | Genuine equal-budget comparison, costs/uncertainty | Existing three-arm report present; selector-quality-only; USD null and cumulative cost closure absent | PARTIAL/BLOCKED |
+| 4 | Hung executor, races, durable crash/recovery and restoration | Historical component evidence mapped; capstone matrix absent | BLOCKED |
+| 5 | Full adversarial negative matrix and surface parity | Checklist fails closed; complete real matrix absent | BLOCKED |
+| 6 | Accessibility walkthrough and measured burden | No actual keyboard/screen-reader/timing artifact | BLOCKED |
+| 7 | Final immutable evidence map and rollback | Complete map of known inputs/unknowns added; runtime/cost/recovery closure missing | PARTIAL/BLOCKED |
+
+LEARNINGS:
+- Accepted component stories and hash-matched blobs cannot stand in for full capstone receipts.
+- Second PM rejection correctly found missing wiring/proof headings; these now have repository artifacts, without fabricated delivery.
+- Genuine Jev repetitions exist at updated base, superseding the old unavailable claim, but unknown USD and selector-only results remain limiting.
+- Separate mandatory not-run counts from successful historical provenance checks.
+- Silent corrupt-registry fallback is a real production defect; empty exception subclasses are not missing implementations.
+
+DISCOVERED_BUG:
+  title: Admission registry corruption silently resets durable state
+  context: _load_registry catches JSONDecodeError/OSError and returns empty registry; duplicate/admission knowledge may be lost. Fix requires responsible security/admission scope, explicitly excluded from capstone feature work.
+  affected_files: research/admission.py:60
+  discovered_during: GRRR-6sso
+
+DISCOVERED_BUG:
+  title: Mandatory full-capstone evidence and protected E2E authority absent
+  context: All seven full ACs remain incomplete; individual missing requirements are enumerated in tests/e2e/milestone.py and FINAL-PACKET. Protected/paid actions and accessibility timing cannot be manufactured in repository-only rework. Costs remain unknown. Route a bounded prerequisite/authorization decision package before execution.
+  affected_files: tests/e2e/milestone.py; docs/evidence/milestone-packet/FINAL-PACKET.md
+  discovered_during: GRRR-6sso
+
+The developer BLOCKED protocol applies: release the claim, do not deliver or close; Sr PM/coordinator must wire actual blockers. EOF contract is written separately after release, and must remain new/not delivered with all seven ACs unchecked. A delivered EOF contract would falsely assert completed proof.
 
 
 ## nd_contract
