@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, rejected]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:34:59Z
-content_hash: "sha256:69315fba6adfd9cb15b995ab26e1f9025457d187fedc51b1e5201ae743f6ab96"
+updated_at: 2026-11-04T00:35:00Z
+content_hash: "sha256:ce396767b82c4dd4632110918ffc540013aca5c825e590c144b0137ddd614700"
 follows: [GRRR-gge0, GRRR-fmvp]
 ---
 
@@ -352,3 +352,21 @@ status: delivered
 - [x] AC #5: deterministic and failure-mode controls recorded.
 - [x] AC #6: false positives and useful signals classified.
 - [x] AC #7: advisory-only trust boundary recorded.
+
+### 2026-11-04T00:35:00Z speed
+## PM Decision
+REJECTED [2026-11-03]:
+EXPECTED: A delivered story must pass the deterministic delivery-proof gate with a machine-recognizable AC verification table/checklist, and the delivery proof must include a LEARNINGS: section.
+DELIVERED: Fresh `pvg story verify-delivery GRRR-888u --json` passed 8/9 but failed `proof:ac_items` with "missing AC verification (checklist or table)". The notes use `## AC Verification` and `- [x] AC #...`, but not the canonical `### AC Verification` heading/bare `[x] AC` form recognized by the gate. The story body also has no `LEARNINGS:` section. Substantive committed evidence at 86ace00860f62f302f4f633eefa6c98b5cce8252 was otherwise coherent: branch ancestry and three artifact hashes matched, JSON parsed, warning counts summed to 5,486, all authority flags were false, diff-check passed, and the five-file target list matched GRRR-gge0.
+GAP: The pipeline cannot certify delivery while its required AC-proof parser fails, and the mandatory retrospective learnings block is absent. These are proof-format defects, not grounds to rerun the external evaluation.
+FIX: Append a new authoritative delivered note (no source or evidence-file changes required unless corrections are found) containing `### AC Verification` with a table or literal `[x] AC #n` proof for all seven ACs and a `LEARNINGS:` section; preserve commit 86ace00860f62f302f4f633eefa6c98b5cce8252. Re-deliver only after `pvg story verify-delivery GRRR-888u` passes 9/9.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Fresh pvg story verify-delivery GRRR-888u --json: 8 passed, 1 failed (`proof:ac_items`).
+- Story body lacks LEARNINGS and the canonical `### AC Verification` machine-readable form.
+
+### proof
+- [ ] AC #1-#7: substantive evidence was reviewed, but authoritative delivery proof does not pass the mandatory PM delivery gate.
