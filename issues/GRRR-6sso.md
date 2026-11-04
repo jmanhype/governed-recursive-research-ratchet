@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T00:27:45Z
-content_hash: "sha256:5bb267bbca1a337bba48e2c922729d61017aa47f44569031c6f7d6d6f9f321b8"
+updated_at: 2026-11-04T00:44:28Z
+content_hash: "sha256:049bc303d73a780d72a3dc9d6277c0af8c754dbbb283f2a1e357363634e38331"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0]
 ---
@@ -572,3 +572,8 @@ status: rejected
 - [ ] AC #5: Full forged/stale/missing/budget/protected-write/ambiguous-spec fail-closed proof is missing.
 - [ ] AC #6: Keyboard-only accessibility walkthrough, decisions, and measured review burden are missing.
 - [ ] AC #7: Final packet lacks complete immutable receipt/revision/cost/warning/block/rollback mapping.
+
+### 2026-11-04T00:44:28Z speed
+## 2026-11-04 Uncommitted Epic Selector/Jev WIP Preservation
+
+Before merging accepted GRRR-888u, the unrelated epic-root WIP was preserved without review or acceptance in Git stash `PRESERVE-GRRR-6sso-selector-jev-WIP-before-GRRR-888u-merge`. Files represented: research/selector_comparison.py, tests/unit_selector_comparison.py, and research/jev_adapter.py. This stash is not evidence, not delivered code, and not authorization to merge or promote GRRR-6sso.
