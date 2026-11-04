@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T00:56:07Z
-content_hash: "sha256:a3178dd636c38a540ad313dec54f5cb6906d4020e7ccbf83338b663584071082"
+updated_at: 2026-11-04T01:03:44Z
+content_hash: "sha256:10530391c2b84e4244917448490ec1a144704878e473a3be3fc4c93d193c61d8"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
 blocked_by: [GRRR-gzgq]
@@ -117,6 +117,10 @@ status: new
 
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
+## 2026-11-04 Sr PM Bug Triage
+- Created P0 `GRRR-gzgq` for the distinct admission registry fail-open defect and wired `GRRR-6sso` to depend on it because the capstone cannot claim complete mandatory authorization/admission capability while durable duplicate state is resettable.
+- The second DISCOVERED_BUG (`Mandatory full-capstone evidence and protected E2E authority absent`) is not duplicated: `GRRR-6sso` already owns all seven capstone ACs, the 11 mandatory gates, seven journeys, exact protected/paid prerequisites, and blocked evidence boundaries. A self-dependency would be structurally invalid; the only structurally correct new hard edge is `GRRR-6sso` blocked by `GRRR-gzgq`.
+- Repository-only work must not manufacture operator authorization, protected access, seeds, stop/recovery, adversarial receipts, accessibility timing, or costs. Those remain explicit blocked/not-run capstone outcomes pending separate authorization.
 
 ## Implementation Evidence
 
