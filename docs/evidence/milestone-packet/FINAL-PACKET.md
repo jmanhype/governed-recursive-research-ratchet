@@ -2,12 +2,14 @@
 ## Current capstone verdict — BLOCKED (repository-only rework, 2026-11-04 UTC)
 
 **Do not approve the full capstone from this packet.** This section supersedes
-the historical packet below and the older REWORK-GRRR-6sso notes. The current
-exact revisions are story `c928791cdaa72df91e61002c40317457b543b032`, epic
+the historical packet below and the older REWORK-GRRR-6sso notes. The immutable
+request runtime base is `c928791cdaa72df91e61002c40317457b543b032`, epic
 `0b2365e30ab5858cb419f4f4ce9b2ce001850541`, historical evidence base
 `845b47d221773eb4157491d35f57dce47ce8afe6`, and accepted admission fix
 `710e6fb1affa366da6ca4c855f49805d3bdb944d`. The unreviewed selector/Jev stash
-is excluded. No real journey ran in this rework. No protected path was
+is excluded. The corrected request package commit and raw request hashes must be
+bound externally by independent review/human authorization; they are not
+self-referential JSON fields. No real journey ran in this rework. No protected path was
 inspected, no replay/admission/production action occurred, and no external
 Jev call or credential access occurred. Delivery, PM acceptance, human contract
 approval and deployment are different decisions; none follows from this report.
@@ -149,8 +151,11 @@ operator-facing [`E2E-DECISION-REQUEST.md`](E2E-DECISION-REQUEST.md). It covers
 preflight, VM/evaluator/ledger, seed inventory, replay, admission, negative cases,
 stop/recovery, independent cost/review-time reconciliation, accessibility, bounded
 budgets/ceilings, immutable destinations, denial list, rollback, and all 11 gates
-and 7 AC journeys. Independent review and a separate human decision are still
-required; `execution_authorized=false`, and this checklist grants no authority.
+and 7 AC journeys. Preflight requires both the immutable runtime base and exact
+post-commit package SHA, resolves request blobs from Git, proves ancestry, and
+rejects checkout-local claims. Independent review and a separate human decision
+are still required to bind that package SHA and raw request hashes externally;
+`execution_authorized=false`, and this checklist grants no authority.
 Repository verification commands/results are in `VERIFICATION.md`.
 
 ---

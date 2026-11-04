@@ -9,17 +9,19 @@
 - Effect now: **none**
 - This Markdown and `E2E-DECISION-REQUEST.json` are request artifacts only. They do not launch a VM, read or write a protected path, replay, admit, promote, mutate production, call Jev/network, access credentials, pop the excluded stash, merge, or push.
 
-## Exact revision bindings
+## Exact runtime base and external package binding
 
 | Role | Revision |
 |---|---|
 | Historical evidence base | `845b47d221773eb4157491d35f57dce47ce8afe6` |
 | Accepted admission fail-closed fix (GRRR-ev2w) | `710e6fb1affa366da6ca4c855f49805d3bdb944d` |
 | Current epic `epic/GRRR-2t3h` | `0b2365e30ab5858cb419f4f4ce9b2ce001850541` |
-| Current story `story/GRRR-6sso` | `c928791cdaa72df91e61002c40317457b543b032` |
+| Immutable runtime base for this request package | `c928791cdaa72df91e61002c40317457b543b032` |
 | Observed main (not a merge target) | `c2970356436531565711fb3c2df24eb91c3ed510` |
 
-The exact story HEAD and epic HEAD must match these values. The admission fix must be an ancestor. Any changed request byte requires a new independent review and human decision; historical approvals are not reusable.
+The runtime base is immutable revision `c928791cdaa72df91e61002c40317457b543b032`; it is not relabeled as the package HEAD. The package commit is intentionally absent from both request artifacts because it cannot correctly hash or name itself. Independent review and any human decision must bind the exact post-commit package SHA and the raw JSON/Markdown SHA-256 values externally.
+
+Preflight must receive both the explicit runtime base and exact package commit arguments. It must resolve the JSON, Markdown, and index bytes from the supplied Git package commit, verify request/blob identities and historical hashes, and prove that `c928791` is an ancestor of that package commit. Checkout-local or caller-supplied request claims are not evidence. The admission fix must also be an ancestor. Any changed request byte requires a new independent review and human decision; historical approvals are not reusable.
 
 ## Immutable historical evidence identities
 
@@ -51,7 +53,7 @@ The authoritative machine-readable inventory is `E2E-DECISION-REQUEST.json`; all
 
 Preflight is blocked and must complete before any VM launch:
 
-1. Confirm the clean worktree and every revision binding above, including GRRR-ev2w ancestry.
+1. Confirm the clean worktree, explicit runtime-base/package-commit binding, and every revision binding above, including GRRR-ev2w ancestry.
 2. Verify all 19 historical identities against the pinned index and current local Git objects without treating them as fresh gate passes.
 3. Verify source, archive, input ISO, VM image, preparation/profile, interpreter/tool, capacity, evaluator/runner identity, corpus, ledger schema/tip/anchor, reservation, and output-name availability.
 4. Obtain independent review plus cost/review-time reconciliation.

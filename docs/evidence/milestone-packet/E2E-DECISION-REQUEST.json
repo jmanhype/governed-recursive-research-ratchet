@@ -10,13 +10,15 @@
     "historical_evidence_base": "845b47d221773eb4157491d35f57dce47ce8afe6",
     "admission_fail_closed_fix": "710e6fb1affa366da6ca4c855f49805d3bdb944d",
     "epic_current": "0b2365e30ab5858cb419f4f4ce9b2ce001850541",
-    "story_current": "c928791cdaa72df91e61002c40317457b543b032",
+    "immutable_runtime_base": "c928791cdaa72df91e61002c40317457b543b032",
     "main_observed_not_target": "c2970356436531565711fb3c2df24eb91c3ed510"
   },
   "revision_policy": {
-    "story_head_must_match": "c928791cdaa72df91e61002c40317457b543b032",
+    "immutable_runtime_base_must_match": "c928791cdaa72df91e61002c40317457b543b032",
     "epic_head_must_match": "0b2365e30ab5858cb419f4f4ce9b2ce001850541",
     "admission_fix_must_be_ancestor": true,
+    "package_commit_must_descend_from_runtime_base": true,
+    "package_commit_binding_is_external": true,
     "changed_request_hash_requires_new_review": true
   },
   "historical_evidence": {
@@ -284,7 +286,7 @@
     "independent_review_required": true,
     "reviewer_must_reconcile": ["story ACs", "11 gates", "7 journeys", "19 evidence identities", "seed partitions", "negative matrix", "budget arithmetic", "accessibility obligations", "output destinations", "rollback and stop behavior"],
     "human_decision_required": true,
-    "approval_binding": ["exact JSON request bytes", "exact Markdown request bytes", "request_id", "all revisions", "budget maxima", "immutable output root"],
+    "approval_binding": ["external package commit SHA", "exact JSON request bytes", "exact Markdown request bytes", "request_id", "all revisions", "budget maxima", "immutable output root"],
     "historical_approval_reuse": false,
     "delivery_and_pm_acceptance_distinct": true
   },

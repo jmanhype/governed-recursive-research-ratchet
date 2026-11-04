@@ -11,6 +11,7 @@ from hashlib import sha256
 import json
 from pathlib import PurePosixPath
 import re
+import subprocess
 import sys
 from typing import Any
 
@@ -27,9 +28,20 @@ REVISIONS = {
     "historical_evidence_base": "845b47d221773eb4157491d35f57dce47ce8afe6",
     "admission_fail_closed_fix": "710e6fb1affa366da6ca4c855f49805d3bdb944d",
     "epic_current": "0b2365e30ab5858cb419f4f4ce9b2ce001850541",
-    "story_current": "c928791cdaa72df91e61002c40317457b543b032",
+    "immutable_runtime_base": "c928791cdaa72df91e61002c40317457b543b032",
     "main_observed_not_target": "c2970356436531565711fb3c2df24eb91c3ed510",
 }
+REVISION_POLICY = {
+    "immutable_runtime_base_must_match": REVISIONS["immutable_runtime_base"],
+    "epic_head_must_match": REVISIONS["epic_current"],
+    "admission_fix_must_be_ancestor": True,
+    "package_commit_must_descend_from_runtime_base": True,
+    "package_commit_binding_is_external": True,
+    "changed_request_hash_requires_new_review": True,
+}
+REQUEST_PATH = "docs/evidence/milestone-packet/E2E-DECISION-REQUEST.json"
+MARKDOWN_PATH = "docs/evidence/milestone-packet/E2E-DECISION-REQUEST.md"
+INDEX_PATH = "docs/evidence/milestone-packet/evidence-index.json"
 GATE_IDS = ("source_environment_identity", "isolation", "protected_asset_integrity", "baseline_correctness", "trusted_observation", "independent_replay", "specification_traceability", "evidence_integrity_currency", "budget_state", "reviewer_outcome", "action_specific_human_approval")
 JOURNEY_IDS = ("AC1", "AC2", "AC3", "AC4", "AC5", "AC6", "AC7")
 SEED_IDS = ("GRRR-VC-D001", "GRRR-VC-D002", "GRRR-VC-D003", "GRRR-VC-D004", "GRRR-VC-D005", "GRRR-VC-D006", "GRRR-VC-D007", "GRRR-VC-D008", "GRRR-VC-D009", "GRRR-VC-D010", "GRRR-VC-D011", "GRRR-VC-D012", "GRRR-VC-D013", "GRRR-VC-D014", "GRRR-VC-D015", "GRRR-VC-D016", "GRRR-VC-D017", "GRRR-VC-D018", "GRRR-VC-D019", "GRRR-VC-D020", "GRRR-VC-D021", "GRRR-VC-D022", "GRRR-VC-D023", "GRRR-VC-D024", "GRRR-VC-C001", "GRRR-VC-C002", "GRRR-VC-C003", "GRRR-VC-C004", "GRRR-VC-C005", "GRRR-VC-C006", "GRRR-VC-C007", "GRRR-VC-C008")
@@ -44,7 +56,8 @@ WORKFLOW_FIELDS = frozenset((
 MARKDOWN_REQUIRED = (
     "# GRRR-6sso exact-target full E2E decision request",
     "`execution_authorized: false`",
-    "## Exact revision bindings",
+    "## Exact runtime base and external package binding",
+    "The package commit is intentionally absent from both request artifacts",
     "## Immutable historical evidence identities",
     "## Required preflight",
     "## VM, evaluator, and ledger",
@@ -64,6 +77,52 @@ SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 
 class DecisionRequestError(ValueError):
     """Raised when the request cannot safely be presented for human review."""
+
+
+class GitPackageEvidence:
+    """Read only immutable Git objects; never trust checkout-local claims."""
+
+    def __init__(self, repository: Any) -> None:
+        self.repository = repository
+
+    def _git(self, *arguments: str, check: bool = True) -> subprocess.CompletedProcess[bytes]:
+        result = subprocess.run(
+            ("git", "-C", str(self.repository), *arguments),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if check and result.returncode != 0:
+            raise DecisionRequestError("Git object evidence is missing or unreadable")
+        return result
+
+    def commit_exists(self, revision: str) -> bool:
+        return self._git("cat-file", "-e", revision + "^{commit}", check=False).returncode == 0
+
+    def is_ancestor(self, ancestor: str, descendant: str) -> bool:
+        return self._git("merge-base", "--is-ancestor", ancestor, descendant, check=False).returncode == 0
+
+    def blob(self, revision: str, path: str) -> bytes:
+        return self._git("show", revision + ":" + path).stdout
+
+    def blob_id(self, revision: str, path: str) -> str:
+        value = self._git("rev-parse", revision + ":" + path).stdout.decode("ascii").strip()
+        if not SHA1_RE.fullmatch(value):
+            raise DecisionRequestError("Git request blob identity is malformed")
+        return value
+
+
+class ResolvedPackage:
+    """Immutable package bytes resolved from two explicit commit arguments."""
+
+    def __init__(self, repository: Any, runtime_base: str, package_commit: str,
+                 request_bytes: bytes, markdown_bytes: bytes, index_bytes: bytes) -> None:
+        self.repository = repository
+        self.runtime_base = runtime_base
+        self.package_commit = package_commit
+        self.request_bytes = request_bytes
+        self.markdown_bytes = markdown_bytes
+        self.index_bytes = index_bytes
 
 
 def _keys(value: dict, expected: set[str], label: str) -> None:
@@ -106,7 +165,8 @@ def _identities(index: dict) -> dict:
         if (not SHA1_RE.fullmatch(str(item["revision"])) or
                 not SHA256_RE.fullmatch(str(item["sha256"])) or
                 not isinstance(item["path"], str) or
-                item["path"].startswith(("/", ".."))):
+                item["path"].startswith(("/", "..")) or "\\" in item["path"] or
+                any(part in ("", ".", "..") for part in item["path"].split("/"))):
             raise DecisionRequestError("evidence item " + name + " is malformed")
     return index["artifacts"]
 
@@ -123,7 +183,7 @@ def _safe_output(root: str, relative: str) -> PurePosixPath:
     return joined
 
 
-def _validate_request_identity(request: dict, current_head: str | None) -> None:
+def _validate_request_identity(request: dict, runtime_base: str) -> None:
     """Validate immutable request identity, authority surface, and revisions."""
     _keys(request, set(REQUEST_FIELDS), "request")
     if (request["schema_version"] != 1 or
@@ -137,20 +197,37 @@ def _validate_request_identity(request: dict, current_head: str | None) -> None:
     for name, expected in REVISIONS.items():
         if request["revisions"][name] != expected:
             raise DecisionRequestError("stale revision " + name)
-    if current_head is not None and current_head != REVISIONS["story_current"]:
-        raise DecisionRequestError("current story HEAD is stale")
+    _keys(request["revision_policy"], set(REVISION_POLICY), "revision policy")
+    for name, expected in REVISION_POLICY.items():
+        if request["revision_policy"][name] != expected:
+            raise DecisionRequestError("revision policy differs: " + name)
+    if runtime_base != REVISIONS["immutable_runtime_base"]:
+        raise DecisionRequestError("runtime base differs from immutable request binding")
+    for key, _value in _walk(request):
+        leaf = key.rsplit(".", 1)[-1]
+        if "package" in leaf and "commit" in leaf:
+            raise DecisionRequestError("package commit must be bound externally, not claimed in JSON")
 
 
-def _validate_historical(request: dict, evidence_index: Any) -> None:
+def _validate_historical(request: dict, evidence_index: Any, git: GitPackageEvidence) -> None:
     """Require exact parity with the immutable 19-artifact evidence index."""
     historical = request["historical_evidence"]
     _keys(historical, {"index_path", "scope", "base_revision", "artifact_count", "limit", "artifacts"}, "historical evidence")
     artifacts = _identities(evidence_index)
-    if (historical["index_path"] != "docs/evidence/milestone-packet/evidence-index.json" or
+    if (historical["index_path"] != INDEX_PATH or
             historical["scope"] != "historical-provenance-only" or
             historical["base_revision"] != REVISIONS["historical_evidence_base"] or
             historical["artifact_count"] != 19 or historical["artifacts"] != artifacts):
         raise DecisionRequestError("historical evidence inventory is stale or mismatched")
+    base = REVISIONS["historical_evidence_base"]
+    if not git.commit_exists(base):
+        raise DecisionRequestError("historical evidence base is unavailable")
+    for name, item in artifacts.items():
+        if not git.commit_exists(item["revision"]) or not git.is_ancestor(item["revision"], base):
+            raise DecisionRequestError("historical evidence revision lacks Git ancestry: " + name)
+        data = git.blob(item["revision"], item["path"])
+        if sha256(data).hexdigest() != item["sha256"] or data != git.blob(base, item["path"]):
+            raise DecisionRequestError("historical evidence bytes differ: " + name)
 
 
 def _validate_gates(request: dict) -> None:
@@ -242,11 +319,17 @@ def _validate_markdown(request: dict, markdown: str) -> None:
             raise DecisionRequestError("Markdown revision binding is stale")
 
 
-def validate(request: Any, markdown: str, evidence_index: Any,
-             current_head: str | None = None) -> dict:
-    """Return blocked review-only state or raise for every unsafe request."""
-    _validate_request_identity(request, current_head)
-    _validate_historical(request, evidence_index)
+def _validate_package(package: ResolvedPackage) -> dict:
+    """Validate only bytes already resolved from immutable Git objects."""
+    try:
+        request = json.loads(package.request_bytes)
+        index = json.loads(package.index_bytes)
+        markdown = package.markdown_bytes.decode("utf-8")
+    except (UnicodeDecodeError, ValueError, RecursionError) as exc:
+        raise DecisionRequestError("malformed JSON request or index") from exc
+    git = GitPackageEvidence(package.repository)
+    _validate_request_identity(request, package.runtime_base)
+    _validate_historical(request, index, git)
     _validate_gates(request)
     _validate_journeys(request)
     _validate_seed_inventory(request)
@@ -254,36 +337,63 @@ def validate(request: Any, markdown: str, evidence_index: Any,
     _validate_budgets(request)
     _validate_outputs(request)
     _validate_markdown(request, markdown)
+    request_hash = sha256(package.request_bytes).hexdigest()
+    markdown_hash = sha256(package.markdown_bytes).hexdigest()
     return {
         "schema_valid": True,
         "decision": "blocked",
         "execution_authorized": False,
-        "request_sha256": sha256(json.dumps(request, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("ascii")).hexdigest(),
+        "request_id": request["request_id"],
+        "runtime_base": package.runtime_base,
+        "package_commit": package.package_commit,
+        "request_blob_git_id": git.blob_id(package.package_commit, REQUEST_PATH),
+        "markdown_blob_git_id": git.blob_id(package.package_commit, MARKDOWN_PATH),
+        "request_sha256": request_hash,
+        "markdown_sha256": markdown_hash,
     }
 
 
-def validate_bytes(request_bytes: bytes, markdown: str, index_bytes: bytes,
-                   current_head: str | None = None) -> dict:
-    """Decode and validate raw request bytes, failing closed on malformed JSON."""
-    try:
-        request = json.loads(request_bytes)
-        index = json.loads(index_bytes)
-    except (UnicodeDecodeError, ValueError, RecursionError) as exc:
-        raise DecisionRequestError("malformed JSON request or index") from exc
-    return validate(request, markdown, index, current_head)
+def _load_package(runtime_base: str | None, package_commit: str | None,
+                  repository: Any) -> ResolvedPackage:
+    """Resolve and bind the package solely from explicit Git commit arguments."""
+    if runtime_base is None or package_commit is None:
+        raise DecisionRequestError("runtime base and package commit are both required")
+    if (not SHA1_RE.fullmatch(str(runtime_base)) or
+            not SHA1_RE.fullmatch(str(package_commit))):
+        raise DecisionRequestError("runtime base or package commit is malformed")
+    if str(runtime_base) != REVISIONS["immutable_runtime_base"]:
+        raise DecisionRequestError("runtime base differs from immutable request binding")
+    git = GitPackageEvidence(repository)
+    if not git.commit_exists(str(runtime_base)) or not git.commit_exists(str(package_commit)):
+        raise DecisionRequestError("runtime base or package commit is unavailable")
+    if not git.is_ancestor(str(runtime_base), str(package_commit)):
+        raise DecisionRequestError("runtime base is not an ancestor of package commit")
+    return ResolvedPackage(
+        repository=repository,
+        runtime_base=str(runtime_base),
+        package_commit=str(package_commit),
+        request_bytes=git.blob(str(package_commit), REQUEST_PATH),
+        markdown_bytes=git.blob(str(package_commit), MARKDOWN_PATH),
+        index_bytes=git.blob(str(package_commit), INDEX_PATH),
+    )
+
+
+def validate_git(runtime_base: str | None, package_commit: str | None,
+                 repository: Any = ".") -> dict:
+    """Resolve package bytes from Git and return blocked review-only state."""
+    package = _load_package(runtime_base, package_commit, repository)
+    return _validate_package(package)
 
 
 def main() -> int:
     """Print only schema validity and blocked state; never launch work."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--request", required=True)
-    parser.add_argument("--markdown", required=True)
-    parser.add_argument("--index", required=True)
-    parser.add_argument("--current-head")
+    parser.add_argument("--runtime-base", required=True)
+    parser.add_argument("--package-commit", required=True)
+    parser.add_argument("--repository", default=".")
     args = parser.parse_args()
     try:
-        result = validate_bytes(open(args.request, "rb").read(), open(args.markdown, encoding="utf-8").read(),
-                                open(args.index, "rb").read(), args.current_head)
+        result = validate_git(args.runtime_base, args.package_commit, args.repository)
     except (OSError, UnicodeError, DecisionRequestError) as exc:
         print("FAIL: " + str(exc), file=sys.stderr)
         return 1
