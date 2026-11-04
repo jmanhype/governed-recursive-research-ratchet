@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T13:14:51Z
-content_hash: "sha256:178a9f6e1b558bd9cf3c6b3faeb16b50797661c6e081a618693a0503d1ac353c"
+updated_at: 2026-11-04T13:18:49Z
+content_hash: "sha256:d392cee11592900fe43e098a4a1aba1cd7983cb4e04702e93430662252a8f504"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -118,6 +118,47 @@ status: new
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
 Supplement verification: parent readback confirmed the five-minute attestation text is present exactly once, both E2E request hashes remain unchanged, and execution_authorized remains false. A bounded fresh GLM attestation-only reviewer did not return a verdict before interruption; no new independent approval is claimed. Prior independently reviewed request semantics are unchanged. No source-tree changes or runtime actions were performed.
+## 2026-11-04 Authorized Bounded Run - Preflight Stopped Before Launch
+
+The exact conditional execution authorization is recorded in Notes under `Operator Authorization - Conditional Bounded Run`, digest `886b28daa787fc21343c8c73575e36df952e0a5148370a7a904627a992659d92`. The operator authorized execution if mandatory preflight passes; do not misclassify this decision as planning-only or request the same unchanged approval again. No mandatory gate was waived.
+
+### Direct observations
+
+- Epic remained `0b2365e30ab5858cb419f4f4ce9b2ce001850541`, story supplement `51fe3084f650f1b238ab4c704bb8ccec9a410416`; the source checkout was clean before and after these checks. No source changes, commits, merges or pushes were made.
+- Exact reviewed package `51ebc998e7c07018740ec53e389646a5b465cc75` and runtime base `c928791cdaa72df91e61002c40317457b543b032` passed the existing offline `tests/e2e/e2e_decision_request.py` validator with explicit `--runtime-base`, `--package-commit`, and `--repository` arguments. Validator exit 0 and `schema_valid=true` mean schema/identity validation only, not runtime gates or execution.
+- Captured validator stdout SHA-256: `ca28561a6004b0e9db5bccda676a989131c27829f1e7944852da2c21f8020777` at `/tmp/grrr-6sso-bounded-preflight-schema-20261104.json`. Its raw JSON is retained below for durable readback; the temporary pathname alone is not a durable receipt.
+- `df -k /` returned Available `7854604` KiB, equivalent to `8043114496` bytes. `sysctl vm.swapusage` returned total `25600.00M`, used `24367.06M`, free `1232.94M`. These are parent-observed point-in-time host measurements, not evaluator-certified runtime receipts.
+- The pinned package enforces `15000000000` bytes in `research/execution.py:79` and `research/trusted_execution.py:295`, `15350000000` in `scripts/conservative-genesis:85`, and `16106127360` in `research/replay_fixtures.py:14`. Observed capacity was below every one of these floors. The actual guest launcher was not invoked to discover this failure.
+- A bounded read-only `/Library/GRRR` namespace inventory was partial: access to `/Library/GRRR/independent-replay` and `/Library/GRRR/.grrr-v4-preservation-stage-1957ab3` was denied. The shell command returned exit 1. No elevation, permission change, protected-file content read, accounting write, or retry to bypass those permissions followed. A complete protected baseline was not established.
+- Direct inspection of pinned `tests/e2e/milestone.py:1-5` and its `main()` confirms the advertised milestone entrypoint is intentionally a repository-only evidence checklist with no pass mode, not the full capstone executor. It calls `checklist()` and returns 1. The request validator likewise has no runtime-launch path. This is a bounded finding about those entrypoints, not a claim that all component runners are absent.
+- Repository cost evidence still labels final Jev settlement unresolved and retains the full USD 50 reservation. The superseded packet's approximate two-hour review estimate is not a measured current cumulative total. This preflight did not establish complete remaining cumulative execution/review allowances; no unknown was converted to zero.
+- CoS dispatch was unavailable (`tunnel_client_not_seen`). Two fresh bounded GLM read-only checks did not return verdicts before interruption. No independent allowance or implementation approval is claimed from those attempts.
+
+### Captured validator output (schema check only)
+
+```json
+{
+  "decision": "blocked",
+  "execution_authorized": false,
+  "markdown_blob_git_id": "d39171e2d5b33632227f90a70bf1ab7325ff73b2",
+  "markdown_sha256": "284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4",
+  "package_commit": "51ebc998e7c07018740ec53e389646a5b465cc75",
+  "request_blob_git_id": "7de41a08643b6827561e68f01256aead3b8ea5bd",
+  "request_id": "GRRR-6sso-exact-target-e2e-v1",
+  "request_sha256": "79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb",
+  "runtime_base": "c928791cdaa72df91e61002c40317457b543b032",
+  "schema_valid": true
+}
+```
+
+The immutable request's `execution_authorized=false` output describes the unchanged request-only artifact. It does not erase the separately recorded conditional operator grant or manufacture a live gate pass.
+
+### Result and constraints
+
+Result: preflight blocked; zero VM launches, zero candidate/replay executions, zero admissions, zero new Jev calls. This is not a completed capstone and was not delivered or accepted as one. The reserved exact-target run output root remains absent; existing inputs/evidence and protected state were not modified. No spendability write, reconciliation, stop clearing, recovery of protected state, credential access, production mutation, cleanup/deletion, merge or push occurred.
+
+Required before launch: sufficient capacity with margin; a verified, reviewed full capstone execution path rather than a checklist; protected baseline/identity checks through the approved boundary; and independent cumulative allowance reconciliation. Existing authorization remains bound to its exact revisions and exclusions. Any implementation revision change must not silently inherit that old exact-revision grant. Do not automatically rerun or relax any floor.
+
 ## 2026-11-04 Operator Authorization - Conditional Bounded Run
 
 Operator's exact response to the bounded run decision: `Authorize this bounded run.`
