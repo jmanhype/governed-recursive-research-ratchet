@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, rejected]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:35:44Z
-content_hash: "sha256:725a7a29c97cce085b77dc26f9d59fab61b9bb0615ddf1efd46bbfa37d22e664"
+updated_at: 2026-11-04T00:37:48Z
+content_hash: "sha256:14cb6d7ae80c0b973cb00be0aac729d5756e49399c3c85563bfc68ca7b1f5cd6"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve]
 assignee: dev-GRRR-888u
 ---
@@ -99,7 +99,72 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERED)
 
+Summary: Proof-format rework for the completed advisory-only Anti-Cheat Scorecard evaluation. The substantive evidence and independent review remain unchanged; this note supplies the canonical AC table and retrospective learnings required by the delivery gate.
+
+Commit SHA: 86ace00860f62f302f4f633eefa6c98b5cce8252.
+
+### CI/Test Results
+
+Commands run (recorded from the unchanged evidence at commit 86ace00860f62f302f4f633eefa6c98b5cce8252; not rerun in this proof-format rework):
+- git clone/checkout v26.8.29 and commit identity check — exit 0.
+- go test ./internal/llmcheat/patterns/... -count=1 — exit 0, 53/53 pattern-related packages OK.
+- go build -o /tmp/anti-cheat-scorecard-v26.8.29 . — exit 0, binary SHA-256 d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e.
+- Full GRRR-gge0 Anti-Cheat scan — exit 0, 79.67s, score 1/10, 5,487 detail rows (5,486 warnings plus one informational row).
+- Five-file subset scan — exit 0, 0.15s, score 7/10, two warnings.
+- Seeded textual-cheat control — exit 0, five warnings.
+- Absent-input control — exit 0 with no output, classified failure.
+- Empty-root control — exit 0 with perfect 10/10, classified unsafe coverage behavior.
+- Same-target subset rerun — exit 0; JSON outputs were semantically equal after timestamp removal.
+- pvg verify selected evidence files — PASS.
+- pvg gates selected evidence files — PASS.
+- git diff --check — PASS.
+
+Rework boundary: no source or evidence file was changed and no external evaluation, protected-path access, replay, admission, promotion, production mutation, merge, push, credential use, or commit was performed.
+
+### AC Verification
+
+| AC # | Requirement | Recorded Evidence | Status |
+|---|---|---|---|
+| 1 | Pin and verify upstream repository, tag, commit, license, module, Go/tool identities without using unpinned main. | v26.8.29 at 5271351d079f79634de2f8b91970b80daf9bcb86; Apache-2.0; module and local Go/binary identities recorded. | PASS |
+| 2 | Independently verify detector registration/count and run all detector package tests at the pinned tag. | 52 registered detector packages across seven categories; 53 pattern-related packages tested OK. | PASS |
+| 3 | Build the pinned CLI locally, record SHA-256, and keep source, credentials, protected truth, and private paths remote. | Local binary SHA-256 d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e; no remote scan or credential submission. | PASS |
+| 4 | Run read-only full-tree and five-file changed-subset scans with target identity, timing, output hash, score, and counts. | Clean target cf3eb55422ba18898541318c138cd82543419d12; full and subset outputs, hashes, elapsed times, scores, finding counts, and pattern counts recorded. | PASS |
+| 5 | Run seeded positive, absent-input, empty-root, and same-target rerun controls. | Five-warning seeded detection; absent-input zero-with-no-output failure; empty-root perfect-score weakness; timestamp-normalized rerun stability recorded. | PASS |
+| 6 | Classify material GRRR false positives and useful advisory signals. | Repeated accounting hashes/historical prose classes and useful textual-cheat signals classified with measured counts and examples; 4,599 false lockfile-checksum mismatches identified. | PASS |
+| 7 | State integration recommendation and trust boundaries, including wrapper validation if not trusted. | Advisory-only recommendation recorded; mandatory/trusted authority rejected; isolated future wrapper must validate output existence, coverage, and failure semantics. | PASS |
+
+- [x] AC #1: exact pinned repository, release, commit, license, module, Go, and binary identities verified.
+- [x] AC #2: detector registration/count and all pattern-related package tests verified.
+- [x] AC #3: pinned local CLI identity and privacy boundary verified.
+- [x] AC #4: clean full-tree and five-file subset scans verified.
+- [x] AC #5: seeded, absent, empty, and rerun controls verified.
+- [x] AC #6: GRRR false-positive classes and useful advisory signals verified.
+- [x] AC #7: advisory-only trust boundary and wrapper validation requirements verified.
+
+LEARNINGS:
+- The deterministic delivery parser requires the canonical `### AC Verification` heading and recognizable table/checklist syntax; a semantically complete differently headed table is not sufficient.
+- A rejection can remove the delivered label even when committed evidence remains coherent, so proof-format rework must end with the atomic `pvg story deliver` transition rather than manual label choreography.
+- Do not rerun expensive or external evaluations to repair a delivery-contract defect when the immutable evidence commit already contains the required measurements.
+- The Anti-Cheat tool’s zero-exit behavior on absent input and perfect score on an empty root are material wrapper requirements, not incidental observations.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Evidence commit: 86ace00860f62f302f4f633eefa6c98b5cce8252.
+- Substantive evidence files, external scan results, and independent approval are unchanged.
+- Rework limited to the nd delivery note; no source/evidence file mutation, external call, protected access, replay, admission, promotion, production mutation, merge, push, or commit.
+
+### proof
+- [x] AC #1: pinned source identity verified.
+- [x] AC #2: detector count and pattern tests verified.
+- [x] AC #3: local binary identity and privacy boundary verified.
+- [x] AC #4: full and subset scan evidence verified.
+- [x] AC #5: deterministic and failure-mode controls verified.
+- [x] AC #6: false positives and advisory signals classified.
+- [x] AC #7: advisory-only trust boundary recorded.
 
 ## nd_contract
 status: rejected
