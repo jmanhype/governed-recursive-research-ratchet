@@ -4,7 +4,7 @@ title: "Evaluate Sean Chatman Anti-Cheat Scorecard"
 status: open
 priority: 1
 type: task
-labels: [milestone-2, research, external-tooling, security-review, delivered]
+labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
