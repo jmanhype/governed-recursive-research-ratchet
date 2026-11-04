@@ -8,8 +8,8 @@ labels: [milestone-1, security, integration, discovered-by-developer, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
-updated_at: 2026-11-04T01:17:37Z
-content_hash: "sha256:4d5f609d214e664c9050efea1ff2c64012bb9a37b23fae289d149c037c4be58d"
+updated_at: 2026-11-04T01:18:06Z
+content_hash: "sha256:f4d3b59a6b7b703bd459a3408585ca0653edbf9315b1e130c544bd78ef8bf503"
 blocks: [GRRR-6sso]
 assignee: dev-GRRR-ev2w
 follows: [GRRR-888u, GRRR-gge0]
@@ -110,7 +110,43 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
 
+PROOF: Formatting supplement to the complete evidence, AC table, and LEARNINGS above; all results refer to the same final commit. No code or claims changed.
+
+### CI/Test Results
+Commands run:
+- python3 -B tests/unit_admission.py: 28 passed, exit 0.
+- python3 -B tests/integration/admission_registry.py: 6 passed, exit 0.
+- /usr/bin/python3 -B tests/unit_admission.py: 28 passed, exit 0.
+- /usr/bin/python3 -B tests/integration/admission_registry.py: 6 passed, exit 0.
+- python3 -B tests/unit_review_report.py and /usr/bin/python3 -B tests/unit_review_report.py: 6 passed each, exit 0 each.
+- python3 -B tests/unit_safe_stop.py and /usr/bin/python3 -B tests/unit_safe_stop.py: 7 passed each, exit 0 each.
+- pvg verify research/admission.py tests/unit_admission.py tests/integration/admission_registry.py --format=text: exit 1, only excluded unchanged AdmissionError class pass at line 84.
+- pvg gates research/admission.py tests/unit_admission.py tests/integration/admission_registry.py --format text: exit 0, PASS with unchanged recurrence_rejected complexity warning.
+
+Summary: 94 passed, 0 failures/errors/skips; extra coverage run 28 passed. Admission module line coverage 89.8%, loader executable lines fully exercised. Full command output and hashes are in the preceding evidence block.
+
+Commit SHA: 710e6fb1affa366da6ca4c855f49805d3bdb944d
+SHA: 710e6fb1affa366da6ca4c855f49805d3bdb944d
+
+LEARNINGS:
+- Delivery verification expects exact heading and label syntax; this append-only supplement normalizes it without replacing prior evidence.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 710e6fb1affa366da6ca4c855f49805d3bdb944d, branch story/GRRR-ev2w; complete AC table and artifact hashes above remain authoritative.
+- 94 successful test executions on Python 3.14.3/3.9.6; no failures or skips. Explicit existing static exceptions remain visible.
+
+### proof
+- [x] AC #1: absent registry exact empty shape and valid success.
+- [x] AC #2: malformed/truncated registry rejected by loader and public operations.
+- [x] AC #3: all specified invalid shapes rejected.
+- [x] AC #4: real filesystem failures preserve evidence and do not write temporary state.
+- [x] AC #5: durable authorization/contract duplicates and recurrence protection survive fresh import.
+- [x] AC #6: mandatory real temporary-filesystem integration tests pass on both interpreters without mocks or skips.
 
 ## nd_contract
 status: delivered
