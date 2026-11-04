@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:00:30Z
-content_hash: "sha256:4926da87996300a0ffdeeac02598a1c1863cb6016c522ca94d744f9ea85054ea"
+updated_at: 2026-11-04T17:21:00Z
+content_hash: "sha256:5afce4221543dd251074a002a4945e40ed8702b1e87d49d8cf2815fe893c2753"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary]
 assignee: dev-GRRR-wcwy
@@ -331,6 +331,31 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Independent source security review SOURCE_SLICE_REVIEW: APPROVED; no material in-scope defect found in exact eight-file WIP. Review /tmp/grrr-wcwy-security-code-review-20261104.md SHA256 f18b42dd36979b9bb13fabe7ef3d71b7b99b2bb9c9898187f857fcd902de778b.
+- Reviewer independently reran /opt/homebrew/bin/python3 -B scripts/test-story evaluator-contract twice on Python3.14.3. Each run: tests19, failures0, errors0, skipped0. Retained second output /tmp/grrr-wcwy-security-test-20261104.log SHA256 e6c65e47d612ed90d56be91a1820d90351d2c7fa9953ce963c31dc70ddcdc755.
+- Parent independently reproduced the same19 source tests on Python3.14.3,3.12.7,3.9.6, all non-skipped and exit0; raw commands/stdout/stderr and hashes retained in .git/paivot/wip/GRRR-wcwy/parent-verify-20261104/. runs.json SHA256 3e084bfa1469fa3d1e00b4fe94f36d829e70e404d5ad387ddecb9aba00f26871; hashes.json SHA256 5f4c94dffd868fcd784269fce32a8806c20dc998db11aaf03520a3270f2c9c60.
+- Parent reverified all eight WIP file hashes after review, copied exact review/test artifacts outside the disposable worktree, confirmed git diff --check clean, and preserved the unchanged legacy guards. Retention script /tmp/grrr-wcwy-retain-review-20261104.py. No source commit or worktree removal occurred.
+- Routing: CoS unavailable (tunnel-client-not-seen). GLM Coding Plan and Qwen Ambassador review attempts exceeded bounded windows without a review artifact and were interrupted; neither was treated as approval. A fresh bounded Astra security-review escalation produced the above exact-file artifact. All completed/interrupted review handles were stopped; no recursive delegation.
+- This approval is SOURCE ONLY, not PM acceptance or deployment approval. No installed descriptor, authenticated v4 authority backend, issued allowance, production UID320/321 or VM proof exists in this slice. Observe refuses unissued authority, v4 is unsupported, start always refuses, absent status/stop capability claims no cessation or settlement.
+- Fresh df available10751936KiB (11009982464 bytes), below replay floor16106127360 bytes. Space is time-sensitive; no live launch was attempted. Capacity and missing executable/runtime capabilities remain distinct blockers.
+- bd sync --from-main reported no beads database; no competing tracker was initialized. Shared PAIVOT nd remains authoritative and was synced locally without push.
+- Source commit/delivery and accepted-story merge have not been authorized for this repair. Requesting one bounded standing local-source workflow grant must not be interpreted as permission for main merge/push, protected reads/installations, reconciliation/stop release/VM/replay, admission/promotion or production changes. Original exact-target run authorization is not silently transferred to changed runtime bytes.
+
+### proof
+- [x] AC1 strict bounded schemas/raw binding helpers implemented and source-reviewed.
+- [x] AC2 actual unprivileged AF_UNIX peer-before-payload/slot tests; production wrapper remains pinned and unavailable.
+- [x] AC3 truthful unissued/unsupported refusals; no fabricated allowance, observation or effects.
+- [x] AC4 source suite19 tests, no skip/failure/error on all three interpreters, plus independent reviewer replay on3.14.
+- [x] AC5 exact accepted contract retained and legacy guarded modules unchanged; only explicit evaluator-contract source mode added.
+- [x] AC6 commands/raw outputs/hashes retained; coverage limitations explicitly documented.
+- [x] AC7 no protected access, runtime authority, new research call, secret use, reconciliation, stop release, replay, admission, promotion, production mutation, commit, delivery, acceptance, merge or push.
+- [ ] Explicit source-commit authorization, committed delivery and independent PM acceptance. Story remains in_progress, not delivered/accepted.
+- [ ] Full GRRR-q3hp driver and GRRR-6sso capstone readiness: NOT SATISFIED and not authorized by this source review.
+
 ## nd_contract
 status: in_progress
 
