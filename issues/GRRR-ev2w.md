@@ -4,11 +4,11 @@ title: "Bug: Fail closed on corrupt admission registry"
 status: closed
 priority: 0
 type: bug
-labels: [milestone-1, security, integration, discovered-by-developer, delivered, accepted]
+labels: [milestone-1, security, integration, discovered-by-developer, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
-updated_at: 2026-11-04T01:21:13Z
+updated_at: 2026-11-04T01:21:14Z
 content_hash: "sha256:fa9960a64d501a8f65f0cf34c058124ffae64d261a3b3316a4f339181549aaa8"
 assignee: dev-GRRR-ev2w
 follows: [GRRR-888u, GRRR-gge0]
