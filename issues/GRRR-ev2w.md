@@ -8,12 +8,17 @@ labels: [milestone-1, security, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
-updated_at: 2026-11-04T01:07:35Z
-content_hash: "sha256:b699a6ec294ed4b7543904dad6210371716a6724ac2a2e463257d01c269ea896"
+updated_at: 2026-11-04T01:10:14Z
+content_hash: "sha256:a3915331fb5ba721f726c849c1dc3a120c54e910057f9ae6642f0484c55fce6b"
 blocks: [GRRR-6sso]
 ---
-
 ## Description
+## Context
+- Discovery base: `epic/GRRR-2t3h` at `845b47d221773eb4157491d35f57dce47ce8afe6`; the affected implementation exists at `research/admission.py`.
+- GRRR-6sso reported that `pvg verify` flags `research/admission.py:60`. Current `_load_registry()` catches both `json.JSONDecodeError` and `OSError`, executes `pass`, and returns `{"consumed_authorizations": [], "admitted_contracts": {}}`.
+- Failure scenario: a truncated/malformed/unreadable durable registry is indistinguishable from a legitimate first use. A later `_save_registry()` can replace the damaged evidence, while consumed-authorization and admitted-contract knowledge are silently lost. That can permit authorization replay or a duplicate contract admission and can make `recurrence_rejected()` falsely reject safe recurrence protection.
+- This is a P0 durability/security bug in the accepted admission controller, not missing capstone evidence. It must be fixed independently before the capstone can claim complete mandatory authorization/admission capability.
+
 ## USER INTENT
 I can trust permanent admission state: corruption or unreadable durable evidence must stop admission and preserve the audit trail, never reset duplicate protection to an empty registry.
 
@@ -95,12 +100,6 @@ status: new
 
 ### proof
 - [ ] Pending implementation
-
-## Description
-
-## Context
-
-## USER INTENT
 
 ## Acceptance Criteria
 
