@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:46:08Z
-content_hash: "sha256:8ba786ba3d6ca5511f39cd04096df98901df20879f3773c2f3d52840c7970ac2"
+updated_at: 2026-11-04T03:54:31Z
+content_hash: "sha256:4e22055e59112098bb4632e0d937135e76882e5d3bf35af9f58b929bd9df23e8"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -927,3 +927,18 @@ Requested next action: ONE read-only TypeSafe/Jev usage-or-billing receipt looku
 ## 2026-11-04 Operator-Authorized Read-Only Cost-Receipt Lookup
 
 Operator explicitly authorized ONE read-only TypeSafe/Jev usage-or-billing receipt lookup for exactly run IDs 6cf35082f34a4149b67293c7b53d9740, 9f7ea255e61d4f2aa6596967ef698adf, 76aaf8542fce4465b082524432f6a1ca, and e3938b63cf634cdda8e0f00fe416ab31. Authorization permits credential use and one external read-only request, with no model/inference call, retry, mutation, protected path, key disclosure, merge, push, or capstone execution.
+
+### 2026-11-04T03:54:31Z speed
+## 2026-11-04 Read-Only Cost-Receipt Lookup Outcome — No Authenticated Provider Request
+
+The operator authorized one read-only receipt lookup. Outcome:
+
+- Official `https://api.typesafe.ai/openapi.json` was fetched successfully; SHA-256 `3ca93b6e6b9aa8d7820531b78c66ed7a9798b11e6e163ad96b140fb3d75fbcf4`. It documents only `GET /v1/models` and `POST /v1/systemone`, with no usage or billing endpoint.
+- Official docs state rate limits are visible in the developer console but expose no public billing receipt API.
+- Connected Gmail read-only search found TypeSafe welcome/update messages only; no invoice, receipt, or billing statement.
+- Chrome requested broad remote-debugging access to inspect the console. This exceeds the exact read-only provider-lookup authorization and was refused; no authenticated console action occurred.
+- Therefore no authenticated TypeSafe request was made, no credential value was read, and the authorization was not consumed.
+
+Official public model documentation lists `jev-1.14.0` at `$42/Btok` (`$0.042/Mtok`) input and free output. Applied only as a non-authoritative list-price exposure projection, not actual billing reconciliation: pilot `12,548` input tokens -> `$0.000527016`; confirmatory `37,644` -> `$0.001581048`; cumulative `50,192` -> `$0.002108064`. Actual USD remains unknown because account-specific discounts, credits, plan, billing period, statement, and exact run coverage are not established.
+
+No model/inference call, retry, protected path, mutation, merge, or push occurred.
