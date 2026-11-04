@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T13:09:49Z
-content_hash: "sha256:d502a8ed0b5824a7689097e814b5cf6d92c5b207496ac59e2bf5415852f5fffd"
+updated_at: 2026-11-04T13:14:51Z
+content_hash: "sha256:178a9f6e1b558bd9cf3c6b3faeb16b50797661c6e081a618693a0503d1ac353c"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -118,6 +118,30 @@ status: new
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
 Supplement verification: parent readback confirmed the five-minute attestation text is present exactly once, both E2E request hashes remain unchanged, and execution_authorized remains false. A bounded fresh GLM attestation-only reviewer did not return a verdict before interruption; no new independent approval is claimed. Prior independently reviewed request semantics are unchanged. No source-tree changes or runtime actions were performed.
+## 2026-11-04 Operator Authorization - Conditional Bounded Run
+
+Operator's exact response to the bounded run decision: `Authorize this bounded run.`
+
+This is action-specific execution authorization, not merely planning approval. It permits preflight and, only if every mandatory preflight gate passes, one bounded run without another permission request for that same transition.
+
+Exact target bindings:
+- Request ID: `GRRR-6sso-exact-target-e2e-v1`.
+- Reviewed package commit: `51ebc998e7c07018740ec53e389646a5b465cc75`.
+- Runtime base: `c928791cdaa72df91e61002c40317457b543b032`.
+- Epic: `0b2365e30ab5858cb419f4f4ce9b2ce001850541`.
+- Request JSON SHA-256: `79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb`.
+- Request Markdown SHA-256: `284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4`.
+- Immutable evidence output root: `docs/evidence/milestone-e2e/GRRR-6sso-exact-target-v1`.
+
+Permitted scope: protected read-only preflight; ordinary already-guarded evaluator/accounting operations; dedicated disposable offline VM execution; the fixed 32-scenario corpus; independent replay; negative tests; and disposable-environment stop/recovery tests. No unrestricted host/container fallback. This grant is conditional, does not itself establish gate passes or spendability, and must not be reused for a second run.
+
+Incremental maxima: USD 50, six cumulative execution hours summed across concurrent arms and replays, and 60 review minutes. Remaining original milestone allowances further restrict these maxima: USD 150 including POC, 24 cumulative execution hours, and 180 cumulative review minutes. Independent reconciliation must establish remaining allowances before launch. Unknown values are not zero; uncertain usage retains reservations. The operator's new accessibility result is pass with five self-reported review minutes; it is not a machine-timed cumulative review total.
+
+On failure: stop and preserve evidence. No skipped mandatory gate, automatic rerun, budget increase, accounting reset, protected stop clearing, or protected accounting recovery. Disposable-runtime recovery tests do not authorize persistent-state recovery.
+
+Excluded: new Jev or external network calls, secret/credential access, permanent contract admission, promotion, production mutation, merge, push, stash pop, harness adaptation, and autonomous patch generation. Any such action requires its own exact grant, not reinterpretation of this one.
+
+The original reviewed request bytes remain unchanged, including their request-only `execution_authorized=false` field. This external operator decision supplies the bounded conditional grant; changing that field is neither required nor allowed as a substitute for actual execution evidence. Human authorization, independent gate verification, developer delivery, and PM acceptance remain distinct.
 
 ## 2026-11-04 Fresh Operator Accessibility Attestation - Five Minutes
 
