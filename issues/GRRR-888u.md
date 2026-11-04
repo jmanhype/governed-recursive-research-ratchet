@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:38:12Z
-content_hash: "sha256:ade96705d610cd8fc650826a97ec9b07645d3b0f00456cbde0ab6243228ebf06"
+updated_at: 2026-11-04T00:38:13Z
+content_hash: "sha256:1c231c28f6d93794a4cc6d55fba309f0517112d3359dd876a91ba99268fe28b3"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve, GRRR-dbbi]
 assignee: dev-GRRR-888u
 ---
@@ -99,6 +99,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-03.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence (DELIVERED)
 
 Summary: Proof-format rework for the completed advisory-only Anti-Cheat Scorecard evaluation. The substantive evidence and independent review remain unchanged; this note supplies the canonical AC table and retrospective learnings required by the delivery gate.
