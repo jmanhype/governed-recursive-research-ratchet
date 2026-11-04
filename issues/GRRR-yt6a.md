@@ -8,8 +8,8 @@ labels: [milestone-1, source-only, security-boundary, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T19:28:39Z
-content_hash: "sha256:c164d01ee3b67e7ccb0f4c5124609a0390818be2578b86d989f57109d2e51026"
+updated_at: 2026-11-04T19:28:40Z
+content_hash: "sha256:cdc1e5d95389b2722d264192336a9f58d79c1d81259e54540500e4e0a20df4fb"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
@@ -94,6 +94,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-04.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## nd_contract
 status: in_progress
 
