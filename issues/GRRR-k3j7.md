@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-04T21:41:26Z
-content_hash: "sha256:f04c696d72ce2fbddacffd0b9be3db1bfdd67674b9c0ce239a62e5a56b2a12c7"
+updated_at: 2026-11-04T22:36:45Z
+content_hash: "sha256:338ae9d6c5bd84cee9126ed83da598001edad47e694262d08b849e90e411312a"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -225,6 +225,25 @@ status: in_progress
 - [x] AC #1 prerequisite: exact accepted design and independent review exist, implementation must still demonstrate conformance.
 - [ ] AC #2-11: implementation and parent reproduced evidence pending.
 - [ ] AC #12: independent security/PM acceptance pending; no accepted merge permitted yet.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator agreed to finish the required core FIRST, then consider ranked optional autoresearch/adaptation additions. User asks for ONE coordinated completion delivery rather than personally managing internal stages. This is not permission to drop original gates or transfer old exact-target live grants to changed code.
+- Fresh HEAD2b601462ba0ffb5aee6239aa22b06c26801dfaf9; root clean, story WIP uncommitted/unaccepted. pvg loop next reports GRRR-k3j7 sole in-progress and q3hp/capstone blocked. Existing author/contract handles conclusively terminal; cleared dead developer handle, no blind loop recover or worktree removal.
+- Preserved14 exact public WIP files179505bytes before worker replacement: .git/paivot/wip/GRRR-k3j7/resume-1793831735621994000/; tarSHA dcd05d3949c7636fd3b876cfb2f7aaaa04744fa5a935941bcdf36d30c4681b92, per-file hashes/base/status receipt present. No protected/private files included.
+- Failed GLM contract worker produced no owned module/test file. Fresh exact Qwen Ambassador /root/unblock_core_review_contract now owns ONLY pure ReviewV2/codec/hash module+tests to unblock real reviewer/composition tests, unsupported broader schemas remain explicit WIP. No mocks or universalpass substitute.
+- Fresh exact GLM /root/review_launch_rework independently reviews launch corrections against prior F1-F4 rejection at exact new source/test hashes. Re-review pending, not accepted. Source work remains current12ACs, not a weakened delivery.
+- Original author reports72 source tests all3interpreters for old51+new21launch; parent must independently reproduce current rework and full reviewer/composition tests after contract exists. Earlier parent directly verified old17launchtests all3 but that is not approval of changed source.
+- Core completion means implemented backend+driver, independent source security/PM acceptance, exact-target authorized installation/current baseline/live qualification, complete capstone/all11gates/all7journeys, final independent PM acceptance. Components/fixtures/history cannot substitute. Optional work frozen; no added ecosystem integrations.
+- Measured free space~5.66GB remains below16.1GB replayfloor. No cleanup or protected effects performed. Current source-only authorization excludes /Library/GRRR metadata/content, installation/accounting/reconcile/unstop, VM/replay, permanent admission/promotion, main/production or push. Batch a concrete future live decision package only after source genuinely ready.
+
+### proof
+- [x] Preserved previous public source WIP before restarting conclusively failed worker.
+- [x] No mandatory criterion removed or old source/runtime grant silently transferred.
+- [ ] AC #2-11: remaining implementation and reproduced evidence not complete.
+- [ ] AC #12: complete independent security/PM acceptance not yet obtained.
 
 ## History
 - 2026-11-04T21:39:55Z dep_added: blocks GRRR-q3hp
