@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T16:46:18Z
-content_hash: "sha256:9568981b90a4eac87bdfbd89901b356d62bb9ceca769bcac275e5d19f9e40f92"
+updated_at: 2026-11-04T17:11:46Z
+content_hash: "sha256:eab5e7461d59503bd6592b4d355d80f9dce149a0d2eeb096f9acf4f1c3f6df31"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w]
 blocked_by: [GRRR-wcwy]
@@ -105,6 +105,12 @@ Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocke
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 2026-11-04 proposed v4 evaluator interface contract retained below. Artifact /tmp/grrr-q3hp-v4-interface-contract-20261104.md,225 lines,SHA256 f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3. PROPOSED, NOT ACCEPTED, NOT DEPLOYED; no source implementation or live capability claimed. It defines a minimal source-only contract/client/read-only refusal-service slice and separately gated later adapter/migration/authorization work. Independent review is still required; raw reviewed JSON/Markdown request-binding semantics must be made explicit before implementation. Existing 11 common.GATES match the approved capstone inventory; no missing-gate concern is asserted. User-directed remediation does not silently authorize installation, v4 writes, new revision execution, reconciliation or capstone acceptance.
 2026-11-04 independent FIRST_SLICE_V2_REVIEW: APPROVED for exact /tmp/grrr-q3hp-v4-interface-contract-v2-20261104.md SHA2569b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad (250lines). Reviewed repairs: separate exact decisionJSON+Markdown/requestID/package/outputroot from invocation; raw Grant and human-authorization digests; exactlyall11gates; strict operatorUID; defined start-envelope digest; explicit nonproduction localpeer tests. Approval permits ONLY source-only contract/hash validators, explicit-peer client, read-only observation/refusal façade and no-guest local-peer tests. It does NOT accept full q3hp mapping, livev4, grant issuance/migration, spendability, protected access, installation, driver integration or VM/runtime. Existing v1 mutation guards remain unchanged. Source prerequisite is being split from driver because q3hp AC1 cannot be bypassed; failed SrPM stream produced no issue/source effects and was stopped. Implementation is not yet claimed.
+## Source-only v4 adapter gap assessment
+- Read-only exact-source assessment retained at /tmp/grrr-v4-adapter-gap-20261104.md; 34 lines, SHA256 7fd3b712daa0b1f45057e2e4516c7d5e86797d0363f8316cb6ffc01e6125a93d. Source commit 51ebc998e7c07018740ec53e389646a5b465cc75. This is not live protected-store observation.
+- The four core accounting table columns match the existing Budget.totals query; the additive store_identity table is already a known concept. PersistentBudget rejects v4 in binding validation before open. Therefore a future read-only reporter need not invent a SQL schema migration merely to report conservative totals.
+- Any such later reporter still needs exact schema/identity/stopped-state validation, actual evaluator permissions, a strictly read-only handle and no mutable constructor. It must expose spendable=null and no mutations. A readable stopped/empty store does not resolve historical allowance, cumulative holds or issuance.
+- This assessment creates no live capability, grants no access and does not authorize a source expansion of GRRR-wcwy. That source component remains strictly protocol/refusal-only. Full driver mapping and runtime readiness are still NOT ACCEPTED, with q3hp blocked on wcwy.
+
 ## nd_contract
 status: new
 
