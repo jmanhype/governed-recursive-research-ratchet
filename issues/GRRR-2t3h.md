@@ -7,8 +7,8 @@ type: epic
 labels: [milestone-1]
 created_at: 2026-10-20T03:08:52Z
 created_by: speed
-updated_at: 2026-10-20T03:28:13Z
-content_hash: "sha256:43e6f45eeea8e96f520c72c5a5832f33ae1e78103b3c4699e19d27aafd52ce51"
+updated_at: 2026-11-04T22:27:11Z
+content_hash: "sha256:f8c63aba45c1651d9684b65d633b9a6ae68936329af7884256e7e7f0f4590547"
 ---
 
 ## Description
@@ -107,10 +107,49 @@ Round 1 of 3. Scope: GRRR-2t3h and all 11 children. Backlog review only; no impl
 - Three prescribed `pvg notes search` pattern/convention queries returned no results.
 - `git log --oneline -3`: unborn main, no commits. `docs/findings` is absent. No runtime experiments, upstream clone, implementation, commit or push performed.
 
+## Operator scope change: all previously optional full-system components required
+
+Authoritative user instruction on2026-11-04: "No, I want to include the optional stuff as well. Those are required."
+
+This is a REQUIRED full-project completion scope change, not optional backlog.
+In addition to all existing core/backend/capstone obligations, full completion
+requires executable, independently reviewed integration and evidence for:
+1. Karpathy-style autonomous candidate/patch experiment loop.
+2. Operational Harness2-style Propose-Probe-Compose research adaptation.
+3. Existing Jev adapter wired through complete campaigns, accounting and reports.
+4. Sean Chatman Anti-Cheat Scorecard in an ADVISORY role, never gate authority.
+5. Machinery models/invariants and derived verification oracles.
+6. ggen in an explicitly reviewed integration role.
+7. wasm4pm in an explicitly reviewed integration role.
+8. dteam in an explicitly reviewed integration role.
+9. Bend2 with a concrete reviewed mathematical proof obligation/integration.
+
+No component may silently be marked optional, dropped, or counted complete by
+evaluation-only/defer/documentation. Repository identity, pinned versions,
+licenses, concrete roles and executable acceptance tests must be established;
+unknowns stay explicit. A security/license/feasibility failure is a blocker or
+operator decision, never a waiver or manufactured success. Anti-Cheat remains
+advisory and no adaptation may alter protected governance/evaluation authority.
+
+The existing first-milestone criteria and non-goals describe the historically
+approved foundation milestone; they do not define the newly expanded entire
+product. Preserve all original criteria, rejected history, eleven mandatory
+gates and seven capstone journeys. First-milestone acceptance alone cannot be
+reported as whole-project completion. Broader required work is sequenced after
+its real prerequisites, not silently removed from completion scope.
+
+Sr.PM /root/record_required_full_system_scope is reconciling the broader required
+completion backlog without changing the active M1 dispatcher or current source
+WIP. Scope/D&F impact and independent acceptance precede new implementation.
+
+This instruction authorizes scope capture/planning, not protected namespace
+access, installation/accounting/reconciliation/stop release, VM/replay,
+permanent admission/promotion, production/main/push, new paid-service spending,
+credential use, or a legal commitment. Existing execution permissions unchanged.
+No component or whole-system implementation acceptance is claimed by this note.
+
 ## History
 
 
 ## Links
-
-
 ## Comments
