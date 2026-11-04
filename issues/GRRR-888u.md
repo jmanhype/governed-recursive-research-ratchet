@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:16:12Z
-content_hash: "sha256:f61f440e5f1547a2de438a5b626f310e0f1da25dfa9b4e1c8a92cd82a08f8ea7"
+updated_at: 2026-11-04T00:16:38Z
+content_hash: "sha256:f7641e07cb9f63edd850273cc4e190293a819f1bfb1139a9d779d0148dd0c8c3"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0, GRRR-fmvp]
 ---
@@ -100,6 +100,28 @@ status: new
 
 ## Notes
 
+## AC Verification Checklist
+
+- [x] AC #1: exact repository, tag, commit, license, module, source Go version, local Go version, and binary identity verified.
+- [x] AC #2: 52 registered detector packages across seven categories verified; 53 pattern-related packages passed tests.
+- [x] AC #3: pinned CLI built locally with recorded SHA-256; no source, credential, protected truth, or private remote scan submitted.
+- [x] AC #4: clean full GRRR-gge0 scan and five-file subset scan recorded with target commit, elapsed time, output hash, score, findings, and pattern counts.
+- [x] AC #5: seeded positive, absent-input, empty-root, and same-target rerun controls recorded with exit and output behavior.
+- [x] AC #6: material GRRR false-positive classes and useful advisory signals classified with measured counts and examples.
+- [x] AC #7: advisory-only recommendation and false authority flags recorded, with mandatory future wrapper gates.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 86ace00860f62f302f4f633eefa6c98b5cce8252.
+- All 53 pattern-related Go packages passed.
+- Full, subset, seeded, absent, empty, and rerun controls completed.
+- Independent reviewer returned ANTI_CHEAT_EVAL_REREVIEW: APPROVED.
+- pvg verify and pvg gates passed on committed evidence.
+
+### proof
+- [x] AC #1 through AC #7 independently verified from evidence.
 
 ## nd_contract
 status: delivered
