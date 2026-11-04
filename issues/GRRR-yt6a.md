@@ -8,8 +8,8 @@ labels: [milestone-1, source-only, security-boundary, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T19:32:01Z
-content_hash: "sha256:58914cf01c772b1fc3a51dd8ec666396172752c2580695b5ccdf701408ccf80a"
+updated_at: 2026-11-04T19:32:10Z
+content_hash: "sha256:347746eb1470382e0b89f5e9a1206082ec1ff6c0d59efc51ec9d2b416fa5c001"
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
 closed_at: 2026-11-04T19:32:00Z
@@ -199,6 +199,60 @@ status: delivered
 - [x] AC #6: real source suites3interpreters/raw evidence and honest coverage.
 - [x] AC #7: unchanged guarded modules and exact embedded contract; local records not authority.
 - [x] AC #8: source-only scope, no q3hp/capstone closure or protected/runtime effects.
+
+# GRRR-yt6a independent source review — 2026-11-04
+
+PM_RESULT: ACCEPTED
+SECURITY_REVIEW: APPROVED
+
+Exact reviewed commit: 2dc0b3a8920135c578d0d5aaec6aaefbbb2b55d6.
+Parent: 9a439a09161b7c62da8acc36a9cefef8f2924faf.
+Patch SHA256: 3c2c745f0f99d39c3af7b5fc37e04c24750cbaf6af790c7f2a5df39975ee33db.
+Six files, 966 insertions / 2 deletions; clean story worktree. No source edits.
+
+## Findings and verification
+
+No material within-scope security or acceptance defect found. Reviewed complete journal/schema, test bodies, source runner, documentation diff, and existing Ledger append/cache behavior. Trusted supplied Ledger and in-process caller are explicitly not an adversarial Python sandbox.
+
+- AC1: Exact sqlite_master SQL/index inventory, no temp shadows/attached DBs, required durability settings, complete chain/idempotency/row replay; corrupt state refuses. Production open checks actual UID320 before ledger I/O. No production migration or grant issuer.
+- AC2: Raw issued Grant bytes/digest and decoded grant, authorization hash, Start/Plan and exact integer operator bindings checked; consumption, unique operation and event updated inside real Ledger append_atomic callback, same connection/transaction.
+- AC3: Entire actual chain and row state revalidated after BEGIN IMMEDIATE including tentative event. A stale pre-BEGIN tip cannot survive callback validation. Cached append cannot set applied marker. Same/different-grant process and thread races force interleaving at BEGIN and validate reopened chain/uniqueness; shared-connection repeats return status only.
+- AC4: Actual child exits at traced COMMIT-before and after returned commit prove rollback/durability. Only applied live pending transition mints permit. Copy/pickle, repeated consume, fork and reopen tests refuse renewed authority. Persisted unsupported unknown state refuses rather than repairs. No send exists.
+- AC5: Stop is authenticated, monotonic and serialized with pending; reservation immutable. Status transaction contains reads and rollback, no persisted writes. Absent operation and stopped invalid transitions refuse.
+- AC6: Real SQLite fixtures use actual unprivileged UID and unmodified Ledger methods; production-negative identity test is not a production positive. Reviewed raw nine suite runs, each interpreter journal25/wcwy19/durable7, zero failures/errors/skips and exit0; no need to repeat complete trustworthy proof. Static rerun passed four eligible files/zero issues; delivery preflight9/9. Measured trace LINE coverage 98.9%/100%; branch, child and runtime coverage unmeasured.
+- AC7: Exact six-file change list and manifest/commit bytes independently verified. Guarded legacy code unchanged. Accepted docs suffix SHA256 9b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad remains byte exact. Local JournalRecord does not fabricate full Operation/Receipt/Anchor/allowance.
+- AC8: Source-only approval, no protected access, runtime, service, network, accounting, installation, merge or push. q3hp and 6sso remain unfinished; epic must remain open.
+
+## Commands and evidence
+
+- git log --oneline -3; git diff --stat HEAD^ HEAD; source/test/docs reads.
+- pvg nd show GRRR-yt6a; pvg verify <six delivered paths> --include-tests --format=text; pvg story verify-delivery GRRR-yt6a.
+- /opt/homebrew/bin/python3 -B /tmp/grrr-yt6a-pm-verify-20261104.py: exit0, independently hashes source against commit, exact manifest/patch/contract/receipt, all11 raw stdout/stderr artifacts and test counts/OK results.
+- Parent evidence: .git/paivot/wip/GRRR-yt6a/parent-verify-20261104/{runs.json,run0..run10.stdout/stderr,source-hashes.json,validation-receipt.json}.
+- Receipt SHA256 independently confirmed ffa1b6d164d311868d5465647e37b736ed5795aebd51ce449f83b5136ac776a8.
+- Explicitly investigated parent-only harness exit1: run10 stdout contains the stdlib coverage row `traceback` (1065 lines,43.0%), not an exception. All11 actual commands have exit0 and matching raw hashes; test stderr ends OK without traceback/warnings/errors. Anchored stderr filter fix is valid; no source/test/log weakening. Existing parent harness is now corrected; raw execution artifacts retain the original successful runs.
+- pvg nd children GRRR-2t3h --json confirms 6sso deferred, q3hp open (and this story in_progress before decision).
+
+## Limits
+
+Approval is only for this journal prerequisite at the pinned commit, not q3hp completion or a live capstone. No production UID320/getpeereid, installed schema/issuance, allowance/budget, VM/replay/send, reconciliation, admission or promotion proof. Process-local permit does not solve future stop-versus-send coupling. No further claim, merge, epic closure or push authorized/performed by reviewer.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Independent security and PM review at exact commit2dc0b3a; static4/0issues, delivery9/9; all11 raw commands/hash receipts verified, source suites25+19+7 on3interpreters, no failure/error/skip.
+- Full review /tmp/grrr-yt6a-pm-security-review-20261104.md; independent verification script /tmp/grrr-yt6a-pm-verify-20261104.py. Source-only limitations and resolved parent harness false-positive recorded above.
+
+### proof
+- [x] AC #1: exact existing schema/state refusal and pre-I/O production UID gate.
+- [x] AC #2: raw-bound grant/operator and atomic same-DB operation/event.
+- [x] AC #3: transactional chain revalidation, unique consumption and no cached permit.
+- [x] AC #4: real crash cuts, conservative reopen, one-use process-local permit.
+- [x] AC #5: monotonic stop, immutable reservation, SELECT-only absent-refusing status.
+- [x] AC #6: real SQLite source evidence across3interpreters with honest coverage.
+- [x] AC #7: exact legacy/contract preservation and no fabricated runtime authority.
+- [x] AC #8: independent source approval only; q3hp/6sso and live gates remain unfinished.
 
 ## History
 - 2026-11-04T18:43:15Z dep_added: blocks GRRR-q3hp
