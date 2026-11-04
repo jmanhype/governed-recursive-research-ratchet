@@ -8,8 +8,8 @@ labels: [milestone-1, source-only, security-boundary, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T19:32:10Z
-content_hash: "sha256:347746eb1470382e0b89f5e9a1206082ec1ff6c0d59efc51ec9d2b416fa5c001"
+updated_at: 2026-11-04T19:35:33Z
+content_hash: "sha256:aa39682e7c07006ec8dd245ca77884dc23c0a751037fe9fec686d72198346973"
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
 closed_at: 2026-11-04T19:32:00Z
@@ -95,7 +95,12 @@ status: new
 
 
 ## Notes
-
+## Accepted local source integration
+- Independent security+PM review approved exact source commit2dc0b3a8920135c578d0d5aaec6aaefbbb2b55d6. Live nd confirms closed+accepted. Review /tmp/grrr-yt6a-pm-security-review-20261104.md SHA256 b50ad66ecc84f79f7763b3c8fdf581451b682e3fbef8cba55352b03bec73143e; retained under .git/paivot/wip/GRRR-yt6a/parent-verify-20261104/.
+- Authorized epic merge2b601462ba0ffb5aee6239aa22b06c26801dfaf9 has parents9a439a09161b7c62da8acc36a9cefef8f2924faf and2dc0b3a8920135c578d0d5aaec6aaefbbb2b55d6. Merged tree is byte-identical to accepted source tree and clean. Main remains c2970356436531565711fb3c2df24eb91c3ed510.
+- Native pvg story merge again failed with missing origin (exit128). No remote was invented or tool changed. Exact pinned local-only fallback rechecked PM closure/acceptance, source/base/branch/clean state before no-ff merge, as explicitly operator-authorized. Raw native failure and exact integration receipt retained in .git/paivot/wip/GRRR-yt6a/merge-20261104/.
+- Nine merged-tree suite runs passed: EACH of3interpreters journal25+protocol19+durable unit7,0fail/error/skip and exit0. This is51 source tests per interpreter, not live corpus observations. No VM/replay or full capstone gate executed.
+- Journal source is now integrated, not installed or issued authority. q3hp/6sso remain unfinished; v4 allowance/history/stopped-state authority, production descriptor/transport, replay reservation/execution seam and full driver/live proof remain substantive gaps. No protected access/install/write/reconcile/stop release, new research/credential call, admission/promotion/prod/main mutation or push.
 
 ## nd_contract
 status: accepted
