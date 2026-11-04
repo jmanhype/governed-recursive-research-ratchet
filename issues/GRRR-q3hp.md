@@ -1,7 +1,7 @@
 ---
 id: GRRR-q3hp
 title: "Bug: capstone lacks explicit executable driver wiring"
-status: in_progress
+status: open
 priority: 0
 type: bug
 labels: [milestone-1, integration, discovered-by-pm]
@@ -9,11 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-04T18:43:15Z
-content_hash: "sha256:e82b9f27620226eae72ac919694c2712b21e91bd858dde980609931d107ec2ec"
+content_hash: "sha256:084a9a83ea016aaf067aa4223994dc8625a40e32405a3ee311bf8b23451783d4"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy]
 was_blocked_by: [GRRR-wcwy]
-assignee: dev-GRRR-q3hp
 blocked_by: [GRRR-yt6a]
 ---
 
@@ -884,6 +883,8 @@ Current result: GRRR-q3hp AC1 mapping is blocked by concrete missing trusted cap
 - 2026-11-04T17:40:55Z auto-follows: linked to predecessor GRRR-wcwy
 - 2026-11-04T17:40:55Z claimed by dev-GRRR-q3hp
 - 2026-11-04T18:43:15Z dep_added: blocked_by GRRR-yt6a
+- 2026-11-04T18:43:15Z status: in_progress -> open
+- 2026-11-04T18:43:15Z released by speed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
