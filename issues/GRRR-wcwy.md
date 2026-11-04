@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T16:49:10Z
-content_hash: "sha256:288af98d2110f7e41ee2d16b0e8a3a10b95fc9ae52c0a054a4703240642096fe"
+updated_at: 2026-11-04T17:00:30Z
+content_hash: "sha256:4926da87996300a0ffdeeac02598a1c1863cb6016c522ca94d744f9ea85054ea"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary]
 assignee: dev-GRRR-wcwy
@@ -331,6 +331,27 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Parent verified base HEAD 0b2365e30ab5858cb419f4f4ce9b2ce001850541, epic root clean, docs/findings absent, and live queue waiting on exactly GRRR-wcwy. GRRR-q3hp remains blocked and the full capstone GRRR-6sso remains deferred/rejected, not accepted.
+- Verified all eight WIP source hashes against author manifest and raw diff SHA256 458c1c8ae3f13c080dd9c1532998381e7e80d89c973b5b884d47c02085a4082a. git diff --check passes. Existing common.py, trusted_transport.py, budget.py, persistent_budget.py, replay.py, ledger.py are byte-identical to HEAD. Accepted contract SHA256 9b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad is an exact documentation suffix.
+- Parent reran /opt/homebrew/bin/python3 -B scripts/test-story evaluator-contract (Python3.14.3); /Users/speed/miniconda3/bin/python3 -B scripts/test-story evaluator-contract (Python3.12.7); /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -B scripts/test-story evaluator-contract (Python3.9.6). EACH reported tests=19, failures=0, errors=0, skipped=0, exit0. These are 19 repeated source tests, not 57 distinct scenarios or VM observations.
+- Exact WIP, author evidence and independent parent stdout/stderr/commands/hashes retained outside the disposable worktree under .git/paivot/wip/GRRR-wcwy/parent-verify-20261104/. Verification script /tmp/grrr-wcwy-parent-verify-20261104.py. No worktree recovery/removal may discard this WIP.
+- CoS readiness check failed tunnel-client-not-seen; fresh independent code review dispatched to allowed GLM Coding Plan route /root/review_evaluator_source_wip. Review verdict pending; author tests are not independent acceptance.
+- Observe truthfully refuses without issued grant bytes; accounting v4 remains unsupported. All starts refuse; status/stop claim no cessation/settlement. Data/hash consistency is not issuance, provenance, allowance or authentication. Local unprivileged AF_UNIX tests are not UID320/321 or VM proof.
+- No protected /Library/GRRR metadata/content access or mutation, runtime installation, allowance issuance, reconciliation, stop release, VM/replay, new Jev call, secret use, admission, promotion, source commit/delivery/merge or push performed. Disk is below live execution floors, so no runtime readiness is claimed.
+- bd sync --status reported no beads database. The existing shared PAIVOT nd vault remains the project source of record; no competing beads database was initialized.
+
+### proof
+- [x] AC1-4 source implementation and focused tests reproduced by parent, subject to independent review.
+- [x] AC5 existing tracked guards and modes unchanged except explicit evaluator-contract source mode.
+- [x] AC6 all three existing interpreters ran 19 non-skipped tests with raw evidence retained. Author line-coverage output retained, not independently claimed as branch/runtime coverage.
+- [x] AC7 scope maintained: no full milestone acceptance or runtime authority inferred.
+- [ ] Independent code review of exact WIP and any resulting rework.
+- [ ] Explicit source-commit authorization, committed delivery and independent PM acceptance.
+
 ## nd_contract
 status: in_progress
 
