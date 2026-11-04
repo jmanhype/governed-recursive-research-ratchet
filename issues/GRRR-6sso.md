@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:24:15Z
-content_hash: "sha256:bcc474119d15f9727ce806b762d998e34fc941e6cca40f3bff061096bd1a0e62"
+updated_at: 2026-11-04T03:25:03Z
+content_hash: "sha256:521f1eac8dba4a163fe72d080e83ac3d1c07a22876ddbce3c7c12909c1f78ccd"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -906,3 +906,19 @@ Three fresh, independently scoped reviews at package commit `51ebc998e7c07018740
 Raw request identities: JSON `79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb`; Markdown `284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4`.
 
 This combined record approves request semantics only. It does not reconcile actual USD/review-time, execute accessibility, authorize runtime work, or change `execution_authorized=false`.
+
+### 2026-11-04T03:25:03Z speed
+## 2026-11-04 Cost-Receipt Evidence Request — Explicit Authorization Required
+
+Package commit: `51ebc998e7c07018740ec53e389646a5b465cc75`. Independent request-semantics review is complete, but actual USD remains unreconciled.
+
+Known provider usage is bound to model `jev-1.14.0` and four retained run IDs:
+
+- exploratory pilot `6cf35082f34a4149b67293c7b53d9740`: 32 calls, 12,548 input / 736 output tokens
+- confirmatory `9f7ea255e61d4f2aa6596967ef698adf`: 32 calls, 12,548 input / 736 output tokens
+- confirmatory `76aaf8542fce4465b082524432f6a1ca`: 32 calls, 12,548 input / 736 output tokens
+- confirmatory `e3938b63cf634cdda8e0f00fe416ab31`: 32 calls, 12,548 input / 736 output tokens
+
+Cumulative observed usage: 128 calls, 50,192 input / 2,944 output tokens, zero retries. All stored USD fields are null and must remain unknown until an independent provider receipt establishes amount, currency, billing identity, period, rate/card statement linkage, and run coverage.
+
+Requested next action: ONE read-only TypeSafe/Jev usage-or-billing receipt lookup for exactly these four run IDs and usage totals. No model/inference call, no retry, no mutation, no protected path, no key disclosure, no repository merge/push, and no capstone execution. Credential use and external network access require a fresh exact operator authorization.
