@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:36:39Z
-content_hash: "sha256:4741d6161e974f956cbe556cc761b301274feee178c02d42c1459c8229fe4b5a"
+updated_at: 2026-11-04T17:36:48Z
+content_hash: "sha256:40f190ab5e0828069ec3c8cc358fdbdff279449a24da578bf3c9b41e28eb15cb"
 labels: [milestone-1, source-only, security-boundary, accepted]
 assignee: dev-GRRR-wcwy
 follows: [GRRR-ev2w, GRRR-888u]
@@ -568,6 +568,32 @@ status: delivered
 - [x] AC #5: existing guarded modules/modes unchanged, exact contract docs retained.
 - [x] AC #6: producing-commit commands/results/hash/line-coverage evidence.
 - [x] AC #7: no protected authority or capstone closure implied.
+
+## PM Decision 2026-11-04
+ACCEPTED: independent exact-commit source-only review passed all seven ACs. Review artifact: /tmp/grrr-wcwy-pm-review-20261104.md. Production, VM, allowance, provenance and full capstone remain unproven and unauthorized.
+
+Commands run:
+- pvg story verify-delivery GRRR-wcwy: 9/9 PASS before acceptance.
+- pvg verify eight explicit delivered paths: six eligible files, zero issues.
+- /opt/homebrew/bin/python3 -B /tmp/grrr-wcwy-pm-evidence-check-20261104.py: exact commit, eight hashes, ten output hashes, clean 19-test runs, legacy diff and contract suffix PASS.
+Summary: accepted source-only commit8cf7d0d86d5103de3709d432a8c35b8101020440.19tests per3interpreters,0failure/error/skip. No new test rerun required because producing-commit proof was complete and hash verified.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Independent PM reviewed exact delivered code/tests/docs and raw producing-commit evidence; static6eligible files0issues. Source API types, wiring, scope and documentation verified.
+- Line coverage95.6/96.9/93.5percent only; no VM/production identity/runtime authority inferred. No merge or push.
+
+### proof
+- [x] AC #1: exact schemas, eleven gates and original-byte consistency bindings.
+- [x] AC #2: real local peer-before-payload/slot checks; production descriptor absent and refusing.
+- [x] AC #3: truthful unsupported/unissued/absent-capability refusals without protected effects.
+- [x] AC #4:19 actual source tests, no skip/failure/error; runner fails empty or skipped suites.
+- [x] AC #5: guarded modules and old modes unchanged; exact contract docs retained.
+- [x] AC #6: producing-commit raw commands/results/hashes/line coverage verified.
+- [x] AC #7: local-source authorization only; full q3hp/6sso and runtime remain unfinished.
+
 
 ## History
 - 2026-11-04T16:46:17Z dep_added: blocks GRRR-q3hp
