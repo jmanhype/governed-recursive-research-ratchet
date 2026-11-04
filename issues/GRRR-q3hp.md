@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T13:50:12Z
-content_hash: "sha256:7c42f00f76658279d19bfd46f1d02eaecd350e3e631ce371923dc14e352556be"
+updated_at: 2026-11-04T13:50:13Z
+content_hash: "sha256:fac840774ea5472201cc376a266e056bb738a61b4e761358f9d43f8963a59e29"
 blocks: [GRRR-6sso]
 ---
 
@@ -99,6 +99,203 @@ status: new
 
 ## Notes
 Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocker wiring does not change any capstone AC and does not constitute or authorize VM/replay execution. True capstone closure still requires separately authorized live runtime/evaluator/ledger proof plus all existing review and human gates.
+# GRRR-q3hp bounded architecture mapping
+
+**MAPPING_RESULT: BLOCKED_BY_MISSING_CAPABILITY**
+
+Date: 2026-11-04. Scope: source-only prerequisite mapping, not implementation approval.
+Package P = `51ebc998e7c07018740ec53e389646a5b465cc75`.
+Runtime R = `c928791cdaa72df91e61002c40317457b543b032`.
+Every source citation below is at P unless explicitly marked R.
+`git diff R P --` for the seven requested research modules returned no differences;
+their cited semantics therefore apply at both exact revisions, not necessarily HEAD.
+Current checkout log: `0b2365e`, `710e6fb`, `845b47d`; `docs/findings/` absent.
+Read `pvg issues show GRRR-q3hp --json`. No tracker mutation, tests, builds,
+network, VM, privileged identity, or access whatsoever to `/Library/GRRR` occurred.
+Source references to that namespace were read from Git objects only.
+Graph tools were unavailable; exact-revision `git show`/numbered source was used.
+
+## 1. Decisive capability gaps
+
+1. **The existing runtime rejects accounting v4.** `PersistentBudget.validate_store`
+   accepts only versions 1/2/3 (`research/persistent_budget.py:73-81`).
+   `require_mutable` allows only exact unchanged v1 (`:158-166`);
+   `reserve` rechecks it (`:184-194`). `replay.preflight` independently requires v1
+   (`research/replay.py:69-86`). Constructing a budget cannot fix this.
+2. **No authenticated evaluator allowance/spendability receipt API exists in the
+   bounded inspected interfaces.** `totals(principal)` is an in-process method;
+   v3 explicitly projects `spendable=None` (`persistent_budget.py:152-156`).
+   There is no v4 receipt issuer/client/schema/freshness contract in these files.
+3. **The supplied Stage O adapter is not a live adapter.** At
+   `docs/evidence/replay-authority/stage-r/source/replay-successor-v4-stage_o_runtime_adapter.py:6-40`,
+   it accepts only exact hypothetical uninstalled v3 observation, emits
+   `execution_authorized=False`, and has an empty mutation allowlist.
+   Do not upgrade its `source_prepared:pass` into capability or allowance.
+4. **Sandbox schema verification is not spendability.**
+   `.../replay-successor-v4-v4_store_schema.py:46-61` creates an empty stopped store;
+   `.../replay-successor-v4-postflight_verifier.py:33-63` verifies exact bytes,
+   physical identity, schema, stopped bit and empty tables. It returns
+   `{stopped:True, empty:True, verified:True}`, not an allowance receipt.
+   `.../replay-successor-v4-protected_preflight.py:12-38` is lexical sandbox
+   containment, explicitly excluding Library paths, not evaluator preflight.
+5. **Operator-to-evaluator prepare/run service is absent in inspected scope.**
+   Replay evaluator is a fixed privileged process entry, not a socket handler
+   (`research/replay.py:566-587`). A client transport primitive does not establish
+   an authorized endpoint or caller rights. Never call `handle(320, ...)` locally.
+6. **Cross-restart capstone authorization consumption/idempotency is absent.**
+   Existing replay pending state is conservative, but no capstone plan/manifest
+   schema or one-use external authorization receipt is defined by these modules.
+
+Parent's reported active v4, independent-replay profile, private evaluator-owned
+store and denied parent database access are context, not independently verified.
+Budget totals remain unknown. Reported 5.8 GB free is below replay's exact
+16,106,127,360-byte floor (`research/replay_fixtures.py:14`), so no live work is
+permitted even if the missing capability were subsequently implemented.
+
+## 2. Exact existing identity/transport flow
+
+- Operator UID is a configured non-root, non-320, non-321 identity, not a request
+  role (`corpus_execution.py:43-61`, `replay_profile.py:38-54`).
+- Reviewed parent provisioning/identity switching is outside the enumerated
+  interfaces. `ParentProtocol` defines fixed replay scope/config/preflight hooks,
+  not an operator-facing authenticated allowance service (`replay.py:96-117`).
+- UID 320 evaluator: `ReplaySession.__init__` enforces identity, preflight,
+  root-owned plan, private evaluator storage and nonblocking session lock;
+  then opens budget/ledger and writes replay state (`replay.py:326-376`).
+  It must not be constructed during mutation-free prepare.
+- `reproduce` requires UID 320 and exact configured operator principal, allegation
+  and policy; the source explicitly says it is NOT an unauthenticated endpoint
+  (`replay.py:396-425`). It marks attempt pending before dispatch (`:426-431`).
+- UID 320 sends structured requests to runner `ipc/executor.sock` using
+  `common.call`; server peer is authenticated as UID 321 before payload is sent
+  (`research/common.py:94-115`, explicitly inspected at R).
+- UID 321 `runner` installs separate data/control `AuthenticatedServer`s
+  (`replay.py:192-201`). Server authenticates UID 320 before reading bytes or
+  occupying a request slot; control and dispatch actions are separated
+  (`trusted_transport.py:12-24,36-75`). This is kernel peer identity, not JSON UID.
+- `ReplayExecutor` subclasses `CorpusExecutor`, pins replay artifacts/scope and
+  enforces run prefix/guest count (`replay.py:129-180`). Base initialization
+  requires UID 321, protected artifacts/config and approval
+  (`corpus_execution.py:161-168`); `handle` requires UID 320 (`:177-186`).
+- Dispatch wire fields are exactly `action,version,run,arm,challenge,variant,key,
+  reservation,epoch,probe`; action dispatch, arm validated-corpus, epoch 0,
+  probe null, challenge=variant (`corpus_execution.py:65-76`). Status/stop have
+  exactly action/run (`:179-185`). These are runner interfaces, not driver APIs.
+- Existing control client authenticates explicit expected server UID before send
+  (`trusted_transport.py:104-128`). Unknown transport outcome is not a retry grant.
+- Replay evaluator reserves, obtains fresh isolated observations, validates each,
+  meters and settles under its own authority (`replay.py:389-394,443-481`).
+  Failure halts budget, retains unknown reservation and records inconclusive
+  (`:482-516`). No driver-issued receipt can replace those evaluator records.
+
+## 3. Existing bindings and receipts
+
+- CLT interpreter path and full runtime identity are pinned in
+  `replay_runtime.py:10-15,29-71`; `verify_runtime(current=True)` requires the
+  direct interpreter and returns `root_launch_authorized:False`.
+- Corpus freeze is `dfa75ef2bf3d43fd4f750094fe643afe4f204812c0ae2426276bedb471fa8529`
+  (`corpus_execution.py:20-27`); replay uses its separate fixed catalog/image,
+  not arbitrary corpus challenges (`replay_profile.py:10-15,38-54`).
+- QEMU manifest/executable pins are in `trusted_execution.py:24-27`; VM kernel,
+  initramfs and ISO pins are in `research/execution.py:15-17`. Runner verifies
+  them before launch (`corpus_execution.py:203-225`). No asset paths supplied
+  by a driver may override those compiled identities.
+- Config binds host_code, interpreter/bootstrap, QEMU, corpus, active accounting
+  digest and composed execution_profile (`replay_profile.py:29-54`). Approval
+  binds matching config fields and license-review digest plus an authorization
+  reference (`trusted_execution.py:160-178`). Reference shape is not one-use proof.
+- Existing protected replay plan is exactly `{run,scope,policy_sha256}`
+  (`replay.py:120-126`). It is NOT a capstone prepare-plan and cannot be silently
+  extended: the validator rejects unknown fields.
+- Replay receipts live as content-addressed ledger objects; export is a snapshot
+  under evaluator home (`replay.py:499-521`). Raw protected receipts are not
+  public caller inputs. No public authenticated allowance-receipt location is
+  mapped. New driver package/request/authorization hashes cannot be inferred
+  from old package P or the existing old-revision run grant.
+
+## 4. Minimum safe grammar and schema decision
+
+**Executable ready/run grammar cannot be frozen from existing interfaces.**
+There is no honest command that satisfies q3hp AC2/AC3 today. The only safe
+implementation-ready surface is local parse/binding/refusal/report glue, after
+mapping acceptance; it must keep every attempted run blocked.
+
+Candidate CLI surface for a later accepted contract (proposal, NOT existing API):
+`scripts/capstone-driver prepare --request REQUEST --authorization AUTH --output PLAN`
+`scripts/capstone-driver run --plan PLAN --authorization AUTH --output MANIFEST`
+No endpoint, identity, profile, code, asset, accounting path, shell command or
+skip-gate override flag. Inputs must be bounded local public records; never raw
+protected receipts. Paths must be lexically rejected before metadata access.
+
+Minimum future plan bindings: exact driver package and source inventory; R;
+corpus freeze and replay catalog/image/profile; QEMU/VM/interpreter/bootstrap;
+accounting binding digest/version; exact request and external authorization
+byte digests; evaluator-issued capability/allowance identity and freshness;
+operator identity; fixed scope/maxima/floors; per-gate status/evidence.
+Run manifest must bind the exact plan digest, consumed authorization, durable
+operation identity and separate dispatch/gate outcomes. Unknowns remain explicit.
+These are required semantics, **not an invented accepted schema**. Exact receipt
+fields, authority signatures/channel, TTL, consumption store and receipt
+publication contract remain blockers. Do not implement against guessed fields.
+
+Refusal order for future wiring:
+1. Parse exact grammar and bounded bytes; lexical path rejection before I/O.
+2. Validate record schemas/digests; reject historical-only, stale/reused or
+   wrong-revision authorization before contacting authority or launching anything.
+3. Read-only local runtime/source/floor checks; record unperformed gates not-run.
+4. Authenticate mapped evaluator; require exact current capability and fresh
+   allowance/spendability receipt. Missing service/v4/unknown funds => blocked.
+5. On run, recheck plan, all identities/floors and authorization; evaluator must
+   atomically claim authorization/operation and reserve before authenticated
+   runner dispatch. Missing atomic capability => blocked, not best-effort launch.
+6. Separately retain dispatch and gate outcomes; unknown effect => no redispatch,
+   no reservation release, no manufactured aggregate pass.
+
+Existing runner key behavior is in-memory: same key+same message returns cached
+result only if complete; changed message rejects; pending requires recovery
+(`corpus_execution.py:188-198`). This is NOT durable driver idempotency.
+Replay session rejects persisted pending attempts (`replay.py:326-331,370-374`).
+A caller-side file or random new key must not bypass that refusal.
+
+## 5. Minimal surfaces and focused evidence
+
+Ready glue after acceptance: new `research/capstone_driver.py`, new
+`scripts/capstone-driver`, explicit no-guest `scripts/test-story` dispatch,
+focused CLI/binding/refusal tests and public command/schema documentation.
+Preserve `tests/e2e/milestone.py` checklist semantics: all mandatory gates not-run,
+historical hashes explicitly non-proof, unconditional return 1 (`:86-123`).
+Current script dispatch simply propagates that result (`scripts/test-story:7-10`).
+
+Required capability work is NOT merely those files: authenticated evaluator
+service/client contract; reviewed v4 accounting adapter/receipt issuer;
+durable plan/authorization consumption integration; reviewed launcher binding.
+Likely integration touchpoints are `persistent_budget.py`, `replay.py` and
+transport/launcher code, but exact minimal files cannot be asserted before the
+missing authority contract is resolved. Do not relax v1-only guards as wiring.
+The 8-12 file/1,200 LOC budget must be reassessed if those capabilities are in scope.
+
+Existing source tests (read, NOT run):
+- `tests/unit_replay_registration_boundary.py:15-38`: unknown versions and
+  registered/stop-only modes refuse before protected input/mutation.
+- `tests/unit_independent_replay.py:59-138`: failed rebuild/nondeterminism/forged
+  logs, all gates not-run, policy/scope/accounting and caller refusals.
+- `tests/unit_replay_successor_runtime.py:61-270`: hypothetical status cannot
+  authorize execution; claimed install/store and reused future receipt rejected.
+  These tests do not certify the stage-r retained adapter as a deployed service.
+- `tests/e2e/milestone_checklist.py:48-83`: missing/malformed history and execution
+  option attempts cannot produce success.
+
+New focused public tests must exercise real parsing and binding code without
+mocking it: duplicate/unknown fields, exact bytes changed, stale/reused auth,
+prepare/run separation, protected path lexical rejection, unavailable/wrong-peer
+service, unsupported v4, unknown/null/insufficient allowance, floor breach,
+changed identity, pending/unknown outcome, and historic-provenance-only input.
+Synthetic authority records test rejection only, not authentication or VM proof.
+Later authorized live tests must independently prove real peer identities,
+current v4 receipts/reservation, fresh VM observations, cessation and settlement.
+No tests were executed here under the disk-floor prohibition. No capstone pass,
+budget balance, deployed capability, or runtime authority is claimed.
+
 ## 2026-11-04 Source Mapping and Capacity Evidence - Implementation Blocked
 
 Independent architecture mapping by `/root/grrr_q3hp_trust_boundary_mapping` returned `BLOCKED_BY_MISSING_CAPABILITY`. Parent verified the 196-line artifact exists at `/tmp/grrr-q3hp-architecture-mapping-20261104.md` with SHA-256 `631453fafb047f3a564ca8fc88813eb83f643d914a0d0f91b959c3b0242046bf`. The full mapping is appended separately for durable nd readback; it is source-only evidence, not implementation approval or deployed capability.
