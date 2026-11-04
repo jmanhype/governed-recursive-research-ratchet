@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:25:03Z
-content_hash: "sha256:521f1eac8dba4a163fe72d080e83ac3d1c07a22876ddbce3c7c12909c1f78ccd"
+updated_at: 2026-11-04T03:46:08Z
+content_hash: "sha256:8ba786ba3d6ca5511f39cd04096df98901df20879f3773c2f3d52840c7970ac2"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -922,3 +922,8 @@ Known provider usage is bound to model `jev-1.14.0` and four retained run IDs:
 Cumulative observed usage: 128 calls, 50,192 input / 2,944 output tokens, zero retries. All stored USD fields are null and must remain unknown until an independent provider receipt establishes amount, currency, billing identity, period, rate/card statement linkage, and run coverage.
 
 Requested next action: ONE read-only TypeSafe/Jev usage-or-billing receipt lookup for exactly these four run IDs and usage totals. No model/inference call, no retry, no mutation, no protected path, no key disclosure, no repository merge/push, and no capstone execution. Credential use and external network access require a fresh exact operator authorization.
+
+### 2026-11-04T03:46:08Z speed
+## 2026-11-04 Operator-Authorized Read-Only Cost-Receipt Lookup
+
+Operator explicitly authorized ONE read-only TypeSafe/Jev usage-or-billing receipt lookup for exactly run IDs 6cf35082f34a4149b67293c7b53d9740, 9f7ea255e61d4f2aa6596967ef698adf, 76aaf8542fce4465b082524432f6a1ca, and e3938b63cf634cdda8e0f00fe416ab31. Authorization permits credential use and one external read-only request, with no model/inference call, retry, mutation, protected path, key disclosure, merge, push, or capstone execution.
