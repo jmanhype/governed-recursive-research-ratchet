@@ -4,7 +4,7 @@ title: "Source-only durable capstone grant and operation journal"
 status: closed
 priority: 0
 type: task
-labels: [milestone-1, source-only, security-boundary, delivered]
+labels: [milestone-1, source-only, security-boundary, delivered, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
