@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T21:39:25Z
-content_hash: "sha256:fef9c4d505ffb2c445e76d6a5ef081dfb79627cfd8eff6d3e965ac17bb7bf4f0"
+updated_at: 2026-11-04T21:39:26Z
+content_hash: "sha256:9648fbefd7dd042e44117578d51d890ce6cf8b5e381f918d46ded4f635919f26"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
@@ -928,4 +928,7 @@ status: in_progress
 ## Comments
 
 ### 2026-11-04T21:11:58Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
+
+### 2026-11-04T21:39:26Z speed
 loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
