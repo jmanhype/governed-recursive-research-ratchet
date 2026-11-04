@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:34:13Z
-content_hash: "sha256:0df70f40a2704192adbdeb4409c29ee72e5fb8792e8883d21c0512db3e01086f"
+updated_at: 2026-11-04T17:34:48Z
+content_hash: "sha256:a12252540f91d226d40c0b2849ecfc7b140a84a735fbf1988386107210c68454"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary, delivered]
 assignee: dev-GRRR-wcwy
@@ -499,6 +499,13 @@ status: in_progress
 PROOF:
 
 ### CI/Test Results
+Commands run:
+- /opt/homebrew/bin/python3 -B scripts/test-story evaluator-contract
+- /Users/speed/miniconda3/bin/python3 -B scripts/test-story evaluator-contract
+- /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 -B scripts/test-story evaluator-contract
+- pvg verify research/capstone_contract.py research/capstone_client.py research/capstone_service.py tests/unit_capstone_contract.py tests/unit_capstone_peer.py tests/unit_capstone_suite.py scripts/test-story docs/CAPSTONE-EVALUATOR-PROTOCOL.md --format=text
+Summary: PASS source19 tests on EACH3interpreters; failures0/errors0/skipped0, each exit0; static PASS6eligible files0issues. Full capstone/VM/replay NOT-RUN. Producing SHA8cf7d0d86d5103de3709d432a8c35b8101020440.
+
 - Commands run:
   - /opt/homebrew/bin/python3 -B scripts/test-story evaluator-contract
   - /Users/speed/miniconda3/bin/python3 -B scripts/test-story evaluator-contract
