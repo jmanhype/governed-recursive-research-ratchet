@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:39:03Z
-content_hash: "sha256:df64cc1a3d71fb7552e6250c19b31245ca155af29597e714bb480f9decdc4f00"
+updated_at: 2026-11-04T00:42:43Z
+content_hash: "sha256:cea7d17a930863fc530cd76be01de7bf34c3625c52a91c23103b32b7b5d28d92"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve, GRRR-dbbi]
 assignee: dev-GRRR-888u
 ---
@@ -99,7 +99,27 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-11-03]: Full resumed evidence review meets the bar. The prior proof-format gaps are closed, fresh delivery verification passes 9/9, and immutable evidence commit 86ace00860f62f302f4f633eefa6c98b5cce8252 remains coherent and within the evaluation-only trust boundary.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Fresh pvg story verify-delivery GRRR-888u --json: 9/9 passed.
+- Canonical `### AC Verification` and `LEARNINGS:` are present in the authoritative delivered EOF contract.
+- Story branch remains 86ace00860f62f302f4f633eefa6c98b5cce8252, parent/base remains accepted GRRR-gge0 commit cf3eb55422ba18898541318c138cd82543419d12.
+- Committed evidence hashes, JSON parse/arithmetic, five-file target identity, advisory-only authority flags, diff check, and exact-tree pvg gates were independently rechecked.
+- No external scan, credential/protected-path access, source edit, merge, push, or production mutation was performed during PM review.
+
+### proof
+- [x] AC #1: pinned upstream/tool identities verified from evidence.
+- [x] AC #2: 52 detector packages and 53 pattern-related test packages verified from evidence.
+- [x] AC #3: local pinned binary identity and privacy boundary verified.
+- [x] AC #4: clean full-tree and five-file subset scan evidence verified.
+- [x] AC #5: seeded, absent-input, empty-root, and timestamp-normalized rerun controls verified.
+- [x] AC #6: GRRR false-positive classes and useful advisory signals classified.
+- [x] AC #7: advisory-only recommendation, wrapper requirements, and false authority boundary verified.
 
 ## nd_contract
 status: delivered
