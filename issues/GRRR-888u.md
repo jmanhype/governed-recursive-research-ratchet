@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:16:38Z
-content_hash: "sha256:f7641e07cb9f63edd850273cc4e190293a819f1bfb1139a9d779d0148dd0c8c3"
+updated_at: 2026-11-04T00:18:41Z
+content_hash: "sha256:52f43a547fc111d3003def7e58a6c27627974bf9ce68629cc92695a35affd195"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0, GRRR-fmvp]
 ---
@@ -256,3 +256,50 @@ Independent review rejected two evidence gaps. Corrected full scan warning count
 ## 2026-11-03 Anti-Cheat Evaluation Narrow Re-review — APPROVED
 
 Fresh reviewer verdict: ANTI_CHEAT_EVAL_REREVIEW: APPROVED. Reviewer verified current evidence hashes 2bcaa7cdaacc6b8d642846c498fcf1e93655948afa2cd1a8463fcbc36359bd12, 1105fbfeb68a407cf6ec465190d5ec2226f06a00786f7fbc8f23c68348d504c8, and 643ee210dd0abfa925abe6cb454d939cb5102738d3e9d46ca9688a357eef1fa0; confirmed missing exit-code/output fields; corroborated 53 pattern-test packages, binary identity, subset rerun validity, full count arithmetic, and unchanged advisory-only conclusion. No mutation or operational authority.
+
+### 2026-11-04T00:18:41Z speed
+## Implementation Evidence
+
+Summary: Sean Chatman Anti-Cheat Scorecard v26.8.29 was pinned, built, tested, and evaluated read-only against clean GRRR-gge0 evidence. Result is advisory-only because the tool detects real textual cheats but misclassifies GRRR accounting evidence and exits zero on absent or empty inputs.
+
+Commit SHA: 86ace00860f62f302f4f633eefa6c98b5cce8252.
+
+Evidence hashes:
+- docs/evidence/anti-cheat-scorecard/evaluation.json — 2bcaa7cdaacc6b8d642846c498fcf1e93655948afa2cd1a8463fcbc36359bd12
+- docs/evidence/anti-cheat-scorecard/EVALUATION.md — 1105fbfeb68a407cf6ec465190d5ec2226f06a00786f7fbc8f23c68348d504c8
+- docs/evidence/anti-cheat-scorecard/ARTIFACTS.md — 643ee210dd0abfa925abe6cb454d939cb5102738d3e9d46ca9688a357eef1fa0
+
+### CI/Test Results
+
+Commands run:
+- git clone/checkout v26.8.29 and commit identity check — exit 0
+- go test ./internal/llmcheat/patterns/... -count=1 — exit 0, 53/53 packages
+- go build -o /tmp/anti-cheat-scorecard-v26.8.29 . — exit 0, binary SHA d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e
+- full GRRR-gge0 scan — exit 0, 79.67s, score 1/10, 5,487 rows
+- five-file subset scan — exit 0, 0.15s, score 7/10, two warnings
+- seeded control — exit 0, five warnings
+- absent-input control — exit 0 with no output, classified failure
+- empty-root control — exit 0, perfect 10/10, classified unsafe
+- subset rerun — exit 0, valid output, semantically equal after timestamp removal
+- pvg verify/gates and git diff checks — PASS
+
+## AC Verification
+
+| AC | Result |
+|---|---|
+| 1 | PASS: exact source/tag/commit/license/module/tool identities verified. |
+| 2 | PASS: 52 detector packages and 53 pattern-related tests verified. |
+| 3 | PASS: pinned local binary identity and privacy boundary verified. |
+| 4 | PASS: full and five-file target scans recorded with hashes and counts. |
+| 5 | PASS: seeded, absent, empty, and rerun controls recorded. |
+| 6 | PASS: false-positive classes and advisory signals classified. |
+| 7 | PASS: advisory-only boundary and all authority flags recorded. |
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 86ace00860f62f302f4f633eefa6c98b5cce8252; all local controls and independent review approved.
+
+### proof
+- [x] AC #1 through AC #7 independently verified.
