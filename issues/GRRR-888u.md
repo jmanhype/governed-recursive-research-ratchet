@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-03T23:49:02Z
-content_hash: "sha256:96cf954aba14d22e0aed82996fcd148cc433ab2c790f1fb9516f723db055d052"
+updated_at: 2026-11-04T00:16:11Z
+content_hash: "sha256:46dd977fdaa67583dd9b3ae1fe3867af0826f98ef25aeff76cc864dadd98f083"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0]
 ---
@@ -100,6 +100,77 @@ status: new
 
 ## Notes
 
+## Implementation Evidence
+
+Summary: Evaluated Sean Chatman’s Anti-Cheat Scorecard at stable tag v26.8.29 and concluded it is useful for advisory textual-cheat triage but unsuitable as a trusted or mandatory GRRR gate. The full GRRR-gge0 scan produced 5,487 detail rows—5,486 warnings and one informational row—score 1/10, dominated by 4,599 false lockfile-checksum-mismatch findings. The five-file adaptation subset produced two warnings, and the seeded control detected five real textual-cheat patterns. Missing input exited zero without output and an empty eligible root exited zero with perfect 10/10, proving the need for a strict future wrapper and advisory-only authority boundary.
+
+Commit SHA: 86ace00860f62f302f4f633eefa6c98b5cce8252.
+
+Changed files and SHA-256:
+- docs/evidence/anti-cheat-scorecard/evaluation.json — 2bcaa7cdaacc6b8d642846c498fcf1e93655948afa2cd1a8463fcbc36359bd12
+- docs/evidence/anti-cheat-scorecard/EVALUATION.md — 1105fbfeb68a407cf6ec465190d5ec2226f06a00786f7fbc8f23c68348d504c8
+- docs/evidence/anti-cheat-scorecard/ARTIFACTS.md — 643ee210dd0abfa925abe6cb454d939cb5102738d3e9d46ca9688a357eef1fa0
+
+Pinned source identity:
+- Repository https://github.com/seanchatmangpt/anti-cheat-scorecard
+- Tag v26.8.29
+- Commit 5271351d079f79634de2f8b91970b80daf9bcb86
+- License Apache-2.0
+- Module github.com/ossf/scorecard/v5
+- Built binary SHA-256 d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e
+- Target GRRR-gge0 commit cf3eb55422ba18898541318c138cd82543419d12, clean worktree
+
+### CI/Test Results
+
+Commands run:
+- git clone --filter=blob:none https://github.com/seanchatmangpt/anti-cheat-scorecard /tmp/anti-cheat-scorecard-research — exit 0
+- cd /tmp/anti-cheat-scorecard-research && git checkout v26.8.29 && test "$(git rev-parse HEAD)" = 5271351d079f79634de2f8b91970b80daf9bcb86 — exit 0
+- go version — Go 1.26.7 darwin/arm64
+- go test ./internal/llmcheat/patterns/... -count=1 — exit 0, 53/53 packages OK
+- go build -o /tmp/anti-cheat-scorecard-v26.8.29 . — exit 0, binary SHA d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e
+- Full target Anti-Cheat scan — exit 0, 79.67s, output SHA f56ee077318bea77d1678e5666b5a06904ff5651477f9a8a9f630d923e1f418f, score 1/10, 5,487 rows
+- Five-file subset scan — exit 0, 0.15s, output SHA 9b6e5e04fdc52208670d74ba53c63ad20146badcf7c36ac68cb57e5ea0c284a2, score 7/10, two warnings
+- Seeded textual-cheat scan — exit 0, 0.04s, output SHA af70a5118096b3d792e381c07bb5711521d81e53b9d3b34ab3506902ef3fcdd3, five warnings
+- Absent-input control — exit 0 without output, classified failure
+- Empty-root control — exit 0, output SHA 57ec647ca337d632ae1894c34f3e4d2fd2a8c1a575db585519f52fb02ea2a000, perfect 10/10, classified unsafe
+- Subset rerun control — exit 0, valid 1,406-byte output, semantically equal after timestamp removal
+- pvg verify selected evidence files — PASS
+- pvg gates selected evidence files — PASS
+- git diff --check — PASS
+
+Independent review:
+- Initial technical review rejected a warning-count error and missing command/exit evidence.
+- Corrected full count to 5,486 warnings + 1 information row and added complete reproduction evidence.
+- Final narrow reviewer returned ANTI_CHEAT_EVAL_REREVIEW: APPROVED.
+
+Diff-budget disclosure: 3 files and 429 inserted lines, within the approximate 3-file/under-400-LOC budget by file count and 29 lines over the rough LOC guide because exact reproduction commands and safety limitations were mandatory.
+
+## AC Verification
+
+| AC | Result |
+|---|---|
+| 1 | PASS: exact repository/tag/commit/license/module/Go/tool identities verified. |
+| 2 | PASS: 52 detector packages and seven categories verified; 53 pattern-related packages tested OK. |
+| 3 | PASS: pinned local binary built, hashed, and used; no remote scan or credential use. |
+| 4 | PASS: clean full target and five-file subset scans recorded with commit, elapsed time, hashes, scores, and counts. |
+| 5 | PASS: seeded, absent, empty, and rerun controls recorded with exit/output behavior. |
+| 6 | PASS: false-positive classes and useful advisory signals classified with counts and examples. |
+| 7 | PASS: advisory-only recommendation and all authority flags false. |
+
+## nd_contract
+status: delivered
+
+### evidence
+- Evidence commit 86ace00860f62f302f4f633eefa6c98b5cce8252; all pattern tests and local controls completed; independent narrow review approved.
+
+### proof
+- [x] AC #1: pinned source identity verified.
+- [x] AC #2: detector registry/count and tests verified.
+- [x] AC #3: pinned local binary identity and privacy boundary verified.
+- [x] AC #4: full and subset target scans recorded.
+- [x] AC #5: deterministic and failure-mode controls recorded.
+- [x] AC #6: false positives and useful signals classified.
+- [x] AC #7: advisory-only trust boundary recorded.
 
 ## History
 - 2026-11-03T23:27:53Z status: open -> in_progress
