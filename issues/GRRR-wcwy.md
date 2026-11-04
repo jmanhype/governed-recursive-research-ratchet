@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T16:46:19Z
-content_hash: "sha256:2a1d11cdd8069b5631b33c5f50e1ae7643806e97b05f5bf7ff133cdbc9ddb101"
+updated_at: 2026-11-04T16:49:10Z
+content_hash: "sha256:288af98d2110f7e41ee2d16b0e8a3a10b95fc9ae52c0a054a4703240642096fe"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary]
 assignee: dev-GRRR-wcwy
@@ -331,7 +331,19 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Selected by pvg loop next, claimed atomically, and isolated at .claude/worktrees/dev-GRRR-wcwy on story/GRRR-wcwy from epic0b2365e.
+- Security/IPC implementation delegated as one bounded task to /root/implement_evaluator_source_boundary, against independently approved contract9b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad.
+- Existing interpreters verified: Homebrew3.14.3, Miniconda3.12.7, CLT3.9.6. No new dependencies/installations or external service needed.
+- Only small source-only unittest fixtures are permitted; actual VM/preparation/replay remains forbidden while below its floor. Host disk space has fallen again; no stable replay capacity is claimed.
+- No source commit/delivery/acceptance is authorized yet. Uncommitted WIP must be preserved before any worktree recovery/removal; never force-clean it.
+
+### proof
+- [ ] AC1-6: implementation and measured source-test evidence pending.
+- [x] AC7 boundary: capstone remains deferred/rejected-x3; no protected/runtime authority is granted.
 
 ## History
 - 2026-11-04T16:46:17Z dep_added: blocks GRRR-q3hp
