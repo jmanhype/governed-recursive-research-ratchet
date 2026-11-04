@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected, rejected-x3]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T15:58:50Z
-content_hash: "sha256:1f739e6eb9fcb5cf1b4d9d3735df78c3697b62c448f80359d46d26b7cd8bfd1a"
+updated_at: 2026-11-04T16:01:11Z
+content_hash: "sha256:bc1e2fc45ebd9a21bf2b4d1f5cf6975c2dc8008827d642d6750d0e55617f41ad"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f, GRRR-q3hp]
@@ -119,6 +119,7 @@ status: new
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
 Supplement verification: parent readback confirmed the five-minute attestation text is present exactly once, both E2E request hashes remain unchanged, and execution_authorized remains false. A bounded fresh GLM attestation-only reviewer did not return a verdict before interruption; no new independent approval is claimed. Prior independently reviewed request semantics are unchanged. No source-tree changes or runtime actions were performed.
 2026-11-04 independent PM rejection successfully landed after supported reviewer-metadata repair; status=open,labels=rejected/rejected-x3,all ACs/blockers preserved. Parent directly verified pvg loop next emits escalate for third rejection. Automatic dispatch stopped at that operator-decision boundary. No counter reset, forced claim, acceptance, source change, VM/replay, protected mutation, merge or push occurred. Recommended operator direction: continue bounded GRRR-q3hp design/implementation repair only, while keeping this capstone rejected and preserving every gate; do not authorize another capstone run or weaken ACs by implication.
+2026-11-04 operator direction after escalation: "We want to finish". Continue prerequisite GRRR-q3hp repair; keep the capstone rejected with all three rejection records and every AC/gate intact. Place the escalated capstone on a native issue hold while its prerequisite is repaired; this is not acceptance, a rejection-counter reset, a new run grant, or permission to retry the capstone. Reconsider the hold only after prerequisite evidence and operator-required exact execution bindings are ready.
 
 ## nd_contract
 status: rejected
