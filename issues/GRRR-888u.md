@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
 updated_at: 2026-11-04T00:42:44Z
-content_hash: "sha256:3adfa0366affbe5d2a0ae635877b875e1a0e9d2513083dcf869426b6ee472253"
+content_hash: "sha256:32a736a18c5d328878902c3bc8d1fb196248bd861bc44a564cf8aceff249a307"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve, GRRR-dbbi]
 assignee: dev-GRRR-888u
 closed_at: 2026-11-04T00:42:44Z
@@ -101,6 +101,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-03.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-11-03]: Full resumed evidence review meets the bar. The prior proof-format gaps are closed, fresh delivery verification passes 9/9, and immutable evidence commit 86ace00860f62f302f4f633eefa6c98b5cce8252 remains coherent and within the evaluation-only trust boundary.
 
