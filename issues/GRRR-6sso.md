@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T12:56:15Z
-content_hash: "sha256:cdc926ce16d6e69a315c0db1d6111b604297c9705edc76ba33b9349b8eda0d76"
+updated_at: 2026-11-04T12:58:32Z
+content_hash: "sha256:0a01d82075626d893e7529536a40321e44c3da69af51fe0562383d1943c65d60"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -1045,3 +1045,8 @@ They must not be used as proof, review-time accounting, runtime authorization, o
 The operator expressed desire to authorize the full GRRR run and continue Harness²/autoresearch, but simultaneously explicitly rejected the accessibility walkthrough and review-time reconciliation. The request did not bind the reviewed package/runtime identities, budget maxima, output root, stop conditions, or denied-action list.
 
 This is recorded as intent to proceed, not executable authorization. Mandatory accessibility and review-time gates remain unmet. No VM/QEMU, protected access, replay, admission, promotion, production mutation, merge, or push is authorized. Recursive adaptation remains gated by the full capstone.
+
+### 2026-11-04T12:58:32Z speed
+## 2026-11-04 Fresh Informed Accessibility Gate — Started
+
+Operator explicitly said `Start the final gates`. Accessibility test began at 2026-11-04T12:58:32ZZ. Prior contested result remains discarded. This start authorizes no VM/QEMU, protected access, replay, admission, promotion, production mutation, merge, or push.
