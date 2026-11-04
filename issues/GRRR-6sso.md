@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T12:52:12Z
-content_hash: "sha256:8ffc13e4cca7ab909b7629a19106ae296d39c9da5428abe123a6de6f469780de"
+updated_at: 2026-11-04T12:56:15Z
+content_hash: "sha256:cdc926ce16d6e69a315c0db1d6111b604297c9705edc76ba33b9349b8eda0d76"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -1038,3 +1038,10 @@ Retained artifacts remain audit history only:
 - `docs/evidence/milestone-packet/ACCESSIBILITY-PREFLIGHT-20261104.json` SHA-256 `f8a67546627d33799d1d4518106ce9139258d2c459b167c0d6610a5d33bf02af`
 
 They must not be used as proof, review-time accounting, runtime authorization, or capstone acceptance. A fresh informed walkthrough or a separately reviewed requirement change is required. No runtime work is authorized by this note.
+
+### 2026-11-04T12:56:15Z speed
+## 2026-11-04 Operator Runtime Request — Intent Only, Refused as Authorization
+
+The operator expressed desire to authorize the full GRRR run and continue Harness²/autoresearch, but simultaneously explicitly rejected the accessibility walkthrough and review-time reconciliation. The request did not bind the reviewed package/runtime identities, budget maxima, output root, stop conditions, or denied-action list.
+
+This is recorded as intent to proceed, not executable authorization. Mandatory accessibility and review-time gates remain unmet. No VM/QEMU, protected access, replay, admission, promotion, production mutation, merge, or push is authorized. Recursive adaptation remains gated by the full capstone.
