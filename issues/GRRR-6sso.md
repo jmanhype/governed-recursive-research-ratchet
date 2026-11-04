@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T04:15:41Z
-content_hash: "sha256:2c253bdd19a04a65c13c52e7cdf274deb06710c36f95e3bc1c261e0dc921fa22"
+updated_at: 2026-11-04T05:06:00Z
+content_hash: "sha256:a5e1c4c26dbf9d07300ab136ac41319648187c4e36fe2c3a005039e3fba4ad94"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -986,3 +986,14 @@ Parent independently checked exact model/rate/usage/arithmetic, full $50 reserva
 Keyboard-only command transcript captured at `/tmp/grrr-accessibility-preflight-20261104-v2.txt`; SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a`, 5,621 bytes. It exercises real plain-text/Markdown review output, CLI help discoverability, decision choices, stop, and recovery vocabulary. No ANSI color escapes. Started at `2026-11-04T04:15:13Z`; operator response time pending.
 
 This preflight does not substitute for the full runtime accessibility journey or authorize execution.
+
+### 2026-11-04T05:06:00Z speed
+## 2026-11-04 Operator Accessibility Walkthrough — PASS
+
+Operator response: `Accessibility pass, one minute`.
+
+The operator confirmed, through the active voice/text interface, that the report was understandable without a mouse and exposed the required finding/decision/stop information. Self-reported review burden: **1 minute**.
+
+Basis transcript: `/tmp/grrr-accessibility-preflight-20261104-v2.txt`, SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a`, 5,621 bytes, started `2026-11-04T04:15:13Z`. The transcript contains keyboard-only command help, plain-text/Markdown review, decision choices, emergency stop, recovery wording, and no ANSI color escapes.
+
+This records the accessibility preflight only. It does not authorize VM/QEMU, protected access, replay, admission, promotion, production mutation, external calls, merge, or push.
