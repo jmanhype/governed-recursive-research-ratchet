@@ -1,18 +1,19 @@
 ---
 id: GRRR-6sso
 title: "E2e: Operator completes a governed vlt research ratchet"
-status: blocked
+status: deferred
 priority: 1
 type: task
 labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T02:23:18Z
-content_hash: "sha256:68cca45cb16adbc777861426f6dff55e7b04c3c00688a863c6214c0c7e371209"
+updated_at: 2026-11-04T02:24:16Z
+content_hash: "sha256:d86c030961229890ce25a28cd743a62aee86c4f8ad509a5cb039b46299b21385"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
+defer_until: 2026-11-07
 ---
 
 ## Description
@@ -358,6 +359,7 @@ status: delivered
 - 2026-11-04T02:23:18Z status: in_progress -> open
 - 2026-11-04T02:23:18Z released by speed
 - 2026-11-04T02:23:18Z status: open -> blocked
+- 2026-11-04T02:24:16Z status: blocked -> deferred
 
 ## Links
 - Parent: [[GRRR-2t3h]]
