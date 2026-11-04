@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T12:58:32Z
-content_hash: "sha256:0a01d82075626d893e7529536a40321e44c3da69af51fe0562383d1943c65d60"
+updated_at: 2026-11-04T12:59:50Z
+content_hash: "sha256:35e4b5f91b02f57571d9ffa1d04e37e2ebcec33a57a50065f9ad29223ec3f9bb"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -1050,3 +1050,8 @@ This is recorded as intent to proceed, not executable authorization. Mandatory a
 ## 2026-11-04 Fresh Informed Accessibility Gate — Started
 
 Operator explicitly said `Start the final gates`. Accessibility test began at 2026-11-04T12:58:32ZZ. Prior contested result remains discarded. This start authorizes no VM/QEMU, protected access, replay, admission, promotion, production mutation, merge, or push.
+
+### 2026-11-04T12:59:50Z speed
+## 2026-11-04 Fresh Informed Accessibility Journey — Restarted
+
+Operator explicitly asked to start the accessibility test and asked whether the journey was included. New journey started at 2026-11-04T12:59:50ZZ. It covers inspecting the current blocked report, distinguishing execution/finding/decision/effect, selecting a safe decision when evidence is missing, locating emergency stop, and locating recovery. Prior 2-minute self-report remains unanswered/non-counted. No VM/QEMU, protected access, replay, admission, promotion, production mutation, merge, or push is authorized.
