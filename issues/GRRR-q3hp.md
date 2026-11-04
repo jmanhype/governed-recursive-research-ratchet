@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-04T18:43:15Z
-content_hash: "sha256:f0052a55b51d684bce49cc6702504a3fefca607cb20a6838398eafaf70a68dae"
+content_hash: "sha256:e82b9f27620226eae72ac919694c2712b21e91bd858dde980609931d107ec2ec"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy]
 was_blocked_by: [GRRR-wcwy]
 assignee: dev-GRRR-q3hp
+blocked_by: [GRRR-yt6a]
 ---
 
 ## Description
@@ -882,10 +883,12 @@ Current result: GRRR-q3hp AC1 mapping is blocked by concrete missing trusted cap
 - 2026-11-04T17:40:55Z status: open -> in_progress
 - 2026-11-04T17:40:55Z auto-follows: linked to predecessor GRRR-wcwy
 - 2026-11-04T17:40:55Z claimed by dev-GRRR-q3hp
+- 2026-11-04T18:43:15Z dep_added: blocked_by GRRR-yt6a
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
+- Blocked by: [[GRRR-yt6a]]
 - Was blocked by: [[GRRR-wcwy]]
 - Follows: [[GRRR-ev2w]], [[GRRR-wcwy]]
 
