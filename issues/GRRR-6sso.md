@@ -4,11 +4,11 @@ title: "E2e: Operator completes a governed vlt research ratchet"
 status: open
 priority: 1
 type: task
-labels: [milestone-1, capstone, rejected]
+labels: [milestone-1, capstone, rejected, rejected-x3]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T15:54:50Z
+updated_at: 2026-11-04T15:54:51Z
 content_hash: "sha256:e781719118285763c5074105b03fbe441fda7c4fe23f29457b01258ae03ee2e9"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
