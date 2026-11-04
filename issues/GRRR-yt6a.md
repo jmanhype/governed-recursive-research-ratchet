@@ -8,8 +8,8 @@ labels: [milestone-1, source-only, security-boundary, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T19:32:00Z
-content_hash: "sha256:62e1f9511ad5b5b065c00b6e5d893855db4da0512528841791bd113d3f95b1d8"
+updated_at: 2026-11-04T19:32:01Z
+content_hash: "sha256:58914cf01c772b1fc3a51dd8ec666396172752c2580695b5ccdf701408ccf80a"
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
 closed_at: 2026-11-04T19:32:00Z
@@ -95,6 +95,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-04.
+
+### proof
+- [x] Story closed after accepted label was applied.
 
 
 ## nd_contract
