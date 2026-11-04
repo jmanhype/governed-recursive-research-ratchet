@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:27:45Z
-content_hash: "sha256:c00a4dd63e126fae49e49fed917023c57b40719754ab8a97626a9ffd6930fb52"
+content_hash: "sha256:5bb267bbca1a337bba48e2c922729d61017aa47f44569031c6f7d6d6f9f321b8"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0]
 ---
@@ -115,6 +115,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: rejected
+
+### evidence
+- PM rejection applied via pvg story reject on 2026-11-03.
+
+### proof
+- [ ] Story requires another developer delivery before it can be accepted.
 
 
 ## nd_contract
