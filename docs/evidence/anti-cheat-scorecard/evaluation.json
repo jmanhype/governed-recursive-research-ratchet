@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "evaluation_status": "complete",
+  "recommendation": "advisory-only",
+  "source": {
+    "repository": "https://github.com/seanchatmangpt/anti-cheat-scorecard",
+    "tag": "v26.8.29",
+    "commit": "5271351d079f79634de2f8b91970b80daf9bcb86",
+    "release_date": "2026-08-29",
+    "license": "Apache-2.0",
+    "module": "github.com/ossf/scorecard/v5",
+    "source_go_version": "1.25.6",
+    "local_go_version": "go1.26.7 darwin/arm64",
+    "built_binary_sha256": "d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e",
+    "built_binary_bytes": 108507506,
+    "detector_packages": 52,
+    "detector_categories": 7,
+    "readme_claimed_detectors": 50,
+    "release_claimed_detectors": 52,
+    "pattern_test_packages_ok": 53,
+    "pattern_test_log_sha256": "bbfe64ec1c98b9f55da6243b896415d2c621815481d0cf7cffeb1106dcd7ec0a"
+  },
+  "reproduction_commands": [
+    "git clone --filter=blob:none https://github.com/seanchatmangpt/anti-cheat-scorecard /tmp/anti-cheat-scorecard-research",
+    "cd /tmp/anti-cheat-scorecard-research && git checkout v26.8.29 && test \"$(git rev-parse HEAD)\" = 5271351d079f79634de2f8b91970b80daf9bcb86",
+    "cd /tmp/anti-cheat-scorecard-research && go version",
+    "cd /tmp/anti-cheat-scorecard-research && go test ./internal/llmcheat/patterns/... -count=1 > /tmp/anti-cheat-all-pattern-tests.log 2>&1",
+    "cd /tmp/anti-cheat-scorecard-research && go build -o /tmp/anti-cheat-scorecard-v26.8.29 .",
+    "GRRR_ROOT=/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet; test \"$(git -C \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0\" rev-parse HEAD)\" = cf3eb55422ba18898541318c138cd82543419d12 && test -z \"$(git -C \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0\" status --porcelain)\"",
+    "GRRR_ROOT=/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet; /usr/bin/time -p /tmp/anti-cheat-scorecard-v26.8.29 --local \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0\" --checks Anti-Cheat --format json --show-details --output /tmp/grrr-gge0-anti-cheat-timed.json",
+    "GRRR_ROOT=/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet; SUBSET=/tmp/grrr-gge0-anti-cheat-subset; mkdir -p \"$SUBSET/research\" \"$SUBSET/scripts\" \"$SUBSET/reports\" \"$SUBSET/tests\" && cp \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0/research/harness_adaptation.py\" \"$SUBSET/research/\" && cp \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0/scripts/run-harness-adaptation-cycle\" \"$SUBSET/scripts/\" && cp \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0/reports/adaptation-cycle-1.json\" \"$SUBSET/reports/\" && cp \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0/reports/adaptation-cycle-1.md\" \"$SUBSET/reports/\" && cp \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0/tests/unit_harness_adaptation.py\" \"$SUBSET/tests/\"",
+    "/usr/bin/time -p /tmp/anti-cheat-scorecard-v26.8.29 --local /tmp/grrr-gge0-anti-cheat-subset --checks Anti-Cheat --format json --show-details --output /tmp/grrr-gge0-anti-cheat-subset-timed.json",
+    "SEEDED=/tmp/grrr-anti-cheat-seeded-20261103T232425Z; mkdir -p \"$SEEDED\"; printf '%s\\n' 'def calculate_answer():' '    raise NotImplementedError' '' 'def empty_operation():' '    pass' > \"$SEEDED/implementation.py\"; printf '%s\\n' '# Claim' '' 'The implementation is verified and complete.' '' 'Performance improved by 100%' > \"$SEEDED/README.md\"",
+    "/usr/bin/time -p /tmp/anti-cheat-scorecard-v26.8.29 --local /tmp/grrr-anti-cheat-seeded-20261103T232425Z --checks Anti-Cheat --format json --show-details --output /tmp/grrr-anti-cheat-seeded-timed.json",
+    "/tmp/anti-cheat-scorecard-v26.8.29 --local /tmp/definitely-absent-grrr --checks Anti-Cheat --format json --show-details --output /tmp/grrr-anti-cheat-absent.json",
+    "EMPTY=$(mktemp -d); /tmp/anti-cheat-scorecard-v26.8.29 --local \"$EMPTY\" --checks Anti-Cheat --format json --show-details --output /tmp/grrr-anti-cheat-empty.json",
+    "/tmp/anti-cheat-scorecard-v26.8.29 --local /tmp/grrr-gge0-anti-cheat-subset --checks Anti-Cheat --format json --show-details --output /tmp/grrr-gge0-anti-cheat-subset-rerun.json"
+  ],
+  "reproduction_evidence": {
+    "pattern_tests": {
+      "command": "cd /tmp/anti-cheat-scorecard-research && go test ./internal/llmcheat/patterns/... -count=1 > /tmp/anti-cheat-all-pattern-tests.log 2>&1",
+      "exit_code": 0,
+      "output_bytes": 4924,
+      "output_sha256": "bbfe64ec1c98b9f55da6243b896415d2c621815481d0cf7cffeb1106dcd7ec0a",
+      "ok_packages": 53
+    },
+    "binary_build": {
+      "command": "cd /tmp/anti-cheat-scorecard-research && go build -o /tmp/anti-cheat-scorecard-v26.8.29 .",
+      "exit_code": 0,
+      "output_bytes": 108507506,
+      "output_sha256": "d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e"
+    },
+    "target_identity_check": {
+      "command": "GRRR_ROOT=/Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet; test \"$(git -C \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0\" rev-parse HEAD)\" = cf3eb55422ba18898541318c138cd82543419d12 && test -z \"$(git -C \"$GRRR_ROOT/.claude/worktrees/dev-GRRR-gge0\" status --porcelain)\"",
+      "exit_code": 0,
+      "observed_commit": "cf3eb55422ba18898541318c138cd82543419d12",
+      "worktree_clean": true
+    }
+  },
+  "target": {
+    "story": "GRRR-gge0",
+    "commit": "cf3eb55422ba18898541318c138cd82543419d12",
+    "worktree_clean": true,
+    "changed_files_scanned_in_subset": 5
+  },
+  "runs": {
+    "full_target": {
+      "command": "/usr/bin/time -p /tmp/anti-cheat-scorecard-v26.8.29 --local <clean GRRR-gge0 worktree> --checks Anti-Cheat --format json --show-details --output /tmp/grrr-gge0-anti-cheat-timed.json",
+      "exit_code": 0,
+      "elapsed_seconds": 79.67,
+      "output_exists": true,
+      "output_json_valid": true,
+      "output_bytes": 1894849,
+      "output_sha256": "f56ee077318bea77d1678e5666b5a06904ff5651477f9a8a9f630d923e1f418f",
+      "check_score": 1,
+      "detail_rows": 5487,
+      "warning_count": 5486,
+      "informational_count": 1,
+      "informational_messages": [
+        "no semantic-web-integrity patterns detected"
+      ],
+      "pattern_counts": {
+        "claim-alive-without-receipt": 131,
+        "claim-verified-without-run": 230,
+        "declared-invariant-not-enforced": 1,
+        "error-message-wrong-context": 172,
+        "fabricated-citation": 1,
+        "interaction-only-assertion": 11,
+        "lockfile-checksum-mismatch": 4599,
+        "misleading-function-name-vs-body": 10,
+        "non-chicago-acceptance-laundering": 1,
+        "non-chicago-evidence": 36,
+        "overclaiming-superlative": 51,
+        "placeholder-lorem-ipsum-in-code": 8,
+        "self-contradicting-status": 88,
+        "unverified-benchmark-numbers": 147
+      }
+    },
+    "five_file_subset": {
+      "files": [
+        "research/harness_adaptation.py",
+        "scripts/run-harness-adaptation-cycle",
+        "reports/adaptation-cycle-1.json",
+        "reports/adaptation-cycle-1.md",
+        "tests/unit_harness_adaptation.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.15,
+      "output_exists": true,
+      "output_json_valid": true,
+      "output_bytes": 1406,
+      "output_sha256": "9b6e5e04fdc52208670d74ba53c63ad20146badcf7c36ac68cb57e5ea0c284a2",
+      "check_score": 7,
+      "detail_rows": 7,
+      "warning_count": 2,
+      "warning_patterns": {
+        "claim-alive-without-receipt": 1,
+        "non-chicago-evidence": 1
+      },
+      "notes": "The report's completed-status prose triggered claim-alive-without-receipt, and an intentionally synthetic test fixture triggered non-Chicago-evidence. No implementation stub or unauthorized mock was reported."
+    },
+    "seeded_control": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.04,
+      "output_exists": true,
+      "output_json_valid": true,
+      "output_bytes": 1930,
+      "output_sha256": "af70a5118096b3d792e381c07bb5711521d81e53b9d3b34ab3506902ef3fcdd3",
+      "check_score": 7,
+      "warning_count": 5,
+      "detected_patterns": {
+        "claim-alive-without-receipt": 1,
+        "claim-verified-without-run": 1,
+        "overclaiming-superlative": 1,
+        "python-hollow-function": 1,
+        "python-notimplemented-shipped": 1
+      },
+      "result": "positive-detection"
+    },
+    "absent_input_control": {
+      "exit_code": 0,
+      "output_exists": false,
+      "classification": "failure-despite-upstream-zero-exit"
+    },
+    "empty_input_control": {
+      "exit_code": 0,
+      "output_exists": true,
+      "output_json_valid": true,
+      "output_bytes": 1043,
+      "output_sha256": "57ec647ca337d632ae1894c34f3e4d2fd2a8c1a575db585519f52fb02ea2a000",
+      "check_score": 10,
+      "reason": "no LLM-cheat patterns detected across any category",
+      "classification": "unsafe-perfect-score-with-no-coverage-ledger"
+    },
+    "subset_rerun_control": {
+      "exit_code": 0,
+      "output_exists": true,
+      "output_json_valid": true,
+      "output_bytes": 1406,
+      "semantic_result_equal_after_removing_timestamp": true,
+      "first_output_sha256": "22f8fea79ae1b3dea6b7ab4ca04b22600a3a7c8485428fa1fd36c55f1a677c0b",
+      "second_output_sha256": "66d2c7a3c8025cc4c5382b6df47de52cf7868a8949693bdd8d0995a066ca9346",
+      "classification": "semantically-stable-but-not-byte-stable-because-output-date-changes"
+    }
+  },
+  "material_false_positives": [
+    {
+      "pattern": "lockfile-checksum-mismatch",
+      "count": 4599,
+      "cause": "The detector interprets repeated keys such as digest in multi-object accounting/evidence JSON as one lockfile subject with conflicting checksums."
+    },
+    {
+      "pattern": "claim-verified-without-run",
+      "count": 230,
+      "cause": "The detector requires run-like text within the next two lines and does not resolve evidence references or receipts elsewhere in the immutable report."
+    },
+    {
+      "pattern": "error-message-wrong-context",
+      "count": 172,
+      "cause": "Error messages that name the exact invalid field are frequently more context-specific than the enclosing function name; the lexical heuristic misreads them as copy-paste errors."
+    },
+    {
+      "pattern": "self-contradicting-status",
+      "count": 88,
+      "cause": "Historical reports intentionally preserve both completed slices and outstanding blockers; nearby-line lexical analysis erases that distinction."
+    }
+  ],
+  "useful_advisory_signals": [
+    "claim-verified-without-run",
+    "claim-alive-without-receipt",
+    "unverified-benchmark-numbers",
+    "python-hollow-function",
+    "python-notimplemented-shipped",
+    "skipped-test-presented-passing",
+    "tautological-assertion"
+  ],
+  "limitations": [
+    "Findings are textual heuristics, not verified defects.",
+    "A clean score means no known pattern matched; it does not prove correctness.",
+    "Upstream exits zero for findings, absent input without output, and empty input with a perfect score.",
+    "No scanned-file count or unreadable-file coverage ledger is emitted.",
+    "Local mode scans the filesystem tree, including ignored or untracked files unless the caller first exports a clean Git tree.",
+    "Output includes a timestamp and local repository URI, so raw bytes are not stable and must be sanitized before retention.",
+    "Files over 2 MiB are silently truncated to the first 2 MiB.",
+    "The inherited Go dependency footprint is large; build from a pinned tag rather than invoking go run per scan.",
+    "README says 50 detectors although 52 detector packages are registered; release metadata says 52."
+  ],
+  "required_future_wrapper_gates": [
+    "input must be a clean Git export at a recorded commit",
+    "binary and source commit must be pinned",
+    "output must exist and parse as JSON",
+    "scanner elapsed time and output bytes must be recorded",
+    "scanned-file and eligible-file counts must be independently computed",
+    "timestamp and local path must be removed before durable storage",
+    "known GRRR evidence formats require reviewed suppressions or triage rules",
+    "findings remain advisory and cannot block or authorize anything by themselves"
+  ],
+  "authority": {
+    "trusted_evaluator": false,
+    "mandatory_gate": false,
+    "promotion": false,
+    "admission": false,
+    "replay": false,
+    "production_mutation": false,
+    "merge": false,
+    "push": false
+  }
+}
