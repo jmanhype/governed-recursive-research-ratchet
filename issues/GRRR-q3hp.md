@@ -1,15 +1,15 @@
 ---
 id: GRRR-q3hp
 title: "Bug: capstone lacks explicit executable driver wiring"
-status: in_progress
+status: open
 priority: 0
 type: bug
 labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T21:13:11Z
-content_hash: "sha256:4acd027450d1ef784e92b65a1e1fc4e03a5eb13fe9fa9abf6e7ba2a30105b2a7"
+updated_at: 2026-11-04T21:39:25Z
+content_hash: "sha256:fef9c4d505ffb2c445e76d6a5ef081dfb79627cfd8eff6d3e965ac17bb7bf4f0"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
@@ -917,6 +917,7 @@ status: in_progress
 - 2026-11-04T21:13:11Z status: open -> in_progress
 - 2026-11-04T21:13:11Z auto-follows: linked to predecessor GRRR-888u
 - 2026-11-04T21:13:11Z claimed by dev-GRRR-q3hp
+- 2026-11-04T21:39:25Z status: in_progress -> open
 
 ## Links
 - Parent: [[GRRR-2t3h]]
