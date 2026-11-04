@@ -9,12 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
 updated_at: 2026-11-04T00:42:44Z
-content_hash: "sha256:0f7b1dd525047a92d52ac79d341c2960f539c296456d618e28136d1842cbc78e"
+content_hash: "sha256:9c9f209bfc3fea608807543c377e26eb2b80d10bf8ed76f7d9d26bd7463286fd"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve, GRRR-dbbi]
 assignee: dev-GRRR-888u
 closed_at: 2026-11-04T00:42:44Z
 close_reason: "Accepted: corrected canonical proof passes 9/9; unchanged evidence supports advisory-only use with strict future-wrapper boundaries."
 led_to: [GRRR-6sso]
+blocks: [GRRR-6sso]
 ---
 
 ## Description
@@ -342,9 +343,11 @@ status: delivered
 - 2026-11-04T00:38:12Z status: in_progress -> in_progress
 - 2026-11-04T00:38:12Z auto-follows: linked to predecessor GRRR-dbbi
 - 2026-11-04T00:42:44Z status: in_progress -> closed
+- 2026-11-04T01:05:03Z dep_added: blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-6sso]]
 - Follows: [[GRRR-gge0]], [[GRRR-fmvp]], [[GRRR-34ve]], [[GRRR-dbbi]]
 - Led to: [[GRRR-6sso]]
 

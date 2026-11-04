@@ -9,10 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T01:03:44Z
-content_hash: "sha256:099795d44cb448c6af98ade975a5eea6309ab38af3f155e5711d0c46f72da67a"
+content_hash: "sha256:58a2e5d255355e35522307a74165affc385bf677f410402adc4438e2364b6776"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
-blocked_by: [GRRR-gzgq, GRRR-43i8]
+blocked_by: [GRRR-gzgq, GRRR-43i8, GRRR-888u]
 ---
 
 ## Description
@@ -340,10 +340,11 @@ status: delivered
 - 2026-11-04T00:55:26Z released by speed
 - 2026-11-04T01:03:31Z dep_added: blocked_by GRRR-gzgq
 - 2026-11-04T01:04:36Z dep_added: blocked_by GRRR-43i8
+- 2026-11-04T01:05:03Z dep_added: blocked_by GRRR-888u
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-gzgq]], [[GRRR-43i8]]
+- Blocked by: [[GRRR-gzgq]], [[GRRR-43i8]], [[GRRR-888u]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
 - Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]], [[GRRR-888u]]
 
