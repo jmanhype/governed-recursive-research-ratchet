@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:21:00Z
-content_hash: "sha256:5afce4221543dd251074a002a4945e40ed8702b1e87d49d8cf2815fe893c2753"
+updated_at: 2026-11-04T17:26:22Z
+content_hash: "sha256:170877cb5f48979a7637c26c6cd5158915b8e499409cc05080c3f0f684ce444e"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary]
 assignee: dev-GRRR-wcwy
@@ -331,6 +331,22 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+# Local-source workflow authorization
+
+Operator response: "Authorized and you have enough space now".
+This directly approves the preceding bounded request: local commits, PM delivery,
+and PM-accepted merges into epic/GRRR-2t3h for reviewed source repairs.
+
+It does not authorize main merges, pushes, protected accounting changes, protected
+installation, replay, permanent contract admission, promotion or production changes.
+Source acceptance still requires tests and independent PM review. No missing gate
+may be waived. Prior source-only WIP commit restriction is superseded only for this
+local-source workflow; protected/run restrictions remain intact.
+
+Fresh capacity observation at kickoff: df available10638548KiB, below the replay
+floor16106127360bytes. The operator's space report does not replace measured
+preflight. No cleanup or live execution is authorized by this source-workflow grant.
+
 ## nd_contract
 status: in_progress
 
