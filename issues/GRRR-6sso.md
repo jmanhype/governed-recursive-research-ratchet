@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T03:11:50Z
-content_hash: "sha256:70b770ce006e454b1a6890c05a2edaab79bb35caeb74c9254b55498a01ec86e8"
+updated_at: 2026-11-04T03:11:51Z
+content_hash: "sha256:1d8d662600de863c36517bd3ef55e305c4306b0469d4c4f2b539f8d0491a858f"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -868,3 +868,6 @@ Reviewed package commit `dfb9d6daa1e8b259445c4fb1e22e28373481729a`; raw request 
 Blocking finding: request labels parent `c928791cdaa72df91e61002c40317457b543b032` as `story_current` / `story_head_must_match`, while actual package HEAD is `dfb9d6d...`. Validator trusts caller-supplied claimed head, so package-commit versus runtime-base semantics are not sufficiently distinct.
 
 Required repository-only fix: explicitly separate review/package commit from parent runtime base, rename misleading semantics, and validate both bindings independently during review/preflight. This remains non-authoritative; execution_authorized=false.
+
+### 2026-11-04T03:11:51Z speed
+BLOCKED: Binding rework committed at 51ebc998e7c07018740ec53e389646a5b465cc75, but independent review/human authorization and all seven full capstone ACs remain absent; do not deliver.
