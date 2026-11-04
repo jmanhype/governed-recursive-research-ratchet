@@ -1,17 +1,19 @@
 ---
 id: GRRR-888u
 title: "Evaluate Sean Chatman Anti-Cheat Scorecard"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:42:43Z
-content_hash: "sha256:cea7d17a930863fc530cd76be01de7bf34c3625c52a91c23103b32b7b5d28d92"
+updated_at: 2026-11-04T00:42:44Z
+content_hash: "sha256:3adfa0366affbe5d2a0ae635877b875e1a0e9d2513083dcf869426b6ee472253"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve, GRRR-dbbi]
 assignee: dev-GRRR-888u
+closed_at: 2026-11-04T00:42:44Z
+close_reason: "Accepted: corrected canonical proof passes 9/9; unchanged evidence supports advisory-only use with strict future-wrapper boundaries."
 ---
 
 ## Description
@@ -326,6 +328,7 @@ status: delivered
 - 2026-11-04T00:35:44Z claimed by dev-GRRR-888u
 - 2026-11-04T00:38:12Z status: in_progress -> in_progress
 - 2026-11-04T00:38:12Z auto-follows: linked to predecessor GRRR-dbbi
+- 2026-11-04T00:42:44Z status: in_progress -> closed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
