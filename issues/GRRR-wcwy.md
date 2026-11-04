@@ -9,7 +9,7 @@ created_at: 2026-11-04T16:45:10Z
 created_by: speed
 updated_at: 2026-11-04T17:36:39Z
 content_hash: "sha256:adb4bfc315eca88630028fc4ca9ac9f7c668f0c5b2e2faf62f1672828e55a93c"
-labels: [milestone-1, source-only, security-boundary, delivered]
+labels: [milestone-1, source-only, security-boundary, delivered, accepted]
 assignee: dev-GRRR-wcwy
 follows: [GRRR-ev2w, GRRR-888u]
 closed_at: 2026-11-04T17:36:38Z
