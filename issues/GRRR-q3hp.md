@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T13:37:38Z
-content_hash: "sha256:9c3b289f41698f3769969df6579c17313cd5784c863c76725f09577712dc4847"
+updated_at: 2026-11-04T13:37:44Z
+content_hash: "sha256:aba1d5be3028c96e59fb31b4db5d26a84db6c047562dffd2881cddd4c87479d2"
 blocks: [GRRR-6sso]
 ---
 
@@ -98,7 +98,7 @@ status: new
 
 
 ## Notes
-
+Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocker wiring does not change any capstone AC and does not constitute or authorize VM/replay execution. True capstone closure still requires separately authorized live runtime/evaluator/ledger proof plus all existing review and human gates.
 
 ## History
 - 2026-11-04T13:37:44Z dep_added: blocks GRRR-6sso
