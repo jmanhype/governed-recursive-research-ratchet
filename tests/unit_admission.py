@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -55,12 +56,67 @@ def _valid_auth(contract):
 
 class TestAdmission(unittest.TestCase):
     def setUp(self):
-        # Reset durable registry for clean tests
-        if _admission_mod.REGISTRY_PATH.exists():
-            _admission_mod.REGISTRY_PATH.unlink()
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        original = _admission_mod.REGISTRY_PATH
+        self.addCleanup(setattr, _admission_mod, "REGISTRY_PATH", original)
+        _admission_mod.REGISTRY_PATH = Path(temporary.name) / "REGISTRY.json"
         self.contract = build_contract()
         self.auth = _valid_auth(self.contract)
         self.receipt = copy.deepcopy(VALID_RECEIPT)
+
+    def test_missing_registry_is_empty_without_writing(self):
+        self.assertEqual(_admission_mod._load_registry(), {
+            "consumed_authorizations": [], "admitted_contracts": {},
+        })
+        self.assertFalse(_admission_mod.REGISTRY_PATH.exists())
+
+    def test_corrupt_registry_rejects_without_reset(self):
+        for contents in (b"not JSON", b'{"consumed_authorizations": [', b"\xff"):
+            with self.subTest(contents=contents):
+                _admission_mod.REGISTRY_PATH.write_bytes(contents)
+                with self.assertRaises(AdmissionError):
+                    _admission_mod._load_registry()
+                self.assertEqual(_admission_mod.REGISTRY_PATH.read_bytes(), contents)
+                self.assertFalse(_admission_mod.REGISTRY_PATH.with_suffix(".tmp").exists())
+
+    def test_invalid_registry_shapes_reject(self):
+        invalid = [None, [], "registry", 1, True, {},
+                   {"consumed_authorizations": []}, {"admitted_contracts": {}},
+                   {"consumed_authorizations": [], "admitted_contracts": {}, "extra": 1}]
+        for wrong in (None, {}, "", 1, True):
+            invalid.append({"consumed_authorizations": wrong, "admitted_contracts": {}})
+        for wrong in (None, [], "", 1, True):
+            invalid.append({"consumed_authorizations": [], "admitted_contracts": wrong})
+        for value in invalid:
+            with self.subTest(value=value):
+                _admission_mod.REGISTRY_PATH.write_text(json.dumps(value))
+                with self.assertRaises(AdmissionError):
+                    _admission_mod._load_registry()
+
+    def test_unavailable_registry_metadata_rejects(self):
+        parent = _admission_mod.REGISTRY_PATH.parent
+        parent.chmod(0)
+        try:
+            with self.assertRaises(AdmissionError):
+                _admission_mod._load_registry()
+        finally:
+            parent.chmod(0o700)
+        self.assertEqual(list(parent.iterdir()), [])
+
+    def test_duplicate_state_survives_reload(self):
+        result = admit(self.contract, self.auth, self.receipt)
+        expected = {
+            "consumed_authorizations": [result["authorization_sha256"]],
+            "admitted_contracts": {result["contract_sha256"]: result},
+        }
+        self.assertEqual(_admission_mod._load_registry(), expected)
+        with self.assertRaises(AdmissionError):
+            _admission_mod.consume_authorization(self.auth)
+        with self.assertRaises(AdmissionError):
+            _admission_mod.persist_admission(result)
+        self.assertTrue(recurrence_rejected(result, self.receipt))
+        self.assertEqual(_admission_mod._load_registry(), expected)
 
     def test_valid_contract(self):
         validated = validate_contract(copy.deepcopy(self.contract))
