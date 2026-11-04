@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
 updated_at: 2026-11-04T01:21:14Z
-content_hash: "sha256:fa9960a64d501a8f65f0cf34c058124ffae64d261a3b3316a4f339181549aaa8"
+content_hash: "sha256:2045db589d072502c2d2ba4983b18979e99f14fc33786fd1d53ec1ccd56b618f"
 assignee: dev-GRRR-ev2w
 follows: [GRRR-888u, GRRR-gge0]
 closed_at: 2026-11-04T01:21:13Z
@@ -111,6 +111,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-03.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## Implementation Evidence
 
 PROOF: Formatting supplement to the complete evidence, AC table, and LEARNINGS above; all results refer to the same final commit. No code or claims changed.
