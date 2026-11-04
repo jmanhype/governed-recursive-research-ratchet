@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:31:38Z
-content_hash: "sha256:226ff41be3d08eef293fe5cf53d56e3ce93dd9942496040630740f8f543d49e5"
+updated_at: 2026-11-04T17:31:39Z
+content_hash: "sha256:f2f909d9ee6301936e3bc374752904db5e152e7f6f7c7a64d3e5cee787f866b7"
 blocks: [GRRR-q3hp]
 labels: [milestone-1, source-only, security-boundary, delivered]
 assignee: dev-GRRR-wcwy
@@ -331,6 +331,18 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-04.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence (DELIVERED SOURCE COMPONENT)
 
 PROOF:
