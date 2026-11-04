@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T16:04:26Z
-content_hash: "sha256:0b9a055566332eae01b26eb16996e3f4022f1d3fefc662b0d0548cd4a016ccc7"
+updated_at: 2026-11-04T16:04:39Z
+content_hash: "sha256:369ece5ad1e1349dcdc8eeecfb56324db32c99bc11b662e465ed45610d955147"
 blocks: [GRRR-6sso]
 assignee: dev-GRRR-q3hp
 follows: [GRRR-ev2w]
@@ -104,6 +104,21 @@ Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocke
 2026-11-04 fresh capacity update after operator reported more space: df -k / and /System/Volumes/Data both returned 15110888 KiB available = 15473549312 bytes. This clears only the 15350000000-byte preparation CAPACITY floor by 123549312 bytes. It remains below the 16106127360-byte replay CAPACITY floor by 632578048 bytes. These arithmetic checks are not full preparation/preflight approval or VM runtime proof. Source floors verified at reviewed package 51ebc998e7c07018740ec53e389646a5b465cc75. Existing v4 runtime incompatibility and missing authenticated capability findings remain unchanged; no VM/replay, cleanup, protected access/mutation, budget reconciliation, source edit, commit, merge or push occurred.
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 2026-11-04 proposed v4 evaluator interface contract retained below. Artifact /tmp/grrr-q3hp-v4-interface-contract-20261104.md,225 lines,SHA256 f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3. PROPOSED, NOT ACCEPTED, NOT DEPLOYED; no source implementation or live capability claimed. It defines a minimal source-only contract/client/read-only refusal-service slice and separately gated later adapter/migration/authorization work. Independent review is still required; raw reviewed JSON/Markdown request-binding semantics must be made explicit before implementation. Existing 11 common.GATES match the approved capstone inventory; no missing-gate concern is asserted. User-directed remediation does not silently authorize installation, v4 writes, new revision execution, reconciliation or capstone acceptance.
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator-directed prerequisite repair selected by pvg loop next after native deferral of escalated GRRR-6sso; rejection-x3 and all capstone ACs remain intact.
+- Claimed atomically via pvg story claim. Story branch/worktree prepared from epic 0b2365e; no source implementation started.
+- Proposed first-slice interface contract f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3 is under independent review; code changes remain gated by that review.
+
+### proof
+- [ ] AC #1: full implementation mapping remains incomplete; first source-only slice proposal review pending.
+- [ ] AC #2: no prepare runtime capability implemented or certified.
+- [ ] AC #3: no run/replay authorized for new revisions.
+- [ ] AC #4: no new code/tests executed yet.
+- [ ] AC #5: denied authority matrix remains in force; no protected mutation or deployment.
+
 # GRRR-q3hp — proposed evaluator interface contract, 2026-11-04
 
 **PROPOSED / NOT ACCEPTED / NOT DEPLOYED.** This specifies a source-only first
