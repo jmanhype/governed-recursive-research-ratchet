@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
 updated_at: 2026-11-04T19:35:33Z
-content_hash: "sha256:aa39682e7c07006ec8dd245ca77884dc23c0a751037fe9fec686d72198346973"
+content_hash: "sha256:799b17a35863f95bc03068e797c34e67ec4bad08dc787b8342671edf6519de5e"
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
 closed_at: 2026-11-04T19:32:00Z
 close_reason: "Independent security/PM review approved exact 2dc0b3a: eight source-only ACs verified; raw hashes/tests and parent-filter false-positive checked. No runtime or full capstone authority."
+led_to: [GRRR-q3hp]
 ---
 
 ## Description
@@ -272,5 +273,6 @@ status: accepted
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Follows: [[GRRR-wcwy]], [[GRRR-ev2w]]
+- Led to: [[GRRR-q3hp]]
 
 ## Comments

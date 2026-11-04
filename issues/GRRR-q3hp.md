@@ -1,18 +1,19 @@
 ---
 id: GRRR-q3hp
 title: "Bug: capstone lacks explicit executable driver wiring"
-status: open
+status: in_progress
 priority: 0
 type: bug
 labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T19:35:34Z
-content_hash: "sha256:791c5db79b4524b28c178b9428d6624057c8e682c8e7263abd0467160b2037b4"
+updated_at: 2026-11-04T19:40:27Z
+content_hash: "sha256:ec66d20b6d969eef328df5d1bf47c0c9027d6edcfc35dc3934e1361d0418ac85"
 blocks: [GRRR-6sso]
-follows: [GRRR-ev2w, GRRR-wcwy]
+follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
+assignee: dev-GRRR-q3hp
 ---
 
 ## Description
@@ -892,11 +893,14 @@ Current result: GRRR-q3hp AC1 mapping is blocked by concrete missing trusted cap
 - 2026-11-04T18:43:15Z status: in_progress -> open
 - 2026-11-04T18:43:15Z released by speed
 - 2026-11-04T19:32:00Z dep_removed: was_blocked_by GRRR-yt6a
+- 2026-11-04T19:40:27Z status: open -> in_progress
+- 2026-11-04T19:40:27Z auto-follows: linked to predecessor GRRR-yt6a
+- 2026-11-04T19:40:27Z claimed by dev-GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
 - Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]]
-- Follows: [[GRRR-ev2w]], [[GRRR-wcwy]]
+- Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]]
 
 ## Comments
