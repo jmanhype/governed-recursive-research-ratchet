@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:38:13Z
-content_hash: "sha256:1c231c28f6d93794a4cc6d55fba309f0517112d3359dd876a91ba99268fe28b3"
+updated_at: 2026-11-04T00:39:03Z
+content_hash: "sha256:df64cc1a3d71fb7552e6250c19b31245ca155af29597e714bb480f9decdc4f00"
 follows: [GRRR-gge0, GRRR-fmvp, GRRR-34ve, GRRR-dbbi]
 assignee: dev-GRRR-888u
 ---
@@ -464,3 +464,35 @@ status: rejected
 
 ### proof
 - [ ] AC #1-#7: substantive evidence was reviewed, but authoritative delivery proof does not pass the mandatory PM delivery gate.
+
+### 2026-11-04T00:39:03Z speed
+## Authoritative Delivery Contract (Proof Rework)
+
+Evidence commit: 86ace00860f62f302f4f633eefa6c98b5cce8252. This compact EOF contract overrides the preceding rejected PM contract for re-delivery; the full appended implementation evidence, commands, and unchanged evidence boundaries remain above.
+
+### AC Verification
+
+| AC # | Requirement | Recorded Evidence | Status |
+|---|---|---|---|
+| 1 | Exact pinned source/tool identities. | v26.8.29, commit 5271351d079f79634de2f8b91970b80daf9bcb86, Apache-2.0, module/Go/binary identities recorded. | PASS |
+| 2 | Detector registry/count and all pattern tests. | 52 registered packages; 53 pattern-related packages passed. | PASS |
+| 3 | Local pinned build and privacy boundary. | Binary SHA-256 d6df6a07b5d818bf11bed026455acf531307afb39c92bf7b58cae0c93883ee4e; no remote scan or credentials. | PASS |
+| 4 | Full-tree and five-file subset evaluation. | Target cf3eb55422ba18898541318c138cd82543419d12; outputs, hashes, elapsed behavior, scores, findings, and patterns recorded. | PASS |
+| 5 | Seeded, absent, empty, and rerun controls. | Five-warning positive, absent-input failure, empty-root weakness, and timestamp-normalized stable rerun recorded. | PASS |
+| 6 | GRRR false positives and advisory signals. | Accounting/prose false-positive classes and useful signals classified with counts/examples. | PASS |
+| 7 | Integration and trust boundary. | Advisory-only; no trusted/mandatory authority; future wrapper must validate output and coverage. | PASS |
+
+LEARNINGS:
+- The delivery gate requires canonical `### AC Verification` syntax, not merely an equivalent custom heading.
+- Rejection-state labels must be cleared by atomic `pvg story deliver`, never manual label edits.
+- Proof-format defects should be repaired from immutable evidence without rerunning external scans.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Evidence commit 86ace00860f62f302f4f633eefa6c98b5cce8252.
+- Canonical AC table and LEARNINGS appended; source/evidence files and external results unchanged.
+
+### proof
+- [x] AC #1 through AC #7 verified from the unchanged committed evidence.
