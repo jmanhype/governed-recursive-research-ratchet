@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T05:09:56Z
-content_hash: "sha256:073043fdcfd04431723053962a84c141a5b65ef9d9146b68a792beab92721272"
+updated_at: 2026-11-04T12:52:12Z
+content_hash: "sha256:8ffc13e4cca7ab909b7629a19106ae296d39c9da5428abe123a6de6f469780de"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -1027,3 +1027,14 @@ The operator confirmed, through the active voice/text interface, that the report
 Basis transcript: `/tmp/grrr-accessibility-preflight-20261104-v2.txt`, SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a`, 5,621 bytes, started `2026-11-04T04:15:13Z`. The transcript contains keyboard-only command help, plain-text/Markdown review, decision choices, emergency stop, recovery wording, and no ANSI color escapes.
 
 This records the accessibility preflight only. It does not authorize VM/QEMU, protected access, replay, admission, promotion, production mutation, external calls, merge, or push.
+
+### 2026-11-04T12:52:12Z speed
+## 2026-11-04 Accessibility Result Contested — Gate Restored to Unmet
+
+The operator explicitly stated they were confused and did not knowingly perform the accessibility walkthrough or understand the reported one-minute result. The earlier voice confirmation is therefore no longer accepted as satisfying the accessibility gate.
+
+Retained artifacts remain audit history only:
+- `docs/evidence/milestone-packet/ACCESSIBILITY-PREFLIGHT-20261104.txt` SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a`
+- `docs/evidence/milestone-packet/ACCESSIBILITY-PREFLIGHT-20261104.json` SHA-256 `f8a67546627d33799d1d4518106ce9139258d2c459b167c0d6610a5d33bf02af`
+
+They must not be used as proof, review-time accounting, runtime authorization, or capstone acceptance. A fresh informed walkthrough or a separately reviewed requirement change is required. No runtime work is authorized by this note.
