@@ -1,18 +1,19 @@
 ---
 id: GRRR-yt6a
 title: "Source-only durable capstone grant and operation journal"
-status: in_progress
+status: closed
 priority: 0
 type: task
 labels: [milestone-1, source-only, security-boundary, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T19:28:40Z
-content_hash: "sha256:5d63e7eecd78922d201b05239b0e8402d6150331018a00ac67f44d966cff199d"
-blocks: [GRRR-q3hp]
+updated_at: 2026-11-04T19:32:00Z
+content_hash: "sha256:62e1f9511ad5b5b065c00b6e5d893855db4da0512528841791bd113d3f95b1d8"
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy, GRRR-ev2w]
+closed_at: 2026-11-04T19:32:00Z
+close_reason: "Independent security/PM review approved exact 2dc0b3a: eight source-only ACs verified; raw hashes/tests and parent-filter false-positive checked. No runtime or full capstone authority."
 ---
 
 ## Description
@@ -196,10 +197,11 @@ status: delivered
 - 2026-11-04T18:43:35Z claimed by dev-GRRR-yt6a
 - 2026-11-04T19:28:39Z status: in_progress -> in_progress
 - 2026-11-04T19:28:39Z auto-follows: linked to predecessor GRRR-ev2w
+- 2026-11-04T19:32:00Z status: in_progress -> closed
+- 2026-11-04T19:32:00Z dep_removed: no_longer_blocks GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-q3hp]]
 - Follows: [[GRRR-wcwy]], [[GRRR-ev2w]]
 
 ## Comments
