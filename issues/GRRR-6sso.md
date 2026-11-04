@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:46:41Z
-content_hash: "sha256:95ce4f2edc9cf49f8d6f2b398b678e681a0a831a2e29ea49588a8c77e373512a"
+content_hash: "sha256:6388ab9b7c3ec6396adc1d09fdc20c38848dbc0fb816634b0127f619aa4d4f91"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
 assignee: dev-GRRR-6sso
@@ -581,3 +581,8 @@ status: rejected
 ## 2026-11-04 Uncommitted Epic Selector/Jev WIP Preservation
 
 Before merging accepted GRRR-888u, the unrelated epic-root WIP was preserved without review or acceptance in Git stash `PRESERVE-GRRR-6sso-selector-jev-WIP-before-GRRR-888u-merge`. Files represented: research/selector_comparison.py, tests/unit_selector_comparison.py, and research/jev_adapter.py. This stash is not evidence, not delivered code, and not authorization to merge or promote GRRR-6sso.
+
+### 2026-11-04T00:46:41Z speed
+## 2026-11-04 Capstone Rework Dispatch Base
+
+story/GRRR-6sso was fast-forwarded from 5b50e29272819da205fc09e051f82c2639a7a197 to accepted epic/GRRR-2t3h commit 845b47d221773eb4157491d35f57dce47ce8afe6 before the second-rejection rework. The preserved stash remains unreviewed and is excluded from the rework base.
