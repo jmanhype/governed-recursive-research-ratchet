@@ -7,8 +7,8 @@ type: task
 parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
-updated_at: 2026-11-04T17:36:48Z
-content_hash: "sha256:40f190ab5e0828069ec3c8cc358fdbdff279449a24da578bf3c9b41e28eb15cb"
+updated_at: 2026-11-04T17:40:07Z
+content_hash: "sha256:2fa0d818e5bb6cb0e9fe1296229cf3e98801fbc2836516b5eaa9b3b165794cf1"
 labels: [milestone-1, source-only, security-boundary, accepted]
 assignee: dev-GRRR-wcwy
 follows: [GRRR-ev2w, GRRR-888u]
@@ -332,7 +332,12 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## Notes
-
+## Accepted local source integration
+- Independent PM accepted exact source commit8cf7d0d86d5103de3709d432a8c35b8101020440; live pvg nd verified closed+accepted. PM report SHA256 cd1001a1da72839391d0bd10c857769a9f040c41ac53fd25917737c1537dfdfe, retained at /tmp/grrr-wcwy-pm-review-20261104.md and .git/paivot/wip/GRRR-wcwy/parent-verify-20261104/.
+- Authorized local epic merge9a439a09161b7c62da8acc36a9cefef8f2924faf has exact parents0b2365e30ab5858cb419f4f4ce9b2ce001850541 and8cf7d0d86d5103de3709d432a8c35b8101020440. Merged tree is byte-identical to accepted source tree; clean root.
+- pvg story merge GRRR-wcwy and its explicit --base epic/GRRR-2t3h variant both refused because this repository has NO origin remote. No remote was invented and no tool implementation/configuration was changed. Used explicit operator-authorized local git merge --no-ff of the pinned accepted SHA only after freshly verifying closed+accepted, exact branch/base/head, clean index/tree, and ancestry. This is not a stale/unaccepted hand merge or a push bypass. Script /tmp/grrr-wcwy-local-merge-20261104.py and exact receipt .git/paivot/wip/GRRR-wcwy/merge-20261104/receipt.json.
+- Independently reran merged-tree evaluator-contract source suite on all3 interpreters: EACH19tests,0fail/0error/0skip, exit0. Raw outputs retained in merge evidence directory.
+- Full GRRR-q3hp wiring and GRRR-6sso capstone remain unfinished. No protected access/install/write/reconciliation/stop release/VM/replay, new research call, credential use, admission, promotion, production/main change or push. Source-only acceptance remains distinct from runtime authority.
 
 ## nd_contract
 status: accepted
