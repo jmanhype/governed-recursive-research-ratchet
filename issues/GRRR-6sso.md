@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T04:03:22Z
-content_hash: "sha256:8b41ebed7a77a13668407ae6e311a79ba1b640cef19116f4f2cc51c035b4e840"
+updated_at: 2026-11-04T04:13:53Z
+content_hash: "sha256:94efdb2a9fcb350b2e681bf6f5aadaf5935af320fcd15b9eefd02c7953baa699"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -968,3 +968,13 @@ Fresh reviewer verdict: `COST_BOUND_REVIEW: APPROVED`.
 Verified all four Jev runs, model `jev-1.14.0`, 32 valid responses per run, 12,548 input / 736 output tokens per run, cumulative 50,192 input / 2,944 output tokens, and official public pricing $42/Btok input with free output. Arithmetic: pilot `$0.000527016`, confirmatory `$0.001581048`, cumulative `$0.002108064`. Full `$50` incremental reservation remains retained.
 
 Approval is a conservative public-rate preflight cost bound only. It does not prove account invoice, balance debit, credits, tax, final settlement, or authorize capstone execution. Approved E2E request bytes remain unchanged.
+
+### 2026-11-04T04:13:53Z speed
+## 2026-11-04 Conservative Jev Cost-Bound Supplement — Committed / Capstone Still Blocked
+
+Supplement commit: `b1d8bfd702fb577d1c437ffeb12f3ab6ebe1d751`.
+
+- `docs/evidence/milestone-packet/JEV-COST-BOUND.json` SHA-256 `24cae1cfc1042079bdc776696646253fd33d6744a7397a731515a523a2f69c73`
+- `docs/evidence/milestone-packet/JEV-COST-BOUND.md` SHA-256 `acca35f9953e4e096e44e6833b94dc73e7cd57a60efe38a062252dfe04501460`
+
+Parent independently checked exact model/rate/usage/arithmetic, full $50 reservation, unresolved settlement, unchanged approved request bytes, JSON semantics, `pvg verify`, and diff checks. The capstone remains unaccepted and blocked; accessibility/review-time closure and exact runtime authorization are still required.
