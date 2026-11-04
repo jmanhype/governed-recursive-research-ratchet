@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T00:55:45Z
-content_hash: "sha256:2c8560a2333d53f49fcd162a38295e634c5fa5f1c2a3512f04bdc3b0ef1c1083"
+content_hash: "sha256:667030b0fd6ef25d875a01daa9c27b3550920b7d84b4d5c405ae36c6acb373bb"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
 ---
@@ -731,4 +731,25 @@ status: new
 - [ ] AC #5: complete adversarial and export-integrity surface-parity evidence missing.
 - [ ] AC #6: actual keyboard/screen-reader walkthrough and measured review burden missing.
 - [ ] AC #7: exact mapping provided, but full runtime/cost/recovery closure still missing.
+
+
+### 2026-11-04T00:55:45Z speed
+## nd_contract
+status: new
+
+### evidence
+- BLOCKED, not delivered. Released claim after repository-only rework; source b0e8d8119c8ec1194874c2f9aa347416651c415d, verification ff0aa463dca9523490c1a93a730cfe8a5cf19756.
+- Implementation Evidence, CI/Test Results, Commands run, Summary, exact SHA/output hashes and AC verification appear in the appended notes and docs/evidence/milestone-packet/VERIFICATION.md (SHA256 aeaa6cd76c0b8dc722d8eba9dcfba8a1c28a5fca5a211c44d2bddbe7b2a99342).
+- 4/4 real checklist CLI regressions passed on each of Python 3.14.3 and 3.12.7; required milestone command exits 1: 11 gates + 7 journeys not-run, 0 executed, 0 skipped. Historical provenance 19/19 hashes matched only.
+- Full capstone and production registry defect are unresolved. No protected/external execution or fabricated success. Human authorization, developer delivery and PM acceptance remain separate.
+
+### proof
+- [ ] AC #1: full authorized clean-environment operator journey missing.
+- [ ] AC #2: >=20 seed full mandatory system receipts missing; fixture-only results cannot substitute.
+- [ ] AC #3: selector measurement exists; actual USD and cumulative equal-budget cost closure unknown.
+- [ ] AC #4: complete hung-runner/race/crash/recovery/restoration evidence missing.
+- [ ] AC #5: complete adversarial and export-integrity surface-parity evidence missing.
+- [ ] AC #6: actual keyboard/screen-reader walkthrough and measured review burden missing.
+- [ ] AC #7: exact mapping provided, but full runtime/cost/recovery closure still missing.
+
 
