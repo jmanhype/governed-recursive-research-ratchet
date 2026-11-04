@@ -1,0 +1,101 @@
+{
+  "base_revision": "845b47d221773eb4157491d35f57dce47ce8afe6",
+  "scope": "historical-provenance-only",
+  "artifacts": {
+    "adaptation": {
+      "path": "reports/adaptation-cycle-1.json",
+      "revision": "cf3eb55422ba18898541318c138cd82543419d12",
+      "sha256": "550944a2b81b1e52cf4c9aaf410b5e43bcb5758aa0eb1bfa9ba4a63094d352ba"
+    },
+    "admission": {
+      "path": "docs/evidence/contract-admission/ADMISSION.json",
+      "revision": "0503286612075c06d0acda654b740f12ee9a873f",
+      "sha256": "c875e5668ccbc3f79735045fc69899bddd675552207bb3d34e40fc27a7326686"
+    },
+    "architecture": {
+      "path": "docs/ARCHITECTURE.md",
+      "revision": "0fa26e4cf6f0c35b19fb6f1f75259932b00a086e",
+      "sha256": "c06101668429195596a4d2bf4e4731d02ae0a0b870da93a50bbe6c9f4382add0"
+    },
+    "authorization": {
+      "path": "docs/evidence/contract-admission/AUTHORIZATION.json",
+      "revision": "0503286612075c06d0acda654b740f12ee9a873f",
+      "sha256": "55dbedc3e03c31a61830e2e83969243cac7958f86ee5b86d0ba488b77fe4e911"
+    },
+    "business": {
+      "path": "docs/BUSINESS.md",
+      "revision": "67ea3709b0ad1d3d496d90e99af3feca8b25f745",
+      "sha256": "7d56b562c4b3c194e2ee76ccdd4be68aa22ff0f8b749bdefacbd03e868a5dd82"
+    },
+    "contract": {
+      "path": "docs/evidence/contract-admission/CONTRACT.json",
+      "revision": "0503286612075c06d0acda654b740f12ee9a873f",
+      "sha256": "d9ef76d4f99f8d354fdbeb7473a88423728cdc46ff15800f7b58109dad5a4910"
+    },
+    "corpus": {
+      "path": "docs/evidence/validated-corpus/v2.2-batched-run/aggregate.json",
+      "revision": "3f6d8dcfb407438591ad13c9bc14d60886bb0d73",
+      "sha256": "93f2558864a7bdfa01dd0e8042ae8330834659ef71812f17a6ddc9efac3c5cc4"
+    },
+    "design": {
+      "path": "docs/DESIGN.md",
+      "revision": "67ea3709b0ad1d3d496d90e99af3feca8b25f745",
+      "sha256": "97f0e36febd2ad4dce43cc2912db477735f82349d9d3f965d22216d6a566b252"
+    },
+    "durable": {
+      "path": "docs/evidence/durable-evidence/attempt-20261021T204415Z-c360927f/summary.json",
+      "revision": "1c2a1c595703abf6a94e96792c5f1deb60841ca8",
+      "sha256": "d7b8d4c14510a689f9742edba1f5a7d8019b58cfd191bce9b48ba4cb421556c6"
+    },
+    "export_verification": {
+      "path": "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/VERIFY.md",
+      "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+      "sha256": "f73589682a553d48d6a6c452720d030e087f07a30e2bc598ca09232dc698cecb"
+    },
+    "jev_design": {
+      "path": "corpus/evaluation-plan-v2-proposed.json",
+      "revision": "9e107609db76022ed6d8e138cbbece2e41d634ee",
+      "sha256": "97ec4b8ccc34b3fc4da4fcfbef33b49bbb3f4f1c445cfecdb752715ddf034be1"
+    },
+    "jev_manifest": {
+      "path": "docs/evidence/jev-selector-measurement/CONFIRMATORY-SHA256SUMS",
+      "revision": "5b50e29272819da205fc09e051f82c2639a7a197",
+      "sha256": "0632b43338155d0cf9802dc21079b2aa66dc6bb11a3710f312cf3dc546788d36"
+    },
+    "jev_result": {
+      "path": "docs/evidence/jev-selector-measurement/three-arm-result-20261103T214701Z/report.json",
+      "revision": "5b50e29272819da205fc09e051f82c2639a7a197",
+      "sha256": "b7bb2ec8717e8921e16f9a3e312f6ad46839a125634dc6e3d144499cc841fefb"
+    },
+    "jev_review": {
+      "path": "docs/evidence/jev-selector-measurement/three-arm-result-20261103T214701Z/REVIEW-APPROVED.md",
+      "revision": "5b50e29272819da205fc09e051f82c2639a7a197",
+      "sha256": "57d71f12f21f0f0a6407923fc8c1137e819b7ecf3d297670e0b58a5d96cc4db1"
+    },
+    "lifecycle": {
+      "path": "docs/evidence/replay-authority/replay-result/lifecycle.json",
+      "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+      "sha256": "4f9c08584c72b4dc8cf0e878ae901007a97024ab8d60889987e5dba9c76ca795"
+    },
+    "replay_receipt": {
+      "path": "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/objects/78fde524d9562f6cb28df336512b3ca84bc8d72c72b47cd71f1a47516613ab4e",
+      "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+      "sha256": "78fde524d9562f6cb28df336512b3ca84bc8d72c72b47cd71f1a47516613ab4e"
+    },
+    "scorecard": {
+      "path": "docs/evidence/anti-cheat-scorecard/evaluation.json",
+      "revision": "86ace00860f62f302f4f633eefa6c98b5cce8252",
+      "sha256": "2bcaa7cdaacc6b8d642846c498fcf1e93655948afa2cd1a8463fcbc36359bd12"
+    },
+    "snapshot": {
+      "path": "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe/snapshot.json",
+      "revision": "ff600fff656ef8570857291e6b0a79fb2862ce64",
+      "sha256": "ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689"
+    },
+    "stop": {
+      "path": "docs/evidence/safe-stop/attempt-20261021T211422Z-9f4ee3e0/manifest.json",
+      "revision": "3f4a9cf2c52ae5992f76ff5350e63518ba1fad83",
+      "sha256": "88c4768aeee38a36c3dafb07480978515fceec365658b171278bce945da811cc"
+    }
+  }
+}

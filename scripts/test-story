@@ -4,9 +4,14 @@ from pathlib import Path
 import subprocess
 import sys
 ROOT = Path(__file__).resolve().parents[1]
+if sys.argv[1:2] == ['milestone-e2e']:
+    result = subprocess.run([sys.executable, '-I', '-S', '-B',
+                             str(ROOT / 'tests/e2e/milestone.py'), *sys.argv[2:]],
+                            cwd=ROOT, timeout=120)
+    raise SystemExit(result.returncode)
 if sys.argv[1:] not in (['bounded-challenge'], ['offline-preflight'], ['trusted-observation'],
                         ['validated-corpus'], ['durable-evidence'], ['safe-stop'], ['independent-replay']):
-    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|validated-corpus|durable-evidence|safe-stop|independent-replay', file=sys.stderr)
+    print('Usage: ./scripts/test-story bounded-challenge|offline-preflight|trusted-observation|validated-corpus|durable-evidence|safe-stop|independent-replay|milestone-e2e [--json]', file=sys.stderr)
     raise SystemExit(2)
 if sys.argv[1] == 'offline-preflight':
     import json
