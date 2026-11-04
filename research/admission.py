@@ -52,13 +52,25 @@ REGISTRY_PATH = Path(__file__).resolve().parent.parent / "docs/evidence/contract
 _registry_lock = threading.Lock()
 
 
-def _load_registry():
-    if REGISTRY_PATH.exists():
-        try:
-            return json.loads(REGISTRY_PATH.read_bytes())
-        except (json.JSONDecodeError, OSError):
-            pass
-    return {"consumed_authorizations": [], "admitted_contracts": {}}
+def _load_registry() -> dict:
+    # Only an absent directory entry permits initialization. In particular,
+    # exists() hides dangling links (and some access errors) as missing state.
+    try:
+        REGISTRY_PATH.lstat()
+    except FileNotFoundError:
+        return {"consumed_authorizations": [], "admitted_contracts": {}}
+    except OSError as exc:
+        raise AdmissionError("admission registry is unavailable") from exc
+    try:
+        registry = json.loads(REGISTRY_PATH.read_bytes())
+    except (ValueError, OSError, RecursionError) as exc:
+        raise AdmissionError("admission registry is unreadable or corrupt") from exc
+    if (not isinstance(registry, dict)
+            or set(registry) != {"consumed_authorizations", "admitted_contracts"}
+            or not isinstance(registry["consumed_authorizations"], list)
+            or not isinstance(registry["admitted_contracts"], dict)):
+        raise AdmissionError("admission registry has invalid version-1 structure")
+    return registry
 
 
 def _save_registry(registry):
