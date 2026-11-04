@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T05:06:21Z
-content_hash: "sha256:e0ee2f4d34646e69445b3fbde637b389a854387f1564d6cd2674ec5d475b24b2"
+updated_at: 2026-11-04T05:09:56Z
+content_hash: "sha256:804aec8a480384482ca322eca609208862c20c876e9cd50aa70f47129f25fe98"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -118,6 +118,32 @@ status: new
 
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
+## 2026-11-04 Accessibility Preflight Evidence — Committed / Capstone Still BLOCKED
+
+Narrow repository-only evidence commit `51fe3084f650f1b238ab4c704bb8ccec9a410416` on `story/GRRR-6sso`, parent `b1d8bfd702fb577d1c437ffeb12f3ab6ebe1d751`:
+
+- `docs/evidence/milestone-packet/ACCESSIBILITY-PREFLIGHT-20261104.txt` SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a`, 5,621 bytes. `cmp` against `/tmp/grrr-accessibility-preflight-20261104-v2.txt` passed, so bytes are unchanged.
+- `docs/evidence/milestone-packet/ACCESSIBILITY-PREFLIGHT-20261104.json` SHA-256 `f8a67546627d33799d1d4518106ce9139258d2c459b167c0d6610a5d33bf02af`. JSON parse and exact-field assertions passed; it records `execution_authorized=false` and `runtime_authority=false`.
+- Transcript checks found no ESC/color escape and found the required `keyboard`, `text`, `markdown`, `decision`, `stop`, and `recovery` vocabulary.
+- `pvg verify` on both files: PASSED (0 files scanned, 0 issues). `git diff --check`, `git diff --cached --check`, and parent-to-HEAD diff check passed. The commit changes only these two files.
+- This preflight does not satisfy the full AC #6 runtime keyboard/screen-reader journey or any other full-capstone AC. No protected access, network, secret, VM/QEMU, replay, admission, production mutation, merge, push, or runtime execution authority is granted.
+
+## nd_contract
+status: new
+
+### evidence
+- Narrow accessibility evidence committed at `51fe3084f650f1b238ab4c704bb8ccec9a410416`; transcript byte/hash identity, JSON parse/fields, pvg verify, and Git diff checks passed.
+
+### proof
+- [x] Narrow task: exact operator accessibility transcript and non-authoritative JSON sidecar preserved with verification.
+- [ ] AC #1: full authorized operator journey remains absent.
+- [ ] AC #2: full >=20-seed mandatory-system proof remains absent.
+- [ ] AC #3: cumulative equal-budget/cost closure remains incomplete.
+- [ ] AC #4: full stop/race/crash/recovery/restoration proof remains absent.
+- [ ] AC #5: full adversarial/export-integrity surface-parity proof remains absent.
+- [ ] AC #6: full runtime keyboard/screen-reader journey and measured review closure remain absent.
+- [ ] AC #7: full immutable runtime/cost/warning/rollback closure remains absent.
+
 ## 2026-11-04 Binding Rework — Still BLOCKED, Not Delivered
 
 Repository-only corrected package commit: `51ebc998e7c07018740ec53e389646a5b465cc75` on `story/GRRR-6sso`. Immutable runtime base remains `c928791cdaa72df91e61002c40317457b543b032`; Git ancestry was verified. The package SHA is deliberately absent from request JSON and must be bound externally by independent review/human authorization.
