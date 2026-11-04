@@ -8,8 +8,8 @@ labels: [milestone-2, research, external-tooling, security-review, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-03T23:26:01Z
 created_by: speed
-updated_at: 2026-11-04T00:18:41Z
-content_hash: "sha256:52f43a547fc111d3003def7e58a6c27627974bf9ce68629cc92695a35affd195"
+updated_at: 2026-11-04T00:19:13Z
+content_hash: "sha256:be30d51515ea9a7192e291009045708d8848c77fbab7d6588ffb637d26729b78"
 assignee: dev-GRRR-888u
 follows: [GRRR-gge0, GRRR-fmvp]
 ---
@@ -303,3 +303,51 @@ status: delivered
 
 ### proof
 - [x] AC #1 through AC #7 independently verified.
+
+### 2026-11-04T00:19:13Z speed
+## Implementation Evidence
+
+Summary: Authoritative per-AC delivery proof for the completed advisory-only Anti-Cheat Scorecard evaluation.
+
+Commit SHA: 86ace00860f62f302f4f633eefa6c98b5cce8252.
+
+### CI/Test Results
+
+Commands run:
+- go test ./internal/llmcheat/patterns/... -count=1 — exit 0
+- go build -o /tmp/anti-cheat-scorecard-v26.8.29 . — exit 0
+- full target scan — exit 0
+- five-file subset scan — exit 0
+- seeded control — exit 0
+- absent-input control — exit 0 with no output
+- empty-root control — exit 0
+- subset rerun — exit 0
+- pvg verify/gates — PASS
+- git diff --check — PASS
+
+## AC Verification
+
+- [x] AC #1: exact repository/tag/commit/license/module/tool identities verified.
+- [x] AC #2: 52 detector packages, seven categories, and 53 pattern-related tests verified.
+- [x] AC #3: pinned local binary identity and privacy boundary verified.
+- [x] AC #4: full and five-file target scans recorded with hashes and counts.
+- [x] AC #5: seeded, absent, empty, and rerun controls recorded.
+- [x] AC #6: false-positive classes and useful advisory signals classified.
+- [x] AC #7: advisory-only boundary and all authority flags recorded.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 86ace00860f62f302f4f633eefa6c98b5cce8252.
+- All pattern tests and local controls completed.
+- Independent reviewer returned ANTI_CHEAT_EVAL_REREVIEW: APPROVED.
+
+### proof
+- [x] AC #1: pinned source identity verified.
+- [x] AC #2: detector registry/count and tests verified.
+- [x] AC #3: pinned local binary identity and privacy boundary verified.
+- [x] AC #4: full and subset target scans recorded.
+- [x] AC #5: deterministic and failure-mode controls recorded.
+- [x] AC #6: false positives and useful signals classified.
+- [x] AC #7: advisory-only trust boundary recorded.
