@@ -8,8 +8,8 @@ labels: [milestone-1, source-only, security-boundary]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T18:43:35Z
-content_hash: "sha256:9e2104e3e5d44acb67055922c965239d4f837f09dc83447fb3e37c6fc055fd91"
+updated_at: 2026-11-04T18:45:50Z
+content_hash: "sha256:d5cf18e68915cd3ec77d060b2c120ebe68f6e9e5cd25bd7a18b176b599c48b4f"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-yt6a
 follows: [GRRR-wcwy]
@@ -94,7 +94,17 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Selected by pvg loop next and claimed atomically. Isolated source worktree .claude/worktrees/dev-GRRR-yt6a on story/GRRR-yt6a, base9a439a09161b7c62da8acc36a9cefef8f2924faf.
+- One bounded security/concurrency implementation delegated to /root/implement_capstone_journal. Exact source design/ACs in Description; no recursive delegation or protected/runtime authority.
+- Operator authorized local source commits/PM delivery/PM-accepted epic integration. Existing three interpreters and stdlib SQLite only; tiny public fixtures, no VM or protected access.
+
+### proof
+- [ ] AC1-8 implementation, tests and independent review pending.
+- [x] Scope: q3hp remains blocked; no capstone completion or live authority inferred.
 
 ## History
 - 2026-11-04T18:43:15Z dep_added: blocks GRRR-q3hp
