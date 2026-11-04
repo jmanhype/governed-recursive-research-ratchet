@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T21:39:26Z
-content_hash: "sha256:20987072a424f6a8c255ad491ae6e30a2412db1a959190f0bff7da930134fb17"
+updated_at: 2026-11-04T21:41:26Z
+content_hash: "sha256:4c9c5fdef6bb5240405cc4c3884bd05864bb043943492858eae60f5ebece869f"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
@@ -894,6 +894,22 @@ status: in_progress
 - [ ] AC #1: complete concrete backend/driver mapping accepted; design work ongoing.
 - [ ] AC #2-4: real prepare/run source wiring and source/runtime evidence still missing.
 - [x] AC #5 boundary: no protected access, allowance/reconciliation/stop release, VM/replay, admission/promotion, production/main effect or push.
+
+## nd_contract
+status: new
+
+### evidence
+- Integrated backend design accepted for SOURCE implementation only: acceptance55155e52a5543325b1b071ca66b596e3795fa9456f04e6fda0efb9ce43e425d1; independent bounded review2e6d50ddd3e638365284f344cc5412975362cd6d7ee94dc87651e402b8b9d3d3. Original rejection preserved; exact precedence/inputs archived .git/paivot/wip/GRRR-q3hp/integrated-contract-review-20261104/.
+- Review resolved durable campaign transitions/stop-pending, immutable binding-only Plan provenance, and independently stored actual-plan prelaunch review. Coordinator also corrected Ledger's injected version1 compatibility and froze the exact local reviewer/context boundary. No strict v1 freshness or journal schema weakened.
+- Dependency GRRR-k3j7 created for ONE substantive executable backend. pvg loop next selected it; claimed dev-GRRR-k3j7 with owned story worktree. q3hp remains blocked on actual accepted backend before driver mapping/wiring; its original ACs not rewritten or closed.
+- Fresh accepted-source regressions19protocol+25journal each passed on Python3.14/3.12/3.9, failures/errors/skips0; logs/receipts source-checkpoint-1793826811844986000. No backend/runtime proof inferred.
+- CoS tunnel not seen; fallback cheap GLM contract worker and bounded Astra security/concurrency backend worker. Both own disjoint files, no recursive delegation, root handles integration/commit and independent PM remains mandatory.
+- Protected namespace access INCLUDING metadata, installation, accounting/reconciliation/stop release, VM/live replay, admission/promotion, production/main effects and pushes remain prohibited. Measured available disk below15GiB replayfloor; no cleanup performed.
+
+### proof
+- [ ] AC #1: complete implemented backend/driver mapping not yet accepted; prerequisite source implementation underway.
+- [ ] AC #2-4: source prepare/run driver and live evidence remain missing.
+- [x] AC #5 boundary: current prohibited effects not performed.
 
 ## History
 - 2026-11-04T13:37:44Z dep_added: blocks GRRR-6sso
