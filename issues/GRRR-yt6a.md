@@ -1,16 +1,18 @@
 ---
 id: GRRR-yt6a
 title: "Source-only durable capstone grant and operation journal"
-status: open
+status: in_progress
 priority: 0
 type: task
 labels: [milestone-1, source-only, security-boundary]
 parent: GRRR-2t3h
 created_at: 2026-11-04T18:42:49Z
 created_by: speed
-updated_at: 2026-11-04T18:42:49Z
-content_hash: "sha256:140cc0a49f5f465acb0beee8df371d8fad52ae32944cbbf28ee24d4dede557f3"
+updated_at: 2026-11-04T18:43:35Z
+content_hash: "sha256:9e2104e3e5d44acb67055922c965239d4f837f09dc83447fb3e37c6fc055fd91"
 blocks: [GRRR-q3hp]
+assignee: dev-GRRR-yt6a
+follows: [GRRR-wcwy]
 ---
 
 ## Description
@@ -96,9 +98,13 @@ status: new
 
 ## History
 - 2026-11-04T18:43:15Z dep_added: blocks GRRR-q3hp
+- 2026-11-04T18:43:35Z status: open -> in_progress
+- 2026-11-04T18:43:35Z auto-follows: linked to predecessor GRRR-wcwy
+- 2026-11-04T18:43:35Z claimed by dev-GRRR-yt6a
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-q3hp]]
+- Follows: [[GRRR-wcwy]]
 
 ## Comments
