@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "story_id": "GRRR-6sso",
+  "artifact_type": "repository-only-conservative-jev-cost-bound",
+  "basis_package_commit": "51ebc998e7c07018740ec53e389646a5b465cc75",
+  "operator_authorization": {
+    "authorized": true,
+    "recorded_at": "2026-11-04T03:57:37Z",
+    "decision": "Use official public-rate exposure as the conservative Jev cost bound; retain the full $50 incremental reservation.",
+    "scope": [
+      "conservative public-rate preflight accounting",
+      "repository-only evidence",
+      "no further Jev call"
+    ]
+  },
+  "independent_review": {
+    "verdict": "COST_BOUND_REVIEW: APPROVED",
+    "recorded_at": "2026-11-04T04:03:21Z",
+    "scope": "conservative public-rate cost-bound review only"
+  },
+  "model": "jev-1.14.0",
+  "official_rate_source": {
+    "provider": "TypeSafe",
+    "document": "Official public model documentation for jev-1.14.0",
+    "snapshot_sha256": "d0f55e74b7b97adf327842bba4da0d5f57cca60d6a5d41ba4d1c92edf388e6ff",
+    "input": {
+      "usd_per_billion_tokens": "42",
+      "usd_per_million_tokens": "0.042"
+    },
+    "output": {
+      "usd_per_billion_tokens": "0",
+      "billing": "free"
+    },
+    "authority": "official public list price, not account settlement"
+  },
+  "runs": [
+    {
+      "classification": "exploratory-pilot",
+      "run_id": "6cf35082f34a4149b67293c7b53d9740",
+      "calls": 32,
+      "input_tokens": 12548,
+      "output_tokens": 736,
+      "report_path": "docs/evidence/jev-selector-measurement/run-20261103T201719Z/report.json",
+      "report_sha256": "59a9a21282ae2f4b8fa213f43d0fa1d652bee07d0aad2bf6bfc45535fb436c0f"
+    },
+    {
+      "classification": "confirmatory-repetition-1",
+      "run_id": "9f7ea255e61d4f2aa6596967ef698adf",
+      "calls": 32,
+      "input_tokens": 12548,
+      "output_tokens": 736,
+      "report_path": "docs/evidence/jev-selector-measurement/confirmatory-repetition-1-20261103T214533Z/report.json",
+      "report_sha256": "79aeba001d375b39806d9f73ff211a9573062fdb26792d9d489cf933c48dd628"
+    },
+    {
+      "classification": "confirmatory-repetition-2",
+      "run_id": "76aaf8542fce4465b082524432f6a1ca",
+      "calls": 32,
+      "input_tokens": 12548,
+      "output_tokens": 736,
+      "report_path": "docs/evidence/jev-selector-measurement/confirmatory-repetition-2-20261103T214623Z/report.json",
+      "report_sha256": "f09f56cdddc0f183e7701eef7ec438ee0d30acc4bdc4beea1a0b3ea9ab7a2b84"
+    },
+    {
+      "classification": "confirmatory-repetition-3",
+      "run_id": "e3938b63cf634cdda8e0f00fe416ab31",
+      "calls": 32,
+      "input_tokens": 12548,
+      "output_tokens": 736,
+      "report_path": "docs/evidence/jev-selector-measurement/confirmatory-repetition-3-20261103T214701Z/report.json",
+      "report_sha256": "0121a7caafecbe543e698e67ba729bf38726f43bdcfd7cc63d7245634c7dce1c"
+    }
+  ],
+  "cumulative_usage": {
+    "run_count": 4,
+    "calls": 128,
+    "retries": 0,
+    "input_tokens": 50192,
+    "output_tokens": 2944
+  },
+  "cost_bound_usd": {
+    "pilot": "0.000527016",
+    "confirmatory": "0.001581048",
+    "cumulative": "0.002108064",
+    "formula": "input_tokens * 42 / 1000000000; output is free"
+  },
+  "reservation": {
+    "incremental_usd": "50",
+    "status": "retained-in-full"
+  },
+  "settlement": {
+    "account_invoice_present": false,
+    "actual_settlement": "unresolved",
+    "unresolved_dimensions": [
+      "account-specific amount",
+      "currency",
+      "billing identity",
+      "credits",
+      "discounts",
+      "tax",
+      "billing period",
+      "statement linkage",
+      "exact run coverage",
+      "final debit"
+    ]
+  },
+  "authority": {
+    "cost_bound_accounting": true,
+    "execution_authorized": false,
+    "capstone_authorized": false
+  },
+  "approved_e2e_request_binding": {
+    "package_commit": "51ebc998e7c07018740ec53e389646a5b465cc75",
+    "json": {
+      "path": "docs/evidence/milestone-packet/E2E-DECISION-REQUEST.json",
+      "sha256": "79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb",
+      "modified_by_supplement": false
+    },
+    "markdown": {
+      "path": "docs/evidence/milestone-packet/E2E-DECISION-REQUEST.md",
+      "sha256": "284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4",
+      "modified_by_supplement": false
+    }
+  },
+  "denied_by_this_record": [
+    "secret or credential access",
+    "authenticated API call",
+    "external network call",
+    "model or inference call",
+    "protected path access",
+    "VM or QEMU launch",
+    "replay",
+    "admission",
+    "promotion",
+    "production mutation",
+    "stash pop",
+    "merge",
+    "push",
+    "capstone execution"
+  ]
+}
