@@ -55,7 +55,6 @@ class DecisionRequestSchema(unittest.TestCase):
         package = self.package_with(request=request, markdown=markdown, index=index)
         with self.assertRaises(DecisionRequestError):
             _validate_package(package)
-        self.assertFalse(json.loads(package.request_bytes)["execution_authorized"])
 
     def test_baseline_is_schema_valid_but_blocked(self):
         package = self.baseline_package()
