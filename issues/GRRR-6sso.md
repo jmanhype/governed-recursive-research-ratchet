@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T12:59:50Z
-content_hash: "sha256:35e4b5f91b02f57571d9ffa1d04e37e2ebcec33a57a50065f9ad29223ec3f9bb"
+updated_at: 2026-11-04T13:01:02Z
+content_hash: "sha256:454c7317296c2272d2169697c48e3b36d53fba690464c9c006a61590776a8747"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -1055,3 +1055,8 @@ Operator explicitly said `Start the final gates`. Accessibility test began at 20
 ## 2026-11-04 Fresh Informed Accessibility Journey — Restarted
 
 Operator explicitly asked to start the accessibility test and asked whether the journey was included. New journey started at 2026-11-04T12:59:50ZZ. It covers inspecting the current blocked report, distinguishing execution/finding/decision/effect, selecting a safe decision when evidence is missing, locating emergency stop, and locating recovery. Prior 2-minute self-report remains unanswered/non-counted. No VM/QEMU, protected access, replay, admission, promotion, production mutation, merge, or push is authorized.
+
+### 2026-11-04T13:01:02Z speed
+## 2026-11-04 Fresh Accessibility Journey — Invalid Attempt
+
+Operator explicitly asked the agent to supply the answers. An agent-authored answer set cannot demonstrate operator comprehension or screen-reader/keyboard usability. The journey remains unmet and no review time is recorded from it. A teaching pass followed by a fresh operator-answered journey is required. No runtime authority is granted.
