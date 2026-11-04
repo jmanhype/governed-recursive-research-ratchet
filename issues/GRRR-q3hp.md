@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T14:53:36Z
-content_hash: "sha256:36ca4aa9d6732405dadc952aa2a82d96cddf43befd2ae571849b341338cf3b9d"
+updated_at: 2026-11-04T14:56:58Z
+content_hash: "sha256:6999190c9f947ef254944d1649a75998a0cd61953c0fbcec2d2e374ac2ea5bd0"
 blocks: [GRRR-6sso]
 ---
 
@@ -100,6 +100,7 @@ status: new
 ## Notes
 Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocker wiring does not change any capstone AC and does not constitute or authorize VM/replay execution. True capstone closure still requires separately authorized live runtime/evaluator/ledger proof plus all existing review and human gates.
 2026-11-04 fresh capacity update after operator reported more space: df -k / and /System/Volumes/Data both returned 15110888 KiB available = 15473549312 bytes. This clears only the 15350000000-byte preparation CAPACITY floor by 123549312 bytes. It remains below the 16106127360-byte replay CAPACITY floor by 632578048 bytes. These arithmetic checks are not full preparation/preflight approval or VM runtime proof. Source floors verified at reviewed package 51ebc998e7c07018740ec53e389646a5b465cc75. Existing v4 runtime incompatibility and missing authenticated capability findings remain unchanged; no VM/replay, cleanup, protected access/mutation, budget reconciliation, source edit, commit, merge or push occurred.
+2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 
 # GRRR-q3hp bounded architecture mapping
 
