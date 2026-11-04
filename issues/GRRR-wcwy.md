@@ -8,7 +8,8 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
 updated_at: 2026-11-04T16:45:10Z
-content_hash: "sha256:a76e0b65cb0e5f17ae7b401fe98344f2cf6b43a1391bfdf01ded97ff07fecbc8"
+content_hash: "sha256:c290bff89c2e7c54d362f56a430933481aa2bdae77fb4979bf930046543ef4c5"
+blocks: [GRRR-q3hp]
 ---
 
 ## Description
@@ -330,9 +331,10 @@ current spendability, VM execution, cessation or any capstone aggregate pass.
 
 
 ## History
-
+- 2026-11-04T16:46:17Z dep_added: blocks GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-q3hp]]
 
 ## Comments
