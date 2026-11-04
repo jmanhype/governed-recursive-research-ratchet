@@ -1,17 +1,18 @@
 ---
 id: GRRR-6sso
 title: "E2e: Operator completes a governed vlt research ratchet"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [milestone-1, capstone, rejected, rejected-x2]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T00:44:28Z
-content_hash: "sha256:049bc303d73a780d72a3dc9d6277c0af8c754dbbb283f2a1e357363634e38331"
+updated_at: 2026-11-04T00:46:41Z
+content_hash: "sha256:95ce4f2edc9cf49f8d6f2b398b678e681a0a831a2e29ea49588a8c77e373512a"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp]
-follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0]
+follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u]
+assignee: dev-GRRR-6sso
 ---
 
 ## Description
@@ -204,11 +205,14 @@ status: delivered
 - 2026-11-04T00:27:39Z claimed by pm_review_grrr_6sso_landed_v1
 - 2026-11-04T00:27:45Z status: in_progress -> open
 - 2026-11-04T00:27:45Z released by speed
+- 2026-11-04T00:46:41Z status: open -> in_progress
+- 2026-11-04T00:46:41Z auto-follows: linked to predecessor GRRR-888u
+- 2026-11-04T00:46:41Z claimed by dev-GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]]
-- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]]
+- Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]], [[GRRR-888u]]
 
 ## Comments
 
