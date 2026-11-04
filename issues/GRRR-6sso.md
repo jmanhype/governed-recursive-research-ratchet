@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected-x2, delivered]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T13:05:53Z
-content_hash: "sha256:fcfaa88f0bdf507d0dc28a08863dc3521029715e784ebf76e9c7c262f1fb9c54"
+updated_at: 2026-11-04T13:07:21Z
+content_hash: "sha256:30b76d0ddcd814d8d1ee2031dfeb7fc8d66b3381201df7150dbcaa03f2f4d939"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -117,6 +117,28 @@ status: new
 
 ## Notes
 Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Passed 7, Failed 2. EOF contract, Implementation Evidence, CI/Test Results, Commands run, Summary, commit SHA and AC items all pass. The two intentional remaining failures are missing delivered label and authoritative contract not delivered; the story is BLOCKED/released, not falsely delivered. Full mandatory capstone execution remains absent. No status promotion was performed.
+## 2026-11-04 Fresh Operator Accessibility Attestation - Five Minutes
+
+Evidence source: the current operator message containing the audit summary and the exact statement `Accessibility passed 5 minutes`.
+
+- Recorded result: operator-reported ACCESSIBILITY PASS.
+- Self-reported review duration: 5 minutes. This is not a machine-timed measurement.
+- Scope: fresh accessibility preflight attestation only. The operator's message also explicitly states that the full milestone is not complete yet.
+- No specific keyboard or screen-reader technology, observed interactions, comprehension answers, or complete runtime journey is asserted by this record. It is not independent verification of those details.
+- The earlier one-minute result, subsequent contestation, and invalid attempt remain unchanged as audit history. This new attestation does not rehabilitate or overwrite them.
+- Do not overwrite, average, or automatically add this duration to historical review totals. Whether this is a new session or a correction is not established; cumulative review accounting and remaining allowance require separate reconciliation. No budget or protected accounting change is authorized.
+- Historical generated transcript SHA-256 `42ebaecb6241db3d1f6b4209ca0275ef102efa80823d2aa992b6b6501f92564a` remains historical provenance only; it is not proof of today's operator actions.
+
+Fresh repository bindings checked before recording:
+- Epic: `0b2365e30ab5858cb419f4f4ce9b2ce001850541`.
+- Story supplement: `51fe3084f650f1b238ab4c704bb8ccec9a410416`.
+- Exact request ID: `GRRR-6sso-exact-target-e2e-v1`.
+- Request JSON SHA-256: `79b471a6e99a83dac45cfd703c92ed11e511ac3f3b08e75a93626411a0470acb`.
+- Request Markdown SHA-256: `284f1cf41e0662dec4d77611f662167019d8c07609269c86ab662b67680d12f4`.
+- Request still states `execution_authorized=false`.
+
+This is an append-only evidence supplement, not developer delivery, PM acceptance, full AC #6 closure, milestone completion, or an authorization record. It grants no protected-path access, VM/QEMU execution, credential use, external calls, spendability writes, reconciliation, replay, contract admission, promotion, production mutation, merge, or push. The remaining mandatory capstone gates and separate human execution decision are unchanged.
+
 ## 2026-11-04 Accessibility Preflight Evidence — Committed / Capstone Still BLOCKED
 
 Narrow repository-only evidence commit `51fe3084f650f1b238ab4c704bb8ccec9a410416` on `story/GRRR-6sso`, parent `b1d8bfd702fb577d1c437ffeb12f3ab6ebe1d751`:
