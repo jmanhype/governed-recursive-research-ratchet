@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T13:37:44Z
-content_hash: "sha256:aba1d5be3028c96e59fb31b4db5d26a84db6c047562dffd2881cddd4c87479d2"
+updated_at: 2026-11-04T13:50:12Z
+content_hash: "sha256:7c42f00f76658279d19bfd46f1d02eaecd350e3e631ce371923dc14e352556be"
 blocks: [GRRR-6sso]
 ---
 
@@ -99,6 +99,33 @@ status: new
 
 ## Notes
 Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocker wiring does not change any capstone AC and does not constitute or authorize VM/replay execution. True capstone closure still requires separately authorized live runtime/evaluator/ledger proof plus all existing review and human gates.
+## 2026-11-04 Source Mapping and Capacity Evidence - Implementation Blocked
+
+Independent architecture mapping by `/root/grrr_q3hp_trust_boundary_mapping` returned `BLOCKED_BY_MISSING_CAPABILITY`. Parent verified the 196-line artifact exists at `/tmp/grrr-q3hp-architecture-mapping-20261104.md` with SHA-256 `631453fafb047f3a564ca8fc88813eb83f643d914a0d0f91b959c3b0242046bf`. The full mapping is appended separately for durable nd readback; it is source-only evidence, not implementation approval or deployed capability.
+
+Concrete findings at reviewed package `51ebc998e7c07018740ec53e389646a5b465cc75` / runtime `c928791cdaa72df91e61002c40317457b543b032`:
+- `PersistentBudget.validate_store` accepts versions 1/2/3, not v4; `require_mutable` and replay preflight require v1.
+- No authenticated v4 allowance/spendability receipt API was identified in the bounded inspected interfaces.
+- The retained Stage O adapter is hypothetical/uninstalled and grants no execution authority; a sandbox schema verifier is not a spendability or capability receipt.
+- Operator-to-evaluator service wiring and cross-restart one-use authorization consumption are unresolved.
+- Therefore a prepare/run wrapper alone cannot safely launch this capstone. Do not weaken version guards or instantiate the evaluator session during mutation-free prepare. Do not implement guessed schemas or claim a mapping pass.
+
+Capacity audit artifact `/tmp/grrr-capacity-audit-20261104.txt` was independently checked on disk: 148,693 bytes, SHA-256 `f366259c07712e34ba32ebca3911ab424fe3b81320ded31c745fbc1b1c731de5`.
+
+Measured cache-size ceilings (not guaranteed reclaimed bytes):
+- Codex cache: 1,892,179,968 bytes; active runtime, not approved for cleanup.
+- Go build cache: 1,366,118,400 bytes.
+- Chrome Default Cache: 1,297,309,696 bytes; active browser.
+- Chrome Default Code Cache: 606,470,144 bytes; active browser.
+- pip cache: 8,232,960 bytes.
+- Requested Homebrew cache path absent; no alternate-path search or inferred broader zero.
+- Total measured ceiling: 5,170,311,168 bytes.
+
+Parent's later `df -k /` observation reported 5,663,168 KiB available, or 5,799,084,032 bytes. Even an ideal recovery of every measured cache byte would yield only 10,969,395,200 bytes, still 5,136,732,160 bytes below the 16,106,127,360-byte replay floor, with no safety margin. Active Codex/Chrome caveats further reduce what could safely be considered. No cleanup, purge, quit, termination, reboot or deletion occurred.
+
+Workflow writeback also exposed a tool failure: `pvg story reject GRRR-6sso` refused with `property "assignee" not found`. Live status/labels remained unchanged. A subsequent normal atomic `pvg nd claim ... --agent pm-rejection-writeback` without force was refused because GRRR-q3hp blocks the story. No force claim, manual label/status workaround, raw issue-file edit, or pvg-core change was used. The independent PM rejection is substantive but not a landed transition; do not claim otherwise.
+
+Current result: GRRR-q3hp AC1 mapping is blocked by concrete missing trusted capability; no implementation has begun. Capstone runtime evidence and cumulative allowances remain unestablished. Source checkout remains untouched; no protected mutation, VM/replay, network/inference, credential, admission, promotion, merge or push occurred. The exact-old-revision conditional grant does not silently authorize new implementation or deployment.
 
 ## History
 - 2026-11-04T13:37:44Z dep_added: blocks GRRR-6sso
