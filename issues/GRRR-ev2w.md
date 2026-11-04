@@ -8,8 +8,8 @@ labels: [milestone-1, security, integration, discovered-by-developer]
 parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
-updated_at: 2026-11-04T01:11:27Z
-content_hash: "sha256:968d1f88ae54b3a8cfd19e47f2e36243b31b791c811a3f788f41d0cff3c19244"
+updated_at: 2026-11-04T01:17:36Z
+content_hash: "sha256:d245916a68063a8aab60c2a09ff353e4cb2cce7279803f788d08967466628506"
 blocks: [GRRR-6sso]
 assignee: dev-GRRR-ev2w
 follows: [GRRR-888u]
@@ -110,7 +110,86 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERED)
 
+PROOF:
+
+### CI/Test Results
+Commands run (cwd: dispatcher-owned `.claude/worktrees/dev-GRRR-ev2w`):
+- `python3 -B tests/unit_admission.py` — 28 tests, OK, exit 0 (Python 3.14.3).
+- `python3 -B tests/integration/admission_registry.py` — 6 tests, OK, exit 0.
+- `/usr/bin/python3 -B tests/unit_admission.py` — 28 tests, OK, exit 0 (Python 3.9.6).
+- `/usr/bin/python3 -B tests/integration/admission_registry.py` — 6 tests, OK, exit 0.
+- `python3 -B tests/unit_review_report.py` — 6 tests, OK, exit 0.
+- `python3 -B tests/unit_safe_stop.py` — 7 tests, OK, exit 0.
+- `/usr/bin/python3 -B tests/unit_review_report.py` — 6 tests, OK, exit 0.
+- `/usr/bin/python3 -B tests/unit_safe_stop.py` — 7 tests, OK, exit 0.
+- `python3 -B -m trace --count --missing --summary --coverdir /tmp/GRRR-ev2w-evidence-v1/coverage-verified --module unittest discover -s tests -p unit_admission.py` — 28 tests, OK, exit 0; admission.py 89.8% line coverage, all executable loader lines 58–73 executed. No branch-coverage claim.
+- `pvg verify research/admission.py tests/unit_admission.py tests/integration/admission_registry.py --format=text` — exit 1, 3 files scanned, one finding: `research/admission.py:84 [stub] bare pass statement` in unchanged AdmissionError. Original loader catch-and-reset finding is gone. This remaining finding is explicitly outside this story's scope and not suppressed.
+- `pvg gates research/admission.py tests/unit_admission.py tests/integration/admission_registry.py --format text` — exit 0, `GATES: PASS (1 warn, 0 skipped)`; unchanged recurrence_rejected CCN 15 warning at line 223 remains visible.
+- `git diff --check 845b47d221773eb4157491d35f57dce47ce8afe6 HEAD` — exit 0.
+- `git status --short` — empty, exit 0.
+
+Summary: 94 test executions passed, 0 failures, 0 errors, 0 skips; plus 28 successful coverage executions. Static verification has the one explicitly excluded existing class-pass finding; metric gates pass with one existing complexity warning. No full repository suite was run: assigned tests plus adjacent offline review/stop tests cover the bounded change; protected, replay, external, and capstone journeys remain outside this assignment. No runtime authorization, protected repository registry mutation, network/Jev, merge, or push performed.
+
+Coverage: stdlib trace reports admission.py 89.8% line coverage (187 executable lines); changed loader executable lines all exercised. Initial `python3 -m coverage --version` found coverage uninstalled. An exploratory direct-file trace invocation incorrectly ran zero tests; that output is retained in verification.log and is NOT claimed as coverage proof. The corrected unittest-discovery invocation above ran 28 actual tests and is the authoritative coverage measurement.
+
+RED evidence before implementation: the initial new 27-test unit suite failed with 21 subtest failures and one UnicodeDecodeError, demonstrating silent corrupt/invalid state acceptance. Final suite has 28 tests after adding metadata-access regression.
+
+### Commit
+- Branch: `story/GRRR-ev2w`
+- SHA: `710e6fb1affa366da6ca4c855f49805d3bdb944d`
+- Base: `845b47d221773eb4157491d35f57dce47ce8afe6`
+- Diff: 3 files, 197 insertions, 10 deletions. Only loader behavior and focused unit/integration tests changed.
+- Final complete command/output artifact: `/tmp/GRRR-ev2w-evidence-v1/verification-final.log`
+- Artifact SHA256: `1c3517dafd88b9196134e66921c947ff7de53eedbe830366b2709f4886061dc9`
+- research/admission.py SHA256: `d6f53e43ea4233e2a244ed4c5640739a3610dbee40bdad85e2bca6d90717a43f`
+- tests/unit_admission.py SHA256: `ae8a648eb40efb75bf6082203996bc0fc67760537113631956212a81eddb84fd`
+- tests/integration/admission_registry.py SHA256: `a633e088f6fc9f5e76babad2d64769155b670ef31977bb0bccfaae412e26d710`
+
+### Wiring and boundaries
+- Existing public consume_authorization/persist_admission/recurrence_rejected call `_load_registry`; their signatures, locks, persistence implementation, and valid registry-v1 shape are unchanged.
+- Loader now uses lstat to distinguish a missing directory entry from unavailable metadata or a dangling link, raises AdmissionError for read/parse/encoding/depth failures, and rejects wrong top-level structure without writing.
+- Tests redirect only the registry configuration to real TemporaryDirectory paths and restore it through cleanup; no filesystem/function mocks or skips.
+- Integration asserts bytes or preserved directory evidence, inode/size/mtime, unchanged input objects, no `.tmp`, real permission denial, and duplicates across an independently imported module.
+- Graph MCP tools were unavailable; bounded grep/read fallback covered admission.py and all test imports. No additional admission importers found within bin/scripts/tests. No docs/findings directory exists in this worktree. Epic HEAD checked before implementation.
+
+### AC Verification
+| AC # | Requirement | Code Location | Test Location | Status |
+|------|-------------|---------------|---------------|--------|
+| 1 | Only legitimate absence initializes exact empty v1 shape; valid success works | research/admission.py:58-61 | unit test_missing_registry_is_empty_without_writing; integration setUp and test_success_and_durable_duplicates_after_module_reload | PASS |
+| 2 | Corrupt/truncated bytes fail closed across loader and public paths | research/admission.py:64-67 | unit test_corrupt_registry_rejects_without_reset; integration test_malformed_truncated_and_invalid_encoding and assert_closed | PASS |
+| 3 | Non-object, missing/unknown fields, wrong collection types reject | research/admission.py:68-72 | unit test_invalid_registry_shapes_reject (19 cases); integration test_invalid_shapes (6 cases across 5 paths) | PASS |
+| 4 | Real unavailable reads preserve evidence with no temp writes or mutations | research/admission.py:58-67 | unit test_unavailable_registry_metadata_rejects; integration unreadable-file, directory, dangling-link cases and assert_closed | PASS |
+| 5 | Consumed/admitted state remains durable and recurrence protected | unchanged public operations plus validated loader | unit test_duplicate_state_survives_reload; integration independent-module reload test | PASS |
+| 6 | Real temporary-file integration success and all mandatory failures, nonzero on failure | tests/integration/admission_registry.py | 6 integration tests pass on Python 3.14.3 and 3.9.6; unittest.main supplies failure exit status | PASS |
+
+LEARNINGS:
+- Path.exists is not a safe security-state initialization discriminator; lstat distinguishes missing entries from dangling registry links, and access errors must propagate as domain failure.
+- Changing the unit fixture to isolated real temporary storage avoids deleting accepted evidence during ordinary regression runs.
+- Fresh module imports prove durable duplicate behavior without invalidating exception-class identities held by other test modules.
+- Stdlib trace must invoke unittest discovery here; direct tracing of a unittest.main script yielded zero tests and is not valid coverage evidence.
+
+### OBSERVATIONS (not changed)
+- `pvg notes search 'admission registry'` could not access a worktree-local .vault. Shared tracker operations through pvg nd succeeded; no vault configuration was changed. Context/evidence remain appended in this story.
+- `tests/integration/protected-admission`, referenced as a historical pattern in the story, is absent at the base; the newly required Python integration entry point is self-contained and fully executes.
+- Existing AdmissionError class-pass static finding and recurrence_rejected complexity warning remain reported above per the explicit scope boundary; GRRR-6sso capstone claims are unchanged.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 710e6fb1affa366da6ca4c855f49805d3bdb944d; exact commands and full count summaries above.
+- 94/94 assigned/focused executions passed on two interpreters, plus 28 coverage executions. No tests skipped.
+- Static verify retains only the excluded class-pass finding; gates pass with disclosed existing warning.
+
+### proof
+- [x] AC #1: exact empty initialization and valid success.
+- [x] AC #2: corrupt/truncated/invalid-encoding/deep JSON rejected without reset.
+- [x] AC #3: invalid top-level registry shapes rejected.
+- [x] AC #4: real unreadable evidence preserved; no temporary write or admission/authorization mutation.
+- [x] AC #5: durable duplicates and real recurrence remain rejected after independent module import.
+- [x] AC #6: real-file integration success and mandatory failures pass without mocks/skips on both interpreters.
 
 ## History
 - 2026-11-04T01:07:35Z dep_added: blocks GRRR-6sso
