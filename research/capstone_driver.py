@@ -16,11 +16,24 @@ from common import GATES, Failure, canonical, digest, fields, identifier, requir
 VERSION = 1
 PREPARE_SCHEMA = 'capstone-prepare-plan-v1'
 RUN_SCHEMA = 'capstone-run-record-v1'
-RECEIPT_KINDS = ('runtime', 'corpus', 'vm', 'accounting', 'review', 'approval',
-                 'observation')
+RECEIPT_KINDS = ('runtime', 'corpus', 'vm', 'accounting', 'observation',
+                 'replay', 'source_review', 'reviewer', 'approval')
 REQUEST_FIELDS = {'version', 'driver_commit', 'runtime_identity', 'corpus_binding',
                   'accounting_binding', 'vm_assets', 'authorization_sha256',
                   'request_sha256', 'floors', 'receipts'}
+GATE_RECEIPTS = {
+    'source_environment_identity': ('runtime',),
+    'isolation': ('vm',),
+    'protected_asset_integrity': ('vm', 'corpus'),
+    'baseline_correctness': ('corpus',),
+    'trusted_observation': ('observation',),
+    'independent_replay': ('replay',),
+    'specification_traceability': ('source_review',),
+    'evidence_integrity_currency': ('corpus', 'vm'),
+    'budget_state': ('accounting',),
+    'reviewer_outcome': ('reviewer',),
+    'action_specific_human_approval': ('approval',),
+}
 _COMMIT = re.compile(r'[0-9a-f]{7,40}')
 
 
@@ -54,63 +67,57 @@ def _request(value: dict) -> dict:
     for name in ('runtime_identity', 'corpus_binding', 'accounting_binding',
                  'vm_assets', 'authorization_sha256', 'request_sha256'):
         identifier(value[name], True)
-    return {'version': VERSION, 'driver_commit': value['driver_commit'],
-            'runtime_identity': value['runtime_identity'],
-            'corpus_binding': value['corpus_binding'],
-            'accounting_binding': value['accounting_binding'],
-            'vm_assets': value['vm_assets'],
-            'authorization_sha256': value['authorization_sha256'],
-            'request_sha256': value['request_sha256'],
-            'floors': _floors(value['floors']),
-            'receipts': _receipts(value['receipts'])}
+    bound = {'version': VERSION, 'driver_commit': value['driver_commit'],
+             'runtime_identity': value['runtime_identity'],
+             'corpus_binding': value['corpus_binding'],
+             'accounting_binding': value['accounting_binding'],
+             'vm_assets': value['vm_assets'],
+             'authorization_sha256': value['authorization_sha256'],
+             'request_sha256': value['request_sha256'],
+             'floors': _floors(value['floors']),
+             'receipts': _receipts(value['receipts'])}
+    body = dict(bound, request_sha256=None)
+    require(bound['request_sha256'] == digest(canonical(body)),
+            'InvalidInput', 'Request digest does not bind the request body')
+    return bound
 
 
-def _gates(request: dict) -> tuple[dict, list]:
-    """Each gate is decided by exactly one receipt; absent means not-run."""
-    receipts = request['receipts']
+def _gates(request: dict, verify):
+    """Each gate needs its OWN approved receipts; existence alone proves nothing."""
     gates, refusals = {}, []
-
-    def want(name: str, expected: tuple, refusal=None) -> dict:
-        if name not in receipts:
-            if refusal is not None:
-                refusals.append(refusal)
-            return _gate('not-run', None, refusal or 'no-receipt')
-        return _gate('pass', receipts[name], None)
-
-    gates['source_environment_identity'] = (
-        _gate('pass', None, None) if 'runtime' in receipts
-        else _gate('not-run', None, 'no-runtime-receipt'))
-    gates['isolation'] = want('vm', (), 'isolation-unverified')
-    gates['protected_asset_integrity'] = (
-        _gate('pass', receipts['vm'], None)
-        if {'vm', 'corpus'} <= set(receipts) else _gate('not-run', None, 'no-asset-receipt'))
-    gates['baseline_correctness'] = want('corpus', (), 'baseline-unverified')
-    gates['trusted_observation'] = want('observation', ())
-    gates['independent_replay'] = want('observation', ())
-    gates['specification_traceability'] = want('review', ())
-    gates['evidence_integrity_currency'] = (
-        _gate('pass', receipts['corpus'], None)
-        if {'corpus', 'vm'} <= set(receipts) else _gate('not-run', None, 'no-asset-receipt'))
-    if 'accounting' in receipts:
-        gates['budget_state'] = _gate('pass', receipts['accounting'], None)
-    else:
-        gates['budget_state'] = _gate('blocked', None, 'budget-unverified')
-        refusals.append('budget-unverified')
-    gates['reviewer_outcome'] = want('review', (), 'review-missing')
-    if 'approval' in receipts:
-        gates['action_specific_human_approval'] = _gate('pass', receipts['approval'], None)
-    else:
-        gates['action_specific_human_approval'] = _gate('not-run', None, 'approval-missing')
-        refusals.append('approval-missing')
+    for name in GATES:
+        needed = GATE_RECEIPTS[name]
+        missing = [kind for kind in needed if kind not in request['receipts']]
+        if missing:
+            gates[name] = _gate('not-run', None, 'no-' + missing[0] + '-receipt')
+            refusals.append(name + '-unverified')
+            continue
+        if verify is None:
+            gates[name] = _gate('blocked', None, 'receipt-unverified')
+            refusals.append(name + '-unverified')
+            continue
+        approved = True
+        for kind in needed:
+            if not verify(kind, request['receipts'][kind], request):
+                approved = False
+        if approved:
+            gates[name] = _gate('pass', request['receipts'][needed[0]], None)
+        else:
+            gates[name] = _gate('blocked', None, 'receipt-rejected')
+            refusals.append(name + '-unverified')
     require(set(gates) == set(GATES), 'InvalidInput', 'Gate inventory differs')
     return gates, refusals
 
 
-def prepare(request: dict) -> dict:
-    """Bind revisions and emit an immutable per-gate plan. No side effects."""
+def prepare(request: dict, *, verify=None) -> dict:
+    """Bind revisions and emit an immutable per-gate plan. No side effects.
+
+    `verify(kind, receipt_sha256, bound_request) -> bool` is trusted evaluator
+    wiring. Without it every receipt-backed gate is blocked, never passed.
+    """
     bound = _request(request)
     floors = bound['floors']
-    gates, refusals = _gates(bound)
+    gates, refusals = _gates(bound, verify)
     if floors['free_bytes'] < floors['required_bytes']:
         refusals.append('floor-breach')
         for name in GATES:
@@ -123,22 +130,19 @@ def prepare(request: dict) -> dict:
     return plan
 
 
-def run(plan: dict, request: dict, *, dispatch=None) -> dict:
-    """Dispatch only a runnable plan that still matches every bound revision."""
+def run(plan: dict, request: dict, *, dispatch=None, verify=None) -> dict:
+    """Recompute the plan and dispatch only if it still matches exactly."""
     require(type(plan) is dict and plan.get('schema') == PREPARE_SCHEMA,
             'InvalidInput', 'Unknown prepare plan')
-    body = {key: plan[key] for key in ('schema', 'version', 'bound', 'gates',
-                                       'refusals', 'runnable')}
-    require(plan.get('plan_id') == digest(canonical(body)),
-            'StaleBinding', 'Prepare plan was changed after issue')
-    bound = _request(request)
-    require(bound == plan['bound'], 'StaleBinding', 'Run request differs from the prepared binding')
-    blocked = [name for name in GATES if plan['gates'][name]['state'] != 'pass']
-    require(not plan['refusals'] and plan['runnable'] and not blocked,
-            'GateBlocked', 'Plan is not runnable: ' + ','.join(sorted(set(plan['refusals']) | set(blocked))))
+    expected = prepare(request, verify=verify)
+    require(plan == expected, 'StaleBinding',
+            'Plan differs from a fresh recomputation of the same request')
+    blocked = [name for name in GATES if expected['gates'][name]['state'] != 'pass']
+    require(expected['runnable'] and not blocked, 'GateBlocked',
+            'Plan is not runnable: ' + ','.join(sorted(set(expected['refusals']) | set(blocked))))
     require(dispatch is not None, 'Unavailable',
             'No authenticated evaluator dispatcher; the operator cannot execute')
-    result = dispatch(dict(plan))
+    result = dispatch(dict(expected))
     require(type(result) is dict, 'InvalidInput', 'Dispatcher result differs')
-    return {'schema': RUN_SCHEMA, 'version': VERSION, 'plan_id': plan['plan_id'],
-            'gates': plan['gates'], 'dispatch': result, 'executed': True}
+    return {'schema': RUN_SCHEMA, 'version': VERSION, 'plan_id': expected['plan_id'],
+            'gates': expected['gates'], 'dispatch': result, 'executed': True}
