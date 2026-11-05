@@ -1,17 +1,17 @@
 ---
 id: GRRR-q3hp
 title: "Bug: capstone lacks explicit executable driver wiring"
-status: open
+status: in_progress
 priority: 0
 type: bug
 labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-04T21:41:26Z
-content_hash: "sha256:5cd6d73cfc4f6fa0729b3b46de99582944f654821fe14b5a4f36de6151c01a61"
+updated_at: 2026-11-05T21:55:38Z
+content_hash: "sha256:c0bd1a210cc83ca155db98e417fbe07be87344a60397f8c05474009f099c38e8"
 blocks: [GRRR-6sso]
-follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u]
+follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
 assignee: dev-GRRR-q3hp
 ---
@@ -936,12 +936,15 @@ status: new
 - 2026-11-04T21:39:25Z status: in_progress -> open
 - 2026-11-04T21:39:55Z dep_added: blocked_by GRRR-k3j7
 - 2026-11-05T20:25:47Z dep_removed: was_blocked_by GRRR-k3j7
+- 2026-11-05T21:55:38Z status: open -> in_progress
+- 2026-11-05T21:55:38Z auto-follows: linked to predecessor GRRR-k3j7
+- 2026-11-05T21:55:38Z claimed by dev-GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
 - Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-k3j7]]
-- Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]]
+- Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]], [[GRRR-k3j7]]
 
 ## Comments
 
