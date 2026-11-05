@@ -1,7 +1,7 @@
 ---
 id: GRRR-k3j7
 title: "Executable evaluator backend: finite JIT campaign, accounting and isolated launch bridge"
-status: in_progress
+status: closed
 priority: 0
 type: feature
 labels: [milestone-1, integration, security, source-only, delivered]
@@ -9,10 +9,11 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
 updated_at: 2026-11-05T20:25:47Z
-content_hash: "sha256:1cbcbf3f8b31692d60995572a3d67c361657e7ce957845c4c15922a38d263f97"
-blocks: [GRRR-q3hp]
+content_hash: "sha256:dc72a7501a0ad55a5f6ffc53129fbc33a34ea2a1a2688bb9c7043ddb1dcb8561"
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
+closed_at: 2026-11-05T20:25:47Z
+close_reason: "Accepted via pvg story accept"
 ---
 
 ## Description
@@ -741,10 +742,11 @@ Summary: PASS source257 tests on EACH of Python3.14.3,3.12.9,3.9.6; failures0/er
 - 2026-11-05T12:44:36Z claimed by dev-GRRR-k3j7
 - 2026-11-05T15:00:01Z status: in_progress -> in_progress
 - 2026-11-05T15:00:01Z auto-follows: linked to predecessor GRRR-888u
+- 2026-11-05T20:25:47Z status: in_progress -> closed
+- 2026-11-05T20:25:47Z dep_removed: no_longer_blocks GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-q3hp]]
 - Follows: [[GRRR-yt6a]], [[GRRR-wcwy]], [[GRRR-ev2w]], [[GRRR-888u]]
 
 ## Comments

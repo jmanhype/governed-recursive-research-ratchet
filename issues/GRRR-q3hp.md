@@ -9,12 +9,11 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-04T21:41:26Z
-content_hash: "sha256:4c9c5fdef6bb5240405cc4c3884bd05864bb043943492858eae60f5ebece869f"
+content_hash: "sha256:5cd6d73cfc4f6fa0729b3b46de99582944f654821fe14b5a4f36de6151c01a61"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u]
-was_blocked_by: [GRRR-wcwy, GRRR-yt6a]
+was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
 assignee: dev-GRRR-q3hp
-blocked_by: [GRRR-k3j7]
 ---
 
 ## Description
@@ -936,12 +935,12 @@ status: new
 - 2026-11-04T21:13:11Z claimed by dev-GRRR-q3hp
 - 2026-11-04T21:39:25Z status: in_progress -> open
 - 2026-11-04T21:39:55Z dep_added: blocked_by GRRR-k3j7
+- 2026-11-05T20:25:47Z dep_removed: was_blocked_by GRRR-k3j7
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
-- Blocked by: [[GRRR-k3j7]]
-- Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]]
+- Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-k3j7]]
 - Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]]
 
 ## Comments
