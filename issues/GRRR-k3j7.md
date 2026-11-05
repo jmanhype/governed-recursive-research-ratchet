@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
 updated_at: 2026-11-05T20:25:47Z
-content_hash: "sha256:dc72a7501a0ad55a5f6ffc53129fbc33a34ea2a1a2688bb9c7043ddb1dcb8561"
+content_hash: "sha256:e08f48073566c8a011807d49156c754a373db605dd1d93dc7df8f9509e119a70"
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
 closed_at: 2026-11-05T20:25:47Z
@@ -210,6 +210,18 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-05.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## nd_contract
 status: accepted
 
