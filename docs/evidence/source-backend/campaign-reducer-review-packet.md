@@ -1,8 +1,8 @@
-# Review packet — GRRR-k3j7 fixes F1/F2/F3 (revision 2)
+# Review packet — GRRR-k3j7 revision 3
 
 
 
-## F1: durable evidence helpers (incl. reject-on-existing-mismatch and short-write check)
+## F1: durable evidence helpers
 
 def _objects_dir(db):
     main = [row[2] for row in db.execute('PRAGMA database_list') if row[1] == 'main']
@@ -54,7 +54,7 @@ def _store_object(db, raw):
     return hashed
 
 
-## F1: manifest binding to durable per-leaf plans and completion prefix
+## F1: manifest binding
 
 def _bind_manifest(state, campaign_id, manifest, terminal, leaves, completed):
     """Manifest leaf entries must match the durable per-leaf Plans and prefix."""
@@ -94,7 +94,7 @@ def _bind_manifest(state, campaign_id, manifest, terminal, leaves, completed):
            'Campaign manifest execution differs from the completion prefix')
 
 
-## F1: finish uses the binding
+## F1: finish
 
 def _finish(state, event, receipt, record, progress, manifest_provider, replay=False,
             db=None):
@@ -143,7 +143,7 @@ def _finish(state, event, receipt, record, progress, manifest_provider, replay=F
     return objects
 
 
-## F2: select requires completed result refs
+## F2: select
 
 def _select(state, event, receipt, record, progress, joins, live=None, replay=False):
     """First unfinished leaf; completion is certified by an injected verifier."""
@@ -190,7 +190,7 @@ def _select(state, event, receipt, record, progress, joins, live=None, replay=Fa
     _put(state, 'campaign_run', run, True)
 
 
-## F2: advance records the result ref
+## F2: advance
 
 def _advance(state, event, receipt, record, progress, advance_proof, replay=False):
     """Advance one leaf only with certified claim/exit/settlement proof."""
@@ -228,7 +228,7 @@ def _advance(state, event, receipt, record, progress, advance_proof, replay=Fals
         progress.setdefault(campaign_id, {})[index] = record['evidence'][0]
 
 
-## F3: stop-outcome verification is durable
+## F3: stop-outcome (now binds manifest)
 
 def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay=False,
                   db=None):
@@ -259,6 +259,11 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
                               'capstone-campaign-stop-v2'},
                'Campaign stop-outcome evidence roles differ')
         outcome = kinds['capstone-campaign-stop-v2']
+        stop_leaves = {row['leaf_index'] for row in state['leaf'].values()
+                       if row['campaign_id'] == campaign_id}
+        _bind_manifest(state, campaign_id, kinds['capstone-campaign-manifest-v2'],
+                       terminal, stop_leaves,
+                       set((progress or {}).get(campaign_id, ())))
         _check(digest(canonical(kinds['capstone-campaign-manifest-v2'])) == terminal,
                'Campaign stop-outcome manifest differs')
         verified = outcome.get('verified')
@@ -299,56 +304,86 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
     return objects
 
 
-## Regression tests
+## Fence (now binds manifest)
 
-    def test_start_accepts_exact_run_and_fills_receipt_fields(self):
-    def test_start_requires_unstopped_issued_campaign(self):
-    def test_start_rejects_prior_active_run(self):
-    def test_start_rejects_non_null_previous_revision(self):
-    def test_start_rejects_binding_or_leaf_plan(self):
-    def test_start_rejects_unsorted_duplicate_or_short_evidence(self):
-    def test_start_rejects_operation_id_mismatch(self):
-    def test_start_rejects_plan_hash_mismatch(self):
-    def test_start_rejects_unknown_grant(self):
-    def test_start_rejects_wrong_idempotency_key(self):
-    def test_unimplemented_actions_refuse_instead_of_accepting(self):
-    def test_unknown_action_and_malformed_envelope_refuse(self):
-    def test_select_accepts_first_unfinished_leaf(self):
-    def test_select_requires_completion_joins(self):
-    def test_select_rejects_stale_revision_and_active_leaf(self):
-    def test_select_rejects_plan_already_present_for_leaf(self):
-    def test_select_rejects_evidence_before_first_completion(self):
-    def test_select_rejects_changed_immutable_field(self):
-    def test_select_propagates_join_failure(self):
-    def test_select_rejects_campaign_without_leaves(self):
-    def test_select_evidence_must_match_completed_result_refs(self):
-    def test_bind_inserts_binding_and_plan_atomically(self):
-    def test_bind_requires_live_verification(self):
-    def test_bind_rejects_leaf_mismatch(self):
-    def test_bind_rejects_plan_byte_digest_mismatch(self):
-    def test_bind_rejects_start_plan_mismatch(self):
-    def test_bind_rejects_wrong_evidence(self):
-    def test_bind_rejects_duplicate_binding_or_plan(self):
-    def test_bind_rejects_stale_revision(self):
-    def test_advance_clears_active_leaf_and_records_progress(self):
-    def test_advance_requires_claim_and_settlement_proof(self):
-    def test_advance_requires_a_bound_plan(self):
-    def test_advance_rejects_wrong_evidence_cardinality(self):
-    def test_advance_rejects_stale_revision(self):
-    def test_unbound_leaf_is_not_planned_without_a_fake_manifest(self):
-    def test_bound_leaf_is_binding_only_with_concrete_failure(self):
-    def test_claimed_leaf_links_manifest_to_operation(self):
-    def test_manifest_requires_exact_gate_set_and_time(self):
-    def test_finish_completes_with_terminal_manifest(self):
-    def test_finish_requires_manifest_provider(self):
-    def test_finish_rejects_before_every_leaf_advanced(self):
-    def test_finish_rejects_wrong_evidence(self):
-    def test_finish_rejects_manifest_leaf_not_bound_to_durable_plan(self):
-    def test_fence_moves_to_recovery_and_preserves_leaf(self):
-    def test_fence_requires_controller_evidence(self):
-    def test_fence_rejects_snapshot_identity_mismatch(self):
-    def test_fence_rejects_wrong_evidence_set(self):
-    def test_verified_outcome_becomes_stopped(self):
-    def test_unverified_outcome_becomes_recovery_and_keeps_leaf(self):
-    def test_stop_outcome_requires_verifier(self):
-    def test_stop_outcome_flag_must_match_durable_evidence(self):
+def _fence(state, event, receipt, record, progress, fence_provider, replay=False, db=None):
+    """Controller-authenticated cut to recovery-required; never resumes work."""
+    if not replay:
+        require(fence_provider is not None, 'Unavailable',
+                'Authenticated fence evidence is unavailable; fence refuses')
+    _check(record['binding'] is None and record['leaf_plan'] is None,
+           'Campaign fence rows differ')
+    campaign_id = record['campaign_id']
+    current = state['campaign_run'].get((campaign_id,))
+    _check(current is not None and current['state'] in ('running', 'stop-pending'),
+           'Campaign fence state differs')
+    _check(record['previous_revision'] == current['revision'],
+           'Campaign fence previous revision differs')
+    run = _row('campaign_run', record['run'], ('last_event',))
+    if replay:
+        terminal = run['result_object']
+        _check(terminal is not None and len(record['evidence']) == 3
+               and terminal in record['evidence'], 'Campaign fence evidence differs')
+        kinds = {}
+        for hashed in record['evidence']:
+            value = _json(_durable_object(db, hashed))
+            _check(type(value) is dict and type(value.get('schema')) is str,
+                   'Campaign fence evidence object differs')
+            kinds[value['schema']] = value
+        _check(set(kinds) == {'capstone-campaign-manifest-v2',
+                              'capstone-failure-v1', 'capstone-campaign-fence-v2'},
+               'Campaign fence evidence roles differ')
+        manifest = kinds['capstone-campaign-manifest-v2']
+        snapshot = kinds['capstone-campaign-fence-v2']
+        fence_leaves = {row['leaf_index'] for row in state['leaf'].values()
+                        if row['campaign_id'] == campaign_id}
+        _bind_manifest(state, campaign_id, manifest, terminal, fence_leaves,
+                       set((progress or {}).get(campaign_id, ())))
+        _check(manifest.get('schema') == 'capstone-campaign-manifest-v2'
+               and digest(canonical(manifest)) == terminal
+               and snapshot.get('campaign_operation_id') == current['campaign_operation_id']
+               and snapshot.get('owner_epoch') == current['owner_epoch']
+               and snapshot.get('observed_owner') in ('present', 'absent')
+               and snapshot.get('active_leaf') == current['active_leaf']
+               and snapshot.get('cut') in ('owner-lost', 'binding-gap', 'claim-gap',
+                                           'accounting-gap', 'dispatch-unknown',
+                                           'evidence-failure'),
+               'Campaign fence durable evidence differs')
+        objects = []
+    else:
+        manifest, terminal, failure, snapshot = fence_provider(
+            campaign_id, state, record['evidence'])
+        _check(type(manifest) is dict
+               and manifest.get('schema') == 'capstone-campaign-manifest-v2'
+               and terminal == digest(canonical(manifest)),
+               'Campaign fence manifest differs')
+        _check(type(failure) is dict and failure.get('schema') == 'capstone-failure-v1',
+               'Campaign fence failure record differs')
+        _check(type(snapshot) is dict
+               and snapshot.get('schema') == 'capstone-campaign-fence-v2'
+               and snapshot.get('campaign_operation_id') == current['campaign_operation_id']
+               and snapshot.get('owner_epoch') == current['owner_epoch']
+               and snapshot.get('observed_owner') in ('present', 'absent')
+               and snapshot.get('active_leaf') == current['active_leaf']
+               and snapshot.get('cut') in ('owner-lost', 'binding-gap', 'claim-gap',
+                                           'accounting-gap', 'dispatch-unknown',
+                                           'evidence-failure'),
+               'Campaign fence snapshot differs')
+        _check(record['evidence'] == sorted({digest(canonical(failure)),
+                                             digest(canonical(snapshot)), terminal}),
+               'Campaign fence evidence differs')
+        objects = [canonical(failure), canonical(snapshot), canonical(manifest)]
+    for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
+                   'auth_hash', 'owner_epoch', 'intent_anchor'):
+        _check(run[column] == current[column], 'Campaign fence immutable field differs')
+    _check(run['state'] == 'recovery-required'
+           and run['active_leaf'] == current['active_leaf']
+           and run['result_object'] == terminal
+           and run['revision'] == current['revision'] + 1,
+           'Campaign fence revision or run state differs')
+    _check(event['idempotency_key'] == _domain('campaign-event-v2', {
+        'campaign_id': campaign_id, 'action': event['action'],
+        'revision': run['revision']}), 'Campaign fence key differs')
+    run['last_event'] = receipt['digest']
+    _put(state, 'campaign_run', run, True)
+    return objects

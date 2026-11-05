@@ -322,6 +322,10 @@ def _fence(state, event, receipt, record, progress, fence_provider, replay=False
                'Campaign fence evidence roles differ')
         manifest = kinds['capstone-campaign-manifest-v2']
         snapshot = kinds['capstone-campaign-fence-v2']
+        fence_leaves = {row['leaf_index'] for row in state['leaf'].values()
+                        if row['campaign_id'] == campaign_id}
+        _bind_manifest(state, campaign_id, manifest, terminal, fence_leaves,
+                       set((progress or {}).get(campaign_id, ())))
         _check(manifest.get('schema') == 'capstone-campaign-manifest-v2'
                and digest(canonical(manifest)) == terminal
                and snapshot.get('campaign_operation_id') == current['campaign_operation_id']
@@ -401,6 +405,11 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
                               'capstone-campaign-stop-v2'},
                'Campaign stop-outcome evidence roles differ')
         outcome = kinds['capstone-campaign-stop-v2']
+        stop_leaves = {row['leaf_index'] for row in state['leaf'].values()
+                       if row['campaign_id'] == campaign_id}
+        _bind_manifest(state, campaign_id, kinds['capstone-campaign-manifest-v2'],
+                       terminal, stop_leaves,
+                       set((progress or {}).get(campaign_id, ())))
         _check(digest(canonical(kinds['capstone-campaign-manifest-v2'])) == terminal,
                'Campaign stop-outcome manifest differs')
         verified = outcome.get('verified')
