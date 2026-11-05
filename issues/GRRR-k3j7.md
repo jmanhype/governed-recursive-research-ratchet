@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T15:00:02Z
-content_hash: "sha256:15796f31b3a0fe13798bf1db9eee83d2dd44b926a913fbad4997c088e53d25e6"
+updated_at: 2026-11-05T15:21:34Z
+content_hash: "sha256:c4bf3736a1b33026229d3b76e09c322cbe6519a2905aede7e102e405944c1f2a"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
@@ -209,7 +209,18 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: delivered
 
+### evidence
+- Operator/product owner explicitly approved the delivery in session (2026-11-05). This is PM acceptance of the delivery intent; it does not by itself satisfy the independent-review gate.
+- Independent review attempted three times with three routes (zai-coding/glm-5.3 twice, custom/Qwen-Ambassador/Qwen3.8-Max, deepseek/deepseek-v4.1-flash). Every attempt ended in provider 429 after 10-24 calls; no verdict file was produced. All attempts are retained under outputs/paivot-autoloop-pilot/coding-adapter/runs/review-*.
+- Partial reviewer output before the 429 raised finding F1: replay-mode branches for finish/fence/stop-outcome derive the terminal hash from the submitted run row and then compare evidence against that same value, which is circular. A forged event carrying a consistent fake result_object and matching evidence would pass replay because the manifest is not recomputed and no durable manifest object is checked.
+- F1 is accepted as a real gap. It must be fixed before AC #12 is considered satisfied: replay must resolve the terminal manifest from a durable typed object (hash-addressed) and recompute/verify the manifest links, or the action must be unable to replay-accept without it.
+
+### proof
+- [x] Delivery package and PM approval recorded.
+- [ ] AC #12: independent review verdict and F1 remediation outstanding; no acceptance or merge claimed.
 
 ## nd_contract
 status: delivered
@@ -611,6 +622,65 @@ status: in_progress
 - [ ] Pilot guard digest fix and fresh scoped review.
 - [ ] AC #2-11 full backend implementation and integrated source/installed verification remain incomplete.
 - [ ] AC #12 complete independent security and PM acceptance remains pending.
+
+
+## nd_contract
+status: delivered
+
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.12 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /usr/bin/python3 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 -m unittest discover -s tests -p 'unit_capstone*.py'
+Summary: PASS source257 tests on EACH of Python3.14.3,3.12.9,3.9.6; failures0/errors0/skipped0, each exit0. Campaign reducer, CampaignManifestV2 derivation, real-Ledger append, two-leaf campaign, fence and both stop-outcome paths covered. All 11 gate phases and all seven capstone journeys NOT-RUN; no installed topology, VM replay, admission, promotion, production or q3hp claim. Producing SHA8c3e607cf4611da88d3bd3200593cc3e150e1268.
+
+- Commands run:
+  - PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 tests/unit_capstone_backend_suite.py
+  - PYTHONPATH=research:tests /opt/homebrew/bin/python3.12 tests/unit_capstone_backend_suite.py
+  - PYTHONPATH=research:tests /usr/bin/python3 tests/unit_capstone_backend_suite.py
+  - PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 -m unittest discover -s tests -p 'unit_capstone*.py'
+- Summary: source-only delivery. 257 tests per interpreter, 0 failures/errors/skips. No external CI claimed. Gate phases, capstone journeys, installation, admission and promotion remain not-run and are not claimed.
+
+### Commit
+- Branch: story/GRRR-k3j7
+- SHA: 8c3e607cf4611da88d3bd3200593cc3e150e1268
+- Worktree clean at delivery time; no merge, no push, no protected access.
+
+### Acceptance Criteria
+- [x] AC1: accepted design and independent review bound; implementation conforms at source.
+- [x] AC2: InstallationV2 open-only topology, 44 source tests.
+- [x] AC3: backend-v2 schema, index, reducer, replay equality and stop-pending transitions.
+- [x] AC4: issuance idempotence, intent continuity and reopen behaviour.
+- [x] AC5: two-leaf JIT composition with distinct Plans and verifier-injected owner/gate proof.
+- [x] AC6: ReviewV2 store/service/RPCs with peer identity, idempotency and crash-conservative replay.
+- [x] AC7: AF_UNIX SCM_RIGHTS gate/broker with real multiprocess and wrong-inode tests.
+- [x] AC8: stop commits stop-pending before cancellation; verified outcome stopped, else recovery-required.
+- [x] AC9: v4 unchanged and read-only; operational v5 accounting implemented and tested.
+- [x] AC10: two-leaf campaign executes through the real Ledger with truthful manifest links.
+- [x] AC11: 257 regressions reproducible on Python 3.14, 3.12 and 3.9 with zero skips.
+- [ ] AC12: independent review and PM acceptance pending for this delivery.
+
+### Independent Review and Scope
+- Pending: one fresh-context read-only review of the campaign reducer, the Ledger version change, the journal version check and the integration tests. No merge, push, promotion, admission, installation or /Library/GRRR access is authorized by this delivery.
+
+### proof
+- [x] AC1: accepted design and independent review bound; implementation conforms at source.
+- [x] AC2: InstallationV2 open-only topology, 44 source tests.
+- [x] AC3: backend-v2 schema, index, reducer, replay equality and stop-pending transitions.
+- [x] AC4: issuance idempotence, intent continuity and reopen behaviour.
+- [x] AC5: two-leaf JIT composition with distinct Plans and verifier-injected owner/gate proof.
+- [x] AC6: ReviewV2 store/service/RPCs with peer identity, idempotency and crash-conservative replay.
+- [x] AC7: AF_UNIX SCM_RIGHTS gate/broker with real multiprocess and wrong-inode tests.
+- [x] AC8: stop commits stop-pending before cancellation; verified outcome stopped, else recovery-required.
+- [x] AC9: v4 unchanged and read-only; operational v5 accounting implemented and tested.
+- [x] AC10: two-leaf campaign executes through the real Ledger with truthful manifest links.
+- [x] AC11: 257 regressions reproducible on Python 3.14, 3.12 and 3.9 with zero skips.
+- [ ] AC12: independent review and PM acceptance pending for this delivery.
 
 
 ## History
