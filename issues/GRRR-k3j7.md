@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T12:44:36Z
-content_hash: "sha256:6a1bd72c08c02973d8475e0f2f579829df89236161096d85ccc00320fe2efc68"
+updated_at: 2026-11-05T12:51:51Z
+content_hash: "sha256:60a24cc60bb276705f232eaf115a24772cc218dbc246a365bd75f3756c118851"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,22 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Required public source suite now includes v5 accounting: 202 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6 (tests/unit_capstone_backend_suite.py). Commit 8395acd on story/GRRR-k3j7; no merge or push.
+- v5 operational accounting hardened after real flake: removed an over-strict rollback-journal open refusal that broke legitimate concurrent writers (SQLite already resolves it under locks); child open now reports failures; 4/4 repeats green on 3.9 and 3.14.
+- Provider lane measured: zai-coding/glm-5.3 produced the v5 draft then died on 429 at 16-17 calls three times; custom/Qwen-Ambassador was slower and non-convergent. Gate failed closed with 0 unresolved reservations each run; ledgers retained.
+- Exact remaining blocker identified in source: research/capstone_backend_index.py::_validate raises Failure('Unavailable','Campaign evidence reducer not implemented') for any capstone-campaign-event-v2 envelope. AC #3/#5/#10 cannot be met until that reducer (amendment v3 section 1) is implemented exactly, with no local interpretation and no stub.
+- Everything else is source-complete and tested at source: installation topology 44 tests, backend schema/index/replay/stop 29+ tests, ReviewV2 store/service/RPCs, SCM_RIGHTS launch broker, two-leaf composition, v5 accounting.
+
+### proof
+- [x] AC #9 v5 object implemented and tested at source (8 adversarial tests).
+- [x] AC #11 source regressions reproducible on 3 interpreters, zero skips.
+- [ ] AC #3/#5/#10 blocked on the campaign reducer; it is not implemented and must not be approximated.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
