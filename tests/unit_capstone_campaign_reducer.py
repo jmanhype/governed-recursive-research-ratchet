@@ -568,5 +568,124 @@ class CampaignFinishTests(unittest.TestCase):
                       self.progress, None, None, None, self.provider)
 
 
+def cut_event(plan, raw, action, terminal, revision, evidence, state='recovery-required',
+              active_leaf=0):
+    op = operation_id(plan['grant']['grant_id'], plan['plan_sha256'])
+    run = dict(
+        campaign_id=CAMPAIGN, campaign_operation_id=op, plan_hash=plan['plan_sha256'],
+        plan_raw=base64.b64encode(raw).decode('ascii'), auth_hash=AUTH,
+        owner_epoch='e' * 64, state=state, active_leaf=active_leaf,
+        result_object=terminal, intent_anchor=RECEIPT, revision=revision + 1)
+    record = dict(campaign_id=CAMPAIGN, previous_revision=revision, run=run,
+                  binding=None, leaf_plan=None, evidence=evidence)
+    return dict(
+        format='capstone-campaign-event-v2', version=2, action=action,
+        idempotency_key=_domain('campaign-event-v2',
+                                {'campaign_id': CAMPAIGN, 'action': action,
+                                 'revision': revision + 1}),
+        record=record)
+
+
+class CampaignFenceTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = bound_state(self.plan, self.raw)
+        self.state['campaign_run'][(CAMPAIGN,)].update(revision=2)
+        self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
+        self.manifest, self.terminal = derive_manifest(self.state, CAMPAIGN, {CAMPAIGN: {0}},
+                                                       gate_set(), now_ns=1)
+        self.failure = dict(schema='capstone-failure-v1')
+        self.snapshot = dict(
+            schema='capstone-campaign-fence-v2',
+            campaign_operation_id=operation_id(self.plan['grant']['grant_id'],
+                                               self.plan['plan_sha256']),
+            owner_epoch='e' * 64, observed_owner='absent', active_leaf=0,
+            cut='owner-lost')
+        self.evidence = sorted({digest(canonical(self.failure)),
+                                digest(canonical(self.snapshot)), self.terminal})
+
+    def provider(self, campaign_id, state, evidence):
+        return self.manifest, self.terminal, self.failure, self.snapshot
+
+    def test_fence_moves_to_recovery_and_preserves_leaf(self):
+        event = cut_event(self.plan, self.raw, 'campaign-fence', self.terminal, 2,
+                          self.evidence)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants, {}, None, None,
+                  None, None, self.provider)
+        row = self.state['campaign_run'][(CAMPAIGN,)]
+        self.assertEqual(row['state'], 'recovery-required')
+        self.assertEqual(row['active_leaf'], 0)
+        self.assertEqual(row['result_object'], self.terminal)
+        self.assertEqual(row['revision'], 3)
+
+    def test_fence_requires_controller_evidence(self):
+        event = cut_event(self.plan, self.raw, 'campaign-fence', self.terminal, 2,
+                          self.evidence)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {})
+        self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+
+    def test_fence_rejects_snapshot_identity_mismatch(self):
+        event = cut_event(self.plan, self.raw, 'campaign-fence', self.terminal, 2,
+                          self.evidence)
+        self.snapshot['active_leaf'] = 1
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None,
+                      None, None, None, self.provider)
+
+    def test_fence_rejects_wrong_evidence_set(self):
+        event = cut_event(self.plan, self.raw, 'campaign-fence', self.terminal, 2,
+                          [self.terminal])
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None,
+                      None, None, None, self.provider)
+
+
+class CampaignStopOutcomeTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = bound_state(self.plan, self.raw)
+        self.state['campaign_run'][(CAMPAIGN,)].update(revision=2, state='stop-pending')
+        self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
+        self.manifest, self.terminal = derive_manifest(self.state, CAMPAIGN, {CAMPAIGN: {0}},
+                                                       gate_set(), now_ns=1)
+        self.outcome = dict(schema='capstone-campaign-stop-v2')
+        self.evidence = sorted({digest(canonical(self.outcome)), self.terminal})
+
+    def provider(self, campaign_id, state, evidence):
+        return self.manifest, self.terminal, self.outcome, True
+
+    def refused(self, campaign_id, state, evidence):
+        return self.manifest, self.terminal, self.outcome, False
+
+    def test_verified_outcome_becomes_stopped(self):
+        event = cut_event(self.plan, self.raw, 'campaign-stop-outcome', self.terminal, 2,
+                          self.evidence, state='stopped', active_leaf=None)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants, {}, None, None,
+                  None, None, None, self.provider)
+        row = self.state['campaign_run'][(CAMPAIGN,)]
+        self.assertEqual(row['state'], 'stopped')
+        self.assertIsNone(row['active_leaf'])
+        self.assertEqual(row['result_object'], self.terminal)
+
+    def test_unverified_outcome_becomes_recovery_and_keeps_leaf(self):
+        event = cut_event(self.plan, self.raw, 'campaign-stop-outcome', self.terminal, 2,
+                          self.evidence)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants, {}, None, None,
+                  None, None, None, self.refused)
+        row = self.state['campaign_run'][(CAMPAIGN,)]
+        self.assertEqual(row['state'], 'recovery-required')
+        self.assertEqual(row['active_leaf'], 0)
+
+    def test_stop_outcome_requires_verifier(self):
+        event = cut_event(self.plan, self.raw, 'campaign-stop-outcome', self.terminal, 2,
+                          self.evidence)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {})
+        self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+
+
 if __name__ == '__main__':
     unittest.main()
