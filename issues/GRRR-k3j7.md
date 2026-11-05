@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T05:30:29Z
-content_hash: "sha256:da63ad7205511f1db9ee555ca68c2c0e1a687bb0577bf0970c578841acfedad3"
+updated_at: 2026-11-05T06:14:19Z
+content_hash: "sha256:749f8954aca9c4953b8314c62467cfa8480ce61804f54c889b06ee1437a25317"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,19 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Parent ran owned synthetic same-user process canary using a native C sysctl client. Host positive control and each of three sandbox profiles (deny sysctl-read, process-info-pidinfo, or process-info-pidfileportinfo) could read the synthetic marker; no real credentials were used. Result /tmp/grrr-native-sysctl-result-v2.json SHA256 d4894ce68ce95990e8e780e6f881e821891da4b9e895259e73b114677d15e8e9. This rejects those candidate isolation approaches; it does not establish a complete sandbox profile.
+- The nonproduction request-controller candidate now derives synthetic reservations from fixed policy rates instead of caller-supplied cost; parent and independent reviewer each observed 10 passing tests. controller.py SHA256 fd968f4fcf0d7cf19971164e577d719a2653ed07aebc67380d03bdd67dbd923b, test_controller.py SHA256 36b05ebdfef85f52e2c63dd55ae3062b39b46607d751d23aa992e836630c02fb. Review approval covers this pricing calculation only, not provider currency, accounting integrity, or SQLite security.
+- Independent channel review found guest file operations lack a deadline. Docstring corrected; reviewer confirmed wording only, underlying issue remains. Parent reran 22 passing channel tests; vm_channel.py SHA256 d6435426d6ee4b7587cac76e0f585c6f7006e4e28fe6235b390cd55249b4039c.
+- These uncommitted artifacts are outside the repository under outputs/paivot-autoloop-pilot/coding-adapter. No real provider, credentials, protected path, VM, replay, promotion, production mutation, merge, or push occurred in this work.
+
+### proof
+- [x] Synthetic zero-price caller bypass corrected and narrowly independently reviewed.
+- [ ] Operating-system isolation, real provider pricing, persistent accounting, actual AI coding dispatch through Autoloop, and GRRR story acceptance remain incomplete.
+
 ## nd_contract
 status: in_progress
 
