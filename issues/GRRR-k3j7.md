@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-04T23:54:15Z
-content_hash: "sha256:76481b5b0676074be0c6b8e99f0f6389c98a5b69241d4b487e21dee082f2a528"
+updated_at: 2026-11-05T00:29:31Z
+content_hash: "sha256:54ac3cac8d12f6591cbdea87a92e1f238441b70f00b1fdfa79fc3a695ccfef49"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -265,6 +265,26 @@ status: in_progress
 - [x] Current core WIP preserved; no false delivery, acceptance, merge, or promotion claim.
 - [ ] AC #2-11 complete implementation and integrated source verification remain unfinished.
 - [ ] AC #12 complete independent security/PM acceptance remains pending.
+
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Reviewed partial backend source WIP is committed on story/GRRR-k3j7 as 419c312a116476ff22486737883d4b19b4a2ddb4. The epic and main branches were not merged or pushed. All12 original story criteria remain required; this is neither delivery nor acceptance.
+- Exact independently scoped review reports and parent-run evidence are committed at docs/evidence/source-backend/current-source-20261104/. Parent combined143 tests passed on Python3.14/3.12/3.9, plus direct required-suite entrypoint on3.14. These are public source fixtures, not installation/UID/ACL/VM/authority proofs. Earlier failed attempts remain in private WIP evidence.
+- A finite, normal-user PAIVOT/Autoloop/source-test connector exists at outputs/paivot-autoloop-pilot/ outside the GRRR checkout. It captures the actual loop decision and current owned claim; runs exactly22 contract and29 index source tests through the actual pinned Autoloop hub/kernel/worker; retains outputs and skills digests; observed both fixed-job processes overlapping; and stops the hub. PAIVOT returned stalled; no new story was selected/claimed. No AI adapter, real provider credential, permanent service, production, protected installation, or promotion was used.
+- Independent finite-pilot reproduction review SHA256 72dd8227168f36903ddd01b2abed95dead8aac468b99e0029fc2ffd14ca91355 approves only the single reproduced run. Broader reuse is blocked until the source-guard dependency is digest-pinned; normal-user access is not OS-enforced read-only. The concurrency intervals cover full job processes, not solely the guarded commands or AI speedup.
+- /root/fix_pilot_review is addressing this exact digest/label finding; independent re-review remains required. /root/installation_record_codec owns only a data-only InstallationV2 descriptor codec/test; it grants no authority and cannot open protected files. /root/review_authority_cycle is independently checking the architect's proposal and exact full-byte installation/registry/authorization cycle. Those tasks are ongoing; no success is claimed yet.
+- Architect's uncommitted authority proposal has SHA256 f4d9b2bf86a9c1d6b60d03d5a48232bf43d9bade991dd9cd8375644a92e73734 and explicitly marks newly proposed records, missing independently validated import provenance, and unresolved cyclic hashes. No existing hash semantics are silently altered and the proposal is not approved authority.
+- Existing user decision keeps optional research ecosystem additions optional; the separately requested verification lane does not replace PAIVOT selection, trusted evaluator, ledger, required Jev comparison, or any original gate. No /Library/GRRR access including metadata, protected installation/accounting/reconcile/unstop, VM/live replay, permanent contract admission/promotion, main/production mutation, or push was authorized by the pilot.
+
+### proof
+- [x] WIP source/review/test evidence was committed without closing or merging the story.
+- [x] One finite real Autoloop verification connection was independently reproduced within the stated source-only limits.
+- [ ] Pilot guard digest fix and fresh scoped review.
+- [ ] AC #2-11 full backend implementation and integrated source/installed verification remain incomplete.
+- [ ] AC #12 complete independent security and PM acceptance remains pending.
 
 
 ## History
