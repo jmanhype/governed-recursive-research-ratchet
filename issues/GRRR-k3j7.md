@@ -4,7 +4,7 @@ title: "Executable evaluator backend: finite JIT campaign, accounting and isolat
 status: closed
 priority: 0
 type: feature
-labels: [milestone-1, integration, security, source-only, delivered, accepted]
+labels: [milestone-1, integration, security, source-only, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
