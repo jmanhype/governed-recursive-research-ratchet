@@ -1,8 +1,23 @@
 # Capstone driver — bounded pre-implementation mapping (GRRR-q3hp AC1)
 
-Status: **BLOCKED — three mandatory items cannot be resolved from source.**
-Implementation has not started. This document records only what was verified
-from concrete source at the base commit, plus the exact blockers.
+Status: **DECIDED** — operator delegated the three open decisions
+(2026-11-05). Implementation proceeds against the decisions below.
+
+## Decisions
+
+1. **Transport:** the driver does not invent an evaluator transport. `prepare`
+   and `run` are pure functions over caller-supplied authenticated receipts and
+   an injected `dispatch` callable. The authenticated evaluator path stays
+   where it already lives; the CLI supplies no dispatcher and therefore refuses
+   `run` with `Unavailable`. This keeps the operator from ever wielding
+   evaluator authority directly.
+2. **Allowance:** for the v4 `independent-replay` profile, `prepare` records
+   `budget_state = blocked` unless an evaluator-issued spendability receipt is
+   supplied. No fresh allowance is issued or assumed. `run` therefore refuses
+   for this profile, truthfully.
+3. **Base:** stay on `story/GRRR-q3hp`. `tests/e2e/milestone.py` is not ported;
+   the driver is standalone and `scripts/test-story capstone-driver` covers it.
+   The GRRR-6sso dependency remains open and out of scope here.
 
 Base: `story/GRRR-q3hp` at `0b2365e30ab5858cb419f4f4ce9b2ce001850541`.
 
