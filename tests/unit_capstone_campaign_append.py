@@ -7,7 +7,8 @@ import tempfile
 import unittest
 
 from common import GATES, Failure, canonical, digest
-from capstone_backend_index import _domain, derive_manifest, open_public_fixture
+from capstone_backend_index import (_domain, apply_backend_stop, derive_manifest,
+                                    open_public_fixture)
 from capstone_contract import content_digest, operation_id, validate_record
 from unit_capstone_backend_index import issuance_fixture
 from unit_capstone_journal import fixture_connection
@@ -309,6 +310,102 @@ class CampaignSequenceTests(unittest.TestCase):
         self.assertEqual(final['state'], 'recovery-required')
         self.assertEqual(final['result_object'], terminal)
         self.assertIsNone(final['active_leaf'])
+
+
+class CampaignStopOutcomeLedgerTests(unittest.TestCase):
+    setUp = CampaignAppendTests.setUp
+
+    def issue(self):
+        return CampaignAppendTests.issue(self)
+
+    def plan_for(self, leaf, entry):
+        return CampaignAppendTests.plan_for(self, leaf, entry)
+
+    def start_record(self, plan):
+        return CampaignAppendTests.start_record(self, plan)
+
+    def stop_running_campaign(self):
+        entries, leaves = self.issue()
+        plan = self.plan_for(leaves[0], entries[0])
+        record, _ = self.start_record(plan)
+        start_key = _domain('campaign-event-v2', {'campaign_id': self.row['campaign_id'],
+                                                  'action': 'campaign-start', 'revision': 0})
+        self.index.append_campaign('campaign-start', record, start_key)
+        state = self.index.validate()
+        campaign = state['campaign'][(self.row['campaign_id'],)]
+        run = state['campaign_run'][(self.row['campaign_id'],)]
+        after = dict(run)
+        after.pop('last_event')
+        after['plan_raw'] = raw(after['plan_raw'])
+        after.update(state='stop-pending', revision=run['revision'] + 1)
+        stop = dict(schema='capstone-campaign-stop-v2',
+                    campaign_id=campaign['campaign_id'],
+                    control_run=campaign['control_run'], epoch=1,
+                    primary_operation=H, affected_operations=[],
+                    run_before_revision=run['revision'], run_after=after)
+        event = dict(kind='safe-stop', run=campaign['control_run'], epoch=1,
+                     operation=H, backend_stop=stop)
+        self.ledger.append_atomic(320, event, self.ledger.tip(), 'campaign-stop',
+                                  lambda db, receipt: apply_backend_stop(db, receipt, stop))
+        return self.index.validate()
+
+    def test_stop_outcome_verified_becomes_stopped(self):
+        state = self.stop_running_campaign()
+        run = state['campaign_run'][(self.row['campaign_id'],)]
+        self.assertEqual(run['state'], 'stop-pending')
+        manifest, terminal = derive_manifest(state, self.row['campaign_id'], {},
+                                             gate_set(), now_ns=1)
+        outcome = dict(schema='capstone-campaign-stop-v2')
+        evidence = sorted({digest(canonical(outcome)), terminal})
+        after = dict(run)
+        after.pop('last_event')
+        after['plan_raw'] = raw(after['plan_raw'])
+        after.update(state='stopped', active_leaf=None, result_object=terminal,
+                     revision=run['revision'] + 1)
+        record = dict(campaign_id=self.row['campaign_id'],
+                      previous_revision=run['revision'], run=after,
+                      binding=None, leaf_plan=None, evidence=evidence)
+
+        def provider(campaign_id, state, evidence):
+            return manifest, terminal, outcome, True
+
+        key = _domain('campaign-event-v2', {'campaign_id': self.row['campaign_id'],
+                                             'action': 'campaign-stop-outcome',
+                                             'revision': run['revision'] + 1})
+        self.index.append_campaign('campaign-stop-outcome', record, key,
+                                   stop_provider=provider)
+        final = self.index.validate()['campaign_run'][(self.row['campaign_id'],)]
+        self.assertEqual(final['state'], 'stopped')
+        self.assertIsNone(final['active_leaf'])
+        self.assertEqual(final['result_object'], terminal)
+
+    def test_stop_outcome_unverified_requires_recovery(self):
+        state = self.stop_running_campaign()
+        run = state['campaign_run'][(self.row['campaign_id'],)]
+        manifest, terminal = derive_manifest(state, self.row['campaign_id'], {},
+                                             gate_set(), now_ns=1)
+        outcome = dict(schema='capstone-campaign-stop-v2')
+        evidence = sorted({digest(canonical(outcome)), terminal})
+        after = dict(run)
+        after.pop('last_event')
+        after['plan_raw'] = raw(after['plan_raw'])
+        after.update(state='recovery-required', result_object=terminal,
+                     revision=run['revision'] + 1)
+        record = dict(campaign_id=self.row['campaign_id'],
+                      previous_revision=run['revision'], run=after,
+                      binding=None, leaf_plan=None, evidence=evidence)
+
+        def provider(campaign_id, state, evidence):
+            return manifest, terminal, outcome, False
+
+        key = _domain('campaign-event-v2', {'campaign_id': self.row['campaign_id'],
+                                             'action': 'campaign-stop-outcome',
+                                             'revision': run['revision'] + 1})
+        self.index.append_campaign('campaign-stop-outcome', record, key,
+                                   stop_provider=provider)
+        final = self.index.validate()['campaign_run'][(self.row['campaign_id'],)]
+        self.assertEqual(final['state'], 'recovery-required')
+        self.assertEqual(final['result_object'], terminal)
 
 
 if __name__ == '__main__':
