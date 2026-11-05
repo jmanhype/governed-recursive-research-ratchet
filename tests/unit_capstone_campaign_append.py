@@ -215,7 +215,7 @@ class CampaignSequenceTests(unittest.TestCase):
         for index, plan in enumerate(plans):
             revision = self.inspect()['revision']
             run = self.run_row(active_leaf=index, revision=revision + 1)
-            evidence = [] if index == 0 else ['4' * 64]
+            evidence = [] if index == 0 else ['0' * 64]
             select = dict(campaign_id=self.row['campaign_id'], previous_revision=revision,
                           run=run, binding=None, leaf_plan=None, evidence=evidence)
             self.append('campaign-select', select, revision + 1, joins=joins)
@@ -365,7 +365,7 @@ class CampaignStopOutcomeLedgerTests(unittest.TestCase):
         self.assertEqual(run['state'], 'stop-pending')
         manifest, terminal = derive_manifest(state, self.row['campaign_id'], {},
                                              gate_set(), now_ns=1)
-        outcome = dict(schema='capstone-campaign-stop-v2')
+        outcome = dict(schema='capstone-campaign-stop-v2', verified=True)
         evidence = sorted({digest(canonical(outcome)), terminal})
         after = dict(run)
         after.pop('last_event')
@@ -394,7 +394,7 @@ class CampaignStopOutcomeLedgerTests(unittest.TestCase):
         run = state['campaign_run'][(self.row['campaign_id'],)]
         manifest, terminal = derive_manifest(state, self.row['campaign_id'], {},
                                              gate_set(), now_ns=1)
-        outcome = dict(schema='capstone-campaign-stop-v2')
+        outcome = dict(schema='capstone-campaign-stop-v2', verified=False)
         evidence = sorted({digest(canonical(outcome)), terminal})
         after = dict(run)
         after.pop('last_event')

@@ -362,11 +362,16 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
         _check(set(kinds) == {'capstone-campaign-manifest-v2',
                               'capstone-campaign-stop-v2'},
                'Campaign stop-outcome evidence roles differ')
+        outcome = kinds['capstone-campaign-stop-v2']
         _check(digest(canonical(kinds['capstone-campaign-manifest-v2'])) == terminal,
                'Campaign stop-outcome manifest differs')
+        verified = outcome.get('verified')
+        _check(type(verified) is bool,
+               'Campaign stop-outcome durable verification flag differs')
         _check(run['state'] in ('stopped', 'recovery-required'),
                'Campaign stop-outcome state differs')
-        verified = run['state'] == 'stopped'
+        _check((run['state'] == 'stopped') is verified,
+               'Campaign stop-outcome state contradicts durable evidence')
         objects = []
     else:
         manifest, terminal, outcome, verified = stop_provider(
@@ -376,6 +381,8 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
                and terminal == digest(canonical(manifest))
                and type(outcome) is dict and type(verified) is bool,
                'Campaign stop-outcome evidence differs')
+        _check(outcome.get('verified') is verified,
+               'Campaign stop-outcome verification flag differs')
         _check(record['evidence'] == sorted({digest(canonical(outcome)), terminal}),
                'Campaign stop-outcome evidence differs')
         objects = [canonical(outcome), canonical(manifest)]
@@ -489,7 +496,7 @@ def _advance(state, event, receipt, record, progress, advance_proof, replay=Fals
     run['last_event'] = receipt['digest']
     _put(state, 'campaign_run', run, True)
     if progress is not None:
-        progress.setdefault(campaign_id, set()).add(index)
+        progress.setdefault(campaign_id, {})[index] = record['evidence'][0]
 
 
 def _select(state, event, receipt, record, progress, joins, live=None, replay=False):
@@ -516,7 +523,7 @@ def _select(state, event, receipt, record, progress, joins, live=None, replay=Fa
     leaves = sorted(row['leaf_index'] for row in state['leaf'].values()
                     if row['campaign_id'] == campaign_id)
     _check(bool(leaves), 'Campaign select has no leaves')
-    completed = set((progress or {}).get(campaign_id, ()))
+    completed = dict((progress or {}).get(campaign_id, {}))
     unfinished = [index for index in leaves if index not in completed]
     _check(bool(unfinished), 'Campaign select has no unfinished leaf')
     selected = unfinished[0]
@@ -529,8 +536,8 @@ def _select(state, event, receipt, record, progress, joins, live=None, replay=Fa
     _check(event['idempotency_key'] == _domain('campaign-event-v2', {
         'campaign_id': campaign_id, 'action': event['action'],
         'revision': run['revision']}), 'Campaign select key differs')
-    _check(len(record['evidence']) == len(completed),
-           'Campaign select evidence differs from completed prefix')
+    _check(sorted(completed.values()) == record['evidence'],
+           'Campaign select evidence differs from completed result refs')
     if not replay:
         joins(campaign_id, sorted(completed), state)
     run['last_event'] = receipt['digest']

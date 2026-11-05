@@ -257,6 +257,20 @@ class CampaignSelectTests(unittest.TestCase):
         with self.assertRaises(Failure):
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
 
+    def test_select_evidence_must_match_completed_result_refs(self):
+        self.state = started_state(self.plan, self.raw, leaves=2)
+        progress = {CAMPAIGN: {0: '5' * 64}}
+        event = select_event(self.plan, self.raw, evidence=['6' * 64])
+        event['record']['run']['active_leaf'] = 1
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      progress, self.joins)
+        event = select_event(self.plan, self.raw, evidence=['5' * 64])
+        event['record']['run']['active_leaf'] = 1
+        _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                  progress, self.joins)
+        self.assertEqual(self.state['campaign_run'][(CAMPAIGN,)]['active_leaf'], 1)
+
 
 def selected_state(plan, raw):
     state = started_state(plan, raw)
@@ -419,7 +433,7 @@ class CampaignAdvanceTests(unittest.TestCase):
         self.assertIsNone(row['active_leaf'])
         self.assertEqual(row['revision'], 3)
         self.assertEqual(row['last_event'], '9' * 64)
-        self.assertEqual(self.progress, {CAMPAIGN: {0}})
+        self.assertEqual(self.progress, {CAMPAIGN: {0: '5' * 64}})
         self.assertEqual(self.calls, [(CAMPAIGN, 0, '5' * 64)])
 
     def test_advance_requires_claim_and_settlement_proof(self):
@@ -651,14 +665,14 @@ class CampaignStopOutcomeTests(unittest.TestCase):
         self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
         self.manifest, self.terminal = derive_manifest(self.state, CAMPAIGN, {CAMPAIGN: {0}},
                                                        gate_set(), now_ns=1)
-        self.outcome = dict(schema='capstone-campaign-stop-v2')
+        self.outcome = dict(schema='capstone-campaign-stop-v2', verified=True)
         self.evidence = sorted({digest(canonical(self.outcome)), self.terminal})
 
     def provider(self, campaign_id, state, evidence):
         return self.manifest, self.terminal, self.outcome, True
 
     def refused(self, campaign_id, state, evidence):
-        return self.manifest, self.terminal, self.outcome, False
+        return self.manifest, self.terminal, dict(self.outcome, verified=False), False
 
     def test_verified_outcome_becomes_stopped(self):
         event = cut_event(self.plan, self.raw, 'campaign-stop-outcome', self.terminal, 2,
@@ -671,8 +685,10 @@ class CampaignStopOutcomeTests(unittest.TestCase):
         self.assertEqual(row['result_object'], self.terminal)
 
     def test_unverified_outcome_becomes_recovery_and_keeps_leaf(self):
+        refused_outcome = dict(self.outcome, verified=False)
+        evidence = sorted({digest(canonical(refused_outcome)), self.terminal})
         event = cut_event(self.plan, self.raw, 'campaign-stop-outcome', self.terminal, 2,
-                          self.evidence)
+                          evidence)
         _campaign(self.state, event, {'digest': '9' * 64}, self.grants, {}, None, None,
                   None, None, None, self.refused)
         row = self.state['campaign_run'][(CAMPAIGN,)]
@@ -685,6 +701,17 @@ class CampaignStopOutcomeTests(unittest.TestCase):
         with self.assertRaises(Failure) as blocked:
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {})
         self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+
+    def test_stop_outcome_flag_must_match_durable_evidence(self):
+        event = cut_event(self.plan, self.raw, 'campaign-stop-outcome', self.terminal, 2,
+                          self.evidence)
+
+        def mismatched(campaign_id, state, evidence):
+            return self.manifest, self.terminal, dict(self.outcome, verified=False), True
+
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None,
+                      None, None, None, None, mismatched)
 
 
 if __name__ == '__main__':
