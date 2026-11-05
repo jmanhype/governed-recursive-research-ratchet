@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T01:48:46Z
-content_hash: "sha256:82232d859577ddecd19d17d5695d7c4fccf505e0112a3fc5c1f181e466d34370"
+updated_at: 2026-11-05T02:23:03Z
+content_hash: "sha256:f0f01a454efd24ea3bab6a8caa633ce57c3c88d73c0740d35d465481d6f7dd93"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -209,6 +209,14 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## Source checkpoint: installation fixture (2026-11-04)
+
+- Private-temp source only; `open_installed` remains unavailable before metadata access. No protected installation or provenance has been qualified.
+- `research/capstone_installation.py` SHA256 `e37f856f299114a3b8e0b73ab7fdcd790b903e7b3d26a0a65a4f18394a2c76b0`; tests SHA256 `e1854faf6938ac931e10f57f27548b7334892edc8112569d0b10a146e9aa8986`.
+- Independent review exercised real temporary Darwin ACLs and identified a close-failure descriptor cleanup defect. The fix was independently re-reviewed with real descriptors and injected close failure.
+- Parent combined guarded source run: 93 tests, zero failures, errors, skips or protected-path attempts; log SHA256 `ef1085d16e7fb0cb5d16f11a0c3add039f1336c7743edcf089f5555437ce6758`.
+- Reviewed WIP and test log preserved in `.git/paivot/wip/GRRR-k3j7/installation-acl-reviewed-20261104/`. No delivery, acceptance, installation, replay, merge or production change.
+
 ## Source checkpoint: detached fixture inventory (2026-11-04)
 
 - Scope: NONPRODUCTION fixture bytes only. Stable installation authority is not implemented and requests for it are refused before filesystem access.
