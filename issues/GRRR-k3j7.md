@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T17:01:52Z
-content_hash: "sha256:69792bc9ffd057631604a383a5ac777813e64750856813fb248192a4802b9c70"
+updated_at: 2026-11-05T18:26:50Z
+content_hash: "sha256:c3d4f5380d40ceec634c89f17ac297f6f0673aced7762c3544ccdd8f077e8aa3"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: delivered
+
+### evidence
+- Both findings from the interrupted independent review are fixed in commit 1262472.
+- Finding F2 (unchecked select evidence): the replay completion prefix now records the per-leaf result hash from campaign-advance, and campaign-select requires its evidence list to equal the sorted result refs of the completed leaves. Tampered or invented refs are rejected; a regression test covers both the reject and accept cases.
+- Finding F3 (stop-outcome verified derived from run state): the durable stop-outcome object must now carry an explicit boolean verified flag. Append requires it to equal the verifier's verdict; replay derives stopped vs recovery-required from that durable flag and rejects a run state that contradicts it. Regression test covers the mismatch.
+- Required suite: 260 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6.
+- Review-environment note: the reviewer's in-sandbox run reported 8 setup errors because the worker permission profile denies /private/tmp while the fixtures require it. The same suites pass unmodified outside the worker on all three interpreters; this is a sandbox limitation, not a test failure, and is recorded rather than papered over.
+
+### proof
+- [x] F1, F2, F3 fixed with regression tests.
+- [ ] AC #12: independent review verdict still outstanding; three provider 429s so far.
+
 ## nd_contract
 status: delivered
 
