@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T00:29:31Z
-content_hash: "sha256:54ac3cac8d12f6591cbdea87a92e1f238441b70f00b1fdfa79fc3a695ccfef49"
+updated_at: 2026-11-05T01:48:46Z
+content_hash: "sha256:82232d859577ddecd19d17d5695d7c4fccf505e0112a3fc5c1f181e466d34370"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -209,7 +209,13 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## Source checkpoint: detached fixture inventory (2026-11-04)
 
+- Scope: NONPRODUCTION fixture bytes only. Stable installation authority is not implemented and requests for it are refused before filesystem access.
+- Source SHA256: `15df4cd7babdf241e66e0e52354f1d0be7d6c31f8b0c1992fecba5738334b345`; tests SHA256: `33a01a418dd62b41776d9d533f44c23ebeef3ad23092f03e20387d7cf8eecd81`.
+- Parent guarded run: 74 source tests passed, zero errors, failures, skips or protected-access attempts; independent scoped reviewer validated 15 fixture tests on Python 3.9, 3.12 and 3.14.
+- Deterministic adversarial cases replace a name and rebind the root after recheck. Returned bytes remain bound to the expected digest; the result makes no stable-namespace claim.
+- Untracked source and tests preserved under `.git/paivot/wip/GRRR-k3j7/inventory-detached-20261104/`. This is WIP: no story delivery, acceptance, protected installation, or live-capstone claim.
 
 ## nd_contract
 status: in_progress
