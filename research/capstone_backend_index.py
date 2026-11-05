@@ -19,8 +19,63 @@ from capstone_backend_schema import (BACKEND_SQL, BLOBS, PREFIX, PRIMARY_KEYS,
 
 BASE_FORMAT = 'capstone-backend-event-v1'
 CAMPAIGN_FORMAT = 'capstone-campaign-event-v2'
+CAMPAIGN_ACTIONS = ('campaign-start', 'campaign-select', 'campaign-leaf-bind',
+                    'campaign-advance', 'campaign-finish', 'campaign-fence',
+                    'campaign-stop-outcome')
 _OPEN = object()
 MAX_RAW = 16 * 1024 * 1024
+
+
+def _campaign(state, event, receipt, grants):
+    """Campaign-v2 reducer entry; unimplemented actions refuse, never accept."""
+    _fields(event, ('format', 'action', 'record', 'idempotency_key', 'version'))
+    record = event['record']
+    _fields(record, ('campaign_id', 'previous_revision', 'run', 'binding',
+                     'leaf_plan', 'evidence'))
+    action = event['action']
+    _check(action in CAMPAIGN_ACTIONS, 'Unknown campaign action')
+    identifier(record['campaign_id'], True)
+    evidence = record['evidence']
+    _check(type(evidence) is list and evidence == sorted(set(evidence))
+           and all(type(item) is str and len(item) == 64 for item in evidence),
+           'Campaign evidence is unsorted, duplicated or malformed')
+    previous = record['previous_revision']
+    _check(previous is None or (type(previous) is int and previous >= 0),
+           'Campaign previous revision differs')
+    if action != 'campaign-start':
+        raise Failure('Unavailable', 'Campaign action not implemented: ' + action)
+
+    _check(previous is None and record['binding'] is None and record['leaf_plan'] is None,
+           'Campaign start rows differ')
+    _check(len(evidence) == 2, 'Campaign start evidence differs')
+    run = _row('campaign_run', record['run'], ('last_event', 'intent_anchor'))
+    _check(run['state'] == 'running' and run['active_leaf'] is None
+           and run['result_object'] is None and run['revision'] == 0,
+           'Campaign start run state differs')
+    _check(len(run['owner_epoch']) == 64, 'Campaign owner epoch differs')
+    campaign = state['campaign'].get((run['campaign_id'],))
+    issuance = state['issuance'].get((run['auth_hash'],))
+    _check(campaign is not None and campaign['campaign_id'] == run['campaign_id']
+           and campaign['stopped'] == 0, 'Campaign start control join differs')
+    _check(issuance is not None and issuance['phase'] == 'issued'
+           and issuance['campaign_id'] == run['campaign_id']
+           and issuance['auth_hash'] == run['auth_hash'], 'Campaign start issuance join differs')
+    _check(all(row['state'] not in ('running', 'stop-pending', 'recovery-required')
+               for row in state['campaign_run'].values()), 'Campaign already active')
+    plan = decode_record(run['plan_raw'], 'Plan')
+    _check(canonical(plan) == run['plan_raw'] and plan['plan_sha256'] == run['plan_hash'],
+           'Campaign start plan bytes differ')
+    grant_id = plan['grant']['grant_id']
+    _check(grant_id in grants and grants[grant_id][0] == grant_id,
+           'Campaign start grant join differs')
+    _check(run['campaign_operation_id'] == operation_id(grant_id, plan['plan_sha256']),
+           'Campaign start operation id differs')
+    _check(event['idempotency_key'] == _domain('campaign-event-v2', {
+        'campaign_id': run['campaign_id'], 'action': action, 'revision': 0}),
+        'Campaign start key differs')
+    run['last_event'] = receipt['digest']
+    run['intent_anchor'] = receipt['digest']
+    _put(state, 'campaign_run', run)
 
 
 def _check(ok, message):
@@ -295,7 +350,7 @@ def _validate(db, tentative=None):
             if fmt == BASE_FORMAT:
                 _base(state, event, receipt, grants)
             else:
-                raise Failure('Unavailable', 'Campaign evidence reducer not implemented')
+                _campaign(state, event, receipt, grants)
         elif type(fmt) is str and (fmt.startswith('capstone-backend-') or fmt.startswith('capstone-campaign-')):
             raise Failure('IntegrityFailure', 'Unknown backend event format')
         elif 'backend_stop' in event:
