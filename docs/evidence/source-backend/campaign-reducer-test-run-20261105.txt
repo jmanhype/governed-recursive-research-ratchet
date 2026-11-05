@@ -1,0 +1,21 @@
+# Parent-run test evidence (outside the worker sandbox)
+# date: 2026-11-05T18:26:59Z
+# HEAD: 1262472549f0a4d9a78ee8b96775698467c31478
+
+## Python 3.14.3
+Ran 260 tests in 8.122s
+
+OK
+SOURCE_ONLY BACKEND_WIP tests=260 failures=0 errors=0 skipped=0; installed topology, live campaign execution and capstone NOT-QUALIFIED
+
+## Python 3.12.9
+Ran 260 tests in 7.711s
+
+OK
+SOURCE_ONLY BACKEND_WIP tests=260 failures=0 errors=0 skipped=0; installed topology, live campaign execution and capstone NOT-QUALIFIED
+
+## Python 3.9.6
+Ran 260 tests in 8.235s
+
+OK
+SOURCE_ONLY BACKEND_WIP tests=260 failures=0 errors=0 skipped=0; installed topology, live campaign execution and capstone NOT-QUALIFIED
