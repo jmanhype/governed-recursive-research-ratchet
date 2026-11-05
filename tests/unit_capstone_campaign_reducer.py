@@ -151,5 +151,110 @@ class CampaignReducerTests(unittest.TestCase):
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants)
 
 
+def started_state(plan, raw, leaves=1):
+    state = empty_state()
+    seed(state, plan, None)
+    op = operation_id(plan['grant']['grant_id'], plan['plan_sha256'])
+    state['campaign_run'][(CAMPAIGN,)] = dict(
+        campaign_id=CAMPAIGN, campaign_operation_id=op, plan_hash=plan['plan_sha256'],
+        plan_raw=raw, auth_hash=AUTH, owner_epoch='e' * 64, state='running',
+        active_leaf=None, result_object=None, intent_anchor=RECEIPT, revision=0,
+        last_event=RECEIPT)
+    for index in range(leaves):
+        state['leaf'][(CAMPAIGN, index)] = dict(
+            campaign_id=CAMPAIGN, leaf_index=index, leaf_id=('1' + str(index)) * 32,
+            grant_id=plan['grant']['grant_id'], request_run='run-%d' % index,
+            request_hash=H)
+    return state
+
+
+def select_event(plan, raw, revision=0, **record_overrides):
+    run = dict(
+        campaign_id=CAMPAIGN,
+        campaign_operation_id=operation_id(plan['grant']['grant_id'], plan['plan_sha256']),
+        plan_hash=plan['plan_sha256'], plan_raw=base64.b64encode(raw).decode('ascii'),
+        auth_hash=AUTH, owner_epoch='e' * 64, state='running', active_leaf=0,
+        result_object=None, intent_anchor=RECEIPT, revision=revision + 1)
+    record = dict(campaign_id=CAMPAIGN, previous_revision=revision, run=run,
+                  binding=None, leaf_plan=None, evidence=[])
+    record.update(record_overrides)
+    return dict(
+        format='capstone-campaign-event-v2', version=2, action='campaign-select',
+        idempotency_key=_domain('campaign-event-v2',
+                                {'campaign_id': CAMPAIGN, 'action': 'campaign-select',
+                                 'revision': revision + 1}),
+        record=record)
+
+
+class CampaignSelectTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = started_state(self.plan, self.raw)
+        self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
+        self.calls = []
+
+    def joins(self, campaign_id, completed, state):
+        self.calls.append((campaign_id, list(completed)))
+
+    def test_select_accepts_first_unfinished_leaf(self):
+        event = select_event(self.plan, self.raw)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants,
+                  {}, self.joins)
+        row = self.state['campaign_run'][(CAMPAIGN,)]
+        self.assertEqual(row['active_leaf'], 0)
+        self.assertEqual(row['revision'], 1)
+        self.assertEqual(row['last_event'], '9' * 64)
+        self.assertEqual(row['intent_anchor'], RECEIPT)
+        self.assertEqual(self.calls, [(CAMPAIGN, [])])
+
+    def test_select_requires_completion_joins(self):
+        event = select_event(self.plan, self.raw)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants)
+        self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+        self.assertEqual(self.state['campaign_run'][(CAMPAIGN,)]['active_leaf'], None)
+
+    def test_select_rejects_stale_revision_and_active_leaf(self):
+        event = select_event(self.plan, self.raw, revision=1)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
+        self.state['campaign_run'][(CAMPAIGN,)]['active_leaf'] = 0
+        event = select_event(self.plan, self.raw)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
+
+    def test_select_rejects_plan_already_present_for_leaf(self):
+        self.state['leaf_plan'][(CAMPAIGN, 0)] = dict(campaign_id=CAMPAIGN, leaf_index=0)
+        event = select_event(self.plan, self.raw)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
+
+    def test_select_rejects_evidence_before_first_completion(self):
+        event = select_event(self.plan, self.raw, evidence=[H])
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
+
+    def test_select_rejects_changed_immutable_field(self):
+        event = select_event(self.plan, self.raw)
+        event['record']['run']['plan_hash'] = '9' * 64
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
+
+    def test_select_propagates_join_failure(self):
+        def refusing(campaign_id, completed, state):
+            raise Failure('GateBlocked', 'Predecessor settlement is not certified')
+        event = select_event(self.plan, self.raw)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, refusing)
+        self.assertEqual(blocked.exception.record['code'], 'GateBlocked')
+
+    def test_select_rejects_campaign_without_leaves(self):
+        self.state['leaf'].clear()
+        event = select_event(self.plan, self.raw)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
+
+
 if __name__ == '__main__':
     unittest.main()

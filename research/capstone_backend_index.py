@@ -26,7 +26,7 @@ _OPEN = object()
 MAX_RAW = 16 * 1024 * 1024
 
 
-def _campaign(state, event, receipt, grants):
+def _campaign(state, event, receipt, grants, progress=None, joins=None):
     """Campaign-v2 reducer entry; unimplemented actions refuse, never accept."""
     _fields(event, ('format', 'action', 'record', 'idempotency_key', 'version'))
     record = event['record']
@@ -42,6 +42,9 @@ def _campaign(state, event, receipt, grants):
     previous = record['previous_revision']
     _check(previous is None or (type(previous) is int and previous >= 0),
            'Campaign previous revision differs')
+    if action == 'campaign-select':
+        _select(state, event, receipt, record, progress, joins)
+        return
     if action != 'campaign-start':
         raise Failure('Unavailable', 'Campaign action not implemented: ' + action)
 
@@ -76,6 +79,49 @@ def _campaign(state, event, receipt, grants):
     run['last_event'] = receipt['digest']
     run['intent_anchor'] = receipt['digest']
     _put(state, 'campaign_run', run)
+
+
+def _select(state, event, receipt, record, progress, joins):
+    """First unfinished leaf; completion is certified by an injected verifier."""
+    require(joins is not None, 'Unavailable',
+            'Campaign completion joins are unavailable; select refuses')
+    _check(record['binding'] is None and record['leaf_plan'] is None,
+           'Campaign select rows differ')
+    campaign_id = record['campaign_id']
+    current = state['campaign_run'].get((campaign_id,))
+    _check(current is not None, 'Campaign select run is absent')
+    _check(current['state'] == 'running' and current['active_leaf'] is None
+           and current['result_object'] is None, 'Campaign select state differs')
+    _check(record['previous_revision'] == current['revision'],
+           'Campaign select previous revision differs')
+    run = _row('campaign_run', record['run'], ('last_event',))
+    for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
+                   'auth_hash', 'owner_epoch', 'intent_anchor'):
+        _check(run[column] == current[column], 'Campaign select immutable field differs')
+    _check(run['state'] == 'running' and run['result_object'] is None
+           and run['revision'] == current['revision'] + 1,
+           'Campaign select revision or state differs')
+    leaves = sorted(row['leaf_index'] for row in state['leaf'].values()
+                    if row['campaign_id'] == campaign_id)
+    _check(bool(leaves), 'Campaign select has no leaves')
+    completed = set((progress or {}).get(campaign_id, ()))
+    unfinished = [index for index in leaves if index not in completed]
+    _check(bool(unfinished), 'Campaign select has no unfinished leaf')
+    selected = unfinished[0]
+    _check(all(index in completed for index in leaves if index < selected),
+           'Campaign select skipped an unfinished predecessor')
+    _check(run['active_leaf'] == selected, 'Campaign select leaf differs')
+    _check((campaign_id, selected) not in state['leaf_plan'],
+           'Campaign select leaf already has a Plan')
+    _check(receipt.get('digest') is not None, 'Campaign select receipt differs')
+    _check(event['idempotency_key'] == _domain('campaign-event-v2', {
+        'campaign_id': campaign_id, 'action': event['action'],
+        'revision': run['revision']}), 'Campaign select key differs')
+    _check(len(record['evidence']) == len(completed),
+           'Campaign select evidence differs from completed prefix')
+    joins(campaign_id, sorted(completed), state)
+    run['last_event'] = receipt['digest']
+    _put(state, 'campaign_run', run, True)
 
 
 def _check(ok, message):
@@ -328,14 +374,16 @@ def _snapshot(db):
 def _validate(db, tentative=None):
     validate_schema(db)
     state = {table: {} for table in TABLE_COLUMNS}
-    grants, keys, prior = {}, {}, '0' * 64
+    grants, keys, prior, progress = {}, {}, '0' * 64, {}
     events = db.execute('SELECT seq,prior,hash,body FROM events ORDER BY seq').fetchall()
     for sequence, (seq, parent, hashed, raw) in enumerate(events, 1):
         _check(type(raw) is bytes and seq == sequence and parent == prior
                and hashed == digest(prior.encode() + raw), 'Backend core chain differs')
         event = _json(raw)
-        _check(type(event) is dict and 'idempotency_key' in event and type(event.get('version')) is int
-               and event['version'] == 1, 'Backend envelope version differs')
+        _check(type(event) is dict, 'Backend envelope differs')
+        expected_version = 2 if event.get('format') == CAMPAIGN_FORMAT else 1
+        _check('idempotency_key' in event and type(event.get('version')) is int
+               and event['version'] == expected_version, 'Backend envelope version differs')
         key = identifier(event['idempotency_key'])
         _check(key not in keys, 'Duplicate ledger key')
         keys[key] = (seq, parent, hashed, raw)
@@ -350,7 +398,7 @@ def _validate(db, tentative=None):
             if fmt == BASE_FORMAT:
                 _base(state, event, receipt, grants)
             else:
-                _campaign(state, event, receipt, grants)
+                _campaign(state, event, receipt, grants, progress)
         elif type(fmt) is str and (fmt.startswith('capstone-backend-') or fmt.startswith('capstone-campaign-')):
             raise Failure('IntegrityFailure', 'Unknown backend event format')
         elif 'backend_stop' in event:
