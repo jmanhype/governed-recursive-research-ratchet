@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T04:23:00Z
-content_hash: "sha256:0759c328b11cb72bf4f042a3270614a1a3d0cbb8af5edc90011400d80c95b633"
+updated_at: 2026-11-05T04:59:14Z
+content_hash: "sha256:edcb633ecfa1ad866689aa0f70a807e1c0487b512ecd9a8c3f0de099008f0b6e"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Source-only WIP: tests/unit_capstone_backend_suite.py now includes three existing untracked installation test modules; SHA256 df53be40567b1de3c86b2d521bae247e6578ceb06c002943caa1863fe2fb46b1. These modules and their source must accompany any later commit; this change is not delivered or accepted.
+- Parent ran the expanded suite: 194 tests, 0 failures, 0 errors, 0 skipped. Log /private/tmp/grrr-suite-194-20261105.log SHA256 9ec5bd0d62a44b5ae9da5ed3c91d06b0dcf2cd0d1f0bec4ff56ac81551b3c0e9. This does not qualify the protected install or capstone.
+- Autoloop finite verification run runs/verify-1793854654196335000/result.json SHA256 511b932722bdd04582dbd39a3473db6375cca66129dd8bb3dc398ba623eea595: two command jobs passed 22 and 29 tests; PAIVOT returned wait, no model calls in Autoloop jobs. This did not dispatch the AI worker or prove continuous autonomous coding.
+- Independent review of the suite inclusion did not complete; no review approval claimed. No protected access, replay, admission, promotion, merge or push.
+
+### proof
+- [x] Expanded source suite passes without skips.
+- [ ] Independent review and full story acceptance remain outstanding.
+- [ ] Autoloop-to-real-AI-worker dispatch and protected installation remain unproven.
+
 # Live provider and isolation checkpoint
 
 - One direct routed model probe returned the expected answer. Router metadata
