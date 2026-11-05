@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:18:01Z
-content_hash: "sha256:741170229c6eeaac3b5c363f4e656c618c9549f4e9d8f83f2ed81ef4bc6aa18b"
+updated_at: 2026-11-05T14:23:07Z
+content_hash: "sha256:6b0ac97869118683bdcab72b627bfe10aa7475e0ce65d8d95d64206a5c1e7f85"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- CampaignManifestV2 derivation implemented (research/capstone_backend_index.py::derive_manifest): exact leaf entries with not-planned / binding-only / claimed enum, null rules, concrete FailureRecordV1 for every manifest-less leaf, Plan byte/selfhash/operation-id link checks, exact 11-gate input required (no defaulted gates), explicit now_ns required (no fabricated timestamp), execution completed|partial|not-run from the replay completion prefix, verification blocked, admission blocked, promotion disabled, terminal hash = SHA256(C(manifest)).
+- campaign-finish implemented: requires an injected manifest provider (else Unavailable), every leaf advanced, manifest campaign_plan_sha256 and leaf cardinality match the run, evidence exactly [terminal], run -> completed with result_object=terminal, revision+1, immutable fields unchanged.
+- tests/unit_capstone_campaign_reducer.py: 41 tests. Required suite: 243 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Commit 74eb40e on story/GRRR-k3j7; no merge or push.
+- Five of seven campaign actions plus the terminal manifest now exist at source. Remaining: campaign-fence and campaign-stop-outcome, both requiring FenceSnapshotV2 / StopOutcome verifier injection.
+
+### proof
+- [x] AC #3 reducer: five of seven actions plus CampaignManifestV2 derivation, all fail-closed.
+- [ ] AC #3/#5/#10: campaign-fence, campaign-stop-outcome, full replay row equality.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
