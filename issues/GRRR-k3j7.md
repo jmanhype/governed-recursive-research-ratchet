@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T02:23:03Z
-content_hash: "sha256:f0f01a454efd24ea3bab6a8caa633ce57c3c88d73c0740d35d465481d6f7dd93"
+updated_at: 2026-11-05T02:53:26Z
+content_hash: "sha256:a349cec338da1bf20d3861937806896a44f602a45c82d62bb2772843d3a3dbb1"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -209,6 +209,13 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## Source checkpoint: installation authority joins (2026-11-04)
+
+- `research/capstone_installation_authority.py` SHA256 `7673d23fb93d363a7b04e57416433b181191b9502e065e53c644ca7c6eefd317`; `tests/unit_capstone_installation_authority.py` SHA256 `fff0887e2ab225016ff7bb24691a05705247a62cf484ac964b11624bb890c27e`.
+- Source-only codecs and private-temp inventory joins; protected installation authority remains unavailable. The reviewer found an incorrect resolver test; it was corrected and independently re-reviewed, 10/10 guarded tests passing. The later `RecoveryRequired` branch is not proven by that test.
+- Accepted full-byte descriptor/registry/authorization hashes form a construction cycle. The proposed projection repair received GAPS_FOUND: exact schemas, replay, provenance, version separation and migration remain unapproved. Proposal SHA256 `a0aeee3b6d48019769430fe734871b9b0c9d5ec4562f1d8db9d3e1185861ea2b` explicitly labels that review outcome.
+- No protected metadata/content access, production authority, live replay, story delivery, acceptance, merge or push.
+
 ## Source checkpoint: installation fixture (2026-11-04)
 
 - Private-temp source only; `open_installed` remains unavailable before metadata access. No protected installation or provenance has been qualified.
