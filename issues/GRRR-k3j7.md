@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T06:14:19Z
-content_hash: "sha256:749f8954aca9c4953b8314c62467cfa8480ce61804f54c889b06ee1437a25317"
+updated_at: 2026-11-05T08:18:27Z
+content_hash: "sha256:1fbe953cb18caa040b44a6118f6a04442b18499b81ceab04c63fe51f7c9a2e07"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,23 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Real gated coding bridge verified live: Autoloop hub/worker -> pinned Codex CLI -> loopback provider gate (caller secret held outside worker; per-call worst-case SQLite reservation; hard call/budget caps; uncertain dispatch halts) -> zai-coding/glm-5.3 and custom/Qwen-Ambassador/Qwen3.8-Max. Gate suite 14 passed. Scratch two-turn loop exit 0 (progress=2, shared ledger). Boundary probes in the real worker denied operator-secret read and direct network.
+- GRRR worktree loop runs: two runs advanced the real story then ended on provider 429 (16 calls/2372357 micro-USD reserved/0 unresolved; 9 calls Qwen). No fabricated retry; ledgers retained under outputs/paivot-autoloop-pilot/coding-adapter/runs/.
+- Parent integrated and corrected worker WIP: missing-store now fails closed; InvalidInput passes through; meter-before-settle legal; tamper rejection non-mutating; unknown-commit halts and fences reuse; multiprocessing worker hoisted for Python 3.14.
+- Current verified suite: PYTHONPATH=research:tests /opt/homebrew/bin/python3 -m unittest discover -s tests -p 'unit_capstone*.py' => Ran 195 tests, OK, 0 skipped (includes new tests.unit_capstone_accounting_v5, 8 tests OK).
+- Story-branch WIP commits (no merge/push): c55f722 installation authority/inventory + launch socket race fix; 07dd656 operational v5 accounting object research/accounting_v5.py + tests/unit_capstone_accounting_v5.py.
+- Added worker/loop.py resume-usage fallback and worker/keep_going.py cycle driver (verify-gated, stop-file, no merge/push) so bounded cycles continue without manual 'continue'.
+
+### proof
+- [x] AC #9 source-level v5 object now exists and passes 8 focused adversarial tests; independent review and integration remain outstanding.
+- [x] Autoloop-to-real-AI-worker source lane proven for real worktree turns under enforced cost/call caps; 429s halt rather than bypass.
+- [ ] AC #2-8, #10-11 full backend implementation and reproduced evidence remain incomplete.
+- [ ] AC #12 independent security/PM acceptance pending; no accepted merge.
+
 ## nd_contract
 status: in_progress
 
