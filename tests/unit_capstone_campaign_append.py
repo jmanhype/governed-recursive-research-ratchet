@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from common import GATES, Failure, canonical, digest
-from capstone_backend_index import _domain, open_public_fixture
+from capstone_backend_index import _domain, derive_manifest, open_public_fixture
 from capstone_contract import content_digest, operation_id, validate_record
 from unit_capstone_backend_index import issuance_fixture
 from unit_capstone_journal import fixture_connection
@@ -162,6 +162,119 @@ class CampaignAppendTests(unittest.TestCase):
         changed['run']['owner_epoch'] = 'f' * 64
         with self.assertRaises(Failure):
             self.index.append_campaign('campaign-start', changed, key)
+
+
+class CampaignSequenceTests(unittest.TestCase):
+    setUp = CampaignAppendTests.setUp
+
+    def issue(self):
+        return CampaignAppendTests.issue(self)
+
+    def plan_for(self, leaf, entry):
+        return CampaignAppendTests.plan_for(self, leaf, entry)
+
+    def start_record(self, plan):
+        return CampaignAppendTests.start_record(self, plan)
+
+    def run_row(self, **changes):
+        state = self.index.validate()
+        row = dict(state['campaign_run'][(self.row['campaign_id'],)])
+        row.pop('last_event')
+        row['plan_raw'] = raw(row['plan_raw'])
+        row.update(changes)
+        return row
+
+    def append(self, action, record, revision, **verifiers):
+        key = _domain('campaign-event-v2', {'campaign_id': self.row['campaign_id'],
+                                            'action': action, 'revision': revision})
+        return self.index.append_campaign(action, record, key, **verifiers)
+
+    def inspect(self):
+        return self.index.validate()['campaign_run'][(self.row['campaign_id'],)]
+
+    def test_two_leaf_campaign_runs_end_to_end(self):
+        entries, leaves = self.issue()
+        plans = [self.plan_for(leaves[0], entries[0]), self.plan_for(leaves[1], entries[1])]
+        start, _ = self.start_record(plans[0])
+        self.append('campaign-start', start, 0)
+        self.assertEqual(self.inspect()['state'], 'running')
+        self.assertIsNone(self.inspect()['active_leaf'])
+
+        calls = []
+
+        def joins(campaign_id, completed, state):
+            calls.append(('joins', list(completed)))
+
+        def live(campaign_id, leaf_index, binding, plan_row, state):
+            calls.append(('live', leaf_index))
+
+        def proof(campaign_id, leaf_index, result, state):
+            calls.append(('proof', leaf_index, result))
+
+        for index, plan in enumerate(plans):
+            revision = self.inspect()['revision']
+            run = self.run_row(active_leaf=index, revision=revision + 1)
+            evidence = [] if index == 0 else ['4' * 64]
+            select = dict(campaign_id=self.row['campaign_id'], previous_revision=revision,
+                          run=run, binding=None, leaf_plan=None, evidence=evidence)
+            self.append('campaign-select', select, revision + 1, joins=joins)
+            self.assertEqual(self.inspect()['active_leaf'], index)
+            self.assertEqual(self.inspect()['revision'], revision + 1)
+
+            grant = plan['grant']
+            op = operation_id(grant['grant_id'], plan['plan_sha256'])
+            start_rec = dict(action='start', version=1, plan=plan, operation_id=op)
+            start_raw = canonical(start_rec)
+            review_hash = '7' * 64
+            binding = dict(operation_id=op, grant_id=grant['grant_id'],
+                           plan_hash=plan['plan_sha256'],
+                           start_hash=digest(start_raw),
+                           start_raw=raw(start_raw))
+            leaf_plan = dict(campaign_id=self.row['campaign_id'], leaf_index=index,
+                             operation_id=op, plan_hash=plan['plan_sha256'],
+                             plan_bytes_sha256=digest(canonical(plan)),
+                             plan_raw=raw(canonical(plan)), review_hash=review_hash)
+            revision = self.inspect()['revision']
+            run = self.run_row(revision=revision + 1)
+            bind = dict(campaign_id=self.row['campaign_id'], previous_revision=revision,
+                        run=run, binding=binding, leaf_plan=leaf_plan,
+                        evidence=[review_hash])
+            self.append('campaign-leaf-bind', bind, revision + 1, live=live)
+            self.assertEqual(self.inspect()['revision'], revision + 1)
+
+            revision = self.inspect()['revision']
+            run = self.run_row(active_leaf=None, revision=revision + 1)
+            result = ('%d' % index) * 64
+            advance = dict(campaign_id=self.row['campaign_id'],
+                           previous_revision=revision, run=run, binding=None,
+                           leaf_plan=None, evidence=[result])
+            self.append('campaign-advance', advance, revision + 1, advance_proof=proof)
+            self.assertIsNone(self.inspect()['active_leaf'])
+
+        revision = self.inspect()['revision']
+
+        def finish_provider(campaign_id, state, progress):
+            return derive_manifest(state, campaign_id, progress, gate_set(), now_ns=1)
+
+        # The run row must already carry the terminal hash, so derive it first.
+        current = self.index.validate()
+        manifest, terminal = derive_manifest(current, self.row['campaign_id'],
+                                             {self.row['campaign_id']: {0, 1}},
+                                             gate_set(), now_ns=1)
+        run = self.run_row(state='completed', result_object=terminal, revision=revision + 1)
+        finish = dict(campaign_id=self.row['campaign_id'], previous_revision=revision,
+                      run=run, binding=None, leaf_plan=None, evidence=[terminal])
+        self.append('campaign-finish', finish, revision + 1,
+                    manifest_provider=finish_provider)
+        final = self.inspect()
+        self.assertEqual(final['state'], 'completed')
+        self.assertEqual(final['result_object'], terminal)
+        self.assertEqual(final['revision'], revision + 1)
+        self.assertEqual(final['active_leaf'], None)
+        self.assertEqual(self.index.validate(), self.index.validate())
+        self.assertIn(('joins', []), calls)
+        self.assertIn(('live', 1), calls)
+        self.assertIn(('proof', 1, '1' * 64), calls)
 
 
 if __name__ == '__main__':
