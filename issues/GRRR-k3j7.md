@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T13:48:56Z
-content_hash: "sha256:8936a5a52159a73d0a2a1d577cd37294899fe7bfe32438a795471a7026d1d1b6"
+updated_at: 2026-11-05T14:18:01Z
+content_hash: "sha256:741170229c6eeaac3b5c363f4e656c618c9549f4e9d8f83f2ed81ef4bc6aa18b"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,22 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Campaign-v2 reducer now implements four exact actions in research/capstone_backend_index.py: campaign-start, campaign-select, campaign-leaf-bind and campaign-advance, all wired through _validate with format-derived envelope version (base v1, campaign v2).
+- select requires an injected completion-joins verifier and refuses Unavailable without it; leaf-bind requires an injected live owner/gate/window verifier and refuses without it; advance requires an injected claim/exit/settlement proof and refuses without it. No action assumes unverified proof.
+- bind validates canonical Plan bytes, plan_sha256, byte digest, derived operation id, Start bytes/embedded Plan identity, exact evidence [review_hash], no duplicate binding/plan, no consumed grant, immutable run fields and revision+1.
+- advance validates the active leaf has a bound Plan, exact single evidence hash, immutable fields, revision+1, clears active_leaf and records the completed index into the reducer progress prefix.
+- tests/unit_capstone_campaign_reducer.py: 33 tests. Required suite: 235 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Commits d48e7c6, 74d2eaf, 2c7df68 on story/GRRR-k3j7; no merge or push.
+- Exact remaining boundary recorded: campaign-finish/fence/stop-outcome require the terminal CampaignManifestV2 derivation (spec section 2), which does not exist yet and must not be approximated.
+
+### proof
+- [x] AC #3 reducer: four of seven actions implemented exactly with fail-closed verifier injection.
+- [ ] AC #3/#5/#10: CampaignManifestV2 derivation, finish/fence/stop-outcome, full replay equality.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
