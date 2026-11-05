@@ -1,17 +1,18 @@
 ---
 id: GRRR-k3j7
 title: "Executable evaluator backend: finite JIT campaign, accounting and isolated launch bridge"
-status: open
+status: in_progress
 priority: 0
 type: feature
 labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T08:18:47Z
-content_hash: "sha256:c5306bd8b4f8451091ba1b922df09894a71ad5c4a763bd28f9bba1632c0f5d38"
+updated_at: 2026-11-05T12:44:36Z
+content_hash: "sha256:6a1bd72c08c02973d8475e0f2f579829df89236161096d85ccc00320fe2efc68"
 blocks: [GRRR-q3hp]
-follows: [GRRR-yt6a, GRRR-wcwy]
+follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
+assignee: dev-GRRR-k3j7
 ---
 
 ## Description
@@ -399,10 +400,13 @@ status: in_progress
 - 2026-11-05T04:23:00Z claimed by dev-GRRR-k3j7
 - 2026-11-05T08:18:47Z status: in_progress -> open
 - 2026-11-05T08:18:47Z released by speed
+- 2026-11-05T12:44:36Z status: open -> in_progress
+- 2026-11-05T12:44:36Z auto-follows: linked to predecessor GRRR-ev2w
+- 2026-11-05T12:44:36Z claimed by dev-GRRR-k3j7
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-q3hp]]
-- Follows: [[GRRR-yt6a]], [[GRRR-wcwy]]
+- Follows: [[GRRR-yt6a]], [[GRRR-wcwy]], [[GRRR-ev2w]]
 
 ## Comments
