@@ -256,5 +256,112 @@ class CampaignSelectTests(unittest.TestCase):
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, self.joins)
 
 
+def selected_state(plan, raw):
+    state = started_state(plan, raw)
+    row = state['campaign_run'][(CAMPAIGN,)]
+    row.update(active_leaf=0, revision=1, last_event=RECEIPT)
+    return state
+
+
+def bind_event(plan, raw, review_hash='7' * 64, revision=1, **record_overrides):
+    op = operation_id(plan['grant']['grant_id'], plan['plan_sha256'])
+    start = dict(action='start', version=1, plan=plan, operation_id=op)
+    start_raw = canonical(start)
+    binding = dict(operation_id=op, grant_id=plan['grant']['grant_id'],
+                   plan_hash=plan['plan_sha256'], start_hash=digest(start_raw),
+                   start_raw=base64.b64encode(start_raw).decode('ascii'))
+    leaf_plan = dict(campaign_id=CAMPAIGN, leaf_index=0, operation_id=op,
+                     plan_hash=plan['plan_sha256'],
+                     plan_bytes_sha256=digest(raw),
+                     plan_raw=base64.b64encode(raw).decode('ascii'),
+                     review_hash=review_hash)
+    run = dict(
+        campaign_id=CAMPAIGN, campaign_operation_id=op, plan_hash=plan['plan_sha256'],
+        plan_raw=base64.b64encode(raw).decode('ascii'), auth_hash=AUTH,
+        owner_epoch='e' * 64, state='running', active_leaf=0, result_object=None,
+        intent_anchor=RECEIPT, revision=revision + 1)
+    record = dict(campaign_id=CAMPAIGN, previous_revision=revision, run=run,
+                  binding=binding, leaf_plan=leaf_plan, evidence=[review_hash])
+    record.update(record_overrides)
+    return dict(
+        format='capstone-campaign-event-v2', version=2, action='campaign-leaf-bind',
+        idempotency_key=_domain('campaign-event-v2',
+                                {'campaign_id': CAMPAIGN, 'action': 'campaign-leaf-bind',
+                                 'revision': revision + 1}),
+        record=record)
+
+
+class CampaignLeafBindTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = selected_state(self.plan, self.raw)
+        self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
+        self.calls = []
+
+    def live(self, campaign_id, leaf_index, binding, plan_row, state):
+        self.calls.append((campaign_id, leaf_index))
+
+    def test_bind_inserts_binding_and_plan_atomically(self):
+        event = bind_event(self.plan, self.raw)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants,
+                  {}, None, self.live)
+        op = event['record']['binding']['operation_id']
+        self.assertIn((op,), self.state['binding'])
+        self.assertEqual(self.state['binding'][(op,)]['bind_anchor'], '9' * 64)
+        self.assertIn((CAMPAIGN, 0), self.state['leaf_plan'])
+        self.assertEqual(self.state['campaign_run'][(CAMPAIGN,)]['revision'], 2)
+        self.assertEqual(self.calls, [(CAMPAIGN, 0)])
+
+    def test_bind_requires_live_verification(self):
+        event = bind_event(self.plan, self.raw)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants)
+        self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+        self.assertFalse(self.state['binding'])
+
+    def test_bind_rejects_leaf_mismatch(self):
+        event = bind_event(self.plan, self.raw)
+        event['record']['leaf_plan']['leaf_index'] = 1
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
+
+    def test_bind_rejects_plan_byte_digest_mismatch(self):
+        event = bind_event(self.plan, self.raw)
+        event['record']['leaf_plan']['plan_bytes_sha256'] = '9' * 64
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
+
+    def test_bind_rejects_start_plan_mismatch(self):
+        event = bind_event(self.plan, self.raw)
+        other = copy.deepcopy(self.plan)
+        other['plan_sha256'] = '9' * 64
+        start = dict(action='start', version=1, plan=other,
+                     operation_id=self.plan['grant']['grant_id'])
+        raw = canonical(start)
+        event['record']['binding']['start_raw'] = base64.b64encode(raw).decode('ascii')
+        event['record']['binding']['start_hash'] = digest(raw)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
+
+    def test_bind_rejects_wrong_evidence(self):
+        event = bind_event(self.plan, self.raw, review_hash='7' * 64)
+        event['record']['evidence'] = ['8' * 64]
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
+
+    def test_bind_rejects_duplicate_binding_or_plan(self):
+        event = bind_event(self.plan, self.raw)
+        self.state['binding'][(event['record']['binding']['operation_id'],)] = dict(
+            operation_id=event['record']['binding']['operation_id'])
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
+
+    def test_bind_rejects_stale_revision(self):
+        event = bind_event(self.plan, self.raw, revision=0)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
+
+
 if __name__ == '__main__':
     unittest.main()

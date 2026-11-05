@@ -26,7 +26,7 @@ _OPEN = object()
 MAX_RAW = 16 * 1024 * 1024
 
 
-def _campaign(state, event, receipt, grants, progress=None, joins=None):
+def _campaign(state, event, receipt, grants, progress=None, joins=None, live=None):
     """Campaign-v2 reducer entry; unimplemented actions refuse, never accept."""
     _fields(event, ('format', 'action', 'record', 'idempotency_key', 'version'))
     record = event['record']
@@ -44,6 +44,9 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None):
            'Campaign previous revision differs')
     if action == 'campaign-select':
         _select(state, event, receipt, record, progress, joins)
+        return
+    if action == 'campaign-leaf-bind':
+        _leaf_bind(state, event, receipt, record, progress, joins, live)
         return
     if action != 'campaign-start':
         raise Failure('Unavailable', 'Campaign action not implemented: ' + action)
@@ -81,7 +84,71 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None):
     _put(state, 'campaign_run', run)
 
 
-def _select(state, event, receipt, record, progress, joins):
+def _leaf_bind(state, event, receipt, record, progress, joins, live):
+    """Atomic base binding + leaf_plan insert; live owner/gate proof required."""
+    require(live is not None, 'Unavailable',
+            'Live owner/gate/window verification is unavailable; bind refuses')
+    del progress
+    campaign_id = record['campaign_id']
+    current = state['campaign_run'].get((campaign_id,))
+    _check(current is not None and current['state'] == 'running'
+           and current['active_leaf'] is not None, 'Campaign bind state differs')
+    _check(record['previous_revision'] == current['revision'],
+           'Campaign bind previous revision differs')
+    binding = _row('binding', record['binding'], ('bind_anchor',))
+    plan_row = _row('leaf_plan', record['leaf_plan'])
+    _check(plan_row['campaign_id'] == campaign_id, 'Campaign bind campaign differs')
+    _check(plan_row['leaf_index'] == current['active_leaf'],
+           'Campaign bind leaf differs from the selected leaf')
+    leaf = state['leaf'].get((campaign_id, plan_row['leaf_index']))
+    _check(leaf is not None, 'Campaign bind leaf is absent')
+    _check(binding['grant_id'] == leaf['grant_id'] and plan_row['operation_id']
+           == binding['operation_id'], 'Campaign bind identity differs')
+    plan = decode_record(plan_row['plan_raw'], 'Plan')
+    _check(canonical(plan) == plan_row['plan_raw']
+           and plan['plan_sha256'] == plan_row['plan_hash'] == binding['plan_hash'],
+           'Campaign bind Plan bytes or selfhash differ')
+    _check(digest(plan_row['plan_raw']) == plan_row['plan_bytes_sha256'],
+           'Campaign bind Plan byte digest differs')
+    _check(plan_row['operation_id'] == operation_id(plan['grant']['grant_id'],
+                                                   plan['plan_sha256'])
+           and plan['grant']['grant_id'] == leaf['grant_id'],
+           'Campaign bind operation or grant differs')
+    start = decode_record(binding['start_raw'], 'Start')
+    _check(canonical(start) == binding['start_raw']
+           and canonical(start['plan']) == plan_row['plan_raw']
+           and start['operation_id'] == binding['operation_id']
+           and digest(binding['start_raw']) == binding['start_hash'],
+           'Campaign bind Start bytes differ')
+    _check(record['evidence'] == [plan_row['review_hash']],
+           'Campaign bind evidence differs')
+    _check((campaign_id, plan_row['leaf_index']) not in state['leaf_plan'],
+           'Campaign bind leaf already has a Plan')
+    _check((binding['operation_id'],) not in state['binding'],
+           'Campaign bind operation already exists')
+    _check(not any(row['grant_id'] == binding['grant_id']
+                   for row in state['binding'].values()),
+           'Campaign bind grant already consumed')
+    run = _row('campaign_run', record['run'], ('last_event',))
+    for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
+                   'auth_hash', 'owner_epoch', 'intent_anchor'):
+        _check(run[column] == current[column], 'Campaign bind immutable field differs')
+    _check(run['state'] == 'running' and run['result_object'] is None
+           and run['active_leaf'] == current['active_leaf']
+           and run['revision'] == current['revision'] + 1,
+           'Campaign bind revision or run state differs')
+    _check(event['idempotency_key'] == _domain('campaign-event-v2', {
+        'campaign_id': campaign_id, 'action': event['action'],
+        'revision': run['revision']}), 'Campaign bind key differs')
+    live(campaign_id, plan_row['leaf_index'], binding, plan_row, state)
+    binding['bind_anchor'] = receipt['digest']
+    _put(state, 'binding', binding)
+    _put(state, 'leaf_plan', plan_row)
+    run['last_event'] = receipt['digest']
+    _put(state, 'campaign_run', run, True)
+
+
+def _select(state, event, receipt, record, progress, joins, live=None):
     """First unfinished leaf; completion is certified by an injected verifier."""
     require(joins is not None, 'Unavailable',
             'Campaign completion joins are unavailable; select refuses')
