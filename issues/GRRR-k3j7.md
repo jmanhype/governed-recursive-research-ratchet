@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:44:16Z
-content_hash: "sha256:85ba51cc3ebd6cbce4e7113770ebddaa20b87607f1ce1d5aef650e063adf826e"
+updated_at: 2026-11-05T14:46:27Z
+content_hash: "sha256:7972a6bdaa66b039ff62deadd1285f4bf14499e1d5534eea26a2eb4f8fc50c15"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- campaign-stop-outcome proven through the real Ledger and the real base safe-stop hook: a safe-stop event with run_before_revision/run_after moves the campaign run to stop-pending in the same SQL-only hook; a verified stop provider resolves it to stopped with active_leaf null; an unverified provider resolves it to recovery-required. Both asserted through index.validate().
+- tests/unit_capstone_campaign_append.py: 7 integration tests covering start, select, bind, advance, two-leaf finish, fence, and both stop-outcome outcomes. Reducer: 48 tests. Required suite: 257 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Commit 8c3e607 on story/GRRR-k3j7; no merge or push.
+- Source-level campaign reducer work is complete. All 11 gate phases and all seven capstone journeys remain not-run / not live-qualified; installation, admission, promotion, production readiness and q3hp mapping are not claimed.
+- Next gate is AC #12 only: delivery package, independent review, PM acceptance.
+
+### proof
+- [x] AC #3/#5/#10 source campaign reducer, manifest, ledger append, two-leaf execution, fence and stop outcomes.
+- [x] AC #11 257 tests reproducible on 3 interpreters with zero skips.
+- [ ] AC #12 independent review and PM acceptance pending; no delivery claimed yet.
+
 ## nd_contract
 status: in_progress
 
