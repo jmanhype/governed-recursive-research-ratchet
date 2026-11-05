@@ -15,6 +15,7 @@ GATES = ('source_environment_identity', 'isolation', 'protected_asset_integrity'
          'baseline_correctness', 'trusted_observation', 'independent_replay',
          'specification_traceability', 'evidence_integrity_currency', 'budget_state',
          'reviewer_outcome', 'action_specific_human_approval')
+CAMPAIGN_EVENT_FORMAT = 'capstone-campaign-event-v2'
 DENIED = ('main-merge', 'production-mutation', 'patch-generation',
           'harness-adaptation', 'paid-call')
 PACKETS = {name: {'version': 1, 'command': command} for name, command in

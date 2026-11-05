@@ -11,14 +11,15 @@ import os
 from pathlib import Path
 import stat
 
-from common import EVALUATOR, GATES, Failure, canonical, digest, identifier, require, unique_fields
+from common import (CAMPAIGN_EVENT_FORMAT, EVALUATOR, GATES, Failure, canonical, digest,
+                    identifier, require, unique_fields)
 from ledger import Ledger
 from capstone_contract import decode_record, validate_record, operation_id, content_digest
 from capstone_backend_schema import (BACKEND_SQL, BLOBS, PREFIX, PRIMARY_KEYS,
                                      TABLE_COLUMNS, validate_schema)
 
 BASE_FORMAT = 'capstone-backend-event-v1'
-CAMPAIGN_FORMAT = 'capstone-campaign-event-v2'
+CAMPAIGN_FORMAT = CAMPAIGN_EVENT_FORMAT
 CAMPAIGN_ACTIONS = ('campaign-start', 'campaign-select', 'campaign-leaf-bind',
                     'campaign-advance', 'campaign-finish', 'campaign-fence',
                     'campaign-stop-outcome')
@@ -38,7 +39,7 @@ def _failure(phase, *, code, now_ns, leaf_id=None, operation_id=None, plan_hash=
 
 def derive_manifest(state, campaign_id, progress, gates, *, claim=None, now_ns=None):
     """Pure CampaignManifestV2 derivation; no Manifest is invented for a leaf."""
-    identifier(campaign_id, True)
+    identifier(campaign_id)
     _check(type(now_ns) is int and now_ns >= 0,
            'Campaign manifest needs an explicit observation time')
     run = state['campaign_run'].get((campaign_id,))
@@ -125,7 +126,7 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None, live=Non
                      'leaf_plan', 'evidence'))
     action = event['action']
     _check(action in CAMPAIGN_ACTIONS, 'Unknown campaign action')
-    identifier(record['campaign_id'], True)
+    identifier(record['campaign_id'])
     evidence = record['evidence']
     _check(type(evidence) is list and evidence == sorted(set(evidence))
            and all(type(item) is str and len(item) == 64 for item in evidence),
@@ -754,7 +755,7 @@ def _validate(db, tentative=None):
     _check(set(actual_grants) == set(grants), 'Backend grant cardinality differs')
     for gid, expected in grants.items():
         _check(actual_grants.get(gid) == expected, 'Issued original grant row differs')
-    return state, grants, prior, len(events)
+    return state, grants, prior, len(events), progress
 
 
 def _write_delta(db, before, after):
@@ -840,7 +841,7 @@ class BackendIndex:
                         'Intent belongs to a lost/different issuer invocation')
             prior = ledger.tip()
             def apply(db, receipt):
-                before, old_grants, _, _ = _validate(db, receipt['sequence'])
+                before, old_grants, _, _, _ = _validate(db, receipt['sequence'])
                 after, grants = copy.deepcopy(before), dict(old_grants)
                 _base(after, dict(event, version=1, idempotency_key=key), receipt, grants)
                 for gid, row in grants.items():
@@ -854,6 +855,34 @@ class BackendIndex:
             elif action == 'issuance-commit':
                 self._owned_intents.discard(auth_hash)
             return result
+
+    def append_campaign(self, action, record, key, *, joins=None, live=None,
+                        advance_proof=None, manifest_provider=None,
+                        fence_provider=None, stop_provider=None):
+        """Append one campaign-v2 event; every unverified action still refuses."""
+        _check(action in CAMPAIGN_ACTIONS, 'Unknown campaign action')
+        event = dict(format=CAMPAIGN_FORMAT, action=action, record=copy.deepcopy(record))
+        ledger = self._ledger
+        with ledger.lock:
+            _validate(ledger.db)
+            cached = ledger.db.execute(
+                'SELECT seq,prior,hash,body FROM idempotency WHERE key=?', (key,)).fetchone()
+            if cached is not None:
+                _check(cached[3] == canonical(dict(event, version=2, idempotency_key=key)),
+                       'Changed cached campaign event')
+                return dict(sequence=cached[0], prior=cached[1], digest=cached[2])
+            prior = ledger.tip()
+
+            def apply(db, receipt):
+                before, old_grants, _, _, progress = _validate(db, receipt['sequence'])
+                after, grants = copy.deepcopy(before), dict(old_grants)
+                _campaign(after, dict(event, version=2, idempotency_key=key), receipt,
+                          grants, progress, joins, live, advance_proof,
+                          manifest_provider, fence_provider, stop_provider)
+                _write_delta(db, before, after)
+                _validate(db)
+
+            return ledger.append_atomic(EVALUATOR, event, prior, key, apply, version=2)
 
 
 def open_existing(ledger):
