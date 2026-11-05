@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T03:21:38Z
-content_hash: "sha256:21bd80f7fb60398211d4b133f63b0b68754e2dbd46bd59979db84e82ffc90fa0"
+updated_at: 2026-11-05T03:48:45Z
+content_hash: "sha256:428e07ccabd1a16328c1f6c694a0b267b577104e88c1506f6c3bf5a08c32d53b"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -209,6 +209,23 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+# Live provider and isolation checkpoint
+
+- One direct routed model probe returned the expected answer. Router metadata
+  reported the approved coding route, successful status, and one upstream attempt.
+  No repository contents or operator credential were supplied in the prompt.
+- Two disposable standalone Codex CLI probes, with a dummy non-credential and
+  synthetic prompt, failed authentication. They do not establish a real Autoloop
+  coding run or an authenticated GRRR evaluator.
+- A synthetic same-UID process canary showed that the tested Codex sandbox could
+  read the other process's environment via the kernel process-argument interface.
+  The control process used only a synthetic marker. This is not a credential-safe
+  boundary and does not prove all possible sandbox configurations are unsafe.
+- A synthetic memory-visibility check was inconclusive: host and sandbox both
+  failed to obtain the target task port, so the host positive control failed.
+- No protected installation access, evaluator replay, permanent contract admission,
+  promotion, merge, push or production mutation occurred.
+
 ## Installation cycle design checkpoint (2026-11-04)
 
 - `installation-cycle-v2-spec-20261104.md` SHA256 `599503fffda03576882642c57928a76d66659c2a28e0ee4518f6d1b5c5f21027` and `installation-trust-contract-proposal-20261104.md` SHA256 `d9f05bef3db4af4f67a97e7fd35146624fb7dfd19eea5a41455414f5d95ea0fa` are PROPOSAL ONLY.
