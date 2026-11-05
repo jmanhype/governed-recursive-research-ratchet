@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 import stat
 
-from common import EVALUATOR, Failure, canonical, digest, identifier, require, unique_fields
+from common import EVALUATOR, GATES, Failure, canonical, digest, identifier, require, unique_fields
 from ledger import Ledger
 from capstone_contract import decode_record, validate_record, operation_id, content_digest
 from capstone_backend_schema import (BACKEND_SQL, BLOBS, PREFIX, PRIMARY_KEYS,
@@ -26,8 +26,97 @@ _OPEN = object()
 MAX_RAW = 16 * 1024 * 1024
 
 
+def _failure(phase, *, code, now_ns, leaf_id=None, operation_id=None, plan_hash=None,
+             effects='none', next_action='query-status'):
+    return dict(schema='capstone-failure-v1', phase=phase, input_sha256=None,
+                authorization_sha256=None, campaign_plan_sha256=plan_hash,
+                leaf_id=leaf_id, operation_id=operation_id, code=code,
+                gates={name: dict(state='not-run', evidence=None, reason=None)
+                       for name in GATES},
+                effects=effects, next_action=next_action, created_ns=now_ns)
+
+
+def derive_manifest(state, campaign_id, progress, gates, *, claim=None, now_ns=None):
+    """Pure CampaignManifestV2 derivation; no Manifest is invented for a leaf."""
+    identifier(campaign_id, True)
+    _check(type(now_ns) is int and now_ns >= 0,
+           'Campaign manifest needs an explicit observation time')
+    run = state['campaign_run'].get((campaign_id,))
+    _check(run is not None, 'Campaign manifest has no run')
+    _check(type(gates) is dict and set(gates) == set(GATES),
+           'Campaign manifest gates differ')
+    for gate in gates.values():
+        _check(set(gate) == {'state', 'evidence', 'reason'}
+               and gate['state'] in ('pass', 'fail', 'not-run', 'error'),
+               'Campaign manifest gate record differs')
+    leaves = sorted((row for row in state['leaf'].values()
+                     if row['campaign_id'] == campaign_id),
+                    key=lambda row: row['leaf_index'])
+    _check(bool(leaves), 'Campaign manifest has no leaves')
+    completed = set((progress or {}).get(campaign_id, ()))
+    entries, failures, claimed_count = [], [], 0
+    for leaf in leaves:
+        index = leaf['leaf_index']
+        plan_row = state['leaf_plan'].get((campaign_id, index))
+        if plan_row is None:
+            failure = _failure('prepare', code='Unavailable', now_ns=now_ns,
+                               leaf_id=leaf['leaf_id'], plan_hash=run['plan_hash'])
+            entries.append(dict(leaf_id=leaf['leaf_id'], preclaim='not-planned',
+                                operation_id=None, actual_plan_raw=None,
+                                actual_plan_sha256=None, actual_plan_bytes_sha256=None,
+                                review_sha256=None, manifest=None, failure=failure))
+            failures.append(failure)
+            continue
+        plan = decode_record(plan_row['plan_raw'], 'Plan')
+        _check(canonical(plan) == plan_row['plan_raw']
+               and plan['plan_sha256'] == plan_row['plan_hash']
+               and digest(plan_row['plan_raw']) == plan_row['plan_bytes_sha256']
+               and plan_row['operation_id'] == operation_id(plan['grant']['grant_id'],
+                                                            plan['plan_sha256']),
+               'Campaign manifest Plan links differ')
+        operation = claim(plan_row['operation_id']) if claim is not None else None
+        if operation is None:
+            failure = _failure('prepare', code='Unavailable', now_ns=now_ns,
+                               leaf_id=leaf['leaf_id'], operation_id=plan_row['operation_id'],
+                               plan_hash=run['plan_hash'], effects='possible')
+            entries.append(dict(leaf_id=leaf['leaf_id'], preclaim='binding-only',
+                                operation_id=plan_row['operation_id'],
+                                actual_plan_raw=base64.b64encode(plan_row['plan_raw']).decode('ascii'),
+                                actual_plan_sha256=plan_row['plan_hash'],
+                                actual_plan_bytes_sha256=plan_row['plan_bytes_sha256'],
+                                review_sha256=plan_row['review_hash'], manifest=None,
+                                failure=failure))
+            failures.append(failure)
+            continue
+        claimed_count += 1
+        validate_record(operation, 'Operation')
+        _check(operation['operation_id'] == plan_row['operation_id']
+               and operation['plan_sha256'] == plan_row['plan_hash'],
+               'Campaign manifest Operation links differ')
+        manifest = dict(schema='capstone-manifest-v1', plan_sha256=plan_row['plan_hash'],
+                        operation_id=plan_row['operation_id'], operation=operation,
+                        transport='ok' if operation['dispatch'] == 'completed' else 'unknown',
+                        gates=operation['gates'])
+        validate_record(manifest, 'Manifest')
+        entries.append(dict(leaf_id=leaf['leaf_id'], preclaim='claimed',
+                            operation_id=plan_row['operation_id'],
+                            actual_plan_raw=base64.b64encode(plan_row['plan_raw']).decode('ascii'),
+                            actual_plan_sha256=plan_row['plan_hash'],
+                            actual_plan_bytes_sha256=plan_row['plan_bytes_sha256'],
+                            review_sha256=plan_row['review_hash'], manifest=manifest,
+                            failure=None))
+    execution = ('not-run' if claimed_count == 0 else
+                 'completed' if completed.issuperset(leaf['leaf_index'] for leaf in leaves)
+                 else 'partial')
+    manifest = dict(schema='capstone-campaign-manifest-v2',
+                    campaign_plan_sha256=run['plan_hash'], leaves=entries, gates=gates,
+                    execution=execution, verification='blocked', admission='blocked',
+                    promotion='disabled', failures=failures)
+    return manifest, digest(canonical(manifest))
+
+
 def _campaign(state, event, receipt, grants, progress=None, joins=None, live=None,
-              advance_proof=None):
+              advance_proof=None, manifest_provider=None):
     """Campaign-v2 reducer entry; unimplemented actions refuse, never accept."""
     _fields(event, ('format', 'action', 'record', 'idempotency_key', 'version'))
     record = event['record']
@@ -51,6 +140,9 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None, live=Non
         return
     if action == 'campaign-advance':
         _advance(state, event, receipt, record, progress, advance_proof)
+        return
+    if action == 'campaign-finish':
+        _finish(state, event, receipt, record, progress, manifest_provider)
         return
     if action != 'campaign-start':
         raise Failure('Unavailable', 'Campaign action not implemented: ' + action)
@@ -148,6 +240,48 @@ def _leaf_bind(state, event, receipt, record, progress, joins, live):
     binding['bind_anchor'] = receipt['digest']
     _put(state, 'binding', binding)
     _put(state, 'leaf_plan', plan_row)
+    run['last_event'] = receipt['digest']
+    _put(state, 'campaign_run', run, True)
+
+
+def _finish(state, event, receipt, record, progress, manifest_provider):
+    """Complete only when every leaf advanced and a manifest provider exists."""
+    require(manifest_provider is not None, 'Unavailable',
+            'Terminal manifest derivation is unavailable; finish refuses')
+    _check(record['binding'] is None and record['leaf_plan'] is None,
+           'Campaign finish rows differ')
+    campaign_id = record['campaign_id']
+    current = state['campaign_run'].get((campaign_id,))
+    _check(current is not None and current['state'] == 'running'
+           and current['active_leaf'] is None, 'Campaign finish state differs')
+    _check(record['previous_revision'] == current['revision'],
+           'Campaign finish previous revision differs')
+    leaves = {row['leaf_index'] for row in state['leaf'].values()
+              if row['campaign_id'] == campaign_id}
+    completed = set((progress or {}).get(campaign_id, ()))
+    _check(bool(leaves) and completed.issuperset(leaves),
+           'Campaign finish before every leaf advanced')
+    manifest, terminal = manifest_provider(campaign_id, state, progress)
+    _check(type(manifest) is dict
+           and manifest.get('schema') == 'capstone-campaign-manifest-v2'
+           and manifest.get('campaign_plan_sha256') == current['plan_hash']
+           and type(manifest.get('leaves')) is list
+           and len(manifest['leaves']) == len(leaves),
+           'Campaign finish manifest differs')
+    _check(terminal == digest(canonical(manifest)),
+           'Campaign finish manifest digest differs')
+    _check(record['evidence'] == [terminal], 'Campaign finish evidence differs')
+    run = _row('campaign_run', record['run'], ('last_event',))
+    for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
+                   'auth_hash', 'owner_epoch', 'intent_anchor'):
+        _check(run[column] == current[column], 'Campaign finish immutable field differs')
+    _check(run['state'] == 'completed' and run['active_leaf'] is None
+           and run['result_object'] == terminal
+           and run['revision'] == current['revision'] + 1,
+           'Campaign finish revision or run state differs')
+    _check(event['idempotency_key'] == _domain('campaign-event-v2', {
+        'campaign_id': campaign_id, 'action': event['action'],
+        'revision': run['revision']}), 'Campaign finish key differs')
     run['last_event'] = receipt['digest']
     _put(state, 'campaign_run', run, True)
 

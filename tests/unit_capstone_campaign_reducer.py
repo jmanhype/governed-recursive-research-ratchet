@@ -8,9 +8,11 @@ import copy
 import unittest
 
 from common import Failure, canonical, digest
-from capstone_backend_index import _campaign, _domain, CAMPAIGN_ACTIONS
+from capstone_backend_index import (_campaign, _domain, CAMPAIGN_ACTIONS,
+                                    derive_manifest)
 from capstone_backend_schema import TABLE_COLUMNS
 from capstone_contract import operation_id
+from common import GATES
 from unit_capstone_contract import bound_plan
 
 H = 'a' * 64
@@ -445,6 +447,125 @@ class CampaignAdvanceTests(unittest.TestCase):
         with self.assertRaises(Failure):
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
                       self.progress, None, None, self.proof)
+
+
+def gate_set(state='not-run'):
+    return {name: dict(state=state, evidence=None, reason=None) for name in GATES}
+
+
+class CampaignManifestTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = bound_state(self.plan, self.raw)
+
+    def test_unbound_leaf_is_not_planned_without_a_fake_manifest(self):
+        self.state['leaf_plan'].clear()
+        manifest, terminal = derive_manifest(self.state, CAMPAIGN, {}, gate_set(),
+                                             now_ns=1)
+        entry = manifest['leaves'][0]
+        self.assertEqual(entry['preclaim'], 'not-planned')
+        self.assertIsNone(entry['manifest'])
+        self.assertIsNone(entry['actual_plan_raw'])
+        self.assertEqual(entry['failure']['code'], 'Unavailable')
+        self.assertEqual(manifest['execution'], 'not-run')
+        self.assertEqual(terminal, digest(canonical(manifest)))
+
+    def test_bound_leaf_is_binding_only_with_concrete_failure(self):
+        manifest, _ = derive_manifest(self.state, CAMPAIGN, {}, gate_set(), now_ns=1)
+        entry = manifest['leaves'][0]
+        self.assertEqual(entry['preclaim'], 'binding-only')
+        self.assertIsNotNone(entry['actual_plan_raw'])
+        self.assertIsNone(entry['manifest'])
+        self.assertEqual(entry['failure']['effects'], 'possible')
+        self.assertEqual(entry['actual_plan_bytes_sha256'], digest(self.raw))
+
+    def test_claimed_leaf_links_manifest_to_operation(self):
+        op = operation_id(self.plan['grant']['grant_id'], self.plan['plan_sha256'])
+        operation = dict(
+            schema='capstone-operation-v1', operation_id=op,
+            grant_id=self.plan['grant']['grant_id'], plan_sha256=self.plan['plan_sha256'],
+            start_request_sha256=H, state='completed', reservation=None,
+            dispatch='completed', gates=gate_set(), anchor=dict(
+                ledger_sequence=0, ledger_tip=H, accounting_snapshot=H,
+                grant_registry_snapshot=H, installation=H),
+            stop_requested=False, result_object=None, blockers=[])
+        manifest, _ = derive_manifest(self.state, CAMPAIGN, {CAMPAIGN: {0}},
+                                      gate_set(), claim=lambda key: operation, now_ns=1)
+        entry = manifest['leaves'][0]
+        self.assertEqual(entry['preclaim'], 'claimed')
+        self.assertEqual(entry['manifest']['plan_sha256'], self.plan['plan_sha256'])
+        self.assertEqual(entry['manifest']['operation_id'], op)
+        self.assertEqual(manifest['execution'], 'completed')
+
+    def test_manifest_requires_exact_gate_set_and_time(self):
+        with self.assertRaises(Failure):
+            derive_manifest(self.state, CAMPAIGN, {}, {}, now_ns=1)
+        with self.assertRaises(Failure):
+            derive_manifest(self.state, CAMPAIGN, {}, gate_set())
+
+
+def finish_event(plan, raw, terminal, revision=3):
+    op = operation_id(plan['grant']['grant_id'], plan['plan_sha256'])
+    run = dict(
+        campaign_id=CAMPAIGN, campaign_operation_id=op, plan_hash=plan['plan_sha256'],
+        plan_raw=base64.b64encode(raw).decode('ascii'), auth_hash=AUTH,
+        owner_epoch='e' * 64, state='completed', active_leaf=None,
+        result_object=terminal, intent_anchor=RECEIPT, revision=revision + 1)
+    record = dict(campaign_id=CAMPAIGN, previous_revision=revision, run=run,
+                  binding=None, leaf_plan=None, evidence=[terminal])
+    return dict(
+        format='capstone-campaign-event-v2', version=2, action='campaign-finish',
+        idempotency_key=_domain('campaign-event-v2',
+                                {'campaign_id': CAMPAIGN, 'action': 'campaign-finish',
+                                 'revision': revision + 1}),
+        record=record)
+
+
+class CampaignFinishTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = bound_state(self.plan, self.raw)
+        self.state['campaign_run'][(CAMPAIGN,)].update(active_leaf=None, revision=3)
+        self.progress = {CAMPAIGN: {0}}
+        self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
+        manifest, terminal = derive_manifest(self.state, CAMPAIGN, self.progress,
+                                             gate_set(), now_ns=1)
+        self.manifest, self.terminal = manifest, terminal
+
+    def provider(self, campaign_id, state, progress):
+        return self.manifest, self.terminal
+
+    def test_finish_completes_with_terminal_manifest(self):
+        event = finish_event(self.plan, self.raw, self.terminal)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants,
+                  self.progress, None, None, None, self.provider)
+        row = self.state['campaign_run'][(CAMPAIGN,)]
+        self.assertEqual(row['state'], 'completed')
+        self.assertEqual(row['result_object'], self.terminal)
+        self.assertEqual(row['revision'], 4)
+        self.assertEqual(row['last_event'], '9' * 64)
+
+    def test_finish_requires_manifest_provider(self):
+        event = finish_event(self.plan, self.raw, self.terminal)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, self.progress)
+        self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+        self.assertEqual(self.state['campaign_run'][(CAMPAIGN,)]['state'], 'running')
+
+    def test_finish_rejects_before_every_leaf_advanced(self):
+        event = finish_event(self.plan, self.raw, self.terminal)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      {}, None, None, None, self.provider)
+
+    def test_finish_rejects_wrong_evidence(self):
+        event = finish_event(self.plan, self.raw, self.terminal)
+        event['record']['evidence'] = ['9' * 64]
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      self.progress, None, None, None, self.provider)
 
 
 if __name__ == '__main__':
