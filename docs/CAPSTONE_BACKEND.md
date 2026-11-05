@@ -162,3 +162,13 @@ test output and the original commands are retained in
 The separate PAIVOT/Autoloop/selected-skills pilot is an optional development
 verification lane outside this source checkout. It does not supply any missing
 campaign, accounting, installation, evaluation, or promotion authority.
+
+### Subsequent descriptor-data checkpoint
+
+`capstone_installation_record.py` validates the exact InstallationV2 record's
+canonical data and hashes. It does not inspect an installed descriptor, resolve
+inventory, prove provenance, authenticate an identity, or authorize an effect.
+Seven focused tests passed on Python3.14/3.12/3.9; a separate independent source
+review approved only this codec. The combined WIP suite now runs 150 tests on
+all three interpreters, plus the required entrypoint on3.14, with zero skips.
+See `docs/evidence/source-backend/installation-record-20261104/` for raw evidence.

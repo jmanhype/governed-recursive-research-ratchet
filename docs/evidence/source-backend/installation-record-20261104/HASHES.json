@@ -1,0 +1,65 @@
+{
+  "scope": "Descriptor codec and partial public source WIP, not authority or story acceptance",
+  "files": [
+    {
+      "path": "entrypoint.stderr",
+      "sha256": "210559eb1bb79afbd5fe7045b9aba59a81dcbbddd056cdec88668747e0c0c570",
+      "bytes": 20685
+    },
+    {
+      "path": "entrypoint.stdout",
+      "sha256": "ed48da433b36c55853423dea858a6ceac68c6720c0b69b0914cb4e8104b072b9",
+      "bytes": 219
+    },
+    {
+      "path": "guarded_source_suite.py",
+      "sha256": "182ade427971f13354ec32a94d2af295818b3a0d1dedb79249de32ec130a4673",
+      "bytes": 3175
+    },
+    {
+      "path": "independent-review.md",
+      "sha256": "41e8ee15eb306e021f0d22a3c04fd36255ba4d18945c432f0fecd5738ddba23b",
+      "bytes": 5203
+    },
+    {
+      "path": "python-0.stderr",
+      "sha256": "63b1076cc2a4c596196330d85249d396511ad032b24261f0e915efceb6936b30",
+      "bytes": 20685
+    },
+    {
+      "path": "python-0.stdout",
+      "sha256": "fa6a8a3e1e0adaaf3a1a5d1e8cafaee1ad9a83fa28237051b6937e360ab55760",
+      "bytes": 211
+    },
+    {
+      "path": "python-1.stderr",
+      "sha256": "ebfbdf33df3e60b76a5a94dd324cbabe39e58d371d25bbfdff21050ac8efc50a",
+      "bytes": 20685
+    },
+    {
+      "path": "python-1.stdout",
+      "sha256": "d25b9aa83cb0544305f3052ef96aeff2a5617fa223aa6c65747a8f08f96a913c",
+      "bytes": 211
+    },
+    {
+      "path": "python-2.stderr",
+      "sha256": "60e854ed5e126a69f1b555adce41c605ba4acff8f4daa151a83f73ec617fae01",
+      "bytes": 14160
+    },
+    {
+      "path": "python-2.stdout",
+      "sha256": "fa6a8a3e1e0adaaf3a1a5d1e8cafaee1ad9a83fa28237051b6937e360ab55760",
+      "bytes": 211
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "5fd7c427299c492203c0458c5e829163fd05e617939995ae02e74831fa101b06",
+      "bytes": 4986
+    },
+    {
+      "path": "verify_source.py",
+      "sha256": "b2926a39a0f00eabd7d13069073206c87ac3c29adf33f72bb651463de07acdf2",
+      "bytes": 3592
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+PUBLIC_FIXTURE_MAX_OBSERVED_BYTES=127552; not runtime/UID320 evidence
+SOURCE_ONLY BACKEND_WIP tests=150 failures=0 errors=0 skipped=0; installed topology, full campaign backend, v5 accounting and capstone NOT-QUALIFIED
