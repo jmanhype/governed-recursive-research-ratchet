@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:58:38Z
-content_hash: "sha256:fd9a916f2ae2a87d14eb79c44002455cfa70100546487f212d8fa5eff0b2eea9"
+updated_at: 2026-11-05T14:59:58Z
+content_hash: "sha256:e78d11609374f91d77cb0f6b10047b80dafaf38dd5d845aa0a04ecd023b8b6ba"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,50 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: delivered
+
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.12 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /usr/bin/python3 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 -m unittest discover -s tests -p 'unit_capstone*.py'
+Summary: PASS source257 tests on EACH of Python3.14.3,3.12.9,3.9.6; failures0/errors0/skipped0, each exit0. Campaign reducer, CampaignManifestV2 derivation, real-Ledger append, two-leaf campaign, fence and both stop-outcome paths covered. All 11 gate phases and all seven capstone journeys NOT-RUN; no installed topology, VM replay, admission, promotion, production or q3hp claim. Producing SHA8c3e607cf4611da88d3bd3200593cc3e150e1268.
+
+- Commands run:
+  - PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 tests/unit_capstone_backend_suite.py
+  - PYTHONPATH=research:tests /opt/homebrew/bin/python3.12 tests/unit_capstone_backend_suite.py
+  - PYTHONPATH=research:tests /usr/bin/python3 tests/unit_capstone_backend_suite.py
+  - PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 -m unittest discover -s tests -p 'unit_capstone*.py'
+- Summary: source-only delivery. 257 tests per interpreter, 0 failures/errors/skips. No external CI claimed. Gate phases, capstone journeys, installation, admission and promotion remain not-run and are not claimed.
+
+### Commit
+- Branch: story/GRRR-k3j7
+- SHA: 8c3e607cf4611da88d3bd3200593cc3e150e1268
+- Worktree clean at delivery time; no merge, no push, no protected access.
+
+### Acceptance Criteria
+- [x] AC1: accepted design and independent review bound; implementation conforms at source.
+- [x] AC2: InstallationV2 open-only topology, 44 source tests.
+- [x] AC3: backend-v2 schema, index, reducer, replay equality and stop-pending transitions.
+- [x] AC4: issuance idempotence, intent continuity and reopen behaviour.
+- [x] AC5: two-leaf JIT composition with distinct Plans and verifier-injected owner/gate proof.
+- [x] AC6: ReviewV2 store/service/RPCs with peer identity, idempotency and crash-conservative replay.
+- [x] AC7: AF_UNIX SCM_RIGHTS gate/broker with real multiprocess and wrong-inode tests.
+- [x] AC8: stop commits stop-pending before cancellation; verified outcome stopped, else recovery-required.
+- [x] AC9: v4 unchanged and read-only; operational v5 accounting implemented and tested.
+- [x] AC10: two-leaf campaign executes through the real Ledger with truthful manifest links.
+- [x] AC11: 257 regressions reproducible on Python 3.14, 3.12 and 3.9 with zero skips.
+- [ ] AC12: independent review and PM acceptance pending for this delivery.
+
+### Independent Review and Scope
+- Pending: one fresh-context read-only review of the campaign reducer, the Ledger version change, the journal version check and the integration tests. No merge, push, promotion, admission, installation or /Library/GRRR access is authorized by this delivery.
+
 ## nd_contract
 status: delivered
 
