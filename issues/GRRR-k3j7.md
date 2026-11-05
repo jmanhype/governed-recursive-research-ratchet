@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:29:36Z
-content_hash: "sha256:c583fca0c811797793f3d03fe17c4e540993e58f454bf9c2c9d4ed2ab46b44b4"
+updated_at: 2026-11-05T14:44:16Z
+content_hash: "sha256:85ba51cc3ebd6cbce4e7113770ebddaa20b87607f1ce1d5aef650e063adf826e"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,21 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Full two-leaf campaign now runs through the real temp Ledger: campaign-start -> select(0) -> leaf-bind(0) -> advance(0) -> select(1) -> leaf-bind(1) -> advance(1) -> finish, with real issued fixtures and test verifiers. Asserted run state/revision after each append, completed state with result_object=terminal at the end, and replay equality on validate().
+- Added fence-after-start through the Ledger: running -> recovery-required with result_object=manifest hash and active_leaf preserved.
+- Replay-mode split implemented: _validate folds campaign events with replay=True, skipping live verifier calls only (liveness cannot be re-proved from stored history) while keeping structural, evidence-link, revision, immutable-field and row-equality checks. Append always requires the verifiers.
+- tests/unit_capstone_campaign_append.py: 5 integration tests; reducer 48; required suite 255 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Commits f246226 and 2b0d259 on story/GRRR-k3j7; no merge or push.
+- Remaining source gap: campaign-stop-outcome has reducer-level tests but no Ledger-level case, because stop-pending is produced by the base apply_backend_stop hook and that wiring is not exercised for campaign runs yet.
+
+### proof
+- [x] AC #5/#10: two-leaf JIT campaign executes through the ledger with distinct Plans, permits (verifier-injected) and truthful manifest links.
+- [ ] AC #3: stop-outcome Ledger case via the base safe-stop hook.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
