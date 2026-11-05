@@ -193,7 +193,7 @@ class CampaignSequenceTests(unittest.TestCase):
     def inspect(self):
         return self.index.validate()['campaign_run'][(self.row['campaign_id'],)]
 
-    def test_two_leaf_campaign_runs_end_to_end(self):
+    def _run_two_leaf(self):
         entries, leaves = self.issue()
         plans = [self.plan_for(leaves[0], entries[0]), self.plan_for(leaves[1], entries[1])]
         start, _ = self.start_record(plans[0])
@@ -276,6 +276,16 @@ class CampaignSequenceTests(unittest.TestCase):
         self.assertIn(('joins', []), calls)
         self.assertIn(('live', 1), calls)
         self.assertIn(('proof', 1, '1' * 64), calls)
+        return terminal
+
+    def test_two_leaf_campaign_runs_end_to_end(self):
+        self._run_two_leaf()
+
+    def test_finish_replay_rejects_missing_manifest_object(self):
+        terminal = self._run_two_leaf()
+        (self.root / 'objects' / terminal).unlink()
+        with self.assertRaises(Failure):
+            self.index.validate()
 
     def test_fence_after_start_moves_run_to_recovery(self):
         entries, leaves = self.issue()

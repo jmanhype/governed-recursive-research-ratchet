@@ -118,7 +118,7 @@ def derive_manifest(state, campaign_id, progress, gates, *, claim=None, now_ns=N
 
 def _campaign(state, event, receipt, grants, progress=None, joins=None, live=None,
               advance_proof=None, manifest_provider=None, fence_provider=None,
-              stop_provider=None, replay=False):
+              stop_provider=None, replay=False, db=None):
     """Campaign-v2 reducer entry; unimplemented actions refuse, never accept."""
     _fields(event, ('format', 'action', 'record', 'idempotency_key', 'version'))
     record = event['record']
@@ -136,21 +136,21 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None, live=Non
            'Campaign previous revision differs')
     if action == 'campaign-select':
         _select(state, event, receipt, record, progress, joins, replay=replay)
-        return
+        return []
     if action == 'campaign-leaf-bind':
         _leaf_bind(state, event, receipt, record, progress, joins, live, replay)
-        return
+        return []
     if action == 'campaign-advance':
         _advance(state, event, receipt, record, progress, advance_proof, replay)
-        return
+        return []
     if action == 'campaign-finish':
-        _finish(state, event, receipt, record, progress, manifest_provider, replay)
+        return _finish(state, event, receipt, record, progress, manifest_provider, replay, db)
         return
     if action == 'campaign-fence':
-        _fence(state, event, receipt, record, progress, fence_provider, replay)
+        return _fence(state, event, receipt, record, progress, fence_provider, replay, db)
         return
     if action == 'campaign-stop-outcome':
-        _stop_outcome(state, event, receipt, record, progress, stop_provider, replay)
+        return _stop_outcome(state, event, receipt, record, progress, stop_provider, replay, db)
         return
     if action != 'campaign-start':
         raise Failure('Unavailable', 'Campaign action not implemented: ' + action)
@@ -186,6 +186,7 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None, live=Non
     run['last_event'] = receipt['digest']
     run['intent_anchor'] = receipt['digest']
     _put(state, 'campaign_run', run)
+    return []
 
 
 def _leaf_bind(state, event, receipt, record, progress, joins, live, replay=False):
@@ -254,7 +255,7 @@ def _leaf_bind(state, event, receipt, record, progress, joins, live, replay=Fals
     _put(state, 'campaign_run', run, True)
 
 
-def _fence(state, event, receipt, record, progress, fence_provider, replay=False):
+def _fence(state, event, receipt, record, progress, fence_provider, replay=False, db=None):
     """Controller-authenticated cut to recovery-required; never resumes work."""
     if not replay:
         require(fence_provider is not None, 'Unavailable',
@@ -270,8 +271,30 @@ def _fence(state, event, receipt, record, progress, fence_provider, replay=False
     run = _row('campaign_run', record['run'], ('last_event',))
     if replay:
         terminal = run['result_object']
-        _check(len(record['evidence']) == 3 and terminal in record['evidence'],
-               'Campaign fence evidence differs')
+        _check(terminal is not None and len(record['evidence']) == 3
+               and terminal in record['evidence'], 'Campaign fence evidence differs')
+        kinds = {}
+        for hashed in record['evidence']:
+            value = _json(_durable_object(db, hashed))
+            _check(type(value) is dict and type(value.get('schema')) is str,
+                   'Campaign fence evidence object differs')
+            kinds[value['schema']] = value
+        _check(set(kinds) == {'capstone-campaign-manifest-v2',
+                              'capstone-failure-v1', 'capstone-campaign-fence-v2'},
+               'Campaign fence evidence roles differ')
+        manifest = kinds['capstone-campaign-manifest-v2']
+        snapshot = kinds['capstone-campaign-fence-v2']
+        _check(manifest.get('schema') == 'capstone-campaign-manifest-v2'
+               and digest(canonical(manifest)) == terminal
+               and snapshot.get('campaign_operation_id') == current['campaign_operation_id']
+               and snapshot.get('owner_epoch') == current['owner_epoch']
+               and snapshot.get('observed_owner') in ('present', 'absent')
+               and snapshot.get('active_leaf') == current['active_leaf']
+               and snapshot.get('cut') in ('owner-lost', 'binding-gap', 'claim-gap',
+                                           'accounting-gap', 'dispatch-unknown',
+                                           'evidence-failure'),
+               'Campaign fence durable evidence differs')
+        objects = []
     else:
         manifest, terminal, failure, snapshot = fence_provider(
             campaign_id, state, record['evidence'])
@@ -294,6 +317,7 @@ def _fence(state, event, receipt, record, progress, fence_provider, replay=False
         _check(record['evidence'] == sorted({digest(canonical(failure)),
                                              digest(canonical(snapshot)), terminal}),
                'Campaign fence evidence differs')
+        objects = [canonical(failure), canonical(snapshot), canonical(manifest)]
     for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
                    'auth_hash', 'owner_epoch', 'intent_anchor'):
         _check(run[column] == current[column], 'Campaign fence immutable field differs')
@@ -307,9 +331,11 @@ def _fence(state, event, receipt, record, progress, fence_provider, replay=False
         'revision': run['revision']}), 'Campaign fence key differs')
     run['last_event'] = receipt['digest']
     _put(state, 'campaign_run', run, True)
+    return objects
 
 
-def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay=False):
+def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay=False,
+                  db=None):
     """Stop-pending resolves to stopped only when the outcome verifies fully."""
     if not replay:
         require(stop_provider is not None, 'Unavailable',
@@ -325,11 +351,23 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
     run = _row('campaign_run', record['run'], ('last_event',))
     if replay:
         terminal = run['result_object']
-        _check(len(record['evidence']) == 2 and terminal in record['evidence'],
-               'Campaign stop-outcome evidence differs')
+        _check(terminal is not None and len(record['evidence']) == 2
+               and terminal in record['evidence'], 'Campaign stop-outcome evidence differs')
+        kinds = {}
+        for hashed in record['evidence']:
+            value = _json(_durable_object(db, hashed))
+            _check(type(value) is dict and type(value.get('schema')) is str,
+                   'Campaign stop-outcome evidence object differs')
+            kinds[value['schema']] = value
+        _check(set(kinds) == {'capstone-campaign-manifest-v2',
+                              'capstone-campaign-stop-v2'},
+               'Campaign stop-outcome evidence roles differ')
+        _check(digest(canonical(kinds['capstone-campaign-manifest-v2'])) == terminal,
+               'Campaign stop-outcome manifest differs')
         _check(run['state'] in ('stopped', 'recovery-required'),
                'Campaign stop-outcome state differs')
         verified = run['state'] == 'stopped'
+        objects = []
     else:
         manifest, terminal, outcome, verified = stop_provider(
             campaign_id, state, record['evidence'])
@@ -340,6 +378,7 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
                'Campaign stop-outcome evidence differs')
         _check(record['evidence'] == sorted({digest(canonical(outcome)), terminal}),
                'Campaign stop-outcome evidence differs')
+        objects = [canonical(outcome), canonical(manifest)]
     for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
                    'auth_hash', 'owner_epoch', 'intent_anchor'):
         _check(run[column] == current[column], 'Campaign stop-outcome immutable field differs')
@@ -354,9 +393,11 @@ def _stop_outcome(state, event, receipt, record, progress, stop_provider, replay
         'revision': run['revision']}), 'Campaign stop-outcome key differs')
     run['last_event'] = receipt['digest']
     _put(state, 'campaign_run', run, True)
+    return objects
 
 
-def _finish(state, event, receipt, record, progress, manifest_provider, replay=False):
+def _finish(state, event, receipt, record, progress, manifest_provider, replay=False,
+            db=None):
     """Complete only when every leaf advanced and a manifest provider exists."""
     if not replay:
         require(manifest_provider is not None, 'Unavailable',
@@ -377,7 +418,17 @@ def _finish(state, event, receipt, record, progress, manifest_provider, replay=F
     run = _row('campaign_run', record['run'], ('last_event',))
     if replay:
         terminal = run['result_object']
+        _check(terminal is not None, 'Campaign finish has no terminal hash')
+        manifest = _json(_durable_object(db, terminal))
+        _check(type(manifest) is dict
+               and manifest.get('schema') == 'capstone-campaign-manifest-v2'
+               and manifest.get('campaign_plan_sha256') == current['plan_hash']
+               and type(manifest.get('leaves')) is list
+               and len(manifest['leaves']) == len(leaves)
+               and digest(canonical(manifest)) == terminal,
+               'Campaign finish durable manifest differs')
         _check(record['evidence'] == [terminal], 'Campaign finish evidence differs')
+        objects = []
     else:
         manifest, terminal = manifest_provider(campaign_id, state, progress)
         _check(type(manifest) is dict
@@ -389,6 +440,7 @@ def _finish(state, event, receipt, record, progress, manifest_provider, replay=F
         _check(terminal == digest(canonical(manifest)),
                'Campaign finish manifest digest differs')
         _check(record['evidence'] == [terminal], 'Campaign finish evidence differs')
+        objects = [canonical(manifest)]
     for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
                    'auth_hash', 'owner_epoch', 'intent_anchor'):
         _check(run[column] == current[column], 'Campaign finish immutable field differs')
@@ -401,6 +453,7 @@ def _finish(state, event, receipt, record, progress, manifest_provider, replay=F
         'revision': run['revision']}), 'Campaign finish key differs')
     run['last_event'] = receipt['digest']
     _put(state, 'campaign_run', run, True)
+    return objects
 
 
 def _advance(state, event, receipt, record, progress, advance_proof, replay=False):
@@ -515,6 +568,48 @@ def _raw(value):
 
 def _domain(tag, value):
     return digest(tag.encode('ascii') + b'\0' + canonical(value))
+
+
+def _objects_dir(db):
+    main = [row[2] for row in db.execute('PRAGMA database_list') if row[1] == 'main']
+    _check(len(main) == 1 and main[0], 'Durable evidence database path is absent')
+    return Path(main[0]).parent / 'objects'
+
+
+def _durable_object(db, hashed):
+    """Resolve a hash-addressed durable evidence object; never trust the event."""
+    identifier(hashed, True)
+    path = _objects_dir(db) / hashed
+    _check(path.is_file() and not path.is_symlink(), 'Durable evidence object is absent')
+    raw = path.read_bytes()
+    _check(digest(raw) == hashed, 'Durable evidence object digest differs')
+    return raw
+
+
+def _store_object(db, raw):
+    """Persist evidence bytes before the referencing event is appended."""
+    _check(type(raw) is bytes and 0 < len(raw) <= MAX_RAW, 'Evidence object bytes differ')
+    hashed = digest(raw)
+    directory = _objects_dir(db)
+    try:
+        directory.mkdir(mode=0o700, exist_ok=True)
+        path = directory / hashed
+        if not path.exists():
+            descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                                 0o600)
+            try:
+                os.write(descriptor, raw)
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
+            directory_fd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            try:
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
+    except OSError as exc:
+        raise Failure('RecoveryRequired', 'Evidence object could not be persisted') from exc
+    return hashed
 
 
 def _row(table, value, omitted=()):
@@ -758,7 +853,7 @@ def _validate(db, tentative=None):
             if fmt == BASE_FORMAT:
                 _base(state, event, receipt, grants)
             else:
-                _campaign(state, event, receipt, grants, progress, replay=True)
+                _campaign(state, event, receipt, grants, progress, replay=True, db=db)
         elif type(fmt) is str and (fmt.startswith('capstone-backend-') or fmt.startswith('capstone-campaign-')):
             raise Failure('IntegrityFailure', 'Unknown backend event format')
         elif 'backend_stop' in event:
@@ -903,9 +998,12 @@ class BackendIndex:
             def apply(db, receipt):
                 before, old_grants, _, _, progress = _validate(db, receipt['sequence'])
                 after, grants = copy.deepcopy(before), dict(old_grants)
-                _campaign(after, dict(event, version=2, idempotency_key=key), receipt,
-                          grants, progress, joins, live, advance_proof,
-                          manifest_provider, fence_provider, stop_provider)
+                objects = _campaign(after, dict(event, version=2, idempotency_key=key),
+                                    receipt, grants, progress, joins, live,
+                                    advance_proof, manifest_provider, fence_provider,
+                                    stop_provider, db=db)
+                for raw in objects:
+                    _store_object(db, raw)
                 _write_delta(db, before, after)
                 _validate(db)
 
