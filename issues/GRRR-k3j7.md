@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T04:59:14Z
-content_hash: "sha256:edcb633ecfa1ad866689aa0f70a807e1c0487b512ecd9a8c3f0de099008f0b6e"
+updated_at: 2026-11-05T05:30:29Z
+content_hash: "sha256:da63ad7205511f1db9ee555ca68c2c0e1a687bb0577bf0970c578841acfedad3"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,19 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator requested the real PAIVOT/Autoloop coding loop with a credential-owning controller and isolated coding workspace. Two source-only candidate components are outside the repo under outputs/paivot-autoloop-pilot/coding-adapter/: trusted-controller/controller.py SHA256 1c4ab0601a7e4b759240a6817e29055086d01e251abcdcc0f50e089e097ff8dc, workspace-channel/vm_channel.py SHA256 8bddd162bf1a917ec01db23587a4ce796db5c8e5f5619f453251e0ca53818a12.
+- Parent reran 7 controller tests and 22 channel tests; all passed. They are synthetic provider and local socketpair tests, not actual AI, provider cost enforcement, OS isolation or VM evidence. Independent security reviews did not finish. Both components are unaccepted WIP, not yet used for any live dispatch.
+- Controller uses caller-supplied synthetic costs and reopens SQLite by pathname after the initial check, so it does not establish trusted real-spend enforcement or a protected database boundary. The channel supports only ping/read_file; it does not run coding commands. Both must remain disconnected from live operation until gaps are addressed.
+- A separate synthetic macOS sandbox probe showed unrestricted host read of a synthetic process marker. Denying sysctl-read made Python fail importing ctypes before the targeted read, so this test is inconclusive and does not establish isolation. No real credentials or protected paths used.
+
+### proof
+- [x] Candidate components exist and basic source-only tests passed.
+- [ ] Security review, actual isolation, real budget enforcement, real AI worker, Autoloop integration, sustained operation, and GRRR story acceptance are incomplete.
+
 ## nd_contract
 status: in_progress
 
