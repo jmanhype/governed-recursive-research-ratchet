@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T18:26:50Z
-content_hash: "sha256:c3d4f5380d40ceec634c89f17ac297f6f0673aced7762c3544ccdd8f077e8aa3"
+updated_at: 2026-11-05T20:25:47Z
+content_hash: "sha256:1cbcbf3f8b31692d60995572a3d67c361657e7ce957845c4c15922a38d263f97"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: accepted
+
+### evidence
+- Independent review completed with a fresh-context, read-only reviewer (packet-based; code review, execution evidence parent-run). Verdict: REVIEW_RESULT: APPROVED. Verdict file SHA256 aea6a7ae47a459d963181eddd86c62896849887c414332b8b913ea44efc56b62, committed at b0bfad5. The reviewer confirmed F1 (durable manifest binding), F2 (select evidence refs), F3 (durable stop verification) and found no remaining fail-open path in the reviewed functions.
+- Earlier rejected verdict retained at docs/evidence/source-backend/campaign-reducer-review-20261105.rejected-r1.md (SHA256 03ad04db987d9cafb3f1ba354d27e3058891d7e19e3235b59643f2bcc979d719); both findings from it were fixed before re-review.
+- Final commit b0bfad526c09f2589eda10303c38f617e1d01a2e on story/GRRR-k3j7. Required suite: 261 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Parent-run evidence retained at docs/evidence/source-backend/campaign-reducer-test-run-20261105.txt.
+- Operator/product owner approved the delivery in session. PM acceptance is therefore recorded against this exact commit and verdict.
+- No merge, no push, no promotion, no admission, no installation and no /Library/GRRR access occurred. All 11 gate phases and all seven capstone journeys remain not-run.
+
+### proof
+- [x] AC1-AC11 implemented and verified at source.
+- [x] AC12 independent review APPROVED and PM acceptance recorded.
+
 ## nd_contract
 status: delivered
 
