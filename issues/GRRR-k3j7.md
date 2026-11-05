@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T15:21:34Z
-content_hash: "sha256:c4bf3736a1b33026229d3b76e09c322cbe6519a2905aede7e102e405944c1f2a"
+updated_at: 2026-11-05T17:01:52Z
+content_hash: "sha256:69792bc9ffd057631604a383a5ac777813e64750856813fb248192a4802b9c70"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,19 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: delivered
+
+### evidence
+- F1 remediated in commit 6b02ba1. Replay no longer trusts the submitted run row for the terminal hash: finish, fence and stop-outcome resolve the manifest, FailureRecord and FenceSnapshot/StopOutcome from the durable hash-addressed object store, verify each object digest, and re-check manifest schema, campaign_plan_sha256, leaf cardinality and terminal equality. A missing or tampered object fails replay.
+- Append now persists evidence objects before the referencing event (store_object with O_EXCL/O_NOFOLLOW and fsync); a failed transaction may leave unreferenced inert objects, never authority.
+- New regression test: deleting the terminal manifest object makes index.validate() fail. Integration tests: 8. Required suite: 258 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6.
+- Known residual: fence/stop replay validates object roles and snapshot links but does not re-derive the manifest contents from the full gate set, because gates are not stored in the event. Recorded as a limitation, not a claim.
+
+### proof
+- [x] F1 fixed with a regression test.
+- [ ] AC #12: independent review verdict still outstanding (three provider 429s); PM approval recorded.
+
 ## nd_contract
 status: delivered
 
