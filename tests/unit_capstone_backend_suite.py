@@ -11,7 +11,8 @@ MODULES = ('unit_capstone_contract', 'unit_capstone_peer', 'unit_capstone_journa
            'unit_capstone_backend_composition', 'unit_capstone_backend_index',
            'unit_capstone_installation_record', 'unit_capstone_installation',
            'unit_capstone_installation_authority',
-           'unit_capstone_installation_inventory')
+           'unit_capstone_installation_inventory',
+           'unit_capstone_accounting_v5')
 
 
 def main():
@@ -25,7 +26,7 @@ def main():
         suite.addTests(part)
     result = unittest.TextTestRunner(verbosity=2).run(suite)
     print('SOURCE_ONLY BACKEND_WIP tests=%d failures=%d errors=%d skipped=%d; '
-          'installed topology, full campaign backend, v5 accounting and capstone NOT-QUALIFIED' %
+          'installed topology, live campaign execution and capstone NOT-QUALIFIED' %
           (result.testsRun, len(result.failures), len(result.errors), len(result.skipped)))
     return int(result.testsRun == 0 or bool(result.skipped) or not result.wasSuccessful())
 

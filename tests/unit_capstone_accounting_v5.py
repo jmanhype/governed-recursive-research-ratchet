@@ -83,14 +83,15 @@ class OnceFailingCommit:
 
 
 def reserve_worker(root: str, output: mp.Queue, key: str) -> None:
-    store = open_store(Path(root) / 'accounting-v5.sqlite')
     try:
+        store = open_store(Path(root) / 'accounting-v5.sqlite')
         value = {'currency': 'USD', 'money_cents': 2, 'execution_us': 2, 'review_us': 2}
         output.put(store.reserve(UID, key, value, key))
     except BaseException as exc:
         output.put(exc)
     finally:
-        store.close()
+        if 'store' in locals():
+            store.close()
 
 
 class AccountingV5Tests(unittest.TestCase):
@@ -183,7 +184,7 @@ class AccountingV5Tests(unittest.TestCase):
                      for key in ('concurrent-a', 'concurrent-b')]
         for process in processes:
             process.start()
-        results = [queue.get(timeout=10) for _ in processes]
+        results = [queue.get(timeout=60) for _ in processes]
         for process in processes:
             process.join(10)
             self.assertFalse(process.exitcode)

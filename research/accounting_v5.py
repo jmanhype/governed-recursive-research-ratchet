@@ -153,7 +153,10 @@ class OperationalAccountingV5:
 
     def _validate_schema(self) -> None:
         require(self.db is not None, 'Stopped', 'Accounting connection is closed')
-        for suffix in ('-journal', '-wal', '-shm'):
+        # A rollback journal is created by any concurrent writer and is not by
+        # itself a hot journal; SQLite resolves it under its own locks. WAL
+        # artifacts still mean the store is not in the required delete mode.
+        for suffix in ('-wal', '-shm'):
             require(not os.path.lexists(str(self.path) + suffix), 'IntegrityFailure',
                     'Partial accounting journal present')
         schema = self.db.execute('SELECT type,name,tbl_name FROM sqlite_master').fetchall()
