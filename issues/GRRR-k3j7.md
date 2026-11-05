@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:46:27Z
-content_hash: "sha256:7972a6bdaa66b039ff62deadd1285f4bf14499e1d5534eea26a2eb4f8fc50c15"
+updated_at: 2026-11-05T14:58:38Z
+content_hash: "sha256:fd9a916f2ae2a87d14eb79c44002455cfa70100546487f212d8fa5eff0b2eea9"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,57 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: delivered
+
+## Implementation Evidence
+
+Source-level implementation on story/GRRR-k3j7 at commit 8c3e607. All changes are inside the story worktree; nothing was merged, pushed, promoted, admitted, or installed.
+
+- Campaign-v2 reducer: research/capstone_backend_index.py implements campaign-start, campaign-select, campaign-leaf-bind, campaign-advance, campaign-finish, campaign-fence, campaign-stop-outcome, plus derive_manifest (CampaignManifestV2) and the real-Ledger append_campaign path.
+- Ledger change is additive: research/ledger.py accepts an explicit envelope version (1 or 2, default 1); research/capstone_journal.py expects version 2 only for the shared CAMPAIGN_EVENT_FORMAT and version 1 otherwise; research/common.py holds that constant.
+- Operational v5 accounting: research/accounting_v5.py (open-existing-only, lineage/holds, reserve-meter-settle-halt, cross-process exclusion, fail-closed unknown outcome).
+- Tests: tests/unit_capstone_campaign_reducer.py (48), tests/unit_capstone_campaign_append.py (7), tests/unit_capstone_accounting_v5.py (8), plus the existing installation/review/launch/index suites.
+
+## CI/Test Results
+
+Commands run:
+
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.12 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /usr/bin/python3 tests/unit_capstone_backend_suite.py
+- PYTHONPATH=research:tests /opt/homebrew/bin/python3.14 -m unittest discover -s tests -p 'unit_capstone*.py'
+
+Results:
+
+- Python 3.14.3: Ran 257 tests, OK, 0 failures, 0 errors, 0 skipped
+- Python 3.12.9: Ran 257 tests, OK, 0 failures, 0 errors, 0 skipped
+- Python 3.9.6:  Ran 257 tests, OK, 0 failures, 0 errors, 0 skipped
+- Suites assert zero-test and skipped success are failures.
+
+## Summary:
+
+The source campaign reducer, CampaignManifestV2 derivation, real-Ledger campaign append path, two-leaf end-to-end campaign, fence, and both stop-outcome paths are implemented and proven at source on three interpreters. All 11 gate phases and all seven capstone journeys remain not-run / not live-qualified; installation, admission, promotion, production readiness, live VM replay, and q3hp mapping are explicitly not claimed. Commit 8c3e607.
+
+### evidence
+- commits c55f722, 07dd656, 8395acd, 12f5f80, d48e7c6, 74d2eaf, 2c7df68, 74eb40e, d38706d, 63394d4, f246226, 2b0d259, 8c3e607
+- independent design acceptance 55155e52a5543325b1b071ca66b596e3795fa9456f04e6fda0efb9ce43e425d1 and review 2e6d50ddd3e638365284f344cc5412975362cd6d7ee94dc87651e402b8b9d3d3
+- no /Library/GRRR access, no installation, no replay, no admission, no promotion, no merge, no push
+
+### proof
+- [x] AC #1: accepted design and independent review bound; implementation conforms at source.
+- [x] AC #2: InstallationV2 open-only topology implemented with 44 source tests.
+- [x] AC #3: backend-v2 schema, index, reducer, replay equality and stop-pending transitions implemented and tested.
+- [x] AC #4: issuance idempotence, intent continuity and reopen behaviour tested.
+- [x] AC #5: two-leaf JIT composition with distinct Plans, verifier-injected owners and one permit per leaf.
+- [x] AC #6: ReviewV2 store/service/RPCs with peer identity, idempotency and crash-conservative replay.
+- [x] AC #7: AF_UNIX SCM_RIGHTS gate/broker with real multiprocess and wrong-inode tests.
+- [x] AC #8: stop commits stop-pending before cancellation; verified outcome yields stopped, otherwise recovery-required.
+- [x] AC #9: v4 unchanged and read-only; operational v5 accounting implemented and tested.
+- [x] AC #10: two-leaf campaign executes through the real Ledger with truthful manifest links; unverified actions refuse.
+- [x] AC #11: 257 source regressions reproducible on Python 3.14, 3.12 and 3.9 with zero skips.
+- [ ] AC #12: independent review and PM acceptance pending for this delivery.
+
 ## nd_contract
 status: in_progress
 
