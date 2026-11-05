@@ -276,6 +276,40 @@ class CampaignSequenceTests(unittest.TestCase):
         self.assertIn(('live', 1), calls)
         self.assertIn(('proof', 1, '1' * 64), calls)
 
+    def test_fence_after_start_moves_run_to_recovery(self):
+        entries, leaves = self.issue()
+        plan = self.plan_for(leaves[0], entries[0])
+        record, _ = self.start_record(plan)
+        start_key = _domain('campaign-event-v2', {'campaign_id': self.row['campaign_id'],
+                                                  'action': 'campaign-start', 'revision': 0})
+        self.index.append_campaign('campaign-start', record, start_key)
+        state = self.index.validate()
+        manifest, terminal = derive_manifest(state, self.row['campaign_id'], {},
+                                             gate_set(), now_ns=1)
+        failure = dict(schema='capstone-failure-v1')
+        snapshot = dict(
+            schema='capstone-campaign-fence-v2',
+            campaign_operation_id=state['campaign_run'][(self.row['campaign_id'],)][
+                'campaign_operation_id'],
+            owner_epoch='e' * 64, observed_owner='absent', active_leaf=None,
+            cut='owner-lost')
+        evidence = sorted({digest(canonical(failure)), digest(canonical(snapshot)),
+                           terminal})
+        revision = state['campaign_run'][(self.row['campaign_id'],)]['revision']
+        run = self.run_row(state='recovery-required', result_object=terminal,
+                           revision=revision + 1)
+        fence = dict(campaign_id=self.row['campaign_id'], previous_revision=revision,
+                     run=run, binding=None, leaf_plan=None, evidence=evidence)
+
+        def provider(campaign_id, state, evidence):
+            return manifest, terminal, failure, snapshot
+
+        self.append('campaign-fence', fence, revision + 1, fence_provider=provider)
+        final = self.inspect()
+        self.assertEqual(final['state'], 'recovery-required')
+        self.assertEqual(final['result_object'], terminal)
+        self.assertIsNone(final['active_leaf'])
+
 
 if __name__ == '__main__':
     unittest.main()
