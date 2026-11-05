@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T12:51:51Z
-content_hash: "sha256:60a24cc60bb276705f232eaf115a24772cc218dbc246a365bd75f3756c118851"
+updated_at: 2026-11-05T13:48:56Z
+content_hash: "sha256:8936a5a52159a73d0a2a1d577cd37294899fe7bfe32438a795471a7026d1d1b6"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Campaign-v2 envelope validation and the exact campaign-start reducer implemented in research/capstone_backend_index.py::_campaign, wired into _validate. Start enforces: null previous_revision, no binding/leaf_plan, exact 10-field run row, running/null/result-null/revision-0, unstopped issued campaign join, no other active run, canonical v1 Plan bytes with plan_sha256 and derived operation_id, existing grant join, sorted-unique 2-hash evidence, exact domain idempotency key; fills last_event and intent_anchor from the receipt digest.
+- Every other campaign action still raises Failure('Unavailable','Campaign action not implemented: ...'); no stub accepts, so no campaign event can be folded unchecked.
+- tests/unit_capstone_campaign_reducer.py: 12 tests, including one that proves all six unimplemented actions refuse and leave no run row.
+- Required suite now 214 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9, 3.9.6. Commit 12f5f80 on story/GRRR-k3j7; no merge or push.
+
+### proof
+- [x] AC #3 envelope + campaign-start slice implemented and adversarially tested.
+- [ ] AC #3/#5/#10 remaining actions (select, leaf-bind, advance, finish, fence, stop-outcome) plus replay equality and manifest derivation.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
