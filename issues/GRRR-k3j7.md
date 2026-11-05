@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:25:26Z
-content_hash: "sha256:bb68ab034eeb86a78a3ad1be789eb486ecf3b7b42ef700dd4eb6e9e52c7e731b"
+updated_at: 2026-11-05T14:29:36Z
+content_hash: "sha256:c583fca0c811797793f3d03fe17c4e540993e58f454bf9c2c9d4ed2ab46b44b4"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,21 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- Real-Ledger campaign append path implemented: BackendIndex.append_campaign stages a copy, applies the campaign reducer with all six injected verifiers, writes the delta, appends a version-2 envelope, and re-validates. Cached-retry equality returns the stored receipt; changed bytes fail.
+- Ledger change is additive: append_atomic/_append accept an explicit version (1 or 2, default 1). Journal validation now expects version 2 only for the shared capstone-campaign-event-v2 format and version 1 otherwise, so base and journal chains are unchanged.
+- tests/unit_capstone_campaign_append.py (3 tests) proves through a real temp Ledger and real issued fixture: campaign-start appends and replays with equality; campaign-select without the joins verifier refuses Unavailable and does not advance the ledger tip; a changed cached campaign event fails.
+- Required suite: 253 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Commit 63394d4 on story/GRRR-k3j7; no merge or push.
+- Next exact gap: no full two-leaf campaign run (start -> select -> bind -> advance x2 -> finish) through the Ledger yet, and no fence/stop-outcome ledger case.
+
+### proof
+- [x] AC #3: campaign envelopes now append through the real Ledger with replay equality.
+- [ ] AC #5/#10: full two-leaf end-to-end campaign and fence/stop ledger cases.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
