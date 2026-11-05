@@ -581,6 +581,19 @@ class CampaignFinishTests(unittest.TestCase):
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
                       self.progress, None, None, None, self.provider)
 
+    def test_finish_rejects_manifest_leaf_not_bound_to_durable_plan(self):
+        tampered = copy.deepcopy(self.manifest)
+        tampered['leaves'][0]['leaf_id'] = '9' * 64
+        terminal = digest(canonical(tampered))
+        event = finish_event(self.plan, self.raw, terminal)
+
+        def provider(campaign_id, state, progress):
+            return tampered, terminal
+
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      self.progress, None, None, None, provider)
+
 
 def cut_event(plan, raw, action, terminal, revision, evidence, state='recovery-required',
               active_leaf=0):

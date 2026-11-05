@@ -116,6 +116,44 @@ def derive_manifest(state, campaign_id, progress, gates, *, claim=None, now_ns=N
     return manifest, digest(canonical(manifest))
 
 
+def _bind_manifest(state, campaign_id, manifest, terminal, leaves, completed):
+    """Manifest leaf entries must match the durable per-leaf Plans and prefix."""
+    run = state['campaign_run'][(campaign_id,)]
+    _check(type(manifest) is dict
+           and manifest.get('schema') == 'capstone-campaign-manifest-v2'
+           and manifest.get('campaign_plan_sha256') == run['plan_hash']
+           and digest(canonical(manifest)) == terminal
+           and type(manifest.get('leaves')) is list
+           and len(manifest['leaves']) == len(leaves),
+           'Campaign manifest differs')
+    for position, index in enumerate(sorted(leaves)):
+        entry = manifest['leaves'][position]
+        leaf = state['leaf'][(campaign_id, index)]
+        plan_row = state['leaf_plan'].get((campaign_id, index))
+        _check(type(entry) is dict and entry.get('leaf_id') == leaf['leaf_id'],
+               'Campaign manifest leaf identity differs')
+        if plan_row is not None:
+            _check(entry.get('operation_id') == plan_row['operation_id']
+                   and entry.get('actual_plan_sha256') == plan_row['plan_hash']
+                   and entry.get('actual_plan_bytes_sha256') == plan_row['plan_bytes_sha256']
+                   and entry.get('review_sha256') == plan_row['review_hash'],
+                   'Campaign manifest leaf binding differs')
+        else:
+            _check(entry.get('preclaim') == 'not-planned'
+                   and entry.get('operation_id') is None,
+                   'Campaign manifest invented a plan for an unplanned leaf')
+    claimed = sum(1 for entry in manifest['leaves']
+                  if type(entry) is dict and entry.get('preclaim') == 'claimed')
+    if claimed == 0:
+        expected_execution = 'not-run'
+    elif claimed == len(leaves) and set(completed).issuperset(leaves):
+        expected_execution = 'completed'
+    else:
+        expected_execution = 'partial'
+    _check(manifest.get('execution') == expected_execution,
+           'Campaign manifest execution differs from the completion prefix')
+
+
 def _campaign(state, event, receipt, grants, progress=None, joins=None, live=None,
               advance_proof=None, manifest_provider=None, fence_provider=None,
               stop_provider=None, replay=False, db=None):
@@ -427,25 +465,12 @@ def _finish(state, event, receipt, record, progress, manifest_provider, replay=F
         terminal = run['result_object']
         _check(terminal is not None, 'Campaign finish has no terminal hash')
         manifest = _json(_durable_object(db, terminal))
-        _check(type(manifest) is dict
-               and manifest.get('schema') == 'capstone-campaign-manifest-v2'
-               and manifest.get('campaign_plan_sha256') == current['plan_hash']
-               and type(manifest.get('leaves')) is list
-               and len(manifest['leaves']) == len(leaves)
-               and digest(canonical(manifest)) == terminal,
-               'Campaign finish durable manifest differs')
+        _bind_manifest(state, campaign_id, manifest, terminal, leaves, completed)
         _check(record['evidence'] == [terminal], 'Campaign finish evidence differs')
         objects = []
     else:
         manifest, terminal = manifest_provider(campaign_id, state, progress)
-        _check(type(manifest) is dict
-               and manifest.get('schema') == 'capstone-campaign-manifest-v2'
-               and manifest.get('campaign_plan_sha256') == current['plan_hash']
-               and type(manifest.get('leaves')) is list
-               and len(manifest['leaves']) == len(leaves),
-               'Campaign finish manifest differs')
-        _check(terminal == digest(canonical(manifest)),
-               'Campaign finish manifest digest differs')
+        _bind_manifest(state, campaign_id, manifest, terminal, leaves, completed)
         _check(record['evidence'] == [terminal], 'Campaign finish evidence differs')
         objects = [canonical(manifest)]
     for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
@@ -601,11 +626,21 @@ def _store_object(db, raw):
     try:
         directory.mkdir(mode=0o700, exist_ok=True)
         path = directory / hashed
-        if not path.exists():
+        if path.exists():
+            _check(path.is_file() and not path.is_symlink()
+                   and digest(path.read_bytes()) == hashed,
+                   'Existing evidence object content differs')
+        else:
             descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
                                  0o600)
             try:
-                os.write(descriptor, raw)
+                written = 0
+                while written < len(raw):
+                    count = os.write(descriptor, raw[written:])
+                    _check(type(count) is int and count > 0,
+                           'Short evidence object write')
+                    written += count
+                _check(written == len(raw), 'Short evidence object write')
                 os.fsync(descriptor)
             finally:
                 os.close(descriptor)
