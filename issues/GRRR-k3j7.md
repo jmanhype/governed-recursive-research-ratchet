@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
 updated_at: 2026-11-05T15:00:02Z
-content_hash: "sha256:3ebcc316093e66aa83cfa23f8f4d4c7a2045822c9d3ba95784973af0e43fd364"
+content_hash: "sha256:15796f31b3a0fe13798bf1db9eee83d2dd44b926a913fbad4997c088e53d25e6"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,18 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-05.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## nd_contract
 status: delivered
 
