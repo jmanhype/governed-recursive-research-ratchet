@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T02:53:26Z
-content_hash: "sha256:a349cec338da1bf20d3861937806896a44f602a45c82d62bb2772843d3a3dbb1"
+updated_at: 2026-11-05T03:21:38Z
+content_hash: "sha256:21bd80f7fb60398211d4b133f63b0b68754e2dbd46bd59979db84e82ffc90fa0"
 blocks: [GRRR-q3hp]
 assignee: dev-GRRR-k3j7
 follows: [GRRR-yt6a]
@@ -209,6 +209,12 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## Installation cycle design checkpoint (2026-11-04)
+
+- `installation-cycle-v2-spec-20261104.md` SHA256 `599503fffda03576882642c57928a76d66659c2a28e0ee4518f6d1b5c5f21027` and `installation-trust-contract-proposal-20261104.md` SHA256 `d9f05bef3db4af4f67a97e7fd35146624fb7dfd19eea5a41455414f5d95ea0fa` are PROPOSAL ONLY.
+- Independent reviewers confirmed the candidate dependency order is acyclic; both reviews found material implementation and activation gaps. A UID-bound discrepancy was corrected and narrowly re-reviewed; other gaps remain.
+- No schema acceptance, protected installation, real coding launch, replay, promotion, merge or push. Preserve all untracked WIP; no active worker owns these files.
+
 ## Source checkpoint: installation authority joins (2026-11-04)
 
 - `research/capstone_installation_authority.py` SHA256 `7673d23fb93d363a7b04e57416433b181191b9502e065e53c644ca7c6eefd317`; `tests/unit_capstone_installation_authority.py` SHA256 `fff0887e2ab225016ff7bb24691a05705247a62cf484ac964b11624bb890c27e`.
