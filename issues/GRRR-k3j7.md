@@ -8,8 +8,8 @@ labels: [milestone-1, integration, security, source-only]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T14:23:07Z
-content_hash: "sha256:6b0ac97869118683bdcab72b627bfe10aa7475e0ce65d8d95d64206a5c1e7f85"
+updated_at: 2026-11-05T14:25:26Z
+content_hash: "sha256:bb68ab034eeb86a78a3ad1be789eb486ecf3b7b42ef700dd4eb6e9e52c7e731b"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w]
 assignee: dev-GRRR-k3j7
@@ -209,6 +209,20 @@ broker-death teardown, pinned image/catalog/build, current baseline, and complet
 
 
 ## Notes
+## nd_contract
+status: in_progress
+
+### evidence
+- All seven campaign-v2 actions now exist in research/capstone_backend_index.py: start, select, leaf-bind, advance, finish, fence, stop-outcome, plus derive_manifest (CampaignManifestV2). Fence requires an authenticated controller snapshot and evidence exactly [failure, snapshot, terminal]; stop-outcome requires a stop verifier and resolves stopped only when verified, otherwise recovery-required with active_leaf preserved. Both refuse Unavailable without their injected verifier.
+- Replay equality was already enforced in _validate: derived state must equal _snapshot(db) row-for-row, idempotency rows must match, journal validation runs, and a campaign claim without a prior backend binding fails.
+- tests/unit_capstone_campaign_reducer.py: 48 tests. Required suite: 250 tests, 0 failures, 0 errors, 0 skips on Python 3.14.3, 3.12.9 and 3.9.6. Commit d38706d on story/GRRR-k3j7; no merge or push.
+- Newly identified exact gap: BackendIndex.append_transition only builds base v1 envelopes, so campaign envelopes have no real ledger append path yet. Reducer unit tests pass but no end-to-end campaign run through the Ledger exists.
+
+### proof
+- [x] AC #3 reducer: all seven actions plus manifest derivation, fail-closed on missing verifiers.
+- [ ] AC #3/#5/#10: campaign append path through BackendIndex, end-to-end two-leaf fixture, replay equality on reopen.
+- [ ] AC #12 independent review/PM acceptance pending; no delivery claimed.
+
 ## nd_contract
 status: in_progress
 
