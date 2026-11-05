@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-05T21:55:38Z
-content_hash: "sha256:c0bd1a210cc83ca155db98e417fbe07be87344a60397f8c05474009f099c38e8"
+updated_at: 2026-11-05T21:56:38Z
+content_hash: "sha256:59db28a85ba53f9ca670bda229b05ac1ad937964ded5f8567b123b92b4b7e079"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
@@ -106,6 +106,20 @@ Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocke
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 2026-11-04 proposed v4 evaluator interface contract retained below. Artifact /tmp/grrr-q3hp-v4-interface-contract-20261104.md,225 lines,SHA256 f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3. PROPOSED, NOT ACCEPTED, NOT DEPLOYED; no source implementation or live capability claimed. It defines a minimal source-only contract/client/read-only refusal-service slice and separately gated later adapter/migration/authorization work. Independent review is still required; raw reviewed JSON/Markdown request-binding semantics must be made explicit before implementation. Existing 11 common.GATES match the approved capstone inventory; no missing-gate concern is asserted. User-directed remediation does not silently authorize installation, v4 writes, new revision execution, reconciliation or capstone acceptance.
 2026-11-04 independent FIRST_SLICE_V2_REVIEW: APPROVED for exact /tmp/grrr-q3hp-v4-interface-contract-v2-20261104.md SHA2569b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad (250lines). Reviewed repairs: separate exact decisionJSON+Markdown/requestID/package/outputroot from invocation; raw Grant and human-authorization digests; exactlyall11gates; strict operatorUID; defined start-envelope digest; explicit nonproduction localpeer tests. Approval permits ONLY source-only contract/hash validators, explicit-peer client, read-only observation/refusal façade and no-guest local-peer tests. It does NOT accept full q3hp mapping, livev4, grant issuance/migration, spendability, protected access, installation, driver integration or VM/runtime. Existing v1 mutation guards remain unchanged. Source prerequisite is being split from driver because q3hp AC1 cannot be bypassed; failed SrPM stream produced no issue/source effects and was stopped. Implementation is not yet claimed.
+## nd_contract
+status: in_progress
+
+### evidence
+- Claimed and created an ownership-marked worktree .claude/worktrees/dev-GRRR-q3hp on story/GRRR-q3hp at 0b2365e30ab5858cb419f4f4ce9b2ce001850541.
+- Bounded pre-implementation mapping produced at docs/CAPSTONE-DRIVER-MAPPING.md (commit bdd6e14) with verified digests for replay_runtime.py, corpus_execution.py, persistent_budget.py and scripts/test-story.
+- Three mandatory AC1 items cannot be resolved from concrete source: (1) no authenticated operator->evaluator transport exists for CorpusExecutor.handle (in-process UID 320 call only; no AF_UNIX/SCM_RIGHTS client in research/); (2) no allowance/spendability receipt API exists for the v4 independent-replay profile, which reports spendable=None and POC-only reservations; (3) tests/e2e/milestone.py is absent at this base and exists only on story/GRRR-6sso at 51ebc998, so the CONSUMES entry cannot be satisfied from this branch.
+- No implementation, VM launch, protected access or accounting write was performed. Per AC1 these are blockers, not permission to invent interfaces.
+
+### proof
+- [x] AC1 mapping attempted and documented with concrete source references.
+- [ ] AC1 blocked on three architecture decisions.
+- [ ] AC2-AC5 not started.
+
 ## Source continuation checkpoint after journal integration
 - Epic HEAD2b601462ba0ffb5aee6239aa22b06c26801dfaf9 now includes independently accepted protocol/refusal component GRRR-wcwy and durable journal GRRR-yt6a. Both source components are genuinely merged, not just delivered.
 - Current architecture mapping b24eb7cc862d526b279afb618b08e95f1de8f792ac6f83241905877424653dc8 remains the authoritative bounded gap inventory, except its journal-implementation gap is now closed at SOURCE level. It does not become a full AC1 approval or live capability because the journal landed.
