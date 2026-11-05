@@ -26,7 +26,8 @@ _OPEN = object()
 MAX_RAW = 16 * 1024 * 1024
 
 
-def _campaign(state, event, receipt, grants, progress=None, joins=None, live=None):
+def _campaign(state, event, receipt, grants, progress=None, joins=None, live=None,
+              advance_proof=None):
     """Campaign-v2 reducer entry; unimplemented actions refuse, never accept."""
     _fields(event, ('format', 'action', 'record', 'idempotency_key', 'version'))
     record = event['record']
@@ -47,6 +48,9 @@ def _campaign(state, event, receipt, grants, progress=None, joins=None, live=Non
         return
     if action == 'campaign-leaf-bind':
         _leaf_bind(state, event, receipt, record, progress, joins, live)
+        return
+    if action == 'campaign-advance':
+        _advance(state, event, receipt, record, progress, advance_proof)
         return
     if action != 'campaign-start':
         raise Failure('Unavailable', 'Campaign action not implemented: ' + action)
@@ -146,6 +150,40 @@ def _leaf_bind(state, event, receipt, record, progress, joins, live):
     _put(state, 'leaf_plan', plan_row)
     run['last_event'] = receipt['digest']
     _put(state, 'campaign_run', run, True)
+
+
+def _advance(state, event, receipt, record, progress, advance_proof):
+    """Advance one leaf only with certified claim/exit/settlement proof."""
+    require(advance_proof is not None, 'Unavailable',
+            'Claim/exit/settlement proof is unavailable; advance refuses')
+    _check(record['binding'] is None and record['leaf_plan'] is None,
+           'Campaign advance rows differ')
+    campaign_id = record['campaign_id']
+    current = state['campaign_run'].get((campaign_id,))
+    _check(current is not None and current['state'] == 'running'
+           and current['active_leaf'] is not None, 'Campaign advance state differs')
+    _check(record['previous_revision'] == current['revision'],
+           'Campaign advance previous revision differs')
+    _check(len(record['evidence']) == 1, 'Campaign advance evidence differs')
+    run = _row('campaign_run', record['run'], ('last_event',))
+    for column in ('campaign_id', 'campaign_operation_id', 'plan_hash', 'plan_raw',
+                   'auth_hash', 'owner_epoch', 'intent_anchor'):
+        _check(run[column] == current[column], 'Campaign advance immutable field differs')
+    _check(run['state'] == 'running' and run['active_leaf'] is None
+           and run['result_object'] is None
+           and run['revision'] == current['revision'] + 1,
+           'Campaign advance revision or run state differs')
+    _check(event['idempotency_key'] == _domain('campaign-event-v2', {
+        'campaign_id': campaign_id, 'action': event['action'],
+        'revision': run['revision']}), 'Campaign advance key differs')
+    index = current['active_leaf']
+    _check((campaign_id, index) in state['leaf_plan'],
+           'Campaign advance leaf has no bound Plan')
+    advance_proof(campaign_id, index, record['evidence'][0], state)
+    run['last_event'] = receipt['digest']
+    _put(state, 'campaign_run', run, True)
+    if progress is not None:
+        progress.setdefault(campaign_id, set()).add(index)
 
 
 def _select(state, event, receipt, record, progress, joins, live=None):

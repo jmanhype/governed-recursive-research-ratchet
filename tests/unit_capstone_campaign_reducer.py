@@ -363,5 +363,89 @@ class CampaignLeafBindTests(unittest.TestCase):
             _campaign(self.state, event, {'digest': RECEIPT}, self.grants, {}, None, self.live)
 
 
+def bound_state(plan, raw):
+    state = selected_state(plan, raw)
+    op = operation_id(plan['grant']['grant_id'], plan['plan_sha256'])
+    state['binding'][(op,)] = dict(
+        operation_id=op, grant_id=plan['grant']['grant_id'],
+        plan_hash=plan['plan_sha256'], start_hash=H, start_raw=b'start',
+        bind_anchor=RECEIPT)
+    state['leaf_plan'][(CAMPAIGN, 0)] = dict(
+        campaign_id=CAMPAIGN, leaf_index=0, operation_id=op,
+        plan_hash=plan['plan_sha256'], plan_bytes_sha256=digest(raw),
+        plan_raw=raw, review_hash='7' * 64)
+    row = state['campaign_run'][(CAMPAIGN,)]
+    row.update(revision=2, last_event=RECEIPT)
+    return state
+
+
+def advance_event(plan, raw, revision=2, result_hash='5' * 64, **record_overrides):
+    op = operation_id(plan['grant']['grant_id'], plan['plan_sha256'])
+    run = dict(
+        campaign_id=CAMPAIGN, campaign_operation_id=op, plan_hash=plan['plan_sha256'],
+        plan_raw=base64.b64encode(raw).decode('ascii'), auth_hash=AUTH,
+        owner_epoch='e' * 64, state='running', active_leaf=None, result_object=None,
+        intent_anchor=RECEIPT, revision=revision + 1)
+    record = dict(campaign_id=CAMPAIGN, previous_revision=revision, run=run,
+                  binding=None, leaf_plan=None, evidence=[result_hash])
+    record.update(record_overrides)
+    return dict(
+        format='capstone-campaign-event-v2', version=2, action='campaign-advance',
+        idempotency_key=_domain('campaign-event-v2',
+                                {'campaign_id': CAMPAIGN, 'action': 'campaign-advance',
+                                 'revision': revision + 1}),
+        record=record)
+
+
+class CampaignAdvanceTests(unittest.TestCase):
+    def setUp(self):
+        self.plan, _, _ = bound_plan()
+        self.raw = canonical(self.plan)
+        self.state = bound_state(self.plan, self.raw)
+        self.grants = {self.plan['grant']['grant_id']: (self.plan['grant']['grant_id'],)}
+        self.progress = {}
+        self.calls = []
+
+    def proof(self, campaign_id, index, result, state):
+        self.calls.append((campaign_id, index, result))
+
+    def test_advance_clears_active_leaf_and_records_progress(self):
+        event = advance_event(self.plan, self.raw)
+        _campaign(self.state, event, {'digest': '9' * 64}, self.grants,
+                  self.progress, None, None, self.proof)
+        row = self.state['campaign_run'][(CAMPAIGN,)]
+        self.assertIsNone(row['active_leaf'])
+        self.assertEqual(row['revision'], 3)
+        self.assertEqual(row['last_event'], '9' * 64)
+        self.assertEqual(self.progress, {CAMPAIGN: {0}})
+        self.assertEqual(self.calls, [(CAMPAIGN, 0, '5' * 64)])
+
+    def test_advance_requires_claim_and_settlement_proof(self):
+        event = advance_event(self.plan, self.raw)
+        with self.assertRaises(Failure) as blocked:
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants, self.progress)
+        self.assertEqual(blocked.exception.record['code'], 'Unavailable')
+        self.assertEqual(self.state['campaign_run'][(CAMPAIGN,)]['active_leaf'], 0)
+
+    def test_advance_requires_a_bound_plan(self):
+        self.state['leaf_plan'].clear()
+        event = advance_event(self.plan, self.raw)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      self.progress, None, None, self.proof)
+
+    def test_advance_rejects_wrong_evidence_cardinality(self):
+        event = advance_event(self.plan, self.raw, evidence=[])
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      self.progress, None, None, self.proof)
+
+    def test_advance_rejects_stale_revision(self):
+        event = advance_event(self.plan, self.raw, revision=1)
+        with self.assertRaises(Failure):
+            _campaign(self.state, event, {'digest': RECEIPT}, self.grants,
+                      self.progress, None, None, self.proof)
+
+
 if __name__ == '__main__':
     unittest.main()
