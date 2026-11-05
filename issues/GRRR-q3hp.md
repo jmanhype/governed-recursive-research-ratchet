@@ -8,10 +8,10 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-05T21:59:42Z
-content_hash: "sha256:6d83b48fb7f0251d8d4347c54d722c401571b3d3a0b2bb91b23d6dee045316a6"
+updated_at: 2026-11-05T21:59:46Z
+content_hash: "sha256:47d5c608a0ec08132a052517edeec9d0498d50a586b5f9473981430c0c891f7f"
 blocks: [GRRR-6sso]
-follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7]
+follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7, GRRR-gge0]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
 assignee: dev-GRRR-q3hp
 ---
@@ -972,12 +972,14 @@ status: new
 - 2026-11-05T21:55:38Z status: open -> in_progress
 - 2026-11-05T21:55:38Z auto-follows: linked to predecessor GRRR-k3j7
 - 2026-11-05T21:55:38Z claimed by dev-GRRR-q3hp
+- 2026-11-05T21:59:46Z status: in_progress -> in_progress
+- 2026-11-05T21:59:46Z auto-follows: linked to predecessor GRRR-gge0
 
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Blocks: [[GRRR-6sso]]
 - Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-k3j7]]
-- Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]], [[GRRR-k3j7]]
+- Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]], [[GRRR-k3j7]], [[GRRR-gge0]]
 
 ## Comments
 
