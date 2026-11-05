@@ -4,11 +4,11 @@ title: "Executable evaluator backend: finite JIT campaign, accounting and isolat
 status: in_progress
 priority: 0
 type: feature
-labels: [milestone-1, integration, security, source-only]
+labels: [milestone-1, integration, security, source-only, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
-updated_at: 2026-11-05T15:00:01Z
+updated_at: 2026-11-05T15:00:02Z
 content_hash: "sha256:3ebcc316093e66aa83cfa23f8f4d4c7a2045822c9d3ba95784973af0e43fd364"
 blocks: [GRRR-q3hp]
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
