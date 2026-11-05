@@ -1,5 +1,6 @@
 """Real local processes/rights/locks/children. NONPRODUCTION, no VM or installed UID proof."""
 import array
+import errno
 import fcntl
 import json
 import multiprocessing
@@ -198,7 +199,13 @@ class LaunchTests(unittest.TestCase):
             conn.sendmsg([marker], ancillary)
             if body:
                 conn.sendall(body + tail)
-            conn.shutdown(socket.SHUT_WR)
+            # A fail-fast server may already have closed its side; on macOS the
+            # resulting ENOTCONN is not a failure of the property under test.
+            try:
+                conn.shutdown(socket.SHUT_WR)
+            except OSError as error:
+                if error.errno != errno.ENOTCONN:
+                    raise
         response = self.receive(pipe)
         self.assertEqual(response[0], 'failure', response)
         with self.gate.acquire(1):

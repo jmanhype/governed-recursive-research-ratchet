@@ -9,7 +9,9 @@ MODULES = ('unit_capstone_contract', 'unit_capstone_peer', 'unit_capstone_journa
            'unit_durable_evidence', 'unit_capstone_backend_contract',
            'unit_capstone_backend_launch', 'unit_capstone_backend_review',
            'unit_capstone_backend_composition', 'unit_capstone_backend_index',
-           'unit_capstone_installation_record')
+           'unit_capstone_installation_record', 'unit_capstone_installation',
+           'unit_capstone_installation_authority',
+           'unit_capstone_installation_inventory')
 
 
 def main():
