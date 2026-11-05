@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-05T21:56:38Z
-content_hash: "sha256:59db28a85ba53f9ca670bda229b05ac1ad937964ded5f8567b123b92b4b7e079"
+updated_at: 2026-11-05T21:59:42Z
+content_hash: "sha256:6d83b48fb7f0251d8d4347c54d722c401571b3d3a0b2bb91b23d6dee045316a6"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
@@ -106,6 +106,25 @@ Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocke
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 2026-11-04 proposed v4 evaluator interface contract retained below. Artifact /tmp/grrr-q3hp-v4-interface-contract-20261104.md,225 lines,SHA256 f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3. PROPOSED, NOT ACCEPTED, NOT DEPLOYED; no source implementation or live capability claimed. It defines a minimal source-only contract/client/read-only refusal-service slice and separately gated later adapter/migration/authorization work. Independent review is still required; raw reviewed JSON/Markdown request-binding semantics must be made explicit before implementation. Existing 11 common.GATES match the approved capstone inventory; no missing-gate concern is asserted. User-directed remediation does not silently authorize installation, v4 writes, new revision execution, reconciliation or capstone acceptance.
 2026-11-04 independent FIRST_SLICE_V2_REVIEW: APPROVED for exact /tmp/grrr-q3hp-v4-interface-contract-v2-20261104.md SHA2569b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad (250lines). Reviewed repairs: separate exact decisionJSON+Markdown/requestID/package/outputroot from invocation; raw Grant and human-authorization digests; exactlyall11gates; strict operatorUID; defined start-envelope digest; explicit nonproduction localpeer tests. Approval permits ONLY source-only contract/hash validators, explicit-peer client, read-only observation/refusal façade and no-guest local-peer tests. It does NOT accept full q3hp mapping, livev4, grant issuance/migration, spendability, protected access, installation, driver integration or VM/runtime. Existing v1 mutation guards remain unchanged. Source prerequisite is being split from driver because q3hp AC1 cannot be bypassed; failed SrPM stream produced no issue/source effects and was stopped. Implementation is not yet claimed.
+## nd_contract
+status: delivered
+
+### evidence
+- AC1: bounded mapping at docs/CAPSTONE-DRIVER-MAPPING.md with three blockers and the operator-delegated decisions recorded (commits bdd6e14, 3d5ca11). Decisions: pure functions over caller receipts plus an injected dispatcher; v4 independent-replay records budget blocked with no fresh allowance; keep this branch, do not port milestone.py.
+- AC2: research/capstone_driver.py prepare() binds driver commit, runtime identity, corpus/accounting/VM bindings, authorization and request digests, and floors; it performs no VM launch, no protected access and no accounting write; each of the 11 gates is recorded separately as pass/not-run/blocked/error; missing capability, unknown budget, missing review/approval and floor breach all refuse before launch.
+- AC3: run() is separate, re-derives the plan digest, refuses any changed binding or tampered plan (StaleBinding), refuses any gate not pass (GateBlocked), and refuses with Unavailable when no authenticated dispatcher is supplied. scripts/capstone-driver exposes prepare/run and exits 1 with a typed record for run.
+- AC4: tests/unit_capstone_driver.py, 12 public no-guest tests covering parsing, binding, prepare/run separation, idempotent prepare, refusal ordering and truthful not-run gates. scripts/test-story capstone-driver dispatch added and passing. Executed on Python 3.14.3, 3.12.9 and 3.9.6: 12/12 each. No VM, evaluator or ledger proof is claimed.
+- AC5: no admission, promotion, recovery, stop-release, network, secret, production mutation, merge or push was added or performed. Historical provenance cannot satisfy any gate because receipts must be 64-hex and the CLI supplies no dispatcher.
+- Commit 90d3b130a8f75f4de7d738006c746b6f02a1950e on story/GRRR-q3hp; worktree clean; no merge or push.
+
+### proof
+- [x] AC1 mapping and decisions
+- [x] AC2 prepare with per-gate truth and prelaunch refusals
+- [x] AC3 separate run with binding, digest and dispatcher refusals
+- [x] AC4 public no-guest tests on three interpreters
+- [x] AC5 no authority, admission, promotion or production effect
+- [ ] Independent review and PM acceptance pending
+
 ## nd_contract
 status: in_progress
 
