@@ -70,11 +70,13 @@ class Ledger:
         return row[0] if row else '0' * 64
 
     def _append(self, principal: int, event: dict, expectedTip: str, key: str,
-                callback=None) -> dict:
+                callback=None, version: int = 1) -> dict:
         require(principal == EVALUATOR, 'Unauthorized', 'Journal is evaluator-only')
         identifier(expectedTip, True)
         identifier(key)
-        event = dict(event, idempotency_key=key, version=1)
+        require(type(version) is int and version in (1, 2), 'InvalidInput',
+                'Journal envelope version differs')
+        event = dict(event, idempotency_key=key, version=version)
         if event.get('format') == DURABLE_FORMAT:
             validate_durable_event(event)
         with self.lock:
@@ -110,9 +112,9 @@ class Ledger:
         return self._append(principal, event, expectedTip, key)
 
     def append_atomic(self, principal: int, event: dict, expectedTip: str, key: str,
-                      callback=None) -> dict:
+                      callback=None, version: int = 1) -> dict:
         """Append and apply caller state changes in one SQLite transaction."""
-        return self._append(principal, event, expectedTip, key, callback)
+        return self._append(principal, event, expectedTip, key, callback, version)
 
     def snapshot(self, event: dict, key: str) -> dict:
         with self.lock:

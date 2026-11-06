@@ -1,0 +1,6 @@
+REVIEW_RESULT: REJECTED
+
+- `_finish`: F1 is only partially satisfied. Replay does resolve the terminal bytes through `_durable_object` and checks their digest, but it takes the expected terminal hash from `run['result_object']` and checks the manifest only against the schema, plan hash, and leaf count. It never binds manifest contents to the per-leaf result refs in `progress`, so a different digest-valid manifest with the same plan hash and leaf count can still be accepted.
+- `_select`: F2 is satisfied. `sorted(completed.values()) == record['evidence']` requires the submitted evidence to equal the sorted result refs recorded for the completed leaves.
+- `_stop_outcome`: F3 is satisfied. Replay reads both evidence objects through `_durable_object`, requires the outcome's `verified` field to be a real boolean, maps it to `stopped` or `recovery-required`, and rejects a run state or active-leaf value that contradicts that boolean.
+- `_store_object`: Fail-open persistence remains. If the hash path already exists, the function returns success without checking that its contents equal `raw` or `hashed`; it also ignores the byte count returned by `os.write`, so a short write is treated as durable. A retry can therefore append an event referencing a corrupt or truncated object, with the corruption discovered only on replay.

@@ -1,0 +1,80 @@
+{
+  "scope": "Reviewed partial public source WIP only; no story acceptance or live qualification",
+  "files": [
+    {
+      "path": "codec-review.md",
+      "sha256": "e2886bfd8839bf22738afa89fd8b3f425d1d441c60ea165ed71e655a60775ce1",
+      "bytes": 3103
+    },
+    {
+      "path": "entrypoint.stderr",
+      "sha256": "9d7dd075f0a737f3afba1da6b3bd691b9f483f27392d644d4215ae552c50c896",
+      "bytes": 19532
+    },
+    {
+      "path": "entrypoint.stdout",
+      "sha256": "87bb67a9c61a3cf2e084bc9d9bf89ad8f07c7241888caba8ee786c61b2352968",
+      "bytes": 219
+    },
+    {
+      "path": "guarded_source_suite.py",
+      "sha256": "182ade427971f13354ec32a94d2af295818b3a0d1dedb79249de32ec130a4673",
+      "bytes": 3175
+    },
+    {
+      "path": "index-review.md",
+      "sha256": "aa59f1ae686729ac7a9ddc8c14ac4ced38f14897bf05e211baa17ce89e8df1b6",
+      "bytes": 7210
+    },
+    {
+      "path": "launch-review.md",
+      "sha256": "517fe0ba9f8ad38d7d9f11b1a280c29fe9d1d3071105d571b21f65baf8dcd3ea",
+      "bytes": 5288
+    },
+    {
+      "path": "python-0.stderr",
+      "sha256": "23afd396df68cf96ac5749cc75331b079b97085e89b3b3e798563f2514adea67",
+      "bytes": 19532
+    },
+    {
+      "path": "python-0.stdout",
+      "sha256": "eb3dff76e3623f0a8815af94915b8a2f607681a1dea65e1b281d148d8194c6d3",
+      "bytes": 211
+    },
+    {
+      "path": "python-1.stderr",
+      "sha256": "f53236de906645ff0cfebc3ca144a29a7e29e653adfd184395bdcafd98f6e083",
+      "bytes": 19533
+    },
+    {
+      "path": "python-1.stdout",
+      "sha256": "75bd281adb92de7042ed61b657fe6ceda88ca3e05a69b3f18d8105c19f9fcffd",
+      "bytes": 211
+    },
+    {
+      "path": "python-2.stderr",
+      "sha256": "5027110935de1e44580337bbf740442024d8194ca00f7c56e18e970f7bc8a7db",
+      "bytes": 13349
+    },
+    {
+      "path": "python-2.stdout",
+      "sha256": "eb3dff76e3623f0a8815af94915b8a2f607681a1dea65e1b281d148d8194c6d3",
+      "bytes": 211
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "c4c593c7863786960227c4701bd03ec683d588427b5febda9faeb8e2e5371dab",
+      "bytes": 4541
+    },
+    {
+      "path": "review-rpc.md",
+      "sha256": "61ec973755e37522b1ad83141a87c6c86b42c3ee7b1ec73efaf647ad8980521e",
+      "bytes": 10063
+    },
+    {
+      "path": "verify_source.py",
+      "sha256": "b568388077428b73cc9d8714a2246ba768938c8694d7db928b0d6cd9ae101e8a",
+      "bytes": 3458
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+PUBLIC_FIXTURE_MAX_OBSERVED_BYTES=131656; not runtime/UID320 evidence
+PARENT_SOURCE_ONLY tests=150 failures=0 errors=0 skipped=0 protected_attempts=0; guard=parent-interpreter-only; no VM/UID/OS-isolation proof

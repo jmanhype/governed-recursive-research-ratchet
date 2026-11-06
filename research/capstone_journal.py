@@ -12,7 +12,8 @@ import sqlite3
 import threading
 from typing import Optional, Tuple
 
-from common import EVALUATOR, RUNNER, Failure, canonical, digest, identifier, require, unique_fields
+from common import (CAMPAIGN_EVENT_FORMAT, EVALUATOR, RUNNER, Failure, canonical, digest,
+                    identifier, require, unique_fields)
 from capstone_contract import decode_record, start_request_digest, validate_record
 from capstone_journal_schema import validate_schema
 from ledger import Ledger
@@ -158,7 +159,9 @@ def _validate(db, tentative=None):
                 'IntegrityFailure', 'Nonlinear or corrupt ledger chain')
         event = _json(raw)
         key = identifier(event['idempotency_key'])
-        require(key not in keys and type(event['version']) is int and event['version'] == 1,
+        expected_version = 2 if event.get('format') == CAMPAIGN_EVENT_FORMAT else 1
+        require(key not in keys and type(event['version']) is int
+                and event['version'] == expected_version,
                 'IntegrityFailure', 'Duplicate event key/version')
         keys[key] = (seq, parent, hashed, raw)
         prior = hashed

@@ -1,0 +1,140 @@
+{
+  "source_only": true,
+  "installed_qualification": false,
+  "vm_execution": false,
+  "base": "419c312a116476ff22486737883d4b19b4a2ddb4",
+  "runs": [
+    {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "-B",
+        "/tmp/grrr-k3j7-guarded-source-suite-20261104.py",
+        "unit_capstone_contract",
+        "unit_capstone_peer",
+        "unit_capstone_journal",
+        "unit_durable_evidence",
+        "unit_capstone_backend_contract",
+        "unit_capstone_backend_launch",
+        "unit_capstone_backend_review",
+        "unit_capstone_backend_composition",
+        "unit_capstone_backend_index",
+        "unit_capstone_installation_record"
+      ],
+      "returncode": 0,
+      "tests": 150,
+      "stdout_sha256": "fa6a8a3e1e0adaaf3a1a5d1e8cafaee1ad9a83fa28237051b6937e360ab55760",
+      "stderr_sha256": "63b1076cc2a4c596196330d85249d396511ad032b24261f0e915efceb6936b30"
+    },
+    {
+      "command": [
+        "/Users/speed/miniconda3/bin/python3",
+        "-B",
+        "/tmp/grrr-k3j7-guarded-source-suite-20261104.py",
+        "unit_capstone_contract",
+        "unit_capstone_peer",
+        "unit_capstone_journal",
+        "unit_durable_evidence",
+        "unit_capstone_backend_contract",
+        "unit_capstone_backend_launch",
+        "unit_capstone_backend_review",
+        "unit_capstone_backend_composition",
+        "unit_capstone_backend_index",
+        "unit_capstone_installation_record"
+      ],
+      "returncode": 0,
+      "tests": 150,
+      "stdout_sha256": "d25b9aa83cb0544305f3052ef96aeff2a5617fa223aa6c65747a8f08f96a913c",
+      "stderr_sha256": "ebfbdf33df3e60b76a5a94dd324cbabe39e58d371d25bbfdff21050ac8efc50a"
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "-B",
+        "/tmp/grrr-k3j7-guarded-source-suite-20261104.py",
+        "unit_capstone_contract",
+        "unit_capstone_peer",
+        "unit_capstone_journal",
+        "unit_durable_evidence",
+        "unit_capstone_backend_contract",
+        "unit_capstone_backend_launch",
+        "unit_capstone_backend_review",
+        "unit_capstone_backend_composition",
+        "unit_capstone_backend_index",
+        "unit_capstone_installation_record"
+      ],
+      "returncode": 0,
+      "tests": 150,
+      "stdout_sha256": "fa6a8a3e1e0adaaf3a1a5d1e8cafaee1ad9a83fa28237051b6937e360ab55760",
+      "stderr_sha256": "60e854ed5e126a69f1b555adce41c605ba4acff8f4daa151a83f73ec617fae01"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "-B",
+        "tests/unit_capstone_backend_suite.py"
+      ],
+      "returncode": 0,
+      "tests": 150,
+      "stdout_sha256": "ed48da433b36c55853423dea858a6ceac68c6720c0b69b0914cb4e8104b072b9",
+      "stderr_sha256": "210559eb1bb79afbd5fe7045b9aba59a81dcbbddd056cdec88668747e0c0c570"
+    }
+  ],
+  "files": [
+    {
+      "path": "research/capstone_backend_contract.py",
+      "sha256": "32f63af61f8a26f667569d0ffe8adea2f618b10366254b8fc8dbcacc43e41831"
+    },
+    {
+      "path": "tests/unit_capstone_backend_contract.py",
+      "sha256": "762b6586e41584c30e4011a495c18dda3384691d590265087552d13efcae6429"
+    },
+    {
+      "path": "research/capstone_launch.py",
+      "sha256": "c94b036daebdd03fffa8d5a33c075049b8a0d235e2bef6d2c11114c3d174ebaf"
+    },
+    {
+      "path": "research/capstone_review.py",
+      "sha256": "1e5e2b01224cc6acc9d5944dfac9ab738ae690e7311194ba7145490227d504c4"
+    },
+    {
+      "path": "research/capstone_review_service.py",
+      "sha256": "2e7a7ee7d69f75f5e4e503bb2468254cae7ec9176141f87d9cbe16e214f398da"
+    },
+    {
+      "path": "research/capstone_backend_schema.py",
+      "sha256": "2249d8b8a69baf6f88ba62934cfd9ba4fcf0f6cdaa12d400c3bae86e388001c8"
+    },
+    {
+      "path": "research/capstone_backend_index.py",
+      "sha256": "fe90fcd9fc80841030ad81c9ebdd9c5d0c0c788815c1c6f30825696894d96976"
+    },
+    {
+      "path": "tests/unit_capstone_backend_index.py",
+      "sha256": "15fff01697bd9ad0051ee64f5e476bb76cf59f22e3ffed3be65b0a120bcf796b"
+    },
+    {
+      "path": "tests/unit_capstone_backend_review.py",
+      "sha256": "3c4e163a437577056dd4744926980f8219916296105c1332b088f4c84c947977"
+    },
+    {
+      "path": "tests/unit_capstone_backend_launch.py",
+      "sha256": "c8682ac69944a0eeee02c6515dcc0edb5634025306c5aaaa683a3d17a2052fe0"
+    },
+    {
+      "path": "tests/unit_capstone_backend_composition.py",
+      "sha256": "a5baf99ba3b5a478ae1e58aee5f3e180c7e91af1103e2502e410a840de211e52"
+    },
+    {
+      "path": "tests/unit_capstone_backend_suite.py",
+      "sha256": "15f1baf55ec6bbb778be0a2012bb4efa69945d8ff51e32c792c4a43497c381f7"
+    },
+    {
+      "path": "research/capstone_installation_record.py",
+      "sha256": "5d6afe113a13882ac256d57cbf19dda4f73ea44cece98efe0c23b01bc7e5ef6e"
+    },
+    {
+      "path": "tests/unit_capstone_installation_record.py",
+      "sha256": "d7697d53e303233f13844dd7197c1a3eb6ed1ccb8dc7a9de91a02eea81a58997"
+    }
+  ]
+}
