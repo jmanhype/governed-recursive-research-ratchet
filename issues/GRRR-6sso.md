@@ -9,10 +9,10 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-04T16:01:11Z
-content_hash: "sha256:d5ef0363caace8526ca085d9794c7c11e4aadeaa06bb86ef46c24cf1e0d69317"
-was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w]
+content_hash: "sha256:d2b756b1ebc8dd0499935a71f4a37ceb827d9a989445934097591331314b5d9b"
+was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w, GRRR-q3hp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
-blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f, GRRR-q3hp]
+blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
 ---
 
 ## Description
@@ -561,11 +561,12 @@ status: delivered
 - 2026-11-04T15:54:50Z status: in_progress -> open
 - 2026-11-04T15:54:50Z released by speed
 - 2026-11-04T16:01:11Z status: open -> deferred
+- 2026-11-06T13:03:34Z dep_removed: was_blocked_by GRRR-q3hp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-43i8]], [[GRRR-888u]], [[GRRR-d8ji]], [[GRRR-gge0]], [[GRRR-w1lt]], [[GRRR-wu6f]], [[GRRR-q3hp]]
-- Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-gzgq]], [[GRRR-ev2w]]
+- Blocked by: [[GRRR-43i8]], [[GRRR-888u]], [[GRRR-d8ji]], [[GRRR-gge0]], [[GRRR-w1lt]], [[GRRR-wu6f]]
+- Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-gzgq]], [[GRRR-ev2w]], [[GRRR-q3hp]]
 - Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]], [[GRRR-888u]], [[GRRR-ev2w]]
 
 ## Comments

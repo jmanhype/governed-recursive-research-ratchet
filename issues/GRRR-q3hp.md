@@ -1,7 +1,7 @@
 ---
 id: GRRR-q3hp
 title: "Bug: capstone lacks explicit executable driver wiring"
-status: in_progress
+status: closed
 priority: 0
 type: bug
 labels: [milestone-1, integration, discovered-by-pm, delivered]
@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-06T13:03:34Z
-content_hash: "sha256:006ffa25edc0aaa0c3cfbcea761af8084fe968c4da449a8dcfebbeec5c016757"
-blocks: [GRRR-6sso]
+content_hash: "sha256:b66bc03724f2c94f67ac1af741e581583397823fc71a533682a0dde2ed1eee6e"
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7, GRRR-gge0]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
 assignee: dev-GRRR-q3hp
+closed_at: 2026-11-06T13:03:34Z
+close_reason: "Accepted via pvg story accept"
 ---
 
 ## Description
@@ -1048,10 +1049,11 @@ Summary: PASS source12 driver tests on EACH of Python3.14.3,3.12.9,3.9.6; failur
 - 2026-11-05T21:55:38Z claimed by dev-GRRR-q3hp
 - 2026-11-05T21:59:46Z status: in_progress -> in_progress
 - 2026-11-05T21:59:46Z auto-follows: linked to predecessor GRRR-gge0
+- 2026-11-06T13:03:34Z status: in_progress -> closed
+- 2026-11-06T13:03:34Z dep_removed: no_longer_blocks GRRR-6sso
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-6sso]]
 - Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-k3j7]]
 - Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]], [[GRRR-k3j7]], [[GRRR-gge0]]
 
