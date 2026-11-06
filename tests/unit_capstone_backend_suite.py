@@ -14,7 +14,8 @@ MODULES = ('unit_capstone_contract', 'unit_capstone_peer', 'unit_capstone_journa
            'unit_capstone_installation_inventory',
            'unit_capstone_accounting_v5',
            'unit_capstone_campaign_reducer',
-           'unit_capstone_campaign_append')
+           'unit_capstone_campaign_append',
+           'unit_capstone_driver')
 
 
 def main():
