@@ -8,8 +8,8 @@ labels: [milestone-1, integration, discovered-by-pm, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
-updated_at: 2026-11-05T22:07:18Z
-content_hash: "sha256:490eb0f5e212ac4b4975fbdc90d0e2877bf5679b1c51c4db89b9d6f5b81ee7bd"
+updated_at: 2026-11-06T13:03:34Z
+content_hash: "sha256:006ffa25edc0aaa0c3cfbcea761af8084fe968c4da449a8dcfebbeec5c016757"
 blocks: [GRRR-6sso]
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7, GRRR-gge0]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
@@ -106,6 +106,21 @@ Dependency/evidence update: GRRR-6sso is now blocked by this repair. This blocke
 2026-11-04 operator explicitly authorized: "Clean out the 633 we need cleared". Scope is a bounded inactive regenerable cache cleanup to clear the existing replay capacity floor, not VM/replay or a gate waiver. Fresh audit found go-build already 8KiB, npm content cache648KiB, pip8040KiB, Homebrew/Gradle caches absent. A bounded worker is auditing Cargo download archives and inactive Xcode module cache only, preserving active Codex/Chrome, all runtimes, repositories, GRRR evidence/protected state and production data. No broader deletion, process termination, privileged action or source edit is authorized. Actual reclamation and floor result will be recorded only after measurement.
 2026-11-04 proposed v4 evaluator interface contract retained below. Artifact /tmp/grrr-q3hp-v4-interface-contract-20261104.md,225 lines,SHA256 f7b4ef7223cbede243eaa39c3dcbd4f8cbe4e2a8d3686fdcbe30eef3bc358cd3. PROPOSED, NOT ACCEPTED, NOT DEPLOYED; no source implementation or live capability claimed. It defines a minimal source-only contract/client/read-only refusal-service slice and separately gated later adapter/migration/authorization work. Independent review is still required; raw reviewed JSON/Markdown request-binding semantics must be made explicit before implementation. Existing 11 common.GATES match the approved capstone inventory; no missing-gate concern is asserted. User-directed remediation does not silently authorize installation, v4 writes, new revision execution, reconciliation or capstone acceptance.
 2026-11-04 independent FIRST_SLICE_V2_REVIEW: APPROVED for exact /tmp/grrr-q3hp-v4-interface-contract-v2-20261104.md SHA2569b0f0f5639a1f2f07539a1b1e22d33bb67e88e2dc78fe58ecc9925f356aaf8ad (250lines). Reviewed repairs: separate exact decisionJSON+Markdown/requestID/package/outputroot from invocation; raw Grant and human-authorization digests; exactlyall11gates; strict operatorUID; defined start-envelope digest; explicit nonproduction localpeer tests. Approval permits ONLY source-only contract/hash validators, explicit-peer client, read-only observation/refusal façade and no-guest local-peer tests. It does NOT accept full q3hp mapping, livev4, grant issuance/migration, spendability, protected access, installation, driver integration or VM/runtime. Existing v1 mutation guards remain unchanged. Source prerequisite is being split from driver because q3hp AC1 cannot be bypassed; failed SrPM stream produced no issue/source effects and was stopped. Implementation is not yet claimed.
+## nd_contract
+status: accepted
+
+### evidence
+- Operator/product owner explicitly accepted the delivered and independently reviewed driver at commit 782e34bbfdfcfaa004378da2c62595504a61be4b (verdict 52b0857b93274472a9e8887c2c80fd8a89b7b3b363b33ded0de4262838451b15).
+- Driver: 14 tests, 0 failures/errors/skips on Python 3.14.3, 3.12.9 and 3.9.6; ./scripts/test-story capstone-driver passes. No merge, push, promotion, admission, installation, VM launch or protected access.
+
+### proof
+- [x] AC1 mapping and decisions
+- [x] AC2 prepare with per-gate truth and prelaunch refusals
+- [x] AC3 separate run with recomputation and dispatcher refusal
+- [x] AC4 public no-guest tests on three interpreters
+- [x] AC5 no authority, admission, promotion or production effect
+- [x] Independent review APPROVED and PM acceptance recorded
+
 ## nd_contract
 status: delivered
 
