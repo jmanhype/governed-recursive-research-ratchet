@@ -4,7 +4,7 @@ title: "Bug: capstone lacks explicit executable driver wiring"
 status: closed
 priority: 0
 type: bug
-labels: [milestone-1, integration, discovered-by-pm, delivered, accepted]
+labels: [milestone-1, integration, discovered-by-pm, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
