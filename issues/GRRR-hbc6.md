@@ -1,17 +1,19 @@
 ---
 id: GRRR-hbc6
 title: "Recovery: reviewed v4 accounting unhalt planner"
-status: in_progress
+status: closed
 priority: 2
 type: task
 labels: [milestone-1, security, accounting, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
-updated_at: 2026-11-08T17:44:51Z
-content_hash: "sha256:d8a401bd2dfbcc1dce0529a13f11a62449b3578c572cd8f75873fe3457ae0829"
+updated_at: 2026-11-08T17:44:52Z
+content_hash: "sha256:94851da692ae283080a92fce2c7cfeea43d27e4901916965e170c2b29c2fb418"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
+closed_at: 2026-11-08T17:44:52Z
+close_reason: "Accepted: all seven recovery ACs are supported by exact hash-bound source, independent approval, three-interpreter zero-skip logs, real fixture refusals, durable live receipt, and separate fresh-process verification."
 ---
 
 ## Description
@@ -186,6 +188,7 @@ No reconciliation, replay, contract admission, promotion, production mutation, m
 - 2026-11-08T15:08:54Z claimed by dev-GRRR-hbc6
 - 2026-11-08T17:38:02Z status: in_progress -> in_progress
 - 2026-11-08T17:38:02Z auto-follows: linked to predecessor GRRR-k3j7
+- 2026-11-08T17:44:52Z status: in_progress -> closed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
