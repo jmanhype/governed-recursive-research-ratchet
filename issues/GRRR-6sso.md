@@ -8,8 +8,8 @@ labels: [milestone-1, capstone, rejected, rejected-x3]
 parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-04T16:01:11Z
-content_hash: "sha256:d2b756b1ebc8dd0499935a71f4a37ceb827d9a989445934097591331314b5d9b"
+updated_at: 2026-11-08T15:05:00Z
+content_hash: "sha256:dafc0bff890accabe750614c5c6cfdf66b4b6ada45536b177911a414d33e9f75"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w, GRRR-q3hp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -120,6 +120,22 @@ Final proof-shape check: pvg story verify-delivery GRRR-6sso returned exit 1, Pa
 Supplement verification: parent readback confirmed the five-minute attestation text is present exactly once, both E2E request hashes remain unchanged, and execution_authorized remains false. A bounded fresh GLM attestation-only reviewer did not return a verdict before interruption; no new independent approval is claimed. Prior independently reviewed request semantics are unchanged. No source-tree changes or runtime actions were performed.
 2026-11-04 independent PM rejection successfully landed after supported reviewer-metadata repair; status=open,labels=rejected/rejected-x3,all ACs/blockers preserved. Parent directly verified pvg loop next emits escalate for third rejection. Automatic dispatch stopped at that operator-decision boundary. No counter reset, forced claim, acceptance, source change, VM/replay, protected mutation, merge or push occurred. Recommended operator direction: continue bounded GRRR-q3hp design/implementation repair only, while keeping this capstone rejected and preserving every gate; do not authorize another capstone run or weaken ACs by implication.
 2026-11-04 operator direction after escalation: "We want to finish". Continue prerequisite GRRR-q3hp repair; keep the capstone rejected with all three rejection records and every AC/gate intact. Place the escalated capstone on a native issue hold while its prerequisite is repaired; this is not acceptance, a rejection-counter reset, a new run grant, or permission to retry the capstone. Reconsider the hold only after prerequisite evidence and operator-required exact execution bindings are ready.
+## nd_contract
+status: in_progress
+
+### evidence
+- Operator authorized one live run: wire the evaluator-owned dispatcher and run one bounded campaign, then close GRRR-6sso only if the gates pass.
+- Parent dispatcher wired at docs/evidence/independent-replay-20261108/launcher.sh (SHA256 8d1a04bab98eb9edbb3cb93c828b1de56eaf80b8efb89e9dd5351159318cd525): clears only stale runner-owned sockets, starts replay.runner as UID 321, waits for the socket, runs replay.evaluator as UID 320, then stops the runner. The protected replay package was not modified.
+- Attempt 2026-11-08: EVALUATOR_EXIT=1. The harness refused before launching guests with error.code=Stopped, message='Fixed attempt sequence exhausted', execution_complete=false, finding Inconclusive. The fixed attempt sequence for this replay runtime was already consumed by the 2026-11-03 run.
+- Receipt gates for the attempt: budget_state=error, independent_replay=error, source_environment_identity=pass, evidence_integrity_currency=pass, all others not-run. Attempt export export-6bbe1fc699954aebad2926f1d8c9c773, trusted anchor 792454bb2d2e352f1d61435f65d523ad7d0667107b2717c342b6029ac45d5c84, 14 events.
+- Fail-closed side effect: evaluator failure path called budget.halt(). Accounting state is now stopped=1 and reservation a549efbdca5743878052c0226c617c1f is unsettled. Not reset, reconciled or released.
+- Prior real end-to-end run (2026-11-03) remains the only passing evidence: export-ca47bda9f47645b1910cba1449bcddfe, decision approved-D011-independent-replay-normal, finding Verified defect, children_ceased true, exit codes [-15,0], trusted anchor 34dc2753bc0be33753a3312b48f9530ff3e00019757254529310e053fd0e905e.
+- Evidence committed at 6729cc1 (docs/evidence/independent-replay-20261108). No merge, push, promotion, admission or production mutation.
+
+### proof
+- [x] Dispatcher wiring and one bounded attempt executed and recorded truthfully.
+- [ ] Gates did not pass: one D011 refusal, not 20+ seeds or 11 gates. GRRR-6sso remains open.
+- [ ] Accounting unhalt requires a separately reviewed recovery; not performed.
 
 ## nd_contract
 status: rejected
