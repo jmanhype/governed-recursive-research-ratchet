@@ -4,12 +4,12 @@ action=release-v4-stop-retain-unknowns  base=/Library/GRRR/accounting-poc2
 
 ## Staged source hashes
 - accounting_recovery_planner_v4.py  3a2c6fa896ba59f864af215de3b55fe88bb83544a87fe6c425c43a506e9aa61c
-- accounting_recovery_v4.py  2c2104e629b5ae4c115dc083a49f99fd1a19e54a280af1f5e080774f78a96a22
+- accounting_recovery_v4.py  f01aa2409ab8dceee631d99b5c1e2c2634a8bc5bef5c6ae54bd719857dd7fff5
 
 ## Record hashes
-- plan.json          eed9a1120ada621721e9e78b2604d36adab12f9ee2ea4a8123a807f102b7d738
-- review.json        d2d201e80069495e29ae8341ea91e2f159abd1cc1e4c0f3114ac24eab40dda4c
-- authorization.json b15881fd654f0eb1c4c90e56081e7a3f993f3e1524a45792d6a1b4551e3e71fa
+- plan.json          52533ef48c60155e49b5f6a6700cf908f78d17dc1306d35ba4cba60dc279881a
+- review.json        3228f09c883d34bcb967e7c90ddaf33a6c2418d6a6e89e1f9a4dd159e0cd73be
+- authorization.json c964c1913dbb3caaaa9f491aa504a7a94ac37a2390a61c5d2b58148ca49dbee7
 
 ## Baseline summary (exact)
 - state: {'rowid': True, 'rows': [[['i', 1], ['i', 1], ['i', 1]]]}
@@ -176,7 +176,10 @@ def inventory(database: Path) -> dict:
         for table in tables:
             quoted = '"' + table.replace('"', '""') + '"'
             columns = [row[1] for row in db.execute('PRAGMA table_info(' + quoted + ')')]
-            if 'WITHOUT ROWID' in definitions[table].upper():
+            # Only the trailing table-options clause may declare WITHOUT ROWID;
+            # the same words inside the column list are ordinary identifiers.
+            tail = definitions[table].rsplit(')', 1)[-1].upper()
+            if 'WITHOUT' in tail and 'ROWID' in tail:
                 rows = db.execute('SELECT * FROM ' + quoted).fetchall()
                 hidden = False
             else:
@@ -185,6 +188,10 @@ def inventory(database: Path) -> dict:
                 check(not masked, 'table masks the hidden rowid: ' + table)
                 rows = db.execute('SELECT rowid AS _grrr_rowid, * FROM ' + quoted
                                   + ' ORDER BY _grrr_rowid').fetchall()
+                if rows:
+                    check(len(rows[0]) == len(columns) + 1
+                          and type(rows[0][0]) is int,
+                          'hidden rowid was not captured: ' + table)
                 hidden = True
             result['tables'][table] = {'rowid': hidden,
                                        'rows': [[encode(item) for item in row]
@@ -257,8 +264,9 @@ def unchanged(before: dict, after: dict) -> None:
           'unexpected state table shape')
     expected[0][-1] = ['i', 0]
     tables['state'] = {'rowid': state['rowid'], 'rows': expected}
-    check(after['schema'] == before['schema'] and after['tables'] == tables,
-          'history, schema, holds or unknown rows changed')
+    check(after['schema'] == before['schema'] and after['tables'] == tables
+          and after['header'] == before['header'],
+          'history, schema, header, holds or unknown rows changed')
 
 
 def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
