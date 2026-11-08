@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-08T18:10:48Z
-content_hash: "sha256:be4b1a3488ca41b14e7325b53e4ac69ce271942208d3cdf7562056c05183c991"
+updated_at: 2026-11-08T18:15:23Z
+content_hash: "sha256:ad88f95f7b47e48bdcdbf4430d8ac92d7e8e3b071df8e733c62738e9043bd9d3"
 follows: [GRRR-hbc6, GRRR-q3hp]
 assignee: dev-GRRR-734u
 ---
@@ -84,6 +84,25 @@ status: new
 
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
+## nd_contract
+status: in_progress
+
+### evidence
+- Authoritative queue selected developer_new GRRR-734u; canonical atomic claim verified in_progress / dev-GRRR-734u under GRRR-2t3h.
+- Story worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Epic remains on the authorized merge; no source changes on epic.
+- Developer /root/dev_grrr_734u dispatched for the exact four-file source-only WIP. CoS unavailable; exact GLM Coding Plan fallback. No source/test completion claimed yet.
+- Accepted hbc6 merge freshly passed 307 required backend tests on each installed Python3.14/3.12/3.9, zero failures/errors/skips. These are baseline results, not results for new code.
+- Optional process-local protected-path denial profile syntax accepted by /usr/bin/sandbox-exec running /usr/bin/true; no protected path was probed. This is not proof that a new planner passes containment.
+- No protected access/provisioning, reconciliation, VM/replay execution, admission, promotion, production mutation, new source commit, merge of this new story, or push.
+
+### proof
+- [ ] AC #1: Exact typed canonical candidate API and hash bindings.
+- [ ] AC #2: Fresh target validation and predecessor preservation.
+- [ ] AC #3: Existing accounting authority only; no new allowance.
+- [ ] AC #4: Prepared-not-issued output and false authorizations.
+- [ ] AC #5: Real filesystem/SQLite fixtures plus zero protected metadata guards.
+- [ ] AC #6: New tests and required suite measured on three interpreters.
+- [ ] AC #7: Honest source-only documentation and remaining protected gates.
 
 ## History
 - 2026-11-08T18:08:44Z status: open -> in_progress
