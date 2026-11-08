@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Library/GRRR/bootstrap/recovery-v4/operator-r9.py", line 10, in <module>
+    assert sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode, 'isolated flags required'
+AssertionError: isolated flags required
