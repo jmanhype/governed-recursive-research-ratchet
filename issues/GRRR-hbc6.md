@@ -8,8 +8,8 @@ labels: [milestone-1, security, accounting, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
-updated_at: 2026-11-08T17:44:52Z
-content_hash: "sha256:ae1d963b8a8237676f6d5a40bc6798d643b5407ebfa11d44b7da277cec352e5d"
+updated_at: 2026-11-08T17:45:15Z
+content_hash: "sha256:db441a23cf211502d23f631ce38a1be56fc2b46ef1049146a2ccae1fb0a1de77"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 closed_at: 2026-11-08T17:44:52Z
@@ -286,3 +286,22 @@ status: delivered
 - [x] AC #5: Durable intent/receipt/completion with fail-closed partial/repeat controls.
 - [x] AC #6: Fixture and actual invocation refusal coverage, zero mandatory source-suite skips.
 - [x] AC #7: No live mutation during fixture tests; only authorized recovery outside tests; no out-of-scope actions.
+
+### 2026-11-08T17:45:15Z speed
+## PM Final Review
+ACCEPTED [2026-11-08]: All seven story ACs are independently supported. Production source is unchanged since the fc4cd5f9df2ada6cfe2784e940759ee0dae066b96e30c258a57feec873c60457 review; exact plan/review/authorization and receipt hashes were recomputed; required source logs passed with zero skips; install and a separate fresh process both returned published-durable with only stopped 1 -> 0 and protected history/unknowns retained. This acceptance does not reconcile, establish spendability, qualify the capstone, merge, or push.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Fresh PM review of GRRR-hbc6 story, committed artifacts, source/tests, independent approval, canonical records, raw logs, and retained live-operation evidence.
+
+### proof
+- [x] AC #1: Exact read-only v4 planner baseline and source binding.
+- [x] AC #2: Fixed canonical schemas and exact typed authority bindings.
+- [x] AC #3: Independent exact-target approval plus separate authorization.
+- [x] AC #4: Root-isolated canonical install changed only the stop bit and preserved protected invariants.
+- [x] AC #5: Durable records with fail-closed partial/repeat controls.
+- [x] AC #6: Happy path, fresh already-unhalted refusal, tampering, partial/repeat/failure, wrong-interpreter/flags, and rowid regressions are covered.
+- [x] AC #7: No live mutation during tests and no out-of-scope action.
