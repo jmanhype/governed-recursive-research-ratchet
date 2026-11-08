@@ -9,7 +9,7 @@ import unittest
 
 from accounting_recovery_planner_v4 import build
 from accounting_recovery_v4 import (approval, apply_install, canonical, digest,
-                                    snapshot, verify)
+                                    inventory, snapshot, verify)
 
 OWNER = os.getuid()
 RESEARCH = Path(__file__).resolve().parents[1] / 'research'
@@ -285,6 +285,44 @@ class RecoveryV4Tests(unittest.TestCase):
         db = sqlite3.connect(self.database)
         self.assertEqual(db.execute('SELECT stopped FROM state').fetchone(), (1,))
         db.close()
+        names = {item.name for item in (self.base / 'recovery-v4').iterdir()}
+        self.assertIn('incomplete.json', names)
+        self.assertNotIn('complete.json', names)
+
+    def test_header_mutation_after_plan_is_refused(self):
+        db = sqlite3.connect(self.database)
+        db.execute('PRAGMA user_version=7')
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            self.install()
+
+    def test_inventory_refuses_shadowed_rowid(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE shadow(rowid TEXT, value TEXT)')
+        db.execute("INSERT INTO shadow VALUES('a','b')")
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            inventory(self.database)
+
+    def test_unresolvable_target_still_invalidates_completion(self):
+        self.install()
+        os.chmod(self.base / 'active.json', 0o644)
+        (self.base / 'active.json').write_bytes(b'{}')
+        os.chmod(self.base / 'active.json', 0o444)
+        import accounting_recovery_v4 as module
+        original = module.verify
+
+        def failing(base, *, owner=OWNER):
+            raise RuntimeError('simulated verification failure')
+
+        module.verify = failing
+        try:
+            with self.assertRaises(RuntimeError):
+                self.install()
+        finally:
+            module.verify = original
         names = {item.name for item in (self.base / 'recovery-v4').iterdir()}
         self.assertIn('incomplete.json', names)
         self.assertNotIn('complete.json', names)
