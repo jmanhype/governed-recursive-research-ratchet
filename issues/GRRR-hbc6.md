@@ -1,15 +1,17 @@
 ---
 id: GRRR-hbc6
 title: "Recovery: reviewed v4 accounting unhalt planner"
-status: open
+status: in_progress
 priority: 2
 type: task
 labels: [milestone-1, security, accounting]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
-updated_at: 2026-11-08T15:08:46Z
-content_hash: "sha256:cf8920885c715e4100f9abcffe20517245749177e6e89d15af989ff2ab9afc78"
+updated_at: 2026-11-08T15:08:54Z
+content_hash: "sha256:031bc1352c627219241089987b4b9647e7d8cc5e00073f9e1ddbb4538ec415a5"
+assignee: dev-GRRR-hbc6
+follows: [GRRR-q3hp]
 ---
 
 ## Description
@@ -41,9 +43,12 @@ Replay session reset (`replay_state`), fresh replay runtime provisioning, and an
 
 
 ## History
-
+- 2026-11-08T15:08:54Z status: open -> in_progress
+- 2026-11-08T15:08:54Z auto-follows: linked to predecessor GRRR-q3hp
+- 2026-11-08T15:08:54Z claimed by dev-GRRR-hbc6
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Follows: [[GRRR-q3hp]]
 
 ## Comments
