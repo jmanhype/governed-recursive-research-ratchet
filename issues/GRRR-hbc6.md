@@ -8,8 +8,8 @@ labels: [milestone-1, security, accounting, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
-updated_at: 2026-11-08T17:45:15Z
-content_hash: "sha256:db441a23cf211502d23f631ce38a1be56fc2b46ef1049146a2ccae1fb0a1de77"
+updated_at: 2026-11-08T17:56:07Z
+content_hash: "sha256:b6da2780a60443440b3eb31f876fbdc5b844480a755f89c2a53b0382b328da72"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 closed_at: 2026-11-08T17:44:52Z
@@ -42,7 +42,7 @@ Replay session reset (`replay_state`), fresh replay runtime provisioning, and an
 
 
 ## Notes
-
+Merge authorized 2026-11-08: story/GRRR-hbc6 at 9df1bd0081191130bb919b4b36d586a834aacd85 merged locally into epic/GRRR-2t3h at 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Both merge parents and tree identity verified; accepted status unchanged. No push or protected mutation. Next scope: fresh replay-runtime source work only, no replay execution.
 
 ## nd_contract
 status: accepted
