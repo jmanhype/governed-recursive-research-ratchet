@@ -144,23 +144,35 @@ def inventory(database: Path) -> dict:
                              for row in db.execute(
                                  'SELECT type,name,tbl_name,sql FROM sqlite_master '
                                  'ORDER BY type,name')]}
-        definitions = {row[1]: row[3] or '' for row in db.execute(
-            "SELECT type,name,tbl_name,sql FROM sqlite_master WHERE type='table'")}
         tables = [row[0] for row in db.execute(
             "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")]
         result['tables'] = {}
         for table in tables:
             quoted = '"' + table.replace('"', '""') + '"'
-            columns = [row[1] for row in db.execute('PRAGMA table_info(' + quoted + ')')]
-            # Only the trailing table-options clause may declare WITHOUT ROWID;
-            # the same words inside the column list are ordinary identifiers.
-            tail = definitions[table].rsplit(')', 1)[-1].upper()
-            if 'WITHOUT' in tail and 'ROWID' in tail:
-                rows = db.execute('SELECT * FROM ' + quoted).fetchall()
+            # table_info omits generated/hidden columns, including alias masks.
+            info = db.execute('PRAGMA table_xinfo(' + quoted + ')').fetchall()
+            check(bool(info), 'table column metadata unavailable: ' + table)
+            columns = [row[1] for row in info if row[6] != 1]
+            names = {row[1].lower() for row in info}
+            aliases = ('rowid', '_rowid_', 'oid')
+            probe = next((alias for alias in aliases if alias not in names), None)
+            check(probe is not None, 'table masks the hidden rowid: ' + table)
+            # A qualified identifier cannot become a double-quoted string
+            # literal. SQLite resolves it even with LIMIT 0 / an empty table.
+            # Only this exact missing-column error means WITHOUT ROWID; all
+            # other failures propagate rather than silently dropping identity.
+            try:
+                db.execute('SELECT _grrr_probe.' + probe + ' FROM ' + quoted
+                           + ' AS _grrr_probe LIMIT 0')
+                hidden = True
+            except sqlite3.OperationalError as error:
+                if str(error) != 'no such column: _grrr_probe.' + probe:
+                    raise
                 hidden = False
+            if not hidden:
+                rows = db.execute('SELECT * FROM ' + quoted).fetchall()
             else:
-                masked = {'rowid', '_rowid_', 'oid', '_grrr_rowid'} & {
-                    column.lower() for column in columns}
+                masked = set(aliases + ('_grrr_rowid',)) & names
                 check(not masked, 'table masks the hidden rowid: ' + table)
                 rows = db.execute('SELECT rowid AS _grrr_rowid, * FROM ' + quoted
                                   + ' ORDER BY _grrr_rowid').fetchall()
@@ -168,7 +180,6 @@ def inventory(database: Path) -> dict:
                     check(len(rows[0]) == len(columns) + 1
                           and type(rows[0][0]) is int,
                           'hidden rowid was not captured: ' + table)
-                hidden = True
             result['tables'][table] = {'rowid': hidden,
                                        'rows': [[encode(item) for item in row]
                                                 for row in rows]}

@@ -357,6 +357,88 @@ class RecoveryV4Tests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             inventory(self.database)
 
+    def test_empty_generated_alias_masks_are_refused(self):
+        for alias in ('rowid', '_rowid_', 'oid', '_grrr_rowid'):
+            for storage in ('VIRTUAL', 'STORED'):
+                with self.subTest(alias=alias, storage=storage):
+                    db = sqlite3.connect(self.database)
+                    db.execute('CREATE TABLE shadowed(id INTEGER PRIMARY KEY, "'
+                               + alias.upper() + '" TEXT GENERATED ALWAYS AS (id) '
+                               + storage + ')')
+                    db.commit()
+                    db.close()
+                    with self.assertRaisesRegex(RuntimeError, 'masks the hidden rowid'):
+                        inventory(self.database)
+                    db = sqlite3.connect(self.database)
+                    db.execute('DROP TABLE shadowed')
+                    db.commit()
+                    db.close()
+
+    def test_comment_words_do_not_hide_rowid_changes(self):
+        for comment in ('/* WITHOUT ROWID */', '-- WITHOUT and ROWID\n',
+                        '/* WITHOUT */ /* ROWID */'):
+            with self.subTest(comment=comment):
+                db = sqlite3.connect(self.database)
+                db.execute('UPDATE state SET stopped=1')
+                db.execute('CREATE TABLE commented(value TEXT) ' + comment)
+                db.execute("INSERT INTO commented(rowid,value) VALUES(7,'same')")
+                db.commit()
+                db.close()
+                before = inventory(self.database)
+                self.assertTrue(before['tables']['commented']['rowid'])
+                db = sqlite3.connect(self.database)
+                db.execute('UPDATE state SET stopped=0')
+                db.commit()
+                db.close()
+                unchanged(before, inventory(self.database))
+                db = sqlite3.connect(self.database)
+                db.execute('UPDATE commented SET rowid=8')
+                db.commit()
+                db.close()
+                with self.assertRaisesRegex(RuntimeError, 'rows changed'):
+                    unchanged(before, inventory(self.database))
+                db = sqlite3.connect(self.database)
+                db.execute('DROP TABLE commented')
+                db.commit()
+                db.close()
+
+    def test_empty_without_rowid_and_quoted_names(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE "wr""quoted"("rowid" TEXT PRIMARY KEY, '
+                   '"_rowid_" TEXT) WITHOUT /* split options */ ROWID')
+        db.execute('CREATE TABLE "ordinary""quoted"("WITHOUT" TEXT, "ROWID value" TEXT)')
+        db.commit()
+        db.close()
+        found = inventory(self.database)['tables']
+        self.assertEqual(found['wr"quoted'], {'rowid': False, 'rows': []})
+        self.assertEqual(found['ordinary"quoted'], {'rowid': True, 'rows': []})
+        db = sqlite3.connect(self.database)
+        db.execute('INSERT INTO "ordinary""quoted" VALUES(\'a\',\'b\')')
+        db.commit()
+        db.close()
+        self.assertEqual(inventory(self.database)['tables']['ordinary"quoted']['rows'],
+                         [[['i', 1], ['s', 'a'], ['s', 'b']]])
+
+    def test_nonempty_unmasked_generated_columns_capture_identity(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE generated(value INTEGER, '
+                   '"virtual" INTEGER GENERATED ALWAYS AS (value+1) VIRTUAL, '
+                   '"stored" INTEGER GENERATED ALWAYS AS (value+2) STORED)')
+        db.execute('INSERT INTO generated(rowid,value) VALUES(9,20)')
+        db.commit()
+        db.close()
+        self.assertEqual(inventory(self.database)['tables']['generated'],
+                         {'rowid': True, 'rows': [
+                             [['i', 9], ['i', 20], ['i', 21], ['i', 22]]]})
+
+    def test_all_hidden_aliases_masked_fail_closed_when_empty(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE masked(rowid TEXT, _rowid_ TEXT, oid TEXT)')
+        db.commit()
+        db.close()
+        with self.assertRaisesRegex(RuntimeError, 'masks the hidden rowid'):
+            inventory(self.database)
+
 
 if __name__ == '__main__':
     unittest.main()
