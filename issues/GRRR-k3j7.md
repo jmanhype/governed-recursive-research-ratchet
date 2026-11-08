@@ -9,12 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T21:39:45Z
 created_by: speed
 updated_at: 2026-11-05T20:25:47Z
-content_hash: "sha256:e93ee1f547a9ce365b7557fd0889644fb8b532fa4c98aa1cfaf675fc8fbbf469"
+content_hash: "sha256:5e668636ac41b00e4e85e4ffc40a83d257499145b237b4e1dde249c0f80552f2"
 follows: [GRRR-yt6a, GRRR-wcwy, GRRR-ev2w, GRRR-888u]
 assignee: dev-GRRR-k3j7
 closed_at: 2026-11-05T20:25:47Z
 close_reason: "Accepted via pvg story accept"
-led_to: [GRRR-q3hp]
+led_to: [GRRR-q3hp, GRRR-hbc6]
 ---
 
 ## Description
@@ -761,6 +761,6 @@ Summary: PASS source257 tests on EACH of Python3.14.3,3.12.9,3.9.6; failures0/er
 ## Links
 - Parent: [[GRRR-2t3h]]
 - Follows: [[GRRR-yt6a]], [[GRRR-wcwy]], [[GRRR-ev2w]], [[GRRR-888u]]
-- Led to: [[GRRR-q3hp]]
+- Led to: [[GRRR-q3hp]], [[GRRR-hbc6]]
 
 ## Comments
