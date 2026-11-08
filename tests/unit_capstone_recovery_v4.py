@@ -257,6 +257,38 @@ class RecoveryV4Tests(unittest.TestCase):
         self.assertEqual(db.execute('SELECT stopped FROM state').fetchone(), (1,))
         db.close()
 
+    def test_verify_rejects_open_journal_sidecar(self):
+        self.install()
+        sidecar = Path(str(self.database) + '-wal')
+        sidecar.write_bytes(b'')
+        os.chmod(sidecar, 0o600)
+        try:
+            with self.assertRaises(RuntimeError):
+                verify(self.base, owner=OWNER)
+        finally:
+            sidecar.unlink()
+
+    def test_repeat_install_verification_failure_invalidates_completion(self):
+        self.install()
+        import accounting_recovery_v4 as module
+        original = module.verify
+
+        def failing(base, *, owner=OWNER):
+            raise RuntimeError('simulated repeat verification failure')
+
+        module.verify = failing
+        try:
+            with self.assertRaises(RuntimeError):
+                self.install()
+        finally:
+            module.verify = original
+        db = sqlite3.connect(self.database)
+        self.assertEqual(db.execute('SELECT stopped FROM state').fetchone(), (1,))
+        db.close()
+        names = {item.name for item in (self.base / 'recovery-v4').iterdir()}
+        self.assertIn('incomplete.json', names)
+        self.assertNotIn('complete.json', names)
+
 
 if __name__ == '__main__':
     unittest.main()

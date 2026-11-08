@@ -223,6 +223,27 @@ def unchanged(before: dict, after: dict) -> None:
 
 def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
                   *, privileged: bool, owner: int = 320, active_uid: int = 0) -> dict:
+    try:
+        return _install(base, plan, review, authorization, privileged=privileged,
+                        owner=owner, active_uid=active_uid)
+    except BaseException as original:
+        recovery = base / 'recovery-v4'
+        intent = None
+        try:
+            intent = json.loads(read(recovery / 'intent.json'))
+        except BaseException:
+            pass
+        if intent is None or not (
+                canonical(intent.get('plan')) == canonical(plan)
+                and canonical(intent.get('review')) == canonical(review)
+                and canonical(intent.get('authorization')) == canonical(authorization)):
+            raise original
+        _recover_failure(base, recovery, binding(base, owner=owner)['database'])
+        raise
+
+
+def _install(base: Path, plan: dict, review: dict, authorization: dict,
+             *, privileged: bool, owner: int = 320, active_uid: int = 0) -> dict:
     if privileged:
         check(os.getuid() == 0 and os.geteuid() == 0, 'root-only recovery required')
         check(str(Path(__file__).resolve()).startswith('/Library/GRRR/bootstrap/recovery-v4/'),
@@ -264,97 +285,103 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
         changed = db.execute('UPDATE state SET stopped=0 WHERE id=1 AND stopped=1').rowcount
         check(changed == 1, 'stop bit was not released exactly once')
         db.commit()
-    except BaseException:
-        db.rollback()
-        raise
+        # Hold the exclusive guard from the mutation through publication and
+        # verification: no writer may touch any row in between.
+        db.execute('BEGIN IMMEDIATE')
+        published = _publish(base, recovery, database, pre, before, owner)
+        db.execute('COMMIT')
+        return published
     finally:
         db.close()
+
+
+def _publish(base: Path, recovery: Path, database: Path, pre: os.stat_result,
+             before: dict, owner: int) -> dict:
+    post = database.lstat()
+    check((post.st_dev, post.st_ino) == (pre.st_dev, pre.st_ino),
+          'store database was replaced during recovery')
+    after = inventory(database)
+    unchanged(before['inventory'], after)
+    receipt = {'version': 1, 'outcome': 'released-stop-retained-unknowns',
+               'active_sha256': digest(read(base / 'active.json')),
+               'inventory_before': digest(canonical(before['inventory'])),
+               'inventory_after': digest(canonical(after)),
+               'database_sha256_before': before['inventory']['database_sha256'],
+               'database_sha256_after': after['database_sha256'],
+               'stopped_before': 1, 'stopped_after': 0,
+               'historical_unknowns': 'unresolved', 'spendable': 'unknown',
+               'execution_authorized': True}
+    publish(recovery / 'prior-active.json', read(base / 'active.json'))
+    publish(recovery / 'receipt.json', canonical(receipt))
+    sync(recovery)
+    sync(base)
+    _verify_state(base, owner, published=False)
+    publish(recovery / 'complete.json', canonical(
+        {'binding_sha256': receipt['active_sha256'],
+         'outcome': 'published-durable',
+         'receipt_sha256': digest(canonical(receipt)),
+         'execution_authorized': True}))
+    sync(recovery)
+    sync(base)
+    os.chmod(recovery / 'intent.json', 0o444)
+    os.chmod(recovery / 'prior-active.json', 0o444)
+    os.chmod(recovery / 'receipt.json', 0o444)
+    os.chmod(recovery / 'complete.json', 0o444)
+    os.chmod(recovery, 0o555)
+    sync(base)
+    return verify(base, owner=owner)
+
+
+def _recover_failure(base: Path, recovery: Path, database: Path) -> None:
+    """Restore the stop bit, invalidate completion, and record the failure."""
+    # Never leave the store released without a durable, verified completion.
+    failure = []
     try:
-        post = database.lstat()
-        check((post.st_dev, post.st_ino) == (pre.st_dev, pre.st_ino),
-              'store database was replaced during recovery')
-        after = inventory(database)
-        unchanged(before['inventory'], after)
-        receipt = {'version': 1, 'outcome': 'released-stop-retained-unknowns',
-                   'active_sha256': digest(read(base / 'active.json')),
-                   'inventory_before': digest(canonical(before['inventory'])),
-                   'inventory_after': digest(canonical(after)),
-                   'database_sha256_before': before['inventory']['database_sha256'],
-                   'database_sha256_after': after['database_sha256'],
-                   'stopped_before': 1, 'stopped_after': 0,
-                   'historical_unknowns': 'unresolved', 'spendable': 'unknown',
-                   'execution_authorized': True}
-        publish(recovery / 'prior-active.json', read(base / 'active.json'))
-        publish(recovery / 'receipt.json', canonical(receipt))
+        os.chmod(recovery, 0o700)
+    except Exception as error:
+        failure.append('namespace: ' + str(error))
+    for name in ('intent.json', 'prior-active.json', 'receipt.json', 'complete.json'):
+        try:
+            os.chmod(recovery / name, 0o600)
+        except FileNotFoundError:
+            continue
+        except Exception as error:
+            failure.append(name + ': ' + str(error))
+    try:
+        (recovery / 'complete.json').unlink()
         sync(recovery)
-        sync(base)
-        _verify_state(base, owner, published=False)
-        publish(recovery / 'complete.json', canonical(
-            {'binding_sha256': receipt['active_sha256'],
-             'outcome': 'published-durable',
-             'receipt_sha256': digest(canonical(receipt)),
-             'execution_authorized': True}))
+    except FileNotFoundError:
+        pass
+    except Exception as error:
+        failure.append('invalidate: ' + str(error))
+    try:
+        restore = sqlite3.connect(str(database), isolation_level=None)
+        try:
+            restore.execute('PRAGMA synchronous=FULL')
+            current = restore.execute('SELECT stopped FROM state WHERE id=1').fetchone()
+            if current != (1,):
+                restored = restore.execute(
+                    'UPDATE state SET stopped=1 WHERE id=1 AND stopped=0').rowcount
+                restore.commit()
+                check(restored == 1, 'restore affected %d rows' % restored)
+                current = restore.execute('SELECT stopped FROM state WHERE id=1').fetchone()
+            check(current == (1,), 'restored stop bit did not read back as 1')
+        finally:
+            restore.close()
+    except Exception as restore_error:
+        failure.append('restore: ' + str(restore_error))
+    try:
+        publish(recovery / 'incomplete.json', canonical(
+            {'outcome': 'recovery-incomplete',
+             'reason': '; '.join(failure)[:512] or 'post-publish verification failed'}))
         sync(recovery)
-        sync(base)
-        os.chmod(recovery / 'intent.json', 0o444)
-        os.chmod(recovery / 'prior-active.json', 0o444)
-        os.chmod(recovery / 'receipt.json', 0o444)
-        os.chmod(recovery / 'complete.json', 0o444)
         os.chmod(recovery, 0o555)
         sync(base)
-        return verify(base, owner=owner)
-    except BaseException:
-        # Never leave the store released without a durable, verified completion.
-        failure = []
-        try:
-            os.chmod(recovery, 0o700)
-        except Exception as error:
-            failure.append('namespace: ' + str(error))
-        for name in ('intent.json', 'prior-active.json', 'receipt.json', 'complete.json'):
-            try:
-                os.chmod(recovery / name, 0o600)
-            except FileNotFoundError:
-                continue
-            except Exception as error:
-                failure.append(name + ': ' + str(error))
-        try:
-            (recovery / 'complete.json').unlink()
-            sync(recovery)
-        except FileNotFoundError:
-            pass
-        except Exception as error:
-            failure.append('invalidate: ' + str(error))
-        try:
-            restore = sqlite3.connect(str(database), isolation_level=None)
-            try:
-                restore.execute('PRAGMA synchronous=FULL')
-                current = restore.execute(
-                    'SELECT stopped FROM state WHERE id=1').fetchone()
-                if current != (1,):
-                    restored = restore.execute(
-                        'UPDATE state SET stopped=1 WHERE id=1 AND stopped=0').rowcount
-                    restore.commit()
-                    check(restored == 1, 'restore affected %d rows' % restored)
-                    current = restore.execute(
-                        'SELECT stopped FROM state WHERE id=1').fetchone()
-                check(current == (1,), 'restored stop bit did not read back as 1')
-            finally:
-                restore.close()
-        except Exception as restore_error:
-            failure.append('restore: ' + str(restore_error))
-        try:
-            publish(recovery / 'incomplete.json', canonical(
-                {'outcome': 'recovery-incomplete',
-                 'reason': '; '.join(failure)[:512] or 'post-publish verification failed'}))
-            sync(recovery)
-            os.chmod(recovery, 0o555)
-            sync(base)
-        except Exception as marker_error:
-            failure.append('marker: ' + str(marker_error))
-        if failure:
-            raise RuntimeError('recovery failed and could not be fully recorded; '
-                               'operator recovery required: ' + '; '.join(failure))
-        raise
+    except Exception as marker_error:
+        failure.append('marker: ' + str(marker_error))
+    if failure:
+        raise RuntimeError('recovery failed and could not be fully recorded; '
+                           'operator recovery required: ' + '; '.join(failure))
 
 
 def _verify_state(base: Path, owner: int, *, published: bool) -> dict:
@@ -390,9 +417,14 @@ def _verify_state(base: Path, owner: int, *, published: bool) -> dict:
           and metadata(found['database'], planned['database']['uid'], 0o600) == planned['database']
           and metadata(found['directory'], planned['directory']['uid'], 0o700, True)
           == planned['directory'], 'post-install metadata drift')
+    for suffix in ('-wal', '-shm', '-journal'):
+        sidecar = Path(str(found['database']) + suffix)
+        check(not sidecar.exists(), 'store has an open journal or WAL sidecar')
     current = inventory(found['database'])
     state = current['tables']['state']['rows']
     check(len(state) == 1 and state[0][-1] == ['i', 0], 'store is not released')
+    check(digest(canonical(current)) == receipt['inventory_after'],
+          'store inventory differs from the released receipt')
     check(current['database_sha256'] == receipt['database_sha256_after'],
           'current database bytes differ from the released receipt')
     return {'outcome': 'published-durable' if published else 'verified-not-published',
