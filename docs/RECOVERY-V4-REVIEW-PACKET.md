@@ -4,12 +4,12 @@ action=release-v4-stop-retain-unknowns  base=/Library/GRRR/accounting-poc2
 
 ## Staged source hashes
 - accounting_recovery_planner_v4.py  3a2c6fa896ba59f864af215de3b55fe88bb83544a87fe6c425c43a506e9aa61c
-- accounting_recovery_v4.py  7ac59862cafdd3d9b2a27b038a1fd6985252a6f13dfca57f41024c3066e452de
+- accounting_recovery_v4.py  2c2104e629b5ae4c115dc083a49f99fd1a19e54a280af1f5e080774f78a96a22
 
 ## Record hashes
-- plan.json          ca02831c54945197d8abb543dfa892055aa8b0f0f8a178db51f8f794516624d3
-- review.json        54bb43c9d5d45c74109645abcbad4768656334799e745276fc487f3a71e18088
-- authorization.json 88d58a8a20d35fcdb5f71786aa1f598701d210455a45a6cfd197825411b3f20a
+- plan.json          eed9a1120ada621721e9e78b2604d36adab12f9ee2ea4a8123a807f102b7d738
+- review.json        d2d201e80069495e29ae8341ea91e2f159abd1cc1e4c0f3114ac24eab40dda4c
+- authorization.json b15881fd654f0eb1c4c90e56081e7a3f993f3e1524a45792d6a1b4551e3e71fa
 
 ## Baseline summary (exact)
 - state: {'rowid': True, 'rows': [[['i', 1], ['i', 1], ['i', 1]]]}
@@ -65,10 +65,10 @@ def publish(path: Path, raw: bytes, mode: int = 0o444) -> None:
         written = 0
         while written < len(raw):
             written += os.write(descriptor, raw[written:])
+        os.fchmod(descriptor, mode)
         os.fsync(descriptor)
     finally:
         os.close(descriptor)
-    os.chmod(path, mode)
 
 
 def sync(path: Path) -> None:
@@ -133,6 +133,15 @@ def binding(base: Path = BASE, *, owner: int = 320) -> dict:
     return {'value': value, 'directory': directory, 'database': database}
 
 
+def header(raw: bytes) -> dict:
+    """Stable SQLite header fields; excludes counters that a commit must change."""
+    check(len(raw) >= 100 and raw[:16] == b'SQLite format 3\x00', 'not a sqlite database')
+    return {'write_version': raw[18], 'read_version': raw[19],
+            'schema_cookie': int.from_bytes(raw[40:44], 'big'),
+            'user_version': int.from_bytes(raw[60:64], 'big'),
+            'application_id': int.from_bytes(raw[68:72], 'big')}
+
+
 def encode(item: object) -> list:
     """Type-tagged cell encoding; BLOB, TEXT and numbers never collide."""
     if item is None:
@@ -153,23 +162,30 @@ def encode(item: object) -> list:
 def inventory(database: Path) -> dict:
     db = sqlite3.connect('file:' + str(database) + '?mode=ro', uri=True)
     try:
-        result = {'database_sha256': digest(read(database)),
+        raw = read(database)
+        result = {'database_sha256': digest(raw), 'header': header(raw),
                   'schema': [[row[0], row[1], row[2], row[3] or '']
                              for row in db.execute(
                                  'SELECT type,name,tbl_name,sql FROM sqlite_master '
                                  'ORDER BY type,name')]}
+        definitions = {row[1]: row[3] or '' for row in db.execute(
+            "SELECT type,name,tbl_name,sql FROM sqlite_master WHERE type='table'")}
         tables = [row[0] for row in db.execute(
             "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")]
         result['tables'] = {}
         for table in tables:
             quoted = '"' + table.replace('"', '""') + '"'
-            try:
-                rows = db.execute('SELECT rowid, * FROM ' + quoted
-                                  + ' ORDER BY rowid').fetchall()
-                hidden = True
-            except sqlite3.OperationalError:
+            columns = [row[1] for row in db.execute('PRAGMA table_info(' + quoted + ')')]
+            if 'WITHOUT ROWID' in definitions[table].upper():
                 rows = db.execute('SELECT * FROM ' + quoted).fetchall()
                 hidden = False
+            else:
+                masked = {'rowid', '_rowid_', 'oid', '_grrr_rowid'} & {
+                    column.lower() for column in columns}
+                check(not masked, 'table masks the hidden rowid: ' + table)
+                rows = db.execute('SELECT rowid AS _grrr_rowid, * FROM ' + quoted
+                                  + ' ORDER BY _grrr_rowid').fetchall()
+                hidden = True
             result['tables'][table] = {'rowid': hidden,
                                        'rows': [[encode(item) for item in row]
                                                 for row in rows]}
@@ -262,7 +278,7 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
                 and canonical(intent.get('review')) == canonical(review)
                 and canonical(intent.get('authorization')) == canonical(authorization)):
             raise original
-        _recover_failure(base, recovery, binding(base, owner=owner)['database'])
+        _recover_failure(base, recovery, None, owner)
         raise
 
 
@@ -347,59 +363,64 @@ def _publish(base: Path, recovery: Path, database: Path, pre: os.stat_result,
          'execution_authorized': True}))
     sync(recovery)
     sync(base)
-    os.chmod(recovery / 'intent.json', 0o444)
-    os.chmod(recovery / 'prior-active.json', 0o444)
-    os.chmod(recovery / 'receipt.json', 0o444)
-    os.chmod(recovery / 'complete.json', 0o444)
     os.chmod(recovery, 0o555)
+    sync(recovery)
     sync(base)
     return verify(base, owner=owner)
 
 
-def _recover_failure(base: Path, recovery: Path, database: Path) -> None:
-    """Restore the stop bit, invalidate completion, and record the failure."""
-    # Never leave the store released without a durable, verified completion.
+def _recover_failure(base: Path, recovery: Path, database: Path | None,
+                     owner: int) -> None:
+    """Invalidate completion first, then restore and record, in that order."""
     failure = []
+    # 1. Completion must be invalidated even when the store cannot be located.
     try:
         os.chmod(recovery, 0o700)
     except Exception as error:
         failure.append('namespace: ' + str(error))
-    for name in ('intent.json', 'prior-active.json', 'receipt.json', 'complete.json'):
-        try:
-            os.chmod(recovery / name, 0o600)
-        except FileNotFoundError:
-            continue
-        except Exception as error:
-            failure.append(name + ': ' + str(error))
     try:
         (recovery / 'complete.json').unlink()
-        sync(recovery)
     except FileNotFoundError:
         pass
     except Exception as error:
         failure.append('invalidate: ' + str(error))
     try:
-        restore = sqlite3.connect(str(database), isolation_level=None)
+        sync(recovery)
+    except Exception as error:
+        failure.append('sync: ' + str(error))
+    # 2. Restore only a target resolved from the protected binding.
+    if database is None:
         try:
-            restore.execute('PRAGMA synchronous=FULL')
-            current = restore.execute('SELECT stopped FROM state WHERE id=1').fetchone()
-            if current != (1,):
-                restored = restore.execute(
-                    'UPDATE state SET stopped=1 WHERE id=1 AND stopped=0').rowcount
-                restore.commit()
-                check(restored == 1, 'restore affected %d rows' % restored)
-                current = restore.execute('SELECT stopped FROM state WHERE id=1').fetchone()
-            check(current == (1,), 'restored stop bit did not read back as 1')
-        finally:
-            restore.close()
-    except Exception as restore_error:
-        failure.append('restore: ' + str(restore_error))
+            database = binding(base, owner=owner)['database']
+        except Exception as error:
+            failure.append('target: ' + str(error))
+    if database is not None:
+        try:
+            restore = sqlite3.connect(str(database), isolation_level=None)
+            try:
+                restore.execute('PRAGMA synchronous=FULL')
+                current = restore.execute(
+                    'SELECT stopped FROM state WHERE id=1').fetchone()
+                if current != (1,):
+                    restored = restore.execute(
+                        'UPDATE state SET stopped=1 WHERE id=1 AND stopped=0').rowcount
+                    restore.commit()
+                    check(restored == 1, 'restore affected %d rows' % restored)
+                    current = restore.execute(
+                        'SELECT stopped FROM state WHERE id=1').fetchone()
+                check(current == (1,), 'restored stop bit did not read back as 1')
+            finally:
+                restore.close()
+        except Exception as restore_error:
+            failure.append('restore: ' + str(restore_error))
+    # 3. Durable failure record.
     try:
         publish(recovery / 'incomplete.json', canonical(
             {'outcome': 'recovery-incomplete',
              'reason': '; '.join(failure)[:512] or 'post-publish verification failed'}))
         sync(recovery)
         os.chmod(recovery, 0o555)
+        sync(recovery)
         sync(base)
     except Exception as marker_error:
         failure.append('marker: ' + str(marker_error))
