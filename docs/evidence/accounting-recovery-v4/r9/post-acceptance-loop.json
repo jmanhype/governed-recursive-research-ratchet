@@ -1,0 +1,16 @@
+{
+  "mode": "epic",
+  "target_epic": "GRRR-2t3h",
+  "active_loop": true,
+  "scope_source": "loop_state",
+  "decision": "wait",
+  "reason": "Epic GRRR-2t3h: 1 stories in non-dispatcher workflow states",
+  "counts": {
+    "Ready": 0,
+    "Delivered": 0,
+    "Rejected": 0,
+    "InProgress": 0,
+    "Blocked": 0,
+    "Other": 1
+  }
+}
