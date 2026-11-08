@@ -4,7 +4,7 @@ title: "Recovery: reviewed v4 accounting unhalt planner"
 status: closed
 priority: 2
 type: task
-labels: [milestone-1, security, accounting, delivered, accepted]
+labels: [milestone-1, security, accounting, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
