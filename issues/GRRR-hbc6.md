@@ -8,8 +8,8 @@ labels: [milestone-1, security, accounting, accepted]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
-updated_at: 2026-11-08T17:56:07Z
-content_hash: "sha256:b6da2780a60443440b3eb31f876fbdc5b844480a755f89c2a53b0382b328da72"
+updated_at: 2026-11-08T17:59:09Z
+content_hash: "sha256:ddb04ea7b9338589e326cd4cd668d415dc745630910c16259d74a468ec10e074"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 closed_at: 2026-11-08T17:44:52Z
@@ -43,6 +43,7 @@ Replay session reset (`replay_state`), fresh replay runtime provisioning, and an
 
 ## Notes
 Merge authorized 2026-11-08: story/GRRR-hbc6 at 9df1bd0081191130bb919b4b36d586a834aacd85 merged locally into epic/GRRR-2t3h at 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Both merge parents and tree identity verified; accepted status unchanged. No push or protected mutation. Next scope: fresh replay-runtime source work only, no replay execution.
+Post-merge source verification at epic commit 5f6ce4e83e2426e859127af568aa730c19dc6a9b: /opt/homebrew/bin/python3.14, /opt/homebrew/bin/python3.12, /usr/bin/python3 -B tests/unit_capstone_backend_suite.py each passed 307 tests, zero failures/errors/skips. Raw logs /private/tmp/grrr-hbc6-merged-Python-3.14.3.log (SHA256 faed6d2a99a7d298e67db9b645b0033258dbb4f1405b28656d79ef43bd2c7548), /private/tmp/grrr-hbc6-merged-Python-3.12.9.log (47994250ed9d0e8cc73a9c1a35392476df990fc89302bf5d89151ea2950670cf), /private/tmp/grrr-hbc6-merged-Python-3.9.6.log (702cf63c78a9b5a30df331084ad50245b1788e6f02e36b51203cde12b5d49a88). Merged tree equals accepted story tree 27b7f8928661812af6445213e12988dd5e5b6cf8. No replay, reconciliation, protected mutation, promotion, admission, production mutation or push.
 
 ## nd_contract
 status: accepted
