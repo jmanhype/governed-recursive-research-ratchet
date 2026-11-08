@@ -152,7 +152,10 @@ def inventory(database: Path) -> dict:
         for table in tables:
             quoted = '"' + table.replace('"', '""') + '"'
             columns = [row[1] for row in db.execute('PRAGMA table_info(' + quoted + ')')]
-            if 'WITHOUT ROWID' in definitions[table].upper():
+            # Only the trailing table-options clause may declare WITHOUT ROWID;
+            # the same words inside the column list are ordinary identifiers.
+            tail = definitions[table].rsplit(')', 1)[-1].upper()
+            if 'WITHOUT' in tail and 'ROWID' in tail:
                 rows = db.execute('SELECT * FROM ' + quoted).fetchall()
                 hidden = False
             else:
@@ -161,6 +164,10 @@ def inventory(database: Path) -> dict:
                 check(not masked, 'table masks the hidden rowid: ' + table)
                 rows = db.execute('SELECT rowid AS _grrr_rowid, * FROM ' + quoted
                                   + ' ORDER BY _grrr_rowid').fetchall()
+                if rows:
+                    check(len(rows[0]) == len(columns) + 1
+                          and type(rows[0][0]) is int,
+                          'hidden rowid was not captured: ' + table)
                 hidden = True
             result['tables'][table] = {'rowid': hidden,
                                        'rows': [[encode(item) for item in row]
@@ -233,8 +240,9 @@ def unchanged(before: dict, after: dict) -> None:
           'unexpected state table shape')
     expected[0][-1] = ['i', 0]
     tables['state'] = {'rowid': state['rowid'], 'rows': expected}
-    check(after['schema'] == before['schema'] and after['tables'] == tables,
-          'history, schema, holds or unknown rows changed')
+    check(after['schema'] == before['schema'] and after['tables'] == tables
+          and after['header'] == before['header'],
+          'history, schema, header, holds or unknown rows changed')
 
 
 def apply_install(base: Path, plan: dict, review: dict, authorization: dict,

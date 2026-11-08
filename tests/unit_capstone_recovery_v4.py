@@ -9,7 +9,7 @@ import unittest
 
 from accounting_recovery_planner_v4 import build
 from accounting_recovery_v4 import (approval, apply_install, canonical, digest,
-                                    inventory, snapshot, verify)
+                                    inventory, snapshot, unchanged, verify)
 
 OWNER = os.getuid()
 RESEARCH = Path(__file__).resolve().parents[1] / 'research'
@@ -326,6 +326,36 @@ class RecoveryV4Tests(unittest.TestCase):
         names = {item.name for item in (self.base / 'recovery-v4').iterdir()}
         self.assertIn('incomplete.json', names)
         self.assertNotIn('complete.json', names)
+
+    def test_unchanged_detects_header_drift(self):
+        before = snapshot(self.base, owner=OWNER, active_uid=OWNER)['inventory']
+        after = copy.deepcopy(before)
+        after['tables']['state']['rows'][0][-1] = ['i', 0]
+        after['database_sha256'] = 'irrelevant'
+        unchanged(before, after)
+        after['header']['user_version'] = 7
+        with self.assertRaises(RuntimeError):
+            unchanged(before, after)
+
+    def test_without_rowid_table_is_supported(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE wr(key TEXT PRIMARY KEY, value TEXT) WITHOUT ROWID')
+        db.execute("INSERT INTO wr VALUES('a','b')")
+        db.commit()
+        db.close()
+        found = inventory(self.database)['tables']['wr']
+        self.assertFalse(found['rowid'])
+        self.assertEqual(found['rows'], [[['s', 'a'], ['s', 'b']]])
+
+    def test_generated_column_shadowing_rowid_alias_is_refused(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE shadowed(id INTEGER PRIMARY KEY, '
+                   '_grrr_rowid TEXT GENERATED ALWAYS AS (id) VIRTUAL)')
+        db.execute('INSERT INTO shadowed(id) VALUES(1)')
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            inventory(self.database)
 
 
 if __name__ == '__main__':
