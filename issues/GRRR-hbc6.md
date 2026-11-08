@@ -8,8 +8,8 @@ labels: [milestone-1, security, accounting, delivered]
 parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
-updated_at: 2026-11-08T17:39:36Z
-content_hash: "sha256:14c983aa2651387edb8b00962ffc2b358971f41d223a2875210e2bf6523ecb41"
+updated_at: 2026-11-08T17:44:51Z
+content_hash: "sha256:d8a401bd2dfbcc1dce0529a13f11a62449b3578c572cd8f75873fe3457ae0829"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 ---
@@ -40,7 +40,35 @@ Replay session reset (`replay_state`), fresh replay runtime provisioning, and an
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-11-08]: Independent PM evidence review meets all seven ACs.
 
+### evidence
+- Queue direction was pm_review; fresh delivery verifier passed 9/9.
+- Reviewed story HEAD d3e74cbcc9727dab29b9144639d03cc1a7f7adcd and exact source fix 09ef310b7b5eb1df021ac6c56b8251cf68ff625b; source/test files are unchanged after independent review.
+- Independently recomputed review SHA256 fc4cd5f9df2ada6cfe2784e940759ee0dae066b96e30c258a57feec873c60457 and exact cross-bindings for plan 4603b443783e8bfc91f6a1c1c408f54cd8f3f073aaf35f14af9278d01d8f0953, review 1bcb3351e435ff476c35e5df713b6facd519a9fa96d0670db9f2df13388ea2dc, authorization 5d1deb5fe0c26e378233c0a1fa1c1104fa60ce8aaee38673b2fd4efa9f6e026e, baseline e2e9289a971b069437113843309565b6706142e3a205e18a23beea583d639c5d, and both source hashes.
+- Verified full plan inventory covers metering/overhead/reservations/state/store_identity plus schema, stable header, active binding bytes, metadata, and source hashes; staging log reports staged-not-installed with stopped=1.
+- Raw required logs record 307 passing tests and zero failures/errors/skips on each installed Python 3.14.3, 3.12.9, and 3.9.6; each includes all 32 recovery tests. The supplemental real-SQLite already-unhalted fixture passed once and was independently rerun.
+- Raw install and fresh-process verification logs both report published-durable, stopped 1 -> 0 then 0 -> 0, unchanged active bytes/metadata, and unchanged schema/history/holds/unknowns. Receipt 8b7958e5be76f6b35c4bfafc1f17a2926badfdd813addbefd5d683e376e8eeeb and completion ea5dae2b353a1e7c0747f92b5bdb0b907a92f3b0939588ea63046a70403407af were recomputed. historical_unknowns remains unresolved and spendable remains unknown.
+- The isolated driver and invocation pin exact hashes and reject wrong flags/interpreter before protected access. No reconciliation, replay, campaign, admission, promotion, production source mutation after review, merge, or push is claimed.
+
+### proof
+- [x] AC #1: Read-only exact v4 planner baseline and source binding.
+- [x] AC #2: Fixed canonical plan/review/authorization schemas and typed authority bindings.
+- [x] AC #3: Independent exact-target approval plus separate operator authorization.
+- [x] AC #4: Root-isolated canonical installer released only the stop bit and preserved protected invariants.
+- [x] AC #5: Durable intent/prior-active/receipt/completion records and fail-closed partial/repeat controls.
+- [x] AC #6: Required fixture coverage and three-interpreter source suite passed with no skips.
+- [x] AC #7: No live mutation during tests; only the separately authorized recovery outside tests; no out-of-scope action.
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM independently reviewed story proof, committed source/tests, review/plan/authorization JSON, raw test logs, install/fresh-verify log, and retained receipts.
+
+### proof
+- [x] AC-by-AC verified from artifacts and exact hashes
 
 ## nd_contract
 status: delivered
