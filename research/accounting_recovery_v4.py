@@ -45,6 +45,10 @@ def metadata(path: Path, uid: int, mode: int, directory: bool = False) -> dict:
     info = path.lstat()
     kind_ok = stat.S_ISDIR(info.st_mode) if directory else stat.S_ISREG(info.st_mode)
     check(kind_ok and not stat.S_ISLNK(info.st_mode), 'protected kind differs')
+    check(info.st_uid == uid and stat.S_IMODE(info.st_mode) == mode,
+          'protected owner/mode differs')
+    if not directory:
+        check(info.st_nlink == 1, 'protected file links differ')
     return {'uid': info.st_uid, 'gid': info.st_gid,
             'mode': stat.S_IMODE(info.st_mode), 'inode': info.st_ino,
             'device': info.st_dev, 'links': info.st_nlink}
@@ -66,6 +70,8 @@ def binding(base: Path = BASE, *, owner: int = 320) -> dict:
     db_info = database.lstat()
     check(stat.S_ISREG(db_info.st_mode) and db_info.st_uid == owner
           and stat.S_IMODE(db_info.st_mode) == 0o600, 'store database ownership/mode differs')
+    check(db_info.st_dev == value['device'] and db_info.st_ino == value['inode'],
+          'active binding device/inode differs from the store database')
     return {'value': value, 'directory': directory, 'database': database}
 
 
@@ -84,13 +90,11 @@ def inventory(database: Path) -> dict:
 
 def snapshot(base: Path = BASE, *, owner: int = 320, active_uid: int = 0) -> dict:
     found = binding(base, owner=owner)
-    active_meta = metadata(base / 'active.json', 0, 0o444)
-    check(active_meta['uid'] == active_uid and active_meta['mode'] == 0o444
-          and active_meta['links'] == 1, 'active binding metadata differs')
+    active_meta = metadata(base / 'active.json', active_uid, 0o444)
     return {'active_hex': read(base / 'active.json').hex(),
             'metadata': {'active': active_meta,
-                         'database': metadata(found['database'], 320, 0o600),
-                         'directory': metadata(found['directory'], 320, 0o700, True)},
+                         'database': metadata(found['database'], owner, 0o600),
+                         'directory': metadata(found['directory'], owner, 0o700, True)},
             'inventory': inventory(found['database'])}
 
 
@@ -173,25 +177,36 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
         raise
     finally:
         db.close()
-    after = inventory(database)
-    unchanged(before, after)
-    receipt = {'version': 1, 'outcome': 'released-stop-retained-unknowns',
-               'active_sha256': digest(read(base / 'active.json')),
-               'database_sha256_before': before['database_sha256'],
-               'database_sha256_after': after['database_sha256'],
-               'stopped_before': 1, 'stopped_after': 0,
-               'historical_unknowns': 'unresolved', 'spendable': 'unknown',
-               'execution_authorized': True}
-    (recovery / 'prior-active.json').write_bytes(read(base / 'active.json'))
-    (recovery / 'receipt.json').write_bytes(canonical(receipt))
-    (recovery / 'complete.json').write_bytes(canonical(
-        {'binding_sha256': receipt['active_sha256'],
-         'outcome': 'published-durable',
-         'receipt_sha256': digest(canonical(receipt)),
-         'execution_authorized': True}))
-    for name in ('intent.json', 'prior-active.json', 'receipt.json', 'complete.json'):
-        os.chmod(recovery / name, 0o444)
-    os.chmod(recovery, 0o555)
+    try:
+        after = inventory(database)
+        unchanged(before, after)
+        receipt = {'version': 1, 'outcome': 'released-stop-retained-unknowns',
+                   'active_sha256': digest(read(base / 'active.json')),
+                   'database_sha256_before': before['database_sha256'],
+                   'database_sha256_after': after['database_sha256'],
+                   'stopped_before': 1, 'stopped_after': 0,
+                   'historical_unknowns': 'unresolved', 'spendable': 'unknown',
+                   'execution_authorized': True}
+        (recovery / 'prior-active.json').write_bytes(read(base / 'active.json'))
+        (recovery / 'receipt.json').write_bytes(canonical(receipt))
+        (recovery / 'complete.json').write_bytes(canonical(
+            {'binding_sha256': receipt['active_sha256'],
+             'outcome': 'published-durable',
+             'receipt_sha256': digest(canonical(receipt)),
+             'execution_authorized': True}))
+        for name in ('intent.json', 'prior-active.json', 'receipt.json', 'complete.json'):
+            os.chmod(recovery / name, 0o444)
+        os.chmod(recovery, 0o555)
+    except BaseException:
+        # Never leave the store released without a durable, verified completion.
+        try:
+            restore = sqlite3.connect(str(database), isolation_level=None)
+            restore.execute('UPDATE state SET stopped=1 WHERE id=1 AND stopped=0')
+            restore.commit()
+            restore.close()
+        except Exception:
+            pass
+        raise
     return verify(base, owner=owner)
 
 
@@ -211,5 +226,10 @@ def verify(base: Path = BASE, *, owner: int = 320) -> dict:
           'receipt differs')
     check(complete['receipt_sha256'] == digest(canonical(receipt))
           and complete['outcome'] == 'published-durable', 'completion differs')
-    check(inventory(binding(base, owner=owner)['database'])['state'] == [[1, 0]], 'store is not released')
+    check(read(recovery / 'prior-active.json') == read(base / 'active.json'),
+          'prior active binding differs from the current binding')
+    current = inventory(binding(base, owner=owner)['database'])
+    check(current['state'] == [[1, 0]], 'store is not released')
+    check(current['database_sha256'] == receipt['database_sha256_after'],
+          'current database bytes differ from the released receipt')
     return {'outcome': complete['outcome'], 'receipt': receipt}

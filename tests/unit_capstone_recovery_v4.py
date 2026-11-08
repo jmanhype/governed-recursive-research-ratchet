@@ -34,8 +34,9 @@ def create_store(base: Path) -> Path:
     db.commit()
     db.close()
     os.chmod(database, 0o600)
-    active = {'campaign': 'c' * 64, 'device': 1, 'directory': str(store),
-              'inode': store.stat().st_ino, 'prior_history_receipt': 'd' * 64,
+    db_info = database.stat()
+    active = {'campaign': 'c' * 64, 'device': db_info.st_dev, 'directory': str(store),
+              'inode': db_info.st_ino, 'prior_history_receipt': 'd' * 64,
               'profiles': ['independent-replay'], 'store_id': STORE, 'version': 4}
     (base / 'active.json').write_bytes(canonical(active))
     os.chmod(base / 'active.json', 0o444)
@@ -116,6 +117,24 @@ class RecoveryV4Tests(unittest.TestCase):
         db.close()
         with self.assertRaises(RuntimeError):
             self.install()
+
+    def test_verify_rejects_post_install_drift(self):
+        self.install()
+        db = sqlite3.connect(self.database)
+        db.execute("INSERT INTO overhead VALUES('k2','preparation',9)")
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            verify(self.base, owner=OWNER)
+
+    def test_binding_rejects_active_identity_mismatch(self):
+        active = json.loads((self.base / 'active.json').read_text())
+        active['inode'] = active['inode'] + 1
+        os.chmod(self.base / 'active.json', 0o644)
+        (self.base / 'active.json').write_bytes(canonical(active))
+        os.chmod(self.base / 'active.json', 0o444)
+        with self.assertRaises(RuntimeError):
+            snapshot(self.base, owner=OWNER, active_uid=OWNER)
 
 
 if __name__ == '__main__':
