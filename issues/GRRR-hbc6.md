@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
 updated_at: 2026-11-08T17:38:02Z
-content_hash: "sha256:6b8d0837a31facffea440cc89b44e3b6d171aec7b46b7270ca93c09000a15dc3"
+content_hash: "sha256:941ad239b94cb31b00f904b6e181c6cf6ac226fd0d8dd3df8e2edf180c7338f5"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 ---
@@ -40,6 +40,18 @@ Replay session reset (`replay_state`), fresh replay runtime provisioning, and an
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-08.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence (DELIVERED)
 
 PROOF:
