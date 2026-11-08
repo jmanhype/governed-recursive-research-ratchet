@@ -180,6 +180,83 @@ class RecoveryV4Tests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             verify(self.base, owner=OWNER)
 
+    def test_blob_and_text_are_not_interchangeable(self):
+        db = sqlite3.connect(self.database)
+        db.execute("INSERT INTO metering VALUES('m2','r1',x'31')")
+        db.commit()
+        db.close()
+        self.records = build(self.base, RESEARCH, owner=OWNER, active_uid=OWNER)
+        db = sqlite3.connect(self.database)
+        db.execute("UPDATE metering SET body='31' WHERE id='m2'")
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            self.install()
+
+    def test_rowid_identity_is_part_of_the_baseline(self):
+        db = sqlite3.connect(self.database)
+        db.execute("INSERT INTO store_identity VALUES('c','s','r')")
+        db.commit()
+        db.close()
+        self.records = build(self.base, RESEARCH, owner=OWNER, active_uid=OWNER)
+        db = sqlite3.connect(self.database)
+        db.execute('DELETE FROM store_identity')
+        db.execute("INSERT INTO store_identity VALUES('c','s','r')")
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            self.install()
+
+    def test_post_publish_verification_failure_restores_and_records(self):
+        import accounting_recovery_v4 as module
+        original = module.verify
+
+        def failing(base, *, owner=OWNER):
+            raise RuntimeError('simulated post-publish verification failure')
+
+        module.verify = failing
+        try:
+            with self.assertRaises(RuntimeError):
+                self.install()
+        finally:
+            module.verify = original
+        db = sqlite3.connect(self.database)
+        self.assertEqual(db.execute('SELECT stopped FROM state').fetchone(), (1,))
+        db.close()
+        recovery = self.base / 'recovery-v4'
+        self.assertIn('incomplete.json', {item.name for item in recovery.iterdir()})
+        with self.assertRaises(RuntimeError):
+            original(self.base, owner=OWNER)
+
+    def test_authorization_boolean_confusion_is_refused(self):
+        broken = copy.deepcopy(self.records)
+        broken['authorization']['execution_authorized'] = 1
+        with self.assertRaises(RuntimeError):
+            self.install(broken)
+        broken = copy.deepcopy(self.records)
+        broken['authorization']['exclusive_parent'] = 1
+        with self.assertRaises(RuntimeError):
+            self.install(broken)
+
+    def test_pre_publication_failure_publishes_no_completion(self):
+        import accounting_recovery_v4 as module
+        original = module._verify_state
+
+        def failing(base, owner, *, published):
+            raise RuntimeError('simulated pre-publication failure')
+
+        module._verify_state = failing
+        try:
+            with self.assertRaises(RuntimeError):
+                self.install()
+        finally:
+            module._verify_state = original
+        recovery = self.base / 'recovery-v4'
+        self.assertNotIn('complete.json', {item.name for item in recovery.iterdir()})
+        db = sqlite3.connect(self.database)
+        self.assertEqual(db.execute('SELECT stopped FROM state').fetchone(), (1,))
+        db.close()
+
 
 if __name__ == '__main__':
     unittest.main()
