@@ -35,10 +35,15 @@ def check(condition: bool, reason: str) -> None:
 
 
 def read(path: Path, maximum: int = 1 << 24) -> bytes:
-    info = path.lstat()
-    check(stat.S_ISREG(info.st_mode) and not stat.S_ISLNK(info.st_mode)
-          and info.st_nlink == 1 and info.st_size <= maximum, 'unsafe protected file')
-    return path.read_bytes()
+    descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
+    try:
+        info = os.fstat(descriptor)
+        check(stat.S_ISREG(info.st_mode) and not stat.S_ISLNK(info.st_mode)
+              and info.st_nlink == 1 and info.st_size <= maximum,
+              'unsafe protected file')
+        return os.read(descriptor, maximum + 1)
+    finally:
+        os.close(descriptor)
 
 
 def metadata(path: Path, uid: int, mode: int, directory: bool = False) -> dict:
@@ -78,7 +83,11 @@ def binding(base: Path = BASE, *, owner: int = 320) -> dict:
 def inventory(database: Path) -> dict:
     db = sqlite3.connect('file:' + str(database) + '?mode=ro', uri=True)
     try:
-        result = {'database_sha256': digest(read(database))}
+        result = {'database_sha256': digest(read(database)),
+                  'schema': [[row[0], row[1], row[2], row[3] or '']
+                             for row in db.execute(
+                                 'SELECT type,name,tbl_name,sql FROM sqlite_master '
+                                 'ORDER BY type,name')]}
         for table in TABLES:
             rows = db.execute('SELECT * FROM ' + table).fetchall()
             result[table] = [[item.hex() if isinstance(item, bytes) else item for item in row]
@@ -163,6 +172,7 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
          'review': review, 'authorization': authorization}))
     found = binding(base, owner=owner)
     database = found['database']
+    pre = database.lstat()
     before = inventory(database)
     check(before['state'] == [[1, 1]], 'store is not stopped; recovery refuses')
     db = sqlite3.connect(str(database), isolation_level=None)
@@ -177,6 +187,9 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
         raise
     finally:
         db.close()
+    post = database.lstat()
+    check((post.st_dev, post.st_ino) == (pre.st_dev, pre.st_ino),
+          'store database was replaced during recovery')
     try:
         after = inventory(database)
         unchanged(before, after)
@@ -204,8 +217,13 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
             restore.execute('UPDATE state SET stopped=1 WHERE id=1 AND stopped=0')
             restore.commit()
             restore.close()
-        except Exception:
-            pass
+        except Exception as restore_error:
+            try:
+                (recovery / 'incomplete.json').write_bytes(canonical(
+                    {'outcome': 'recovery-incomplete',
+                     'reason': str(restore_error)[:512]}))
+            except Exception:
+                pass
         raise
     return verify(base, owner=owner)
 
@@ -215,6 +233,7 @@ def verify(base: Path = BASE, *, owner: int = 320) -> dict:
     check(recovery.is_dir() and stat.S_IMODE(recovery.lstat().st_mode) == 0o555,
           'recovery namespace differs')
     names = {item.name for item in recovery.iterdir()}
+    check('incomplete.json' not in names, 'recovery failed before durable completion')
     check(names == {'intent.json', 'prior-active.json', 'receipt.json', 'complete.json'},
           'partial or foreign recovery records')
     intent = json.loads(read(recovery / 'intent.json'))
@@ -226,9 +245,17 @@ def verify(base: Path = BASE, *, owner: int = 320) -> dict:
           'receipt differs')
     check(complete['receipt_sha256'] == digest(canonical(receipt))
           and complete['outcome'] == 'published-durable', 'completion differs')
+    check(complete['binding_sha256'] == receipt['active_sha256'] == digest(read(base / 'active.json')),
+          'completion binding hash differs')
     check(read(recovery / 'prior-active.json') == read(base / 'active.json'),
           'prior active binding differs from the current binding')
-    current = inventory(binding(base, owner=owner)['database'])
+    found = binding(base, owner=owner)
+    planned = intent['plan']['baseline']['metadata']
+    check(metadata(base / 'active.json', planned['active']['uid'], 0o444) == planned['active']
+          and metadata(found['database'], planned['database']['uid'], 0o600) == planned['database']
+          and metadata(found['directory'], planned['directory']['uid'], 0o700, True)
+          == planned['directory'], 'post-install metadata drift')
+    current = inventory(found['database'])
     check(current['state'] == [[1, 0]], 'store is not released')
     check(current['database_sha256'] == receipt['database_sha256_after'],
           'current database bytes differ from the released receipt')

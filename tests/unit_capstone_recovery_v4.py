@@ -136,6 +136,20 @@ class RecoveryV4Tests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             snapshot(self.base, owner=OWNER, active_uid=OWNER)
 
+    def test_schema_objects_are_part_of_the_baseline(self):
+        db = sqlite3.connect(self.database)
+        db.execute("CREATE TRIGGER hidden AFTER UPDATE ON state BEGIN SELECT 1; END")
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            self.install()
+
+    def test_verify_rejects_metadata_drift(self):
+        self.install()
+        os.chmod(self.database, 0o644)
+        with self.assertRaises(RuntimeError):
+            verify(self.base, owner=OWNER)
+
 
 if __name__ == '__main__':
     unittest.main()
