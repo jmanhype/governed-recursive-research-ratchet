@@ -17,7 +17,6 @@ ACTIVE = BASE / 'active.json'
 ACTION = 'release-v4-stop-retain-unknowns'
 CEILINGS = {'poc': [5000, 21600000000, 3600000000],
             'milestone': [15000, 86400000000, 10800000000]}
-TABLES = ('reservations', 'metering', 'overhead', 'state', 'store_identity')
 
 
 def canonical(value: object) -> bytes:
@@ -41,7 +40,14 @@ def read(path: Path, maximum: int = 1 << 24) -> bytes:
         check(stat.S_ISREG(info.st_mode) and not stat.S_ISLNK(info.st_mode)
               and info.st_nlink == 1 and info.st_size <= maximum,
               'unsafe protected file')
-        return os.read(descriptor, maximum + 1)
+        chunks = []
+        while True:
+            chunk = os.read(descriptor, 65536)
+            if not chunk:
+                break
+            chunks.append(chunk)
+            check(sum(len(item) for item in chunks) <= maximum, 'protected file too large')
+        return b''.join(chunks)
     finally:
         os.close(descriptor)
 
@@ -88,10 +94,15 @@ def inventory(database: Path) -> dict:
                              for row in db.execute(
                                  'SELECT type,name,tbl_name,sql FROM sqlite_master '
                                  'ORDER BY type,name')]}
-        for table in TABLES:
-            rows = db.execute('SELECT * FROM ' + table).fetchall()
-            result[table] = [[item.hex() if isinstance(item, bytes) else item for item in row]
-                             for row in rows]
+        tables = [row[0] for row in db.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' "
+            'ORDER BY name')]
+        result['tables'] = {}
+        for table in tables:
+            rows = db.execute('SELECT * FROM "' + table + '"').fetchall()
+            result['tables'][table] = [
+                [item.hex() if isinstance(item, bytes) else item for item in row]
+                for row in rows]
         return result
     finally:
         db.close()
@@ -146,8 +157,10 @@ def approval(plan: dict, review: dict, authorization: dict) -> None:
 
 
 def unchanged(before: dict, after: dict) -> None:
-    check(after == dict(before, state=[[1, 0]], database_sha256=after['database_sha256']),
-          'history, holds or unknown rows changed')
+    tables = {name: rows for name, rows in before['tables'].items()}
+    tables['state'] = [[1, 0]]
+    check(after['schema'] == before['schema'] and after['tables'] == tables,
+          'history, schema, holds or unknown rows changed')
 
 
 def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
@@ -174,7 +187,7 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
     database = found['database']
     pre = database.lstat()
     before = inventory(database)
-    check(before['state'] == [[1, 1]], 'store is not stopped; recovery refuses')
+    check(before['tables']['state'] == [[1, 1]], 'store is not stopped; recovery refuses')
     db = sqlite3.connect(str(database), isolation_level=None)
     try:
         db.execute('PRAGMA foreign_keys=ON')
@@ -195,6 +208,8 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
         unchanged(before, after)
         receipt = {'version': 1, 'outcome': 'released-stop-retained-unknowns',
                    'active_sha256': digest(read(base / 'active.json')),
+                   'inventory_before': digest(canonical(before)),
+                   'inventory_after': digest(canonical(after)),
                    'database_sha256_before': before['database_sha256'],
                    'database_sha256_after': after['database_sha256'],
                    'stopped_before': 1, 'stopped_after': 0,
@@ -222,8 +237,13 @@ def apply_install(base: Path, plan: dict, review: dict, authorization: dict,
                 (recovery / 'incomplete.json').write_bytes(canonical(
                     {'outcome': 'recovery-incomplete',
                      'reason': str(restore_error)[:512]}))
-            except Exception:
-                pass
+            except Exception as marker_error:
+                raise RuntimeError(
+                    'restore and incomplete-record both failed: '
+                    + str(restore_error) + ' / ' + str(marker_error)) from restore_error
+            raise RuntimeError(
+                'store restoration failed; incomplete marker written: '
+                + str(restore_error)) from restore_error
         raise
     return verify(base, owner=owner)
 
@@ -256,7 +276,7 @@ def verify(base: Path = BASE, *, owner: int = 320) -> dict:
           and metadata(found['directory'], planned['directory']['uid'], 0o700, True)
           == planned['directory'], 'post-install metadata drift')
     current = inventory(found['database'])
-    check(current['state'] == [[1, 0]], 'store is not released')
+    check(current['tables']['state'] == [[1, 0]], 'store is not released')
     check(current['database_sha256'] == receipt['database_sha256_after'],
           'current database bytes differ from the released receipt')
     return {'outcome': complete['outcome'], 'receipt': receipt}

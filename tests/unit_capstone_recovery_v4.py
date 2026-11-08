@@ -150,6 +150,36 @@ class RecoveryV4Tests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             verify(self.base, owner=OWNER)
 
+    def test_unlisted_table_data_is_part_of_the_baseline(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE audit(id INTEGER PRIMARY KEY, note TEXT)')
+        db.execute("INSERT INTO audit(note) VALUES('before')")
+        db.commit()
+        db.close()
+        self.records = build(self.base, RESEARCH, owner=OWNER, active_uid=OWNER)
+        db = sqlite3.connect(self.database)
+        db.execute("UPDATE audit SET note='after' WHERE id=1")
+        db.commit()
+        db.close()
+        with self.assertRaises(RuntimeError):
+            self.install()
+
+    def test_trigger_side_effect_on_unlisted_table_is_refused_and_restored(self):
+        db = sqlite3.connect(self.database)
+        db.execute('CREATE TABLE audit(id INTEGER PRIMARY KEY, note TEXT)')
+        db.execute("CREATE TRIGGER release_audit AFTER UPDATE ON state "
+                   "BEGIN INSERT INTO audit(note) VALUES('released'); END")
+        db.commit()
+        db.close()
+        self.records = build(self.base, RESEARCH, owner=OWNER, active_uid=OWNER)
+        with self.assertRaises(RuntimeError):
+            self.install()
+        db = sqlite3.connect(self.database)
+        self.assertEqual(db.execute('SELECT stopped FROM state').fetchone(), (1,))
+        db.close()
+        with self.assertRaises(RuntimeError):
+            verify(self.base, owner=OWNER)
+
 
 if __name__ == '__main__':
     unittest.main()
