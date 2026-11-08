@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/Library/GRRR/replay-package/replay.py", line 581, in evaluator
+    validate_mode_results(mode, results, observations)
+  File "/Library/GRRR/replay-package/replay.py", line 536, in validate_mode_results
+    require(mode in MODES and [item['finding'] for item in results] == expected[mode],
+  File "/Library/GRRR/replay-package/common.py", line 45, in require
+    raise Failure(code, message)
+common.Failure: Fixed replay findings differ
