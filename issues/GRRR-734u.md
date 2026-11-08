@@ -8,7 +8,8 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-08T18:07:59Z
-content_hash: "sha256:f39f6ba04bc2e6861ed8a023cfc8918b870ceff097875299a373458a5ec09066"
+content_hash: "sha256:01b672a55b89b49b82cc3ae1c262da04877e6c0da260a20cd4d409d1dd40b3e5"
+follows: [GRRR-hbc6]
 ---
 
 ## Description
@@ -88,5 +89,6 @@ status: new
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Follows: [[GRRR-hbc6]]
 
 ## Comments
