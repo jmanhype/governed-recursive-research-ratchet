@@ -1,0 +1,7 @@
+$ PYTHONPATH=research:tests /opt/homebrew/bin/python3 -B docs/evidence/accounting-recovery-v4/r9/pre-unhalted-fixture.py
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.021s
+
+OK
+EXIT_STATUS=0
