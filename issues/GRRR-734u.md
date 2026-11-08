@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-08T18:26:48Z
-content_hash: "sha256:c0834f68640c59eb848f3e3cc87fb9d55811891782a5578368249c46755ffbe8"
+content_hash: "sha256:12b7511c71d4c9c90a2d8fb691fa8e404b07f20c592a9ba55cdf526490c268ec"
 follows: [GRRR-hbc6, GRRR-q3hp]
 assignee: dev-GRRR-734u
 ---
@@ -159,3 +159,48 @@ status: in_progress
 - Follows: [[GRRR-hbc6]], [[GRRR-q3hp]]
 
 ## Comments
+
+### 2026-11-08T18:26:48Z speed
+## Source WIP checkpoint — GRRR-734u
+
+Parent verified the requested kickoff progressed beyond framing. The exact four scoped files exist in `.claude/worktrees/dev-GRRR-734u` on `story/GRRR-734u`, base commit `5f6ce4e83e2426e859127af568aa730c19dc6a9b`. No new commit, delivery, acceptance, or merge of this WIP.
+
+### Implemented source, not runtime proof
+- Pure versioned canonical `prepare`/`validate_proposal` API with a frozen byte/hash proposal and detached record copies.
+- Exact source/input/VM/policy/prior-evidence/predecessor/accounting identity bindings; v4 recovery reference pinned. Caller-provided archival hashes are not authentication or proof of live currency.
+- Distinct opaque future namespace; consumed predecessor retained as provenance. Existing/reused/consumed/pending/stopped/unknown target cases refuse. No old ledger, sequence, accounting store or allowance is created/reset/changed.
+- All five authorization flags false, all eleven common mandatory live gates not-run, status prepared_not_issued, runtime readiness not_asserted.
+- Explicit temporary-fixture preflight validates all filesystem-bound paths lexically before metadata and uses descriptor-relative no-follow reads. It does not probe the generated protected target and assumes caller-owned quiescent fixtures, not hostile concurrent renames.
+- Twelve focused real filesystem/SQLite regressions, including preservation of prior bytes/inodes and zero protected metadata attempt guards. Public production functions now have type annotations.
+- Documentation: docs/FRESH-REPLAY-RUNTIME-WIP.md states uncommitted/unapproved/unprovisioned and lists remaining exact-parent review/provisioning gates.
+
+### Exact WIP hashes
+- research/fresh_replay_runtime.py: 04e6dd9922de9e136dd0ad1b46ee114168c9fb509dd66df36a8711343f84eb55
+- tests/unit_capstone_fresh_replay_runtime.py: de3616752ab0d19e4d4888ba73b9e00c758140c5dc18f6fb913640e115455da5
+- tests/unit_capstone_backend_suite.py (registration only): 07e3d0521cdd631c9111da63a054fac579cb90f05da3e6f24c6af6d07bb1f6f4
+- docs/FRESH-REPLAY-RUNTIME-WIP.md: bfd60c10cf14376d0d918901deecc0dbc42b185bb5535cebcb9634448eb85cf7
+- Functional scope: four files, 471 insertions/1 deletion including new additions; under the 600-LOC budget. No other repo changes observed.
+
+### Parent-measured source verification
+Commands: `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_backend_suite.py`, once per installed interpreter. Parent checked source SHA256 before and after each run.
+- Python3.14.3: 319 tests, zero failures/errors/skips. /private/tmp/grrr-734u-parent-Python-3.14.3.log SHA256 134eaebfb1384bb4d990761adeb6577a4748d7b8411145317c7933ca088f1876.
+- Python3.12.9: 319 tests, zero failures/errors/skips. /private/tmp/grrr-734u-parent-Python-3.12.9.log SHA256 53d63c6cb38d6d7246a04481b4f7b8159c14a9b48df62e9689382445f2565b40.
+- Python3.9.6: 319 tests, zero failures/errors/skips. /private/tmp/grrr-734u-parent-Python-3.9.6.log SHA256 f9cd95b619d5692c8fed39dd09251bfc9d0735368d35b59baa333a24d3873734.
+- Worker focused suites: 12 tests passed per interpreter under the same denial profile. Parent verified raw artifacts, source diff, public type hints, and git diff --check; no independent reviewer approval is asserted.
+
+### Routing and lifecycle
+CoS native dispatch was unavailable. Initial GLM coding pass produced no artifacts within its bounded window and was interrupted; no provider throttle/outage is inferred. The protected-path/authority-sensitive implementation was escalated once to fresh Astra, then a tiny GLM signature-only pass. All those child tasks are stopped; parent verification processes completed.
+Canonical worktree cleanup refused a missing ownership marker because this checkout was originally created by git worktree add. The safety refusal was respected: no force removal or marker fabrication. The dirty WIP is deliberately preserved, not discarded or presented as committed.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Authorized hbc6 merge 5f6ce4e is committed on epic/GRRR-2t3h and freshly verified 307 tests on all three interpreters.
+- GRRR-734u source-only WIP exists with hashes above and parent-measured 319-test results on all three interpreters under protected-path OS denial.
+- No protected access/provisioning, reconciliation, VM/replay execution, promotion, admission, production mutation, new source commit, WIP merge, or push.
+
+### proof
+- [x] Kickoff: authoritative queue selection, atomic claim, isolated story worktree, implemented source WIP and measured fixture tests.
+- [ ] AC #1-7: Independent review and canonical delivery/PM acceptance remain pending; source tests are not acceptance or live capstone evidence.
+- [ ] Any protected provisioning or replay: not authorized or performed by this source-only checkpoint.
