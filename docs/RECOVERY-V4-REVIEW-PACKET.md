@@ -1,4 +1,10 @@
-# Recovery v4 review packet (generated, rev5)
+# Recovery v4 review packet (historical r8)
+
+> Superseded by `docs/evidence/accounting-recovery-v4/r9/EXACT-STAGED-PACKET.md`.
+> The r8 closure below was rejected and is retained as historical evidence,
+> not as the current installation target. Its root-staged bytes are archived
+> at `/Library/GRRR/bootstrap/recovery-v4-history/rev8-4db1623-f01aa240`.
+
 Generated from the exact staged closure in /Library/GRRR/bootstrap/recovery-v4.
 action=release-v4-stop-retain-unknowns  base=/Library/GRRR/accounting-poc2
 
