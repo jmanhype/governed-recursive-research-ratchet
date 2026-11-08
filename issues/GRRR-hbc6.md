@@ -9,7 +9,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
 updated_at: 2026-11-08T17:44:52Z
-content_hash: "sha256:94851da692ae283080a92fce2c7cfeea43d27e4901916965e170c2b29c2fb418"
+content_hash: "sha256:ae1d963b8a8237676f6d5a40bc6798d643b5407ebfa11d44b7da277cec352e5d"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 closed_at: 2026-11-08T17:44:52Z
@@ -42,6 +42,18 @@ Replay session reset (`replay_state`), fresh replay runtime provisioning, and an
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-08.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-11-08]: Independent PM evidence review meets all seven ACs.
 
