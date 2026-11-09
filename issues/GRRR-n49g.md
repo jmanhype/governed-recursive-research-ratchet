@@ -1,14 +1,16 @@
 ---
 id: GRRR-n49g
 title: "Report: fail-closed recommendations and read-only status view"
-status: open
+status: in_progress
 priority: 0
 type: bug
 parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
-updated_at: 2026-11-09T17:44:55Z
-content_hash: "sha256:fd4788c96232785e1ad6dc34dcf440177c00465faf88cbabe19ea6fd3793f4a2"
+updated_at: 2026-11-09T17:45:04Z
+content_hash: "sha256:3e62185bbffde830f1e6faf9609163ed6ac2228b4162dd19558013b4e9e9c307"
+assignee: dev-GRRR-n49g
+follows: [GRRR-hbc6]
 ---
 
 ## Description
@@ -65,9 +67,12 @@ status: new
 
 
 ## History
-
+- 2026-11-09T17:45:04Z status: open -> in_progress
+- 2026-11-09T17:45:04Z auto-follows: linked to predecessor GRRR-hbc6
+- 2026-11-09T17:45:04Z claimed by dev-GRRR-n49g
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Follows: [[GRRR-hbc6]]
 
 ## Comments
