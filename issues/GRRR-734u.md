@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-09T15:14:42Z
-content_hash: "sha256:4e64d1aff8d670e4235d14944b6ab3c4f444a97f6ed1c42a7dcff2d191211a3d"
+updated_at: 2026-11-09T15:28:20Z
+content_hash: "sha256:69eaefea9a5fa0e7c0e2772f372f92daad892855f8b6808c803dcef93091f1b0"
 follows: [GRRR-hbc6, GRRR-q3hp]
 assignee: dev-GRRR-734u
 ---
@@ -85,6 +85,33 @@ status: new
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
 Bounded worker replacement: GLM first source pass was interrupted after no source artifacts or commits appeared; no throttle/outage verdict is inferred. Worktree and branch reverified clean at 5f6ce4e. Canonical pvg worktree remove refused a missing ownership marker (the parent had used git worktree add); no force/marker/tooling override was attempted, and the clean checkout is preserved. Escalated exactly the protected-path/authority-sensitive four-file source WIP to fresh Astra task /root/grrr734u_security_wip, with no orchestration or delegation, no commit or protected effects. Existing tested OS denial profile is required for fixture/backend runs. Source results still pending; no approval/readiness claimed.
+## Independently approved source-WIP commit and bounded state audit
+
+Operator-authorized local commit: 4e09c6b65fc9110cbec610c4754cef7e8e902ca4 on story/GRRR-734u, parent 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Four reviewed functional files plus retained review/test evidence, 14 paths total. Story worktree clean after commit; epic/GRRR-2t3h remains clean at 5f6ce4e. No delivery, PM acceptance or merge asserted.
+
+R1 rejected F1 external string-subclass equality bypass. GLM patch was integrated after a bounded interrupt; parent found/repaired its intermediate test setup error. R2 fresh independent security review APPROVED with no blocking findings, artifact docs/evidence/fresh-replay-runtime/r2-review.md SHA256 d73e795e4753f02a47ecad4bdd2faf3135544e14baa9984a5031d33e58ced868. Parent read/revalidated exact source hashes and reran the retained independent probe: 14 checks passed, accounting fixture bytes/inode unchanged.
+
+Parent final backend results on approved committed bytes: Python 3.14.3, 3.12.9, 3.9.6 each 322 tests, zero failures/errors/skips under process-local /Library/GRRR read/write denial; focused 15 tests passed on 3.14.3. Source tests explicitly NOT-QUALIFY installed/live capstone. Retained raw logs, hashes, commands, review provenance and limits: docs/evidence/fresh-replay-runtime/RESULT.md in 4e09c6b. No protected metadata or actual runtime was accessed.
+
+The latest separate operator request to find implicit app state machines was handled as a bounded static audit, not a cross-cutting runtime refactor. Report: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-state-machine-audit-20261109/STATE-MACHINES.md SHA256 cc38ae2b0a0d57c962a4eec5eee3553b421e7d0de8d84306cc163ebaa7af7f62. Manifests enumerate 155 app source/command files (87 research, 67 scripts, one entrypoint), not proof of semantic exhaustiveness or live state. Three scoped read-only auditors plus parent wrapper/projection inspection; all child tasks stopped.
+
+Confirmed synthetic presentation defect, not admission bypass: review_report.build_report can recommend contract admission with zero gate records and hardcoded cost0; proof/report-probe-result.json SHA256 c1476af34742000c5c91a5004eceb526fd207268168e5f3d73b0809cbde8221b in the audit output. Audit decision: first add a pure read-only versioned status/reason projection retaining separate authority owners, unknowns, execution/finding/approval/admission/promotion axes; do not change independent gates or install a framework. That broader recommendation is not implemented or architecturally accepted by this note.
+
+Beads sync found no database; no second tracker was initialized. pvg nd sync --no-push remains local-only/no remote. No protected access, provisioning, reconciliation, replay, promotion, admission, production mutation, merge or push.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- Authorized source-WIP checkpoint committed as 4e09c6b with independent R2 approval and measured cross-version tests.
+- Source/review/evidence bytes retained; worktree clean, epic unchanged; no runtime readiness claim.
+
+### proof
+- [x] Requested independent review, F1 correction, fresh approval and source-WIP commit.
+- [x] Source-only required suite: 322 tests on each installed Python, no failures/errors/skips.
+- [ ] Canonical delivery and independent PM acceptance: not performed by this WIP checkpoint.
+- [ ] Protected provisioning/live namespace/replay: not authorized or performed by this checkpoint.
+
 ## Authorized independent source review and bounded rework
 
 Operator authorization: independently review GRRR-734u, fix findings, then commit approved source WIP. No provisioning, reconciliation, replay, promotion, admission, production mutation, merge or push. This later authorization permits a reviewed local source-WIP commit; it does not issue runtime authority.
