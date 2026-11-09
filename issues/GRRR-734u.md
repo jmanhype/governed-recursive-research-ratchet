@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-09T15:14:42Z
-content_hash: "sha256:6aaa703c06626a5f9706901303a6f66cd7c912fc7c463f11ba7ba660a106f2d3"
+content_hash: "sha256:4e64d1aff8d670e4235d14944b6ab3c4f444a97f6ed1c42a7dcff2d191211a3d"
 follows: [GRRR-hbc6, GRRR-q3hp]
 assignee: dev-GRRR-734u
 ---
@@ -227,3 +227,27 @@ status: in_progress
 - [x] Kickoff: authoritative queue selection, atomic claim, isolated story worktree, implemented source WIP and measured fixture tests.
 - [ ] AC #1-7: Independent review and canonical delivery/PM acceptance remain pending; source tests are not acceptance or live capstone evidence.
 - [ ] Any protected provisioning or replay: not authorized or performed by this source-only checkpoint.
+
+### 2026-11-09T15:14:42Z speed
+## Authorized independent source review and bounded rework
+
+Operator authorization: independently review GRRR-734u, fix findings, then commit approved source WIP. No provisioning, reconciliation, replay, promotion, admission, production mutation, merge or push. This later authorization permits a reviewed local source-WIP commit; it does not issue runtime authority.
+
+Live base remains 5f6ce4e83e2426e859127af568aa730c19dc6a9b. All four source-WIP hashes matched the retained checkpoint. Fresh baseline backend tests: 319 on each Python 3.14.3, 3.12.9 and 3.9.6; zero failures/errors/skips under process-local /Library/GRRR read/write denial.
+
+Independent security review R1 rejected F1: string-subclass equality could bypass external expected-request and fixture digest comparisons. Report docs/evidence/fresh-replay-runtime/r1-review.md SHA256 575a0889134228046d091c4d654cefa9c28cad710a119155a719bf19c226ced5 retained. Exact GLM Coding Plan worker assigned minimal boundary validation/regressions and documentation lifecycle wording; new independent review is required before commit. CoS native worker path was unavailable.
+
+Canonical pvg loop recover preserved dirty GRRR-734u as a foreign worktree, but cleaned two already-merged orphan checkouts (hbc6/q3hp). Their exact accepted branch tips and clean checkouts were restored using canonical pvg worktree add; no code/evidence was lost, no forced cleanup or invented marker. The loop's stalled advisory is a parked-WIP scheduling observation, not a source-test failure or permission for live actions.
+
+The operator additionally requested an app-wide implicit-state-machine audit. It is a separate read-only source audit, not authorization for state migration or broad production refactoring. Results are being retained outside the source WIP at outputs/grrr-state-machine-audit-20261109.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- R1 REVIEW_RESULT: REJECTED; minimal source rework and a new independent review pending.
+- No source-WIP commit, delivery, PM acceptance, protected access or live action asserted at this checkpoint.
+
+### proof
+- [ ] Source-WIP commit: only after independent approval of corrected exact bytes and fresh required suites.
+- [ ] Story acceptance and any protected runtime provisioning: not performed.
