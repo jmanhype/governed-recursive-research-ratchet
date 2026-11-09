@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
-updated_at: 2026-11-09T19:05:30Z
-content_hash: "sha256:6c236513bc2b5f2650846f91bd080a44961b014edf922c380bea18083db1d50e"
+updated_at: 2026-11-09T19:24:39Z
+content_hash: "sha256:2659c9fc79abb17423c8e07f98c9f2e2c0bd784948f2c6345be81ed4e3136080"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6]
 ---
@@ -108,3 +108,6 @@ status: in_progress
 - Source patch exists; parent corrected full eleven-gate presentation and tested focused fixtures. Source WIP uncommitted, no runtime/protected effects.
 ### proof
 - [ ] Final cross-version counts and independent review required before reporting review-approved source WIP.
+
+### 2026-11-09T19:24:39Z speed
+Independent R1 REJECTED two reproduced cost ambiguities despite green source suites: duplicate JSON null/0 fields silently last-won, and distinct integers collapsed after float coercion. R1 artifact SHA2569b8fc34458946427fe3c4d91462d7286ca28e6ea973556bf472ee04b5543e4c4 retained. Fresh GLM exact-number rework finished; parent fixed strict duplicate/precision-aware JSON loading and safe CLI refusal. Worker literal discovery command with an accidental trailing dot found0tests and exited5; it was NOT accepted as green. Corrected focused command ran22tests. Final required-suite counts and fresh independent R2 review pending; all11 gates and authority modules preserved, no source commit or prohibited runtime effects.
