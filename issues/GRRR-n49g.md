@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
 updated_at: 2026-11-09T19:05:30Z
-content_hash: "sha256:59ca82d586aba0f2012ab253030ec379f35f78fff85244720305d003b83d063a"
+content_hash: "sha256:6c236513bc2b5f2650846f91bd080a44961b014edf922c380bea18083db1d50e"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6]
 ---
@@ -92,3 +92,19 @@ status: in_progress
 
 ### 2026-11-09T17:48:00Z speed
 Source kickoff selected by pvg loop next and atomically claimed; isolated pvg-owned story/GRRR-n49g worktree from accepted epic 5f6ce4e. CoS worker unavailable; exact GLM Coding Plan implementation worker assigned seven files; separate read-only compatibility check. Parent baseline307 required backend tests passed on Python3.14.3/3.12.9/3.9.6, zero failures/errors/skips under /Library/GRRR OS denial. New status/report implementation, independent review and final counts pending; no readiness/acceptance/runtime assertion.
+
+### 2026-11-09T19:05:30Z speed
+## Measured gate-profile clarification (operator's preserve-all-gates requirement)
+
+The compatibility checker read selected fields of the actual archived ReplayReceipt: it contains common.GATES' full eleven records, with nine pass and reviewer_outcome/action_specific_human_approval not-run. admission.GATE_INVENTORY is only a nine-gate subset. The initial wording about displaying nine required legacy gates was ambiguous and could obscure those two records; it is superseded for presentation by this clarification.
+
+Required report/status gate inventory: retain all eleven common.GATES, missing entries explicitly not-run; actual archived output must show 9/11, NOT a fully passed9/9. An optional admission-only9/9 subset is separately labeled and grants no approval. Evidence-inspection eligibility requires all eleven plus exact verified=True and Verified defect; source-code review is always separately not-established here. No mandatory gate or authority implementation is changed.
+
+Source-only integration also removes the unrequested arbitrary --evidence CLI input, retaining only --view review|status with existing --format. CLI fixture tests create a real temporary app/evidence copy, not mocked I/O. Exact JSON-type checks prevent in-process equality/lookup hooks; control characters are not projected as labels/status. Parent verification and independent review of the final seven-file diff are pending. Initial worker338-test results apply only to its initial bytes, not the corrected final package.
+
+## nd_contract
+status: in_progress
+### evidence
+- Source patch exists; parent corrected full eleven-gate presentation and tested focused fixtures. Source WIP uncommitted, no runtime/protected effects.
+### proof
+- [ ] Final cross-version counts and independent review required before reporting review-approved source WIP.
