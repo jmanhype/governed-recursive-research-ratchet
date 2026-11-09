@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-08T18:26:48Z
-content_hash: "sha256:12b7511c71d4c9c90a2d8fb691fa8e404b07f20c592a9ba55cdf526490c268ec"
+updated_at: 2026-11-09T15:14:42Z
+content_hash: "sha256:6aaa703c06626a5f9706901303a6f66cd7c912fc7c463f11ba7ba660a106f2d3"
 follows: [GRRR-hbc6, GRRR-q3hp]
 assignee: dev-GRRR-734u
 ---
@@ -85,6 +85,29 @@ status: new
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
 Bounded worker replacement: GLM first source pass was interrupted after no source artifacts or commits appeared; no throttle/outage verdict is inferred. Worktree and branch reverified clean at 5f6ce4e. Canonical pvg worktree remove refused a missing ownership marker (the parent had used git worktree add); no force/marker/tooling override was attempted, and the clean checkout is preserved. Escalated exactly the protected-path/authority-sensitive four-file source WIP to fresh Astra task /root/grrr734u_security_wip, with no orchestration or delegation, no commit or protected effects. Existing tested OS denial profile is required for fixture/backend runs. Source results still pending; no approval/readiness claimed.
+## Authorized independent source review and bounded rework
+
+Operator authorization: independently review GRRR-734u, fix findings, then commit approved source WIP. No provisioning, reconciliation, replay, promotion, admission, production mutation, merge or push. This later authorization permits a reviewed local source-WIP commit; it does not issue runtime authority.
+
+Live base remains 5f6ce4e83e2426e859127af568aa730c19dc6a9b. All four source-WIP hashes matched the retained checkpoint. Fresh baseline backend tests: 319 on each Python 3.14.3, 3.12.9 and 3.9.6; zero failures/errors/skips under process-local /Library/GRRR read/write denial.
+
+Independent security review R1 rejected F1: string-subclass equality could bypass external expected-request and fixture digest comparisons. Report docs/evidence/fresh-replay-runtime/r1-review.md SHA256 575a0889134228046d091c4d654cefa9c28cad710a119155a719bf19c226ced5 retained. Exact GLM Coding Plan worker assigned minimal boundary validation/regressions and documentation lifecycle wording; new independent review is required before commit. CoS native worker path was unavailable.
+
+Canonical pvg loop recover preserved dirty GRRR-734u as a foreign worktree, but cleaned two already-merged orphan checkouts (hbc6/q3hp). Their exact accepted branch tips and clean checkouts were restored using canonical pvg worktree add; no code/evidence was lost, no forced cleanup or invented marker. The loop's stalled advisory is a parked-WIP scheduling observation, not a source-test failure or permission for live actions.
+
+The operator additionally requested an app-wide implicit-state-machine audit. It is a separate read-only source audit, not authorization for state migration or broad production refactoring. Results are being retained outside the source WIP at outputs/grrr-state-machine-audit-20261109.
+
+## nd_contract
+status: in_progress
+
+### evidence
+- R1 REVIEW_RESULT: REJECTED; minimal source rework and a new independent review pending.
+- No source-WIP commit, delivery, PM acceptance, protected access or live action asserted at this checkpoint.
+
+### proof
+- [ ] Source-WIP commit: only after independent approval of corrected exact bytes and fresh required suites.
+- [ ] Story acceptance and any protected runtime provisioning: not performed.
+
 ## Source WIP checkpoint — GRRR-734u
 
 Parent verified the requested kickoff progressed beyond framing. The exact four scoped files exist in `.claude/worktrees/dev-GRRR-734u` on `story/GRRR-734u`, base commit `5f6ce4e83e2426e859127af568aa730c19dc6a9b`. No new commit, delivery, acceptance, or merge of this WIP.
