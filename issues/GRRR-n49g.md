@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
-updated_at: 2026-11-09T17:48:00Z
-content_hash: "sha256:030f719359ba3a77fc8f99e23f22fdab3bcebea538ae19143454ae01befd4943"
+updated_at: 2026-11-09T19:05:30Z
+content_hash: "sha256:59ca82d586aba0f2012ab253030ec379f35f78fff85244720305d003b83d063a"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6]
 ---
@@ -64,7 +64,20 @@ status: new
 
 
 ## Notes
+## Measured gate-profile clarification (operator's preserve-all-gates requirement)
 
+The compatibility checker read selected fields of the actual archived ReplayReceipt: it contains common.GATES' full eleven records, with nine pass and reviewer_outcome/action_specific_human_approval not-run. admission.GATE_INVENTORY is only a nine-gate subset. The initial wording about displaying nine required legacy gates was ambiguous and could obscure those two records; it is superseded for presentation by this clarification.
+
+Required report/status gate inventory: retain all eleven common.GATES, missing entries explicitly not-run; actual archived output must show 9/11, NOT a fully passed9/9. An optional admission-only9/9 subset is separately labeled and grants no approval. Evidence-inspection eligibility requires all eleven plus exact verified=True and Verified defect; source-code review is always separately not-established here. No mandatory gate or authority implementation is changed.
+
+Source-only integration also removes the unrequested arbitrary --evidence CLI input, retaining only --view review|status with existing --format. CLI fixture tests create a real temporary app/evidence copy, not mocked I/O. Exact JSON-type checks prevent in-process equality/lookup hooks; control characters are not projected as labels/status. Parent verification and independent review of the final seven-file diff are pending. Initial worker338-test results apply only to its initial bytes, not the corrected final package.
+
+## nd_contract
+status: in_progress
+### evidence
+- Source patch exists; parent corrected full eleven-gate presentation and tested focused fixtures. Source WIP uncommitted, no runtime/protected effects.
+### proof
+- [ ] Final cross-version counts and independent review required before reporting review-approved source WIP.
 
 ## History
 - 2026-11-09T17:45:04Z status: open -> in_progress
