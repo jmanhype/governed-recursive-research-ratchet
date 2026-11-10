@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-10T02:09:58Z
-content_hash: "sha256:fd59356bad6cd2452f2f5ad774aabb4f673754a2b5110718d8e5869863294651"
+content_hash: "sha256:db1dc53a1842af975ac9ba091878c1daa0954c1fe20a063ace27e7933944b8d8"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7, GRRR-yt6a]
 labels: [rejected]
 assignee: dev-GRRR-734u
@@ -506,3 +506,46 @@ status: rejected
 - [ ] Exact commit provenance: delivery note must cite the actual existing full commit SHA.
 - [x] AC #1-7 behavior was independently substantiated on the actual clean source bytes, subject to this provenance rejection.
 - [x] Runtime readiness explicitly not asserted; source-only result is not live execution proof.
+
+### 2026-11-10T02:09:58Z speed
+## Implementation Evidence
+
+### CI/Test Results
+Commands run:
+- For Python 3.14.3, 3.12.9, and 3.9.6: `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_fresh_replay_runtime.py`.
+- For the same interpreters: `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_backend_suite.py`.
+- `pvg verify research/fresh_replay_runtime.py tests/unit_capstone_fresh_replay_runtime.py tests/unit_capstone_backend_suite.py docs/FRESH-REPLAY-RUNTIME-WIP.md --include-tests --format text`.
+Summary: PASS — focused 15/15 and required 322/322 tests on EACH interpreter, 0 failures/errors/skips; pvg verify 0 issues. Independent PM review repeated these suites on actual clean HEAD and confirmed R2/R3 hashes.
+
+### Commit
+Commit SHA: bdbc4ec1e34845836473d73ea4a681dbb4b46ff8
+
+### Provenance Correction
+The prior note's expanded SHA was invalid; this note corrects it to the actual Git object above. No source byte changed for this correction. Worktree is clean. Exact functional hashes remain:
+- research/fresh_replay_runtime.py: 4f0db5fb8b5deba7ffc21dff1f7dab864911e847754dbae5e5de85d1d52a42cf
+- tests/unit_capstone_fresh_replay_runtime.py: 8eea717b399c34bfd486a6b15b45545edb9fc3e3ddf6f76ce0e85071367e5f40
+- tests/unit_capstone_backend_suite.py: 07e3d0521cdd631c9111da63a054fac579cb90f05da3e6f24c6af6d07bb1f6f4
+- docs/FRESH-REPLAY-RUNTIME-WIP.md: e48e38d3d01d11b0eb62d0df1815313fc87b4ab6cba23f496a2d8cbb65dd28ee
+
+### AC Verification
+- [x] AC #1: Exact typed canonical inputs and immutable hashes; protected assets never opened.
+- [x] AC #2: Fresh namespace proposed; reused/consumed/invalid targets rejected; prior state preserved.
+- [x] AC #3: Exact replay/accounting identities bound; no accounting or authorization mutation.
+- [x] AC #4: prepared_not_issued; every authorization false; every live gate not-run.
+- [x] AC #5: Lexical fail-closed paths and preservation proven by real filesystem/SQLite fixtures.
+- [x] AC #6: Nonzero mock-free/skip-free suites green on Python 3.14/3.12/3.9; static verify clean.
+- [x] AC #7: Remaining exact review/provisioning gates and source-only limits documented.
+
+LEARNINGS:
+- Never expand a abbreviated Git SHA by inference; read rev-parse HEAD before binding evidence.
+- Exact provenance is a distinct acceptance gate even when tests and hashes pass.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Actual clean story HEAD bdbc4ec1e34845836473d73ea4a681dbb4b46ff8; R2/R3 approvals retained; independent PM rerun and parent runs each measured 15 focused and 322 required tests per interpreter with zero failures/errors/skips.
+- No /Library/GRRR access, provisioning, VM, reconciliation, replay, promotion, admission, production mutation, code change, merge, or push.
+
+### proof
+- [x] AC #1-7 verified; the sole prior provenance typo is corrected to the actual commit.
