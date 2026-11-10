@@ -1,17 +1,19 @@
 ---
 id: GRRR-734u
 title: "Replay: fresh execution namespace planner (source-only)"
-status: in_progress
+status: closed
 priority: 2
 type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T02:09:59Z
-content_hash: "sha256:d3e79ebe3df525d5ccbd8c5b09062abb39f9264d6271d8d4caebfa693dbb5c39"
+updated_at: 2026-11-10T22:35:41Z
+content_hash: "sha256:795b363e9d067ce001c4434b8e1dad275de3bc8fb1eed15323735cddaeaf51df"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7, GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-734u
 labels: [delivered]
+closed_at: 2026-11-10T22:35:41Z
+close_reason: "Independent bounded PM re-review passed: delivery preflight 9/9, clean HEAD bdbc4ec1e34845836473d73ea4a681dbb4b46ff8, all four functional SHA256 hashes match corrected authoritative delivery. Sole prior provenance rejection corrected; prior independent AC verification remains applicable to unchanged bytes. Source-only acceptance, not runtime readiness or authorization."
 ---
 
 ## Description
@@ -311,6 +313,7 @@ status: in_progress
 - 2026-11-10T02:09:58Z claimed by dev-GRRR-734u
 - 2026-11-10T02:09:58Z status: in_progress -> in_progress
 - 2026-11-10T02:09:58Z auto-follows: linked to predecessor GRRR-wcwy
+- 2026-11-10T22:35:41Z status: in_progress -> closed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
