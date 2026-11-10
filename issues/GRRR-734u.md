@@ -1,16 +1,17 @@
 ---
 id: GRRR-734u
 title: "Replay: fresh execution namespace planner (source-only)"
-status: open
+status: in_progress
 priority: 2
 type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T02:06:38Z
-content_hash: "sha256:a372c84c620cf496b0c5acfa70c67505429a0e8d9341a12946ad11c04fad297a"
-follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
+updated_at: 2026-11-10T02:09:58Z
+content_hash: "sha256:fd59356bad6cd2452f2f5ad774aabb4f673754a2b5110718d8e5869863294651"
+follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7, GRRR-yt6a]
 labels: [rejected]
+assignee: dev-GRRR-734u
 ---
 
 ## Description
@@ -295,10 +296,13 @@ status: in_progress
 - 2026-11-10T01:53:06Z auto-follows: linked to predecessor GRRR-k3j7
 - 2026-11-10T02:06:37Z status: in_progress -> open
 - 2026-11-10T02:06:37Z released by speed
+- 2026-11-10T02:09:58Z status: open -> in_progress
+- 2026-11-10T02:09:58Z auto-follows: linked to predecessor GRRR-yt6a
+- 2026-11-10T02:09:58Z claimed by dev-GRRR-734u
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Follows: [[GRRR-hbc6]], [[GRRR-q3hp]], [[GRRR-n49g]], [[GRRR-k3j7]]
+- Follows: [[GRRR-hbc6]], [[GRRR-q3hp]], [[GRRR-n49g]], [[GRRR-k3j7]], [[GRRR-yt6a]]
 
 ## Comments
 
