@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T02:06:37Z
-content_hash: "sha256:f6c00ce64504f34337f996978ee36421aba9c54906fbf57be6d4234c34464df8"
+updated_at: 2026-11-10T02:06:38Z
+content_hash: "sha256:a372c84c620cf496b0c5acfa70c67505429a0e8d9341a12946ad11c04fad297a"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
 labels: [rejected]
 ---
@@ -85,6 +85,18 @@ status: new
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
 Bounded worker replacement: GLM first source pass was interrupted after no source artifacts or commits appeared; no throttle/outage verdict is inferred. Worktree and branch reverified clean at 5f6ce4e. Canonical pvg worktree remove refused a missing ownership marker (the parent had used git worktree add); no force/marker/tooling override was attempted, and the clean checkout is preserved. Escalated exactly the protected-path/authority-sensitive four-file source WIP to fresh Astra task /root/grrr734u_security_wip, with no orchestration or delegation, no commit or protected effects. Existing tested OS denial profile is required for fixture/backend runs. Source results still pending; no approval/readiness claimed.
+
+
+## nd_contract
+status: rejected
+
+### evidence
+- PM rejection applied via pvg story reject on 2026-11-09.
+
+### proof
+- [ ] Story requires another developer delivery before it can be accepted.
+
+
 ## Implementation Evidence (DELIVERED)
 
 PROOF:
