@@ -7,10 +7,11 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T02:09:58Z
+updated_at: 2026-11-10T02:09:59Z
 content_hash: "sha256:79626376a35c9e79a853f90d1b39ad19bb1406ac098539ce513f88702db8507c"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7, GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-734u
+labels: [delivered]
 ---
 
 ## Description
