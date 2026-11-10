@@ -1,15 +1,16 @@
 ---
 id: GRRR-734u
 title: "Replay: fresh execution namespace planner (source-only)"
-status: open
+status: in_progress
 priority: 2
 type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-09T17:44:56Z
-content_hash: "sha256:ed9da846d5fa4dfb698ff92f616ef6b68dac870c235bf4bd939961d4bdeab39f"
-follows: [GRRR-hbc6, GRRR-q3hp]
+updated_at: 2026-11-10T01:51:41Z
+content_hash: "sha256:8d952cb1cc0c23300dafc9971465910fb9034be841b3135e405469ab3004a733"
+follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g]
+assignee: dev-GRRR-734u
 ---
 
 ## Description
@@ -204,10 +205,13 @@ status: in_progress
 - 2026-11-08T18:08:44Z claimed by dev-GRRR-734u
 - 2026-11-09T17:44:55Z status: in_progress -> open
 - 2026-11-09T17:44:55Z released by speed
+- 2026-11-10T01:51:41Z status: open -> in_progress
+- 2026-11-10T01:51:41Z auto-follows: linked to predecessor GRRR-n49g
+- 2026-11-10T01:51:41Z claimed by dev-GRRR-734u
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Follows: [[GRRR-hbc6]], [[GRRR-q3hp]]
+- Follows: [[GRRR-hbc6]], [[GRRR-q3hp]], [[GRRR-n49g]]
 
 ## Comments
 
