@@ -11,6 +11,7 @@ updated_at: 2026-11-10T01:16:52Z
 content_hash: "sha256:9e7f68ebd6a98e7e65360f7076d06df7ad53887b024d02928d56b88795a2de60"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6, GRRR-q3hp]
+labels: [delivered]
 ---
 
 ## Description
