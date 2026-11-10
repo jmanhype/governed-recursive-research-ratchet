@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T01:55:48Z
-content_hash: "sha256:34cc3f7929baedad2b7fe0bed3e583681bcb27a6f29794dbf77d193727c5cf40"
+updated_at: 2026-11-10T02:01:07Z
+content_hash: "sha256:f9fc14d5d1970645a2a6233a661cc172be34454fc44520d7830134196fcb644d"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
 assignee: dev-GRRR-734u
 labels: [delivered]
@@ -418,3 +418,51 @@ status: delivered
 
 ### proof
 - [x] AC #1-7 verified from retained review, source hashes, real fixtures, and cross-version test evidence.
+
+### 2026-11-10T02:01:07Z speed
+## Implementation Evidence
+
+### CI/Test Results
+Commands run:
+- For Python 3.14.3, 3.12.9, and 3.9.6: `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_fresh_replay_runtime.py`.
+- For the same three interpreters: `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_backend_suite.py`.
+- `pvg verify research/fresh_replay_runtime.py tests/unit_capstone_fresh_replay_runtime.py tests/unit_capstone_backend_suite.py docs/FRESH-REPLAY-RUNTIME-WIP.md --include-tests --format text`.
+- `shasum -a 256 -c docs/evidence/fresh-replay-runtime/static-repair-artifacts.sha256`; `git diff --check`.
+Summary: PASS — focused 15/15 tests and required 322/322 backend tests on EACH interpreter, with 0 failures, 0 errors, 0 skips. `pvg verify` PASSED with 0 issues. Independent R3 security review APPROVED the exact changed bytes and independently repeated 322 tests per interpreter plus the 14-check boundary probe.
+
+Exact current source hashes:
+- `research/fresh_replay_runtime.py`: `4f0db5fb8b5deba7ffc21dff1f7dab864911e847754dbae5e5de85d1d52a42cf`
+- `tests/unit_capstone_fresh_replay_runtime.py`: `8eea717b399c34bfd486a6b15b45545edb9fc3e3ddf6f76ce0e85071367e5f40`
+- R3 review: `docs/evidence/fresh-replay-runtime/r3-static-repair-review.md` SHA256 `7e64a340bf18e9baa3df99f6b9b6c629e821de73f5a23df50eb17e7c62954bd0`
+
+### Commit
+Commit SHA: bdbc4ec021e26847627597050918c88e94af4d1d
+
+### Wiring
+- The only semantic-code delta after R2 replaces a bare `pass` for expected target absence with explicit fail-closed state tracking; two test marker subclasses receive docstrings.
+- Existing target-exists, dangling-symlink, lexical preflight, exact-type, preservation, prepared-not-issued, and no-authority behavior is retained.
+- Required backend runner still registers the focused suite. No runtime action occurred.
+
+### AC Verification
+- [x] AC #1: Exact typed canonical inputs and immutable hashes; protected assets never opened.
+- [x] AC #2: Fresh namespace proposed; reused/consumed/invalid targets rejected; prior state preserved.
+- [x] AC #3: Exact replay/accounting identities bound; no accounting or authorization mutation.
+- [x] AC #4: `prepared_not_issued`; every authorization false; every live gate not-run.
+- [x] AC #5: Lexical fail-closed paths and preservation proven by real filesystem/SQLite fixtures.
+- [x] AC #6: Nonzero mock-free/skip-free suites green on Python 3.14/3.12/3.9; static verify clean.
+- [x] AC #7: Remaining exact review/provisioning gates and source-only limits documented.
+
+LEARNINGS:
+- A deterministic static gate can catch syntax that looks like a stub even when behavior is intentional; repair the representation and obtain a fresh exact-delta review rather than waiving the gate.
+- Explicit target-absence state preserves fail-closed behavior more legibly than an exception `pass`.
+- Retained per-interpreter logs, the review report, and a checksum manifest prevent an approved WIP from drifting after verification.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Current reviewed source commit `bdbc4ec021e26847627597050918c88e94af4d1d`; R3 exact-delta approval; 15 focused and 322 required tests on each installed interpreter; `pvg verify` 0 issues.
+- No `/Library/GRRR` access, provisioning, VM, reconciliation, replay, promotion, admission, production mutation, merge, or push.
+
+### proof
+- [x] AC #1-7 verified from retained independent R2/R3 reviews, exact hashes, real fixtures, cross-version tests, and documentation.
