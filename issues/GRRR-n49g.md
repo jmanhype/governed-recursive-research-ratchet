@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
 updated_at: 2026-11-10T01:17:12Z
-content_hash: "sha256:a21a3e6eabed4006f92d4cfd4b42926e9c40d9c6d455ef6f14f082a8fb3e5bd6"
+content_hash: "sha256:d83296e5de67eee40fc38874d6afdc8a88c348d19c7a904942e3b8e2319d689c"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6, GRRR-q3hp]
 labels: [delivered]
@@ -303,6 +303,67 @@ PROOF:
   - /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' /opt/homebrew/bin/python3 -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-n49g-delivery-line-coverage.py docs/evidence/read-only-status/delivery-line-coverage.json
   - shasum -a 256 -c docs/evidence/read-only-status/delivery-source.sha256; shasum -a 256 -c docs/evidence/read-only-status/authority-source.sha256; git diff --check.
 - Summary: PASS: 348/348 tests on EACH Python3.14.3/3.12.9/3.9.6; failures0/errors0/skips0. Additional instrumented Python3.14.3 run348/348, failures0/errors0/skips0. pvg verify PASSED: 5files scanned, 0issues. No required module or zero/skip guard removed. All tests are SOURCE_ONLY BACKEND_WIP; installed topology, live campaign execution and capstone NOT-QUALIFIED.
+- Coverage: 96.83% (336/347 executable lines) in the two in-process report/status modules, measured with stdlib trace: status_view98.44% (189/192), review_report94.84% (147/155). Not branch/subprocess CLI/project-wide coverage; not runtime proof. No coverage dependency installed. AC mapping6/6 present; no fabricated runtime/permission success.
+- Logs: docs/evidence/read-only-status/delivery-python314.log, delivery-python312.log, delivery-python39.log, delivery-line-coverage.log/json, delivery-pvg-verify.log, delivery-authority-parity.log. delivery-verify.sh and delivery-line-coverage.py retain exact commands/measurement method.
+- Reviewed-source continuity: R2 ec4fabd6c2785e8e3de19a5a86163b9fa9ba0a24f5e5cfabeceb1c5c0448af6c approved the prior seven-file WIP and independently measured41focused tests. Final exact-delta independent review approved replacing only ReportError's inherited barepass with an exception docstring; all six other reviewed source hashes are unchanged. Current7file inventory delivery-source.sha256; current review delivery-delta-review.md. Old R2 manifests/RESULT retained unchanged as historical evidence, not current bytes/status.
+- All six admission/common/accounting/ledger/installation-authority source files exactly match base HEAD5f6ce4e. No /Library/GRRR access or probe, credentials/research-provider calls, protected install/provisioning, reconciliation, actual replay, admission, promotion, production mutation, merge or push. Standard delegated coding/review inference is separate from research execution.
+
+### Commit
+- Branch: story/GRRR-n49g
+- SHA: 632912391db2bfdf59c339d4627d965fffc7bb08
+- Parent: 5f6ce4e83e2426e859127af568aa730c19dc6a9b.
+- Producing source hashes in delivery-source.sha256 are committed unchanged at this SHA. Tests ran on these exact bytes immediately before commit; no functional change after verification. The operator explicitly authorized this local source commit and delivery, not runtime authority or merge/push.
+- Artifact digests: delivery-artifacts.sha256 binds all retained artifacts except itself; functional source hashes are separate. SHA identifies bytes, not live provenance/authority.
+
+### Wiring
+- scripts/grrr-review --view review|status uses review_report.build_report -> status_view.project_status; both views share one version2 projection and three formats. Real temporary archive/CLI journeys exercise wiring without mocked successful I/O. Existing fixed historical evidence input retained; no arbitrary-path reader or mutation command.
+
+### pvg verify
+VERIFY: PASSED (5 files scanned, 0 issues). The inherited exception-class barepass was corrected, not waived. Independent exact-delta review covers that one-line documentation-only change; tests re-ran afterward.
+
+### AC Verification
+| AC # | Requirement | Code Location | Test Location | Status |
+|------|-------------|---------------|---------------|--------|
+| 1 | All11 common gates retained per later clarification; missing/empty/invalid/extra-only evidence never approves; nine-gate subset separate | research/status_view.py _gates/project_status | unit_status_view gate cases; unit_review_report zero-gate case | PASS |
+| 2 | Missing/invalid/ambiguous costs Unknown/null, exact observed numbers not spendability; duplicate/lossy JSON refused | status_view._cost/_number; review_report._read_json/_json_float/_cost_line | cost/duplicate/precision/real-loader/CLI tests in both modules | PASS |
+| 3 | Pure detached typed schema2 projection, independent state axes and all authoritiesfalse | research/status_view.py project_status | detached/purity/unsupported axes/authority/subclass/control-character tests | PASS |
+| 4 | Same projection in review/status text/Markdown/JSON; historical labels and readable CLI | research/review_report.py; scripts/grrr-review; docs/READ-ONLY-STATUS-VIEW.md | format consistency and real CLI journeys, schema1 rejection | PASS |
+| 5 | Real fixture/purity/adversarial tests; all required modules and zero/skip gates preserved; three Python versions green | tests/unit_status_view.py; tests/unit_review_report.py; tests/unit_capstone_backend_suite.py registration-only |348tests per3Python versions;41focused reports/status cases | PASS |
+| 6 | Independent read-only review and exact retained evidence; no self-acceptance or runtime effects | docs/evidence/read-only-status/DELIVERY-CHECKS.md, R1/R2 and exact-delta review, manifests and logs | exactsource SHA checks; authority-byte parity; independent reviews | PASS |
+
+LEARNINGS:
+- Never use vacuous all() or a subset count as full mandatory-gate success; the historical archive is9/11, not fully passed9/9.
+- Missing cost is not zero; duplicate keys and native-number precision can conceal ambiguity even when ordinary tests are green.
+- A pure shared projection keeps UX/DX/AX consistent, but archive inspection/source review is not installation or action authority.
+- pvg verify flags exception-class barepass as a stub; use a descriptive class docstring, retain independent delta review and do not skip the check.
+- Historical precommit receipts remain immutable; bind current source separately. No Beads database exists; attempted bd sync --from-main refused, so live Paivot nd remains the only tracker.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Local commit 632912391db2bfdf59c339d4627d965fffc7bb08, branchstory/GRRR-n49g, exact seven-file hash inventory plus retained evidence. Three348test suites green and staticverify0issues. Independently reviewed source; PM decision not yet made by developer.
+
+### proof
+- [x] AC #1: All eleven display gates remain fail-closed, subset non-authoritative.
+- [x] AC #2: Unknown costs not fabricated zero; exact/ambiguous JSON number regressions covered.
+- [x] AC #3: Pure detached typed projection, distinct states, no action authority.
+- [x] AC #4: Read-only CLI review/status in text/Markdown/JSON share one historical projection.
+- [x] AC #5:348required source tests each3Python versions, zero failures/errors/skips; real fixtures and preserved suite guards.
+- [x] AC #6: Independent R2 plus exact-delta review, exact manifests/logs retained; no self-acceptance or prohibited runtime effects.
+
+### 2026-11-10T01:17:12Z speed
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+  - From the retained story worktree, for /opt/homebrew/bin/python3 (3.14.3), /opt/homebrew/bin/python3.12 (3.12.9), /usr/bin/python3 (3.9.6): /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' PYTHON -B tests/unit_capstone_backend_suite.py
+  - pvg verify research/status_view.py research/review_report.py scripts/grrr-review tests/unit_status_view.py tests/unit_review_report.py tests/unit_capstone_backend_suite.py --include-tests --format text
+  - /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' /opt/homebrew/bin/python3 -B /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-n49g-delivery-line-coverage.py docs/evidence/read-only-status/delivery-line-coverage.json
+  - shasum -a 256 -c docs/evidence/read-only-status/delivery-source.sha256; shasum -a 256 -c docs/evidence/read-only-status/authority-source.sha256; git diff --check.
+Summary: PASS: 348/348 tests on EACH Python3.14.3/3.12.9/3.9.6; failures0/errors0/skips0. Additional instrumented Python3.14.3 run348/348, failures0/errors0/skips0. pvg verify PASSED: 5files scanned, 0issues. No required module or zero/skip guard removed. All tests are SOURCE_ONLY BACKEND_WIP; installed topology, live campaign execution and capstone NOT-QUALIFIED.
 - Coverage: 96.83% (336/347 executable lines) in the two in-process report/status modules, measured with stdlib trace: status_view98.44% (189/192), review_report94.84% (147/155). Not branch/subprocess CLI/project-wide coverage; not runtime proof. No coverage dependency installed. AC mapping6/6 present; no fabricated runtime/permission success.
 - Logs: docs/evidence/read-only-status/delivery-python314.log, delivery-python312.log, delivery-python39.log, delivery-line-coverage.log/json, delivery-pvg-verify.log, delivery-authority-parity.log. delivery-verify.sh and delivery-line-coverage.py retain exact commands/measurement method.
 - Reviewed-source continuity: R2 ec4fabd6c2785e8e3de19a5a86163b9fa9ba0a24f5e5cfabeceb1c5c0448af6c approved the prior seven-file WIP and independently measured41focused tests. Final exact-delta independent review approved replacing only ReportError's inherited barepass with an exception docstring; all six other reviewed source hashes are unchanged. Current7file inventory delivery-source.sha256; current review delivery-delta-review.md. Old R2 manifests/RESULT retained unchanged as historical evidence, not current bytes/status.
