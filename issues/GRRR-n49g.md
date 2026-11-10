@@ -1,17 +1,19 @@
 ---
 id: GRRR-n49g
 title: "Report: fail-closed recommendations and read-only status view"
-status: in_progress
+status: closed
 priority: 0
 type: bug
 parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
-updated_at: 2026-11-10T01:17:12Z
-content_hash: "sha256:a45939024e7f0e759e027b439318ad426a60b5dfab170dda494882b1fec89b31"
+updated_at: 2026-11-10T01:24:10Z
+content_hash: "sha256:947c55839a09e471ad5b183f812d1f969a22caa0f7b3fcaa29f068c427d37fc1"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-k3j7]
 labels: [delivered]
+closed_at: 2026-11-10T01:24:10Z
+close_reason: "Accepted: Independent evidence-based PM review verified all six ACs at source commit 632912391db2bfdf59c339d4627d965fffc7bb08; current seven-file hashes, authority parity, independent R2/delta approvals, three skip-free 348-test logs, and bounded coverage all pass. Acceptance is source-story only and grants no runtime, admission, promotion, or production authority."
 ---
 
 ## Description
@@ -239,6 +241,7 @@ status: in_progress
 - 2026-11-10T01:16:52Z auto-follows: linked to predecessor GRRR-q3hp
 - 2026-11-10T01:17:12Z status: in_progress -> in_progress
 - 2026-11-10T01:17:12Z auto-follows: linked to predecessor GRRR-k3j7
+- 2026-11-10T01:24:10Z status: in_progress -> closed
 
 ## Links
 - Parent: [[GRRR-2t3h]]
