@@ -6,6 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'research'), str(ROOT / 'tests')]
 MODULES = ('unit_capstone_contract', 'unit_capstone_peer', 'unit_capstone_journal',
+           'unit_status_view', 'unit_review_report',
            'unit_durable_evidence', 'unit_capstone_backend_contract',
            'unit_capstone_backend_launch', 'unit_capstone_backend_review',
            'unit_capstone_backend_composition', 'unit_capstone_backend_index',

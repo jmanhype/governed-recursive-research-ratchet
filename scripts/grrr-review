@@ -1,27 +1,43 @@
 #!/usr/bin/env python3
-"""GRRR replay review surface — generate reports from verified evidence."""
+"""GRRR read-only reports from historical, not currently verified evidence."""
 import argparse, json, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "research"))
 
-from review_report import load_replay_data, build_report, to_markdown, to_plain_text, to_json
+from review_report import (
+    load_replay_data, build_report, to_markdown, to_plain_text, to_json,
+    to_status_markdown, to_status_plain_text, to_status_json,
+    ReportError,
+)
 
 EVIDENCE = ROOT / "docs/evidence/replay-authority/replay-result/export-ca47bda9f47645b1910cba1449bcddfe"
 
-def main():
+def main() -> int:
     p = argparse.ArgumentParser(description="GRRR replay review")
     p.add_argument("--format", choices=["text", "markdown", "json"], default="text")
+    p.add_argument("--view", choices=["review", "status"], default="review")
     args = p.parse_args()
-    data = load_replay_data(EVIDENCE)
-    report = build_report(data)
-    if args.format == "markdown":
-        print(to_markdown(report))
-    elif args.format == "json":
-        print(to_json(report))
-    else:
-        print(to_plain_text(report))
+    try:
+        data = load_replay_data(EVIDENCE)
+        report = build_report(data)
+    except ReportError:
+        message = "Archived evidence unreadable or ambiguous; no actions authorized"
+        if args.format == "json":
+            print(json.dumps({"record_type": "grrr-report-refusal-v1",
+                              "read_only": True, "actions_authorized": False,
+                              "error": {"code": "EVIDENCE_INVALID", "message": message}}))
+        else:
+            print("GRRR_REPORT_REFUSED: " + message, file=sys.stderr)
+        return 2
+    status = args.view == "status"
+    renderers = {
+        "markdown": to_status_markdown if status else to_markdown,
+        "json": to_status_json if status else to_json,
+        "text": to_status_plain_text if status else to_plain_text,
+    }
+    print(renderers[args.format](report))
     return 0
 
 if __name__ == "__main__":

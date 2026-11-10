@@ -1,0 +1,6 @@
+{
+  "checks_passed": 15,
+  "no_actions_authorized": true,
+  "required_gates": 11,
+  "synthetic_only": true
+}

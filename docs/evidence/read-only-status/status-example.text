@@ -1,0 +1,39 @@
+GRRR READ-ONLY STATUS
+=====================
+Evidence:        Historical archive; current verification absent
+Projection:      Read-only; no live runtime or authority inferred
+Run:             dc4e157ee0944793a5953f8805302538
+Challenge:       GRRR-VC-D011
+Execution:       Completed
+Elapsed:         47.7 seconds reported, unverified
+Finding:         Verified defect
+Verified exact:  true
+Required gates:  9/11 pass
+Review eligible: false
+Cost:            Unknown; no settled or spendable amount is established
+Spendability:    Unknown
+Human decision:  Not established
+Source review:   Not established
+Installation:    Not qualified
+Stop/cessation:  Unknown
+Admission:       Not established
+Promotion:       Disabled
+All authorities: false
+Recommendation:  Needs more evidence
+Next action:     Provide complete verified historical evidence
+Next owner:      Evidence owner
+
+Required full replay gates:
+- source_environment_identity: pass
+- isolation: pass
+- protected_asset_integrity: pass
+- baseline_correctness: pass
+- trusted_observation: pass
+- independent_replay: pass
+- specification_traceability: pass
+- evidence_integrity_currency: pass
+- budget_state: pass
+- reviewer_outcome: not-run
+- action_specific_human_approval: not-run
+Admission-only subset: 9/9; not full verification or approval
+Identity: not established; no artifact provenance or currency claim

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/grrr-n49g-regression-probe.py", line 22, in <module>
+    assert report['gates_total'] == len(GATE_INVENTORY), report
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'schema_version': 1, 'run': 'unknown', 'challenge': 'unknown', 'execution_state': 'Completed', 'finding': 'Verified defect', 'verified': True, 'gates_pass': 0, 'gates_total': 0, 'elapsed_seconds': 0, 'cost_usd': 0, 'snapshot_sha256': 'ab8d72f25c3a4ce2f5d5d672c4d052ea2de442f9c9384bd381d8222d7a91b689', 'decision': None, 'decision_state': 'Ready for review', 'recommendation': 'Approve permanent contract admission'}
