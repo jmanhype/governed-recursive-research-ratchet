@@ -10,7 +10,6 @@ created_by: speed
 updated_at: 2026-11-10T02:06:37Z
 content_hash: "sha256:76d536bdaec9fe1b081a918f273d0204008b653cc50105c174a02bf9626eaecb"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
-labels: [delivered]
 ---
 
 ## Description
