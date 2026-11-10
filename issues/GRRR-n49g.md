@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
 updated_at: 2026-11-10T00:44:59Z
-content_hash: "sha256:cb5b7e9c8e9b5a2fbb7af4bf1eeff4e666b5d368211653b758a0996295b868fd"
+content_hash: "sha256:69b88d941ae24c20b83c045fd3ab42085f9f4d33be3cf70c565db0ef2b9b1496"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6]
 ---
@@ -132,3 +132,25 @@ status: in_progress
 
 ### 2026-11-09T19:24:39Z speed
 Independent R1 REJECTED two reproduced cost ambiguities despite green source suites: duplicate JSON null/0 fields silently last-won, and distinct integers collapsed after float coercion. R1 artifact SHA2569b8fc34458946427fe3c4d91462d7286ca28e6ea973556bf472ee04b5543e4c4 retained. Fresh GLM exact-number rework finished; parent fixed strict duplicate/precision-aware JSON loading and safe CLI refusal. Worker literal discovery command with an accidental trailing dot found0tests and exited5; it was NOT accepted as green. Corrected focused command ran22tests. Final required-suite counts and fresh independent R2 review pending; all11 gates and authority modules preserved, no source commit or prohibited runtime effects.
+
+### 2026-11-10T00:44:59Z speed
+## nd_contract
+status: in_progress
+
+### evidence
+- Review-approved, UNCOMMITTED seven-file source WIP on story/GRRR-n49g; unchanged HEAD 5f6ce4e83e2426e859127af568aa730c19dc6a9b. No delivery, PM acceptance, or runtime readiness claimed.
+- Retained result: .claude/worktrees/dev-GRRR-n49g/docs/evidence/read-only-status/RESULT.md; SHA256 0d91af020c4cfa3148ff6d9cf1819bb33efe776f2a8c65e2fc6d889e02faadcb. source.sha256 binds all seven reviewed functional files; ARTIFACTS.sha256 binds the retained evidence.
+- Fresh required backend runs: Python3.14.3 348tests, Python3.12.9 348tests, Python3.9.6 348tests; each exit0, failures0/errors0/skips0 under OS denial of all /Library/GRRR read/write access. Logs: verified-python314.log SHA256 5e5e9353639efe1f7b5a4f58c9b5fe7c9303e438ce6c48ded2f983279c455a97; verified-python312.log a3ace71bb6695b3b4a55db1af56ff9ee0c3f75517030e1360abbd9f503f88b09; verified-python39.log 3c0774cc9790ae762959fded8a152665d6638bf0e7354b742b4bcb9be2d638ba. Every original required suite module and zero/skip refusal guard retained.
+- Parent synthetic presentation probe independently passed15checks. Actual historical CLI example shows9/11 required gates pass, reviewer_outcome/action_specific_human_approval not-run, Cost Unknown, all authoritiesfalse and Needs more evidence, not current verification.
+- R1 cost ambiguities were REJECTED and repaired, not waived. Fresh differently scoped R2 REVIEW_RESULT: APPROVED; r2-review.md SHA256 ec4fabd6c2785e8e3de19a5a86163b9fa9ba0a24f5e5cfabeceb1c5c0448af6c. Independent reviewer measured41focused tests, zero failures/errors/skips, verified final seven source hashes, and made no source/tracker mutations. No reviewed functional bytes changed after approval.
+- All six admission/common/accounting/ledger/installation-authority source files match unchanged HEAD exactly (authority-source.sha256, authority-parity.log); git diff --check passed. No protected runtime inspection is implied by byte parity.
+- Separate preservation: /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/grrr-n49g-reviewed-source-wip-20261109.zrc5UG/source-wip.tar SHA256 d5a8a033a65ee8e9934940f5bb77244fe296405b7787062b88b31f956c6ea186; seven source files plus retained evidence, no unrelated repository/credentials/protected files. Worktree remains intact.
+- No /Library/GRRR access including metadata/probes, research-provider calls/credentials, provisioning, protected install, accounting mutation/reconciliation, actual replay, admission, promotion, production mutation, source commit, merge or push. Standard delegated coding/review model use is separate from research execution. No Beads database exists; bd sync --from-main refused; no second tracker initialized. pvg nd is the live tracker.
+
+### proof
+- [x] AC #1: All eleven common gates retained per authoritative presentation clarification; zero/missing/partial/extra-only/malformed gates cannot imply approval. Nine-gate subset distinct and non-authoritative.
+- [x] AC #2: Unknown/invalid/ambiguous cost is null/Unknown; explicit observations retain values without spendability claims. Recursive duplicate keys and lossy decimal tokens refused; exact integers and sub-cent amounts do not become false zero.
+- [x] AC #3: Pure detached version2 projection separates all state/authority axes and grants no action authority.
+- [x] AC #4: Shared status/review projection in text/Markdown/JSON with historical/current-verification-absent labels and accessible text; --view is the only new CLI selector.
+- [x] AC #5: 348 required source tests on each of three installed Python versions, zero failures/errors/skips; real temporary archive and CLI fixtures, synthetic regression15checks, six authority files unchanged.
+- [x] AC #6: Fresh independent security R2 approval and exact-source/test/artifact evidence retained; no self-acceptance or prohibited effects. Source remains uncommitted pending explicit commit authorization and separate PM disposition.
