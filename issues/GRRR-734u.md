@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T01:53:06Z
-content_hash: "sha256:ba1bd0eb551a0392e6b0bddd4aa439ddc928995f9ab96c01c35ae41c8c9f5360"
+updated_at: 2026-11-10T01:54:18Z
+content_hash: "sha256:5acb06dd89ac601fe3d9a872ad567d3096fb7ed15b5a637510e8e7f4f038ef42"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
 assignee: dev-GRRR-734u
 labels: [delivered]
@@ -86,7 +86,66 @@ status: new
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
 Bounded worker replacement: GLM first source pass was interrupted after no source artifacts or commits appeared; no throttle/outage verdict is inferred. Worktree and branch reverified clean at 5f6ce4e. Canonical pvg worktree remove refused a missing ownership marker (the parent had used git worktree add); no force/marker/tooling override was attempted, and the clean checkout is preserved. Escalated exactly the protected-path/authority-sensitive four-file source WIP to fresh Astra task /root/grrr734u_security_wip, with no orchestration or delegation, no commit or protected effects. Existing tested OS denial profile is required for fixture/backend runs. Source results still pending; no approval/readiness claimed.
+## Implementation Evidence (DELIVERED)
 
+PROOF:
+
+### CI/Test Results
+Commands run:
+- From clean story worktree `.claude/worktrees/dev-GRRR-734u` at `4e09c6b65fc9110cbec610c4754cef7e8e902ca4`: `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_backend_suite.py` for `/opt/homebrew/bin/python3` 3.14.3, `/opt/homebrew/bin/python3.12` 3.12.9, and `/usr/bin/python3` 3.9.6.
+- `git status --short --branch`; `git rev-parse HEAD`; `shasum -a 256` over the four functional files; `git diff --check`.
+- Retained independent R2 review and parent verification evidence under `docs/evidence/fresh-replay-runtime/`.
+
+Summary: PASS — 322/322 required backend tests on EACH of Python 3.14.3, 3.12.9, and 3.9.6; failures=0, errors=0, skips=0. Fresh parent rerun on 2026-11-09 produced the same 322/322 result on each interpreter under explicit `/Library/GRRR` read/write denial. Retained committed final logs and independent R2 review remain authoritative. Focused real fixture/SQLite coverage is 15 tests; independent boundary probe passed 14 checks.
+
+Fresh exact source hashes:
+- `research/fresh_replay_runtime.py`: `06607ef64574329ba0e989a9d4fbcfeef859b6a5458035a22127b78618874958`
+- `tests/unit_capstone_fresh_replay_runtime.py`: `47cd16ca28286444cd7fd1abba1187e99420d48ae2fffbc5df496522ec21a48f`
+- `tests/unit_capstone_backend_suite.py`: `07e3d0521cdd631c9111da63a054fac579cb90f05da3e6f24c6af6d07bb1f6f4`
+- `docs/FRESH-REPLAY-RUNTIME-WIP.md`: `e48e38d3d01d11b0eb62d0df1815313fc87b4ab6cba23f496a2d8cbb65dd28ee`
+
+Independent review: R1 rejected external string-subclass equality bypass; exact-type/recursive-validation rework was completed. Fresh R2 `REVIEW_RESULT: APPROVED`, artifact `docs/evidence/fresh-replay-runtime/r2-review.md`, SHA256 `d73e795e4753f02a47ecad4bdd2faf3135544e14baa9984a5031d33e58ced868`. No reviewed functional bytes changed after approval.
+
+Static `pvg verify` reports three bare-pass advisories on these exact reviewed bytes (expected `FileNotFoundError`, plus two empty marker subclasses). They are not represented as unimplemented behavior and are disclosed rather than silently altered after independent review. The story's required gate is the registered real-fixture backend suite above; source tests do not qualify installed topology or a live capstone.
+
+### Commit
+- Branch: `story/GRRR-734u`
+- SHA: `4e09c6b65fc9110cbec610c4754cef7e8e902ca4`
+- Parent/base: `5f6ce4e83e2426e859127af568aa730c19dc6a9b`
+- Worktree clean at delivery; no merge or push performed.
+
+### Wiring
+- `research/fresh_replay_runtime.py` remains a pure source-only proposal/preflight API.
+- `tests/unit_capstone_backend_suite.py` registers `tests.unit_capstone_fresh_replay_runtime`.
+- Documentation records `prepared_not_issued`, all action authorizations false, all live gates not-run, and exact remaining review/provisioning gates.
+- No `/Library/GRRR` access, provisioning, VM, reconciliation, replay, promotion, admission, production mutation, merge, or push occurred.
+
+### AC Verification
+| AC | Status | Evidence |
+|---|---|---|
+| #1 exact typed canonical inputs and immutable proposal hashes; protected assets unopened | PASS | Typed frozen proposal validation, exact external hash types, recursive exact-JSON checks, and syscall-negative tests in the focused suite. |
+| #2 distinct non-reused namespace; invalid/consumed/pending/stopped targets rejected; state preserved | PASS | Real temporary fixture cases cover reuse/consumption/pending/stopped/unknown/invalid roots and preserve old evidence/accounting bytes/inodes. |
+| #3 exact replay/accounting bindings with no allowance or authorization mutation | PASS | Proposal binds source, inputs, VM/policy, prior evidence, predecessor, accounting v4 identity, and recovery receipt `8b7958e5be76f6b35c4bfafc1f17a2926badfdd813addbefd5d683e379e8eeeb`; no accounting write. |
+| #4 prepared-not-issued and non-authorizing output | PASS | Status is `prepared_not_issued`; review/install/replay/promotion/admission authorizations false; eleven live gates `not-run`. |
+| #5 lexical fail-closed path behavior and preservation | PASS | Paths are canonicalized/validated before metadata; symlink/escape/missing-evidence and changed-evidence tests use real fixtures. |
+| #6 mock-free, skip-free, nonzero three-version tests | PASS | 322 tests per required interpreter, 0 failures/errors/skips; focused 15-test real fixture suite and 14-check independent probe. |
+| #7 remaining gates and source-only limits documented | PASS | `docs/FRESH-REPLAY-RUNTIME-WIP.md` states unprovisioned/not issued and lists exact remaining authorization boundaries. |
+
+## nd_contract
+status: delivered
+
+### evidence
+- Clean reviewed source commit `4e09c6b65fc9110cbec610c4754cef7e8e902ca4`; R2 approval retained; 322 required tests pass on Python 3.14.3, 3.12.9, and 3.9.6 under `/Library/GRRR` denial.
+- No runtime provisioning, protected access, accounting/reconciliation change, replay, admission, promotion, production mutation, merge, or push.
+
+### proof
+- [x] AC #1: Exact typed canonical-input and immutable proposal-hash validation; protected assets never opened.
+- [x] AC #2: Distinct namespace proposed; reuse/consumption/invalid state rejected; prior state preserved.
+- [x] AC #3: Exact replay/accounting identity binding with no accounting or authorization mutation.
+- [x] AC #4: Output explicitly prepared-not-issued; authorizations false and live gates not-run.
+- [x] AC #5: Lexical fail-closed behavior and preservation proven by real filesystem/SQLite fixtures.
+- [x] AC #6: Nonzero mock-free/skip-free tests pass through required runner on Python 3.14/3.12/3.9.
+- [x] AC #7: Remaining review/provisioning gates and source-only limits documented.
 
 ## nd_contract
 status: delivered
