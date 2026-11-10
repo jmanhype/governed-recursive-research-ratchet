@@ -7,8 +7,8 @@ type: feature
 parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
-updated_at: 2026-11-10T01:54:18Z
-content_hash: "sha256:5acb06dd89ac601fe3d9a872ad567d3096fb7ed15b5a637510e8e7f4f038ef42"
+updated_at: 2026-11-10T01:55:48Z
+content_hash: "sha256:34cc3f7929baedad2b7fe0bed3e583681bcb27a6f29794dbf77d193727c5cf40"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
 assignee: dev-GRRR-734u
 labels: [delivered]
@@ -388,3 +388,33 @@ status: in_progress
 
 ### 2026-11-09T17:44:56Z speed
 Parked clean reviewed source-WIP checkpoint 4e09c6b for independent delivery/PM work later; no developer active. Released the stale claim through pvg story release per stalled queue guidance to allow the newly authorized independent report/status fix. No source/evidence removed, no accepted label or merge. Earlier historical in_progress notes do not imply a currently running worker.
+
+### 2026-11-10T01:55:47Z speed
+## Implementation Evidence
+
+### CI/Test Results
+Commands run:
+- `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR"))' <python> -B tests/unit_capstone_backend_suite.py` on Python 3.14.3, 3.12.9, and 3.9.6.
+Summary: PASS — 322/322 tests on each interpreter; failures=0, errors=0, skips=0. Independent R2 review approved exact source bytes.
+
+### Commit
+Commit SHA: 4e09c6b65fc9110cbec610c4754cef7e8e902ca4
+
+### AC Verification
+- [x] AC #1: Exact typed canonical inputs and immutable hashes; protected assets unopened.
+- [x] AC #2: Fresh namespace proposed; reuse/consumed/invalid targets rejected; prior state preserved.
+- [x] AC #3: Exact replay/accounting bindings; no accounting or authorization mutation.
+- [x] AC #4: `prepared_not_issued`; all authorizations false; live gates not-run.
+- [x] AC #5: Lexical fail-closed paths and preservation proven with real filesystem/SQLite fixtures.
+- [x] AC #6: Nonzero mock-free/skip-free suites green on Python 3.14/3.12/3.9.
+- [x] AC #7: Remaining exact review/provisioning gates and source-only limits documented.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit `4e09c6b65fc9110cbec610c4754cef7e8e902ca4`; R2 approval `d73e795e4753f02a47ecad4bdd2faf3135544e14baa9984a5031d33e58ced868`; 322 tests on each required interpreter.
+- No protected access, provisioning, reconciliation, replay, promotion, admission, production mutation, merge, or push.
+
+### proof
+- [x] AC #1-7 verified from retained review, source hashes, real fixtures, and cross-version test evidence.
