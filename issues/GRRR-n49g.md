@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
-updated_at: 2026-11-10T01:24:10Z
-content_hash: "sha256:0249f9f0237e1dac5faa3e7139670ba689867574fa595d05ce67d1488624f837"
+updated_at: 2026-11-10T01:27:22Z
+content_hash: "sha256:11d3c46f8891d71949e35c544d1f6ac7997e89b1c0d4db553554c113d9dc4684"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-k3j7]
 labels: [accepted]
@@ -67,7 +67,23 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-11-09]: Evidence reviewed and meets bar. Independent PM artifact: outputs/grrr-n49g-pm-review.md SHA256 9fc3cf5f6f1d688b31efef82b983ad2f244ef8cb9796e9e107100ba30d5f428d.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed commit 632912391db2bfdf59c339d4627d965fffc7bb08 at parent 5f6ce4e83e2426e859127af568aa730c19dc6a9b; verified clean worktree, delivery shape 9/9, current seven-file manifest, six authority-file parity, retained artifact manifest, and independent R2 plus exact-delta approvals.
+- Trusted retained final source-only logs: 348/348 tests on Python 3.14.3, 3.12.9, and 3.9.6 with failures0/errors0/skips0 under /Library/GRRR denial; pvg verify 0 issues; bounded line coverage 96.83% with explicit non-runtime limits. Tests were not rerun because the exact-hash proof was complete and consistent.
+
+### proof
+- [x] AC #1: All eleven display gates fail closed; nine-gate admission subset is separate and non-authoritative.
+- [x] AC #2: Unknown, invalid, ambiguous, duplicate, underflowing, or precision-losing costs remain null/Unknown and never false zero.
+- [x] AC #3: Version-2 projection is typed, pure, detached, axis-separated, and grants no authority.
+- [x] AC #4: Review/status text, Markdown, JSON, and fixed read-only CLI share one consistent historical projection.
+- [x] AC #5: Real adversarial/purity/CLI fixtures and all preserved required modules produce three skip-free 348-test green logs.
+- [x] AC #6: Independent reviews, exact hashes, logs, manifests, and source-only/no-runtime boundaries are retained.
 
 ## nd_contract
 status: accepted
