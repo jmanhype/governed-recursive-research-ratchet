@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
 updated_at: 2026-11-10T01:24:10Z
-content_hash: "sha256:947c55839a09e471ad5b183f812d1f969a22caa0f7b3fcaa29f068c427d37fc1"
+content_hash: "sha256:0249f9f0237e1dac5faa3e7139670ba689867574fa595d05ce67d1488624f837"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-k3j7]
 labels: [accepted]
@@ -67,6 +67,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-11-09.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## Implementation Evidence
 
 PROOF:
