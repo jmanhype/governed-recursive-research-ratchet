@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-10T01:53:06Z
-content_hash: "sha256:1ff48cf658c28fc6640a1223477aa40a41cf98b8fa0967053c3b50f7654c2ff7"
+content_hash: "sha256:ba1bd0eb551a0392e6b0bddd4aa439ddc928995f9ab96c01c35ae41c8c9f5360"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
 assignee: dev-GRRR-734u
 labels: [delivered]
@@ -86,6 +86,18 @@ status: new
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
 Bounded worker replacement: GLM first source pass was interrupted after no source artifacts or commits appeared; no throttle/outage verdict is inferred. Worktree and branch reverified clean at 5f6ce4e. Canonical pvg worktree remove refused a missing ownership marker (the parent had used git worktree add); no force/marker/tooling override was attempted, and the clean checkout is preserved. Escalated exactly the protected-path/authority-sensitive four-file source WIP to fresh Astra task /root/grrr734u_security_wip, with no orchestration or delegation, no commit or protected effects. Existing tested OS denial profile is required for fixture/backend runs. Source results still pending; no approval/readiness claimed.
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-09.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Independently approved source-WIP commit and bounded state audit
 
 Operator-authorized local commit: 4e09c6b65fc9110cbec610c4754cef7e8e902ca4 on story/GRRR-734u, parent 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Four reviewed functional files plus retained review/test evidence, 14 paths total. Story worktree clean after commit; epic/GRRR-2t3h remains clean at 5f6ce4e. No delivery, PM acceptance or merge asserted.
