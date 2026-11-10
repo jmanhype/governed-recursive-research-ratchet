@@ -75,6 +75,29 @@ Parent retained-probe replay: 14 checks passed; accounting bytes/inode unchanged
 | final-python39.log | ce3770a4e1a8fe7e0696f0ec5503b18f2bce204a150faa6afd7a4cd10fad5c59 |
 | r2-parent-probe.log | 7830f2e648d76dcd7fa80126e4445077170e7a65b8a22013aa8a97a6a113b85a |
 
+## R3 static-repair verification
+
+`pvg verify` flagged three bare `pass` statements in the otherwise approved R2
+bytes. The only functional delta replaces the expected-`FileNotFoundError`
+`pass` with an explicit `target_absent` flag and gives the two exact-type marker
+subclasses docstrings. Independent bounded security review R3 approved those
+exact bytes: `r3-static-repair-review.md`, SHA256
+`7e64a340bf18e9baa3df99f6b9b6c629e821de73f5a23df50eb17e7c62954bd0`.
+
+Changed source hashes:
+
+| File | SHA256 |
+|---|---|
+| research/fresh_replay_runtime.py | 4f0db5fb8b5deba7ffc21dff1f7dab864911e847754dbae5e5de85d1d52a42cf |
+| tests/unit_capstone_fresh_replay_runtime.py | 8eea717b399c34bfd486a6b15b45545edb9fc3e3ddf6f76ce0e85071367e5f40 |
+
+The same three-interpreter denial-profile command produced 322 tests on each
+of Python 3.14.3, 3.12.9, and 3.9.6 with zero failures, errors, or skips. The
+fifteen focused tests also passed on each interpreter. `pvg verify` now reports
+zero issues. Raw retained logs and the R3 report are bound by
+`static-repair-artifacts.sha256`. This remains source-only verification and
+does not qualify installed topology or a live capstone.
+
 ## Remaining boundaries
 
 Hash bindings are not authentication or live currency. Namespace absence and

@@ -156,11 +156,14 @@ def fixture_preflight(request: dict, expected_request_hash: str, *,
         paths.append((parts, entry['sha256']))
     root_fd = directory(root_parts)
     try:
+        target_absent = False
         try:
             os.stat(target_parts[-1], dir_fd=root_fd, follow_symlinks=False)
         except FileNotFoundError:
-            pass
+            target_absent = True
         else:
+            target_absent = False
+        if not target_absent:
             check(False, 'Target exists (including dangling symlink)')
         for parts, expected in paths:
             parent = os.dup(root_fd)

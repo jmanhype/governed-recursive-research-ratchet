@@ -21,11 +21,11 @@ class SpoofDigest(str):
 
 
 class SubclassDict(dict):
-    pass
+    """Exact-type rejection probe for JSON object subclasses."""
 
 
 class SubclassList(list):
-    pass
+    """Exact-type rejection probe for JSON array subclasses."""
 
 
 class FreshRuntimeTests(unittest.TestCase):

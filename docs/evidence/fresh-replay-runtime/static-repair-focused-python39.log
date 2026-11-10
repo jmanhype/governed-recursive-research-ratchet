@@ -1,0 +1,20 @@
+test_canonical_immutable_hashes (__main__.FreshRuntimeTests) ... ok
+test_consumed_predecessor_valid_absent_target_preserves_real_sqlite (__main__.FreshRuntimeTests) ... ok
+test_every_path_lexical_before_any_metadata (__main__.FreshRuntimeTests) ... ok
+test_exact_schema_and_pinned_recovery (__main__.FreshRuntimeTests) ... ok
+test_existing_target_and_dangling_target (__main__.FreshRuntimeTests) ... ok
+test_external_expected_hash_rejects_subclasses_before_io (__main__.FreshRuntimeTests) ... ok
+test_external_hash_and_evidence_reject_subclasses_before_io (__main__.FreshRuntimeTests) ... ok
+test_proposal_rejects_mutable_or_subclassed_bindings (__main__.FreshRuntimeTests) ... ok
+test_protected_symlink_destination_is_never_followed (__main__.FreshRuntimeTests) ... ok
+test_pure_prepare_performs_no_filesystem_calls (__main__.FreshRuntimeTests) ... ok
+test_reused_namespace (__main__.FreshRuntimeTests) ... ok
+test_stale_identity_manifest_and_missing_evidence (__main__.FreshRuntimeTests) ... ok
+test_stale_real_bytes_and_unbound_fixture_hash (__main__.FreshRuntimeTests) ... ok
+test_symlink_root_ancestor_final_and_dangling (__main__.FreshRuntimeTests) ... ok
+test_target_states_fail_closed (__main__.FreshRuntimeTests) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.060s
+
+OK
