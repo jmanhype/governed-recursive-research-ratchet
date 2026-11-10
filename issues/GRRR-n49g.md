@@ -7,8 +7,8 @@ type: bug
 parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
-updated_at: 2026-11-10T00:44:59Z
-content_hash: "sha256:69b88d941ae24c20b83c045fd3ab42085f9f4d33be3cf70c565db0ef2b9b1496"
+updated_at: 2026-11-10T01:07:02Z
+content_hash: "sha256:f2aeae25ddec98047bbe0cc5ee550e793e541813b12636e53523b7638dac1058"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6]
 ---
@@ -154,3 +154,6 @@ status: in_progress
 - [x] AC #4: Shared status/review projection in text/Markdown/JSON with historical/current-verification-absent labels and accessible text; --view is the only new CLI selector.
 - [x] AC #5: 348 required source tests on each of three installed Python versions, zero failures/errors/skips; real temporary archive and CLI fixtures, synthetic regression15checks, six authority files unchanged.
 - [x] AC #6: Fresh independent security R2 approval and exact-source/test/artifact evidence retained; no self-acceptance or prohibited effects. Source remains uncommitted pending explicit commit authorization and separate PM disposition.
+
+### 2026-11-10T01:07:02Z speed
+Operator authorization: commit the independently reviewed GRRR-n49g WIP on story/GRRR-n49g and deliver for independent PM review. This supersedes earlier no-source-commit/no-delivery notes only. Preserve all gates; no /Library/GRRR access, provisioning, reconciliation, actual replay, contract admission, promotion, production mutation, merge or push. A bare-pass exception class inherited from base tripped pvg verify; only that class body was replaced with a descriptive docstring, and exact-delta independent review is required before commit. Final delivery-source.sha256 binds the current seven functional files; old R2 source.sha256/RESULT remain immutable historical evidence.
