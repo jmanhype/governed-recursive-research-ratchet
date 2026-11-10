@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-10T02:09:59Z
-content_hash: "sha256:79626376a35c9e79a853f90d1b39ad19bb1406ac098539ce513f88702db8507c"
+content_hash: "sha256:d3e79ebe3df525d5ccbd8c5b09062abb39f9264d6271d8d4caebfa693dbb5c39"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7, GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-734u
 labels: [delivered]
@@ -86,6 +86,16 @@ status: new
 ## Notes
 Implementation kickoff: selected by fresh pvg loop next developer_new action and atomically claimed by dev-GRRR-734u. Retained worktree .claude/worktrees/dev-GRRR-734u on story/GRRR-734u from authorized merge 5f6ce4e83e2426e859127af568aa730c19dc6a9b. Worker /root/dev_grrr_734u dispatched via exact zai-coding/glm-5.3; no delegation permitted. CoS native dispatch connection failed; initial broad framing turn was bounded/interrupted without a created issue, then create-only Sr-PM produced this story. Source-only WIP: four assigned functional files, no commits/delivery/acceptance, no protected access or provision/reconcile/replay/promote/admit/production/merge/push. Existing accounting authority and consumed predecessor evidence must be preserved. Source test results not yet claimed.
 Bounded worker replacement: GLM first source pass was interrupted after no source artifacts or commits appeared; no throttle/outage verdict is inferred. Worktree and branch reverified clean at 5f6ce4e. Canonical pvg worktree remove refused a missing ownership marker (the parent had used git worktree add); no force/marker/tooling override was attempted, and the clean checkout is preserved. Escalated exactly the protected-path/authority-sensitive four-file source WIP to fresh Astra task /root/grrr734u_security_wip, with no orchestration or delegation, no commit or protected effects. Existing tested OS denial profile is required for fixture/backend runs. Source results still pending; no approval/readiness claimed.
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-11-09.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
 
 
 ## nd_contract
