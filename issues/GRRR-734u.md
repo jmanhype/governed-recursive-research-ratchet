@@ -8,7 +8,7 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-10T02:06:37Z
-content_hash: "sha256:76d536bdaec9fe1b081a918f273d0204008b653cc50105c174a02bf9626eaecb"
+content_hash: "sha256:f6c00ce64504f34337f996978ee36421aba9c54906fbf57be6d4234c34464df8"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7]
 labels: [rejected]
 ---
@@ -467,3 +467,26 @@ status: delivered
 
 ### proof
 - [x] AC #1-7 verified from retained independent R2/R3 reviews, exact hashes, real fixtures, cross-version tests, and documentation.
+
+### 2026-11-10T02:06:37Z speed
+## PM Decision
+REJECTED [2026-11-09]:
+EXPECTED: The authoritative delivered PROOF must bind test results and reviewed bytes to the exact commit that exists on story/GRRR-734u. The delivery note and dispatch brief cite full commit bdbc4ec021e26847627597050918c88e94af4d1d.
+DELIVERED: The clean story branch/worktree HEAD is bdbc4ec1e34845836473d73ea4a681dbb4b46ff8. The cited full SHA is not a Git object in this repository (git cat-file fails). The shared seven-character prefix is not an exact commit binding.
+GAP: Although PM fresh verification on the actual clean HEAD passed (15 focused and 322 required tests on Python 3.14.3/3.12.9/3.9.6, zero failures/errors/skips; pvg verify 0 issues; scoped functional diff 544 changed lines; R2/R3 hashes verified), the latest delivery proof's full commit SHA is invalid. Exact evidence provenance therefore remains untrustworthy even though the actual source behavior appears sound. This acceptance is source-only and is not runtime readiness.
+FIX: Correct and re-deliver the tracker evidence with the actual full SHA bdbc4ec1e34845836473d73ea4a681dbb4b46ff8 (or a later exact reviewed commit), without changing code or performing any protected/runtime action. Reconfirm the worktree is clean at that SHA. No test rework is required if the exact four functional hashes remain 4f0db5fb8b5deba7ffc21dff1f7dab864911e847754dbae5e5de85d1d52a42cf, 8eea717b399c34bfd486a6b15b45545edb9fc3e3ddf6f76ce0e85071367e5f40, 07e3d0521cdd631c9111da63a054fac579cb90f05da3e6f24c6af6d07bb1f6f4, and e48e38d3d01d11b0eb62d0df1815313fc87b4ab6cba23f496a2d8cbb65dd28ee.
+
+## nd_contract
+status: rejected
+
+### evidence
+- Actual clean HEAD: bdbc4ec1e34845836473d73ea4a681dbb4b46ff8; cited delivery/dispatch SHA bdbc4ec021e26847627597050918c88e94af4d1d does not exist.
+- PM fresh focused tests: 15/15 on Python 3.14.3, 3.12.9, and 3.9.6 under /Library/GRRR read/write denial.
+- PM fresh required suites: 322/322 on each interpreter, 0 failures/errors/skips; pvg verify PASSED with 0 issues.
+- R2 SHA d73e795e4753f02a47ecad4bdd2faf3135544e14baa9984a5031d33e58ced868 and R3 SHA 7e64a340bf18e9baa3df99f6b9b6c629e821de73f5a23df50eb17e7c62954bd0 verified.
+- No /Library/GRRR access, provisioning, reconciliation, replay, promotion, admission, production mutation, code edit, commit, merge, or push performed.
+
+### proof
+- [ ] Exact commit provenance: delivery note must cite the actual existing full commit SHA.
+- [x] AC #1-7 behavior was independently substantiated on the actual clean source bytes, subject to this provenance rejection.
+- [x] Runtime readiness explicitly not asserted; source-only result is not live execution proof.
