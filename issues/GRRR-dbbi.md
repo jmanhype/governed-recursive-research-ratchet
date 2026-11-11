@@ -9,13 +9,14 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:17:56Z
-content_hash: "sha256:7b72d0d20a1723e3fbd96fe4d289b6565e0f3ded6cf2075d9b55d167100f65ed"
+content_hash: "sha256:fec194b79dd764b2d76b8e259d119e7522e76a30b0ab1d9fcbf87faa55cbb56c"
 was_blocked_by: [GRRR-bnkf, GRRR-z3w9]
 assignee: dev-GRRR-dbbi
 follows: [GRRR-bnkf, GRRR-z3w9]
 closed_at: 2026-11-03T17:17:56Z
 close_reason: "PM acceptance: honest partial delivery. Deterministic and random baselines working. Jev correctly marked unavailable. No fabricated results. 12/12 tests independently verified."
 led_to: [GRRR-34ve, GRRR-fmvp, GRRR-6sso, GRRR-888u]
+blocks: [GRRR-0kb3]
 ---
 
 ## Description
@@ -148,9 +149,11 @@ status: accepted
 - 2026-11-03T17:17:56Z dep_removed: no_longer_blocks GRRR-6sso
 - 2026-11-11T21:15:20Z dep_added: blocks GRRR-2hib
 - 2026-11-11T21:17:49Z dep_removed: no_longer_blocks GRRR-2hib
+- 2026-11-11T21:17:56Z dep_added: blocks GRRR-0kb3
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-0kb3]]
 - Was blocked by: [[GRRR-bnkf]], [[GRRR-z3w9]]
 - Follows: [[GRRR-bnkf]], [[GRRR-z3w9]]
 - Led to: [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-6sso]], [[GRRR-888u]]
