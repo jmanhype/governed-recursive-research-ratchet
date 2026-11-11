@@ -8,9 +8,9 @@ parent: GRRR-2t3h
 created_at: 2026-11-11T21:14:42Z
 created_by: speed
 updated_at: 2026-11-11T21:14:58Z
-content_hash: "sha256:abe692fb514a216fac83cf3551be147192354703ac08b5302f8f798de58107f2"
+content_hash: "sha256:ae1dfed3645b1931ebe0846cb5de017a6acc0a37a571dc58e02cf36b299717ec"
 labels: [milestone-1, capstone, integration, security, e2e, release-gate]
-blocked_by: [GRRR-43i8, GRRR-d8ji, GRRR-ev2w, GRRR-k3j7, GRRR-n49g, GRRR-q3hp, GRRR-w1lt, GRRR-wcwy, GRRR-yt6a, GRRR-0g4n, GRRR-34ve, GRRR-888u, GRRR-90te, GRRR-bnkf, GRRR-c875, GRRR-dbbi]
+blocked_by: [GRRR-43i8, GRRR-d8ji, GRRR-ev2w, GRRR-k3j7, GRRR-n49g, GRRR-q3hp, GRRR-w1lt, GRRR-wcwy, GRRR-yt6a, GRRR-0g4n, GRRR-34ve, GRRR-888u, GRRR-90te, GRRR-bnkf, GRRR-c875, GRRR-dbbi, GRRR-fmvp]
 ---
 
 ## Description
@@ -316,9 +316,10 @@ status: new
 - 2026-11-11T21:15:19Z dep_added: blocked_by GRRR-bnkf
 - 2026-11-11T21:15:20Z dep_added: blocked_by GRRR-c875
 - 2026-11-11T21:15:20Z dep_added: blocked_by GRRR-dbbi
+- 2026-11-11T21:15:20Z dep_added: blocked_by GRRR-fmvp
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-ev2w]], [[GRRR-k3j7]], [[GRRR-n49g]], [[GRRR-q3hp]], [[GRRR-w1lt]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-0g4n]], [[GRRR-34ve]], [[GRRR-888u]], [[GRRR-90te]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-dbbi]]
+- Blocked by: [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-ev2w]], [[GRRR-k3j7]], [[GRRR-n49g]], [[GRRR-q3hp]], [[GRRR-w1lt]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-0g4n]], [[GRRR-34ve]], [[GRRR-888u]], [[GRRR-90te]], [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-dbbi]], [[GRRR-fmvp]]
 
 ## Comments
