@@ -9,13 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-11-03T22:07:39Z
 created_by: speed
 updated_at: 2026-11-03T23:14:47Z
-content_hash: "sha256:40cfe59407da157e270fc7a30094d667d73443d92143389b55bdb4e365679ac9"
+content_hash: "sha256:cf5c6535677dbae72dfa1203ed6a7cd84837a3819eaefeda91df4a67b3d49d76"
 assignee: dev-GRRR-gge0
 follows: [GRRR-fmvp, GRRR-34ve]
 closed_at: 2026-11-03T23:14:47Z
 close_reason: "Accepted: all seven ACs independently verified; no-change adaptation result and safety boundaries are sound."
 led_to: [GRRR-888u, GRRR-6sso, GRRR-ev2w, GRRR-q3hp]
-blocks: [GRRR-6sso]
+blocks: [GRRR-6sso, GRRR-0kb3]
 ---
 
 ## Description
@@ -312,10 +312,11 @@ status: in_progress
 - 2026-11-04T01:05:03Z dep_added: blocks GRRR-6sso
 - 2026-11-11T21:15:20Z dep_added: blocks GRRR-2hib
 - 2026-11-11T21:17:49Z dep_removed: no_longer_blocks GRRR-2hib
+- 2026-11-11T21:17:56Z dep_added: blocks GRRR-0kb3
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-6sso]]
+- Blocks: [[GRRR-6sso]], [[GRRR-0kb3]]
 - Follows: [[GRRR-fmvp]], [[GRRR-34ve]]
 - Led to: [[GRRR-888u]], [[GRRR-6sso]], [[GRRR-ev2w]], [[GRRR-q3hp]]
 
