@@ -9,12 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T15:08:46Z
 created_by: speed
 updated_at: 2026-11-08T17:59:09Z
-content_hash: "sha256:7fa57fc725a25691ee62c726adc2272caeb9087e50f24bf9a816b3117f0b53db"
+content_hash: "sha256:f34d5e21f3a38b49daadb40492852a62d9000196e00604fa9aea5b35b1ac2d02"
 assignee: dev-GRRR-hbc6
 follows: [GRRR-q3hp, GRRR-k3j7]
 closed_at: 2026-11-08T17:44:52Z
 close_reason: "Accepted: all seven recovery ACs are supported by exact hash-bound source, independent approval, three-interpreter zero-skip logs, real fixture refusals, durable live receipt, and separate fresh-process verification."
 led_to: [GRRR-734u, GRRR-n49g]
+blocks: [GRRR-0kb3]
 ---
 
 ## Description
@@ -205,9 +206,11 @@ No reconciliation, replay, contract admission, promotion, production mutation, m
 - 2026-11-08T17:44:52Z status: in_progress -> closed
 - 2026-11-11T21:15:22Z dep_added: blocks GRRR-2hib
 - 2026-11-11T21:17:50Z dep_removed: no_longer_blocks GRRR-2hib
+- 2026-11-11T21:17:57Z dep_added: blocks GRRR-0kb3
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-0kb3]]
 - Follows: [[GRRR-q3hp]], [[GRRR-k3j7]]
 - Led to: [[GRRR-734u]], [[GRRR-n49g]]
 
