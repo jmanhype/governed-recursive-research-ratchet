@@ -5,11 +5,10 @@ status: deferred
 priority: 1
 type: task
 labels: [milestone-1, rejected, rejected-x3, superseded-capstone]
-parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
-updated_at: 2026-11-11T21:16:36Z
-content_hash: "sha256:dafc0bff890accabe750614c5c6cfdf66b4b6ada45536b177911a414d33e9f75"
+updated_at: 2026-11-11T21:18:37Z
+content_hash: "sha256:a1d324558b24537022cc9fbfe191887e2565ec670dc0780a63c69edab02b1231"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w, GRRR-q3hp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -580,7 +579,6 @@ status: delivered
 - 2026-11-06T13:03:34Z dep_removed: was_blocked_by GRRR-q3hp
 
 ## Links
-- Parent: [[GRRR-2t3h]]
 - Blocked by: [[GRRR-43i8]], [[GRRR-888u]], [[GRRR-d8ji]], [[GRRR-gge0]], [[GRRR-w1lt]], [[GRRR-wu6f]]
 - Was blocked by: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-gzgq]], [[GRRR-ev2w]], [[GRRR-q3hp]]
 - Follows: [[GRRR-0g4n]], [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-z3w9]], [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-fmvp]], [[GRRR-wu6f]], [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-gge0]], [[GRRR-888u]], [[GRRR-ev2w]]
