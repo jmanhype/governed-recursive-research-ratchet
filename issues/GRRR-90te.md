@@ -9,13 +9,14 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T23:46:10Z
-content_hash: "sha256:5caf492993a81d4beb7060f76499ceaedb22332134128430968c37e6d1c50b5e"
+content_hash: "sha256:94f5916e58184f270f6c3aeb50743f3aa420c8950bcaf2732a86a6f966a73953"
 was_blocked_by: [GRRR-0g4n]
 assignee: dev-GRRR-90te
 follows: [GRRR-0g4n]
 closed_at: 2026-10-20T23:46:09Z
 close_reason: "Accepted: independently verified pinned offline baseline, real identity/isolation/cancellation controls, exact local-use license scope, and justified evidence/diff growth; admission remains blocked."
 led_to: [GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-d8ji, GRRR-z3w9, GRRR-6sso]
+blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -398,9 +399,11 @@ status: in_progress
 - 2026-10-20T23:46:09Z status: in_progress -> closed
 - 2026-10-20T23:46:09Z dep_removed: no_longer_blocks GRRR-gu87
 - 2026-10-20T23:46:09Z dep_removed: no_longer_blocks GRRR-6sso
+- 2026-11-11T21:15:19Z dep_added: blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-2hib]]
 - Was blocked by: [[GRRR-0g4n]]
 - Follows: [[GRRR-0g4n]]
 - Led to: [[GRRR-gu87]], [[GRRR-my5n]], [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-d8ji]], [[GRRR-z3w9]], [[GRRR-6sso]]
