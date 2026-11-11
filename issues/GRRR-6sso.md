@@ -8,7 +8,7 @@ labels: [milestone-1, rejected, rejected-x3, superseded-capstone]
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-11T21:18:37Z
-content_hash: "sha256:a1d324558b24537022cc9fbfe191887e2565ec670dc0780a63c69edab02b1231"
+content_hash: "sha256:0459279cbae5bb9a7c272e70b647abd501225c2083eb1087354abff63bb29790"
 was_blocked_by: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-gzgq, GRRR-ev2w, GRRR-q3hp]
 follows: [GRRR-0g4n, GRRR-90te, GRRR-gu87, GRRR-my5n, GRRR-c875, GRRR-bnkf, GRRR-z3w9, GRRR-dbbi, GRRR-34ve, GRRR-fmvp, GRRR-wu6f, GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-gge0, GRRR-888u, GRRR-ev2w]
 blocked_by: [GRRR-43i8, GRRR-888u, GRRR-d8ji, GRRR-gge0, GRRR-w1lt, GRRR-wu6f]
@@ -1216,3 +1216,6 @@ FIX: Keep all capstone ACs intact; resolve P0 blocker GRRR-q3hp using reviewed e
 Dispatcher factual clarifications (do not change the REJECT outcome): the operator has already supplied the exact conditional run grant, recorded in Notes; the immutable request's execution_authorized=false is request-only semantics, not evidence that the grant is absent. Capacity is not the sole blocker: execution wiring and cumulative allowance proof are also unresolved. A changed runtime revision cannot inherit the old grant silently.
 
 AC proof: AC1/2/4/5/7 full live journey/gate evidence remains unproven; AC3 strategy measurements do not establish complete cumulative allowance closure; AC6 has a fresh five-minute operator preflight attestation but not complete runtime accessibility proof. No AC or threshold is waived, and no source change or runtime effect is authorized by this rejection.
+
+### 2026-11-11T21:18:37Z speed
+Superseded by GRRR-0kb3 for structural epic containment only. GRRR-6sso remains deferred with rejected/rejected-x3 evidence; this note does not reset its rejection counter, accept it, alter source evidence, or authorize runtime work.
