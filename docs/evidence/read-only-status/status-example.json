@@ -1,0 +1,142 @@
+{
+  "action_authorization": {
+    "authorities": {
+      "contract_admission": false,
+      "human_decision": false,
+      "installation": false,
+      "production_mutation": false,
+      "promotion": false,
+      "replay": false,
+      "source_review": false
+    },
+    "state": "Not established"
+  },
+  "admission": {
+    "authorized": false,
+    "state": "Not established"
+  },
+  "budget": {
+    "cost_usd": null,
+    "currency": null,
+    "reason_code": "COST_NOT_REPORTED",
+    "settled_accounting": false,
+    "sources": [],
+    "spendability": "Unknown",
+    "state": "Unknown"
+  },
+  "cessation": {
+    "state": "Unknown",
+    "stopped": null
+  },
+  "challenge": "GRRR-VC-D011",
+  "decision": null,
+  "decision_state": "Not established",
+  "evidence_identity": {
+    "basis": "not computed; artifact identity/provenance/currency not established",
+    "digest": null
+  },
+  "execution": {
+    "elapsed_seconds": 47.7242865,
+    "state": "Completed"
+  },
+  "human_decision": {
+    "approval": false,
+    "decision": null,
+    "state": "Not established"
+  },
+  "installation": {
+    "qualified": false,
+    "state": "Not qualified"
+  },
+  "next_action": "Provide complete verified historical evidence",
+  "next_owner": "Evidence owner",
+  "promotion": {
+    "authorized": false,
+    "state": "Disabled"
+  },
+  "read_only": true,
+  "reason_codes": [
+    "ACTION_AUTHORIZATION_NOT_ESTABLISHED",
+    "ADMISSION_NOT_ESTABLISHED",
+    "COST_NOT_REPORTED",
+    "CURRENT_VERIFICATION_ABSENT",
+    "EVIDENCE_HISTORICAL_UNVERIFIED",
+    "EVIDENCE_REVIEW_NOT_ELIGIBLE",
+    "GATE_NOT_PASS_ACTION_SPECIFIC_HUMAN_APPROVAL",
+    "GATE_NOT_PASS_REVIEWER_OUTCOME",
+    "GATE_NOT_RUN_ACTION_SPECIFIC_HUMAN_APPROVAL",
+    "GATE_NOT_RUN_REVIEWER_OUTCOME",
+    "HISTORICAL_EVIDENCE_INCOMPLETE",
+    "HUMAN_DECISION_NOT_ESTABLISHED",
+    "INSTALLATION_NOT_QUALIFIED",
+    "PROMOTION_DISABLED",
+    "REQUIRED_GATES_INCOMPLETE",
+    "SOURCE_REVIEW_NOT_ESTABLISHED",
+    "SPENDABILITY_UNKNOWN",
+    "STOP_STATE_UNKNOWN"
+  ],
+  "recommendation": "Needs more evidence",
+  "run": "dc4e157ee0944793a5953f8805302538",
+  "schema_version": 2,
+  "scope": {
+    "current_verification": false,
+    "gate_profile": "replay-evidence-v1",
+    "input": "archived replay export",
+    "live": false,
+    "projection": "pure in-memory read-only status",
+    "read_only": true
+  },
+  "source_review": {
+    "eligible": false,
+    "state": "Not established"
+  },
+  "verification": {
+    "evidence_review_eligible": false,
+    "finding": "Verified defect",
+    "gates": {
+      "admission_subset_passed": 9,
+      "admission_subset_total": 9,
+      "exact_profile_pass": false,
+      "extra_names": [],
+      "profile": "replay-evidence-v1",
+      "required": {
+        "action_specific_human_approval": {
+          "status": "not-run"
+        },
+        "baseline_correctness": {
+          "status": "pass"
+        },
+        "budget_state": {
+          "status": "pass"
+        },
+        "evidence_integrity_currency": {
+          "status": "pass"
+        },
+        "independent_replay": {
+          "status": "pass"
+        },
+        "isolation": {
+          "status": "pass"
+        },
+        "protected_asset_integrity": {
+          "status": "pass"
+        },
+        "reviewer_outcome": {
+          "status": "not-run"
+        },
+        "source_environment_identity": {
+          "status": "pass"
+        },
+        "specification_traceability": {
+          "status": "pass"
+        },
+        "trusted_observation": {
+          "status": "pass"
+        }
+      },
+      "required_passed": 9,
+      "required_total": 11
+    },
+    "verified": true
+  }
+}

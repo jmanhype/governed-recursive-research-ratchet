@@ -1,0 +1,56 @@
+$ cd /Users/speed/Documents/Codex/2026-10-19/3e4m-b-4/outputs/governed-recursive-research-ratchet/.claude/worktrees/dev-GRRR-n49g
+$ pvg verify research/review_report.py --format text
+VERIFY: PASSED (1 files scanned, 0 issues)
+pvg_exit=0
+$ PYTHONPATH=research:tests /usr/bin/sandbox-exec -p (version 1)(allow default)(deny file-read* file-write* (subpath "/Library/GRRR")) /opt/homebrew/bin/python3 -B -m unittest -v unit_status_view unit_review_report
+test_all_eleven_gates_and_distinct_nine_gate_admission_subset (unit_status_view.TestStatusView.test_all_eleven_gates_and_distinct_nine_gate_admission_subset) ... ok
+test_arbitrary_authority_and_ready_claims_are_not_trusted (unit_status_view.TestStatusView.test_arbitrary_authority_and_ready_claims_are_not_trusted) ... ok
+test_costs_missing_invalid_and_ambiguous_are_null_and_unknown (unit_status_view.TestStatusView.test_costs_missing_invalid_and_ambiguous_are_null_and_unknown) ... ok
+test_every_required_gate_blocks_on_fail_error_unknown_not_run_and_malformed (unit_status_view.TestStatusView.test_every_required_gate_blocks_on_fail_error_unknown_not_run_and_malformed) ... ok
+test_exact_integer_and_mixed_float_cost_conflicts_remain_unknown (unit_status_view.TestStatusView.test_exact_integer_and_mixed_float_cost_conflicts_remain_unknown) ... ok
+test_exact_positive_profile_is_review_eligible_not_approval (unit_status_view.TestStatusView.test_exact_positive_profile_is_review_eligible_not_approval) ... ok
+test_explicit_zero_and_nonzero_costs_remain_unverified_observations (unit_status_view.TestStatusView.test_explicit_zero_and_nonzero_costs_remain_unverified_observations) ... ok
+test_extra_gates_do_not_substitute_for_missing_required_gates (unit_status_view.TestStatusView.test_extra_gates_do_not_substitute_for_missing_required_gates) ... ok
+test_finding_must_be_exact_verified_defect_for_eligibility (unit_status_view.TestStatusView.test_finding_must_be_exact_verified_defect_for_eligibility) ... ok
+test_large_integer_cost_is_exact_and_json_safe (unit_status_view.TestStatusView.test_large_integer_cost_is_exact_and_json_safe) ... ok
+test_malformed_containers_remain_unknown_and_blocked (unit_status_view.TestStatusView.test_malformed_containers_remain_unknown_and_blocked) ... ok
+test_missing_lifecycle_is_unknown_not_failed (unit_status_view.TestStatusView.test_missing_lifecycle_is_unknown_not_failed) ... ok
+test_nine_pass_two_not_run_is_not_hidden_as_nine_of_nine (unit_status_view.TestStatusView.test_nine_pass_two_not_run_is_not_hidden_as_nine_of_nine) ... ok
+test_no_hardcoded_snapshot_identity_is_projected (unit_status_view.TestStatusView.test_no_hardcoded_snapshot_identity_is_projected) ... ok
+test_projection_is_detached_and_input_unchanged (unit_status_view.TestStatusView.test_projection_is_detached_and_input_unchanged) ... ok
+test_pure_projection_has_negative_io_network_and_time_guards (unit_status_view.TestStatusView.test_pure_projection_has_negative_io_network_and_time_guards) ... ok
+test_real_loader_and_cli_journeys_use_same_projection (unit_status_view.TestStatusView.test_real_loader_and_cli_journeys_use_same_projection) ... ok
+test_subclass_equality_and_lookup_hooks_cannot_make_gates_pass (unit_status_view.TestStatusView.test_subclass_equality_and_lookup_hooks_cannot_make_gates_pass) ... ok
+test_terminal_control_characters_are_not_projected (unit_status_view.TestStatusView.test_terminal_control_characters_are_not_projected) ... ok
+test_unsupported_axes_and_all_action_authorities_fail_closed (unit_status_view.TestStatusView.test_unsupported_axes_and_all_action_authorities_fail_closed) ... ok
+test_verified_must_be_exact_boolean_true (unit_status_view.TestStatusView.test_verified_must_be_exact_boolean_true) ... ok
+test_zero_and_missing_gates_fail_closed (unit_status_view.TestStatusView.test_zero_and_missing_gates_fail_closed) ... ok
+test_all_three_formats_expose_the_same_historical_limits (unit_review_report.TestReviewReport.test_all_three_formats_expose_the_same_historical_limits) ... ok
+test_build_report_uses_shared_fail_closed_projection (unit_review_report.TestReviewReport.test_build_report_uses_shared_fail_closed_projection) ... ok
+test_cli_refuses_duplicate_cost_without_zero_or_traceback (unit_review_report.TestReviewReport.test_cli_refuses_duplicate_cost_without_zero_or_traceback) ... ok
+test_historical_hash_constants_are_not_authority (unit_review_report.TestReviewReport.test_historical_hash_constants_are_not_authority) ... ok
+test_json_is_valid (unit_review_report.TestReviewReport.test_json_is_valid) ... ok
+test_large_integer_cost_remains_exact_in_json_and_human_output (unit_review_report.TestReviewReport.test_large_integer_cost_remains_exact_in_json_and_human_output) ... ok
+test_loader_rejects_duplicate_json_at_each_artifact_and_depth (unit_review_report.TestReviewReport.test_loader_rejects_duplicate_json_at_each_artifact_and_depth) ... ok
+test_loader_rejects_precision_loss_underflow_and_nonfinite_numbers (unit_review_report.TestReviewReport.test_loader_rejects_precision_loss_underflow_and_nonfinite_numbers) ... ok
+test_missing_lifecycle_is_unknown (unit_review_report.TestReviewReport.test_missing_lifecycle_is_unknown) ... ok
+test_plain_text_no_color_codes (unit_review_report.TestReviewReport.test_plain_text_no_color_codes) ... ok
+test_reported_zero_and_nonzero_do_not_become_spendability (unit_review_report.TestReviewReport.test_reported_zero_and_nonzero_do_not_become_spendability) ... ok
+test_small_positive_cost_is_not_formatted_as_zero (unit_review_report.TestReviewReport.test_small_positive_cost_is_not_formatted_as_zero) ... ok
+test_status_view_variants_use_same_projected_json (unit_review_report.TestReviewReport.test_status_view_variants_use_same_projected_json) ... ok
+test_unknown_cost_is_null_and_never_rendered_as_zero (unit_review_report.TestReviewReport.test_unknown_cost_is_null_and_never_rendered_as_zero) ... ok
+test_unknown_finding_is_projected_not_raised (unit_review_report.TestReviewReport.test_unknown_finding_is_projected_not_raised) ... ok
+test_unknown_or_ambiguous_finding_requests_evidence (unit_review_report.TestReviewReport.test_unknown_or_ambiguous_finding_requests_evidence) ... ok
+test_version_one_forged_reports_are_rejected_by_renderers (unit_review_report.TestReviewReport.test_version_one_forged_reports_are_rejected_by_renderers) ... ok
+test_vocabulary_sets_defined (unit_review_report.TestReviewReport.test_vocabulary_sets_defined) ... ok
+test_zero_gates_never_recommend_approval_or_readiness (unit_review_report.TestReviewReport.test_zero_gates_never_recommend_approval_or_readiness) ... ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 0.590s
+
+OK
+unittest_exit=0
+
+--- postflight ---
+review_report_sha256=fe74572f687c4768bb8980d44a3fad6638663cb17d1ceebd30a7cc7b667097d4
+log_sha256=a7f4a8ac86f27cdb2bd48ab3685832a369bd299f4578d8484cf9f50af40a2a79

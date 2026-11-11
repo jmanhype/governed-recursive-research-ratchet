@@ -1,0 +1,24 @@
+{
+  "combined_executable_lines": 347,
+  "combined_executed_lines": 336,
+  "combined_percent": 96.83,
+  "limits": "Two in-process modules only; not branch or subprocess CLI coverage, not runtime qualification",
+  "method": "stdlib trace executable-line hits",
+  "modules": [
+    {
+      "executable_lines": 192,
+      "executed_lines": 189,
+      "path": "research/status_view.py",
+      "percent": 98.44
+    },
+    {
+      "executable_lines": 155,
+      "executed_lines": 147,
+      "path": "research/review_report.py",
+      "percent": 94.84
+    }
+  ],
+  "python": "3.14.3",
+  "source_only": true,
+  "suite_exit_code": 0
+}
