@@ -9,14 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:04Z
 created_by: speed
 updated_at: 2026-11-03T17:31:36Z
-content_hash: "sha256:588f03800c2555f76792fb45000088e522d8d9004f6e071476176676e946f334"
+content_hash: "sha256:ab1ba222e862d2a42c56941a4598f748f8f93413508994c50897a8ebd2687aa5"
 was_blocked_by: [GRRR-dbbi, GRRR-34ve]
 assignee: dev-GRRR-fmvp
 follows: [GRRR-dbbi, GRRR-34ve, GRRR-z3w9]
 closed_at: 2026-11-03T17:31:36Z
 close_reason: "PM acceptance: review surfaces working. 6/6 tests, three formats consistent, approved vocabulary."
 led_to: [GRRR-6sso, GRRR-gge0, GRRR-888u]
-blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -161,10 +160,10 @@ status: delivered
 - 2026-11-03T17:31:36Z status: in_progress -> closed
 - 2026-11-03T17:31:36Z dep_removed: no_longer_blocks GRRR-6sso
 - 2026-11-11T21:15:20Z dep_added: blocks GRRR-2hib
+- 2026-11-11T21:17:49Z dep_removed: no_longer_blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-2hib]]
 - Was blocked by: [[GRRR-dbbi]], [[GRRR-34ve]]
 - Follows: [[GRRR-dbbi]], [[GRRR-34ve]], [[GRRR-z3w9]]
 - Led to: [[GRRR-6sso]], [[GRRR-gge0]], [[GRRR-888u]]

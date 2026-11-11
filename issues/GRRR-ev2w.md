@@ -9,13 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T01:07:35Z
 created_by: speed
 updated_at: 2026-11-04T01:21:14Z
-content_hash: "sha256:09ecbc18454a8f3c4c4e79da1c9d8ba3b36e4117f190160c95795651c33819a3"
+content_hash: "sha256:3d241ee828e009dd72eed7df46d870c4e66fe6becf8da01e77a8d1af731fd5bf"
 assignee: dev-GRRR-ev2w
 follows: [GRRR-888u, GRRR-gge0]
 closed_at: 2026-11-04T01:21:13Z
 close_reason: "Accepted: branch 710e6fb matches the delivered hashes; 9/9 delivery proof, 28 unit and 6 real-filesystem integration executions on Python 3.14/3.9 with 0 failures/skips, and the 3-file 197-line diff satisfy all six fail-closed/durability ACs within scope."
 led_to: [GRRR-6sso, GRRR-q3hp, GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
-blocks: [GRRR-2hib]
 ---
 ## Description
 ## Context
@@ -264,10 +263,10 @@ status: delivered
 - 2026-11-04T01:21:13Z status: in_progress -> closed
 - 2026-11-04T01:21:13Z dep_removed: no_longer_blocks GRRR-6sso
 - 2026-11-11T21:15:17Z dep_added: blocks GRRR-2hib
+- 2026-11-11T21:17:48Z dep_removed: no_longer_blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-2hib]]
 - Follows: [[GRRR-888u]], [[GRRR-gge0]]
 - Led to: [[GRRR-6sso]], [[GRRR-q3hp]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-k3j7]]
 

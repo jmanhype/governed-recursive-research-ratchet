@@ -9,14 +9,13 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:02Z
 created_by: speed
 updated_at: 2026-10-21T20:46:48Z
-content_hash: "sha256:c995b6f4b80b034c607a27c0da243af5ce5ada6b966cfef78538d12fac37b4dd"
+content_hash: "sha256:d5ea5650590f77560d6f2e7989ef436238888d24eb440e49a99f8184f3e149b0"
 was_blocked_by: [GRRR-gu87]
 assignee: dev-GRRR-my5n
 follows: [GRRR-gu87, GRRR-90te]
 closed_at: 2026-10-21T20:46:47Z
 close_reason: "Accepted: durable UID-320 ledger, crash recovery, trusted export, and identity denials proven"
 led_to: [GRRR-c875, GRRR-bnkf, GRRR-w1lt, GRRR-43i8, GRRR-d8ji, GRRR-z3w9, GRRR-6sso]
-blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -214,10 +213,10 @@ status: in_progress
 - 2026-10-21T20:46:47Z dep_removed: no_longer_blocks GRRR-c875
 - 2026-10-21T20:46:47Z dep_removed: no_longer_blocks GRRR-6sso
 - 2026-11-11T21:15:21Z dep_added: blocks GRRR-2hib
+- 2026-11-11T21:17:49Z dep_removed: no_longer_blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-2hib]]
 - Was blocked by: [[GRRR-gu87]]
 - Follows: [[GRRR-gu87]], [[GRRR-90te]]
 - Led to: [[GRRR-c875]], [[GRRR-bnkf]], [[GRRR-w1lt]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-z3w9]], [[GRRR-6sso]]

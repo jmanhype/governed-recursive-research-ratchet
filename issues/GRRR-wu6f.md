@@ -8,14 +8,14 @@ parent: GRRR-2t3h
 created_at: 2026-10-26T02:20:26Z
 created_by: speed
 updated_at: 2026-10-26T04:04:40Z
-content_hash: "sha256:4c7156a9c62253a5838d8c81c147a857d9150320e5785a909f8a7e981a23bd08"
+content_hash: "sha256:15ccdbb3296c31bb3f70a30359682f972d6ae414111b0df5c9429e58682ad80f"
 labels: [milestone-1, integration, spendability-validator, accepted]
 follows: [GRRR-d8ji, GRRR-43i8, GRRR-w1lt, GRRR-bnkf, GRRR-c875]
 assignee: dev-GRRR-wu6f
 closed_at: 2026-10-26T03:53:35Z
 close_reason: "Accepted: strict type-first enum validation closes the malformed-value fail-closed gap while preserving all 28 cases and boundaries"
 led_to: [GRRR-z3w9, GRRR-6sso]
-blocks: [GRRR-6sso, GRRR-2hib]
+blocks: [GRRR-6sso]
 ---
 
 ## Description
@@ -351,10 +351,11 @@ status: in_progress
 - 2026-10-26T03:53:35Z dep_removed: no_longer_blocks GRRR-z3w9
 - 2026-11-04T01:05:04Z dep_added: blocks GRRR-6sso
 - 2026-11-11T21:15:21Z dep_added: blocks GRRR-2hib
+- 2026-11-11T21:17:49Z dep_removed: no_longer_blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-6sso]], [[GRRR-2hib]]
+- Blocks: [[GRRR-6sso]]
 - Follows: [[GRRR-d8ji]], [[GRRR-43i8]], [[GRRR-w1lt]], [[GRRR-bnkf]], [[GRRR-c875]]
 - Led to: [[GRRR-z3w9]], [[GRRR-6sso]]
 
