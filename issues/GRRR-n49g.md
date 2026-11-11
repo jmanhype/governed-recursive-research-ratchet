@@ -8,13 +8,14 @@ parent: GRRR-2t3h
 created_at: 2026-11-09T17:44:55Z
 created_by: speed
 updated_at: 2026-11-10T01:29:06Z
-content_hash: "sha256:33c3caf44596cb6d405da1258c2f7ab60ae53dcc5d2d2e3f45c59d81357252af"
+content_hash: "sha256:3dce2bfeebb29bb7c4c4ac644f0a2221448c09e71cf022c45d23f595f6b63450"
 assignee: dev-GRRR-n49g
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-k3j7]
 labels: [accepted]
 closed_at: 2026-11-10T01:24:10Z
 close_reason: "Accepted: Independent evidence-based PM review verified all six ACs at source commit 632912391db2bfdf59c339d4627d965fffc7bb08; current seven-file hashes, authority parity, independent R2/delta approvals, three skip-free 348-test logs, and bounded coverage all pass. Acceptance is source-story only and grants no runtime, admission, promotion, or production authority."
 led_to: [GRRR-734u]
+blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -271,9 +272,11 @@ status: in_progress
 - 2026-11-10T01:17:12Z status: in_progress -> in_progress
 - 2026-11-10T01:17:12Z auto-follows: linked to predecessor GRRR-k3j7
 - 2026-11-10T01:24:10Z status: in_progress -> closed
+- 2026-11-11T21:15:18Z dep_added: blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-2hib]]
 - Follows: [[GRRR-hbc6]], [[GRRR-q3hp]], [[GRRR-k3j7]]
 - Led to: [[GRRR-734u]]
 
