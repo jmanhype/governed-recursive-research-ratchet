@@ -9,13 +9,14 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T13:37:38Z
 created_by: speed
 updated_at: 2026-11-06T13:03:34Z
-content_hash: "sha256:f97b819bc4e0eb342be6ea5a9f306f09c7c9c9068397b250c12263453145060d"
+content_hash: "sha256:071c7e5e0990012a57f6f3517d1ce6dc247dc4ebd4666c4ea1956362a264c4f7"
 follows: [GRRR-ev2w, GRRR-wcwy, GRRR-yt6a, GRRR-888u, GRRR-k3j7, GRRR-gge0]
 was_blocked_by: [GRRR-wcwy, GRRR-yt6a, GRRR-k3j7]
 assignee: dev-GRRR-q3hp
 closed_at: 2026-11-06T13:03:34Z
 close_reason: "Accepted via pvg story accept"
 led_to: [GRRR-hbc6, GRRR-734u, GRRR-n49g]
+blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -1064,9 +1065,11 @@ Summary: PASS source12 driver tests on EACH of Python3.14.3,3.12.9,3.9.6; failur
 - 2026-11-05T21:59:46Z auto-follows: linked to predecessor GRRR-gge0
 - 2026-11-06T13:03:34Z status: in_progress -> closed
 - 2026-11-06T13:03:34Z dep_removed: no_longer_blocks GRRR-6sso
+- 2026-11-11T21:15:18Z dep_added: blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-2hib]]
 - Was blocked by: [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-k3j7]]
 - Follows: [[GRRR-ev2w]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-888u]], [[GRRR-k3j7]], [[GRRR-gge0]]
 - Led to: [[GRRR-hbc6]], [[GRRR-734u]], [[GRRR-n49g]]
