@@ -9,13 +9,14 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:03Z
 created_by: speed
 updated_at: 2026-11-03T17:24:03Z
-content_hash: "sha256:3e13eba23b85178188aa2baf4dee1516a1aa74055fa72dc83d4925e1daf60589"
+content_hash: "sha256:3cc6661bf29848060b0f6f378af08b7014ac01548405e8906b32dba7e4fbbb8a"
 was_blocked_by: [GRRR-z3w9]
 assignee: dev-GRRR-34ve
 follows: [GRRR-z3w9, GRRR-dbbi]
 closed_at: 2026-11-03T17:24:02Z
 close_reason: "PM acceptance after two rework cycles. All security findings fixed:\n1. Export hash binding enforced\n2. Approved operator identity required\n3. Authorization consumed durably (file-based, survives restart)\n4. Duplicate admission prevented (file-based registry)\n5. recurrence_rejected requires exact 9-gate inventory and cross-checks replay receipt\n23/23 tests pass. Durable REGISTRY.json persisted."
 led_to: [GRRR-fmvp, GRRR-6sso, GRRR-gge0, GRRR-888u]
+blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -148,9 +149,11 @@ status: delivered
 - 2026-11-03T17:24:02Z status: in_progress -> closed
 - 2026-11-03T17:24:03Z dep_removed: no_longer_blocks GRRR-fmvp
 - 2026-11-03T17:24:03Z dep_removed: no_longer_blocks GRRR-6sso
+- 2026-11-11T21:15:19Z dep_added: blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-2hib]]
 - Was blocked by: [[GRRR-z3w9]]
 - Follows: [[GRRR-z3w9]], [[GRRR-dbbi]]
 - Led to: [[GRRR-fmvp]], [[GRRR-6sso]], [[GRRR-gge0]], [[GRRR-888u]]
