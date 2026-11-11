@@ -9,11 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-20T03:19:01Z
 created_by: speed
 updated_at: 2026-10-20T15:56:23Z
-content_hash: "sha256:f71565c382adc5fdf19801214b928b19efcc490633226700ef7619e999a8fa9d"
+content_hash: "sha256:0da90bc3f3d06859fce547d0d89acc4f2d10eb508ec5a27f660b7d4bd04299e8"
 assignee: dev-GRRR-0g4n
 closed_at: 2026-10-20T15:56:23Z
 close_reason: "Accepted: independently verified bounded synthetic VM path, all seven ACs, 12/12 real integration tests, preserved hash-bound evidence and explicitly scoped unit coverage."
 led_to: [GRRR-90te, GRRR-gu87, GRRR-c875, GRRR-z3w9, GRRR-6sso]
+blocks: [GRRR-2hib]
 ---
 
 ## Description
@@ -410,9 +411,11 @@ status: delivered
 - 2026-10-20T15:56:23Z status: in_progress -> closed
 - 2026-10-20T15:56:23Z dep_removed: no_longer_blocks GRRR-90te
 - 2026-10-20T15:56:23Z dep_removed: no_longer_blocks GRRR-6sso
+- 2026-11-11T21:15:19Z dep_added: blocks GRRR-2hib
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-2hib]]
 - Led to: [[GRRR-90te]], [[GRRR-gu87]], [[GRRR-c875]], [[GRRR-z3w9]], [[GRRR-6sso]]
 
 ## Comments
