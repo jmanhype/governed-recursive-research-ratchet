@@ -8,9 +8,9 @@ parent: GRRR-2t3h
 created_at: 2026-11-11T21:14:42Z
 created_by: speed
 updated_at: 2026-11-11T21:14:58Z
-content_hash: "sha256:752acdd4701912833f3399961f8428b6f7f38239100a42784c9009229318828c"
+content_hash: "sha256:38d3151d13434615c318e539416971ed937b7f5f7968f4e5669a992affdda5ef"
 labels: [milestone-1, capstone, integration, security, e2e, release-gate]
-blocked_by: [GRRR-43i8]
+blocked_by: [GRRR-43i8, GRRR-d8ji]
 ---
 
 ## Description
@@ -301,9 +301,10 @@ status: new
 
 ## History
 - 2026-11-11T21:15:17Z dep_added: blocked_by GRRR-43i8
+- 2026-11-11T21:15:17Z dep_added: blocked_by GRRR-d8ji
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-43i8]]
+- Blocked by: [[GRRR-43i8]], [[GRRR-d8ji]]
 
 ## Comments
