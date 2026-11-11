@@ -9,12 +9,12 @@ parent: GRRR-2t3h
 created_at: 2026-10-23T18:55:10Z
 created_by: speed
 updated_at: 2026-10-23T21:29:30Z
-content_hash: "sha256:0fa5d49fa36fac1e0a8b9c0c868be9192347369df431bf1d7ecc8d7087476cea"
+content_hash: "sha256:eeff1b02b3f98df48cc1c2113a9c04e17eb487dbd569b0599365b5f69e05489e"
 follows: [GRRR-bnkf, GRRR-c875, GRRR-my5n]
 closed_at: 2026-10-23T21:29:29Z
 close_reason: "Accepted: documentation-only rework 1120b16 resolves the stale runtime-status contradiction while preserving the C001 lifecycle-only and downstream not-run boundaries; prior implementation and checksummed live evidence remain intact."
 led_to: [GRRR-z3w9, GRRR-43i8, GRRR-d8ji, GRRR-wu6f, GRRR-6sso]
-blocks: [GRRR-6sso]
+blocks: [GRRR-6sso, GRRR-0kb3]
 ---
 
 ## Description
@@ -680,10 +680,11 @@ status: blocked
 - 2026-11-04T01:05:03Z dep_added: blocks GRRR-6sso
 - 2026-11-11T21:15:18Z dep_added: blocks GRRR-2hib
 - 2026-11-11T21:17:48Z dep_removed: no_longer_blocks GRRR-2hib
+- 2026-11-11T21:17:54Z dep_added: blocks GRRR-0kb3
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocks: [[GRRR-6sso]]
+- Blocks: [[GRRR-6sso]], [[GRRR-0kb3]]
 - Follows: [[GRRR-bnkf]], [[GRRR-c875]], [[GRRR-my5n]]
 - Led to: [[GRRR-z3w9]], [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-wu6f]], [[GRRR-6sso]]
 
