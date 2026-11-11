@@ -8,12 +8,13 @@ parent: GRRR-2t3h
 created_at: 2026-11-08T18:07:59Z
 created_by: speed
 updated_at: 2026-11-10T22:35:41Z
-content_hash: "sha256:57ac4a0d40f3bfac00bbf605035011904228a77ccd802020353df637a949871b"
+content_hash: "sha256:49aca928cbcebff68c20ccf4f36628b80c5c2ffdd40c4a60d177946c517f038c"
 follows: [GRRR-hbc6, GRRR-q3hp, GRRR-n49g, GRRR-k3j7, GRRR-yt6a, GRRR-wcwy]
 assignee: dev-GRRR-734u
 labels: [accepted]
 closed_at: 2026-11-10T22:35:41Z
 close_reason: "Independent bounded PM re-review passed: delivery preflight 9/9, clean HEAD bdbc4ec1e34845836473d73ea4a681dbb4b46ff8, all four functional SHA256 hashes match corrected authoritative delivery. Sole prior provenance rejection corrected; prior independent AC verification remains applicable to unchanged bytes. Source-only acceptance, not runtime readiness or authorization."
+blocks: [GRRR-0kb3]
 ---
 
 ## Description
@@ -326,9 +327,11 @@ status: in_progress
 - 2026-11-10T22:35:41Z status: in_progress -> closed
 - 2026-11-11T21:15:21Z dep_added: blocks GRRR-2hib
 - 2026-11-11T21:17:49Z dep_removed: no_longer_blocks GRRR-2hib
+- 2026-11-11T21:17:57Z dep_added: blocks GRRR-0kb3
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-0kb3]]
 - Follows: [[GRRR-hbc6]], [[GRRR-q3hp]], [[GRRR-n49g]], [[GRRR-k3j7]], [[GRRR-yt6a]], [[GRRR-wcwy]]
 
 ## Comments
