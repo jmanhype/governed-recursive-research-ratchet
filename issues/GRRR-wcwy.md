@@ -8,13 +8,14 @@ parent: GRRR-2t3h
 created_at: 2026-11-04T16:45:10Z
 created_by: speed
 updated_at: 2026-11-04T17:40:07Z
-content_hash: "sha256:7eac3f94353d9d241c496eed711238a4a280886416cdf347e5891039dad439e6"
+content_hash: "sha256:13597aab4e5bd6eda1e32267738116289d83afee11f73254424343456c50d3ec"
 labels: [milestone-1, source-only, security-boundary, accepted]
 assignee: dev-GRRR-wcwy
 follows: [GRRR-ev2w, GRRR-888u]
 closed_at: 2026-11-04T17:36:38Z
 close_reason: "Independent PM: exact commit8cf7d0d source-only AC1-7 verified; source hashes/raw proof/static gate pass; no runtime authority"
 led_to: [GRRR-q3hp, GRRR-yt6a, GRRR-k3j7, GRRR-734u]
+blocks: [GRRR-0kb3]
 ---
 
 ## Description
@@ -612,9 +613,11 @@ status: accepted
 - 2026-11-04T17:36:39Z dep_removed: no_longer_blocks GRRR-q3hp
 - 2026-11-11T21:15:18Z dep_added: blocks GRRR-2hib
 - 2026-11-11T21:17:48Z dep_removed: no_longer_blocks GRRR-2hib
+- 2026-11-11T21:17:54Z dep_added: blocks GRRR-0kb3
 
 ## Links
 - Parent: [[GRRR-2t3h]]
+- Blocks: [[GRRR-0kb3]]
 - Follows: [[GRRR-ev2w]], [[GRRR-888u]]
 - Led to: [[GRRR-q3hp]], [[GRRR-yt6a]], [[GRRR-k3j7]], [[GRRR-734u]]
 
