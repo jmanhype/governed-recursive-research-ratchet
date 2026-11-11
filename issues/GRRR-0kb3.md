@@ -8,9 +8,9 @@ parent: GRRR-2t3h
 created_at: 2026-11-11T21:17:50Z
 created_by: speed
 updated_at: 2026-11-11T21:17:51Z
-content_hash: "sha256:d84bca7c1f5ccc57c9221bf9fd2c18adc62d6364e84081f7b4047d35fa192ec2"
+content_hash: "sha256:5b07b3d436b8743c18f19d38cd70d70b15457f3b6cff3d9c30a18da88eb8e1ab"
 labels: [milestone-1, capstone, integration, security, e2e]
-blocked_by: [GRRR-43i8, GRRR-d8ji, GRRR-ev2w, GRRR-k3j7, GRRR-n49g, GRRR-q3hp, GRRR-w1lt, GRRR-wcwy, GRRR-yt6a, GRRR-0g4n, GRRR-34ve, GRRR-888u, GRRR-90te, GRRR-bnkf]
+blocked_by: [GRRR-43i8, GRRR-d8ji, GRRR-ev2w, GRRR-k3j7, GRRR-n49g, GRRR-q3hp, GRRR-w1lt, GRRR-wcwy, GRRR-yt6a, GRRR-0g4n, GRRR-34ve, GRRR-888u, GRRR-90te, GRRR-bnkf, GRRR-c875]
 ---
 
 ## Description
@@ -314,9 +314,10 @@ status: new
 - 2026-11-11T21:17:55Z dep_added: blocked_by GRRR-888u
 - 2026-11-11T21:17:55Z dep_added: blocked_by GRRR-90te
 - 2026-11-11T21:17:55Z dep_added: blocked_by GRRR-bnkf
+- 2026-11-11T21:17:55Z dep_added: blocked_by GRRR-c875
 
 ## Links
 - Parent: [[GRRR-2t3h]]
-- Blocked by: [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-ev2w]], [[GRRR-k3j7]], [[GRRR-n49g]], [[GRRR-q3hp]], [[GRRR-w1lt]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-0g4n]], [[GRRR-34ve]], [[GRRR-888u]], [[GRRR-90te]], [[GRRR-bnkf]]
+- Blocked by: [[GRRR-43i8]], [[GRRR-d8ji]], [[GRRR-ev2w]], [[GRRR-k3j7]], [[GRRR-n49g]], [[GRRR-q3hp]], [[GRRR-w1lt]], [[GRRR-wcwy]], [[GRRR-yt6a]], [[GRRR-0g4n]], [[GRRR-34ve]], [[GRRR-888u]], [[GRRR-90te]], [[GRRR-bnkf]], [[GRRR-c875]]
 
 ## Comments
