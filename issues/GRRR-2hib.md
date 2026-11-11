@@ -9,7 +9,7 @@ created_at: 2026-11-11T21:14:42Z
 created_by: speed
 updated_at: 2026-11-11T21:14:57Z
 content_hash: "sha256:fc877e54cab0399afdbf5c46fcf844f95ebc3c6dd40cf95e2efd2abdb02b8af0"
-labels: [milestone-1, capstone, integration]
+labels: [milestone-1, capstone, integration, security]
 ---
 
 ## Description
