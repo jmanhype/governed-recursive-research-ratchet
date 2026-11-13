@@ -91,6 +91,19 @@ Do not run `scripts/test-story`, provisioning scripts, or capstone-driver
 commands blindly. Several are workflow-specific and intentionally fail when
 protected inputs, identities, permissions, or authorization records are absent.
 
+## Running the tests
+
+Run the required backend source suite from the repository root:
+
+```bash
+python3 -B tests/unit_capstone_backend_suite.py
+```
+
+It uses only the Python standard library and needs no network access. The test
+runner intentionally exits non-zero when zero tests are collected, so an empty
+run cannot be mistaken for a passing one. It also fails when a required module
+contributes no tests or when any test is skipped.
+
 ## Installation and requirements
 
 ### Source inspection and no-guest tests
